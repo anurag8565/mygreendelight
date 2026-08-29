@@ -84,13 +84,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         async jwt({ token, user, trigger, session }) {
 
             if (user) {
-                token.id = user.id;
+                token.id = user.id || token.sub;
                 token.name = user.name;
                 token.email = user.email;
-                token.role = user.role;
+                token.role = (user as any).role || "user";
             }
 
-            if (trigger === "update") {
+            if (trigger === "update" && session?.role) {
                 token.role = session.role;
             }
 
@@ -100,10 +100,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         async session({ session, token }) {
 
             if (session.user) {
-                session.user.id = token.id as string;
+                session.user.id = (token.id || token.sub) as string;
                 session.user.name = token.name as string;
                 session.user.email = token.email as string;
-                session.user.role = token.role as string;
+                session.user.role = (token.role as string) || "user";
             }
 
             return session;
