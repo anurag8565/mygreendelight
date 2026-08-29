@@ -118,7 +118,7 @@ export default function TrackOrderPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50/60 via-white to-green-50/40 p-4 md:p-8">
+    <div className="min-h-screen bg-gradient-to-b from-green-50/60 via-white to-green-50/40 p-4 md:p-8 pb-36 sm:pb-20">
       <div className="max-w-4xl mx-auto">
         {/* Back Link */}
         <Link

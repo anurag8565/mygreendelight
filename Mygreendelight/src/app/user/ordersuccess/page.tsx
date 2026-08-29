@@ -15,18 +15,25 @@ import { motion } from "framer-motion";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import useGetMe from "@/hooks/useGetMe";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { clearCart } from "@/redux/CartSlice";
+import { useEffect } from "react";
 
 export default function OrderSuccess() {
   useGetMe();
+  const dispatch = useDispatch();
   const { userdata } = useSelector((state: RootState) => state.user);
+
+  useEffect(() => {
+    dispatch(clearCart());
+  }, [dispatch]);
 
   return (
     <div className="bg-[#fbfcfb] min-h-screen flex flex-col justify-between font-sans">
       <Nav user={(userdata as any) || { role: "user" }} />
 
-      <main className="max-w-3xl mx-auto px-4 py-12 w-full flex-1 flex flex-col items-center justify-center text-center">
+      <main className="max-w-3xl mx-auto px-4 py-12 pb-32 sm:pb-16 w-full flex-1 flex flex-col items-center justify-center text-center">
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}

@@ -64,9 +64,15 @@ export default function MobileBottomNav() {
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 pointer-events-none">
       <div className="pointer-events-auto">
-        {/* Floating Quick Cart Bar (Appears when cart has items and not on cart/checkout page) */}
+        {/* Floating Quick Cart Bar (Hidden on cart, checkout, orders, and track pages) */}
         <AnimatePresence>
-          {mounted && cartCount > 0 && pathname !== "/user/cart" && pathname !== "/user/checkout" && (
+          {mounted &&
+            cartCount > 0 &&
+            pathname !== "/user/cart" &&
+            pathname !== "/user/checkout" &&
+            pathname !== "/user/ordersuccess" &&
+            pathname !== "/user/myorder" &&
+            !pathname.startsWith("/track") && (
             <motion.div
               initial={{ y: 50, opacity: 0, scale: 0.95 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}

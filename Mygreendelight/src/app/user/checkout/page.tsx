@@ -21,8 +21,9 @@ import {
   Coins,
 } from "lucide-react";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { clearCart } from "@/redux/CartSlice";
 import axios from "axios";
 import {
   selectSubtotal,
@@ -43,6 +44,7 @@ const CheckoutMap = dynamic(() => import("@/components/CheckoutMap"), {
 
 export default function Checkout() {
   useGetMe();
+  const dispatch = useDispatch();
   const { userdata } = useSelector((state: RootState) => state.user);
   const [paymentMethod, setPaymentMethod] = useState<"cod" | "online">("cod");
   const [deliverySlot, setDeliverySlot] = useState<string>("Instant Express (30-45 Mins)");
@@ -191,6 +193,10 @@ export default function Checkout() {
           walletDiscount: walletDiscount || 0,
           deliverySlot: deliverySlot,
         });
+        dispatch(clearCart());
+        try {
+          await axios.delete("/api/user/cart");
+        } catch (e) {}
         router.push("/user/ordersuccess");
       } else {
         // 💳 Paytm Online Payment Flow
@@ -280,7 +286,7 @@ export default function Checkout() {
     <div className="bg-[#fbfcfb] min-h-screen flex flex-col justify-between">
       <Nav user={(userdata as any) || { role: "user" }} />
 
-      <main className="max-w-7xl mx-auto px-4 md:px-8 py-8 w-full flex-1">
+      <main className="max-w-7xl mx-auto px-4 md:px-8 py-8 pb-32 sm:pb-12 w-full flex-1">
         {/* Breadcrumb Navigation */}
         <div className="flex items-center gap-2 text-xs text-gray-500 mb-6">
           <Link href="/" className="hover:text-[#0f8646] transition">

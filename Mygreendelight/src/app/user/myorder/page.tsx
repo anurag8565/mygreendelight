@@ -160,7 +160,7 @@ export default function MyOrder() {
     <div className="bg-[#fbfcfb] min-h-screen flex flex-col justify-between font-sans">
       <Nav user={(userdata as any) || { role: "user" }} />
 
-      <main className="max-w-4xl mx-auto px-4 md:px-8 py-8 w-full flex-1">
+      <main className="max-w-4xl mx-auto px-4 md:px-8 py-8 pb-36 sm:pb-16 w-full flex-1">
         {/* Breadcrumb Navigation */}
         <div className="flex items-center gap-2 text-xs text-gray-500 mb-6">
           <Link href="/" className="hover:text-[#0f8646] transition">
