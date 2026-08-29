@@ -6,6 +6,8 @@ import { auth } from "@/auth";
 import User from "@/model/user.model";
 import ProductDetailsClient from "./ProductDetailsClient";
 
+export const dynamic = "force-dynamic";
+
 export default async function ProductPage(props: { params: Promise<{ id: string }> }) {
   const { id } = await props.params;
 
