@@ -42,8 +42,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             }
         }),
         Google({
-            clientId: process.env.GOOGLE_CLIENT_ID!,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+            clientId: process.env.GOOGLE_CLIENT_ID || "dummy_client_id",
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET || "dummy_client_secret",
         })
     ],
     callbacks: {
@@ -113,5 +113,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         strategy: "jwt",
         maxAge: 10 * 24 * 60 * 60
     },
-    secret: process.env.NEXTAUTH_SECRET
+    secret: process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET || "quickbasket_super_secret_key_2026_random_string"
 })

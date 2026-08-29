@@ -8,13 +8,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-transporter.verify((err, success) => {
-  if (err) {
-    console.log("MAILER ERROR:", err);
-  } else {
-    console.log("MAILER READY");
-  }
-});
 
 export async function sendMail(
   to: string,

@@ -1,18 +1,19 @@
 import mongoose from "mongoose";
 
-const mongourl = process.env.DB_URL || process.env.MONGODB_URI;
+const getMongoUrl = () => process.env.DB_URL || process.env.MONGODB_URI || "";
 
-if (!mongourl) {
-    throw new Error("error")
-}
-
-let cached = global.mongoose
+let cached = (global as any).mongoose;
 
 if (!cached) {
-    cached = global.mongoose = { conn: null, promise: null }
+    cached = (global as any).mongoose = { conn: null, promise: null };
 }
 
 const connectDb = async () => {
+    const mongourl = getMongoUrl();
+    if (!mongourl) {
+        console.warn("MONGODB_URI is not defined");
+        return null;
+    }
     if (cached.conn) {
         return cached.conn
     }
