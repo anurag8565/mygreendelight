@@ -10,32 +10,20 @@ export async function GET() {
       role: "admin",
     });
 
-    if (admin) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Admin already exists",
-        },
-        { status: 400 }
-      );
-    }
-
     return NextResponse.json(
       {
-        success: true,
-        message: "No admin exists",
+        adminExists: !!admin,
       },
       { status: 200 }
     );
   } catch (error) {
-    console.log(error);
+    console.error("CHECK_ADMIN_ERROR:", error);
 
     return NextResponse.json(
       {
-        success: false,
-        message: "Server Error",
+        adminExists: true,
       },
-      { status: 500 }
+      { status: 200 }
     );
   }
 }

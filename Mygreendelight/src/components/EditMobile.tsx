@@ -19,28 +19,34 @@ function EditMobile() {
   const { update } = useSession()
   const router = useRouter()
 
-  // validation
-  const isValidMobile = mobile.length === 11; // simple PK check
+  // validation (support 10 or 11 digit mobile numbers)
+  const isValidMobile = /^[0-9]{10,11}$/.test(mobile.trim());
   const canSave = selectedRole && isValidMobile;
 
- useEffect(()=>{
-   const checkforadmin=async () => {
-    try {
-      const rt =await axios.get("/api/checkforadmin")
-      if (rt.data.admin) {
-        setroles(prev=>prev.filter(r=>r.id=="admin"))
+  useEffect(() => {
+    const checkforadmin = async () => {
+      try {
+        const rt = await axios.get("/api/checkforadmin");
+        if (rt.data.adminExists) {
+          // Admin already exists, remove admin option so regular users cannot select it
+          setroles([
+            { id: "user", label: "Customer / User", icon: User },
+            { id: "deliveryboy", label: "Delivery Partner", icon: Bike },
+          ]);
+        }
+      } catch (error) {
+        console.error("Check admin error:", error);
       }
-    } catch (error) {
-      console.log(error)
-    }
-  } 
- })
-const handleSave = async () => {
-  try {
-    const result = await axios.post("/api/user/editrolemobile", {
-      role: selectedRole,
-      mobile,
-    });
+    };
+    checkforadmin();
+  }, []);
+
+  const handleSave = async () => {
+    try {
+      const result = await axios.post("/api/user/editrolemobile", {
+        role: selectedRole,
+        mobile: mobile.trim(),
+      });
 
     if (result.data.message) {
       await update({ role: selectedRole });

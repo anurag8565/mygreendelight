@@ -18,9 +18,19 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    if (role === "admin") {
+      const existingAdmin = await User.findOne({ role: "admin" });
+      if (existingAdmin && existingAdmin.email !== session.user.email) {
+        return NextResponse.json(
+          { message: "Admin role is restricted. An admin already exists for this store." },
+          { status: 403 }
+        );
+      }
+    }
+
     const user = await User.findOneAndUpdate(
       { email: session.user.email },
-      { role, mobile },
+      { role: role || "user", mobile },
       { new: true }
     );
 
