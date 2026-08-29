@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -12,6 +12,7 @@ import {
   Building,
   Loader2,
   ChevronRight,
+  Clock,
 } from "lucide-react";
 
 interface LocationModalProps {
@@ -20,21 +21,6 @@ interface LocationModalProps {
   currentLocation: string;
   onSelectLocation: (loc: string) => void;
 }
-
-const BHOPAL_LOCALITIES = [
-  { name: "Arera Colony", detail: "E-1 to E-7, Bittan Market, 10 No. Market", tag: "Express 10m" },
-  { name: "MP Nagar", detail: "Zone I, Zone II, DB City Mall area", tag: "Express 10m" },
-  { name: "Kolar Road", detail: "Chuna Bhatti, Sarvadharma, Danish Kunj", tag: "Express 15m" },
-  { name: "Shahpura", detail: "Shahpura Lake, Sector A/B/C, Manisha Market", tag: "Express 10m" },
-  { name: "TT Nagar", detail: "New Market, Malviya Nagar, Platinum Plaza", tag: "Express 10m" },
-  { name: "Hoshangabad Road", detail: "Aashima Mall, Misrod, Ratanpur, Bagmugaliya", tag: "Express 15m" },
-  { name: "Gulmohar Colony", detail: "Trilanga, Rohit Nagar, Bawadiya Kalan", tag: "Express 12m" },
-  { name: "Indrapuri", detail: "Sector A/B/C, Piplani, BHEL, Raisen Road", tag: "Express 15m" },
-  { name: "Ayodhya Bypass", detail: "Minal Residency, Ayodhya Nagar, Karond", tag: "Express 15m" },
-  { name: "Shivaji Nagar", detail: "6 No. Stop, 7 No. Stop, Nutan College area", tag: "Express 10m" },
-  { name: "Bairagarh", detail: "Sant Hirdaram Nagar, Lalghati, VIP Road", tag: "Express 15m" },
-  { name: "Katara Hills", detail: "Spring Valley, Sagar Golden Palm, Bagsewaniya", tag: "Express 20m" },
-];
 
 export default function LocationModal({
   isOpen,
@@ -46,16 +32,75 @@ export default function LocationModal({
   const [searchQuery, setSearchQuery] = useState("");
   const [customAddress, setCustomAddress] = useState("");
   const [isDetecting, setIsDetecting] = useState(false);
+  const [isSearchingLive, setIsSearchingLive] = useState(false);
+  const [liveSuggestions, setLiveSuggestions] = useState<any[]>([]);
+  const [recentLocations, setRecentLocations] = useState<string[]>([]);
+  const searchDebounceRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     setMounted(true);
+    if (typeof window !== "undefined") {
+      try {
+        const recents = JSON.parse(localStorage.getItem("mgd_recent_locations") || "[]");
+        setRecentLocations(recents);
+      } catch (e) {
+        setRecentLocations([]);
+      }
+    }
   }, []);
 
-  const filteredLocalities = BHOPAL_LOCALITIES.filter(
-    (loc) =>
-      loc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      loc.detail.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Real-time live OpenStreetMap Geocoding search (Real API, zero dummy)
+  useEffect(() => {
+    if (!searchQuery.trim() || searchQuery.trim().length < 2) {
+      setLiveSuggestions([]);
+      setIsSearchingLive(false);
+      return;
+    }
+
+    if (searchDebounceRef.current) clearTimeout(searchDebounceRef.current);
+
+    searchDebounceRef.current = setTimeout(async () => {
+      setIsSearchingLive(true);
+      try {
+        const queryWithContext = searchQuery.toLowerCase().includes("bhopal")
+          ? searchQuery.trim()
+          : `${searchQuery.trim()}, Bhopal, Madhya Pradesh`;
+
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+            queryWithContext
+          )}&countrycodes=in&limit=6&addressdetails=1`
+        );
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setLiveSuggestions(data);
+        } else {
+          setLiveSuggestions([]);
+        }
+      } catch (err) {
+        console.error("Live place search error:", err);
+        setLiveSuggestions([]);
+      } finally {
+        setIsSearchingLive(false);
+      }
+    }, 400);
+
+    return () => {
+      if (searchDebounceRef.current) clearTimeout(searchDebounceRef.current);
+    };
+  }, [searchQuery]);
+
+  const saveLocationChoice = (loc: string) => {
+    onSelectLocation(loc);
+    if (typeof window !== "undefined") {
+      try {
+        const updated = [loc, ...recentLocations.filter((item) => item !== loc)].slice(0, 5);
+        localStorage.setItem("mgd_recent_locations", JSON.stringify(updated));
+        setRecentLocations(updated);
+      } catch (e) {}
+    }
+    onClose();
+  };
 
   const handleGPSDetect = () => {
     if (!navigator.geolocation) {
@@ -69,23 +114,22 @@ export default function LocationModal({
         try {
           const { latitude, longitude } = position.coords;
           const res = await fetch(
-            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`
           );
           const data = await res.json();
 
           let detected = "Bhopal, Madhya Pradesh";
-          if (data?.locality) {
-            detected = `${data.locality}, Bhopal`;
-          } else if (data?.city) {
-            detected = `${data.city}, ${data.principalSubdivision || "MP"}`;
+          if (data?.display_name) {
+            const parts = data.display_name.split(",");
+            detected = parts.slice(0, 3).join(", ").trim();
+          } else if (data?.address?.suburb || data?.address?.neighbourhood) {
+            detected = `${data.address.suburb || data.address.neighbourhood}, Bhopal`;
           }
 
-          onSelectLocation(detected);
-          onClose();
+          saveLocationChoice(detected);
         } catch (error) {
           console.error("GPS detection error:", error);
-          onSelectLocation("Bhopal, Madhya Pradesh");
-          onClose();
+          saveLocationChoice("Bhopal, Madhya Pradesh");
         } finally {
           setIsDetecting(false);
         }
@@ -105,8 +149,7 @@ export default function LocationModal({
     const finalAddress = customAddress.includes("Bhopal")
       ? customAddress.trim()
       : `${customAddress.trim()}, Bhopal`;
-    onSelectLocation(finalAddress);
-    onClose();
+    saveLocationChoice(finalAddress);
   };
 
   if (!mounted) return null;
@@ -130,7 +173,7 @@ export default function LocationModal({
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: "100%", opacity: 0.8 }}
             transition={{ type: "spring", damping: 28, stiffness: 300 }}
-            className="relative w-full sm:max-w-lg bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden max-h-[85vh] flex flex-col z-10"
+            className="relative w-full sm:max-w-lg bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col z-10"
           >
             {/* Header */}
             <div className="p-4 sm:p-5 border-b border-gray-100 flex items-center justify-between bg-green-50/50">
@@ -140,10 +183,10 @@ export default function LocationModal({
                 </div>
                 <div>
                   <h2 className="text-base sm:text-lg font-black text-gray-900 leading-tight">
-                    Select Delivery Location
+                    Delivery Address & Location
                   </h2>
                   <p className="text-[11px] text-gray-500 font-medium">
-                    Order fresh groceries delivered in Bhopal in 10-15 mins
+                    10-15 Min Express Delivery across Bhopal
                   </p>
                 </div>
               </div>
@@ -164,7 +207,7 @@ export default function LocationModal({
                 type="button"
                 onClick={handleGPSDetect}
                 disabled={isDetecting}
-                className="w-full flex items-center justify-between p-3.5 bg-green-50/80 hover:bg-green-100/80 border border-green-200 rounded-2xl text-[#0f8646] transition group cursor-pointer"
+                className="w-full flex items-center justify-between p-3.5 bg-green-50/80 hover:bg-green-100/80 border border-green-200 rounded-2xl text-[#0f8646] transition group cursor-pointer shadow-2xs"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-xl bg-[#0f8646] text-white flex items-center justify-center shrink-0 shadow-2xs">
@@ -176,20 +219,99 @@ export default function LocationModal({
                   </div>
                   <div className="text-left">
                     <span className="font-extrabold text-sm block leading-snug">
-                      {isDetecting ? "Detecting GPS Location..." : "Use Current Location"}
+                      {isDetecting ? "Detecting Live GPS..." : "Use Current Location"}
                     </span>
                     <span className="text-[11px] text-green-700 font-medium">
-                      Using device GPS for precise doorstep delivery
+                      GPS coordinates for accurate doorstep delivery
                     </span>
                   </div>
                 </div>
                 <ChevronRight size={16} className="text-[#0f8646] group-hover:translate-x-1 transition-transform" />
               </button>
 
-              {/* 2. Custom Address / Colony Input */}
-              <form onSubmit={handleCustomSubmit} className="space-y-2">
+              {/* 2. Live Real-Time Search Bar */}
+              <div className="space-y-1.5">
                 <label className="text-xs font-black text-gray-700 uppercase tracking-wider block">
-                  Or Enter Your Exact Address / Colony
+                  Search Colony / Landmark / Street Name
+                </label>
+                <div className="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 focus-within:border-[#0f8646] focus-within:bg-white focus-within:ring-1 focus-within:ring-[#0f8646] transition">
+                  <Search size={16} className="text-gray-400 mr-2 shrink-0" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="e.g. Arera Colony, MP Nagar, Minal Residency..."
+                    className="w-full bg-transparent outline-none text-xs sm:text-sm text-gray-800 placeholder-gray-400"
+                  />
+                  {isSearchingLive ? (
+                    <Loader2 size={15} className="animate-spin text-[#0f8646] shrink-0" />
+                  ) : searchQuery ? (
+                    <button
+                      type="button"
+                      onClick={() => setSearchQuery("")}
+                      className="text-gray-400 hover:text-gray-600 p-0.5"
+                    >
+                      <X size={14} />
+                    </button>
+                  ) : null}
+                </div>
+              </div>
+
+              {/* Live Real Results from OSM Map API */}
+              {searchQuery.trim().length >= 2 && (
+                <div className="space-y-2 border border-green-200 bg-green-50/40 rounded-2xl p-3">
+                  <span className="text-[11px] font-black text-[#0f8646] uppercase tracking-wider block">
+                    Live Verified Places ({liveSuggestions.length} found)
+                  </span>
+                  {isSearchingLive ? (
+                    <div className="flex items-center justify-center py-4 gap-2 text-xs text-gray-500">
+                      <Loader2 size={14} className="animate-spin text-[#0f8646]" /> Searching live map database...
+                    </div>
+                  ) : liveSuggestions.length === 0 ? (
+                    <div className="text-center py-3 text-xs text-gray-500">
+                      No exact match found on map. You can save your address manually below!
+                    </div>
+                  ) : (
+                    <div className="space-y-1.5 max-h-48 overflow-y-auto pr-1">
+                      {liveSuggestions.map((place, idx) => {
+                        const parts = place.display_name.split(",");
+                        const title = parts.slice(0, 2).join(", ").trim();
+                        const sub = parts.slice(2, 4).join(", ").trim();
+
+                        return (
+                          <div
+                            key={idx}
+                            onClick={() => saveLocationChoice(title)}
+                            className="p-2.5 rounded-xl bg-white border border-gray-100 hover:border-[#0f8646] flex items-center justify-between cursor-pointer transition"
+                          >
+                            <div className="flex items-center gap-2.5 min-w-0">
+                              <div className="w-7 h-7 rounded-lg bg-green-100 text-[#0f8646] flex items-center justify-center shrink-0">
+                                <MapPin size={13} />
+                              </div>
+                              <div className="min-w-0">
+                                <span className="font-bold text-xs text-gray-900 block truncate">
+                                  {title}
+                                </span>
+                                <span className="text-[10px] text-gray-400 truncate block">
+                                  {sub}
+                                </span>
+                              </div>
+                            </div>
+                            <span className="text-[10px] font-extrabold text-[#0f8646] bg-green-50 px-2 py-0.5 rounded shrink-0">
+                              Select
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* 3. Manual Flat / House / Full Address Input */}
+              <form onSubmit={handleCustomSubmit} className="space-y-1.5 pt-1">
+                <label className="text-xs font-black text-gray-700 uppercase tracking-wider block">
+                  Or Type Complete Doorstep Address
                 </label>
                 <div className="flex items-center gap-2">
                   <div className="flex-1 flex items-center bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 focus-within:border-[#0f8646] focus-within:bg-white focus-within:ring-1 focus-within:ring-[#0f8646] transition">
@@ -216,97 +338,34 @@ export default function LocationModal({
                 </div>
               </form>
 
-              {/* 3. Search & Filter Bhopal Localities */}
-              <div className="pt-2">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-black text-gray-700 uppercase tracking-wider">
-                    Popular Delivery Hubs in Bhopal
+              {/* 4. Recent / Saved Locations */}
+              {recentLocations.length > 0 && (
+                <div className="pt-2">
+                  <span className="text-xs font-black text-gray-700 uppercase tracking-wider flex items-center gap-1 mb-2">
+                    <Clock size={12} className="text-gray-400" />
+                    Recent Locations
                   </span>
-                  <span className="text-[10px] text-green-700 bg-green-100 font-bold px-2 py-0.5 rounded-md">
-                    10-15 Min Express
-                  </span>
-                </div>
-
-                {/* Filter Search Input */}
-                <div className="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 mb-3 focus-within:border-[#0f8646] focus-within:bg-white transition">
-                  <Search size={15} className="text-gray-400 mr-2 shrink-0" />
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search Bhopal areas (e.g. Arera, MP Nagar, Kolar)..."
-                    className="w-full bg-transparent outline-none text-xs text-gray-800 placeholder-gray-400"
-                  />
-                  {searchQuery && (
-                    <button
-                      type="button"
-                      onClick={() => setSearchQuery("")}
-                      className="text-gray-400 hover:text-gray-600 p-0.5"
-                    >
-                      <X size={14} />
-                    </button>
-                  )}
-                </div>
-
-                {/* Localities List */}
-                <div className="space-y-1.5 max-h-52 overflow-y-auto pr-1">
-                  {filteredLocalities.length === 0 ? (
-                    <div className="text-center py-6 text-xs text-gray-400">
-                      No matching locality found. You can type your exact colony above!
-                    </div>
-                  ) : (
-                    filteredLocalities.map((loc) => {
-                      const fullLocName = `${loc.name}, Bhopal`;
-                      const isSelected =
-                        currentLocation.toLowerCase().includes(loc.name.toLowerCase());
-
-                      return (
-                        <div
-                          key={loc.name}
-                          onClick={() => {
-                            onSelectLocation(fullLocName);
-                            onClose();
-                          }}
-                          className={`p-2.5 rounded-xl border flex items-center justify-between cursor-pointer transition ${
-                            isSelected
-                              ? "bg-green-50/80 border-[#0f8646] shadow-2xs"
-                              : "bg-white border-gray-100 hover:border-gray-300 hover:bg-gray-50/60"
-                          }`}
-                        >
-                          <div className="flex items-center gap-2.5 min-w-0">
-                            <div
-                              className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 text-xs font-bold ${
-                                isSelected
-                                  ? "bg-[#0f8646] text-white"
-                                  : "bg-gray-100 text-gray-600"
-                              }`}
-                            >
-                              <MapPin size={13} />
-                            </div>
-                            <div className="min-w-0">
-                              <span className="font-bold text-xs text-gray-900 block truncate">
-                                {loc.name}, Bhopal
-                              </span>
-                              <span className="text-[10px] text-gray-400 truncate block">
-                                {loc.detail}
-                              </span>
-                            </div>
-                          </div>
-
-                          <div className="flex items-center gap-2 shrink-0">
-                            <span className="text-[9px] font-extrabold text-[#0f8646] bg-green-50 px-1.5 py-0.5 rounded border border-green-100">
-                              {loc.tag}
-                            </span>
-                            {isSelected && (
-                              <Check size={14} className="text-[#0f8646] stroke-[3]" />
-                            )}
-                          </div>
+                  <div className="space-y-1.5">
+                    {recentLocations.map((loc, i) => (
+                      <div
+                        key={i}
+                        onClick={() => saveLocationChoice(loc)}
+                        className="p-2.5 rounded-xl border border-gray-100 bg-gray-50/60 hover:border-[#0f8646] hover:bg-green-50/50 flex items-center justify-between cursor-pointer transition"
+                      >
+                        <div className="flex items-center gap-2 min-w-0">
+                          <MapPin size={13} className="text-gray-400 shrink-0" />
+                          <span className="text-xs font-bold text-gray-800 truncate">
+                            {loc}
+                          </span>
                         </div>
-                      );
-                    })
-                  )}
+                        {currentLocation === loc && (
+                          <Check size={14} className="text-[#0f8646] stroke-[3]" />
+                        )}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </motion.div>
         </div>
