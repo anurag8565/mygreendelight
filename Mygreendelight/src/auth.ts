@@ -16,10 +16,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 try {
                     await connectDb()
 
-                    const email = credentials?.email as string
+                    const rawEmail = credentials?.email as string
+                    const email = rawEmail ? rawEmail.trim().toLowerCase() : ""
                     const password = credentials?.password as string
 
-                    const user = await User.findOne({ email })
+                    const user = await User.findOne({ 
+                        email: { $regex: new RegExp(`^${email}$`, "i") } 
+                    })
 
                     if (!user) return null
 

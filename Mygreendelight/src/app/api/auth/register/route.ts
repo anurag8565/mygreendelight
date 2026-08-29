@@ -6,12 +6,15 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
     try {
         await connectDb();
-        const { name, email, password } = await req.json();
+        const { name, email: rawEmail, password } = await req.json();
+        const email = rawEmail ? rawEmail.trim().toLowerCase() : "";
         if (!name || !email || !password) {
             return NextResponse.json({ message: "all fields are required" }, { status: 400 })
         }
 
-        const existuser = await User.findOne({ email })
+        const existuser = await User.findOne({ 
+            email: { $regex: new RegExp(`^${email}$`, "i") } 
+        })
         if (existuser) {
             return NextResponse.json({ message: "email already exist" }, { status: 400 })
         }
