@@ -31,6 +31,7 @@ import {
   X,
   AlertCircle,
   Loader2,
+  Star,
 } from "lucide-react";
 
 interface OrderItem {
@@ -356,9 +357,10 @@ export default function MyOrder() {
                     ) : (
                       <Link
                         href={`/track/${order._id}`}
-                        className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-2.5 px-4 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 text-center"
+                        className="flex-1 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 py-2.5 px-4 rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 text-center shadow-2xs"
                       >
-                        <span>View Details & Receipt</span>
+                        <Star size={13} className="fill-amber-500 text-amber-500" />
+                        <span>Rate Items & Bill</span>
                       </Link>
                     )}
 

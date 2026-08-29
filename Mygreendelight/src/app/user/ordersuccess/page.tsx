@@ -105,6 +105,19 @@ export default function OrderSuccess() {
               <span>Continue Shopping</span>
             </Link>
           </div>
+
+          {/* WhatsApp Direct Updates Button */}
+          <div className="max-w-md mx-auto mt-4 pt-4 border-t border-gray-100">
+            <a
+              href="https://wa.me/919981418565?text=Hello%20MyGreenDelight!%20I%20just%20placed%20an%20order.%20Please%20send%20me%20live%20delivery%20updates%20on%20WhatsApp."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full bg-[#25D366] hover:bg-[#1ebe5b] text-white py-3 px-5 rounded-2xl font-black text-xs shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <span className="text-base">💬</span>
+              <span>Get Order Updates on WhatsApp</span>
+            </a>
+          </div>
         </motion.div>
       </main>
 

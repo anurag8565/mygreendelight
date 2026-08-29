@@ -24,9 +24,11 @@ import {
   X,
   AlertCircle,
   Loader2,
+  Star,
 } from "lucide-react";
 import Link from "next/link";
 import OrderInvoiceModal from "@/components/OrderInvoiceModal";
+import ReviewProductModal from "@/components/ReviewProductModal";
 
 const Livemap = dynamic(() => import("@/components/Livemap"), {
   ssr: false,
@@ -47,6 +49,7 @@ export default function TrackOrderPage() {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [cancelReason, setCancelReason] = useState("Ordered by mistake");
   const [cancelling, setCancelling] = useState(false);
+  const [selectedReviewProduct, setSelectedReviewProduct] = useState<any>(null);
 
   const fetchTracking = async () => {
     try {
@@ -145,16 +148,31 @@ export default function TrackOrderPage() {
               )}
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
               {order && (
-                <button
-                  onClick={() => setShowInvoice(true)}
-                  className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-3.5 py-2 rounded-2xl text-xs font-black flex items-center gap-1.5 transition shadow-2xs cursor-pointer border border-gray-200"
-                  title="View and Print Order Receipt"
-                >
-                  <Printer size={14} className="text-[#0f8646]" />
-                  <span>Invoice / Bill</span>
-                </button>
+                <>
+                  <a
+                    href={`https://wa.me/?text=${encodeURIComponent(
+                      `Track my GreenDelight Bhopal grocery delivery live here: https://mygreendelight.vercel.app/track/${params.id}`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#0c6a38] px-3 py-2 rounded-2xl text-xs font-black flex items-center gap-1.5 transition shadow-2xs cursor-pointer border border-[#25D366]/30"
+                    title="Share Live Tracking on WhatsApp"
+                  >
+                    <span className="text-sm">💬</span>
+                    <span className="hidden sm:inline">Share</span> WhatsApp
+                  </a>
+
+                  <button
+                    onClick={() => setShowInvoice(true)}
+                    className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-3.5 py-2 rounded-2xl text-xs font-black flex items-center gap-1.5 transition shadow-2xs cursor-pointer border border-gray-200"
+                    title="View and Print Order Receipt"
+                  >
+                    <Printer size={14} className="text-[#0f8646]" />
+                    <span>Invoice / Bill</span>
+                  </button>
+                </>
               )}
 
               <span
@@ -322,9 +340,28 @@ export default function TrackOrderPage() {
                         Qty: {item.quantity} × {item.variationWeight || item.unit || "unit"}
                       </p>
                     </div>
-                    <span className="font-extrabold text-xs sm:text-sm text-gray-900">
-                      ₹{item.price * item.quantity}
-                    </span>
+                    <div className="flex flex-col items-end gap-1 shrink-0">
+                      <span className="font-extrabold text-xs sm:text-sm text-gray-900">
+                        ₹{item.price * item.quantity}
+                      </span>
+                      {(status === "delivered" || status === "completed") && (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setSelectedReviewProduct({
+                              _id: item.grocery || item._id,
+                              name: item.name,
+                              image: item.image,
+                              unit: item.variationWeight || item.unit,
+                            })
+                          }
+                          className="text-[10px] font-black text-[#0f8646] hover:text-[#0c6a38] bg-green-50 hover:bg-green-100 px-2 py-0.5 rounded-lg border border-green-200 transition cursor-pointer flex items-center gap-1 shadow-2xs"
+                        >
+                          <Star size={11} className="fill-amber-400 text-amber-400" />
+                          <span>Rate ⭐</span>
+                        </button>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -490,6 +527,18 @@ export default function TrackOrderPage() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Review Product Modal */}
+      {selectedReviewProduct && (
+        <ReviewProductModal
+          isOpen={!!selectedReviewProduct}
+          product={selectedReviewProduct}
+          onClose={() => setSelectedReviewProduct(null)}
+          onSuccess={() => {
+            fetchTracking();
+          }}
+        />
       )}
     </div>
   );

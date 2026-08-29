@@ -7,6 +7,7 @@ import "leaflet/dist/leaflet.css";
 import SocketProvider from "@/components/SocketProvider";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import MobileBottomNav from "@/components/MobileBottomNav";
+import InstallAppPrompt from "@/components/InstallAppPrompt";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -14,11 +15,18 @@ export const viewport: Viewport = {
   maximumScale: 1,
   userScalable: false,
   viewportFit: "cover",
+  themeColor: "#0f8646",
 };
 
 export const metadata: Metadata = {
   title: "MyGreenDelight | Bhopal Mandi Farm Fresh Grocery | Bhopal's #1 Farm Fresh Online Grocery Store",
-  description: "Bhopal's #1 Farm Fresh Online Grocery Store",
+  description: "Bhopal's #1 Farm Fresh Online Grocery Store - 10-15 Min Express Delivery",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "GreenDelight",
+  },
 };
 
 export default function RootLayout({
@@ -36,6 +44,7 @@ export default function RootLayout({
             {children}
             <WhatsAppWidget />
             <MobileBottomNav />
+            <InstallAppPrompt />
           </StoreProviders>
         </Provider>
       </body>
