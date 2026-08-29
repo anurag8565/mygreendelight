@@ -163,8 +163,12 @@ app.post("/update-location", (req, res) => {
   });
 });
 
+app.get("/", (req, res) => {
+  res.send("MyGreenDelight Socket Server is healthy and running!");
+});
+
 const PORT = process.env.PORT || 5000;
 
-server.listen(PORT, () => {
+server.listen(PORT, "0.0.0.0", () => {
   console.log(`Socket running on port ${PORT}`);
 });
