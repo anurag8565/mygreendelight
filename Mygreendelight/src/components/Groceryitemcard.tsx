@@ -152,7 +152,7 @@ export default function Groceryitemcard({
               >
                 {item.variations.map((v, i) => (
                   <option key={i} value={v.weight}>
-                    {v.weight} - ?{v.price} {v.stock <= 0 ? "(OOS)" : ""}
+                    {v.weight} - ₹{v.price} {v.stock <= 0 ? "(OOS)" : ""}
                   </option>
                 ))}
               </select>
@@ -162,10 +162,10 @@ export default function Groceryitemcard({
           {/* PRICE ROW */}
           <div className="flex items-baseline gap-1.5 mt-1 h-[22px]">
             <span className="text-[14px] sm:text-[15px] font-black text-[#0f8646]">
-              ?{displayPrice}
+              ₹{displayPrice}
             </span>
             <span className="text-[11px] text-gray-400 line-through">
-              ?{activeMRP}
+              ₹{activeMRP}
             </span>
           </div>
         </div>

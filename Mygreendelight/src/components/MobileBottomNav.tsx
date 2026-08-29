@@ -87,7 +87,7 @@ export default function MobileBottomNav() {
                       {cartCount} item{cartCount > 1 ? "s" : ""} added
                     </span>
                     <span className="text-sm font-black text-white">
-                      ?{cartTotal.toFixed(2)}
+                      ₹{cartTotal.toFixed(2)}
                     </span>
                   </div>
                 </div>
