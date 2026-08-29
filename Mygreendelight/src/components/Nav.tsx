@@ -299,16 +299,27 @@ export default function Nav({ user }: { user: iUser }) {
         </div>
 
         {/* Tier 2: Main Middle Bar */}
-        <div className="py-4 px-4 md:px-8 flex items-center justify-between border-b border-gray-100 gap-4">
+        <div className="py-3 sm:py-4 px-3.5 sm:px-4 md:px-8 flex items-center justify-between border-b border-gray-100 gap-3 sm:gap-4">
           {/* Mobile Menu & Logo */}
-          <div className="flex items-center gap-3 shrink-0">
-            <button onClick={() => setmenuopen(true)} className="lg:hidden p-1 text-gray-700">
-              <Menu size={24} />
+          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+            <button onClick={() => setmenuopen(true)} className="lg:hidden p-1 text-gray-700 hover:text-[#0f8646]">
+              <Menu size={22} />
             </button>
-            <Link href="/" className="text-[#0f8646] text-xl md:text-3xl font-extrabold flex items-center gap-1 md:gap-2 tracking-tight">
-              <ShoppingCart className="fill-current w-6 h-6 md:w-8 md:h-8" />
-              MyGreenDelight
-            </Link>
+            <div className="flex flex-col">
+              <Link href="/" className="text-[#0f8646] text-lg sm:text-xl md:text-3xl font-extrabold flex items-center gap-1 md:gap-2 tracking-tight">
+                <ShoppingCart className="fill-current w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8" />
+                <span>MyGreenDelight</span>
+              </Link>
+              <button 
+                onClick={() => setShowLocationPopup(true)} 
+                className="lg:hidden flex items-center gap-1 text-[10px] font-bold text-gray-500 hover:text-[#0f8646] transition text-left mt-0.5"
+              >
+                <span className="text-[#0f8646] font-black">⚡ 10-15 MINS</span>
+                <span>•</span>
+                <span className="truncate max-w-[120px]">{location}</span>
+                <ChevronDown size={10} />
+              </button>
+            </div>
           </div>
 
           {/* Location Dropdown (Desktop) */}
@@ -512,15 +523,15 @@ export default function Nav({ user }: { user: iUser }) {
         </div>
 
         {/* Mobile Search Bar (Only visible on small screens below md) */}
-        <div ref={mobileSearchRef} className="md:hidden pb-4 px-4 pt-2 relative z-[60]">
-          <form onSubmit={handleSearch} className="flex items-center bg-gray-100 rounded-lg overflow-hidden border border-transparent focus-within:border-[#0f8646] focus-within:bg-white transition-all shadow-inner h-11">
+        <div ref={mobileSearchRef} className="md:hidden pb-3 px-3.5 pt-1 relative z-[60]">
+          <form onSubmit={handleSearch} className="flex items-center bg-gray-100/90 rounded-2xl overflow-hidden border border-gray-200/80 focus-within:border-[#0f8646] focus-within:bg-white focus-within:ring-2 focus-within:ring-green-100 transition-all shadow-xs h-11">
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               onFocus={() => { if(search.trim() && searchResults.length===0) setSearch(search+" ") }}
-              placeholder="Search for groceries..."
-              className="flex-1 px-4 py-2 bg-transparent outline-none text-sm text-gray-700"
+              placeholder="Search vegetables, fruits, groceries..."
+              className="flex-1 px-3.5 py-2 bg-transparent outline-none text-xs sm:text-sm text-gray-700 placeholder-gray-400"
             />
 
             {/* Mobile Voice Search */}
@@ -531,14 +542,14 @@ export default function Nav({ user }: { user: iUser }) {
               className={`p-2 mr-1 rounded-full transition-all flex items-center justify-center shrink-0 cursor-pointer ${
                 isListening 
                   ? 'bg-red-500 text-white animate-pulse shadow-md ring-2 ring-red-300' 
-                  : 'text-gray-500 hover:text-[#0f8646]'
+                  : 'text-gray-400 hover:text-[#0f8646]'
               }`}
             >
-              <Mic size={18} className={isListening ? "animate-bounce" : ""} />
+              <Mic size={17} className={isListening ? "animate-bounce" : ""} />
             </button>
 
-            <button type="submit" className="px-4 bg-gray-200 text-gray-600 hover:bg-[#0f8646] hover:text-white transition-colors h-full flex items-center justify-center">
-              <Search size={18} />
+            <button type="submit" className="px-3.5 bg-[#0f8646] text-white hover:bg-[#0c6a38] transition-colors h-full flex items-center justify-center">
+              <Search size={16} />
             </button>
           </form>
 

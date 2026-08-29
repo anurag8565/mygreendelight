@@ -140,11 +140,12 @@ export default function ProductDetailsClient({
   };
 
   return (
-    <div className="bg-[#fcfdfc] text-gray-800 font-sans min-h-screen flex flex-col justify-between">
-      <main className="max-w-7xl mx-auto px-4 md:px-8 py-6 w-full flex-1">
-        {/* Breadcrumbs */}
-        <nav className="flex items-center gap-2 text-xs text-gray-500 mb-6 flex-wrap">
-          <Link href="/" className="hover:text-[#0f8646] transition">
+    <div className="bg-white min-h-screen">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-4 sm:py-8">
+        
+        {/* Breadcrumb Navigation */}
+        <nav className="flex items-center gap-1.5 text-xs text-gray-500 mb-4 sm:mb-6 overflow-x-auto pb-1 scrollbar-none">
+          <Link href="/" className="hover:text-[#0f8646] transition flex items-center gap-1">
             Home
           </Link>
           <ChevronRight size={12} />
@@ -169,11 +170,11 @@ export default function ProductDetailsClient({
         </nav>
 
         {/* Product Hero Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 bg-white border border-gray-200/80 rounded-3xl p-6 sm:p-10 shadow-xs mb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-10 bg-white border border-gray-200/80 rounded-3xl p-4 sm:p-10 shadow-xs mb-8 sm:mb-10">
           
           {/* Left: Product Image Container (5 cols) */}
           <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
-            <div className="w-full aspect-square max-h-[420px] rounded-3xl bg-gradient-to-b from-gray-50/80 to-white border border-gray-100 p-8 flex items-center justify-center relative overflow-hidden group">
+            <div className="w-full aspect-square max-h-[280px] sm:max-h-[420px] rounded-2xl sm:rounded-3xl bg-gradient-to-b from-gray-50/80 to-white border border-gray-100 p-4 sm:p-8 flex items-center justify-center relative overflow-hidden group">
               <img
                 src={product.image}
                 alt={product.name}
@@ -632,7 +633,7 @@ export default function ProductDetailsClient({
             </div>
           </div>
         )}
-      </main>
+      </div>
 
       {/* Sticky Bottom Purchase Bar on Scroll */}
       <AnimatePresence>
@@ -641,7 +642,7 @@ export default function ProductDetailsClient({
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
-            className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 px-4 py-3 z-40 shadow-2xl"
+            className="fixed bottom-14 sm:bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 px-4 py-3 z-40 shadow-2xl"
           >
             <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
               <div className="flex items-center gap-3 min-w-0">
