@@ -299,25 +299,25 @@ export default function Nav({ user }: { user: iUser }) {
         </div>
 
         {/* Tier 2: Main Middle Bar */}
-        <div className="py-3 sm:py-4 px-3.5 sm:px-4 md:px-8 flex items-center justify-between border-b border-gray-100 gap-3 sm:gap-4">
+        <div className="py-2.5 sm:py-4 px-3 sm:px-4 md:px-8 flex items-center justify-between border-b border-gray-100 gap-2 sm:gap-4 w-full max-w-full overflow-hidden">
           {/* Mobile Menu & Logo */}
-          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
-            <button onClick={() => setmenuopen(true)} className="lg:hidden p-1 text-gray-700 hover:text-[#0f8646]">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 sm:flex-initial">
+            <button onClick={() => setmenuopen(true)} className="lg:hidden p-1 text-gray-700 hover:text-[#0f8646] shrink-0">
               <Menu size={22} />
             </button>
-            <div className="flex flex-col">
-              <Link href="/" className="text-[#0f8646] text-lg sm:text-xl md:text-3xl font-extrabold flex items-center gap-1 md:gap-2 tracking-tight">
-                <ShoppingCart className="fill-current w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8" />
-                <span>MyGreenDelight</span>
+            <div className="flex flex-col min-w-0">
+              <Link href="/" className="text-[#0f8646] text-base sm:text-xl md:text-3xl font-extrabold flex items-center gap-1 md:gap-2 tracking-tight truncate">
+                <ShoppingCart className="fill-current w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 shrink-0" />
+                <span className="truncate">MyGreenDelight</span>
               </Link>
               <button 
                 onClick={() => setShowLocationPopup(true)} 
                 className="lg:hidden flex items-center gap-1 text-[10px] font-bold text-gray-500 hover:text-[#0f8646] transition text-left mt-0.5"
               >
-                <span className="text-[#0f8646] font-black">⚡ 10-15 MINS</span>
+                <span className="text-[#0f8646] font-black shrink-0">⚡ 10 MINS</span>
                 <span>•</span>
-                <span className="truncate max-w-[120px]">{location}</span>
-                <ChevronDown size={10} />
+                <span className="truncate max-w-[95px] sm:max-w-[140px]">{location}</span>
+                <ChevronDown size={10} className="shrink-0" />
               </button>
             </div>
           </div>
@@ -495,8 +495,8 @@ export default function Nav({ user }: { user: iUser }) {
               </AnimatePresence>
             </div>
 
-            {/* Wishlist Widget */}
-            <Link href="/wishlist" className="flex items-center justify-center p-2 rounded-full hover:bg-gray-100 transition-colors cursor-pointer relative">
+            {/* Wishlist Widget (Desktop Only to prevent mobile header overflow) */}
+            <Link href="/wishlist" className="hidden sm:flex items-center justify-center p-2 rounded-full hover:bg-gray-100 transition-colors cursor-pointer relative">
                <Heart className="text-gray-800" size={24} />
                {mounted && wishlistItems.length > 0 && (
                  <span className="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-sm">
@@ -506,11 +506,11 @@ export default function Nav({ user }: { user: iUser }) {
             </Link>
 
             {/* Cart Widget */}
-            <div onClick={() => setIsMiniCartOpen(true)} className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity ml-1">
-              <div className="relative">
-                <ShoppingCart className="text-gray-800" size={28} />
+            <div onClick={() => setIsMiniCartOpen(true)} className="flex items-center gap-1.5 cursor-pointer hover:opacity-80 transition-opacity shrink-0">
+              <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-green-50 flex items-center justify-center text-[#0f8646] border border-green-200/60 shadow-2xs">
+                <ShoppingCart size={19} className="stroke-[2.2]" />
                 {mounted && cartdata.length > 0 && (
-                  <span className="absolute -top-1 -right-2 bg-[#0f8646] text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-sm">
+                  <span className="absolute -top-1 -right-1 bg-[#0f8646] text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
                     {cartdata.length}
                   </span>
                 )}
