@@ -38,24 +38,24 @@ export default function CategorySlider() {
   const activeCategories = categories.length > 0 ? categories : defaultCategories;
 
   return (
-    <div className="w-full py-10 bg-white">
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
+    <div className="w-full py-4 sm:py-6 bg-white">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-3.5 sm:mb-6">
           <div>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">
-              Shop by Category
+            <h2 className="text-base sm:text-2xl font-black text-gray-900 tracking-tight">
+              Explore Categories
             </h2>
-            <p className="text-xs text-gray-500 mt-0.5">
-              Fresh produce & pantry essentials sorted for you
+            <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5">
+              Fresh produce & daily grocery staples
             </p>
           </div>
           <Link
             href="/shop"
-            className="text-[#0f8646] hover:text-[#0c6a38] font-bold text-xs sm:text-sm flex items-center gap-1 group transition"
+            className="text-[#0f8646] hover:text-[#0c6a38] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition"
           >
-            <span>View All</span>
-            <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            <span>See all</span>
+            <ChevronRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
 

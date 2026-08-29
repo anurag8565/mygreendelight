@@ -43,59 +43,33 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
   }
 
   return (
-    <div className="w-full py-6 sm:py-8 bg-gradient-to-b from-amber-50/50 via-orange-50/30 to-white">
+    <div className="w-full py-4 sm:py-6 bg-gradient-to-b from-orange-50/40 via-amber-50/20 to-white">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         
-        {/* Flash Deals Header Strip */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-5 sm:mb-7 bg-gradient-to-r from-orange-600 via-amber-600 to-yellow-600 rounded-3xl p-4 sm:p-6 text-white shadow-lg relative overflow-hidden">
-          {/* Subtle Background Glow */}
-          <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-white/10 rounded-full blur-2xl pointer-events-none" />
-
-          {/* Left Title */}
-          <div className="flex items-center gap-3 relative z-10">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/20 backdrop-blur-xs flex items-center justify-center text-yellow-200 shrink-0 shadow-inner">
-              <Flame size={22} className="animate-bounce text-yellow-300" />
+        {/* Flash Deals Header Row */}
+        <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">
+          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+            <div className="w-8 h-8 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center shrink-0">
+              <Flame size={18} className="animate-bounce" />
             </div>
-            <div>
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <span className="bg-white/20 text-[10px] sm:text-xs font-black px-2 py-0.5 rounded-md uppercase tracking-wider">
-                  TODAY'S SPECIAL
-                </span>
-                <span className="text-yellow-300 text-[10px] sm:text-xs font-extrabold flex items-center gap-1">
-                  <Zap size={12} className="fill-yellow-300" /> FLAT 25% - 40% OFF
-                </span>
-              </div>
-              <h2 className="text-lg sm:text-2xl font-black mt-0.5 sm:mt-1 tracking-tight">
-                Live Flash Deals
-              </h2>
+            <h2 className="text-base sm:text-2xl font-black text-gray-900 tracking-tight">
+              Flash Deals
+            </h2>
+
+            {/* Countdown Badge */}
+            <div className="flex items-center gap-1 bg-red-50 border border-red-200 text-red-600 px-2.5 py-0.5 rounded-lg text-[10px] sm:text-xs font-black">
+              <Clock size={12} className="animate-spin-slow" />
+              <span>Ends in: {timeLeft.hours}:{timeLeft.minutes}:{timeLeft.seconds}</span>
             </div>
           </div>
 
-          {/* Right: Live Reverse Countdown Timer */}
-          <div className="flex items-center gap-2.5 sm:gap-3 relative z-10 self-start sm:self-auto bg-black/20 backdrop-blur-xs px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-2xl border border-white/20">
-            <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-bold text-yellow-200">
-              <Clock size={14} className="animate-spin-slow" />
-              <span>Ends in:</span>
-            </div>
-
-            {/* Timer Digits */}
-            <div className="flex items-center gap-1.5 font-mono text-xs sm:text-base font-black">
-              <span className="bg-white text-gray-900 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg shadow-xs">
-                {timeLeft.hours}
-                <span className="text-[8px] font-sans block text-gray-400 font-bold -mt-0.5 text-center">HRS</span>
-              </span>
-              <span className="font-bold text-white text-sm sm:text-lg">:</span>
-              <span className="bg-white text-gray-900 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg shadow-xs">
-                {timeLeft.minutes}
-                <span className="text-[8px] font-sans block text-gray-400 font-bold -mt-0.5 text-center">MIN</span>
-              </span>
-              <span className="font-bold text-white text-sm sm:text-lg">:</span>
-              <span className="bg-white text-red-600 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg shadow-xs">
-                {timeLeft.seconds}
-                <span className="text-[8px] font-sans block text-gray-400 font-bold -mt-0.5 text-center">SEC</span>
-              </span>
-            </div>
-          </div>
+          <Link
+            href="/shop"
+            className="text-[#0f8646] hover:text-[#0c6a38] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition shrink-0"
+          >
+            <span>See all</span>
+            <ChevronRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
+          </Link>
         </div>
 
         {/* Product Carousel */}

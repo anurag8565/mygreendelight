@@ -141,49 +141,57 @@ export default async function Userdashbord() {
       {/* 7. Dual Promo Banners (Coupon code copyable) */}
       <PromoBanners banners={plainBanners.slice(1, 3)} />
 
-      {/* 8. Farm to Fork Freshness Promise */}
-      <FarmFreshPromise />
+      {/* 8. Farm to Fork Freshness Promise (Desktop) */}
+      <div className="hidden md:block">
+        <FarmFreshPromise />
+      </div>
 
-      {/* 9. Why Choose MyGreenDelight */}
-      <FeaturesBanner />
+      {/* 9. Why Choose MyGreenDelight (Desktop) */}
+      <div className="hidden md:block">
+        <FeaturesBanner />
+      </div>
 
       {/* 10. Top Rated Products Grid */}
-      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-8 sm:py-12">
-         <div className="flex items-center justify-between mb-5 sm:mb-8">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-6 sm:py-12">
+         <div className="flex items-center justify-between mb-4 sm:mb-8">
             <div className="flex items-center gap-2.5">
                <div className="w-8 h-8 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600">
                   <Sparkles size={18} />
                </div>
                <div>
-                  <h2 className="text-lg sm:text-2xl font-extrabold text-gray-900">
-                     Top Rated Farm Products
+                  <h2 className="text-base sm:text-2xl font-black text-gray-900">
+                     Top Rated Produce
                   </h2>
                   <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5">
-                     Highest customer rated grocery & household items
+                     Highest customer rated daily groceries
                   </p>
                </div>
             </div>
             <Link
                href="/shop"
-               className="text-[#0f8646] hover:text-[#0c6a38] font-bold text-xs sm:text-sm flex items-center gap-1 group transition"
+               className="text-[#0f8646] hover:text-[#0c6a38] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition"
             >
-               <span>View All Items</span>
-               <ChevronRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
+               <span>View all</span>
+               <ChevronRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
             </Link>
          </div>
          
-         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 sm:gap-6">
+         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-6">
            {plainTop.map((item: any) => (
              <Groceryitemcard key={item._id} item={item} />
            ))}
          </div>
       </div>
 
-      {/* 11. Customer Testimonials & Reviews */}
-      <Testimonials />
+      {/* 11. Customer Testimonials & Reviews (Desktop) */}
+      <div className="hidden md:block">
+        <Testimonials />
+      </div>
 
-      {/* 12. PreFooter Trust Elements */}
-      <PreFooter />
+      {/* 12. PreFooter Trust Elements (Desktop) */}
+      <div className="hidden md:block">
+        <PreFooter />
+      </div>
     </div>
   )
 }

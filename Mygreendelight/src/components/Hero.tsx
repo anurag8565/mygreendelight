@@ -1,213 +1,135 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import {
-  ShieldCheck,
-  Truck,
-  CheckCircle2,
-  Zap,
-  ArrowRight,
-  Star,
-  Sparkles,
-  Leaf,
-} from "lucide-react";
-import { motion } from "framer-motion";
+import { ArrowRight, Sparkles, Zap, ChevronLeft, ChevronRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-export default function Hero({ banner }: { banner?: any }) {
-  const title = banner?.title || "Daily Fresh Essentials";
-  const subtitle = banner?.subtitle || "Delivered to Your Doorstep";
-  const image = banner?.image || "/hero_basket.jpg";
-  const btnText = banner?.btnText || "Shop Now";
-  const link = banner?.link || "/shop";
+interface HeroProps {
+  banner?: any;
+}
+
+export default function Hero({ banner }: HeroProps) {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const slides = [
+    {
+      badge: "? 10-15 Min Express Delivery",
+      title: "Farm Fresh Vegetables & Daily Groceries",
+      highlight: "Delivered in Bhopal",
+      desc: "Directly harvested from local Madhya Pradesh farms to your kitchen doorstep.",
+      btnText: "Order Fresh Produce",
+      link: "/shop?category=Vegetables",
+      bgGradient: "from-emerald-900 via-[#0f8646] to-green-700",
+      accentColor: "bg-yellow-300 text-gray-900",
+      image: banner?.image || "/hero_basket.jpg",
+    },
+    {
+      badge: "?? First Order Special Offer",
+      title: "Flat 20% OFF on All Grocery Essentials",
+      highlight: "Use Code: WELCOME20",
+      desc: "Save big on fresh fruits, dairy, whole grains, and organic staples today.",
+      btnText: "Claim 20% Discount",
+      link: "/shop",
+      bgGradient: "from-amber-700 via-orange-600 to-amber-600",
+      accentColor: "bg-white text-orange-700",
+      image: "/categories/fruits.jpg",
+    },
+    {
+      badge: "?? 100% Pure & Farm-Fresh",
+      title: "Daily Dairy, Bread & Breakfast Staples",
+      highlight: "Morning Harvest",
+      desc: "Fresh milk, paneer, artisanal breads and cold-pressed cooking oils.",
+      btnText: "Explore Dairy",
+      link: "/shop?category=Dairy%20%26%20Bakery",
+      bgGradient: "from-teal-900 via-emerald-800 to-teal-700",
+      accentColor: "bg-emerald-300 text-teal-950",
+      image: "/categories/exotic.jpg",
+    },
+  ];
+
+  // Auto-slide every 5 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [slides.length]);
+
+  const slide = slides[currentSlide];
 
   return (
-    <div className="w-full bg-gradient-to-b from-[#f2f9f5] via-[#f7fcf9] to-white overflow-hidden relative min-h-auto sm:min-h-[500px] flex items-center py-6 sm:py-12 border-b border-green-100/60">
-      {/* Decorative ambient background glows */}
-      <motion.div
-        animate={{
-          scale: [1, 1.1, 1],
-          opacity: [0.35, 0.5, 0.35],
-        }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-0 right-10 w-[480px] h-[480px] bg-green-200/40 rounded-full blur-3xl pointer-events-none"
-      />
-      <motion.div
-        animate={{
-          scale: [1, 1.15, 1],
-          opacity: [0.25, 0.4, 0.25],
-        }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute bottom-0 left-10 w-[380px] h-[380px] bg-emerald-200/30 rounded-full blur-3xl pointer-events-none"
-      />
-
-      <div className="max-w-7xl mx-auto px-4 md:px-8 w-full flex flex-col md:flex-row items-center justify-between relative z-10 gap-6 sm:gap-10">
-        
-        {/* Left Content with Staggered Entry */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="flex-1 flex flex-col items-start z-20 max-w-2xl"
-        >
-          {/* Top Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="inline-flex items-center gap-2 bg-white border border-green-200 text-[#0f8646] text-[11px] sm:text-xs font-bold px-3.5 py-1.5 rounded-full mb-4 sm:mb-6 shadow-xs"
-          >
-            <Zap size={14} className="fill-[#0f8646] animate-pulse text-[#0f8646]" />
-            <span>Fast Grocery Delivery in Bhopal</span>
-          </motion.div>
-
-          {/* Heading */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-2xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-[1.2] sm:leading-[1.15] mb-3 sm:mb-5 tracking-tight"
-          >
-            {title} <br />
-            <span className="text-[#0f8646]">{subtitle}</span>
-          </motion.h1>
-
-          {/* Description */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-gray-600 text-sm sm:text-base mb-8 max-w-lg leading-relaxed"
-          >
-            Get 100% farm-fresh vegetables, organic fruits, dairy & daily household groceries delivered safely at honest prices.
-          </motion.p>
-
-          {/* Action Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-wrap items-center gap-4 mb-10"
-          >
-            <Link href={link}>
-              <motion.button
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-8 py-3.5 rounded-xl font-bold text-sm sm:text-base shadow-lg shadow-green-700/20 hover:shadow-green-700/30 transition-all flex items-center gap-2 cursor-pointer"
-              >
-                {btnText} <ArrowRight size={18} />
-              </motion.button>
-            </Link>
-
-            <Link href="/about">
-              <motion.button
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                className="bg-white hover:bg-green-50 text-gray-700 hover:text-[#0f8646] border border-gray-200 px-6 py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all shadow-xs cursor-pointer"
-              >
-                About Us
-              </motion.button>
-            </Link>
-          </motion.div>
-
-          {/* Features Strip */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="grid grid-cols-3 gap-4 sm:gap-6 pt-6 border-t border-green-200/60 w-full"
-          >
-            <div className="flex items-center gap-2.5 group">
-              <div className="w-9 h-9 rounded-xl bg-white border border-green-100 flex items-center justify-center text-[#0f8646] shrink-0 shadow-2xs group-hover:scale-110 transition-transform">
-                <ShieldCheck size={18} />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-xs sm:text-sm text-gray-900">100% Fresh</span>
-                <span className="text-[10px] text-gray-500">Quality Checked</span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2.5 group">
-              <div className="w-9 h-9 rounded-xl bg-white border border-green-100 flex items-center justify-center text-[#0f8646] shrink-0 shadow-2xs group-hover:scale-110 transition-transform">
-                <Truck size={18} />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-xs sm:text-sm text-gray-900">On-Time</span>
-                <span className="text-[10px] text-gray-500">Fast Delivery</span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2.5 group">
-              <div className="w-9 h-9 rounded-xl bg-white border border-green-100 flex items-center justify-center text-[#0f8646] shrink-0 shadow-2xs group-hover:scale-110 transition-transform">
-                <CheckCircle2 size={18} />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-xs sm:text-sm text-gray-900">Best Price</span>
-                <span className="text-[10px] text-gray-500">Direct from Farms</span>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-
-        {/* Right Hero Visual with Continuous Floating Animation */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="flex-1 flex justify-center items-center relative"
-        >
-          <div className="relative w-full max-w-[460px]">
-            {/* Main Card */}
+    <div className="w-full bg-white pt-2 sm:pt-4 pb-2 sm:pb-4">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
+        <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+          <AnimatePresence mode="wait">
             <motion.div
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.3 }}
-              className="bg-white p-3 rounded-3xl shadow-xl border border-gray-100/80 overflow-hidden"
+              key={currentSlide}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.35, ease: "easeInOut" }}
+              className={`w-full bg-gradient-to-r ${slide.bgGradient} text-white p-4 sm:p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6 min-h-[170px] sm:min-h-[260px] relative overflow-hidden`}
             >
-              <img
-                src={image}
-                alt={title}
-                className="w-full h-auto max-h-[380px] object-cover rounded-2xl"
-              />
-            </motion.div>
+              {/* Background ambient glow circle */}
+              <div className="absolute right-0 top-0 w-72 h-72 bg-white/10 rounded-full blur-3xl pointer-events-none" />
 
-            {/* Continuous Floating Badge 1: Customer Rating */}
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow-xl border border-gray-100 p-3.5 flex items-center gap-3 backdrop-blur-md"
-            >
-              <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600">
-                <Star size={20} className="fill-amber-400" />
-              </div>
-              <div>
-                <p className="text-xs font-bold text-gray-900 flex items-center gap-1">
-                  4.9 / 5.0 Rating
+              {/* Left Content */}
+              <div className="flex-1 flex flex-col items-start z-10 w-full">
+                <span className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md text-[10px] sm:text-xs font-black px-2.5 py-1 rounded-full uppercase tracking-wider mb-2 border border-white/20">
+                  <Sparkles size={12} className="text-yellow-300 fill-yellow-300" />
+                  <span>{slide.badge}</span>
+                </span>
+
+                <h1 className="text-lg sm:text-3xl md:text-4xl font-black leading-tight tracking-tight mb-1 sm:mb-2 text-white">
+                  {slide.title} <br className="hidden sm:inline" />
+                  <span className="text-yellow-300">{slide.highlight}</span>
+                </h1>
+
+                <p className="text-xs sm:text-sm text-green-100/90 max-w-lg mb-3 sm:mb-5 line-clamp-2 hidden sm:block">
+                  {slide.desc}
                 </p>
-                <p className="text-[10px] text-gray-500">10,000+ Happy Customers</p>
+
+                <div className="flex items-center gap-3 mt-1 sm:mt-0">
+                  <Link href={slide.link}>
+                    <motion.button
+                      whileTap={{ scale: 0.96 }}
+                      className="bg-white text-gray-900 hover:bg-gray-100 px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl font-black text-xs sm:text-sm shadow-md transition flex items-center gap-1.5 cursor-pointer"
+                    >
+                      <span>{slide.btnText}</span>
+                      <ArrowRight size={14} />
+                    </motion.button>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Right Decorative Image */}
+              <div className="hidden sm:flex shrink-0 w-44 h-44 md:w-56 md:h-56 rounded-2xl overflow-hidden border-2 border-white/20 shadow-xl bg-white/10 backdrop-blur-sm items-center justify-center relative z-10">
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  className="w-full h-full object-cover"
+                />
               </div>
             </motion.div>
+          </AnimatePresence>
 
-            {/* Continuous Floating Badge 2: Free Delivery */}
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-              className="absolute -top-3 -right-3 bg-[#0f8646] text-white px-4 py-2 rounded-2xl shadow-xl text-xs font-extrabold flex items-center gap-1.5"
-            >
-              <Sparkles size={14} className="text-yellow-300" />
-              <span>FREE Delivery &gt; ₹499</span>
-            </motion.div>
-
-            {/* Continuous Floating Badge 3: 100% Organic */}
-            <motion.div
-              animate={{ x: [0, -6, 0] }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute top-1/2 -left-6 bg-white/95 border border-green-100 px-3 py-1.5 rounded-xl shadow-lg text-[11px] font-extrabold text-[#0f8646] hidden sm:flex items-center gap-1.5"
-            >
-              <Leaf size={14} /> 100% Organic
-            </motion.div>
+          {/* Dots Pagination */}
+          <div className="absolute bottom-2.5 right-4 z-20 flex items-center gap-1.5">
+            {slides.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentSlide(idx)}
+                className={`transition-all rounded-full ${
+                  currentSlide === idx
+                    ? "w-5 h-1.5 bg-white"
+                    : "w-1.5 h-1.5 bg-white/50 hover:bg-white/80"
+                }`}
+                title={`Slide ${idx + 1}`}
+              />
+            ))}
           </div>
-        </motion.div>
-
+        </div>
       </div>
     </div>
   );

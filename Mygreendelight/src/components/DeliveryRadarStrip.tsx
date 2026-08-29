@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 export default function DeliveryRadarStrip() {
   return (
-    <div className="w-full bg-[#0a572c] text-white py-2.5 px-4 md:px-8 border-b border-green-800 shadow-inner overflow-hidden relative">
+    <div className="w-full bg-[#0a572c] text-white py-2 px-3.5 sm:px-6 md:px-8 border-b border-green-800 shadow-inner overflow-hidden relative hidden sm:block">
       {/* Background Subtle Gradient Glow */}
       <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/20 via-transparent to-green-600/20 pointer-events-none" />
 
