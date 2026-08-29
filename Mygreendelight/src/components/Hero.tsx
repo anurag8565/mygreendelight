@@ -22,7 +22,7 @@ export default function Hero({ banner }: { banner?: any }) {
   const link = banner?.link || "/shop";
 
   return (
-    <div className="w-full bg-gradient-to-b from-[#f2f9f5] via-[#f7fcf9] to-white overflow-hidden relative min-h-[500px] flex items-center py-12 border-b border-green-100/60">
+    <div className="w-full bg-gradient-to-b from-[#f2f9f5] via-[#f7fcf9] to-white overflow-hidden relative min-h-auto sm:min-h-[500px] flex items-center py-6 sm:py-12 border-b border-green-100/60">
       {/* Decorative ambient background glows */}
       <motion.div
         animate={{
@@ -41,7 +41,7 @@ export default function Hero({ banner }: { banner?: any }) {
         className="absolute bottom-0 left-10 w-[380px] h-[380px] bg-emerald-200/30 rounded-full blur-3xl pointer-events-none"
       />
 
-      <div className="max-w-7xl mx-auto px-4 md:px-8 w-full flex flex-col md:flex-row items-center justify-between relative z-10 gap-10">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 w-full flex flex-col md:flex-row items-center justify-between relative z-10 gap-6 sm:gap-10">
         
         {/* Left Content with Staggered Entry */}
         <motion.div
@@ -55,10 +55,10 @@ export default function Hero({ banner }: { banner?: any }) {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="inline-flex items-center gap-2 bg-white border border-green-200 text-[#0f8646] text-xs font-bold px-4 py-1.5 rounded-full mb-6 shadow-xs"
+            className="inline-flex items-center gap-2 bg-white border border-green-200 text-[#0f8646] text-[11px] sm:text-xs font-bold px-3.5 py-1.5 rounded-full mb-4 sm:mb-6 shadow-xs"
           >
             <Zap size={14} className="fill-[#0f8646] animate-pulse text-[#0f8646]" />
-            <span>Fast & Reliable Grocery Delivery in Bhopal</span>
+            <span>Fast Grocery Delivery in Bhopal</span>
           </motion.div>
 
           {/* Heading */}
@@ -66,7 +66,7 @@ export default function Hero({ banner }: { banner?: any }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-[1.15] mb-5 tracking-tight"
+            className="text-2xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-[1.2] sm:leading-[1.15] mb-3 sm:mb-5 tracking-tight"
           >
             {title} <br />
             <span className="text-[#0f8646]">{subtitle}</span>

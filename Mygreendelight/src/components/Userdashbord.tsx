@@ -76,17 +76,17 @@ export default async function Userdashbord() {
       <FlashDeals products={plainFlash} />
       
       {/* 5. Best Deals for You */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-10">
-         <div className="flex items-center justify-between mb-7">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-6 sm:py-10">
+         <div className="flex items-center justify-between mb-5 sm:mb-7">
             <div className="flex items-center gap-2.5">
                <div className="w-8 h-8 rounded-xl bg-orange-100 flex items-center justify-center text-orange-600">
                   <Flame size={18} />
                </div>
                <div>
-                  <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">
+                  <h2 className="text-lg sm:text-2xl font-extrabold text-gray-900">
                      Best Deals for You
                   </h2>
-                  <p className="text-xs text-gray-500 mt-0.5">
+                  <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5">
                      Handpicked discounts on daily grocery essentials
                   </p>
                </div>
@@ -102,7 +102,7 @@ export default async function Userdashbord() {
 
          <ProductCarousel>
            {plainNew.map((item: any) => (
-              <div key={item._id} className="min-w-[200px] sm:min-w-[220px] snap-start shrink-0">
+              <div key={item._id} className="min-w-[155px] sm:min-w-[220px] snap-start shrink-0">
                  <Groceryitemcard item={item} />
               </div>
            ))}
@@ -111,17 +111,17 @@ export default async function Userdashbord() {
 
       {/* 6. Order Again (For logged in users with order history) */}
       {plainOrderAgain && plainOrderAgain.length > 0 && (
-        <div className="max-w-7xl mx-auto px-4 md:px-8 pb-10">
-           <div className="flex items-center justify-between mb-7">
+        <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 pb-6 sm:pb-10">
+           <div className="flex items-center justify-between mb-5 sm:mb-7">
               <div className="flex items-center gap-2.5">
                  <div className="w-8 h-8 rounded-xl bg-green-100 flex items-center justify-center text-[#0f8646]">
                     <RotateCcw size={18} />
                  </div>
                  <div>
-                    <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">
+                    <h2 className="text-lg sm:text-2xl font-extrabold text-gray-900">
                        Order Again
                     </h2>
-                    <p className="text-xs text-gray-500 mt-0.5">
+                    <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5">
                        Quickly reorder items you previously purchased
                     </p>
                  </div>
@@ -130,7 +130,7 @@ export default async function Userdashbord() {
 
            <ProductCarousel>
              {plainOrderAgain.map((item: any) => (
-                <div key={item._id} className="min-w-[200px] sm:min-w-[220px] snap-start shrink-0">
+                <div key={item._id} className="min-w-[155px] sm:min-w-[220px] snap-start shrink-0">
                    <Groceryitemcard item={item} />
                 </div>
              ))}
@@ -148,17 +148,17 @@ export default async function Userdashbord() {
       <FeaturesBanner />
 
       {/* 10. Top Rated Products Grid */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-12">
-         <div className="flex items-center justify-between mb-8">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-8 sm:py-12">
+         <div className="flex items-center justify-between mb-5 sm:mb-8">
             <div className="flex items-center gap-2.5">
                <div className="w-8 h-8 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600">
                   <Sparkles size={18} />
                </div>
                <div>
-                  <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">
+                  <h2 className="text-lg sm:text-2xl font-extrabold text-gray-900">
                      Top Rated Farm Products
                   </h2>
-                  <p className="text-xs text-gray-500 mt-0.5">
+                  <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5">
                      Highest customer rated grocery & household items
                   </p>
                </div>
@@ -172,7 +172,7 @@ export default async function Userdashbord() {
             </Link>
          </div>
          
-         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 sm:gap-6">
            {plainTop.map((item: any) => (
              <Groceryitemcard key={item._id} item={item} />
            ))}

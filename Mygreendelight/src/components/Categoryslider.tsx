@@ -59,28 +59,28 @@ export default function CategorySlider() {
           </Link>
         </div>
 
-        {/* Category Cards with Smooth Motion Lift */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-4">
-          {activeCategories.slice(0, 7).map((item, idx) => (
+        {/* Category Cards with Smooth Motion Lift (4 columns on mobile, 7 on desktop) */}
+        <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-7 gap-2 sm:gap-4">
+          {activeCategories.slice(0, 8).map((item, idx) => (
             <motion.div
               key={item._id}
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: idx * 0.05 }}
-              whileHover={{ y: -6, scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
+              transition={{ duration: 0.4, delay: idx * 0.04 }}
+              whileHover={{ y: -4, scale: 1.02 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => router.push(`/shop?category=${encodeURIComponent(item.name)}`)}
-              className="flex flex-col items-center bg-white border border-gray-200/80 hover:border-[#0f8646] rounded-2xl p-3 cursor-pointer shadow-xs hover:shadow-lg hover:shadow-green-900/5 transition-all group"
+              className="flex flex-col items-center bg-white border border-gray-100 hover:border-[#0f8646] rounded-2xl p-2 sm:p-3 cursor-pointer shadow-2xs hover:shadow-md transition-all group text-center"
             >
               {/* Clean Frame */}
-              <div className="w-full aspect-square rounded-xl bg-gray-50/80 border border-gray-100 overflow-hidden mb-3 p-2 flex items-center justify-center">
+              <div className="w-full aspect-square rounded-xl bg-gray-50/90 border border-gray-100/80 overflow-hidden mb-1.5 sm:mb-2 p-1.5 flex items-center justify-center">
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-full h-full object-cover rounded-lg group-hover:scale-108 transition-transform duration-300"
+                  className="w-full h-full object-contain rounded-lg group-hover:scale-108 transition-transform duration-300"
                 />
               </div>
-              <h3 className="text-xs sm:text-sm font-bold text-gray-800 text-center leading-tight group-hover:text-[#0f8646] transition-colors">
+              <h3 className="text-[10px] sm:text-xs font-bold text-gray-800 text-center leading-tight group-hover:text-[#0f8646] transition-colors line-clamp-2">
                 {item.name}
               </h3>
             </motion.div>

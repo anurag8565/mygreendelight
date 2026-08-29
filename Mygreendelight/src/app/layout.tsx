@@ -6,6 +6,7 @@ import Inituser from "@/Inituser";
 import 'leaflet/dist/leaflet.css'
 import SocketProvider from "@/components/SocketProvider";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
+import MobileBottomNav from "@/components/MobileBottomNav";
 
 export const metadata: Metadata = {
   title: "MyGreenDelight | Bhopal Mandi Farm Fresh Grocery | Bhopal's #1 Farm Fresh Online Grocery Store",
@@ -27,6 +28,7 @@ export default function RootLayout({
             <SocketProvider />
             {children}
             <WhatsAppWidget />
+            <MobileBottomNav />
           </StoreProviders>
         </Provider>
       </body>

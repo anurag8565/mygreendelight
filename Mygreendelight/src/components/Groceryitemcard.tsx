@@ -52,15 +52,22 @@ export default function Groceryitemcard({ item, isList = false }: { item: IGrose
     <motion.div
       whileHover={{ y: -4 }}
       transition={{ duration: 0.2 }}
-      className={`w-full bg-white rounded-2xl shadow-xs hover:shadow-xl hover:shadow-green-900/5 transition-all duration-300 overflow-hidden border border-gray-200/90 flex p-3.5 ${isList ? 'flex-row max-w-full gap-4' : 'flex-col max-w-[220px]'}`}
+      className={`w-full bg-white rounded-2xl shadow-xs hover:shadow-xl hover:shadow-green-900/5 transition-all duration-300 overflow-hidden border border-gray-200/90 flex ${isList ? 'flex-row max-w-full gap-4 p-4' : 'flex-col p-3 sm:p-3.5'}`}
     >
       {/* IMAGE BOX */}
-      <Link href={`/product/${item._id}`} className={`relative bg-white flex items-center justify-center cursor-pointer group ${isList ? 'w-[150px] h-[150px] shrink-0' : 'w-full h-[150px]'}`}>
+      <Link href={`/product/${item._id}`} className={`relative bg-gray-50/50 rounded-xl flex items-center justify-center cursor-pointer group ${isList ? 'w-[130px] h-[130px] sm:w-[150px] sm:h-[150px] shrink-0' : 'w-full h-[130px] sm:h-[150px]'}`}>
         <img
           src={item.image}
           alt={item.name}
           className="w-full h-full object-contain group-hover:scale-108 transition-transform duration-300 p-2"
         />
+
+        {/* Discount Badge */}
+        {discountPercent > 0 && (
+          <span className="absolute top-1.5 left-1.5 bg-[#0f8646] text-white text-[9px] sm:text-[10px] font-black px-1.5 py-0.5 rounded-md shadow-xs">
+            {discountPercent}% OFF
+          </span>
+        )}
         
         {/* Wishlist Button */}
         <motion.button
