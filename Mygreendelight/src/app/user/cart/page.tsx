@@ -191,7 +191,7 @@ export default function CartPage() {
               </div>
 
               {/* Items Card */}
-              <div className="bg-white rounded-3xl border border-gray-200/80 p-5 divide-y divide-gray-100 shadow-xs">
+              <div className="bg-white rounded-3xl border border-gray-200/80 p-3.5 sm:p-5 divide-y divide-gray-100 shadow-xs">
                 {cartdata.map((item) => {
                   const itemId = item.cartItemId || item._id?.toString();
                   const itemWeight = item.variation?.weight || item.unit;
@@ -199,60 +199,66 @@ export default function CartPage() {
                   return (
                     <div
                       key={itemId}
-                      className="py-4 first:pt-0 last:pb-0 flex items-center justify-between gap-4"
+                      className="py-3.5 first:pt-0 last:pb-0 flex items-start gap-3 sm:gap-4 justify-between"
                     >
-                      {/* Left: Thumbnail & Details */}
-                      <div className="flex items-center gap-3.5 flex-1 min-w-0">
-                        <div className="w-16 h-16 rounded-2xl bg-gray-50 border border-gray-100 p-2 shrink-0 flex items-center justify-center">
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                            className="w-full h-full object-contain"
-                          />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <h3 className="font-extrabold text-sm text-gray-900 truncate">
-                            {item.name}
-                          </h3>
-                          <span className="text-[11px] text-gray-500 font-medium block">
-                            {itemWeight}
+                      {/* Left: Thumbnail */}
+                      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gray-50 border border-gray-100 p-1.5 sm:p-2 shrink-0 flex items-center justify-center">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+
+                      {/* Middle: Details */}
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-extrabold text-xs sm:text-sm text-gray-900 leading-tight line-clamp-1">
+                          {item.name}
+                        </h3>
+                        <span className="text-[10px] sm:text-[11px] text-gray-400 font-medium block mt-0.5">
+                          {itemWeight}
+                        </span>
+                        <div className="flex items-center gap-1.5 mt-1">
+                          <span className="text-xs sm:text-sm font-black text-[#0f8646]">
+                            ₹{item.price * item.quantity}
                           </span>
-                          <span className="text-xs font-black text-[#0f8646] mt-0.5 block">
-                            ₹{item.price} each
-                          </span>
+                          {item.quantity > 1 && (
+                            <span className="text-[10px] text-gray-400">
+                              (₹{item.price}/each)
+                            </span>
+                          )}
                         </div>
                       </div>
 
-                      {/* Right: Quantity Stepper & Price */}
-                      <div className="flex items-center gap-4 shrink-0">
-                        <div className="flex items-center bg-white border border-[#0f8646] rounded-xl overflow-hidden h-9 shadow-xs">
+                      {/* Right: Quantity Stepper & Delete */}
+                      <div className="flex flex-col sm:flex-row items-end sm:items-center gap-1.5 sm:gap-3 shrink-0">
+                        <div className="flex items-center bg-white border border-[#0f8646] rounded-xl overflow-hidden h-7 sm:h-8 shadow-2xs">
                           <button
+                            type="button"
                             onClick={() => dispatch(decreaseQuantity(itemId))}
-                            className="w-8 h-full flex items-center justify-center bg-green-50 text-[#0f8646] hover:bg-[#0f8646] hover:text-white transition font-black text-sm"
+                            className="w-7 h-full flex items-center justify-center bg-green-50 text-[#0f8646] hover:bg-[#0f8646] hover:text-white transition font-black text-xs cursor-pointer"
                           >
-                            <Minus size={14} />
+                            <Minus size={12} />
                           </button>
-                          <span className="w-8 text-center font-extrabold text-xs text-gray-900">
+                          <span className="w-6 text-center font-black text-xs text-gray-900">
                             {item.quantity}
                           </span>
                           <button
+                            type="button"
                             onClick={() => dispatch(increaseQuantity(itemId))}
-                            className="w-8 h-full flex items-center justify-center bg-green-50 text-[#0f8646] hover:bg-[#0f8646] hover:text-white transition font-black text-sm"
+                            className="w-7 h-full flex items-center justify-center bg-green-50 text-[#0f8646] hover:bg-[#0f8646] hover:text-white transition font-black text-xs cursor-pointer"
                           >
-                            <Plus size={14} />
+                            <Plus size={12} />
                           </button>
                         </div>
 
-                        <span className="font-black text-sm text-gray-900 w-16 text-right">
-                          ₹{item.price * item.quantity}
-                        </span>
-
                         <button
+                          type="button"
                           onClick={() => dispatch(removeFromCart(itemId))}
-                          className="text-gray-300 hover:text-red-500 p-1 transition"
+                          className="text-gray-300 hover:text-red-500 p-0.5 transition cursor-pointer"
                           title="Remove Item"
                         >
-                          <Trash2 size={16} />
+                          <Trash2 size={15} />
                         </button>
                       </div>
                     </div>
