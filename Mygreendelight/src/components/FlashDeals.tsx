@@ -6,24 +6,67 @@ import { Flame, Clock, ChevronRight, Zap } from "lucide-react";
 import ProductCarousel from "./ProductCarousel";
 import Groceryitemcard from "./Groceryitemcard";
 import { motion } from "framer-motion";
+import axios from "axios";
 
 export default function FlashDeals({ products = [] }: { products: any[] }) {
+  const [endTime, setEndTime] = useState<string | null>(null);
+  const [isActive, setIsActive] = useState<boolean>(true);
+  const [badgeText, setBadgeText] = useState<string>("");
+  const [isExpired, setIsExpired] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
-    hours: "04",
-    minutes: "30",
+    hours: "00",
+    minutes: "00",
     seconds: "00",
   });
 
+  // 1. Fetch dynamic timer configured by Admin
+  useEffect(() => {
+    axios
+      .get("/api/flash-deal")
+      .then((res) => {
+        if (res.data?.success && res.data?.setting) {
+          const s = res.data.setting;
+          setEndTime(s.endTime);
+          setIsActive(s.isActive !== undefined ? s.isActive : true);
+          setBadgeText(s.badgeText || "");
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  // 2. Real-time reverse countdown
   useEffect(() => {
     const calculateRemaining = () => {
-      const now = new Date();
-      // Target is end of current 6-hour window or midnight
-      const midnight = new Date();
-      midnight.setHours(24, 0, 0, 0);
-      const diff = Math.max(0, midnight.getTime() - now.getTime());
+      const targetTime = endTime ? new Date(endTime).getTime() : 0;
+      const now = Date.now();
 
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / 1000 / 60) % 60);
+      if (!endTime) {
+        // Fallback default tonight midnight
+        const midnight = new Date();
+        midnight.setHours(24, 0, 0, 0);
+        const diff = Math.max(0, midnight.getTime() - now);
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / 1000 / 60) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        setTimeLeft({
+          hours: String(hours).padStart(2, "0"),
+          minutes: String(minutes).padStart(2, "0"),
+          seconds: String(seconds).padStart(2, "0"),
+        });
+        setIsExpired(false);
+        return;
+      }
+
+      const diff = targetTime - now;
+      if (diff <= 0) {
+        setIsExpired(true);
+        setTimeLeft({ hours: "00", minutes: "00", seconds: "00" });
+        return;
+      }
+
+      setIsExpired(false);
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
 
       setTimeLeft({
@@ -36,9 +79,9 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
     calculateRemaining();
     const interval = setInterval(calculateRemaining, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [endTime]);
 
-  if (!products || products.length === 0) {
+  if (!isActive || !products || products.length === 0) {
     return null;
   }
 
@@ -57,10 +100,21 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
             </h2>
 
             {/* Countdown Badge */}
-            <div className="flex items-center gap-1 bg-red-50 border border-red-200 text-red-600 px-2.5 py-0.5 rounded-lg text-[10px] sm:text-xs font-black">
+            <div className="flex items-center gap-1 bg-red-50 border border-red-200 text-red-600 px-2.5 py-0.5 rounded-lg text-[10px] sm:text-xs font-black shadow-2xs">
               <Clock size={12} className="animate-spin-slow" />
-              <span>Ends in: {timeLeft.hours}:{timeLeft.minutes}:{timeLeft.seconds}</span>
+              <span>
+                {isExpired
+                  ? "Deal Ended"
+                  : `Ends in: ${timeLeft.hours}:${timeLeft.minutes}:${timeLeft.seconds}`}
+              </span>
             </div>
+
+            {badgeText && (
+              <span className="hidden md:inline-flex items-center gap-1 text-[11px] font-black text-[#0f8646] bg-green-100/80 border border-green-200 px-2.5 py-0.5 rounded-md uppercase tracking-wider">
+                <Zap size={11} className="text-yellow-500 fill-yellow-500" />
+                {badgeText}
+              </span>
+            )}
           </div>
 
           <Link

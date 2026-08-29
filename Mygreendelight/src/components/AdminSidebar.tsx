@@ -19,6 +19,7 @@ import {
   ShieldAlert,
   Truck,
   TrendingUp,
+  Flame,
 } from "lucide-react";
 
 export default function AdminSidebar() {
@@ -60,6 +61,11 @@ export default function AdminSidebar() {
       name: "Coupons & Discounts",
       href: "/admin/managecoupons",
       icon: <Tag size={18} />,
+    },
+    {
+      name: "Flash Deals Timer",
+      href: "/admin/manage-flash-deals",
+      icon: <Flame size={18} />,
     },
     {
       name: "Customer Inquiries",
