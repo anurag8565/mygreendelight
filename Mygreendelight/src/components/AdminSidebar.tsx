@@ -20,6 +20,7 @@ import {
   Truck,
   TrendingUp,
   Flame,
+  Gift,
 } from "lucide-react";
 
 export default function AdminSidebar() {
@@ -66,6 +67,11 @@ export default function AdminSidebar() {
       name: "Flash Deals Timer",
       href: "/admin/manage-flash-deals",
       icon: <Flame size={18} />,
+    },
+    {
+      name: "Scratch Card Rewards",
+      href: "/admin/manage-rewards",
+      icon: <Gift size={18} />,
     },
     {
       name: "Customer Inquiries",

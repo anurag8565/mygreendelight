@@ -100,28 +100,65 @@ try {
     }
   );
 
-  console.log(
-    "NEW ORDER EMITTED"
-  );
+        console.log("NEW ORDER EMITTED");
+      } catch (err) {
+        console.log("SOCKET ERROR", err);
+      }
 
-} catch (err) {
+      // 🎁 Auto-generate Dynamic Scratch Card Reward in MongoDB
+      let reward = null;
+      try {
+        const RewardConfig = (await import("@/model/rewardConfig.model")).default;
+        const ScratchReward = (await import("@/model/reward.model")).default;
 
-  console.log(
-    "SOCKET ERROR",
-    err
-  );
+        let config = await RewardConfig.findOne().sort({ createdAt: -1 });
+        if (!config) {
+          config = {
+            minCashback: 15,
+            maxCashback: 50,
+            minOrderValue: 199,
+            expiryDays: 7,
+            isActive: true,
+            couponPrefix: "LUCKY",
+          };
+        }
 
-}
+        if (config.isActive) {
+          const min = config.minCashback || 15;
+          const max = config.maxCashback || 50;
+          const randomDiscount =
+            Math.floor(Math.random() * (max - min + 1)) + min;
+          const uniqueCode = `${config.couponPrefix || "LUCKY"}${randomDiscount}-${Math.random()
+            .toString(36)
+            .substring(2, 6)
+            .toUpperCase()}`;
 
-        return NextResponse.json(
-            {
-                success: true,
-                message: "Order created successfully",
-                order: neworder,
-            },
-            { status: 201 }
-        );
+          const expiresAt = new Date();
+          expiresAt.setDate(expiresAt.getDate() + (config.expiryDays || 7));
 
+          reward = await ScratchReward.create({
+            user: userid,
+            order: neworder._id,
+            couponCode: uniqueCode,
+            discountAmount: randomDiscount,
+            minOrderAmount: config.minOrderValue || 199,
+            isScratched: false,
+            expiresAt,
+          });
+        }
+      } catch (rErr) {
+        console.error("Reward generation error:", rErr);
+      }
+
+      return NextResponse.json(
+        {
+          success: true,
+          message: "Order created successfully",
+          order: neworder,
+          reward,
+        },
+        { status: 201 }
+      );
     } catch (error: any) {
         return NextResponse.json(
             {

@@ -10,6 +10,8 @@ import {
   Sparkles,
   ShieldCheck,
   Clock,
+  Gift,
+  PartyPopper,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Nav from "@/components/Nav";
@@ -18,15 +20,38 @@ import useGetMe from "@/hooks/useGetMe";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { clearCart } from "@/redux/CartSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import DigitalScratchCardModal from "@/components/DigitalScratchCardModal";
 
 export default function OrderSuccess() {
   useGetMe();
   const dispatch = useDispatch();
   const { userdata } = useSelector((state: RootState) => state.user);
+  const [reward, setReward] = useState<any>(null);
+  const [showRewardModal, setShowRewardModal] = useState(false);
 
   useEffect(() => {
     dispatch(clearCart());
+
+    // Fetch newly generated reward for this user/order
+    axios
+      .get("/api/user/rewards")
+      .then((res) => {
+        if (res.data?.success && res.data.rewards?.length > 0) {
+          // Find first unscratched reward or latest reward
+          const unscratched = res.data.rewards.find((r: any) => !r.isScratched);
+          const activeReward = unscratched || res.data.rewards[0];
+          setReward(activeReward);
+          if (!activeReward.isScratched) {
+            // Auto open scratch modal after 1 second for excitement!
+            setTimeout(() => {
+              setShowRewardModal(true);
+            }, 1000);
+          }
+        }
+      })
+      .catch(() => {});
   }, [dispatch]);
 
   return (
@@ -87,6 +112,40 @@ export default function OrderSuccess() {
             </div>
           </div>
 
+          {/* Scratch Card Prize Banner */}
+          {reward && (
+            <div className="max-w-md mx-auto mb-8 bg-gradient-to-r from-amber-100 via-yellow-50 to-emerald-100 border-2 border-dashed border-amber-300 rounded-3xl p-4 sm:p-5 text-left flex items-center justify-between gap-3 shadow-md relative overflow-hidden">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center font-black shadow-md shrink-0 animate-bounce">
+                  <Gift size={24} />
+                </div>
+                <div>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-amber-800 block">
+                    Cashback Reward Unlocked
+                  </span>
+                  <h4 className="font-black text-sm text-gray-900 leading-tight">
+                    {reward.isScratched
+                      ? `You won FLAT ₹${reward.discountAmount} OFF!`
+                      : "Scratch to Reveal Your Cashback!"}
+                  </h4>
+                  <p className="text-[11px] text-gray-500">
+                    {reward.isScratched
+                      ? `Code: ${reward.couponCode}`
+                      : "Tap to scratch & win next order discount"}
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowRewardModal(true)}
+                className="px-4 py-2.5 bg-[#0f8646] hover:bg-[#0c6a38] text-white rounded-xl text-xs font-black shadow-md transition cursor-pointer shrink-0"
+              >
+                {reward.isScratched ? "View Code" : "Scratch 🎁"}
+              </button>
+            </div>
+          )}
+
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto">
             <Link
@@ -120,6 +179,18 @@ export default function OrderSuccess() {
           </div>
         </motion.div>
       </main>
+
+      {/* Digital Scratch Card Modal */}
+      {reward && (
+        <DigitalScratchCardModal
+          isOpen={showRewardModal}
+          reward={reward}
+          onClose={() => setShowRewardModal(false)}
+          onSuccess={() => {
+            setReward((prev: any) => ({ ...prev, isScratched: true }));
+          }}
+        />
+      )}
 
       <Footer />
     </div>
