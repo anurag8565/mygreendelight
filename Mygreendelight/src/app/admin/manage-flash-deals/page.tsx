@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -145,10 +145,10 @@ export default function ManageFlashDeals() {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen bg-gray-50/50">
+    <div className="bg-[#f8faf9] min-h-screen font-sans flex flex-col lg:flex-row">
       <AdminSidebar />
 
-      <main className="flex-1 p-4 md:p-8 max-w-5xl mx-auto w-full">
+      <main className="flex-1 lg:pl-64 flex flex-col min-h-screen w-full max-w-full overflow-x-hidden p-4 sm:p-6 lg:p-8">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
