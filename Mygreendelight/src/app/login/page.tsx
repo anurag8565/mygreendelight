@@ -32,9 +32,9 @@ function Login() {
       );
 
       if (res?.error) {
-        alert("Invalid credentials");
+        alert("Invalid email or password");
       } else {
-        router.push("/");
+        window.location.href = "/";
       }
     } catch (error) {
       console.log(error);
