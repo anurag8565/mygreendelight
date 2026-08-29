@@ -9,7 +9,7 @@ export default function ProductCarousel({ children }: { children: React.ReactNod
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth } = scrollRef.current;
-      const scrollAmount = clientWidth > 640 ? clientWidth * 0.75 : 200;
+      const scrollAmount = clientWidth > 640 ? clientWidth * 0.75 : 220;
       const scrollTo =
         direction === "left"
           ? scrollLeft - scrollAmount
@@ -19,13 +19,13 @@ export default function ProductCarousel({ children }: { children: React.ReactNod
   };
 
   return (
-    <div className="relative group">
+    <div className="relative w-full max-w-full overflow-hidden">
       {/* Left Arrow Button */}
       <button
         type="button"
         onClick={() => scroll("left")}
         aria-label="Scroll left"
-        className="flex absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 z-20 bg-white/95 backdrop-blur-md shadow-lg border border-gray-200 text-gray-800 w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all hover:bg-[#0f8646] hover:text-white hover:border-[#0f8646] active:scale-90 cursor-pointer"
+        className="hidden sm:flex absolute left-1 top-1/2 -translate-y-1/2 z-20 bg-white/95 backdrop-blur-md shadow-lg border border-gray-200 text-gray-800 w-9 h-9 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all hover:bg-[#0f8646] hover:text-white hover:border-[#0f8646] active:scale-90 cursor-pointer"
       >
         <ChevronLeft size={18} className="stroke-[2.5]" />
       </button>
@@ -33,7 +33,7 @@ export default function ProductCarousel({ children }: { children: React.ReactNod
       {/* Scroll Container */}
       <div
         ref={scrollRef}
-        className="flex gap-2.5 sm:gap-4 overflow-x-auto pb-3 pt-1 scrollbar-none snap-x scroll-smooth"
+        className="flex gap-3 sm:gap-4 overflow-x-auto pb-3 pt-1 scrollbar-none snap-x scroll-smooth px-0.5"
       >
         {children}
       </div>
@@ -43,7 +43,7 @@ export default function ProductCarousel({ children }: { children: React.ReactNod
         type="button"
         onClick={() => scroll("right")}
         aria-label="Scroll right"
-        className="flex absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 z-20 bg-white/95 backdrop-blur-md shadow-lg border border-gray-200 text-gray-800 w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all hover:bg-[#0f8646] hover:text-white hover:border-[#0f8646] active:scale-90 cursor-pointer"
+        className="hidden sm:flex absolute right-1 top-1/2 -translate-y-1/2 z-20 bg-white/95 backdrop-blur-md shadow-lg border border-gray-200 text-gray-800 w-9 h-9 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all hover:bg-[#0f8646] hover:text-white hover:border-[#0f8646] active:scale-90 cursor-pointer"
       >
         <ChevronRight size={18} className="stroke-[2.5]" />
       </button>

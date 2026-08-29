@@ -62,7 +62,7 @@ export default async function Userdashbord() {
   const plainOrderAgain = JSON.parse(JSON.stringify(orderAgain))
 
   return (
-    <div className="bg-white">
+    <div className="bg-white w-full max-w-full overflow-x-hidden">
       {/* 1. Hero Banner */}
       <Hero banner={plainBanners[0]} />
 
