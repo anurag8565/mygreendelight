@@ -31,6 +31,7 @@ import type { RootState } from "@/redux/store";
 import { AnimatePresence, motion } from "framer-motion";
 import { createPortal } from "react-dom";
 import MiniCart from "./MiniCart";
+import LocationModal from "./LocationModal";
 
 interface iUser {
   _id?: mongoose.Types.ObjectId;
@@ -63,6 +64,10 @@ export default function Nav({ user }: { user: iUser }) {
 
   useEffect(() => {
     setMounted(true);
+    if (typeof window !== "undefined") {
+      const savedLoc = localStorage.getItem("mgd_user_location");
+      if (savedLoc) setLocation(savedLoc);
+    }
   }, []);
 
   const [searchResults, setSearchResults] = useState<any[]>([]);
@@ -323,59 +328,20 @@ export default function Nav({ user }: { user: iUser }) {
           </div>
 
           {/* Location Dropdown (Desktop) */}
-          <div className="hidden lg:flex items-center gap-2 shrink-0 cursor-pointer group relative" ref={locationRef} onClick={() => setShowLocationPopup(!showLocationPopup)}>
-            <MapPin className="text-gray-400 group-hover:text-[#0f8646] transition-colors" size={24} />
+          <div
+            className="hidden lg:flex items-center gap-2 shrink-0 cursor-pointer group relative hover:opacity-90 transition"
+            onClick={() => setShowLocationPopup(true)}
+          >
+            <div className="w-9 h-9 rounded-xl bg-green-50 flex items-center justify-center text-[#0f8646] group-hover:bg-[#0f8646] group-hover:text-white transition-colors">
+              <MapPin size={18} />
+            </div>
             <div className="flex flex-col">
-              <span className="text-[10px] text-gray-500 font-semibold uppercase">Deliver to</span>
-              <div className="text-sm font-bold text-gray-800 flex items-center gap-1 group-hover:text-[#0f8646] transition-colors">
-                {location} <ChevronDown size={14} />
+              <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Deliver to</span>
+              <div className="text-xs sm:text-sm font-black text-gray-800 flex items-center gap-1 group-hover:text-[#0f8646] transition-colors">
+                <span className="truncate max-w-[160px]">{location}</span>
+                <ChevronDown size={14} className="shrink-0 text-gray-400" />
               </div>
             </div>
-            
-            <AnimatePresence>
-              {showLocationPopup && (
-                <motion.div 
-                  key="location-popup"
-                  initial={{ opacity: 0, y: 10 }} 
-                  animate={{ opacity: 1, y: 0 }} 
-                  exit={{ opacity: 0, y: 10 }} 
-                  onClick={(e) => e.stopPropagation()}
-                  className="absolute top-full left-0 mt-3 w-72 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50 cursor-default"
-                >
-                  <div className="p-4 bg-gray-50 border-b border-gray-100">
-                    <p className="text-sm font-bold text-gray-800 mb-1">Choose your location</p>
-                    <p className="text-xs text-gray-500">Select a delivery location to see product availability and delivery options</p>
-                  </div>
-                  <div className="p-3">
-                    <button 
-                      disabled={isDetectingLocation}
-                      onClick={handleDetectLocation} 
-                      className={`w-full text-left px-3 py-2 text-sm text-[#0f8646] hover:bg-green-50 font-bold rounded-lg flex items-center gap-2 ${isDetectingLocation ? 'opacity-70 cursor-not-allowed' : ''}`}
-                    >
-                      {isDetectingLocation ? (
-                        <>
-                          <Loader2 size={16} className="animate-spin" /> Detecting...
-                        </>
-                      ) : (
-                        <>
-                          <MapPin size={16} /> Detect my location
-                        </>
-                      )}
-                    </button>
-                    <div className="my-2 border-t border-gray-100"></div>
-                    {["Bhopal, Madhya Pradesh", "Indore, Madhya Pradesh", "Mumbai, Maharashtra", "Delhi, NCR", "Bangalore, Karnataka"].map((loc) => (
-                      <button 
-                        key={loc}
-                        onClick={() => { setLocation(loc); setShowLocationPopup(false); }} 
-                        className={`w-full text-left px-3 py-2 text-sm rounded-lg transition-colors ${location === loc ? 'bg-green-50 text-[#0f8646] font-bold' : 'text-gray-700 hover:bg-gray-50'}`}
-                      >
-                        {loc}
-                      </button>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
           </div>
 
             {/* Search Bar */}
@@ -638,6 +604,19 @@ export default function Nav({ user }: { user: iUser }) {
       
       {/* Mini Cart Slide-over */}
       <MiniCart isOpen={isMiniCartOpen} onClose={() => setIsMiniCartOpen(false)} />
+
+      {/* Quick-Commerce Bhopal Location & Address Modal */}
+      <LocationModal
+        isOpen={showLocationPopup}
+        onClose={() => setShowLocationPopup(false)}
+        currentLocation={location}
+        onSelectLocation={(newLoc) => {
+          setLocation(newLoc);
+          if (typeof window !== "undefined") {
+            localStorage.setItem("mgd_user_location", newLoc);
+          }
+        }}
+      />
     </>
   );
 }
