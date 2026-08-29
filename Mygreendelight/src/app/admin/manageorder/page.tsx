@@ -24,11 +24,15 @@ import {
   Sparkles,
   Radio,
   UserCheck,
+  Volume2,
+  VolumeX,
+  Bell,
+  Printer,
 } from "lucide-react";
 import { socket } from "@/lib/socket";
 import AdminSidebar from "@/components/AdminSidebar";
 import OrderInvoiceModal from "@/components/OrderInvoiceModal";
-import { Printer } from "lucide-react";
+import { audioAlert } from "@/utils/audioAlert";
 
 interface OrderItem {
   name: string;
@@ -83,6 +87,20 @@ export default function ManageOrder() {
   const [assigningId, setAssigningId] = useState<string | null>(null);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const [selectedInvoiceOrder, setSelectedInvoiceOrder] = useState<any>(null);
+  const [soundEnabled, setSoundEnabled] = useState(true);
+
+  useEffect(() => {
+    setSoundEnabled(!audioAlert.getIsMuted());
+  }, []);
+
+  const toggleSound = () => {
+    const next = !soundEnabled;
+    setSoundEnabled(next);
+    audioAlert.setMuted(!next);
+    if (next) {
+      audioAlert.playNewOrderAlert();
+    }
+  };
 
   const fetchOrders = async () => {
     try {
@@ -111,22 +129,51 @@ export default function ManageOrder() {
     fetchOrders();
   }, []);
 
-  // Live Socket.IO listener for new orders
+  // Live Socket.IO + Polling listener for real-time new orders with Audio Alert
   useEffect(() => {
     socket.connect();
 
     socket.on("new-order", (order) => {
-      setOrders((prev) => [order, ...prev]);
+      audioAlert.playNewOrderAlert();
+      setOrders((prev) => {
+        const exists = prev.some((o) => o._id === order._id);
+        if (exists) return prev;
+        return [order, ...prev];
+      });
       setStatuses((prev) => ({
         ...prev,
         [order._id]: order.status,
       }));
-      setToastMsg(`⚡ New Order Received: #${order._id.slice(-6).toUpperCase()}`);
-      setTimeout(() => setToastMsg(null), 4000);
+      setToastMsg(
+        `🔔 Ting! New Order Received: #${order._id.slice(-6).toUpperCase()} from ${
+          order.address?.fullname || "Customer"
+        } (₹${order.totalamount})!`
+      );
+      setTimeout(() => setToastMsg(null), 5000);
     });
+
+    // Auto sync background check every 15s
+    const pollTimer = setInterval(async () => {
+      try {
+        const res = await axios.get("/api/admin/manageorder");
+        if (res.data) {
+          const list = Array.isArray(res.data) ? res.data : res.data.orders || [];
+          setOrders((prev) => {
+            if (prev.length > 0 && list.length > prev.length) {
+              const diff = list.length - prev.length;
+              audioAlert.playNewOrderAlert();
+              setToastMsg(`🔔 Ting! ${diff} New Order(s) Received!`);
+              setTimeout(() => setToastMsg(null), 5000);
+            }
+            return list;
+          });
+        }
+      } catch (e) {}
+    }, 15000);
 
     return () => {
       socket.off("new-order");
+      clearInterval(pollTimer);
     };
   }, []);
 
@@ -221,7 +268,32 @@ export default function ManageOrder() {
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+            {/* Audio Alert Toggle & Test Chime */}
+            <button
+              type="button"
+              onClick={toggleSound}
+              className={`px-3 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer border ${
+                soundEnabled
+                  ? "bg-amber-50 text-amber-800 border-amber-200 hover:bg-amber-100"
+                  : "bg-gray-100 text-gray-400 border-gray-200"
+              }`}
+              title={soundEnabled ? "Sound Alerts are ON (Click to Mute)" : "Sound Alerts are Muted (Click to Enable)"}
+            >
+              {soundEnabled ? <Volume2 size={15} className="text-amber-600 animate-pulse" /> : <VolumeX size={15} />}
+              <span>{soundEnabled ? "Sound: ON" : "Sound: OFF"}</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => audioAlert.playNewOrderAlert()}
+              className="bg-green-50 hover:bg-green-100 text-[#0f8646] border border-green-200 px-3 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
+              title="Test Order Alert Sound"
+            >
+              <Bell size={14} className="text-[#0f8646]" />
+              <span>Test Ting 🔔</span>
+            </button>
+
             <button
               onClick={fetchOrders}
               className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"

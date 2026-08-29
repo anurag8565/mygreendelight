@@ -22,6 +22,9 @@ import {
 } from "lucide-react";
 import AdminSidebar from "@/components/AdminSidebar";
 
+import { socket } from "@/lib/socket";
+import { audioAlert } from "@/utils/audioAlert";
+
 export default function AdminDashboardPage() {
   const [summary, setSummary] = useState<any>(null);
   const [recentOrders, setRecentOrders] = useState<any[]>([]);
@@ -46,6 +49,16 @@ export default function AdminDashboardPage() {
 
   useEffect(() => {
     fetchDashboardData();
+
+    socket.connect();
+    socket.on("new-order", () => {
+      audioAlert.playNewOrderAlert();
+      fetchDashboardData();
+    });
+
+    return () => {
+      socket.off("new-order");
+    };
   }, []);
 
   const handleRefresh = () => {
