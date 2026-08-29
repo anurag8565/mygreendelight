@@ -1,0 +1,23 @@
+services:
+  # 1. Socket Server
+  - type: web
+    name: mygreendelight-socket
+    runtime: node
+    rootDir: socketserver
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free
+    autoDeploy: true
+
+  # 2. Next.js Main Application
+  - type: web
+    name: mygreendelight-app
+    runtime: node
+    rootDir: Mygreendelight
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20

@@ -1,0 +1,2081 @@
+[
+  {
+    "name": "Taro leaves (अरबी के पत्ते)",
+    "category": "Vegetables",
+    "price": 160,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Taro leaves (अरबी के पत्ते) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 45,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 83,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 160,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 312,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Potato (आलू )",
+    "category": "Vegetables",
+    "price": 28,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Potato (आलू ) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 8,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 15,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 28,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 55,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Desi Tomato (देसी टमाटर)",
+    "category": "Vegetables",
+    "price": 48,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1546470427-e26264be0b11?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Desi Tomato (देसी टमाटर) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 13,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 25,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 48,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 94,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Onion (प्याज )",
+    "category": "Vegetables",
+    "price": 55,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Onion (प्याज ) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 15,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 29,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 55,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 107,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Ginger (अदरक )",
+    "category": "Vegetables",
+    "price": 246,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Ginger (अदरक ) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 69,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 128,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 246,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 480,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Ash gourd (सफेद कद्दू)",
+    "category": "Vegetables",
+    "price": 96,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Ash gourd (सफेद कद्दू) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 27,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 50,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 96,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 187,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Medium Size Garlic (लहसुन मीडियम साइज )",
+    "category": "Vegetables",
+    "price": 230,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Medium Size Garlic (लहसुन मीडियम साइज ) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 64,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 120,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 230,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 449,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Peeled garlic (चिला हुआ लहसुन)",
+    "category": "Vegetables",
+    "price": 190,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Peeled garlic (चिला हुआ लहसुन) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 53,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 99,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 190,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 371,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Big Size Garlic ( लहसुन बिग साइज )",
+    "category": "Vegetables",
+    "price": 280,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Big Size Garlic ( लहसुन बिग साइज ) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 78,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 146,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 280,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 546,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Green Chili - teekhi (हरी मिर्च - तीखी)",
+    "category": "Vegetables",
+    "price": 99,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Green Chili - teekhi (हरी मिर्च - तीखी) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 28,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 51,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 99,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 193,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Green Chili-Feeki (हरी मिर्च - फीकी)",
+    "category": "Vegetables",
+    "price": 99,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Green Chili-Feeki (हरी मिर्च - फीकी) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 28,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 51,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 99,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 193,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Coriander leaves (धनिया पत्ती)",
+    "category": "Vegetables",
+    "price": 99,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1588879462716-59a60714b18c?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Coriander leaves (धनिया पत्ती) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 28,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 51,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 99,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 193,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Capsicum ( शिमला मिर्च)",
+    "category": "Vegetables",
+    "price": 98,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Capsicum ( शिमला मिर्च) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 27,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 51,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 98,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 191,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Salad Carrot (सलाद गाजर)",
+    "category": "Vegetables",
+    "price": 68,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1598170845058-32b9d6a5c317?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Salad Carrot (सलाद गाजर) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 19,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 35,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 68,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 133,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Cauliflower (फूल गोभी)",
+    "category": "Vegetables",
+    "price": 98,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1568584711075-3d021a7c3ca3?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Cauliflower (फूल गोभी) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 27,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 51,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 98,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 191,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Cabbage (पत्ता गोभी)",
+    "category": "Vegetables",
+    "price": 64,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1611105637996-0352c38d41e7?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Cabbage (पत्ता गोभी) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 18,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 33,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 64,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 125,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Bottle gouard (लौकी )",
+    "category": "Vegetables",
+    "price": 58,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Bottle gouard (लौकी ) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 16,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 30,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 58,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 113,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Gilki (गिलकी )",
+    "category": "Vegetables",
+    "price": 88,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Gilki (गिलकी ) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 25,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 46,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 88,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 172,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Black Bringle Small (काले बैगन)",
+    "category": "Vegetables",
+    "price": 54,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Black Bringle Small (काले बैगन) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 15,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 28,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 54,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 105,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Green Bringle (हरा बैगन)",
+    "category": "Vegetables",
+    "price": 54,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Green Bringle (हरा बैगन) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 15,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 28,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 54,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 105,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Long Black Bringle (काले बैगन-लंबे)",
+    "category": "Vegetables",
+    "price": 54,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Long Black Bringle (काले बैगन-लंबे) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 15,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 28,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 54,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 105,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Bharta Bringle (भरता बैगन)",
+    "category": "Vegetables",
+    "price": 76,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Bharta Bringle (भरता बैगन) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 21,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 40,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 76,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 148,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Lady Finger (भिंडी )",
+    "category": "Vegetables",
+    "price": 68,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Lady Finger (भिंडी ) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 19,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 35,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 68,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 133,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Pumpkin (कद्दू)",
+    "category": "Vegetables",
+    "price": 44,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1506917728037-b6fb01c450a6?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Pumpkin (कद्दू) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 12,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 23,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 44,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 86,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Tinda (टिंडा)",
+    "category": "Vegetables",
+    "price": 98,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Tinda (टिंडा) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 27,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 51,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 98,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 191,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Cluster Beans (गवार फल्ली )",
+    "category": "Vegetables",
+    "price": 108,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Cluster Beans (गवार फल्ली ) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 30,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 56,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 108,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 211,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Sem (सेम)",
+    "category": "Vegetables",
+    "price": 98,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Sem (सेम) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 27,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 51,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 98,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 191,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Kundru (कुंदरू)",
+    "category": "Vegetables",
+    "price": 88,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Kundru (कुंदरू) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 25,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 46,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 88,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 172,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Kareli (करेली )",
+    "category": "Vegetables",
+    "price": 88,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Kareli (करेली ) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 25,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 46,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 88,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 172,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Parwal (परवल)",
+    "category": "Vegetables",
+    "price": 92,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Parwal (परवल) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 26,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 48,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 92,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 179,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Cucumber (खीरा/ककड़ी)",
+    "category": "Vegetables",
+    "price": 45,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Cucumber (खीरा/ककड़ी) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 13,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 23,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 45,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 88,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Lemon (नीम्बू)",
+    "category": "Vegetables",
+    "price": 5,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1533082603893-a1c834889ec9?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Lemon (नीम्बू) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 1,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 3,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 5,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 10,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Arbi ( अरबी)",
+    "category": "Vegetables",
+    "price": 72,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Arbi ( अरबी) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 20,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 37,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 72,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 140,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Karela (करेला )",
+    "category": "Vegetables",
+    "price": 88,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1598170845058-32b9d6a5c317?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Karela (करेला ) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 25,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 46,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 88,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 172,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Drum Sticks (मूंगा फली )",
+    "category": "Vegetables",
+    "price": 146,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Drum Sticks (मूंगा फली ) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 41,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 76,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 146,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 285,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Beet Root (चुकंदर)",
+    "category": "Vegetables",
+    "price": 64,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Beet Root (चुकंदर) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 18,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 33,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 64,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 125,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "beans (बीन्स)",
+    "category": "Vegetables",
+    "price": 140,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh beans (बीन्स) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 39,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 73,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 140,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 273,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Barbati ( बरबटी)",
+    "category": "Vegetables",
+    "price": 72,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Barbati ( बरबटी) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 20,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 37,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 72,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 140,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Kakoda (देशी ककोड़ा)",
+    "category": "Vegetables",
+    "price": 220,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Kakoda (देशी ककोड़ा) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 62,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 114,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 220,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 429,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Kimia Dates (कीमिया खजूर)",
+    "category": "Fruits",
+    "price": 190,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Kimia Dates (कीमिया खजूर) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 53,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 99,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 190,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 371,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Blueberry (ब्लूबेरी)",
+    "category": "Fruits",
+    "price": 330,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Blueberry (ब्लूबेरी) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 92,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 172,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 330,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 644,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Apple Gala (गाला सेव)",
+    "category": "Fruits",
+    "price": 260,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Apple Gala (गाला सेव) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 73,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 135,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 260,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 507,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Papaya (पपीता)",
+    "category": "Fruits",
+    "price": 86,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1517282009859-f000ec3b26fe?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Papaya (पपीता) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 24,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 45,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 86,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 168,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Banana (केला)",
+    "category": "Fruits",
+    "price": 76,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Banana (केला) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 21,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 40,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 76,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 148,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Pomegranate ( अनार)",
+    "category": "Fruits",
+    "price": 162,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Pomegranate ( अनार) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 45,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 84,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 162,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 316,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Mosambi (मोसंबी)",
+    "category": "Fruits",
+    "price": 108,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Mosambi (मोसंबी) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 30,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 56,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 108,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 211,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Pineapple (अनानास)",
+    "category": "Fruits",
+    "price": 94,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Pineapple (अनानास) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 26,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 49,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 94,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 183,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Kiwi (कीवी)",
+    "category": "Fruits",
+    "price": 160,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Kiwi (कीवी) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 45,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 83,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 160,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 312,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Dragon fruit (ड्रैगन फ्रूट)",
+    "category": "Fruits",
+    "price": 134,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Dragon fruit (ड्रैगन फ्रूट) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 38,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 70,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 134,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 261,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Imported Avacado (एवोकाडो)",
+    "category": "Exotics",
+    "price": 180,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1584270354949-c26b0d5b4a0c?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Imported Avacado (एवोकाडो) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 50,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 94,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 180,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 351,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Sweet Corn (स्वीट कॉर्न)",
+    "category": "Exotics",
+    "price": 45,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1584270354949-c26b0d5b4a0c?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Sweet Corn (स्वीट कॉर्न) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 13,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 23,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 45,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 88,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Broccoli (ब्रोकॉली)",
+    "category": "Exotics",
+    "price": 380,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1584270354949-c26b0d5b4a0c?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Broccoli (ब्रोकॉली) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 106,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 198,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 380,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 741,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Mushroom (मशरूम)",
+    "category": "Exotics",
+    "price": 54,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1504544750208-dc0358e63f7f?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Mushroom (मशरूम) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 15,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 28,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 54,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 105,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Baby Corn (बेबी कॉर्न)",
+    "category": "Exotics",
+    "price": 41,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1584270354949-c26b0d5b4a0c?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Baby Corn (बेबी कॉर्न) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 11,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 21,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 41,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 80,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Red Capsicum (लाल शिमला मिर्च)",
+    "category": "Exotics",
+    "price": 420,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Red Capsicum (लाल शिमला मिर्च) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 118,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 218,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 420,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 819,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Yellow Capsicum (पीली शिमला मिर्च)",
+    "category": "Exotics",
+    "price": 420,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Yellow Capsicum (पीली शिमला मिर्च) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 118,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 218,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 420,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 819,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Green Zucchini (Zucchini)",
+    "category": "Exotics",
+    "price": 210,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1584270354949-c26b0d5b4a0c?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Green Zucchini (Zucchini) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 59,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 109,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 210,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 410,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Yellow Zucchini (Zucchini)",
+    "category": "Exotics",
+    "price": 210,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1584270354949-c26b0d5b4a0c?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Yellow Zucchini (Zucchini) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 59,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 109,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 210,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 410,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Mix sprouts (moong- chana) (अंकरित (मुंग -चना)-100 gm)",
+    "category": "Exotics",
+    "price": 14,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1584270354949-c26b0d5b4a0c?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Mix sprouts (moong- chana) (अंकरित (मुंग -चना)-100 gm) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 4,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 7,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 14,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 27,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Paneer (पनीर )",
+    "category": "Dairy & Staples",
+    "price": 386,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Paneer (पनीर ) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 108,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 201,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 386,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 753,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Mawa / khoya (मावा / खोया )",
+    "category": "Dairy & Staples",
+    "price": 330,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Mawa / khoya (मावा / खोया ) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 92,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 172,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 330,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 644,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Buffalo Desi Ghee (देसी घी (भैंस))",
+    "category": "Dairy & Staples",
+    "price": 749,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Buffalo Desi Ghee (देसी घी (भैंस)) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 210,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 389,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 749,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 1461,
+        "stock": 30
+      }
+    ]
+  },
+  {
+    "name": "Cow Deshi Ghee (देशी घी (गाय))",
+    "category": "Dairy & Staples",
+    "price": 849,
+    "unit": "1 kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?auto=format&fit=crop&w=600&q=80",
+    "description": "100% farm-fresh Cow Deshi Ghee (देशी घी (गाय)) sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.",
+    "sourcing": "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+    "storage": "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 238,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 441,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 849,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg",
+        "price": 1656,
+        "stock": 30
+      }
+    ]
+  }
+]

@@ -1,0 +1,783 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Link from "next/link";
+import {
+  Edit,
+  Search,
+  Plus,
+  Trash2,
+  Package,
+  Layers,
+  Sparkles,
+  RefreshCw,
+  X,
+  Check,
+  Loader2,
+  PlusCircle,
+  FileSpreadsheet,
+  AlertTriangle,
+  TrendingDown,
+  Boxes,
+} from "lucide-react";
+import AdminSidebar from "@/components/AdminSidebar";
+
+type Grocery = {
+  _id: string;
+  name: string;
+  price: number;
+  unit: string;
+  category?: string;
+  image?: string;
+  stock?: number;
+  description?: string;
+  sourcing?: string;
+  storage?: string;
+  variations?: { weight: string; price: number; stock: number }[];
+};
+
+export default function ViewGrocery() {
+  const [groceries, setGroceries] = useState<Grocery[]>([]);
+  const [filteredGroceries, setFilteredGroceries] = useState<Grocery[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedGrocery, setSelectedGrocery] = useState<any>(null);
+  const [updating, setUpdating] = useState(false);
+
+  const [editForm, setEditForm] = useState({
+    name: "",
+    price: 0,
+    mrp: 0,
+    rating: 4.8,
+    isTopRated: false,
+    stock: 0,
+    unit: "",
+    category: "",
+    image: "",
+    description: "",
+    sourcing: "",
+    storage: "",
+  });
+
+  const [editVariations, setEditVariations] = useState<
+    { weight: string; price: number; stock: number }[]
+  >([]);
+  const [categories, setCategories] = useState<{ _id: string; name: string }[]>([]);
+
+  const fetchGroceries = async () => {
+    setLoading(true);
+    try {
+      const [gRes, cRes] = await Promise.all([
+        axios.get("/api/admin/getgroceries"),
+        axios.get("/api/admin/category"),
+      ]);
+      setGroceries(gRes.data || []);
+      setFilteredGroceries(gRes.data || []);
+      if (cRes.data.success) {
+        setCategories(cRes.data.categories || []);
+      }
+    } catch (error) {
+      console.error("Error fetching groceries:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchGroceries();
+  }, []);
+
+  const distinctCategories = React.useMemo(() => {
+    const map = new Map<string, number>();
+    groceries.forEach((g) => {
+      if (!g.category) return;
+      const cat = g.category.trim();
+      const capitalized = cat.charAt(0).toUpperCase() + cat.slice(1);
+      map.set(capitalized, (map.get(capitalized) || 0) + 1);
+    });
+    return Array.from(map.entries()).map(([name, count]) => ({ name, count }));
+  }, [groceries]);
+
+  const lowStockCount = React.useMemo(() => {
+    return groceries.filter(
+      (g) =>
+        (g.stock || 0) < 10 ||
+        g.variations?.some((v) => (v.stock || 0) < 10)
+    ).length;
+  }, [groceries]);
+
+  const outOfStockCount = React.useMemo(() => {
+    return groceries.filter(
+      (g) =>
+        (g.stock || 0) === 0 &&
+        (!g.variations ||
+          g.variations.length === 0 ||
+          g.variations.every((v) => (v.stock || 0) === 0))
+    ).length;
+  }, [groceries]);
+
+  useEffect(() => {
+    let result = groceries;
+    if (selectedCategory === "low_stock") {
+      result = result.filter(
+        (item) =>
+          (item.stock || 0) < 10 ||
+          item.variations?.some((v) => (v.stock || 0) < 10)
+      );
+    } else if (selectedCategory === "out_of_stock") {
+      result = result.filter(
+        (item) =>
+          (item.stock || 0) === 0 &&
+          (!item.variations ||
+            item.variations.length === 0 ||
+            item.variations.every((v) => (v.stock || 0) === 0))
+      );
+    } else if (selectedCategory !== "all") {
+      result = result.filter(
+        (item) =>
+          (item.category || "").trim().toLowerCase() ===
+          selectedCategory.trim().toLowerCase()
+      );
+    }
+    if (searchTerm.trim() !== "") {
+      const q = searchTerm.toLowerCase();
+      result = result.filter(
+        (item) =>
+          item.name.toLowerCase().includes(q) ||
+          (item.category && item.category.toLowerCase().includes(q))
+      );
+    }
+    setFilteredGroceries(result);
+  }, [searchTerm, selectedCategory, groceries]);
+
+  const quickRestock = async (item: Grocery, addAmount: number = 25) => {
+    const newStock = (item.stock || 0) + addAmount;
+    const newVariations = (item.variations || []).map((v) => ({
+      ...v,
+      stock: (v.stock || 0) + addAmount,
+    }));
+
+    try {
+      const res = await axios.put(`/api/admin/grocery/${item._id}`, {
+        name: item.name,
+        price: item.price,
+        unit: item.unit,
+        category: item.category,
+        image: item.image,
+        description: item.description,
+        sourcing: item.sourcing,
+        storage: item.storage,
+        stock: newStock,
+        variations: newVariations,
+      });
+
+      if (res.data.grocery) {
+        setGroceries((prev) =>
+          prev.map((g) => (g._id === item._id ? res.data.grocery : g))
+        );
+      }
+    } catch (error) {
+      console.error("Quick restock error:", error);
+      alert("Failed to restock item.");
+    }
+  };
+
+  const openEdit = (item: Grocery) => {
+    setSelectedGrocery(item);
+    setEditForm({
+      name: item.name,
+      price: item.price,
+      mrp: (item as any).mrp || 0,
+      rating: (item as any).rating || 4.8,
+      isTopRated: (item as any).isTopRated || false,
+      stock: item.stock || 0,
+      unit: item.unit || "",
+      category: item.category || "",
+      image: item.image || "",
+      description: item.description || "",
+      sourcing: item.sourcing || "",
+      storage: item.storage || "",
+    });
+    setEditVariations(item.variations || []);
+    setShowEditModal(true);
+  };
+
+  const updateGrocery = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setUpdating(true);
+    try {
+      const res = await axios.put(
+        `/api/admin/grocery/${selectedGrocery._id}`,
+        { ...editForm, variations: editVariations }
+      );
+
+      const updatedList = groceries.map((g) =>
+        g._id === selectedGrocery._id ? res.data.grocery : g
+      );
+      setGroceries(updatedList);
+      setShowEditModal(false);
+      alert("Produce details updated successfully!");
+    } catch (error) {
+      console.error(error);
+      alert("Update failed. Please try again.");
+    } finally {
+      setUpdating(false);
+    }
+  };
+
+  const deleteGrocery = async (id: string, name: string) => {
+    if (!confirm(`Are you sure you want to delete "${name}" from inventory?`)) return;
+    try {
+      await axios.delete(`/api/admin/grocery/${id}`);
+      setGroceries((prev) => prev.filter((g) => g._id !== id));
+      alert(`"${name}" has been deleted.`);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to delete item.");
+    }
+  };
+
+  return (
+    <div className="bg-[#f8faf9] min-h-screen font-sans flex">
+      <AdminSidebar />
+
+      <main className="flex-1 lg:pl-64 flex flex-col min-h-screen">
+        {/* Top Header */}
+        <header className="bg-white border-b border-gray-200/80 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 sticky top-0 z-30 shadow-2xs">
+          <div>
+            <h1 className="text-xl sm:text-2xl font-black text-gray-900">
+              Produce Inventory & Stock
+            </h1>
+            <p className="text-xs text-gray-500 mt-0.5">
+              Manage live farm items, pricing, pack sizes & inventory counts
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button
+              onClick={fetchGroceries}
+              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+            >
+              <RefreshCw size={14} />
+              <span>Refresh</span>
+            </button>
+
+            <Link
+              href="/admin/bulk-upload"
+              className="bg-green-50 hover:bg-green-100 border border-green-300 text-[#0f8646] px-3.5 py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5"
+            >
+              <FileSpreadsheet size={15} />
+              <span>Bulk CSV Upload</span>
+            </Link>
+
+            <Link
+              href="/admin/addgrocery"
+              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-xl text-xs font-black shadow-sm transition flex items-center gap-1.5"
+            >
+              <Plus size={16} />
+              <span>Add Produce</span>
+            </Link>
+          </div>
+        </header>
+
+        {/* Content Body */}
+        <div className="p-6 sm:p-8 space-y-6 flex-1">
+          {/* Mandi Procurement Alert Banner */}
+          {lowStockCount > 0 && (
+            <div className="bg-amber-50 border border-amber-200/90 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <AlertTriangle size={20} />
+                </div>
+                <div>
+                  <span className="text-[10px] font-black text-amber-800 uppercase tracking-wider block">
+                    Mandi Procurement & Restock Alert
+                  </span>
+                  <span className="text-xs font-black text-amber-950">
+                    {lowStockCount} produce item(s) are running low in stock (&lt; 10 units). Prioritize in tomorrow&apos;s Mandi procurement batch.
+                  </span>
+                </div>
+              </div>
+              <button
+                onClick={() => setSelectedCategory(selectedCategory === "low_stock" ? "all" : "low_stock")}
+                className="bg-amber-600 hover:bg-amber-700 text-white px-3.5 py-2 rounded-xl text-xs font-black transition shrink-0 cursor-pointer shadow-2xs flex items-center gap-1.5"
+              >
+                <TrendingDown size={14} />
+                <span>{selectedCategory === "low_stock" ? "Show All Produce" : `Filter Low Stock (${lowStockCount})`}</span>
+              </button>
+            </div>
+          )}
+
+          {/* Filter & Search Bar */}
+          <div className="bg-white p-4 rounded-3xl border border-gray-200/80 shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+            {/* Category & Stock Filter Pills */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
+              <button
+                onClick={() => setSelectedCategory("all")}
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer ${
+                  selectedCategory === "all"
+                    ? "bg-[#0f8646] text-white shadow-xs"
+                    : "bg-gray-50 text-gray-600 hover:bg-gray-100"
+                }`}
+              >
+                All Produce ({groceries.length})
+              </button>
+
+              {/* Low Stock Mandi Filter Pill */}
+              <button
+                onClick={() => setSelectedCategory("low_stock")}
+                className={`px-3.5 py-2 rounded-xl text-xs font-black transition shrink-0 cursor-pointer flex items-center gap-1.5 ${
+                  selectedCategory === "low_stock"
+                    ? "bg-amber-500 text-white shadow-xs"
+                    : "bg-amber-50 text-amber-900 border border-amber-200 hover:bg-amber-100"
+                }`}
+              >
+                <AlertTriangle size={13} />
+                <span>Low Stock ({lowStockCount})</span>
+              </button>
+
+              {/* Out of Stock Filter Pill */}
+              {outOfStockCount > 0 && (
+                <button
+                  onClick={() => setSelectedCategory("out_of_stock")}
+                  className={`px-3.5 py-2 rounded-xl text-xs font-black transition shrink-0 cursor-pointer flex items-center gap-1.5 ${
+                    selectedCategory === "out_of_stock"
+                      ? "bg-red-600 text-white shadow-xs"
+                      : "bg-red-50 text-red-700 border border-red-200 hover:bg-red-100"
+                  }`}
+                >
+                  <span>Out of Stock ({outOfStockCount})</span>
+                </button>
+              )}
+
+              {distinctCategories.map((cat) => (
+                <button
+                  key={cat.name}
+                  onClick={() => setSelectedCategory(cat.name)}
+                  className={`px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer ${
+                    selectedCategory.toLowerCase() === cat.name.toLowerCase()
+                      ? "bg-[#0f8646] text-white shadow-xs"
+                      : "bg-gray-50 text-gray-600 hover:bg-gray-100"
+                  }`}
+                >
+                  {cat.name} ({cat.count})
+                </button>
+              ))}
+            </div>
+
+            {/* Search Input */}
+            <div className="relative w-full md:w-72">
+              <Search
+                size={16}
+                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"
+              />
+              <input
+                type="text"
+                placeholder="Search produce by name..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 text-xs font-bold border border-gray-200 rounded-xl outline-none focus:border-[#0f8646] bg-gray-50/60"
+              />
+            </div>
+          </div>
+
+          {/* Groceries Table */}
+          {loading ? (
+            <div className="py-24 flex flex-col items-center justify-center">
+              <Loader2 size={36} className="animate-spin text-[#0f8646] mb-3" />
+              <p className="text-xs font-bold text-gray-500">Loading Produce Items...</p>
+            </div>
+          ) : filteredGroceries.length === 0 ? (
+            <div className="bg-white rounded-3xl p-16 text-center border border-gray-200/80 shadow-xs max-w-md mx-auto">
+              <Package size={36} className="text-gray-300 mx-auto mb-3" />
+              <h3 className="text-base font-black text-gray-900 mb-1">
+                No produce items found
+              </h3>
+              <p className="text-xs text-gray-400 mb-6">
+                Try searching for another name or add a new item to store.
+              </p>
+              <Link
+                href="/admin/addgrocery"
+                className="bg-[#0f8646] text-white px-5 py-2.5 rounded-xl font-bold text-xs"
+              >
+                + Add Produce Item
+              </Link>
+            </div>
+          ) : (
+            <div className="bg-white rounded-3xl border border-gray-200/80 shadow-xs overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="border-b border-gray-100 bg-gray-50/60 text-[11px] font-black uppercase text-gray-400">
+                      <th className="py-3.5 px-5">Produce</th>
+                      <th className="py-3.5 px-4">Category</th>
+                      <th className="py-3.5 px-4">Base Price</th>
+                      <th className="py-3.5 px-4">Unit / Pack</th>
+                      <th className="py-3.5 px-4">Stock Status</th>
+                      <th className="py-3.5 px-4">Variations</th>
+                      <th className="py-3.5 px-5 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100 text-xs">
+                    {filteredGroceries.map((item) => {
+                      const stockCount = item.stock || 0;
+                      const hasVars = item.variations && item.variations.length > 0;
+
+                      return (
+                        <tr
+                          key={item._id}
+                          className="hover:bg-gray-50/60 transition group"
+                        >
+                          <td className="py-3.5 px-5">
+                            <div className="flex items-center gap-3">
+                              <img
+                                src={item.image || "/categories/vegetables.jpg"}
+                                alt={item.name}
+                                className="w-11 h-11 object-contain rounded-xl bg-gray-50 border border-gray-100 p-1 shrink-0"
+                              />
+                              <div className="min-w-0">
+                                <h4 className="font-extrabold text-gray-900 text-xs sm:text-sm">
+                                  {item.name}
+                                </h4>
+                                <span className="text-[10px] text-gray-400 truncate block">
+                                  ID: {item._id.slice(-6).toUpperCase()}
+                                </span>
+                              </div>
+                            </div>
+                          </td>
+
+                          <td className="py-3.5 px-4">
+                            <span className="bg-green-50 text-[#0f8646] font-bold text-[11px] px-2.5 py-1 rounded-lg border border-green-200">
+                              {item.category || "General"}
+                            </span>
+                          </td>
+
+                          <td className="py-3.5 px-4 font-black text-gray-900">
+                            ₹{item.price}
+                          </td>
+
+                          <td className="py-3.5 px-4 text-gray-600 font-medium">
+                            {item.unit || "1 kg"}
+                          </td>
+
+                          <td className="py-3.5 px-4">
+                            <div className="flex flex-col gap-1.5 items-start">
+                              {stockCount <= 0 ? (
+                                <span className="bg-red-100 text-red-700 font-extrabold text-[10px] px-2.5 py-0.5 rounded-md uppercase">
+                                  Out of Stock
+                                </span>
+                              ) : stockCount < 10 ? (
+                                <span className="bg-amber-100 text-amber-800 font-extrabold text-[10px] px-2.5 py-0.5 rounded-md uppercase flex items-center gap-1">
+                                  <AlertTriangle size={10} />
+                                  <span>Low: {stockCount} left</span>
+                                </span>
+                              ) : (
+                                <span className="bg-green-100 text-[#0f8646] font-extrabold text-[10px] px-2.5 py-0.5 rounded-md uppercase">
+                                  In Stock ({stockCount})
+                                </span>
+                              )}
+
+                              {stockCount < 10 && (
+                                <button
+                                  onClick={() => quickRestock(item, 25)}
+                                  className="bg-emerald-50 hover:bg-emerald-100 text-[#0f8646] border border-emerald-300 px-2 py-0.5 rounded-md text-[10px] font-black transition cursor-pointer flex items-center gap-1"
+                                  title="Add +25 Mandi Fresh Units"
+                                >
+                                  <Plus size={10} />
+                                  <span>+25 Restock</span>
+                                </button>
+                              )}
+                            </div>
+                          </td>
+
+                          <td className="py-3.5 px-4 text-gray-500 font-medium">
+                            {hasVars ? (
+                              <span className="text-gray-900 font-bold bg-gray-100 px-2 py-0.5 rounded-md text-[11px]">
+                                {item.variations?.length} sizes
+                              </span>
+                            ) : (
+                              <span className="text-gray-400 text-[11px]">Single Pack</span>
+                            )}
+                          </td>
+
+                          <td className="py-3.5 px-5 text-right">
+                            <div className="flex items-center justify-end gap-2">
+                              <button
+                                onClick={() => openEdit(item)}
+                                className="p-2 rounded-xl bg-gray-100 hover:bg-[#0f8646] text-gray-600 hover:text-white transition"
+                                title="Edit Item"
+                              >
+                                <Edit size={14} />
+                              </button>
+                              <button
+                                onClick={() => deleteGrocery(item._id, item.name)}
+                                className="p-2 rounded-xl bg-gray-100 hover:bg-red-500 text-gray-600 hover:text-white transition"
+                                title="Delete Item"
+                              >
+                                <Trash2 size={14} />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+        </div>
+      </main>
+
+      {/* Edit Produce Modal */}
+      {showEditModal && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-xs">
+          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-gray-100">
+            <div className="flex items-center justify-between border-b border-gray-100 pb-4 mb-6">
+              <h2 className="text-lg font-black text-gray-900">
+                Edit Produce Details: {selectedGrocery?.name}
+              </h2>
+              <button
+                onClick={() => setShowEditModal(false)}
+                className="p-1.5 rounded-full hover:bg-gray-100 text-gray-400"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <form onSubmit={updateGrocery} className="space-y-4 text-xs font-bold">
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-gray-700 mb-1">Produce Name *</label>
+                  <input
+                    type="text"
+                    required
+                    value={editForm.name}
+                    onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 mb-1">Category *</label>
+                  <select
+                    value={editForm.category}
+                    onChange={(e) =>
+                      setEditForm({ ...editForm, category: e.target.value })
+                    }
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60"
+                  >
+                    <option value="">Select Category</option>
+                    {categories.map((c) => (
+                      <option key={c._id} value={c.name}>
+                        {c.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid sm:grid-cols-4 gap-4">
+                <div>
+                  <label className="block text-gray-700 mb-1">Selling Price (₹) *</label>
+                  <input
+                    type="number"
+                    required
+                    value={editForm.price}
+                    onChange={(e) =>
+                      setEditForm({ ...editForm, price: Number(e.target.value) })
+                    }
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-bold"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 mb-1">MRP Cut Price (₹)</label>
+                  <input
+                    type="number"
+                    placeholder="e.g. 60"
+                    value={editForm.mrp}
+                    onChange={(e) =>
+                      setEditForm({ ...editForm, mrp: Number(e.target.value) })
+                    }
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 mb-1">Standard Unit *</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. 500g, 1 kg"
+                    value={editForm.unit}
+                    onChange={(e) => setEditForm({ ...editForm, unit: e.target.value })}
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 mb-1">Stock Count *</label>
+                  <input
+                    type="number"
+                    required
+                    value={editForm.stock}
+                    onChange={(e) =>
+                      setEditForm({ ...editForm, stock: Number(e.target.value) })
+                    }
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-bold"
+                  />
+                </div>
+              </div>
+
+              {/* Rating & Top Rated Toggle in Edit Modal */}
+              <div className="grid sm:grid-cols-2 gap-4 bg-emerald-50/40 p-3.5 rounded-2xl border border-emerald-100">
+                <div>
+                  <label className="block text-gray-700 mb-1">Customer Star Rating (1.0 - 5.0)</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    min="1"
+                    max="5"
+                    value={editForm.rating}
+                    onChange={(e) =>
+                      setEditForm({ ...editForm, rating: Number(e.target.value) })
+                    }
+                    className="w-full p-2 rounded-xl border border-emerald-200 outline-none focus:border-[#0f8646] bg-white font-bold"
+                  />
+                </div>
+
+                <div className="flex items-center gap-2.5 pt-3">
+                  <input
+                    type="checkbox"
+                    id="edit-top-rated-check"
+                    checked={editForm.isTopRated}
+                    onChange={(e) =>
+                      setEditForm({ ...editForm, isTopRated: e.target.checked })
+                    }
+                    className="w-4 h-4 accent-[#0f8646] rounded cursor-pointer"
+                  />
+                  <label htmlFor="edit-top-rated-check" className="cursor-pointer text-gray-800 font-extrabold text-xs">
+                    🌟 Feature in &quot;Top Rated Farm Products&quot;
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-gray-700 mb-1">Image URL *</label>
+                <input
+                  type="text"
+                  required
+                  value={editForm.image}
+                  onChange={(e) => setEditForm({ ...editForm, image: e.target.value })}
+                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-mono text-[11px]"
+                />
+              </div>
+
+              <div>
+                <label className="block text-gray-700 mb-1">Description</label>
+                <textarea
+                  rows={2}
+                  value={editForm.description}
+                  onChange={(e) =>
+                    setEditForm({ ...editForm, description: e.target.value })
+                  }
+                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 resize-none"
+                />
+              </div>
+
+              {/* Weight Variations Manager */}
+              <div className="pt-2">
+                <div className="flex items-center justify-between mb-2">
+                  <label className="block text-gray-700 font-bold">
+                    Pack Size Variations (Optional)
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setEditVariations([
+                        ...editVariations,
+                        { weight: "1 kg", price: editForm.price, stock: 20 },
+                      ])
+                    }
+                    className="text-xs text-[#0f8646] hover:underline"
+                  >
+                    + Add Size Variation
+                  </button>
+                </div>
+
+                {editVariations.map((v, i) => (
+                  <div key={i} className="flex gap-2 mb-2 items-center">
+                    <input
+                      type="text"
+                      placeholder="Size (e.g. 500g)"
+                      value={v.weight}
+                      onChange={(e) => {
+                        const copy = [...editVariations];
+                        copy[i].weight = e.target.value;
+                        setEditVariations(copy);
+                      }}
+                      className="flex-1 p-2 rounded-lg border text-xs"
+                    />
+                    <input
+                      type="number"
+                      placeholder="Price"
+                      value={v.price}
+                      onChange={(e) => {
+                        const copy = [...editVariations];
+                        copy[i].price = Number(e.target.value);
+                        setEditVariations(copy);
+                      }}
+                      className="w-24 p-2 rounded-lg border text-xs"
+                    />
+                    <input
+                      type="number"
+                      placeholder="Stock"
+                      value={v.stock}
+                      onChange={(e) => {
+                        const copy = [...editVariations];
+                        copy[i].stock = Number(e.target.value);
+                        setEditVariations(copy);
+                      }}
+                      className="w-24 p-2 rounded-lg border text-xs"
+                    />
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setEditVariations(editVariations.filter((_, idx) => idx !== i))
+                      }
+                      className="text-red-500 hover:text-red-700 p-1"
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              {/* Form Buttons */}
+              <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
+                <button
+                  type="button"
+                  onClick={() => setShowEditModal(false)}
+                  className="px-5 py-2.5 rounded-xl border font-bold text-gray-600 hover:bg-gray-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={updating}
+                  className="px-6 py-2.5 rounded-xl bg-[#0f8646] hover:bg-[#0c6a38] text-white font-extrabold shadow-md disabled:opacity-50"
+                >
+                  {updating ? "Saving Changes..." : "Save Produce Details"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
