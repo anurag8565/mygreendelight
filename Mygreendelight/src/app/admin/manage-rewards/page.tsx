@@ -93,10 +93,11 @@ export default function ManageRewards() {
   };
 
   return (
-    <div className="bg-[#f8faf9] min-h-screen font-sans flex flex-col lg:flex-row">
+    <div className="bg-[#f8faf9] min-h-screen font-sans">
       <AdminSidebar />
 
-      <main className="flex-1 lg:pl-64 flex flex-col min-h-screen w-full max-w-full overflow-x-hidden p-4 sm:p-6 lg:p-8">
+      <div className="lg:pl-64 flex flex-col min-h-screen w-full">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
@@ -389,7 +390,8 @@ export default function ManageRewards() {
             </div>
           </div>
         )}
-      </main>
+        </main>
+      </div>
     </div>
   );
 }
