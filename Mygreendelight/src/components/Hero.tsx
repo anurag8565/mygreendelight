@@ -14,7 +14,7 @@ export default function Hero({ banner }: HeroProps) {
 
   const slides = [
     {
-      badge: "? 10-15 Min Express Delivery",
+      badge: "⚡ 10-15 Min Express Delivery",
       title: "Farm Fresh Vegetables & Daily Groceries",
       highlight: "Delivered in Bhopal",
       desc: "Directly harvested from local Madhya Pradesh farms to your kitchen doorstep.",
@@ -25,7 +25,7 @@ export default function Hero({ banner }: HeroProps) {
       image: banner?.image || "/hero_basket.jpg",
     },
     {
-      badge: "?? First Order Special Offer",
+      badge: "🎉 First Order Special Offer",
       title: "Flat 20% OFF on All Grocery Essentials",
       highlight: "Use Code: WELCOME20",
       desc: "Save big on fresh fruits, dairy, whole grains, and organic staples today.",
@@ -36,7 +36,7 @@ export default function Hero({ banner }: HeroProps) {
       image: "/categories/fruits.jpg",
     },
     {
-      badge: "?? 100% Pure & Farm-Fresh",
+      badge: "🥛 100% Pure & Farm-Fresh",
       title: "Daily Dairy, Bread & Breakfast Staples",
       highlight: "Morning Harvest",
       desc: "Fresh milk, paneer, artisanal breads and cold-pressed cooking oils.",
