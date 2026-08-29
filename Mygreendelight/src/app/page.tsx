@@ -31,8 +31,8 @@ async function Home() {
     redirect('/login')
   }
 
-  // ✅ FIXED
-  const incomplee = !user.mobile || !user.role
+  // Only regular users / delivery boys need to complete their profile
+  const incomplee = user.role !== "admin" && (!user.mobile || !user.role)
 
   if (incomplee) {
     return <EditMobile />
