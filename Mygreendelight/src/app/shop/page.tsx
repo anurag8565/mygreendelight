@@ -25,6 +25,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { createPortal } from "react-dom";
 
 export default function ShopPage() {
   const searchParams = useSearchParams();
@@ -49,6 +50,11 @@ export default function ShopPage() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [activeCoupon, setActiveCoupon] = useState<string>("WELCOME20");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Fetch featured active coupon from database
   useEffect(() => {
@@ -539,131 +545,144 @@ export default function ShopPage() {
         </div>
       </main>
 
-      {/* Mobile Filter Drawer (Bottom Sheet) */}
-      <AnimatePresence>
-        {isMobileFilterOpen && (
-          <div className="fixed inset-0 z-[9999] md:hidden flex items-end justify-center">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsMobileFilterOpen(false)}
-              className="absolute inset-0 bg-black/60 backdrop-blur-xs"
-            />
-            <motion.div
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "100%" }}
-              transition={{ type: "spring", damping: 26, stiffness: 280 }}
-              className="relative w-full max-h-[85vh] bg-white rounded-t-3xl shadow-2xl flex flex-col z-10 overflow-hidden"
-            >
-              {/* Drawer Header */}
-              <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-green-50/50 shrink-0">
-                <div className="flex items-center gap-2">
-                  <SlidersHorizontal size={18} className="text-[#0f8646]" />
-                  <h3 className="font-black text-base text-gray-900">Filter & Refine</h3>
-                </div>
-                <button
-                  type="button"
+      {/* Mobile Filter Drawer (Bottom Sheet via createPortal) */}
+      {mounted &&
+        typeof document !== "undefined" &&
+        createPortal(
+          <AnimatePresence>
+            {isMobileFilterOpen && (
+              <div className="fixed inset-0 z-[100000] md:hidden flex items-end justify-center">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
                   onClick={() => setIsMobileFilterOpen(false)}
-                  className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition cursor-pointer"
+                  className="absolute inset-0 bg-black/60 backdrop-blur-xs"
+                />
+                <motion.div
+                  initial={{ y: "100%" }}
+                  animate={{ y: 0 }}
+                  exit={{ y: "100%" }}
+                  transition={{ type: "spring", damping: 26, stiffness: 280 }}
+                  className="relative w-full max-h-[85vh] bg-white rounded-t-3xl shadow-2xl flex flex-col z-10 overflow-hidden"
                 >
-                  <X size={16} />
-                </button>
-              </div>
-
-              {/* Scrollable Filter Content */}
-              <div className="p-4 overflow-y-auto flex-1 space-y-5">
-                {/* Categories */}
-                <div>
-                  <span className="text-xs font-black uppercase text-gray-500 tracking-wider block mb-2.5">
-                    Categories
-                  </span>
-                  <div className="flex flex-wrap gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handleCategoryClick("all")}
-                      className={`px-3.5 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
-                        !categoryParam
-                          ? "bg-[#0f8646] text-white shadow-xs"
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                      }`}
-                    >
-                      All Aisles
-                    </button>
-                    {categories.map((cat) => (
+                  {/* Drag Handle & Header */}
+                  <div className="p-4 border-b border-gray-100 bg-green-50/50 shrink-0">
+                    <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-3" />
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-xl bg-[#0f8646] text-white flex items-center justify-center shadow-xs">
+                          <SlidersHorizontal size={16} />
+                        </div>
+                        <div>
+                          <h3 className="font-black text-base text-gray-900 leading-tight">Filter & Refine</h3>
+                          <p className="text-[11px] text-gray-500 font-medium">Customize by category and price</p>
+                        </div>
+                      </div>
                       <button
                         type="button"
-                        key={cat._id}
-                        onClick={() => handleCategoryClick(cat.name)}
-                        className={`px-3.5 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
-                          categoryParam === cat.name
-                            ? "bg-[#0f8646] text-white shadow-xs"
-                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                        }`}
+                        onClick={() => setIsMobileFilterOpen(false)}
+                        className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition cursor-pointer"
                       >
-                        {cat.name}
+                        <X size={16} />
                       </button>
-                    ))}
+                    </div>
                   </div>
-                </div>
 
-                {/* In Stock */}
-                <div>
-                  <label className="flex items-center justify-between cursor-pointer bg-gray-50 border border-gray-100 p-3 rounded-2xl">
-                    <span className="text-xs font-black text-gray-800">In Stock Only</span>
-                    <input
-                      type="checkbox"
-                      checked={inStockOnly}
-                      onChange={(e) => setInStockOnly(e.target.checked)}
-                      className="w-4 h-4 accent-[#0f8646] rounded cursor-pointer"
-                    />
-                  </label>
-                </div>
+                  {/* Scrollable Filter Content */}
+                  <div className="p-4 sm:p-5 overflow-y-auto flex-1 space-y-5">
+                    {/* Categories */}
+                    <div>
+                      <span className="text-xs font-black uppercase text-gray-600 tracking-wider block mb-2.5">
+                        Categories
+                      </span>
+                      <div className="flex flex-wrap gap-2">
+                        <button
+                          type="button"
+                          onClick={() => handleCategoryClick("all")}
+                          className={`px-3.5 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+                            !categoryParam
+                              ? "bg-[#0f8646] text-white shadow-xs"
+                              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                          }`}
+                        >
+                          All Aisles
+                        </button>
+                        {categories.map((cat) => (
+                          <button
+                            type="button"
+                            key={cat._id}
+                            onClick={() => handleCategoryClick(cat.name)}
+                            className={`px-3.5 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+                              categoryParam === cat.name
+                                ? "bg-[#0f8646] text-white shadow-xs"
+                                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                            }`}
+                          >
+                            {cat.name}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
 
-                {/* Price */}
-                <div>
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-xs font-black text-gray-800">Max Price:</span>
-                    <span className="text-sm font-black text-[#0f8646]">₹{priceRange}</span>
+                    {/* In Stock */}
+                    <div>
+                      <label className="flex items-center justify-between cursor-pointer bg-gray-50 border border-gray-100 p-3 rounded-2xl">
+                        <span className="text-xs font-black text-gray-800">In Stock Only</span>
+                        <input
+                          type="checkbox"
+                          checked={inStockOnly}
+                          onChange={(e) => setInStockOnly(e.target.checked)}
+                          className="w-4 h-4 accent-[#0f8646] rounded cursor-pointer"
+                        />
+                      </label>
+                    </div>
+
+                    {/* Price */}
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-xs font-black text-gray-800">Max Price:</span>
+                        <span className="text-sm font-black text-[#0f8646]">₹{priceRange}</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="50"
+                        max="1500"
+                        step="25"
+                        value={priceRange}
+                        onChange={(e) => setPriceRange(Number(e.target.value))}
+                        className="w-full accent-[#0f8646] cursor-pointer"
+                      />
+                      <div className="flex justify-between text-[10px] text-gray-400 font-bold mt-1">
+                        <span>₹50</span>
+                        <span>₹1500+</span>
+                      </div>
+                    </div>
                   </div>
-                  <input
-                    type="range"
-                    min="50"
-                    max="1500"
-                    step="25"
-                    value={priceRange}
-                    onChange={(e) => setPriceRange(Number(e.target.value))}
-                    className="w-full accent-[#0f8646] cursor-pointer"
-                  />
-                  <div className="flex justify-between text-[10px] text-gray-400 font-bold mt-1">
-                    <span>₹50</span>
-                    <span>₹1500+</span>
+
+                  {/* Sticky Action Footer */}
+                  <div className="p-4 bg-white border-t border-gray-100 flex gap-3 pb-8 sm:pb-4 shrink-0 shadow-[0_-4px_20px_rgba(0,0,0,0.06)]">
+                    <button
+                      type="button"
+                      onClick={resetAllFilters}
+                      className="flex-1 py-3.5 rounded-xl border border-gray-300 bg-white text-gray-700 font-black text-xs cursor-pointer hover:bg-gray-100 transition shadow-2xs"
+                    >
+                      Reset
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setIsMobileFilterOpen(false)}
+                      className="flex-2 py-3.5 rounded-xl bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black text-xs shadow-md transition cursor-pointer"
+                    >
+                      Apply Filters ({filteredGroceries.length})
+                    </button>
                   </div>
-                </div>
+                </motion.div>
               </div>
-
-              {/* Sticky Action Footer */}
-              <div className="p-4 bg-gray-50 border-t border-gray-100 flex gap-3 pb-6 sm:pb-4 shrink-0 shadow-md">
-                <button
-                  type="button"
-                  onClick={resetAllFilters}
-                  className="flex-1 py-3 rounded-xl border border-gray-300 bg-white text-gray-700 font-black text-xs cursor-pointer hover:bg-gray-100 transition shadow-2xs"
-                >
-                  Reset
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsMobileFilterOpen(false)}
-                  className="flex-1 py-3 rounded-xl bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black text-xs shadow-md transition cursor-pointer"
-                >
-                  Apply Filters ({filteredGroceries.length})
-                </button>
-              </div>
-            </motion.div>
-          </div>
+            )}
+          </AnimatePresence>,
+          document.body
         )}
-      </AnimatePresence>
 
       <Footer />
     </div>
