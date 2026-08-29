@@ -12,12 +12,12 @@ export default function WhatsAppWidget() {
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-24 right-4 z-[800] md:bottom-8 md:right-8 group flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-[0_4px_14px_0_rgba(37,211,102,0.39)] hover:scale-110 hover:shadow-[0_6px_20px_rgba(37,211,102,0.23)] transition-all duration-300"
+      className="fixed bottom-28 right-3.5 z-40 md:bottom-8 md:right-8 group flex items-center justify-center w-11 h-11 md:w-14 md:h-14 bg-[#25D366] text-white rounded-full shadow-lg hover:scale-110 transition-all duration-300"
+      aria-label="WhatsApp Support"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="28"
-        height="28"
+        className="w-6 h-6 md:w-7 md:h-7"
         fill="currentColor"
         viewBox="0 0 16 16"
       >

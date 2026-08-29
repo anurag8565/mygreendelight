@@ -523,15 +523,16 @@ export default function Nav({ user }: { user: iUser }) {
         </div>
 
         {/* Mobile Search Bar (Only visible on small screens below md) */}
-        <div ref={mobileSearchRef} className="md:hidden pb-3 px-3.5 pt-1 relative z-[60]">
-          <form onSubmit={handleSearch} className="flex items-center bg-gray-100/90 rounded-2xl overflow-hidden border border-gray-200/80 focus-within:border-[#0f8646] focus-within:bg-white focus-within:ring-2 focus-within:ring-green-100 transition-all shadow-xs h-11">
+        <div ref={mobileSearchRef} className="md:hidden pb-2.5 px-3.5 pt-0 relative z-[60]">
+          <form onSubmit={handleSearch} className="flex items-center bg-gray-50/90 rounded-xl border border-gray-200/90 focus-within:border-[#0f8646] focus-within:bg-white focus-within:ring-2 focus-within:ring-green-100 transition-all h-10 px-3 shadow-2xs">
+            <Search size={16} className="text-gray-400 shrink-0 mr-2" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               onFocus={() => { if(search.trim() && searchResults.length===0) setSearch(search+" ") }}
-              placeholder="Search vegetables, fruits, groceries..."
-              className="flex-1 px-3.5 py-2 bg-transparent outline-none text-xs sm:text-sm text-gray-700 placeholder-gray-400"
+              placeholder="Search 'tomato', 'milk', 'mango'..."
+              className="flex-1 bg-transparent outline-none text-xs sm:text-sm text-gray-800 placeholder-gray-400"
             />
 
             {/* Mobile Voice Search */}
@@ -539,17 +540,13 @@ export default function Nav({ user }: { user: iUser }) {
               type="button"
               onClick={handleVoiceSearch}
               title="Search by voice"
-              className={`p-2 mr-1 rounded-full transition-all flex items-center justify-center shrink-0 cursor-pointer ${
+              className={`p-1.5 rounded-full transition-all flex items-center justify-center shrink-0 cursor-pointer ${
                 isListening 
                   ? 'bg-red-500 text-white animate-pulse shadow-md ring-2 ring-red-300' 
                   : 'text-gray-400 hover:text-[#0f8646]'
               }`}
             >
-              <Mic size={17} className={isListening ? "animate-bounce" : ""} />
-            </button>
-
-            <button type="submit" className="px-3.5 bg-[#0f8646] text-white hover:bg-[#0c6a38] transition-colors h-full flex items-center justify-center">
-              <Search size={16} />
+              <Mic size={16} className={isListening ? "animate-bounce" : ""} />
             </button>
           </form>
 
@@ -641,24 +638,6 @@ export default function Nav({ user }: { user: iUser }) {
       
       {/* Mini Cart Slide-over */}
       <MiniCart isOpen={isMiniCartOpen} onClose={() => setIsMiniCartOpen(false)} />
-
-      {/* Mobile Sticky Floating Cart */}
-      {mounted && cartdata.length > 0 && (
-        <div className="md:hidden fixed bottom-4 left-4 right-4 z-[900]">
-          <div 
-            onClick={() => setIsMiniCartOpen(true)}
-            className="bg-[#0f8646] text-white rounded-xl p-4 flex items-center justify-between shadow-2xl cursor-pointer hover:bg-[#0c6a38] transition-colors"
-          >
-            <div className="flex flex-col">
-              <span className="text-xs font-medium text-green-100">{cartdata.length} Item{cartdata.length > 1 ? 's' : ''}</span>
-              <span className="font-extrabold text-lg">₹{cartTotal.toFixed(2)}</span>
-            </div>
-            <div className="flex items-center gap-2 font-bold bg-white/20 px-4 py-2 rounded-lg">
-              View Cart <ArrowRight size={18} />
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }
