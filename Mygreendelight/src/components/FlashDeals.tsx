@@ -75,7 +75,7 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
         {/* Product Carousel */}
         <ProductCarousel>
           {products.map((item: any) => (
-            <div key={item._id} className="min-w-[155px] sm:min-w-[220px] snap-start shrink-0">
+            <div key={item._id} className="w-[155px] sm:w-[200px] md:w-[210px] snap-start shrink-0 flex flex-col h-[300px] sm:h-[320px]">
               <Groceryitemcard item={item} />
             </div>
           ))}

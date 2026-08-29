@@ -44,43 +44,43 @@ export default function CategorySlider() {
         <div className="flex items-center justify-between mb-3.5 sm:mb-6">
           <div>
             <h2 className="text-base sm:text-2xl font-black text-gray-900 tracking-tight">
-              Explore Categories
+              Shop by Category
             </h2>
             <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5">
-              Fresh produce & daily grocery staples
+              Fresh produce & pantry essentials sorted for you
             </p>
           </div>
           <Link
             href="/shop"
             className="text-[#0f8646] hover:text-[#0c6a38] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition"
           >
-            <span>See all</span>
+            <span>View All</span>
             <ChevronRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
 
-        {/* Category Cards with Smooth Motion Lift (4 columns on mobile, 7 on desktop) */}
-        <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-7 gap-2 sm:gap-4">
+        {/* Category Cards: 2 cards per row on mobile, 4 on tablet, 7 on desktop */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-4">
           {activeCategories.slice(0, 8).map((item, idx) => (
             <motion.div
               key={item._id}
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: idx * 0.04 }}
+              transition={{ duration: 0.3, delay: idx * 0.04 }}
               whileHover={{ y: -4, scale: 1.02 }}
-              whileTap={{ scale: 0.95 }}
+              whileTap={{ scale: 0.97 }}
               onClick={() => router.push(`/shop?category=${encodeURIComponent(item.name)}`)}
-              className="flex flex-col items-center bg-white border border-gray-100 hover:border-[#0f8646] rounded-2xl p-2 sm:p-3 cursor-pointer shadow-2xs hover:shadow-md transition-all group text-center"
+              className="flex flex-col items-center bg-white border border-gray-200/90 hover:border-[#0f8646] rounded-2xl p-3 cursor-pointer shadow-2xs hover:shadow-md transition-all group text-center"
             >
-              {/* Clean Frame */}
-              <div className="w-full aspect-square rounded-xl bg-gray-50/90 border border-gray-100/80 overflow-hidden mb-1.5 sm:mb-2 p-1.5 flex items-center justify-center">
+              {/* Image Frame */}
+              <div className="w-full aspect-[4/3] rounded-xl bg-gray-50/80 border border-gray-100 overflow-hidden mb-2 p-2 flex items-center justify-center">
                 <img
                   src={item.image}
                   alt={item.name}
                   className="w-full h-full object-contain rounded-lg group-hover:scale-108 transition-transform duration-300"
                 />
               </div>
-              <h3 className="text-[10px] sm:text-xs font-bold text-gray-800 text-center leading-tight group-hover:text-[#0f8646] transition-colors line-clamp-2">
+              <h3 className="text-xs sm:text-sm font-bold text-gray-800 text-center leading-tight group-hover:text-[#0f8646] transition-colors line-clamp-1">
                 {item.name}
               </h3>
             </motion.div>

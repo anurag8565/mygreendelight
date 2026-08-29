@@ -9,35 +9,43 @@ export default function ProductCarousel({ children }: { children: React.ReactNod
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth } = scrollRef.current;
-      const scrollTo = direction === "left" ? scrollLeft - clientWidth + 100 : scrollLeft + clientWidth - 100;
+      const scrollAmount = clientWidth > 640 ? clientWidth * 0.75 : 200;
+      const scrollTo =
+        direction === "left"
+          ? scrollLeft - scrollAmount
+          : scrollLeft + scrollAmount;
       scrollRef.current.scrollTo({ left: scrollTo, behavior: "smooth" });
     }
   };
 
   return (
     <div className="relative group">
-      {/* Left Arrow */}
+      {/* Left Arrow Button */}
       <button
+        type="button"
         onClick={() => scroll("left")}
-        className="hidden md:flex absolute -left-5 top-1/2 -translate-y-1/2 z-20 bg-white shadow-md border border-gray-100 text-gray-700 w-10 h-10 rounded-full items-center justify-center transition-all hover:bg-[#0f8646] hover:text-white"
+        aria-label="Scroll left"
+        className="flex absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 z-20 bg-white/95 backdrop-blur-md shadow-lg border border-gray-200 text-gray-800 w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all hover:bg-[#0f8646] hover:text-white hover:border-[#0f8646] active:scale-90 cursor-pointer"
       >
-        <ChevronLeft size={24} />
+        <ChevronLeft size={18} className="stroke-[2.5]" />
       </button>
 
       {/* Scroll Container */}
-      <div 
+      <div
         ref={scrollRef}
-        className="flex gap-4 overflow-x-auto pb-6 pt-2 scrollbar-hide snap-x"
+        className="flex gap-2.5 sm:gap-4 overflow-x-auto pb-3 pt-1 scrollbar-none snap-x scroll-smooth"
       >
         {children}
       </div>
 
-      {/* Right Arrow */}
+      {/* Right Arrow Button */}
       <button
+        type="button"
         onClick={() => scroll("right")}
-        className="hidden md:flex absolute -right-5 top-1/2 -translate-y-1/2 z-20 bg-white shadow-md border border-gray-100 text-gray-700 w-10 h-10 rounded-full items-center justify-center transition-all hover:bg-[#0f8646] hover:text-white"
+        aria-label="Scroll right"
+        className="flex absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 z-20 bg-white/95 backdrop-blur-md shadow-lg border border-gray-200 text-gray-800 w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all hover:bg-[#0f8646] hover:text-white hover:border-[#0f8646] active:scale-90 cursor-pointer"
       >
-        <ChevronRight size={24} />
+        <ChevronRight size={18} className="stroke-[2.5]" />
       </button>
     </div>
   );
