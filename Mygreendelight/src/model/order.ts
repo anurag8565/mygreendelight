@@ -39,6 +39,9 @@ export interface iorder {
     couponCode?: string
     discount?: number
     walletDiscount?: number
+    farmerTip?: number
+    isSilentDelivery?: boolean
+    deliveryInstructions?: string
     cancellationReason?: string
     deliverySlot?: string
     paymentId?: string
@@ -150,6 +153,18 @@ const orderSchema = new mongoose.Schema<iorder>(
         walletDiscount: {
             type: Number,
             default: 0,
+        },
+        farmerTip: {
+            type: Number,
+            default: 0,
+        },
+        isSilentDelivery: {
+            type: Boolean,
+            default: false,
+        },
+        deliveryInstructions: {
+            type: String,
+            default: "",
         },
         deliverySlot: {
             type: String,

@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
         // ✅ read body once
         const body = await req.json();
         console.log(body);
-        const { userid, items, paymentmethod, totalamount, address, couponCode, discount, deliverySlot, walletDiscount } = body;
+        const { userid, items, paymentmethod, totalamount, address, couponCode, discount, deliverySlot, walletDiscount, farmerTip, isSilentDelivery, deliveryInstructions } = body;
 
         // ❌ validation
         if (!userid || !items || !paymentmethod || !totalamount || !address) {
@@ -40,6 +40,9 @@ export async function POST(req: NextRequest) {
             couponCode: couponCode || null,
             discount: discount || 0,
             walletDiscount: walletDiscount || 0,
+            farmerTip: farmerTip || 0,
+            isSilentDelivery: isSilentDelivery || false,
+            deliveryInstructions: deliveryInstructions || "",
             deliverySlot: deliverySlot || "Instant Express (30-45 Mins)",
         });
 

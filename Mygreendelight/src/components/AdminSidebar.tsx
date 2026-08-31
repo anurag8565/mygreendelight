@@ -25,6 +25,8 @@ import {
   Utensils,
   Milk,
   Salad,
+  Heart,
+  FileText,
 } from "lucide-react";
 
 export default function AdminSidebar() {
@@ -81,6 +83,16 @@ export default function AdminSidebar() {
       name: "Custom Salad Boxes",
       href: "/admin/manage-custom-boxes",
       icon: <Salad size={18} />,
+    },
+    {
+      name: "Parchi & List Orders",
+      href: "/admin/manage-list-orders",
+      icon: <FileText size={18} />,
+    },
+    {
+      name: "Kisan Gratitude Fund",
+      href: "/admin/farmer-gratitude",
+      icon: <Heart size={18} />,
     },
     {
       name: "Coupons & Discounts",

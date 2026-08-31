@@ -356,6 +356,28 @@ useEffect(() => {
             </div>
           </div>
 
+          {/* 🔕 Silent Doorstep Drop Alert Banner for Rider */}
+          {activeorder?.order?.isSilentDelivery && (
+            <div className="bg-amber-500 text-white p-4 rounded-2xl shadow-sm flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-black/20 flex items-center justify-center font-black shrink-0 text-xl">
+                🔕
+              </div>
+              <div>
+                <h4 className="font-black text-xs sm:text-sm uppercase tracking-wide">
+                  SILENT DOORSTEP DROP — DO NOT RING DOORBELL!
+                </h4>
+                <p className="text-xs text-amber-100 mt-0.5">
+                  Customer has requested a quiet morning drop. Place bag at doorstep.
+                  {activeorder.order.deliveryInstructions && (
+                    <span className="block font-bold mt-1 text-white">
+                      Note: "{activeorder.order.deliveryInstructions}"
+                    </span>
+                  )}
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* 1-Click Rider Action Bar (Google Maps + WhatsApp + Call) */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {/* Google Maps Turn-by-Turn */}
