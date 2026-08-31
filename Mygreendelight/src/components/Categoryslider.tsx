@@ -3,84 +3,95 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 
-export default function CategorySlider() {
+const defaultCategories = [
+  { _id: "1", name: "Vegetables", image: "/categories/vegetables.jpg", color: "bg-emerald-50 border-emerald-200" },
+  { _id: "2", name: "Fresh Fruits", image: "/categories/fruits.jpg", color: "bg-amber-50 border-amber-200" },
+  { _id: "3", name: "Dairy & Bakery", image: "/categories/exotic.jpg", color: "bg-blue-50 border-blue-200" },
+  { _id: "4", name: "Staples & Atta", image: "/categories/vegetables.jpg", color: "bg-orange-50 border-orange-200" },
+  { _id: "5", name: "Snacks & Munchies", image: "/categories/fruits.jpg", color: "bg-purple-50 border-purple-200" },
+  { _id: "6", name: "Beverages", image: "/categories/exotic.jpg", color: "bg-teal-50 border-teal-200" },
+  { _id: "7", name: "Household Care", image: "/categories/vegetables.jpg", color: "bg-rose-50 border-rose-200" },
+];
+
+export default function CategorySlider({ categories = [] }: { categories?: any[] }) {
   const router = useRouter();
-  const [categories, setCategories] = useState<any[]>([]);
+  const [loadedCategories, setLoadedCategories] = useState<any[]>(categories.length > 0 ? categories : []);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await fetch("/api/admin/category");
-        const data = await res.json();
-        if (data.success) {
-          setCategories(data.categories);
+    if (categories.length > 0) {
+      setLoadedCategories(categories);
+      return;
+    }
+
+    // Client fallback only if not provided by server
+    fetch("/api/admin/category")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && data.categories && data.categories.length > 0) {
+          setLoadedCategories(data.categories);
+        } else {
+          setLoadedCategories(defaultCategories);
         }
-      } catch (error) {
-        console.error("Failed to fetch categories");
-      }
-    };
-    fetchCategories();
-  }, []);
+      })
+      .catch(() => {
+        setLoadedCategories(defaultCategories);
+      });
+  }, [categories]);
 
-  const defaultCategories = [
-    { _id: "1", name: "Vegetables", image: "/categories/vegetables.jpg" },
-    { _id: "2", name: "Fresh Fruits", image: "/categories/fruits.jpg" },
-    { _id: "3", name: "Dairy & Bakery", image: "/categories/exotic.jpg" },
-    { _id: "4", name: "Staples & Atta", image: "/categories/vegetables.jpg" },
-    { _id: "5", name: "Snacks & Munchies", image: "/categories/fruits.jpg" },
-    { _id: "6", name: "Beverages", image: "/categories/exotic.jpg" },
-    { _id: "7", name: "Household Care", image: "/categories/vegetables.jpg" },
-  ];
-
-  const activeCategories = categories.length > 0 ? categories : defaultCategories;
+  const activeCategories = loadedCategories.length > 0 ? loadedCategories : defaultCategories;
 
   return (
-    <div className="w-full py-4 sm:py-6 bg-white">
-      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-3.5 sm:mb-6">
-          <div>
-            <h2 className="text-base sm:text-2xl font-black text-gray-900 tracking-tight">
-              Shop by Category
-            </h2>
-            <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5">
-              Fresh produce & pantry essentials sorted for you
-            </p>
+    <div className="w-full py-3.5 sm:py-6 bg-white">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 md:px-8">
+        {/* Section Header */}
+        <div className="flex items-center justify-between mb-3 sm:mb-5">
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-xl bg-green-100 text-[#0f8646] flex items-center justify-center font-black">
+              🌿
+            </div>
+            <div>
+              <h2 className="text-base sm:text-2xl font-black text-gray-900 tracking-tight">
+                Shop by Category
+              </h2>
+              <p className="text-[10px] sm:text-xs text-gray-500">
+                Sunrise farm-harvested veggies & pantry essentials
+              </p>
+            </div>
           </div>
+
           <Link
             href="/shop"
-            className="text-[#0f8646] hover:text-[#0c6a38] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition"
+            className="text-[#0f8646] hover:text-[#0c6a38] font-black text-xs sm:text-sm flex items-center gap-0.5 group transition"
           >
-            <span>View All</span>
+            <span>Explore All</span>
             <ChevronRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
 
-        {/* Category Cards: 2 cards per row on mobile, 4 on tablet, 7 on desktop */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-4">
+        {/* Categories Grid (Mobile: 4 per row or horizontal scroll, Desktop: 7-8 per row) */}
+        <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 sm:gap-3.5">
           {activeCategories.slice(0, 8).map((item, idx) => (
             <motion.div
-              key={item._id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: idx * 0.04 }}
-              whileHover={{ y: -4, scale: 1.02 }}
-              whileTap={{ scale: 0.97 }}
+              key={item._id || idx}
+              whileHover={{ y: -3, scale: 1.02 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => router.push(`/shop?category=${encodeURIComponent(item.name)}`)}
-              className="flex flex-col items-center bg-white border border-gray-200/90 hover:border-[#0f8646] rounded-2xl p-3 cursor-pointer shadow-2xs hover:shadow-md transition-all group text-center"
+              className="flex flex-col items-center bg-gray-50/70 hover:bg-green-50/60 border border-gray-200/80 hover:border-[#0f8646] rounded-2xl p-2 sm:p-3 cursor-pointer shadow-2xs hover:shadow-sm transition-all group text-center"
             >
               {/* Image Frame */}
-              <div className="w-full aspect-[4/3] rounded-xl bg-gray-50/80 border border-gray-100 overflow-hidden mb-2 p-2 flex items-center justify-center">
+              <div className="w-14 h-14 sm:w-20 sm:h-20 aspect-square rounded-xl bg-white border border-gray-100/90 overflow-hidden mb-1.5 p-1.5 flex items-center justify-center shadow-2xs">
                 <img
-                  src={item.image}
+                  src={item.image || "/categories/vegetables.jpg"}
                   alt={item.name}
-                  className="w-full h-full object-contain rounded-lg group-hover:scale-108 transition-transform duration-300"
+                  className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
                 />
               </div>
-              <h3 className="text-xs sm:text-sm font-bold text-gray-800 text-center leading-tight group-hover:text-[#0f8646] transition-colors line-clamp-1">
+
+              {/* Title */}
+              <h3 className="text-[11px] sm:text-xs font-black text-gray-800 leading-tight group-hover:text-[#0f8646] transition-colors line-clamp-1">
                 {item.name}
               </h3>
             </motion.div>
