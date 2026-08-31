@@ -72,6 +72,7 @@ interface OrderType {
   user: {
     name: string;
     email: string;
+    mobile?: string;
   };
 }
 
@@ -230,7 +231,8 @@ export default function ManageOrder() {
   };
 
   const filteredOrders = orders.filter((order) => {
-    const currentStatus = statuses[order._id] || order.status;
+    if (!order) return false;
+    const currentStatus = (statuses[order._id] || order.status || "pending").toLowerCase();
     const matchesFilter =
       filterTab === "all"
         ? true
@@ -242,10 +244,20 @@ export default function ManageOrder() {
         ? currentStatus === "delivered" || currentStatus === "completed"
         : true;
 
+    const term = searchTerm.trim().toLowerCase();
+    const orderIdStr = String(order._id || "").toLowerCase();
+    const customerName = String(
+      order.address?.fullname || order.user?.name || ""
+    ).toLowerCase();
+    const customerMobile = String(
+      order.address?.mobile || order.user?.mobile || ""
+    );
+
     const matchesSearch =
-      order._id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.address?.fullname?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.address?.mobile?.includes(searchTerm);
+      !term ||
+      orderIdStr.includes(term) ||
+      customerName.includes(term) ||
+      customerMobile.includes(term);
 
     return matchesFilter && matchesSearch;
   });
@@ -412,7 +424,7 @@ export default function ManageOrder() {
                       <div>
                         <div className="flex items-center gap-2.5 flex-wrap">
                           <span className="font-black text-base text-gray-900">
-                            #{order._id.slice(-6).toUpperCase()}
+                            #{String(order._id).slice(-6).toUpperCase()}
                           </span>
 
                           <span
