@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
@@ -75,15 +75,47 @@ export default function UserWalletPage() {
   };
 
   const handleTopUp = async (amount: number, bonus: number = 0) => {
-    if (!amount || amount <= 0) return;
+    if (!amount || amount < 10) {
+      alert("Minimum top-up amount is ₹10");
+      return;
+    }
     setIsProcessing(true);
     setMsg(null);
 
     try {
-      const res = await axios.post("/api/user/wallet", {
+      const res = await axios.post("/api/user/wallet/initiate", {
         amount,
         packBonus: bonus,
       });
+
+      if (res.data.gateway === "paytm") {
+        // Submit Paytm form securely
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = `https://securegw.paytm.in/theia/api/v1/showPaymentPage?mid=${res.data.mid}&orderId=${res.data.orderId}`;
+
+        const txnTokenInput = document.createElement("input");
+        txnTokenInput.type = "hidden";
+        txnTokenInput.name = "txnToken";
+        txnTokenInput.value = res.data.txnToken;
+        form.appendChild(txnTokenInput);
+
+        const midInput = document.createElement("input");
+        midInput.type = "hidden";
+        midInput.name = "mid";
+        midInput.value = res.data.mid;
+        form.appendChild(midInput);
+
+        const orderIdInput = document.createElement("input");
+        orderIdInput.type = "hidden";
+        orderIdInput.name = "orderId";
+        orderIdInput.value = res.data.orderId;
+        form.appendChild(orderIdInput);
+
+        document.body.appendChild(form);
+        form.submit();
+        return;
+      }
 
       if (res.data.success) {
         setMsg({ type: "success", text: res.data.message });
@@ -95,7 +127,7 @@ export default function UserWalletPage() {
     } catch (error: any) {
       setMsg({
         type: "error",
-        text: error.response?.data?.message || "Failed to add money",
+        text: error.response?.data?.message || "Failed to initiate payment",
       });
     } finally {
       setIsProcessing(false);

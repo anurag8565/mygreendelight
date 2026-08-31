@@ -1,16 +1,19 @@
-﻿"use client";
+"use client";
 
 import React, { useState, useEffect } from "react";
 import { Gift, Heart, Sparkles, ShoppingBag, Check, ArrowRight, X, Mail } from "lucide-react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "@/redux/CartSlice";
-import { AppDispatch } from "@/redux/store";
+import { AppDispatch, RootState } from "@/redux/store";
 import axios from "axios";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import useGetMe from "@/hooks/useGetMe";
 
 export default function GiftBasketPage() {
+  useGetMe();
+  const { userdata } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch<AppDispatch>();
   const [baskets, setBaskets] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -32,17 +35,18 @@ export default function GiftBasketPage() {
   }, []);
 
   const handleAddGift = (basket: any) => {
+    const giftLabel = recipientName ? `🎁 Gift for ${recipientName}: ${basket.title}` : `🎁 Gift Hamper: ${basket.title}`;
     dispatch(
       addToCart({
         _id: basket._id,
-        name: `🎁 Gift Hamper: ${basket.title} (For ${recipientName || "Loved One"})`,
+        name: `${giftLabel} (Greeting Note: "${giftNote}")`,
         price: basket.price,
-        unit: "Gift Basket",
+        unit: "Gift Hamper",
         image: basket.image,
         category: "Gift Hampers",
         stock: 50,
         quantity: 1,
-        cartItemId: `${basket._id}-gift`,
+        cartItemId: `${basket._id}-gift-${Date.now()}`,
       } as any)
     );
 
@@ -55,7 +59,7 @@ export default function GiftBasketPage() {
 
   return (
     <div className="bg-gray-50/50 min-h-screen flex flex-col justify-between">
-      <Nav user={{ name: "User", email: "", role: "user", image: "", password: "" } as any} />
+      <Nav user={(userdata as any) || { role: "user" }} />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8 sm:py-12">
         {/* Header */}
