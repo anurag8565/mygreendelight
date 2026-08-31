@@ -84,7 +84,11 @@ const orderSchema = new mongoose.Schema<iorder>(
                 grocery: {
                     type: mongoose.Schema.Types.ObjectId,
                     ref: "Grocery",
-                    required: true,
+                    required: false,
+                },
+                groceryId: {
+                    type: String,
+                    default: null,
                 },
                 name: String,
                 price: Number,

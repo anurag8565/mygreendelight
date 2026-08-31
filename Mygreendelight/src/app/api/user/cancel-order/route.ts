@@ -62,16 +62,18 @@ export async function POST(req: NextRequest) {
     // 2. Automatically Restore Produce Stock in MongoDB
     if (order.items && order.items.length > 0) {
       for (const item of order.items) {
-        if (item.variationWeight) {
-          await Grocery.updateOne(
-            { _id: item.grocery, "variations.weight": item.variationWeight },
-            { $inc: { "variations.$.stock": item.quantity } }
-          );
-        } else {
-          await Grocery.updateOne(
-            { _id: item.grocery },
-            { $inc: { stock: item.quantity } }
-          );
+        if (item.grocery) {
+          if (item.variationWeight) {
+            await Grocery.updateOne(
+              { _id: item.grocery, "variations.weight": item.variationWeight },
+              { $inc: { "variations.$.stock": item.quantity } }
+            );
+          } else {
+            await Grocery.updateOne(
+              { _id: item.grocery },
+              { $inc: { stock: item.quantity } }
+            );
+          }
         }
       }
     }

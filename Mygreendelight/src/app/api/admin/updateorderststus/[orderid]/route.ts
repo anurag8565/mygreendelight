@@ -28,18 +28,20 @@ export async function POST(
     }
 
     if (status === "cancelled" && order.status !== "cancelled") {
-      // Restore stock for each item
+      // Restore stock for each valid grocery item
       for (const item of order.items) {
-        const weight = item.variationWeight || (item as any).variation?.weight;
-        if (weight) {
-          await Grocery.findOneAndUpdate(
-            { _id: item.grocery, "variations.weight": weight },
-            { $inc: { "variations.$.stock": item.quantity } }
-          );
-        } else {
-          await Grocery.findByIdAndUpdate(item.grocery, {
-            $inc: { stock: item.quantity },
-          });
+        if (item.grocery) {
+          const weight = item.variationWeight || (item as any).variation?.weight;
+          if (weight) {
+            await Grocery.findOneAndUpdate(
+              { _id: item.grocery, "variations.weight": weight },
+              { $inc: { "variations.$.stock": item.quantity } }
+            );
+          } else {
+            await Grocery.findByIdAndUpdate(item.grocery, {
+              $inc: { stock: item.quantity },
+            });
+          }
         }
       }
     }

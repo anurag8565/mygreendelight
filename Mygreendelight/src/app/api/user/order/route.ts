@@ -1,6 +1,7 @@
 import connectDb from "@/lib/db";
 import Order from "@/model/order";
 import User from "@/model/user.model";
+import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -30,10 +31,25 @@ export async function POST(req: NextRequest) {
             );
         }
 
+        // Sanitize items: ensure invalid/custom ObjectIds don't crash Mongoose
+        const sanitizedItems = items.map((item: any) => {
+            const isValid = item.grocery && mongoose.Types.ObjectId.isValid(item.grocery);
+            return {
+                grocery: isValid ? item.grocery : undefined,
+                groceryId: item.grocery ? String(item.grocery) : undefined,
+                name: item.name,
+                price: item.price,
+                unit: item.unit,
+                variationWeight: item.variationWeight,
+                image: item.image,
+                quantity: item.quantity || 1,
+            };
+        });
+
         // ✅ create order
         const neworder = await Order.create({
             user: userid,
-            items,
+            items: sanitizedItems,
             paymentmethod,
             totalamount,
             address,
@@ -61,19 +77,21 @@ export async function POST(req: NextRequest) {
             });
         }
         
-        // 📉 Reduce stock
+        // 📉 Reduce stock safely
         const Grocery = (await import("@/model/groseri.model")).default;
         for (const item of items) {
-            if (item.variationWeight) {
-                await Grocery.updateOne(
-                    { _id: item.grocery, "variations.weight": item.variationWeight },
-                    { $inc: { "variations.$.stock": -item.quantity } }
-                );
-            } else {
-                await Grocery.updateOne(
-                    { _id: item.grocery },
-                    { $inc: { stock: -item.quantity } }
-                );
+            if (item.grocery && mongoose.Types.ObjectId.isValid(item.grocery)) {
+                if (item.variationWeight) {
+                    await Grocery.updateOne(
+                        { _id: item.grocery, "variations.weight": item.variationWeight },
+                        { $inc: { "variations.$.stock": -item.quantity } }
+                    );
+                } else {
+                    await Grocery.updateOne(
+                        { _id: item.grocery },
+                        { $inc: { stock: -item.quantity } }
+                    );
+                }
             }
         }
         const populatedOrder =
