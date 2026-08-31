@@ -91,6 +91,27 @@ export async function POST(req: NextRequest) {
           },
         },
       });
+
+      try {
+        const UserWallet = (await import("@/model/wallet.model")).default;
+        await UserWallet.findOneAndUpdate(
+          { user: order.user },
+          {
+            $inc: { balance: order.walletDiscount },
+            $push: {
+              transactions: {
+                type: "credit",
+                amount: order.walletDiscount,
+                description: `Refund for Cancelled Order #${order._id.toString().slice(-6).toUpperCase()}`,
+                orderId: order._id.toString(),
+                createdAt: new Date(),
+              },
+            },
+          }
+        );
+      } catch (wErr) {
+        console.warn("Wallet refund sync warning:", wErr);
+      }
     }
 
     return NextResponse.json({

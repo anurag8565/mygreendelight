@@ -75,6 +75,27 @@ export async function POST(req: NextRequest) {
                     },
                 },
             });
+
+            try {
+                const UserWallet = (await import("@/model/wallet.model")).default;
+                await UserWallet.findOneAndUpdate(
+                    { user: userid },
+                    {
+                        $inc: { balance: -walletDiscount },
+                        $push: {
+                            transactions: {
+                                type: "debit",
+                                amount: walletDiscount,
+                                description: `Redeemed on Order #${neworder._id.toString().slice(-6).toUpperCase()}`,
+                                orderId: neworder._id.toString(),
+                                createdAt: new Date(),
+                            },
+                        },
+                    }
+                );
+            } catch (wErr) {
+                console.warn("Wallet ledger sync warning:", wErr);
+            }
         }
         
         // 📉 Reduce stock safely

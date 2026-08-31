@@ -1,6 +1,7 @@
-﻿import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import connectDb from "@/lib/db";
 import UserWallet from "@/model/wallet.model";
+import User from "@/model/user.model";
 import { auth } from "@/auth";
 
 export async function GET(req: NextRequest) {
@@ -31,6 +32,9 @@ export async function GET(req: NextRequest) {
         ],
       });
     }
+
+    // Keep User model in sync for checkout
+    await User.findByIdAndUpdate(session.user.id, { walletBalance: wallet.balance });
 
     return NextResponse.json({
       success: true,
@@ -88,6 +92,19 @@ export async function POST(req: NextRequest) {
     });
 
     await wallet.save();
+
+    // Keep User model in sync for checkout
+    await User.findByIdAndUpdate(session.user.id, {
+      $inc: { walletBalance: totalCredit },
+      $push: {
+        walletHistory: {
+          amount: totalCredit,
+          type: "credit",
+          description: numBonus > 0 ? `Recharge (₹${numAmount} + ₹${numBonus} Bonus)` : `Recharge of ₹${numAmount}`,
+          date: new Date(),
+        },
+      },
+    });
 
     return NextResponse.json({
       success: true,
