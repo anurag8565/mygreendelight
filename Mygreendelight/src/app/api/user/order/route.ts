@@ -97,6 +97,19 @@ export async function POST(req: NextRequest) {
                 console.warn("Wallet ledger sync warning:", wErr);
             }
         }
+
+        // 🎟️ Mark Scratch Reward Coupon as Used if applied
+        if (couponCode) {
+            try {
+                const ScratchReward = (await import("@/model/reward.model")).default;
+                await ScratchReward.updateOne(
+                    { couponCode: couponCode.toUpperCase() },
+                    { $set: { isUsed: true, order: neworder._id } }
+                );
+            } catch (cErr) {
+                console.warn("Coupon mark used note:", cErr);
+            }
+        }
         
         // 📉 Reduce stock safely
         const Grocery = (await import("@/model/groseri.model")).default;
