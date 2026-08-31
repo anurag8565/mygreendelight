@@ -3,6 +3,26 @@ import connectDb from "@/lib/db";
 import User from "@/model/user.model";
 import { NextResponse } from "next/server";
 
+export async function GET() {
+  try {
+    await connectDb();
+    const session = await auth();
+
+    if (!session?.user?.email) {
+      return NextResponse.json({ success: false, items: [] }, { status: 401 });
+    }
+
+    const Grocery = (await import("@/model/groseri.model")).default;
+    const user = await User.findOne({ email: session.user.email }).populate("wishlist");
+    return NextResponse.json({
+      success: true,
+      wishlist: user?.wishlist || [],
+    });
+  } catch (error: any) {
+    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
+  }
+}
+
 export async function POST(req: Request) {
   try {
     await connectDb();
