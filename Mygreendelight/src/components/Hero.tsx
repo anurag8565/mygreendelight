@@ -23,7 +23,8 @@ export default function Hero({ banners = [] }: HeroProps) {
       link: "/shop",
       bgGradient: "from-[#ff5722] via-[#ff6f43] to-[#ff8a65]",
       btnClass: "bg-white text-[#ff5722] hover:bg-orange-50",
-      image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=85",
+      bgImage: "/banners/hero_welcome_3d.jpg",
+      image: "/banners/hero_welcome_3d.jpg",
     },
     {
       _id: "s2",
@@ -103,61 +104,116 @@ export default function Hero({ banners = [] }: HeroProps) {
               transition={{ duration: 0.35, ease: "easeInOut" }}
               className={`w-full bg-gradient-to-r ${slide.bgGradient} text-white p-5 sm:p-8 md:p-10 flex items-center justify-between gap-4 min-h-[190px] sm:min-h-[240px] md:min-h-[270px] relative overflow-hidden`}
             >
-              {/* Background ambient lighting */}
-              <div className="absolute right-0 top-0 w-72 h-72 bg-white/10 rounded-full blur-3xl pointer-events-none" />
-              <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-yellow-400/10 rounded-full blur-2xl pointer-events-none" />
+              {slide.bgImage ? (
+                <>
+                  {/* Full Bleed 3D Banner Image */}
+                  <img
+                    src={slide.bgImage}
+                    alt={slide.title}
+                    className="absolute inset-0 w-full h-full object-cover object-right md:object-center"
+                  />
+                  {/* Left subtle overlay to guarantee text contrast */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-orange-600/70 via-transparent to-transparent md:hidden" />
 
-              {/* Left Content */}
-              <div className="flex-1 flex flex-col items-start z-10 max-w-[65%] sm:max-w-md">
-                {/* Badge */}
-                <div
-                  className={`inline-flex items-center gap-1.5 text-[9px] sm:text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider mb-2 sm:mb-2.5 shadow-2xs ${slide.badgeClass}`}
-                >
-                  <span>{slide.badge}</span>
-                </div>
+                  {/* Left Content */}
+                  <div className="relative z-10 flex-1 flex flex-col items-start max-w-[62%] sm:max-w-md">
+                    {/* Badge */}
+                    <div
+                      className={`inline-flex items-center gap-1.5 text-[9px] sm:text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider mb-2 sm:mb-2.5 shadow-2xs ${slide.badgeClass}`}
+                    >
+                      <span>{slide.badge}</span>
+                    </div>
 
-                {/* Title */}
-                <h1 className="text-xl sm:text-3xl md:text-4xl font-black leading-tight tracking-tight text-white drop-shadow-xs">
-                  {slide.title}
-                </h1>
+                    {/* Title */}
+                    <h1 className="text-xl sm:text-3xl md:text-4xl font-black leading-tight tracking-tight text-white drop-shadow-md">
+                      {slide.title}
+                    </h1>
 
-                {/* Subtitle */}
-                <p className="text-xs sm:text-sm text-white/95 font-bold mb-1.5 sm:mb-2 leading-tight">
-                  {slide.subtitle}
-                </p>
+                    {/* Subtitle */}
+                    <p className="text-xs sm:text-sm text-white font-bold mb-1.5 sm:mb-2 leading-tight drop-shadow-xs">
+                      {slide.subtitle}
+                    </p>
 
-                {/* Coupon Code Strip */}
-                <div className="flex items-center gap-1 text-[11px] sm:text-xs font-black text-white/90 mb-3 sm:mb-4">
-                  <span>{slide.codeText}</span>
-                  <span className="text-yellow-300 uppercase tracking-wider">
-                    {slide.codeHighlight}
-                  </span>
-                </div>
+                    {/* Coupon Code Strip */}
+                    <div className="flex items-center gap-1 text-[11px] sm:text-xs font-black text-white drop-shadow-xs mb-3 sm:mb-4">
+                      <span>{slide.codeText}</span>
+                      <span className="text-yellow-300 uppercase tracking-wider">
+                        {slide.codeHighlight}
+                      </span>
+                    </div>
 
-                {/* CTA Button */}
-                <Link href={slide.link}>
-                  <motion.button
-                    whileHover={{ scale: 1.04 }}
-                    whileTap={{ scale: 0.96 }}
-                    className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full font-black text-xs sm:text-sm shadow-md transition-all flex items-center gap-1.5 cursor-pointer ${slide.btnClass}`}
-                  >
-                    <span>{slide.btnText}</span>
-                    <ArrowRight size={14} className="stroke-[2.5]" />
-                  </motion.button>
-                </Link>
-              </div>
+                    {/* CTA Button */}
+                    <Link href={slide.link}>
+                      <motion.button
+                        whileHover={{ scale: 1.04 }}
+                        whileTap={{ scale: 0.96 }}
+                        className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full font-black text-xs sm:text-sm shadow-lg transition-all flex items-center gap-1.5 cursor-pointer ${slide.btnClass}`}
+                      >
+                        <span>{slide.btnText}</span>
+                        <ArrowRight size={14} className="stroke-[2.5]" />
+                      </motion.button>
+                    </Link>
+                  </div>
+                </>
+              ) : (
+                <>
+                  {/* Background ambient lighting */}
+                  <div className="absolute right-0 top-0 w-72 h-72 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+                  <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-yellow-400/10 rounded-full blur-2xl pointer-events-none" />
 
-              {/* Right: 3D Produce Bag / Basket Illustration */}
-              <div className="shrink-0 w-32 h-32 sm:w-44 sm:h-44 md:w-56 md:h-56 relative z-10 flex items-center justify-center">
-                <motion.img
-                  initial={{ scale: 0.9, y: 5 }}
-                  animate={{ scale: 1, y: 0 }}
-                  transition={{ duration: 0.4 }}
-                  src={slide.image}
-                  alt={slide.title}
-                  className="w-full h-full object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.25)] rounded-2xl"
-                />
-              </div>
+                  {/* Left Content */}
+                  <div className="flex-1 flex flex-col items-start z-10 max-w-[65%] sm:max-w-md">
+                    {/* Badge */}
+                    <div
+                      className={`inline-flex items-center gap-1.5 text-[9px] sm:text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider mb-2 sm:mb-2.5 shadow-2xs ${slide.badgeClass}`}
+                    >
+                      <span>{slide.badge}</span>
+                    </div>
+
+                    {/* Title */}
+                    <h1 className="text-xl sm:text-3xl md:text-4xl font-black leading-tight tracking-tight text-white drop-shadow-xs">
+                      {slide.title}
+                    </h1>
+
+                    {/* Subtitle */}
+                    <p className="text-xs sm:text-sm text-white/95 font-bold mb-1.5 sm:mb-2 leading-tight">
+                      {slide.subtitle}
+                    </p>
+
+                    {/* Coupon Code Strip */}
+                    <div className="flex items-center gap-1 text-[11px] sm:text-xs font-black text-white/90 mb-3 sm:mb-4">
+                      <span>{slide.codeText}</span>
+                      <span className="text-yellow-300 uppercase tracking-wider">
+                        {slide.codeHighlight}
+                      </span>
+                    </div>
+
+                    {/* CTA Button */}
+                    <Link href={slide.link}>
+                      <motion.button
+                        whileHover={{ scale: 1.04 }}
+                        whileTap={{ scale: 0.96 }}
+                        className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full font-black text-xs sm:text-sm shadow-md transition-all flex items-center gap-1.5 cursor-pointer ${slide.btnClass}`}
+                      >
+                        <span>{slide.btnText}</span>
+                        <ArrowRight size={14} className="stroke-[2.5]" />
+                      </motion.button>
+                    </Link>
+                  </div>
+
+                  {/* Right: 3D Produce Bag / Basket Illustration */}
+                  <div className="shrink-0 w-32 h-32 sm:w-44 sm:h-44 md:w-56 md:h-56 relative z-10 flex items-center justify-center">
+                    <motion.img
+                      initial={{ scale: 0.9, y: 5 }}
+                      animate={{ scale: 1, y: 0 }}
+                      transition={{ duration: 0.4 }}
+                      src={slide.image}
+                      alt={slide.title}
+                      className="w-full h-full object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.25)] rounded-2xl"
+                    />
+                  </div>
+                </>
+              )}
             </motion.div>
           </AnimatePresence>
 
