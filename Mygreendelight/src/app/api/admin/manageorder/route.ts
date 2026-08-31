@@ -18,9 +18,9 @@ export async function GET(req: NextRequest) {
     let rawOrders = [];
     try {
       rawOrders = await Order.find({})
-        .populate("user", "name email mobile")
-        .populate("assigneddelliveryboy", "name mobile email")
-        .populate("assigment")
+        .populate({ path: "user", model: User, select: "name email mobile", strictPopulate: false })
+        .populate({ path: "assigneddelliveryboy", model: User, select: "name mobile email", strictPopulate: false })
+        .populate({ path: "assigment", model: DeliveryAssignment, strictPopulate: false })
         .sort({ createdAt: -1 })
         .lean();
     } catch (popErr) {
