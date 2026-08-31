@@ -7,6 +7,7 @@ import RecipeKitsSection from './RecipeKitsSection'
 import DinnerDeciderWheel from './DinnerDeciderWheel'
 import FlashDeals from './FlashDeals'
 import FilteredProduceSection from './FilteredProduceSection'
+import MorningSubscriptionBanner from './MorningSubscriptionBanner'
 import DailyRewardWidget from './DailyRewardWidget'
 import Grocery from '@/model/groseri.model'
 import Category from '@/model/category.model'
@@ -179,16 +180,19 @@ export default async function Userdashbord() {
          </div>
       </div>
 
-      {/* 11. Why Choose MyGreenDelight Features */}
+      {/* 11. 🥛 Subah 7:00 AM Morning Milk & Veggie Subscription Banner */}
+      <MorningSubscriptionBanner />
+
+      {/* 12. Why Choose MyGreenDelight Features */}
       <FeaturesBanner />
 
-      {/* 12. Customer Testimonials & Reviews (Preloaded from MongoDB) */}
+      {/* 13. Customer Testimonials & Reviews (Preloaded from MongoDB) */}
       <Testimonials initialTestimonials={plainTestimonials} />
 
-      {/* 13. PreFooter Trust Elements */}
+      {/* 14. PreFooter Trust Elements */}
       <PreFooter />
 
-      {/* 14. 🎁 Daily Scratch Card & Lucky Farm Reward Widget */}
+      {/* 15. 🎁 Daily Scratch Card & Lucky Farm Reward Widget */}
       <DailyRewardWidget />
     </div>
   )

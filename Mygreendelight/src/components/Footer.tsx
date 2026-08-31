@@ -219,6 +219,10 @@ export default function Footer() {
                 <span>MGD Green Wallet</span>
                 <span className="text-[10px] bg-green-900/80 px-1.5 py-0.5 rounded-sm">+10% Bonus</span>
               </Link>
+              <Link href="/user/subscriptions" className="hover:text-white hover:translate-x-1 transition-all flex items-center justify-between text-emerald-300 font-bold">
+                <span>🥛 7 AM Subscriptions</span>
+                <span className="text-[10px] bg-blue-950 px-1.5 py-0.5 rounded-sm">New</span>
+              </Link>
               <Link href="/user/myorder" className="hover:text-white hover:translate-x-1 transition-all">
                 Track Live Order
               </Link>

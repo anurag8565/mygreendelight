@@ -23,6 +23,7 @@ import {
   Gift,
   ChefHat,
   Utensils,
+  Milk,
 } from "lucide-react";
 
 export default function AdminSidebar() {
@@ -69,6 +70,11 @@ export default function AdminSidebar() {
       name: "Dinner Decider Wheel",
       href: "/admin/manage-dinner-wheel",
       icon: <Utensils size={18} />,
+    },
+    {
+      name: "Morning Subscriptions",
+      href: "/admin/manage-subscriptions",
+      icon: <Milk size={18} />,
     },
     {
       name: "Coupons & Discounts",
