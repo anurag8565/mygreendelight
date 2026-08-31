@@ -1,9 +1,12 @@
 import React from 'react'
 import Hero from './Hero'
+import MandiPriceTicker from './MandiPriceTicker'
 import DeliveryRadarStrip from './DeliveryRadarStrip'
 import Categoryslider from './Categoryslider'
 import RecipeKitsSection from './RecipeKitsSection'
 import FlashDeals from './FlashDeals'
+import FilteredProduceSection from './FilteredProduceSection'
+import DailyRewardWidget from './DailyRewardWidget'
 import Grocery from '@/model/groseri.model'
 import Category from '@/model/category.model'
 import connectDb from '@/lib/db'
@@ -20,6 +23,7 @@ import { Flame, Sparkles, RotateCcw, ChevronRight } from 'lucide-react'
 import Banner from '@/model/banner.model'
 import RecipeKit from '@/model/recipekit.model'
 import Testimonial from '@/model/testimonial.model'
+import MandiRate from '@/model/mandi.model'
 import { auth } from '@/auth'
 import Order from '@/model/order'
 
@@ -27,13 +31,14 @@ export default async function Userdashbord() {
   await connectDb()
   const session = await auth()
   
-  const newGroceriesPromise = Grocery.find({}).sort({ createdAt: -1 }).limit(12)
+  const newGroceriesPromise = Grocery.find({}).sort({ createdAt: -1 }).limit(16)
   const topGroceriesPromise = Grocery.find({}).sort({ rating: -1, numReviews: -1 }).limit(10)
   const flashDealsPromise = Grocery.find({ stock: { $gt: 0 } }).sort({ price: 1, rating: -1 }).limit(8)
   const bannersPromise = Banner.find({}).sort({ createdAt: -1 }).limit(5)
   const categoriesPromise = Category.find({}).sort({ createdAt: -1 })
   const recipeKitsPromise = RecipeKit.find({ isActive: true }).sort({ createdAt: -1 })
   const testimonialsPromise = Testimonial.find({ status: 'approved' }).sort({ createdAt: -1 })
+  const mandiRatesPromise = MandiRate.find({ isActive: true }).sort({ updatedAt: -1 })
   
   let orderAgainGroceriesPromise: Promise<any[]> = Promise.resolve([])
   if (session?.user?.id) {
@@ -54,7 +59,7 @@ export default async function Userdashbord() {
       });
   }
 
-  const [newGroceries, topGroceries, flashDeals, banners, categories, recipeKits, testimonials, orderAgain] = await Promise.all([
+  const [newGroceries, topGroceries, flashDeals, banners, categories, recipeKits, testimonials, mandiRates, orderAgain] = await Promise.all([
     newGroceriesPromise,
     topGroceriesPromise,
     flashDealsPromise,
@@ -62,6 +67,7 @@ export default async function Userdashbord() {
     categoriesPromise,
     recipeKitsPromise,
     testimonialsPromise,
+    mandiRatesPromise,
     orderAgainGroceriesPromise
   ]);
 
@@ -72,6 +78,7 @@ export default async function Userdashbord() {
   const plainCategories = JSON.parse(JSON.stringify(categories))
   const plainRecipeKits = JSON.parse(JSON.stringify(recipeKits))
   const plainTestimonials = JSON.parse(JSON.stringify(testimonials))
+  const plainMandiRates = JSON.parse(JSON.stringify(mandiRates))
   const plainOrderAgain = JSON.parse(JSON.stringify(orderAgain))
 
   return (
@@ -79,51 +86,23 @@ export default async function Userdashbord() {
       {/* 1. High-Converting Sliding Hero Banner (Database-driven from MongoDB) */}
       <Hero banners={plainBanners} />
 
-      {/* 2. Live 10-15 Min Express Delivery Radar Strip */}
+      {/* 2. Live Bhopal Mandi Rate & Price Drop Ticker */}
+      <MandiPriceTicker initialRates={plainMandiRates} />
+
+      {/* 3. Live 10-15 Min Express Delivery Radar Strip */}
       <DeliveryRadarStrip />
 
-      {/* 3. Shop by Category (Zero Flicker & Preloaded from Database) */}
+      {/* 4. Shop by Category (Zero Flicker & Preloaded from Database) */}
       <Categoryslider categories={plainCategories} />
 
-      {/* 4. Live Flash Deals with Real Reverse Countdown Clock */}
+      {/* 5. Live Flash Deals with Real Reverse Countdown Clock */}
       <FlashDeals products={plainFlash} />
 
-      {/* 5. 🥗 1-Click "Cook This Dish" Recipe Ingredient Kits (Direct from MongoDB) */}
+      {/* 6. 🥗 1-Click "Cook This Dish" Recipe Ingredient Kits (Direct from MongoDB) */}
       <RecipeKitsSection kits={plainRecipeKits} />
       
-      {/* 6. Best Deals for You (Carousel) */}
-      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-5 sm:py-8">
-         <div className="flex items-center justify-between mb-4 sm:mb-6">
-            <div className="flex items-center gap-2.5">
-               <div className="w-8 h-8 rounded-2xl bg-orange-100 flex items-center justify-center text-orange-600">
-                  <Flame size={18} />
-               </div>
-               <div>
-                  <h2 className="text-base sm:text-2xl font-black text-gray-900">
-                     Daily Mandi Harvest Specials
-                  </h2>
-                  <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5">
-                     Handpicked discounts on everyday kitchen essentials
-                  </p>
-               </div>
-            </div>
-            <Link
-               href="/shop"
-               className="text-[#0f8646] hover:text-[#0c6a38] font-black text-xs sm:text-sm flex items-center gap-0.5 group transition"
-            >
-               <span>View All</span>
-               <ChevronRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
-            </Link>
-         </div>
-
-         <ProductCarousel>
-           {plainNew.map((item: any) => (
-              <div key={item._id} className="w-[155px] sm:w-[200px] md:w-[210px] snap-start shrink-0 flex flex-col h-[300px] sm:h-[320px]">
-                 <Groceryitemcard item={item} />
-              </div>
-           ))}
-         </ProductCarousel>
-      </div>
+      {/* 7. 🏷️ 1-Tap Filter Chips & Daily Mandi Harvest Specials */}
+      <FilteredProduceSection groceries={plainNew} />
 
       {/* 7. Order Again (For logged in users with previous order history) */}
       {plainOrderAgain && plainOrderAgain.length > 0 && (
@@ -200,6 +179,9 @@ export default async function Userdashbord() {
 
       {/* 13. PreFooter Trust Elements */}
       <PreFooter />
+
+      {/* 14. 🎁 Daily Scratch Card & Lucky Farm Reward Widget */}
+      <DailyRewardWidget />
     </div>
   )
 }

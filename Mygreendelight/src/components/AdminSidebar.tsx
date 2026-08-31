@@ -80,6 +80,11 @@ export default function AdminSidebar() {
       icon: <Gift size={18} />,
     },
     {
+      name: "Mandi Live Rates",
+      href: "/admin/manage-mandi",
+      icon: <TrendingUp size={18} />,
+    },
+    {
       name: "Customer Inquiries",
       href: "/admin/manageinquiries",
       icon: <MessageSquare size={18} />,

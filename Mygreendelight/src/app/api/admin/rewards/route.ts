@@ -1,84 +1,95 @@
-import { auth } from "@/auth";
+﻿import { NextRequest, NextResponse } from "next/server";
 import connectDb from "@/lib/db";
-import RewardConfig from "@/model/rewardConfig.model";
-import ScratchReward from "@/model/reward.model";
-import { NextRequest, NextResponse } from "next/server";
+import { RewardConfig, ScratchReward } from "@/model/reward.model";
+import { auth } from "@/auth";
+import User from "@/model/user.model";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     await connectDb();
-    let config = await RewardConfig.findOne().sort({ createdAt: -1 });
+    const session = await auth();
+    if (!session?.user?.email) {
+      return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
+    }
+
+    const user = await User.findOne({ email: session.user.email });
+    if (!user || user.role !== "admin") {
+      return NextResponse.json({ success: false, message: "Admin access required" }, { status: 403 });
+    }
+
+    let config = await RewardConfig.findOne({});
     if (!config) {
       config = await RewardConfig.create({
-        minCashback: 15,
-        maxCashback: 50,
-        minOrderValue: 199,
-        expiryDays: 7,
         isActive: true,
-        couponPrefix: "LUCKY",
+        dailyLimitPerUser: 1,
+        availableRewards: [
+          {
+            title: "Flat ₹30 Instant OFF",
+            discountType: "fixed",
+            discountValue: 30,
+            couponPrefix: "FARM30",
+            minOrderValue: 249,
+            description: "Flat ₹30 discount on orders above ₹249",
+          },
+          {
+            title: "Flat 15% Extra Savings",
+            discountType: "percent",
+            discountValue: 15,
+            couponPrefix: "FRESH15",
+            minOrderValue: 299,
+            description: "15% OFF on fresh farm produce",
+          },
+        ],
       });
     }
 
-    const totalIssued = await ScratchReward.countDocuments();
-    const totalScratched = await ScratchReward.countDocuments({ isScratched: true });
-    const recentRewards = await ScratchReward.find()
+    const recentClaims = await ScratchReward.find({})
       .populate("user", "name email mobile")
       .sort({ createdAt: -1 })
-      .limit(15)
-      .lean();
+      .limit(20);
+
+    const totalClaims = await ScratchReward.countDocuments({});
 
     return NextResponse.json({
       success: true,
       config,
-      stats: {
-        totalIssued,
-        totalScratched,
-        totalUnscratched: totalIssued - totalScratched,
-      },
-      recentRewards,
+      recentClaims,
+      totalClaims,
     });
   } catch (error: any) {
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }
 
-export async function POST(req: NextRequest) {
+export async function PUT(req: NextRequest) {
   try {
     await connectDb();
     const session = await auth();
-
-    const userRole = (session?.user as any)?.role?.toLowerCase();
-    if (userRole !== "admin" && session?.user?.email !== "anurag8565@gmail.com") {
+    if (!session?.user?.email) {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
     }
 
-    const body = await req.json();
-    const { minCashback, maxCashback, minOrderValue, expiryDays, isActive, couponPrefix } = body;
-
-    let config = await RewardConfig.findOne().sort({ createdAt: -1 });
-    if (config) {
-      if (minCashback !== undefined) config.minCashback = Number(minCashback);
-      if (maxCashback !== undefined) config.maxCashback = Number(maxCashback);
-      if (minOrderValue !== undefined) config.minOrderValue = Number(minOrderValue);
-      if (expiryDays !== undefined) config.expiryDays = Number(expiryDays);
-      if (isActive !== undefined) config.isActive = Boolean(isActive);
-      if (couponPrefix) config.couponPrefix = couponPrefix.toUpperCase();
-      await config.save();
-    } else {
-      config = await RewardConfig.create({
-        minCashback: Number(minCashback) || 15,
-        maxCashback: Number(maxCashback) || 50,
-        minOrderValue: Number(minOrderValue) || 199,
-        expiryDays: Number(expiryDays) || 7,
-        isActive: isActive !== undefined ? Boolean(isActive) : true,
-        couponPrefix: (couponPrefix || "LUCKY").toUpperCase(),
-      });
+    const user = await User.findOne({ email: session.user.email });
+    if (!user || user.role !== "admin") {
+      return NextResponse.json({ success: false, message: "Admin access required" }, { status: 403 });
     }
+
+    const body = await req.json();
+    let config = await RewardConfig.findOne({});
+    if (!config) {
+      config = new RewardConfig(body);
+    } else {
+      if (body.isActive !== undefined) config.isActive = body.isActive;
+      if (body.dailyLimitPerUser !== undefined) config.dailyLimitPerUser = body.dailyLimitPerUser;
+      if (body.availableRewards) config.availableRewards = body.availableRewards;
+    }
+
+    await config.save();
 
     return NextResponse.json({
       success: true,
-      message: "Reward Rules & Cashback Limits Updated Successfully!",
       config,
+      message: "Reward configuration updated successfully!",
     });
   } catch (error: any) {
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
