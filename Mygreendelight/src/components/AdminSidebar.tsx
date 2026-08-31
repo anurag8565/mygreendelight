@@ -24,6 +24,7 @@ import {
   ChefHat,
   Utensils,
   Milk,
+  Salad,
 } from "lucide-react";
 
 export default function AdminSidebar() {
@@ -75,6 +76,11 @@ export default function AdminSidebar() {
       name: "Morning Subscriptions",
       href: "/admin/manage-subscriptions",
       icon: <Milk size={18} />,
+    },
+    {
+      name: "Custom Salad Boxes",
+      href: "/admin/manage-custom-boxes",
+      icon: <Salad size={18} />,
     },
     {
       name: "Coupons & Discounts",

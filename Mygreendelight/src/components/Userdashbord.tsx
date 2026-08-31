@@ -5,6 +5,7 @@ import DeliveryRadarStrip from './DeliveryRadarStrip'
 import Categoryslider from './Categoryslider'
 import RecipeKitsSection from './RecipeKitsSection'
 import DinnerDeciderWheel from './DinnerDeciderWheel'
+import CustomBoxBuilder from './CustomBoxBuilder'
 import FlashDeals from './FlashDeals'
 import FilteredProduceSection from './FilteredProduceSection'
 import MorningSubscriptionBanner from './MorningSubscriptionBanner'
@@ -25,6 +26,7 @@ import { Flame, Sparkles, RotateCcw, ChevronRight } from 'lucide-react'
 import Banner from '@/model/banner.model'
 import RecipeKit from '@/model/recipekit.model'
 import DinnerRecipe from '@/model/dinnerwheel.model'
+import CustomBoxIngredient from '@/model/custombox.model'
 import Testimonial from '@/model/testimonial.model'
 import MandiRate from '@/model/mandi.model'
 import { auth } from '@/auth'
@@ -41,6 +43,7 @@ export default async function Userdashbord() {
   const categoriesPromise = Category.find({}).sort({ createdAt: -1 })
   const recipeKitsPromise = RecipeKit.find({ isActive: true }).sort({ createdAt: -1 })
   const dinnerRecipesPromise = DinnerRecipe.find({ isActive: true }).sort({ createdAt: -1 })
+  const customBoxIngredientsPromise = CustomBoxIngredient.find({ isAvailable: true }).sort({ category: 1 })
   const testimonialsPromise = Testimonial.find({ status: 'approved' }).sort({ createdAt: -1 })
   const mandiRatesPromise = MandiRate.find({ isActive: true }).sort({ updatedAt: -1 })
   
@@ -63,7 +66,7 @@ export default async function Userdashbord() {
       });
   }
 
-  const [newGroceries, topGroceries, flashDeals, banners, categories, recipeKits, dinnerRecipes, testimonials, mandiRates, orderAgain] = await Promise.all([
+  const [newGroceries, topGroceries, flashDeals, banners, categories, recipeKits, dinnerRecipes, customBoxIngredients, testimonials, mandiRates, orderAgain] = await Promise.all([
     newGroceriesPromise,
     topGroceriesPromise,
     flashDealsPromise,
@@ -71,6 +74,7 @@ export default async function Userdashbord() {
     categoriesPromise,
     recipeKitsPromise,
     dinnerRecipesPromise,
+    customBoxIngredientsPromise,
     testimonialsPromise,
     mandiRatesPromise,
     orderAgainGroceriesPromise
@@ -83,6 +87,7 @@ export default async function Userdashbord() {
   const plainCategories = JSON.parse(JSON.stringify(categories))
   const plainRecipeKits = JSON.parse(JSON.stringify(recipeKits))
   const plainDinnerRecipes = JSON.parse(JSON.stringify(dinnerRecipes))
+  const plainCustomBoxIngredients = JSON.parse(JSON.stringify(customBoxIngredients))
   const plainTestimonials = JSON.parse(JSON.stringify(testimonials))
   const plainMandiRates = JSON.parse(JSON.stringify(mandiRates))
   const plainOrderAgain = JSON.parse(JSON.stringify(orderAgain))
@@ -109,8 +114,11 @@ export default async function Userdashbord() {
 
       {/* 7. 🎡 "Aaj Kya Banayein?" Dinner Decider Wheel */}
       <DinnerDeciderWheel initialRecipes={plainDinnerRecipes} />
+
+      {/* 8. 🥑 Craft Your Own Fresh Salad & Detox Box Builder */}
+      <CustomBoxBuilder initialIngredients={plainCustomBoxIngredients} />
       
-      {/* 8. 🏷️ 1-Tap Filter Chips & Daily Mandi Harvest Specials */}
+      {/* 9. 🏷️ 1-Tap Filter Chips & Daily Mandi Harvest Specials */}
       <FilteredProduceSection groceries={plainNew} />
 
       {/* 7. Order Again (For logged in users with previous order history) */}

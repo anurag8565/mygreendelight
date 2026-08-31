@@ -200,6 +200,13 @@ export default function Footer() {
                 <span>🥗</span>
                 <span>1-Click Cook Recipe Kits</span>
               </Link>
+              <Link
+                href="/shop/custom-box"
+                className="hover:text-white hover:translate-x-1 transition-all flex items-center gap-1.5 text-emerald-300 font-bold"
+              >
+                <span>🥑</span>
+                <span>Craft Custom Salad Bowl</span>
+              </Link>
             </div>
           </div>
 
