@@ -6,9 +6,9 @@ import { Star, User, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { createPortal } from "react-dom";
 
-export default function Testimonials() {
-  const [testimonials, setTestimonials] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function Testimonials({ initialTestimonials = [] }: { initialTestimonials?: any[] }) {
+  const [testimonials, setTestimonials] = useState<any[]>(initialTestimonials);
+  const [loading, setLoading] = useState(initialTestimonials.length === 0);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Review Modal State
@@ -19,8 +19,13 @@ export default function Testimonials() {
 
   useEffect(() => {
     setMounted(true);
+    if (initialTestimonials.length > 0) {
+      setTestimonials(initialTestimonials);
+      setLoading(false);
+      return;
+    }
     fetchTestimonials();
-  }, []);
+  }, [initialTestimonials]);
 
   const fetchTestimonials = async () => {
     try {
@@ -35,8 +40,8 @@ export default function Testimonials() {
     }
   };
 
-  const nextSlide = () => setCurrentIndex((prev) => (prev + 1 >= testimonials.length - 2 ? 0 : prev + 1));
-  const prevSlide = () => setCurrentIndex((prev) => (prev === 0 ? Math.max(0, testimonials.length - 3) : prev - 1));
+  const nextSlide = () => setCurrentIndex((prev) => (prev + 1 >= testimonials.length - 1 ? 0 : prev + 1));
+  const prevSlide = () => setCurrentIndex((prev) => (prev === 0 ? Math.max(0, testimonials.length - 2) : prev - 1));
 
   const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();

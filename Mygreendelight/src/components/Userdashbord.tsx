@@ -19,6 +19,7 @@ import { Flame, Sparkles, RotateCcw, ChevronRight } from 'lucide-react'
 
 import Banner from '@/model/banner.model'
 import RecipeKit from '@/model/recipekit.model'
+import Testimonial from '@/model/testimonial.model'
 import { auth } from '@/auth'
 import Order from '@/model/order'
 
@@ -32,6 +33,7 @@ export default async function Userdashbord() {
   const bannersPromise = Banner.find({}).sort({ createdAt: -1 }).limit(5)
   const categoriesPromise = Category.find({}).sort({ createdAt: -1 })
   const recipeKitsPromise = RecipeKit.find({ isActive: true }).sort({ createdAt: -1 })
+  const testimonialsPromise = Testimonial.find({ status: 'approved' }).sort({ createdAt: -1 })
   
   let orderAgainGroceriesPromise: Promise<any[]> = Promise.resolve([])
   if (session?.user?.id) {
@@ -52,13 +54,14 @@ export default async function Userdashbord() {
       });
   }
 
-  const [newGroceries, topGroceries, flashDeals, banners, categories, recipeKits, orderAgain] = await Promise.all([
+  const [newGroceries, topGroceries, flashDeals, banners, categories, recipeKits, testimonials, orderAgain] = await Promise.all([
     newGroceriesPromise,
     topGroceriesPromise,
     flashDealsPromise,
     bannersPromise,
     categoriesPromise,
     recipeKitsPromise,
+    testimonialsPromise,
     orderAgainGroceriesPromise
   ]);
 
@@ -68,6 +71,7 @@ export default async function Userdashbord() {
   const plainBanners = JSON.parse(JSON.stringify(banners))
   const plainCategories = JSON.parse(JSON.stringify(categories))
   const plainRecipeKits = JSON.parse(JSON.stringify(recipeKits))
+  const plainTestimonials = JSON.parse(JSON.stringify(testimonials))
   const plainOrderAgain = JSON.parse(JSON.stringify(orderAgain))
 
   return (
@@ -191,8 +195,8 @@ export default async function Userdashbord() {
       {/* 11. Why Choose MyGreenDelight Features */}
       <FeaturesBanner />
 
-      {/* 12. Customer Testimonials & Reviews */}
-      <Testimonials />
+      {/* 12. Customer Testimonials & Reviews (Preloaded from MongoDB) */}
+      <Testimonials initialTestimonials={plainTestimonials} />
 
       {/* 13. PreFooter Trust Elements */}
       <PreFooter />
