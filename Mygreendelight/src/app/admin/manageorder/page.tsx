@@ -31,6 +31,7 @@ import {
   MessageSquare,
   Download,
   FileSpreadsheet,
+  Navigation,
 } from "lucide-react";
 import { socket } from "@/lib/socket";
 import AdminSidebar from "@/components/AdminSidebar";
@@ -51,6 +52,11 @@ interface DeliveryBoy {
   name: string;
   mobile?: string;
   email?: string;
+  location?: {
+    type?: string;
+    coordinates?: [number, number];
+  };
+  isonline?: boolean;
 }
 
 interface OrderType {
@@ -63,7 +69,12 @@ interface OrderType {
   assigneddelliveryboy?: {
     _id: string;
     name: string;
-    mobile: string;
+    mobile?: string;
+    location?: {
+      type?: string;
+      coordinates?: [number, number];
+    };
+    isonline?: boolean;
   };
   assigment?: any;
   items: OrderItem[];
@@ -72,6 +83,8 @@ interface OrderType {
     mobile: string;
     fulladress: string;
     city?: string;
+    latitude?: number;
+    longitude?: number;
   };
   user: {
     name: string;
@@ -266,6 +279,40 @@ export default function ManageOrder() {
 
     return matchesFilter && matchesSearch;
   });
+
+  const calculateDistanceAndETA = (order: OrderType) => {
+    const custLat = order.address?.latitude;
+    const custLng = order.address?.longitude;
+    const riderCoords = order.assigneddelliveryboy?.location?.coordinates;
+    const riderLng = riderCoords?.[0];
+    const riderLat = riderCoords?.[1];
+
+    if (!custLat || !custLng) return null;
+
+    // If rider has GPS coordinates, compute distance from rider, otherwise from Bhopal Central Hub (23.2599, 77.4126)
+    const originLat = riderLat || 23.259933;
+    const originLng = riderLng || 77.412613;
+
+    const R = 6371; // Earth radius in km
+    const dLat = ((custLat - originLat) * Math.PI) / 180;
+    const dLon = ((custLng - originLng) * Math.PI) / 180;
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos((originLat * Math.PI) / 180) *
+        Math.cos((custLat * Math.PI) / 180) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distKm = Math.max(0.3, Math.round(R * c * 10) / 10);
+    const etaMins = Math.max(5, Math.round(distKm * 3.2) + 4);
+
+    return {
+      distKm,
+      etaMins,
+      hasRiderGPS: !!(riderLat && riderLng),
+      mapsUrl: `https://www.google.com/maps/dir/?api=1&origin=${originLat},${originLng}&destination=${custLat},${custLng}`,
+    };
+  };
 
   const openWhatsApp = (order: OrderType) => {
     const rawMobile = order.address?.mobile || order.user?.mobile || "";
@@ -649,49 +696,81 @@ export default function ManageOrder() {
 
                     {/* Rider Assignment Strip */}
                     {isAssigned ? (
-                      <div className="bg-emerald-50/90 border border-emerald-200 rounded-2xl p-4 mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-2xl bg-[#0f8646] text-white flex items-center justify-center shadow-xs shrink-0">
-                            <Truck size={20} />
-                          </div>
-                          <div>
-                            <div className="flex items-center gap-2">
-                              <span className="text-[10px] font-black text-[#0f8646] uppercase tracking-wider bg-emerald-100 px-2 py-0.5 rounded-md">
-                                Assigned Rider Active
+                      <div className="bg-emerald-50/90 border border-emerald-200 rounded-2xl p-4 mb-4 shadow-2xs space-y-3">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-2xl bg-[#0f8646] text-white flex items-center justify-center shadow-xs shrink-0">
+                              <Truck size={20} />
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <span className="text-[10px] font-black text-[#0f8646] uppercase tracking-wider bg-emerald-100 px-2 py-0.5 rounded-md">
+                                  Assigned Rider Active
+                                </span>
+                              </div>
+                              <span className="font-black text-sm text-gray-900 block mt-0.5">
+                                {order.assigneddelliveryboy?.name} ({order.assigneddelliveryboy?.mobile || "No Mobile"})
                               </span>
                             </div>
-                            <span className="font-black text-sm text-gray-900 block mt-0.5">
-                              {order.assigneddelliveryboy?.name} ({order.assigneddelliveryboy?.mobile || "No Mobile"})
-                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            {order.assigneddelliveryboy?.mobile && (
+                              <a
+                                href={`tel:${order.assigneddelliveryboy.mobile}`}
+                                className="bg-white border border-emerald-300 text-[#0f8646] hover:bg-emerald-100 px-3.5 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 transition shadow-2xs"
+                              >
+                                <Phone size={13} />
+                                <span>Call Rider</span>
+                              </a>
+                            )}
+
+                            {/* Reassign Dropdown */}
+                            <select
+                              onChange={(e) => assignDriver(order._id, e.target.value)}
+                              defaultValue=""
+                              disabled={assigningId === order._id}
+                              className="bg-white border border-gray-200 text-gray-700 text-xs font-bold px-3 py-2 rounded-xl outline-none cursor-pointer hover:border-[#0f8646] transition"
+                            >
+                              <option value="" disabled>Change Rider</option>
+                              {deliveryBoys.map((db) => (
+                                <option key={db._id} value={db._id}>
+                                  Reassign to: {db.name} ({db.mobile || db.email})
+                                </option>
+                              ))}
+                            </select>
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-2">
-                          {order.assigneddelliveryboy?.mobile && (
-                            <a
-                              href={`tel:${order.assigneddelliveryboy.mobile}`}
-                              className="bg-white border border-emerald-300 text-[#0f8646] hover:bg-emerald-100 px-3.5 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 transition shadow-2xs"
-                            >
-                              <Phone size={13} />
-                              <span>Call Rider</span>
-                            </a>
-                          )}
+                        {/* Live GPS Distance & ETA Chip */}
+                        {(() => {
+                          const gpsInfo = calculateDistanceAndETA(order);
+                          if (!gpsInfo) return null;
+                          return (
+                            <div className="flex items-center justify-between gap-2 pt-2 border-t border-emerald-200/80 text-xs font-bold text-emerald-950 flex-wrap">
+                              <div className="flex items-center gap-1.5 bg-white/90 px-3 py-1.5 rounded-xl border border-emerald-300 shadow-2xs">
+                                <Navigation size={13} className="text-[#0f8646] animate-pulse" />
+                                <span>
+                                  {gpsInfo.hasRiderGPS ? "Live Fleet Radar:" : "Hub to Customer:"}{" "}
+                                  <strong className="text-[#0f8646] font-black">
+                                    {gpsInfo.distKm} km away
+                                  </strong>{" "}
+                                  (~{gpsInfo.etaMins} mins ETA)
+                                </span>
+                              </div>
 
-                          {/* Reassign Dropdown */}
-                          <select
-                            onChange={(e) => assignDriver(order._id, e.target.value)}
-                            defaultValue=""
-                            disabled={assigningId === order._id}
-                            className="bg-white border border-gray-200 text-gray-700 text-xs font-bold px-3 py-2 rounded-xl outline-none cursor-pointer hover:border-[#0f8646] transition"
-                          >
-                            <option value="" disabled>Change Rider</option>
-                            {deliveryBoys.map((db) => (
-                              <option key={db._id} value={db._id}>
-                                Reassign to: {db.name} ({db.mobile || db.email})
-                              </option>
-                            ))}
-                          </select>
-                        </div>
+                              <a
+                                href={gpsInfo.mapsUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-3 py-1.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition shadow-2xs"
+                              >
+                                <Navigation size={12} />
+                                <span>Track on Google Maps 🗺️</span>
+                              </a>
+                            </div>
+                          );
+                        })()}
                       </div>
                     ) : (
                       /* Unassigned or Broadcasted State */

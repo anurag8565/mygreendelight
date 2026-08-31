@@ -67,6 +67,63 @@ export default function ViewGrocery() {
   >([]);
   const [categories, setCategories] = useState<{ _id: string; name: string }[]>([]);
 
+  // Bulk Multi-Select & Modifier State
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [bulkLoading, setBulkLoading] = useState(false);
+  const [bulkDiscountInput, setBulkDiscountInput] = useState("10");
+  const [bulkRestockInput, setBulkRestockInput] = useState("25");
+  const [bulkCategoryInput, setBulkCategoryInput] = useState("");
+
+  const toggleSelectAll = () => {
+    if (selectedIds.length === filteredGroceries.length && filteredGroceries.length > 0) {
+      setSelectedIds([]);
+    } else {
+      setSelectedIds(filteredGroceries.map((g) => g._id));
+    }
+  };
+
+  const toggleSelectItem = (id: string) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+
+  const handleBulkAction = async (action: string, value?: any) => {
+    if (selectedIds.length === 0) {
+      alert("Please select at least one produce item first.");
+      return;
+    }
+
+    if (
+      action === "delete" &&
+      !confirm(`Are you sure you want to delete ${selectedIds.length} selected produce item(s)?`)
+    ) {
+      return;
+    }
+
+    try {
+      setBulkLoading(true);
+      const res = await axios.post("/api/admin/bulk-update", {
+        itemIds: selectedIds,
+        action,
+        value,
+      });
+
+      if (res.data.success) {
+        alert(`✓ ${res.data.message}`);
+        setSelectedIds([]);
+        fetchGroceries();
+      } else {
+        alert(res.data.message || "Bulk action failed");
+      }
+    } catch (err: any) {
+      console.error("Bulk update error:", err);
+      alert(err.response?.data?.message || "Failed to execute bulk update.");
+    } finally {
+      setBulkLoading(false);
+    }
+  };
+
   const fetchGroceries = async () => {
     setLoading(true);
     try {
@@ -385,6 +442,111 @@ export default function ViewGrocery() {
             </div>
           </div>
 
+          {/* Bulk Action Toolbar (Appears when 1+ items selected) */}
+          {selectedIds.length > 0 && (
+            <div className="bg-gray-900 text-white rounded-3xl p-4 sm:p-5 shadow-2xl border border-gray-700 flex flex-col lg:flex-row lg:items-center justify-between gap-4 animate-fade-in sticky top-20 z-40">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-[#0f8646] text-white flex items-center justify-center font-black text-sm shrink-0">
+                  {selectedIds.length}
+                </div>
+                <div>
+                  <h3 className="font-extrabold text-sm text-white">
+                    {selectedIds.length} Produce Item(s) Selected
+                  </h3>
+                  <p className="text-[11px] text-gray-400">
+                    Apply bulk discounts, restock or update categories in 1-click
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5 flex-wrap">
+                {/* 1. Bulk Discount */}
+                <div className="flex items-center gap-1.5 bg-gray-800 p-1 rounded-xl border border-gray-700">
+                  <input
+                    type="number"
+                    min="1"
+                    max="90"
+                    value={bulkDiscountInput}
+                    onChange={(e) => setBulkDiscountInput(e.target.value)}
+                    className="w-12 px-2 py-1 text-xs font-black text-white bg-gray-900 rounded-lg outline-none text-center"
+                    placeholder="10"
+                  />
+                  <span className="text-xs font-bold text-gray-400">% OFF</span>
+                  <button
+                    disabled={bulkLoading}
+                    onClick={() => handleBulkAction("discount", bulkDiscountInput)}
+                    className="bg-[#0f8646] hover:bg-[#0c6a38] text-white text-xs font-black px-2.5 py-1 rounded-lg transition disabled:opacity-50 cursor-pointer"
+                  >
+                    Apply
+                  </button>
+                </div>
+
+                {/* 2. Bulk Restock */}
+                <div className="flex items-center gap-1.5 bg-gray-800 p-1 rounded-xl border border-gray-700">
+                  <input
+                    type="number"
+                    min="1"
+                    value={bulkRestockInput}
+                    onChange={(e) => setBulkRestockInput(e.target.value)}
+                    className="w-14 px-2 py-1 text-xs font-black text-white bg-gray-900 rounded-lg outline-none text-center"
+                    placeholder="25"
+                  />
+                  <button
+                    disabled={bulkLoading}
+                    onClick={() => handleBulkAction("restock", bulkRestockInput)}
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black px-2.5 py-1 rounded-lg transition disabled:opacity-50 cursor-pointer"
+                  >
+                    + Restock
+                  </button>
+                </div>
+
+                {/* 3. Bulk Category Move */}
+                <div className="flex items-center gap-1.5 bg-gray-800 p-1 rounded-xl border border-gray-700">
+                  <select
+                    value={bulkCategoryInput}
+                    onChange={(e) => setBulkCategoryInput(e.target.value)}
+                    className="bg-gray-900 text-white text-xs font-bold px-2 py-1 rounded-lg outline-none"
+                  >
+                    <option value="">Move Category...</option>
+                    {categories.map((c) => (
+                      <option key={c._id} value={c.name}>
+                        {c.name}
+                      </option>
+                    ))}
+                  </select>
+                  {bulkCategoryInput && (
+                    <button
+                      disabled={bulkLoading}
+                      onClick={() => handleBulkAction("change_category", bulkCategoryInput)}
+                      className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-black px-2.5 py-1 rounded-lg transition disabled:opacity-50 cursor-pointer"
+                    >
+                      Move
+                    </button>
+                  )}
+                </div>
+
+                {/* 4. Bulk Delete */}
+                <button
+                  disabled={bulkLoading}
+                  onClick={() => handleBulkAction("delete")}
+                  className="bg-red-600/90 hover:bg-red-600 text-white text-xs font-black px-3 py-1.5 rounded-xl transition flex items-center gap-1 disabled:opacity-50 cursor-pointer"
+                  title="Bulk delete selected items"
+                >
+                  <Trash2 size={13} />
+                  <span>Delete</span>
+                </button>
+
+                {/* Clear */}
+                <button
+                  onClick={() => setSelectedIds([])}
+                  className="bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs font-bold px-3 py-1.5 rounded-xl transition cursor-pointer"
+                >
+                  Clear
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* Groceries Table */}
           {loading ? (
             <div className="py-24 flex flex-col items-center justify-center">
@@ -413,7 +575,19 @@ export default function ViewGrocery() {
                 <table className="w-full text-left border-collapse">
                   <thead>
                     <tr className="border-b border-gray-100 bg-gray-50/60 text-[11px] font-black uppercase text-gray-400">
-                      <th className="py-3.5 px-5">Produce</th>
+                      <th className="py-3.5 px-4 w-10">
+                        <input
+                          type="checkbox"
+                          checked={
+                            selectedIds.length === filteredGroceries.length &&
+                            filteredGroceries.length > 0
+                          }
+                          onChange={toggleSelectAll}
+                          className="w-4 h-4 rounded text-[#0f8646] focus:ring-[#0f8646] cursor-pointer"
+                          title="Select / Deselect All"
+                        />
+                      </th>
+                      <th className="py-3.5 px-4">Produce</th>
                       <th className="py-3.5 px-4">Category</th>
                       <th className="py-3.5 px-4">Base Price</th>
                       <th className="py-3.5 px-4">Unit / Pack</th>
@@ -426,13 +600,24 @@ export default function ViewGrocery() {
                     {filteredGroceries.map((item) => {
                       const stockCount = item.stock || 0;
                       const hasVars = item.variations && item.variations.length > 0;
+                      const isSelected = selectedIds.includes(item._id);
 
                       return (
                         <tr
                           key={item._id}
-                          className="hover:bg-gray-50/60 transition group"
+                          className={`hover:bg-gray-50/60 transition group ${
+                            isSelected ? "bg-green-50/40" : ""
+                          }`}
                         >
-                          <td className="py-3.5 px-5">
+                          <td className="py-3.5 px-4">
+                            <input
+                              type="checkbox"
+                              checked={isSelected}
+                              onChange={() => toggleSelectItem(item._id)}
+                              className="w-4 h-4 rounded text-[#0f8646] focus:ring-[#0f8646] cursor-pointer"
+                            />
+                          </td>
+                          <td className="py-3.5 px-4">
                             <div className="flex items-center gap-3">
                               <img
                                 src={item.image || "/categories/vegetables.jpg"}

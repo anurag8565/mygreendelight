@@ -23,11 +23,14 @@ import {
   Loader2,
   ArrowRight,
   Mic,
-  MicOff
+  MicOff,
+  Plus,
+  Minus,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
-import { useSelector } from "react-redux";
-import type { RootState } from "@/redux/store";
+import { useSelector, useDispatch } from "react-redux";
+import { addToCart, increaseQuantity, decreaseQuantity } from "@/redux/CartSlice";
+import type { RootState, AppDispatch } from "@/redux/store";
 import { AnimatePresence, motion } from "framer-motion";
 import { createPortal } from "react-dom";
 import MiniCart from "./MiniCart";
@@ -46,6 +49,7 @@ interface iUser {
 export default function Nav({ user }: { user: iUser }) {
   const router = useRouter();
   const pathname = usePathname();
+  const dispatch = useDispatch<AppDispatch>();
   const [open, setOpen] = useState(false);
   const [menuopen, setmenuopen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -398,24 +402,97 @@ export default function Nav({ user }: { user: iUser }) {
                       </div>
                     ) : (
                       <>
-                        {searchResults.map((item) => (
-                          <div
-                            key={item._id}
-                            onClick={() => {
-                              setSearch("");
-                              setSearchResults([]);
-                              router.push(`/product/${item._id}`);
-                            }}
-                            className="flex items-center gap-3 p-3 hover:bg-green-50 cursor-pointer border-b border-gray-50 last:border-0"
-                          >
-                            <img src={item.image} alt={item.name} className="w-10 h-10 rounded object-contain border border-gray-100 p-1 bg-white" />
-                            <div className="flex flex-col flex-1">
-                              <span className="text-sm font-semibold text-gray-800 line-clamp-1">{item.name}</span>
-                              <span className="text-xs text-gray-500">{item.category}</span>
+                        {searchResults.map((item) => {
+                          const cartItem = cartdata.find(
+                            (c) => c._id === item._id || c.cartItemId === item._id
+                          );
+                          return (
+                            <div
+                              key={item._id}
+                              onClick={() => {
+                                setSearch("");
+                                setSearchResults([]);
+                                router.push(`/product/${item._id}`);
+                              }}
+                              className="flex items-center justify-between gap-3 p-3 hover:bg-green-50 cursor-pointer border-b border-gray-50 last:border-0 transition"
+                            >
+                              <div className="flex items-center gap-3 min-w-0 flex-1">
+                                <img
+                                  src={item.image}
+                                  alt={item.name}
+                                  className="w-11 h-11 rounded-xl object-contain border border-gray-100 p-1 bg-white shrink-0"
+                                />
+                                <div className="flex flex-col min-w-0 flex-1">
+                                  <span className="text-sm font-bold text-gray-900 line-clamp-1">
+                                    {item.name}
+                                  </span>
+                                  <div className="flex items-center gap-2 text-xs">
+                                    <span className="text-gray-400 font-medium">
+                                      {item.unit || item.category}
+                                    </span>
+                                    <span className="font-extrabold text-[#0f8646]">
+                                      ₹{item.price}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* 1-Click Fast ADD / Quantity Pill */}
+                              {!cartItem ? (
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    dispatch(
+                                      addToCart({
+                                        ...item,
+                                        price: item.price,
+                                        unit: item.unit || "unit",
+                                        cartItemId: item._id,
+                                        quantity: 1,
+                                      })
+                                    );
+                                  }}
+                                  className="bg-emerald-50 hover:bg-[#0f8646] text-[#0f8646] hover:text-white border border-emerald-300 px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1 shadow-2xs shrink-0 cursor-pointer"
+                                >
+                                  <Plus size={13} className="stroke-[3]" />
+                                  <span>ADD</span>
+                                </button>
+                              ) : (
+                                <div
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="flex items-center bg-white border border-[#0f8646] rounded-xl overflow-hidden h-7 shadow-2xs shrink-0"
+                                >
+                                  <button
+                                    type="button"
+                                    className="w-6 h-full flex items-center justify-center bg-green-50 text-[#0f8646] hover:bg-[#0f8646] hover:text-white transition font-black text-xs cursor-pointer"
+                                    onClick={() =>
+                                      dispatch(
+                                        decreaseQuantity(cartItem.cartItemId || item._id)
+                                      )
+                                    }
+                                  >
+                                    <Minus size={11} className="stroke-[3]" />
+                                  </button>
+                                  <span className="px-2 text-center font-black text-xs text-gray-900">
+                                    {cartItem.quantity}
+                                  </span>
+                                  <button
+                                    type="button"
+                                    className="w-6 h-full flex items-center justify-center bg-green-50 text-[#0f8646] hover:bg-[#0f8646] hover:text-white transition font-black text-xs cursor-pointer"
+                                    onClick={() =>
+                                      dispatch(
+                                        increaseQuantity(cartItem.cartItemId || item._id)
+                                      )
+                                    }
+                                  >
+                                    <Plus size={11} className="stroke-[3]" />
+                                  </button>
+                                </div>
+                              )}
                             </div>
-                            <span className="text-sm font-bold text-[#0f8646]">₹{item.price}</span>
-                          </div>
-                        ))}
+                          );
+                        })}
                         <div 
                           onClick={() => handleSearch()}
                           className="p-3 text-center text-sm text-[#0f8646] font-bold bg-green-50/50 hover:bg-green-100 cursor-pointer"
@@ -539,24 +616,97 @@ export default function Nav({ user }: { user: iUser }) {
                   </div>
                 ) : (
                   <>
-                    {searchResults.map((item) => (
-                      <div
-                        key={item._id}
-                        onClick={() => {
-                          setSearch("");
-                          setSearchResults([]);
-                          router.push(`/product/${item._id}`);
-                        }}
-                        className="flex items-center gap-3 p-3 hover:bg-green-50 cursor-pointer border-b border-gray-50 last:border-0"
-                      >
-                        <img src={item.image} alt={item.name} className="w-10 h-10 rounded object-contain border border-gray-100 p-1 bg-white" />
-                        <div className="flex flex-col flex-1">
-                          <span className="text-sm font-semibold text-gray-800 line-clamp-1">{item.name}</span>
-                          <span className="text-xs text-gray-500">{item.category}</span>
+                    {searchResults.map((item) => {
+                      const cartItem = cartdata.find(
+                        (c) => c._id === item._id || c.cartItemId === item._id
+                      );
+                      return (
+                        <div
+                          key={item._id}
+                          onClick={() => {
+                            setSearch("");
+                            setSearchResults([]);
+                            router.push(`/product/${item._id}`);
+                          }}
+                          className="flex items-center justify-between gap-3 p-3 hover:bg-green-50 cursor-pointer border-b border-gray-50 last:border-0 transition"
+                        >
+                          <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="w-10 h-10 rounded-xl object-contain border border-gray-100 p-1 bg-white shrink-0"
+                            />
+                            <div className="flex flex-col min-w-0 flex-1">
+                              <span className="text-xs sm:text-sm font-bold text-gray-900 line-clamp-1">
+                                {item.name}
+                              </span>
+                              <div className="flex items-center gap-1.5 text-[11px]">
+                                <span className="text-gray-400 font-medium">
+                                  {item.unit || item.category}
+                                </span>
+                                <span className="font-extrabold text-[#0f8646]">
+                                  ₹{item.price}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* 1-Click Fast ADD / Quantity Pill */}
+                          {!cartItem ? (
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                dispatch(
+                                  addToCart({
+                                    ...item,
+                                    price: item.price,
+                                    unit: item.unit || "unit",
+                                    cartItemId: item._id,
+                                    quantity: 1,
+                                  })
+                                );
+                              }}
+                              className="bg-emerald-50 hover:bg-[#0f8646] text-[#0f8646] hover:text-white border border-emerald-300 px-2.5 py-1 rounded-xl text-xs font-black transition-all flex items-center gap-1 shadow-2xs shrink-0 cursor-pointer"
+                            >
+                              <Plus size={12} className="stroke-[3]" />
+                              <span>ADD</span>
+                            </button>
+                          ) : (
+                            <div
+                              onClick={(e) => e.stopPropagation()}
+                              className="flex items-center bg-white border border-[#0f8646] rounded-xl overflow-hidden h-7 shadow-2xs shrink-0"
+                            >
+                              <button
+                                type="button"
+                                className="w-6 h-full flex items-center justify-center bg-green-50 text-[#0f8646] hover:bg-[#0f8646] hover:text-white transition font-black text-xs cursor-pointer"
+                                onClick={() =>
+                                  dispatch(
+                                    decreaseQuantity(cartItem.cartItemId || item._id)
+                                  )
+                                }
+                              >
+                                <Minus size={10} className="stroke-[3]" />
+                              </button>
+                              <span className="px-1.5 text-center font-black text-xs text-gray-900">
+                                {cartItem.quantity}
+                              </span>
+                              <button
+                                type="button"
+                                className="w-6 h-full flex items-center justify-center bg-green-50 text-[#0f8646] hover:bg-[#0f8646] hover:text-white transition font-black text-xs cursor-pointer"
+                                onClick={() =>
+                                  dispatch(
+                                    increaseQuantity(cartItem.cartItemId || item._id)
+                                  )
+                                }
+                              >
+                                <Plus size={10} className="stroke-[3]" />
+                              </button>
+                            </div>
+                          )}
                         </div>
-                        <span className="text-sm font-bold text-[#0f8646]">₹{item.price}</span>
-                      </div>
-                    ))}
+                      );
+                    })}
                     <div 
                       onClick={() => handleSearch()}
                       className="p-3 text-center text-sm text-[#0f8646] font-bold bg-green-50/50 hover:bg-green-100 cursor-pointer"

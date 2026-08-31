@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
     try {
       rawOrders = await Order.find({})
         .populate({ path: "user", model: User, select: "name email mobile", strictPopulate: false })
-        .populate({ path: "assigneddelliveryboy", model: User, select: "name mobile email", strictPopulate: false })
+        .populate({ path: "assigneddelliveryboy", model: User, select: "name mobile email location isonline", strictPopulate: false })
         .populate({ path: "assigment", model: DeliveryAssignment, strictPopulate: false })
         .sort({ createdAt: -1 })
         .lean();
@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
     }
 
     const deliveryBoys = await User.find({ role: "deliveryboy" })
-      .select("name email mobile")
+      .select("name email mobile location isonline")
       .lean();
 
     const orders = JSON.parse(JSON.stringify(rawOrders || []));
