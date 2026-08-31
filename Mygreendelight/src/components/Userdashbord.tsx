@@ -2,6 +2,7 @@ import React from 'react'
 import Hero from './Hero'
 import MandiPriceTicker from './MandiPriceTicker'
 import DeliveryRadarStrip from './DeliveryRadarStrip'
+import FastReorderWidget from './FastReorderWidget'
 import Categoryslider from './Categoryslider'
 import RecipeKitsSection from './RecipeKitsSection'
 import DinnerDeciderWheel from './DinnerDeciderWheel'
@@ -102,6 +103,9 @@ export default async function Userdashbord() {
 
       {/* 3. Live 10-15 Min Express Delivery Radar Strip */}
       <DeliveryRadarStrip />
+
+      {/* ⚡ 1-Click Fast Reorder Regular Farm Basket */}
+      <FastReorderWidget />
 
       {/* 4. Shop by Category (Zero Flicker & Preloaded from Database) */}
       <Categoryslider categories={plainCategories} />
