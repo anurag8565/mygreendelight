@@ -3,13 +3,14 @@
 import { addToCart, decreaseQuantity, increaseQuantity } from "@/redux/CartSlice";
 import { toggleWishlist } from "@/redux/WishlistSlice";
 import { AppDispatch, RootState } from "@/redux/store";
-import { ShoppingCart, Heart, Plus, Minus } from "lucide-react";
+import { ShoppingCart, Heart, Plus, Minus, Bell } from "lucide-react";
 import mongoose from "mongoose";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import axios from "axios";
 import { motion } from "framer-motion";
+import StockAlertModal from "./StockAlertModal";
 
 interface IGrosery {
   _id: mongoose.Types.ObjectId;
@@ -38,6 +39,7 @@ export default function Groceryitemcard({
   const [selectedVariation, setSelectedVariation] = React.useState(
     item.variations && item.variations.length > 0 ? item.variations[0] : null
   );
+  const [showAlertModal, setShowAlertModal] = React.useState(false);
 
   const displayPrice = selectedVariation ? selectedVariation.price : item.price;
   const displayUnit = selectedVariation ? selectedVariation.weight : item.unit;
@@ -172,10 +174,18 @@ export default function Groceryitemcard({
 
         {/* 3. BOTTOM BUTTON (Pinned at bottom) */}
         <div className="mt-auto pt-1.5">
-          {!cartitem ? (
+          {displayStock <= 0 ? (
             <button
               type="button"
-              disabled={displayStock <= 0}
+              onClick={() => setShowAlertModal(true)}
+              className="w-full h-[34px] rounded-xl flex items-center justify-center gap-1 font-black text-[11px] transition-all bg-amber-50 text-amber-800 border border-amber-300 hover:bg-amber-100 shadow-2xs cursor-pointer"
+            >
+              <Bell size={12} className="stroke-[2.5]" />
+              <span>🔔 Notify Me</span>
+            </button>
+          ) : !cartitem ? (
+            <button
+              type="button"
               onClick={() =>
                 dispatch(
                   addToCart({
@@ -194,14 +204,10 @@ export default function Groceryitemcard({
                   })
                 )
               }
-              className={`w-full h-[34px] rounded-xl flex items-center justify-center gap-1 font-black text-[12px] transition-all border cursor-pointer ${
-                displayStock <= 0
-                  ? "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
-                  : "bg-white text-[#0f8646] border-[#0f8646] hover:bg-[#0f8646] hover:text-white shadow-2xs"
-              }`}
+              className="w-full h-[34px] rounded-xl flex items-center justify-center gap-1 font-black text-[12px] transition-all border cursor-pointer bg-white text-[#0f8646] border-[#0f8646] hover:bg-[#0f8646] hover:text-white shadow-2xs"
             >
               <Plus size={14} className="stroke-[3]" />
-              <span>{displayStock <= 0 ? "OOS" : "ADD"}</span>
+              <span>ADD</span>
             </button>
           ) : (
             <div className="flex items-center justify-between bg-white border border-[#0f8646] rounded-xl overflow-hidden h-[34px] shadow-xs">
@@ -231,6 +237,12 @@ export default function Groceryitemcard({
           )}
         </div>
       </div>
+
+      <StockAlertModal
+        grocery={item as any}
+        isOpen={showAlertModal}
+        onClose={() => setShowAlertModal(false)}
+      />
     </motion.div>
   );
 }

@@ -27,6 +27,7 @@ import {
   Salad,
   Heart,
   FileText,
+  Bell,
 } from "lucide-react";
 
 export default function AdminSidebar() {
@@ -93,6 +94,11 @@ export default function AdminSidebar() {
       name: "Kisan Gratitude Fund",
       href: "/admin/farmer-gratitude",
       icon: <Heart size={18} />,
+    },
+    {
+      name: "Harvest Stock Alerts",
+      href: "/admin/manage-stock-alerts",
+      icon: <Bell size={18} />,
     },
     {
       name: "Coupons & Discounts",

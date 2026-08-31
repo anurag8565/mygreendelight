@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import OrderInvoiceModal from "@/components/OrderInvoiceModal";
+import { segregateOrderProduce } from "@/lib/bagSegregation";
 import ReviewProductModal from "@/components/ReviewProductModal";
 
 const Livemap = dynamic(() => import("@/components/Livemap"), {
@@ -365,6 +366,56 @@ export default function TrackOrderPage() {
                   </div>
                 ))}
               </div>
+
+              {/* 📦 Multi-Bag Freshness Packing Segregation */}
+              {order?.items && (
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <div className="flex items-center gap-1.5 mb-2.5">
+                    <span className="text-[10px] font-black uppercase text-[#0f8646] tracking-wider bg-emerald-50 px-2 py-0.5 rounded-md">
+                      📦 Multi-Bag Quality Segregation
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                    {(() => {
+                      const bags = segregateOrderProduce(order.items);
+                      return (
+                        <>
+                          {bags.bag1_leafy.length > 0 && (
+                            <div className="p-2.5 bg-green-50/70 border border-green-200 rounded-xl">
+                              <span className="font-black text-[11px] text-green-900 block mb-0.5">
+                                🥬 Bag 1 (Soft / Leafy)
+                              </span>
+                              <span className="text-[10px] text-green-800">
+                                {bags.bag1_leafy.map((i) => i.name).join(", ")}
+                              </span>
+                            </div>
+                          )}
+                          {bags.bag2_heavy.length > 0 && (
+                            <div className="p-2.5 bg-amber-50/70 border border-amber-200 rounded-xl">
+                              <span className="font-black text-[11px] text-amber-900 block mb-0.5">
+                                🥔 Bag 2 (Heavy Staples)
+                              </span>
+                              <span className="text-[10px] text-amber-800">
+                                {bags.bag2_heavy.map((i) => i.name).join(", ")}
+                              </span>
+                            </div>
+                          )}
+                          {bags.bag3_dairy.length > 0 && (
+                            <div className="p-2.5 bg-blue-50/70 border border-blue-200 rounded-xl">
+                              <span className="font-black text-[11px] text-blue-900 block mb-0.5">
+                                🥛 Bag 3 (Chilled Dairy)
+                              </span>
+                              <span className="text-[10px] text-blue-800">
+                                {bags.bag3_dairy.map((i) => i.name).join(", ")}
+                              </span>
+                            </div>
+                          )}
+                        </>
+                      );
+                    })()}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Address & Total (5 Cols) */}
