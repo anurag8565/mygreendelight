@@ -11,16 +11,26 @@ export async function GET(req: NextRequest) {
   try {
     await connectDb();
 
-    // Ensure all referenced schemas are initialized in mongoose
-    const [rawOrders, deliveryBoys] = await Promise.all([
-      Order.find({})
+    // Touch models so Mongoose registers them in memory
+    const _models = [User.modelName, DeliveryAssignment.modelName, Grocery.modelName, Order.modelName];
+    if (!_models) console.log("Models loaded");
+
+    let rawOrders = [];
+    try {
+      rawOrders = await Order.find({})
         .populate("user", "name email mobile")
         .populate("assigneddelliveryboy", "name mobile email")
         .populate("assigment")
         .sort({ createdAt: -1 })
-        .lean(),
-      User.find({ role: "deliveryboy" }).select("name email mobile").lean(),
-    ]);
+        .lean();
+    } catch (popErr) {
+      console.warn("Populate error, falling back to plain query:", popErr);
+      rawOrders = await Order.find({}).sort({ createdAt: -1 }).lean();
+    }
+
+    const deliveryBoys = await User.find({ role: "deliveryboy" })
+      .select("name email mobile")
+      .lean();
 
     const orders = JSON.parse(JSON.stringify(rawOrders || []));
 

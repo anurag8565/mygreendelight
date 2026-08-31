@@ -1,4 +1,7 @@
 import mongoose from "mongoose";
+import "./user.model";
+import "./Deliveryassigment.model";
+import "./groseri.model";
 
 export interface iorder {
     _id?: mongoose.Types.ObjectId
