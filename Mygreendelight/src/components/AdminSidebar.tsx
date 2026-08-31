@@ -29,6 +29,7 @@ import {
   FileText,
   Bell,
   BookOpen,
+  Percent,
 } from "lucide-react";
 
 export default function AdminSidebar() {
@@ -105,6 +106,21 @@ export default function AdminSidebar() {
       name: "Produce Storage Guide",
       href: "/admin/manage-produce-guide",
       icon: <BookOpen size={18} />,
+    },
+    {
+      name: "Value Combos & Packs",
+      href: "/admin/manage-combos",
+      icon: <Percent size={18} />,
+    },
+    {
+      name: "Gift Hampers & Baskets",
+      href: "/admin/manage-gift-baskets",
+      icon: <Gift size={18} />,
+    },
+    {
+      name: "Customer Reviews",
+      href: "/admin/manage-reviews",
+      icon: <Star size={18} />,
     },
     {
       name: "Coupons & Discounts",

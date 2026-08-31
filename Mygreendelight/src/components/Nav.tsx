@@ -33,6 +33,7 @@ import { addToCart, increaseQuantity, decreaseQuantity } from "@/redux/CartSlice
 import type { RootState, AppDispatch } from "@/redux/store";
 import { AnimatePresence, motion } from "framer-motion";
 import { createPortal } from "react-dom";
+import VoiceSearchModal from "./VoiceSearchModal";
 import MiniCart from "./MiniCart";
 import LocationModal from "./LocationModal";
 
@@ -114,63 +115,10 @@ export default function Nav({ user }: { user: iUser }) {
 
   const cartTotal = cartdata.reduce((total, item) => total + (item.price * item.quantity), 0);
 
-  const [isListening, setIsListening] = useState(false);
-  const [voiceStatus, setVoiceStatus] = useState<string | null>(null);
+  const [showVoiceModal, setShowVoiceModal] = useState(false);
 
   const handleVoiceSearch = () => {
-    if (typeof window === "undefined") return;
-    const SpeechRecognition =
-      (window as any).SpeechRecognition ||
-      (window as any).webkitSpeechRecognition;
-
-    if (!SpeechRecognition) {
-      alert("Voice search is not supported on this browser. Please try Google Chrome or Edge.");
-      return;
-    }
-
-    try {
-      const recognition = new SpeechRecognition();
-      recognition.lang = "hi-IN"; // Seamlessly captures Hindi, Hinglish and English
-      recognition.interimResults = false;
-      recognition.maxAlternatives = 1;
-
-      recognition.onstart = () => {
-        setIsListening(true);
-        setVoiceStatus("Listening... Bolna shuru kijiye");
-      };
-
-      recognition.onresult = (event: any) => {
-        const transcript = event.results[0][0].transcript;
-        if (transcript) {
-          setSearch(transcript);
-          setIsListening(false);
-          setVoiceStatus(null);
-          router.push(`/user/search?query=${encodeURIComponent(transcript.trim())}`);
-        }
-      };
-
-      recognition.onerror = (event: any) => {
-        setIsListening(false);
-        setVoiceStatus(null);
-        if (event.error === "no-speech" || event.error === "aborted") {
-          // Normal user silence or cancellation, handle silently
-          return;
-        }
-        if (event.error === "not-allowed") {
-          alert("Microphone access is blocked. Please allow mic permissions in your browser address bar.");
-        }
-      };
-
-      recognition.onend = () => {
-        setIsListening(false);
-        setVoiceStatus(null);
-      };
-
-      recognition.start();
-    } catch (err) {
-      setIsListening(false);
-      setVoiceStatus(null);
-    }
+    setShowVoiceModal(true);
   };
 
   const handleSearch = (e?: React.FormEvent) => {
@@ -282,6 +230,10 @@ export default function Nav({ user }: { user: iUser }) {
             <span>🍅 Storage & Shelf Life Guide</span>
             <span className="bg-green-100 text-green-800 text-[10px] font-black px-2 py-0.5 rounded-full">Hacks</span>
           </Link>
+          <Link href="/shop/gift-basket" onClick={() => setmenuopen(false)} className={`font-semibold py-2 border-b flex items-center justify-between ${pathname === "/shop/gift-basket" ? "text-[#0f8646]" : "text-gray-700"}`}>
+            <span>🎁 Gift a Fresh Hamper</span>
+            <span className="bg-pink-100 text-pink-800 text-[10px] font-black px-2 py-0.5 rounded-full">Gift</span>
+          </Link>
           <Link href="/user/myorder" onClick={() => setmenuopen(false)} className={`font-semibold py-2 border-b ${pathname === "/user/myorder" ? "text-[#0f8646]" : "text-gray-700"}`}>My Orders</Link>
           
           {user.role === "admin" && (
@@ -380,28 +332,16 @@ export default function Nav({ user }: { user: iUser }) {
                 <button
                   type="button"
                   onClick={handleVoiceSearch}
-                  title="Search by voice (e.g. Tamatar, Fresh Apple, Milk)"
-                  className={`p-2 mr-1.5 rounded-full transition-all flex items-center justify-center shrink-0 cursor-pointer ${
-                    isListening 
-                      ? 'bg-red-500 text-white animate-pulse shadow-md ring-2 ring-red-300' 
-                      : 'text-gray-400 hover:text-[#0f8646] hover:bg-green-50'
-                  }`}
+                  title="Search by voice in Hindi or English"
+                  className="p-2 mr-1.5 rounded-full transition-all flex items-center justify-center shrink-0 cursor-pointer text-gray-400 hover:text-[#0f8646] hover:bg-green-50"
                 >
-                  <Mic size={18} className={isListening ? "animate-bounce" : ""} />
+                  <Mic size={18} />
                 </button>
 
                 <button type="submit" className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-6 font-semibold transition-colors text-sm h-full shrink-0">
                   Search
                 </button>
               </form>
-
-              {/* Listening Overlay Tooltip */}
-              {isListening && (
-                <div className="absolute top-full left-0 mt-2 bg-red-600 text-white text-xs font-bold px-3.5 py-1.5 rounded-lg shadow-xl flex items-center gap-2 z-50 animate-bounce">
-                  <span className="w-2 h-2 rounded-full bg-white animate-ping" />
-                  <span>Listening... Bolna shuru kijiye (e.g. Tamatar, Palak)</span>
-                </div>
-              )}
 
               {/* Suggestions Dropdown */}
               <AnimatePresence>
@@ -610,24 +550,12 @@ export default function Nav({ user }: { user: iUser }) {
             <button
               type="button"
               onClick={handleVoiceSearch}
-              title="Search by voice"
-              className={`p-1.5 rounded-full transition-all flex items-center justify-center shrink-0 cursor-pointer ${
-                isListening 
-                  ? 'bg-red-500 text-white animate-pulse shadow-md ring-2 ring-red-300' 
-                  : 'text-gray-400 hover:text-[#0f8646]'
-              }`}
+              title="Search by voice in Hindi or English"
+              className="p-1.5 rounded-full transition-all flex items-center justify-center shrink-0 cursor-pointer text-gray-400 hover:text-[#0f8646]"
             >
-              <Mic size={16} className={isListening ? "animate-bounce" : ""} />
+              <Mic size={16} />
             </button>
           </form>
-
-          {/* Listening Overlay Tooltip on Mobile */}
-          {isListening && (
-            <div className="absolute top-full left-4 right-4 mt-2 bg-red-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-xl flex items-center gap-2 z-50 animate-bounce justify-center">
-              <span className="w-2 h-2 rounded-full bg-white animate-ping" />
-              <span>Listening... Bolna shuru kijiye</span>
-            </div>
-          )}
 
           {/* Mobile Suggestions Dropdown */}
           <AnimatePresence>
@@ -794,6 +722,12 @@ export default function Nav({ user }: { user: iUser }) {
             localStorage.setItem("mgd_user_location", newLoc);
           }
         }}
+      />
+
+      {/* 🎙️ Voice Search in Hindi & English Modal */}
+      <VoiceSearchModal
+        isOpen={showVoiceModal}
+        onClose={() => setShowVoiceModal(false)}
       />
     </>
   );

@@ -8,11 +8,13 @@ import RecipeKitsSection from './RecipeKitsSection'
 import DinnerDeciderWheel from './DinnerDeciderWheel'
 import CustomBoxBuilder from './CustomBoxBuilder'
 import FlashDeals from './FlashDeals'
+import CombosSection from './CombosSection'
 import FilteredProduceSection from './FilteredProduceSection'
 import MorningSubscriptionBanner from './MorningSubscriptionBanner'
 import DailyRewardWidget from './DailyRewardWidget'
 import Grocery from '@/model/groseri.model'
 import Category from '@/model/category.model'
+import ComboBundle from '@/model/combo.model'
 import connectDb from '@/lib/db'
 import Groceryitemcard from './Groceryitemcard'
 import ProductCarousel from './ProductCarousel'
@@ -67,7 +69,9 @@ export default async function Userdashbord() {
       });
   }
 
-  const [newGroceries, topGroceries, flashDeals, banners, categories, recipeKits, dinnerRecipes, customBoxIngredients, testimonials, mandiRates, orderAgain] = await Promise.all([
+  const comboBundlesPromise = ComboBundle.find({ isActive: true }).lean()
+
+  const [newGroceries, topGroceries, flashDeals, banners, categories, recipeKits, dinnerRecipes, customBoxIngredients, testimonials, mandiRates, orderAgain, comboBundles] = await Promise.all([
     newGroceriesPromise,
     topGroceriesPromise,
     flashDealsPromise,
@@ -78,7 +82,8 @@ export default async function Userdashbord() {
     customBoxIngredientsPromise,
     testimonialsPromise,
     mandiRatesPromise,
-    orderAgainGroceriesPromise
+    orderAgainGroceriesPromise,
+    comboBundlesPromise
   ]);
 
   const plainNew = JSON.parse(JSON.stringify(newGroceries))
@@ -92,6 +97,7 @@ export default async function Userdashbord() {
   const plainTestimonials = JSON.parse(JSON.stringify(testimonials))
   const plainMandiRates = JSON.parse(JSON.stringify(mandiRates))
   const plainOrderAgain = JSON.parse(JSON.stringify(orderAgain))
+  const plainCombos = JSON.parse(JSON.stringify(comboBundles || []))
 
   return (
     <div className="bg-white w-full max-w-full overflow-x-hidden">
@@ -121,6 +127,9 @@ export default async function Userdashbord() {
 
       {/* 8. 🥑 Craft Your Own Fresh Salad & Detox Box Builder */}
       <CustomBoxBuilder initialIngredients={plainCustomBoxIngredients} />
+
+      {/* ⚡ Save-More Value Combos & Multipacks */}
+      <CombosSection initialCombos={plainCombos} />
       
       {/* 9. 🏷️ 1-Tap Filter Chips & Daily Mandi Harvest Specials */}
       <FilteredProduceSection groceries={plainNew} />
