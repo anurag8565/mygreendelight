@@ -67,59 +67,60 @@ export default function AdminDashboardPage() {
   };
 
   return (
-    <div className="bg-[#f8faf9] min-h-screen font-sans flex">
+    <div className="bg-[#f8faf9] min-h-screen font-sans flex flex-col lg:flex-row w-full max-w-full overflow-x-hidden">
       {/* Sidebar */}
       <AdminSidebar />
 
       {/* Main Content Area */}
-      <main className="flex-1 lg:pl-64 flex flex-col min-h-screen">
-        {/* Top Header */}
-        <header className="bg-white border-b border-gray-200/80 px-6 py-4 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
-          <div>
-            <h1 className="text-xl sm:text-2xl font-black text-gray-900">
-              Admin Overview
-            </h1>
-            <p className="text-xs text-gray-500 mt-0.5">
-              Live store metrics, revenue & 10-min delivery fleet operations
-            </p>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button
-              onClick={handleRefresh}
-              disabled={refreshing}
-              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
-            >
-              <RefreshCw
-                size={14}
-                className={refreshing ? "animate-spin text-[#0f8646]" : ""}
-              />
-              <span className="hidden sm:inline">Refresh Data</span>
-            </button>
-
-            <Link
-              href="/admin/addgrocery"
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-xl text-xs font-black shadow-sm transition flex items-center gap-1.5"
-            >
-              <PlusCircle size={15} />
-              <span>Add Produce</span>
-            </Link>
-          </div>
-        </header>
-
-        {/* Dashboard Body */}
-        <div className="p-6 sm:p-8 space-y-8 flex-1">
-          {loading ? (
-            <div className="py-24 flex flex-col items-center justify-center">
-              <Loader2 size={36} className="animate-spin text-[#0f8646] mb-3" />
-              <p className="text-xs font-bold text-gray-500">
-                Loading MyGreenDelight Live Metrics...
+      <div className="flex-1 lg:pl-64 flex flex-col min-h-screen w-full max-w-full overflow-x-hidden">
+        <main className="flex-1 flex flex-col min-h-screen">
+          {/* Top Header */}
+          <header className="bg-white border-b border-gray-200/80 px-4 sm:px-6 py-3.5 sm:py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sticky top-0 z-30 shadow-2xs">
+            <div>
+              <h1 className="text-lg sm:text-2xl font-black text-gray-900">
+                Admin Overview
+              </h1>
+              <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5">
+                Live store metrics, revenue & 10-min delivery fleet operations
               </p>
             </div>
-          ) : (
-            <>
-              {/* Metric Cards Grid - Fully Clickable */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+              <button
+                onClick={handleRefresh}
+                disabled={refreshing}
+                className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 sm:px-3.5 sm:py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+              >
+                <RefreshCw
+                  size={14}
+                  className={refreshing ? "animate-spin text-[#0f8646]" : ""}
+                />
+                <span>Refresh</span>
+              </button>
+
+              <Link
+                href="/admin/addgrocery"
+                className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-3.5 py-2 sm:px-4 sm:py-2 rounded-xl text-xs font-black shadow-sm transition flex items-center gap-1.5"
+              >
+                <PlusCircle size={15} />
+                <span>Add Produce</span>
+              </Link>
+            </div>
+          </header>
+
+          {/* Dashboard Body */}
+          <div className="p-3.5 sm:p-6 lg:p-8 space-y-6 sm:space-y-8 flex-1 w-full max-w-7xl mx-auto">
+            {loading ? (
+              <div className="py-24 flex flex-col items-center justify-center">
+                <Loader2 size={36} className="animate-spin text-[#0f8646] mb-3" />
+                <p className="text-xs font-bold text-gray-500">
+                  Loading MyGreenDelight Live Metrics...
+                </p>
+              </div>
+            ) : (
+              <>
+                {/* Metric Cards Grid - Fully Clickable */}
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
                 {/* Total Revenue */}
                 <Link
                   href="/admin/manageorder"
@@ -447,5 +448,6 @@ export default function AdminDashboardPage() {
         </div>
       </main>
     </div>
-  );
+  </div>
+);
 }

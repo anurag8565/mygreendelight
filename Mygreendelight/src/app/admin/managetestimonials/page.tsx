@@ -90,12 +90,13 @@ export default function ManageTestimonials() {
   };
 
   return (
-    <div className="bg-[#f8faf9] min-h-screen font-sans flex">
+    <div className="bg-[#f8faf9] min-h-screen font-sans flex flex-col lg:flex-row w-full max-w-full overflow-x-hidden">
       <AdminSidebar />
 
-      <main className="flex-1 lg:pl-64 flex flex-col min-h-screen">
-        {/* Top Header */}
-        <header className="bg-white border-b border-gray-200/80 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 sticky top-0 z-30 shadow-2xs">
+      <div className="flex-1 lg:pl-64 flex flex-col min-h-screen w-full max-w-full overflow-x-hidden">
+        <main className="flex-1 flex flex-col min-h-screen">
+          {/* Top Header */}
+          <header className="bg-white border-b border-gray-200/80 px-4 sm:px-6 py-3.5 sm:py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sticky top-0 z-30 shadow-2xs">
           <div>
             <h1 className="text-xl sm:text-2xl font-black text-gray-900">
               Customer Testimonials & Reviews
@@ -232,7 +233,8 @@ export default function ManageTestimonials() {
             </div>
           )}
         </div>
-      </main>
+        </main>
+      </div>
 
       {/* Add Testimonial Modal */}
       {isAddModalOpen && (
