@@ -1,111 +1,58 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ChefHat, Plus, Check, Sparkles, ArrowRight, ShoppingBag } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/CartSlice";
 import { AppDispatch } from "@/redux/store";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import axios from "axios";
 
-interface RecipeKit {
-  id: string;
-  name: string;
-  hindiName: string;
-  serves: string;
-  cookTime: string;
-  badge: string;
-  price: number;
-  mrp: number;
-  image: string;
-  ingredients: {
-    name: string;
-    qty: string;
-    price: number;
-    image: string;
-  }[];
-}
-
-export default function RecipeKitsSection() {
+export default function RecipeKitsSection({ kits = [] }: { kits?: any[] }) {
   const dispatch = useDispatch<AppDispatch>();
+  const [activeKits, setActiveKits] = useState<any[]>(kits);
   const [addedKitId, setAddedKitId] = useState<string | null>(null);
 
-  const kits: RecipeKit[] = [
-    {
-      id: "kit-palak-paneer",
-      name: "Desi Palak Paneer Kit",
-      hindiName: "देसी पालक पनीर किट",
-      serves: "3-4 Persons",
-      cookTime: "25 Mins",
-      badge: "⭐ Chef's Favorite",
-      price: 149,
-      mrp: 199,
-      image: "/categories/vegetables.jpg",
-      ingredients: [
-        { name: "Farm Fresh Spinach (Palak)", qty: "500g", price: 30, image: "/categories/vegetables.jpg" },
-        { name: "Fresh Malai Paneer", qty: "200g", price: 85, image: "/categories/exotic.jpg" },
-        { name: "Desi Ripe Tomatoes", qty: "250g", price: 15, image: "/categories/vegetables.jpg" },
-        { name: "Ginger, Garlic & Green Chillies Combo", qty: "100g", price: 19, image: "/categories/vegetables.jpg" },
-      ],
-    },
-    {
-      id: "kit-pav-bhaji",
-      name: "Street Style Pav Bhaji Basket",
-      hindiName: "स्ट्रीट स्टाइल पाव भाजी किट",
-      serves: "4 Persons",
-      cookTime: "30 Mins",
-      badge: "🔥 Weekend Special",
-      price: 169,
-      mrp: 220,
-      image: "/categories/vegetables.jpg",
-      ingredients: [
-        { name: "Fresh Farm Potatoes (Aloo)", qty: "500g", price: 25, image: "/categories/vegetables.jpg" },
-        { name: "Fresh Cauliflower (Gobhi)", qty: "500g", price: 35, image: "/categories/vegetables.jpg" },
-        { name: "Green Bell Peppers (Capsicum)", qty: "250g", price: 29, image: "/categories/vegetables.jpg" },
-        { name: "Fresh Green Peas (Matar)", qty: "250g", price: 40, image: "/categories/vegetables.jpg" },
-        { name: "Fresh Coriander & Lemons", qty: "1 pack", price: 40, image: "/categories/vegetables.jpg" },
-      ],
-    },
-    {
-      id: "kit-healthy-salad",
-      name: "Immunity Rainbow Salad Box",
-      hindiName: "इम्यूनिटी फ्रेश सलाद बॉक्स",
-      serves: "2 Persons",
-      cookTime: "5 Mins (Ready)",
-      badge: "🌿 100% Raw Detox",
-      price: 119,
-      mrp: 155,
-      image: "/categories/fruits.jpg",
-      ingredients: [
-        { name: "Crispy English Cucumber", qty: "2 pcs", price: 30, image: "/categories/vegetables.jpg" },
-        { name: "Sweet Beetroot (Chukandar)", qty: "250g", price: 25, image: "/categories/vegetables.jpg" },
-        { name: "Juicy Farm Carrots (Gajar)", qty: "250g", price: 25, image: "/categories/vegetables.jpg" },
-        { name: "Fresh Mint & Lemon Dressing", qty: "1 pack", price: 39, image: "/categories/vegetables.jpg" },
-      ],
-    },
-  ];
+  useEffect(() => {
+    if (kits && kits.length > 0) {
+      setActiveKits(kits);
+      return;
+    }
+    axios
+      .get("/api/recipe-kits")
+      .then((res) => {
+        if (res.data.success && res.data.kits && res.data.kits.length > 0) {
+          setActiveKits(res.data.kits);
+        }
+      })
+      .catch(() => {});
+  }, [kits]);
 
-  const handleAddKit = (kit: RecipeKit) => {
+  const handleAddKit = (kit: any) => {
+    const kitId = kit._id || kit.id;
     // Add all ingredients of the kit to Redux cart in 1 shot
-    kit.ingredients.forEach((ing, index) => {
+    kit.ingredients.forEach((ing: any, index: number) => {
       dispatch(
         addToCart({
-          _id: `${kit.id}-ing-${index}` as any,
+          _id: (ing.groceryId || `${kitId}-ing-${index}`) as any,
           name: `${ing.name} (${kit.name})`,
           price: ing.price,
           unit: ing.qty,
-          image: ing.image,
+          image: ing.image || "/categories/vegetables.jpg",
           category: "Recipe Kit",
           stock: 50,
           quantity: 1,
-          cartItemId: `${kit.id}-ing-${index}`,
+          cartItemId: `${kitId}-ing-${index}`,
         } as any)
       );
     });
 
-    setAddedKitId(kit.id);
+    setAddedKitId(kitId);
     setTimeout(() => setAddedKitId(null), 3000);
   };
+
+  if (!activeKits || activeKits.length === 0) return null;
 
   return (
     <div className="w-full py-5 sm:py-8 bg-gradient-to-b from-green-50/50 via-white to-white">
@@ -142,13 +89,14 @@ export default function RecipeKitsSection() {
 
         {/* Recipe Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {kits.map((kit) => {
-            const isAdded = addedKitId === kit.id;
+          {activeKits.map((kit: any) => {
+            const kitId = kit._id || kit.id;
+            const isAdded = addedKitId === kitId;
             const discount = Math.round(((kit.mrp - kit.price) / kit.mrp) * 100);
 
             return (
               <motion.div
-                key={kit.id}
+                key={kitId}
                 whileHover={{ y: -4 }}
                 transition={{ duration: 0.2 }}
                 className="bg-white rounded-3xl border border-gray-200/90 shadow-2xs hover:shadow-lg transition-all overflow-hidden flex flex-col justify-between"
@@ -181,7 +129,7 @@ export default function RecipeKitsSection() {
                       Included Farm Ingredients:
                     </span>
                     <div className="space-y-1.5">
-                      {kit.ingredients.map((ing, idx) => (
+                      {kit.ingredients?.map((ing: any, idx: number) => (
                         <div
                           key={idx}
                           className="flex items-center justify-between text-xs text-gray-700 bg-gray-50/80 px-2.5 py-1.5 rounded-xl border border-gray-100"

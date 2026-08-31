@@ -18,6 +18,7 @@ import Link from 'next/link'
 import { Flame, Sparkles, RotateCcw, ChevronRight } from 'lucide-react'
 
 import Banner from '@/model/banner.model'
+import RecipeKit from '@/model/recipekit.model'
 import { auth } from '@/auth'
 import Order from '@/model/order'
 
@@ -30,6 +31,7 @@ export default async function Userdashbord() {
   const flashDealsPromise = Grocery.find({ stock: { $gt: 0 } }).sort({ price: 1, rating: -1 }).limit(8)
   const bannersPromise = Banner.find({}).sort({ createdAt: -1 }).limit(5)
   const categoriesPromise = Category.find({}).sort({ createdAt: -1 })
+  const recipeKitsPromise = RecipeKit.find({ isActive: true }).sort({ createdAt: -1 })
   
   let orderAgainGroceriesPromise: Promise<any[]> = Promise.resolve([])
   if (session?.user?.id) {
@@ -50,12 +52,13 @@ export default async function Userdashbord() {
       });
   }
 
-  const [newGroceries, topGroceries, flashDeals, banners, categories, orderAgain] = await Promise.all([
+  const [newGroceries, topGroceries, flashDeals, banners, categories, recipeKits, orderAgain] = await Promise.all([
     newGroceriesPromise,
     topGroceriesPromise,
     flashDealsPromise,
     bannersPromise,
     categoriesPromise,
+    recipeKitsPromise,
     orderAgainGroceriesPromise
   ]);
 
@@ -64,6 +67,7 @@ export default async function Userdashbord() {
   const plainFlash = JSON.parse(JSON.stringify(flashDeals))
   const plainBanners = JSON.parse(JSON.stringify(banners))
   const plainCategories = JSON.parse(JSON.stringify(categories))
+  const plainRecipeKits = JSON.parse(JSON.stringify(recipeKits))
   const plainOrderAgain = JSON.parse(JSON.stringify(orderAgain))
 
   return (
@@ -80,8 +84,8 @@ export default async function Userdashbord() {
       {/* 4. Live Flash Deals with Real Reverse Countdown Clock */}
       <FlashDeals products={plainFlash} />
 
-      {/* 5. 🥗 1-Click "Cook This Dish" Recipe Ingredient Kits */}
-      <RecipeKitsSection />
+      {/* 5. 🥗 1-Click "Cook This Dish" Recipe Ingredient Kits (Direct from MongoDB) */}
+      <RecipeKitsSection kits={plainRecipeKits} />
       
       {/* 6. Best Deals for You (Carousel) */}
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-5 sm:py-8">

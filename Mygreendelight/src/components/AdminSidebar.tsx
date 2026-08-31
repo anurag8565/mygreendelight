@@ -21,6 +21,7 @@ import {
   TrendingUp,
   Flame,
   Gift,
+  ChefHat,
 } from "lucide-react";
 
 export default function AdminSidebar() {
@@ -57,6 +58,11 @@ export default function AdminSidebar() {
       name: "Categories",
       href: "/admin/manage-categories",
       icon: <FolderTree size={18} />,
+    },
+    {
+      name: "Recipe Kits (Combos)",
+      href: "/admin/manage-recipes",
+      icon: <ChefHat size={18} />,
     },
     {
       name: "Coupons & Discounts",
