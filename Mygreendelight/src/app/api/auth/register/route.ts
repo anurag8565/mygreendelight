@@ -23,13 +23,41 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ message: "password must be at least 6 characters" }, { status: 400 })
         }
 
-        const hashedpassword = await bcrypt.hash(password, 10)
+        const hashedpassword = await bcrypt.hash(password, 10);
         const user = new User({
             name,
             email,
-            password: hashedpassword
-        })
-        await user.save()
+            password: hashedpassword,
+            walletBalance: 50,
+            walletHistory: [
+                {
+                    amount: 50,
+                    type: "credit",
+                    description: "🎉 Welcome Farm Gift Bonus",
+                    date: new Date(),
+                },
+            ],
+        });
+        await user.save();
+
+        try {
+            const UserWallet = (await import("@/model/wallet.model")).default;
+            await UserWallet.create({
+                user: user._id,
+                balance: 50,
+                totalCashback: 50,
+                transactions: [
+                    {
+                        type: "credit",
+                        amount: 50,
+                        description: "🎉 Welcome Farm Gift Bonus",
+                        createdAt: new Date(),
+                    },
+                ],
+            });
+        } catch (wErr) {
+            console.warn("Wallet create note:", wErr);
+        }
 
 
 
