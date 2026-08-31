@@ -28,10 +28,14 @@ import {
   VolumeX,
   Bell,
   Printer,
+  MessageSquare,
+  Download,
+  FileSpreadsheet,
 } from "lucide-react";
 import { socket } from "@/lib/socket";
 import AdminSidebar from "@/components/AdminSidebar";
 import OrderInvoiceModal from "@/components/OrderInvoiceModal";
+import OrderPackingSlipModal from "@/components/OrderPackingSlipModal";
 import { audioAlert } from "@/utils/audioAlert";
 
 interface OrderItem {
@@ -88,6 +92,7 @@ export default function ManageOrder() {
   const [assigningId, setAssigningId] = useState<string | null>(null);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const [selectedInvoiceOrder, setSelectedInvoiceOrder] = useState<any>(null);
+  const [selectedPackingSlipOrder, setSelectedPackingSlipOrder] = useState<any>(null);
   const [soundEnabled, setSoundEnabled] = useState(true);
 
   useEffect(() => {
@@ -262,6 +267,103 @@ export default function ManageOrder() {
     return matchesFilter && matchesSearch;
   });
 
+  const openWhatsApp = (order: OrderType) => {
+    const rawMobile = order.address?.mobile || order.user?.mobile || "";
+    const cleanMobile = rawMobile.replace(/[^0-9]/g, "");
+    if (!cleanMobile) {
+      alert("No valid mobile number found for this customer.");
+      return;
+    }
+    const formattedMobile = cleanMobile.length === 10 ? `91${cleanMobile}` : cleanMobile;
+    const name = order.address?.fullname || order.user?.name || "Customer";
+    const shortId = String(order._id).slice(-6).toUpperCase();
+    const currentStatus = (statuses[order._id] || order.status || "pending").toLowerCase();
+
+    let msg = `Hi ${name}! 🌿 Your MyGreenDelight Order #${shortId} (₹${order.totalamount}) status update: `;
+    if (currentStatus === "pending") {
+      msg += `Your order is confirmed & our farm team in Bhopal is carefully packing your fresh groceries! 🥦🍅`;
+    } else if (currentStatus === "out of delivery") {
+      const rider = order.assigneddelliveryboy?.name ? `with rider ${order.assigneddelliveryboy.name}` : "";
+      msg += `Your order is OUT FOR DELIVERY ${rider}! Our 10-minute fleet is on the way to your address. 🛵💨`;
+    } else if (currentStatus === "delivered" || currentStatus === "completed") {
+      msg += `Your order has been DELIVERED successfully. Enjoy your fresh harvest! ⭐`;
+    } else if (currentStatus === "cancelled") {
+      msg += `Your order was cancelled. Please contact support if you need any assistance.`;
+    } else {
+      msg += `Status: ${currentStatus.toUpperCase()}`;
+    }
+
+    const waUrl = `https://wa.me/${formattedMobile}?text=${encodeURIComponent(msg)}`;
+    window.open(waUrl, "_blank");
+  };
+
+  const exportOrdersCSV = () => {
+    if (filteredOrders.length === 0) {
+      alert("No orders to export for the current filter.");
+      return;
+    }
+
+    const headers = [
+      "Order ID",
+      "Date",
+      "Customer Name",
+      "Customer Mobile",
+      "Delivery Address",
+      "City",
+      "Payment Mode",
+      "Payment Status",
+      "Order Status",
+      "Total Amount",
+      "Items Count",
+      "Items Breakdown",
+    ];
+
+    const rows = filteredOrders.map((o) => {
+      const shortId = String(o._id).slice(-6).toUpperCase();
+      const date = new Date(o.createdAt).toLocaleString("en-IN").replace(/,/g, " ");
+      const name = (o.address?.fullname || o.user?.name || "Customer").replace(/,/g, " ");
+      const mobile = (o.address?.mobile || o.user?.mobile || "N/A").replace(/,/g, " ");
+      const addr = (o.address?.fulladress || "Bhopal").replace(/,/g, " ");
+      const city = (o.address?.city || "Bhopal").replace(/,/g, " ");
+      const mode = o.paymentmethod.toUpperCase();
+      const isPaid = o.ispaid ? "PAID" : "UNPAID";
+      const status = (statuses[o._id] || o.status).toUpperCase();
+      const amount = o.totalamount;
+      const count = o.items?.length || 0;
+      const itemsStr = (o.items || [])
+        .map((i) => `${i.name} (x${i.quantity})`)
+        .join(" | ")
+        .replace(/,/g, " ");
+
+      return [
+        `"${shortId}"`,
+        `"${date}"`,
+        `"${name}"`,
+        `"${mobile}"`,
+        `"${addr}"`,
+        `"${city}"`,
+        `"${mode}"`,
+        `"${isPaid}"`,
+        `"${status}"`,
+        amount,
+        count,
+        `"${itemsStr}"`,
+      ].join(",");
+    });
+
+    const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows].join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute(
+      "download",
+      `MyGreenDelight_Orders_${new Date().toISOString().slice(0, 10)}.csv`
+    );
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="bg-[#f8faf9] min-h-screen font-sans flex flex-col lg:flex-row w-full max-w-full overflow-x-hidden">
       {/* Sidebar */}
@@ -305,6 +407,15 @@ export default function ManageOrder() {
             >
               <Bell size={14} className="text-[#0f8646]" />
               <span>Test Ting 🔔</span>
+            </button>
+
+            <button
+              onClick={exportOrdersCSV}
+              className="bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-[#0f8646] px-3.5 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
+              title="Export Current Orders View to CSV / Excel"
+            >
+              <Download size={14} />
+              <span>Export CSV</span>
             </button>
 
             <button
@@ -455,15 +566,33 @@ export default function ManageOrder() {
                         </p>
                       </div>
 
-                      {/* Status Selector & Invoice Print */}
-                      <div className="flex items-center gap-2.5 flex-wrap sm:flex-nowrap">
+                      {/* Action Buttons: WhatsApp, Slip, Bill & Status */}
+                      <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+                        <button
+                          onClick={() => openWhatsApp(order)}
+                          className="bg-emerald-50 hover:bg-emerald-100 text-[#0f8646] border border-emerald-300 px-3 py-1.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition cursor-pointer shadow-2xs"
+                          title="Send instant WhatsApp order status update to customer"
+                        >
+                          <MessageSquare size={13} className="text-[#0f8646]" />
+                          <span>WhatsApp</span>
+                        </button>
+
+                        <button
+                          onClick={() => setSelectedPackingSlipOrder(order)}
+                          className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-2.5 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 transition cursor-pointer border border-gray-200"
+                          title="Print 3-inch Bag Packing & Dispatch Slip"
+                        >
+                          <Package size={13} className="text-[#0f8646]" />
+                          <span>Bag Slip</span>
+                        </button>
+
                         <button
                           onClick={() => setSelectedInvoiceOrder(order)}
-                          className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 transition cursor-pointer border border-gray-200"
+                          className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-2.5 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 transition cursor-pointer border border-gray-200"
                           title="Print Customer Bill / Tax Invoice"
                         >
                           <Printer size={13} className="text-[#0f8646]" />
-                          <span>Bill / Invoice</span>
+                          <span>Invoice</span>
                         </button>
 
                         <div className="flex items-center gap-2">
@@ -675,6 +804,15 @@ export default function ManageOrder() {
         order={selectedInvoiceOrder}
         isOpen={!!selectedInvoiceOrder}
         onClose={() => setSelectedInvoiceOrder(null)}
+      />
+    )}
+
+    {/* Bag Packing Slip Modal */}
+    {selectedPackingSlipOrder && (
+      <OrderPackingSlipModal
+        order={selectedPackingSlipOrder}
+        isOpen={!!selectedPackingSlipOrder}
+        onClose={() => setSelectedPackingSlipOrder(null)}
       />
     )}
   </div>

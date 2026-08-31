@@ -11,6 +11,7 @@ import {
   Clock,
   CheckCircle2,
   AlertCircle,
+  AlertTriangle,
   PlusCircle,
   Package,
   Tag,
@@ -119,6 +120,33 @@ export default function AdminDashboardPage() {
               </div>
             ) : (
               <>
+                {/* Low Stock Alert Banner */}
+                {summary?.lowStockCount > 0 && (
+                  <div className="bg-amber-50/90 border border-amber-300 rounded-3xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-2xs">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-2xl bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-xs">
+                        <AlertTriangle size={20} />
+                      </div>
+                      <div>
+                        <h3 className="font-black text-sm text-amber-950">
+                          ⚠️ Low Stock Warning: {summary.lowStockCount} Produce Item(s) Running Low
+                        </h3>
+                        <p className="text-xs text-amber-800 mt-0.5">
+                          {summary.lowStockItems?.map((i: any) => i.name).join(", ")}
+                          {summary.lowStockCount > 5 ? ` +${summary.lowStockCount - 5} more` : ""} (under 10 units in stock)
+                        </p>
+                      </div>
+                    </div>
+                    <Link
+                      href="/admin/viewgrocery"
+                      className="bg-amber-600 hover:bg-amber-700 text-white text-xs font-black px-4 py-2.5 rounded-xl shadow-xs transition flex items-center gap-1.5 shrink-0 self-start sm:self-center"
+                    >
+                      <Package size={14} />
+                      <span>Quick Restock Produce</span>
+                    </Link>
+                  </div>
+                )}
+
                 {/* Metric Cards Grid - Fully Clickable */}
                 <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
                 {/* Total Revenue */}
