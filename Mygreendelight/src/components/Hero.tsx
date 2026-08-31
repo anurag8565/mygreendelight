@@ -2,65 +2,71 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight, Sparkles, Zap, ChevronLeft, ChevronRight, ShieldCheck } from "lucide-react";
+import { ArrowRight, Sparkles, ChevronLeft, ChevronRight, ShieldCheck, Zap } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface HeroProps {
-  banner?: any;
+  banners?: any[];
 }
 
-export default function Hero({ banner }: HeroProps) {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-
-  const slides = [
+export default function Hero({ banners = [] }: HeroProps) {
+  const defaultSlides = [
     {
-      badge: "⚡ 10-15 Min Express Delivery",
-      title: "Sunrise Farm Harvested Fresh Vegetables",
-      highlight: "Delivered in Bhopal",
-      desc: "100% Ozone-Washed & Chemical-Free produce sourced daily from Sehore & Raisen farms.",
+      _id: "s1",
+      badge: "⚡ 10-15 Min Delivery in Bhopal",
+      title: "Sunrise Harvested Fresh Vegetables & Fruits",
+      subtitle: "100% Ozone-Washed • Direct from Sehore & Raisen Farms",
       btnText: "Shop Fresh Veggies",
       link: "/shop?category=Vegetables",
-      bgGradient: "from-[#0b4d29] via-[#0f8646] to-emerald-600",
-      accentPill: "bg-yellow-300 text-gray-950",
-      image: banner?.image || "/hero_basket.jpg",
-      tag: "Fresh Today",
+      image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1200&q=85",
+      bgGradient: "from-emerald-950/90 via-[#0b4d29]/80 to-transparent",
     },
     {
-      badge: "🎉 Bhopal Special Harvest Offer",
+      _id: "s2",
+      badge: "🎉 Bhopal Special Harvest Sale",
       title: "Flat 20% OFF on Your First 3 Orders",
-      highlight: "Code: BHOPAL20",
-      desc: "Save big on fresh seasonal fruits, desi dairy, pure grains and daily kitchen essentials.",
-      btnText: "Claim 20% OFF",
+      subtitle: "Use Code: BHOPAL20 • Pure, Chemical-Free Produce",
+      btnText: "Claim 20% Discount",
       link: "/shop",
-      bgGradient: "from-amber-800 via-orange-600 to-amber-500",
-      accentPill: "bg-white text-orange-700",
-      image: "/categories/fruits.jpg",
-      tag: "Limited Offer",
+      image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=1200&q=85",
+      bgGradient: "from-amber-950/90 via-orange-900/80 to-transparent",
     },
     {
+      _id: "s3",
       badge: "🥛 100% Pure Organic Dairy",
-      title: "Desi A2 Milk, Farm Paneer & Cold Pressed Oils",
-      highlight: "Morning 7 AM Batch",
-      desc: "Directly from grass-fed local cows. Pure, preservative-free and delivered in insulated boxes.",
-      btnText: "Order Dairy Essentials",
-      link: "/shop?category=Dairy%20%26%20Bakery",
-      bgGradient: "from-teal-950 via-teal-800 to-emerald-700",
-      accentPill: "bg-emerald-300 text-teal-950",
-      image: "/categories/exotic.jpg",
-      tag: "Pure & Raw",
+      title: "Desi A2 Cow Milk, Farm Paneer & Cold Pressed Ghee",
+      subtitle: "Fresh morning batch delivered by 7 AM or in 10 minutes",
+      btnText: "Explore Dairy",
+      link: "/shop?category=Dairy%20%26%20Staples",
+      image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=1200&q=85",
+      bgGradient: "from-teal-950/90 via-emerald-900/80 to-transparent",
+    },
+    {
+      _id: "s4",
+      badge: "🌿 Hydroponic & Exotic Produce",
+      title: "Crisp Lettuce, Cherry Tomatoes & Fresh Herbs",
+      subtitle: "Pesticide-free exotic greens for healthy salads & bowls",
+      btnText: "Shop Exotics",
+      link: "/shop?category=Exotics",
+      image: "https://images.unsplash.com/photo-1584270354949-c26b0d5b4a0c?auto=format&fit=crop&w=1200&q=85",
+      bgGradient: "from-green-950/90 via-[#07321a]/80 to-transparent",
     },
   ];
 
+  const activeSlides = banners && banners.length > 0 ? banners : defaultSlides;
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+
   // Auto-slide every 5 seconds
   useEffect(() => {
+    if (activeSlides.length <= 1) return;
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
+      setCurrentSlide((prev) => (prev + 1) % activeSlides.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, [slides.length]);
+  }, [activeSlides.length]);
 
-  const slide = slides[currentSlide];
+  const slide = activeSlides[currentSlide] || activeSlides[0];
 
   // Touch Swipe Handlers for Mobile
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -71,12 +77,12 @@ export default function Hero({ banner }: HeroProps) {
     if (touchStart === null) return;
     const touchEnd = e.changedTouches[0].clientX;
     const diff = touchStart - touchEnd;
-    if (diff > 50) {
+    if (diff > 45) {
       // Swiped left
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    } else if (diff < -50) {
+      setCurrentSlide((prev) => (prev + 1) % activeSlides.length);
+    } else if (diff < -45) {
       // Swiped right
-      setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+      setCurrentSlide((prev) => (prev - 1 + activeSlides.length) % activeSlides.length);
     }
     setTouchStart(null);
   };
@@ -87,112 +93,95 @@ export default function Hero({ banner }: HeroProps) {
         <div
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
-          className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group"
+          className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group bg-gray-900 min-h-[175px] sm:min-h-[250px] md:min-h-[300px]"
         >
           <AnimatePresence mode="wait">
             <motion.div
-              key={currentSlide}
-              initial={{ opacity: 0, x: 25 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -25 }}
-              transition={{ duration: 0.35, ease: "easeInOut" }}
-              className={`w-full bg-gradient-to-r ${slide.bgGradient} text-white p-4 sm:p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-4 min-h-[190px] sm:min-h-[260px] relative overflow-hidden`}
+              key={slide._id || currentSlide}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              className="relative w-full h-full min-h-[175px] sm:min-h-[250px] md:min-h-[300px] flex items-center overflow-hidden"
             >
-              {/* Background ambient circular glow */}
-              <div className="absolute right-0 top-0 w-80 h-80 bg-white/10 rounded-full blur-3xl pointer-events-none" />
-              <div className="absolute -left-10 -bottom-10 w-48 h-48 bg-yellow-400/10 rounded-full blur-2xl pointer-events-none" />
+              {/* 1. Full-Bleed Real Background Image */}
+              <img
+                src={slide.image || "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1200&q=85"}
+                alt={slide.title}
+                className="absolute inset-0 w-full h-full object-cover object-center scale-102 group-hover:scale-105 transition-transform duration-700"
+              />
 
-              {/* Mobile Decorative Product Watermark Badge */}
-              <div className="md:hidden absolute right-2 -bottom-2 w-28 h-28 opacity-25 pointer-events-none">
-                <img
-                  src={slide.image}
-                  alt="Farm Produce"
-                  className="w-full h-full object-contain rounded-2xl"
-                />
-              </div>
+              {/* 2. Left High-Contrast Gradient Dark Overlay for Sharp Text Legibility */}
+              <div className={`absolute inset-0 bg-gradient-to-r ${slide.bgGradient || "from-black/90 via-black/70 to-transparent"} z-10`} />
 
-              {/* Left Content */}
-              <div className="flex-1 flex flex-col items-start z-10 w-full">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md text-[10px] sm:text-xs font-black px-2.5 py-1 rounded-full uppercase tracking-wider border border-white/25">
-                    <Sparkles size={12} className="text-yellow-300 fill-yellow-300 animate-pulse" />
-                    <span>{slide.badge}</span>
-                  </span>
-                  <span className="hidden sm:inline-block bg-yellow-300 text-gray-950 font-black text-[10px] px-2 py-0.5 rounded-md shadow-xs">
-                    {slide.tag}
-                  </span>
+              {/* 3. Banner Content */}
+              <div className="relative z-20 p-4 sm:p-8 md:p-12 flex flex-col items-start max-w-xl">
+                {/* Badge */}
+                <div className="inline-flex items-center gap-1.5 bg-white/25 backdrop-blur-md text-white text-[10px] sm:text-xs font-black px-2.5 py-1 rounded-full uppercase tracking-wider mb-2 sm:mb-3 border border-white/30 shadow-xs">
+                  <Sparkles size={12} className="text-yellow-300 fill-yellow-300 animate-pulse" />
+                  <span>{slide.badge || "⚡ 10-15 Min Express Delivery"}</span>
                 </div>
 
-                <h1 className="text-lg sm:text-2xl md:text-4xl font-black leading-tight tracking-tight mb-1 sm:mb-2 text-white drop-shadow-xs">
-                  {slide.title} <br className="hidden sm:inline" />
-                  <span className="text-yellow-300">{slide.highlight}</span>
+                {/* Title */}
+                <h1 className="text-lg sm:text-2xl md:text-4xl font-black leading-tight tracking-tight text-white drop-shadow-md mb-1 sm:mb-2 line-clamp-2">
+                  {slide.title}
                 </h1>
 
-                <p className="text-xs sm:text-sm text-green-100/90 max-w-lg mb-3 sm:mb-4 line-clamp-2 hidden sm:block">
-                  {slide.desc}
+                {/* Subtitle */}
+                <p className="text-xs sm:text-sm text-green-100/90 font-medium mb-3 sm:mb-5 line-clamp-2 drop-shadow-xs max-w-md">
+                  {slide.subtitle || slide.desc || "100% Ozone-Washed & Chemical-Free produce sourced daily."}
                 </p>
 
-                <div className="flex items-center gap-3 mt-1 sm:mt-1">
-                  <Link href={slide.link}>
-                    <motion.button
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.96 }}
-                      className="bg-white text-gray-950 hover:bg-gray-100 px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl font-black text-xs sm:text-sm shadow-md transition-all flex items-center gap-1.5 cursor-pointer"
-                    >
-                      <span>{slide.btnText}</span>
-                      <ArrowRight size={14} className="text-[#0f8646]" />
-                    </motion.button>
-                  </Link>
-
-                  <div className="flex items-center gap-1 text-[11px] font-bold text-white/90 hidden sm:flex">
-                    <ShieldCheck size={14} className="text-yellow-300" />
-                    <span>Bhopal Farm Fresh Guarantee</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Hero Image (Desktop & Tablet) */}
-              <div className="hidden sm:flex shrink-0 w-44 h-44 md:w-56 md:h-56 rounded-2xl overflow-hidden border-2 border-white/20 shadow-2xl bg-white/10 backdrop-blur-md items-center justify-center relative z-10 p-2">
-                <img
-                  src={slide.image}
-                  alt={slide.title}
-                  className="w-full h-full object-contain rounded-xl hover:scale-105 transition-transform duration-300"
-                />
+                {/* CTA Button */}
+                <Link href={slide.link || "/shop"}>
+                  <motion.button
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.96 }}
+                    className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl font-black text-xs sm:text-sm shadow-lg transition-all flex items-center gap-1.5 cursor-pointer border border-green-400/40"
+                  >
+                    <span>{slide.btnText || "Shop Now"}</span>
+                    <ArrowRight size={14} />
+                  </motion.button>
+                </Link>
               </div>
             </motion.div>
           </AnimatePresence>
 
-          {/* Navigation Arrows (Desktop & Hover) */}
-          <button
-            onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)}
-            className="absolute left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/30 hover:bg-black/60 text-white backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20 cursor-pointer hidden sm:flex"
-            title="Previous Banner"
-          >
-            <ChevronLeft size={18} />
-          </button>
-          <button
-            onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
-            className="absolute right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/30 hover:bg-black/60 text-white backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20 cursor-pointer hidden sm:flex"
-            title="Next Banner"
-          >
-            <ChevronRight size={18} />
-          </button>
-
-          {/* Dots Pagination */}
-          <div className="absolute bottom-2.5 right-4 z-20 flex items-center gap-1.5">
-            {slides.map((_, idx) => (
+          {/* Navigation Arrows */}
+          {activeSlides.length > 1 && (
+            <>
               <button
-                key={idx}
-                onClick={() => setCurrentSlide(idx)}
-                className={`transition-all rounded-full cursor-pointer ${
-                  currentSlide === idx
-                    ? "w-6 h-1.5 bg-white shadow-xs"
-                    : "w-1.5 h-1.5 bg-white/50 hover:bg-white/80"
-                }`}
-                title={`Slide ${idx + 1}`}
-              />
-            ))}
-          </div>
+                onClick={() => setCurrentSlide((prev) => (prev - 1 + activeSlides.length) % activeSlides.length)}
+                className="absolute left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-30 cursor-pointer hidden sm:flex"
+                title="Previous Slide"
+              >
+                <ChevronLeft size={18} />
+              </button>
+              <button
+                onClick={() => setCurrentSlide((prev) => (prev + 1) % activeSlides.length)}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-30 cursor-pointer hidden sm:flex"
+                title="Next Slide"
+              >
+                <ChevronRight size={18} />
+              </button>
+
+              {/* Dots Pagination */}
+              <div className="absolute bottom-3 right-4 z-30 flex items-center gap-1.5">
+                {activeSlides.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentSlide(idx)}
+                    className={`transition-all rounded-full cursor-pointer ${
+                      currentSlide === idx
+                        ? "w-6 h-1.5 bg-white shadow-md"
+                        : "w-1.5 h-1.5 bg-white/50 hover:bg-white/80"
+                    }`}
+                    title={`Slide ${idx + 1}`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

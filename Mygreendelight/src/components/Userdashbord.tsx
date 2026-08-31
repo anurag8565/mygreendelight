@@ -72,8 +72,8 @@ export default async function Userdashbord() {
 
   return (
     <div className="bg-white w-full max-w-full overflow-x-hidden">
-      {/* 1. High-Converting Sliding Hero Banner */}
-      <Hero banner={plainBanners[0]} />
+      {/* 1. High-Converting Sliding Hero Banner (Database-driven from MongoDB) */}
+      <Hero banners={plainBanners} />
 
       {/* 2. Live 10-15 Min Express Delivery Radar Strip */}
       <DeliveryRadarStrip />

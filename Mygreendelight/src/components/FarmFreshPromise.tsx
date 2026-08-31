@@ -78,30 +78,30 @@ export default function FarmFreshPromise() {
         </div>
 
         {/* 4 Process Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 mb-8">
           {steps.map((item, idx) => (
             <div
               key={idx}
-              className={`p-6 rounded-3xl border ${item.bg} shadow-xs hover:shadow-md transition-all hover:-translate-y-1 relative overflow-hidden flex flex-col justify-between`}
+              className={`p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl border ${item.bg} shadow-xs hover:shadow-md transition-all hover:-translate-y-1 relative overflow-hidden flex flex-col justify-between`}
             >
-              <div className="absolute top-4 right-4 text-3xl font-black text-green-200/50 select-none">
+              <div className="absolute top-2 right-2 sm:top-4 sm:right-4 text-xl sm:text-3xl font-black text-green-200/50 select-none">
                 {item.step}
               </div>
 
               <div>
-                <div className="w-12 h-12 rounded-2xl bg-white border border-green-100 flex items-center justify-center mb-4 shadow-xs">
+                <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-white border border-green-100 flex items-center justify-center mb-2.5 sm:mb-4 shadow-xs">
                   {item.icon}
                 </div>
 
-                <span className="text-[10px] font-extrabold uppercase bg-white border border-green-200 text-[#0f8646] px-2.5 py-0.5 rounded-full inline-block mb-2">
+                <span className="text-[9px] sm:text-[10px] font-extrabold uppercase bg-white border border-green-200 text-[#0f8646] px-2 py-0.5 rounded-full inline-block mb-1.5">
                   {item.badge}
                 </span>
 
-                <h3 className="font-extrabold text-base text-gray-900 mb-1.5">
+                <h3 className="font-black text-xs sm:text-base text-gray-900 mb-1 leading-snug">
                   {item.title}
                 </h3>
 
-                <p className="text-xs text-gray-600 leading-relaxed">
+                <p className="text-[11px] sm:text-xs text-gray-600 leading-relaxed font-medium line-clamp-3">
                   {item.desc}
                 </p>
               </div>

@@ -45,21 +45,21 @@ export default function FeaturesBanner() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
           {features.map((f, i) => (
             <motion.div
               key={i}
-              whileHover={{ y: -6 }}
-              transition={{ duration: 0.25 }}
-              className={`flex flex-col p-6 border border-gray-200/80 rounded-3xl ${f.bg} shadow-2xs hover:shadow-md transition-all group`}
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.2 }}
+              className={`flex flex-col p-4 sm:p-6 border border-gray-200/80 rounded-2xl sm:rounded-3xl ${f.bg} shadow-2xs hover:shadow-md transition-all group`}
             >
-              <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shrink-0 shadow-xs border border-gray-100 mb-4 group-hover:scale-110 transition-transform">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-2xl flex items-center justify-center shrink-0 shadow-xs border border-gray-100 mb-2.5 sm:mb-4 group-hover:scale-105 transition-transform">
                 {f.icon}
               </div>
-              <h3 className="font-extrabold text-sm sm:text-base text-gray-900 mb-1">
+              <h3 className="font-black text-xs sm:text-base text-gray-900 mb-1 leading-snug">
                 {f.title}
               </h3>
-              <p className="text-xs text-gray-500 leading-relaxed">
+              <p className="text-[11px] sm:text-xs text-gray-600 leading-relaxed font-medium line-clamp-2">
                 {f.desc}
               </p>
             </motion.div>

@@ -27,17 +27,17 @@ export default function PromoBanners({ banners = [] }: { banners?: any[] }) {
   };
 
   const b1 = banners[0] || {
-    title: "Super Saver Deals",
+    title: "Sunrise Super Saver",
     subtitle: "Organic Veggies & Fruits",
-    image: "/categories/vegetables.jpg",
-    btnText: "Shop Fresh",
+    image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=85",
+    btnText: "Shop Fresh Produce",
     link: "/shop?category=Vegetables",
   };
 
   const b2 = banners[1] || {
-    title: "On Your First Order",
-    subtitle: "Special Discount",
-    image: "/categories/fruits.jpg",
+    title: "First 3 Orders Offer",
+    subtitle: "Flat 20% Instant Discount",
+    image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=800&q=85",
     code: dbCoupon,
     link: "/shop",
   };

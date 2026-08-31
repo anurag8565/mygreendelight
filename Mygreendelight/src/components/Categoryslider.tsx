@@ -7,13 +7,10 @@ import { ChevronRight, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 
 const defaultCategories = [
-  { _id: "1", name: "Vegetables", image: "/categories/vegetables.jpg", color: "bg-emerald-50 border-emerald-200" },
-  { _id: "2", name: "Fresh Fruits", image: "/categories/fruits.jpg", color: "bg-amber-50 border-amber-200" },
-  { _id: "3", name: "Dairy & Bakery", image: "/categories/exotic.jpg", color: "bg-blue-50 border-blue-200" },
-  { _id: "4", name: "Staples & Atta", image: "/categories/vegetables.jpg", color: "bg-orange-50 border-orange-200" },
-  { _id: "5", name: "Snacks & Munchies", image: "/categories/fruits.jpg", color: "bg-purple-50 border-purple-200" },
-  { _id: "6", name: "Beverages", image: "/categories/exotic.jpg", color: "bg-teal-50 border-teal-200" },
-  { _id: "7", name: "Household Care", image: "/categories/vegetables.jpg", color: "bg-rose-50 border-rose-200" },
+  { _id: "1", name: "Vegetables", image: "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=600&q=85", color: "bg-emerald-50 border-emerald-200" },
+  { _id: "2", name: "Fruits", image: "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=600&q=85", color: "bg-amber-50 border-amber-200" },
+  { _id: "3", name: "Dairy & Staples", image: "https://images.unsplash.com/photo-1628088062854-d1870b4553da?auto=format&fit=crop&w=600&q=85", color: "bg-blue-50 border-blue-200" },
+  { _id: "4", name: "Exotics", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=85", color: "bg-purple-50 border-purple-200" },
 ];
 
 export default function CategorySlider({ categories = [] }: { categories?: any[] }) {
