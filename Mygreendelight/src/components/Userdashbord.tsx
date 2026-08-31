@@ -1,7 +1,9 @@
 import React from 'react'
 import Hero from './Hero'
-import DeliveryRadarStrip from './DeliveryRadarStrip'
+import TrustFeatureStrip from './TrustFeatureStrip'
 import Categoryslider from './Categoryslider'
+import DealOfTheDayBanner from './DealOfTheDayBanner'
+import DeliveryRadarStrip from './DeliveryRadarStrip'
 import RecipeKitsSection from './RecipeKitsSection'
 import FlashDeals from './FlashDeals'
 import Grocery from '@/model/groseri.model'
@@ -72,43 +74,35 @@ export default async function Userdashbord() {
 
   return (
     <div className="bg-white w-full max-w-full overflow-x-hidden">
-      {/* 1. High-Converting Sliding Hero Banner (Database-driven from MongoDB) */}
+      {/* 1. High-Converting 3D Hero Banner Slider */}
       <Hero banners={plainBanners} />
 
-      {/* 2. Live 10-15 Min Express Delivery Radar Strip */}
-      <DeliveryRadarStrip />
+      {/* 2. 4 Quick Feature Badges (10 Mins, Best Quality, Great Offers, Secure) */}
+      <TrustFeatureStrip />
 
-      {/* 3. Shop by Category (Zero Flicker & Preloaded from Database) */}
+      {/* 3. Shop by Category (8 Categories 4x2 Grid with Floating Badge Icons) */}
       <Categoryslider categories={plainCategories} />
 
-      {/* 4. Live Flash Deals with Real Reverse Countdown Clock */}
-      <FlashDeals products={plainFlash} />
+      {/* 4. Mint Green Deal of the Day Banner */}
+      <DealOfTheDayBanner />
 
-      {/* 5. 🥗 1-Click "Cook This Dish" Recipe Ingredient Kits (Direct from MongoDB) */}
-      <RecipeKitsSection kits={plainRecipeKits} />
-      
-      {/* 6. Best Deals for You (Carousel) */}
-      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-5 sm:py-8">
-         <div className="flex items-center justify-between mb-4 sm:mb-6">
-            <div className="flex items-center gap-2.5">
-               <div className="w-8 h-8 rounded-2xl bg-orange-100 flex items-center justify-center text-orange-600">
-                  <Flame size={18} />
-               </div>
-               <div>
-                  <h2 className="text-base sm:text-2xl font-black text-gray-900">
-                     Daily Mandi Harvest Specials
-                  </h2>
-                  <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5">
-                     Handpicked discounts on everyday kitchen essentials
-                  </p>
-               </div>
+      {/* 5. Live 10-15 Min Express Delivery Radar Strip */}
+      <DeliveryRadarStrip />
+
+      {/* 6. Best Sellers / Daily Mandi Harvest Specials */}
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-3.5 sm:py-6">
+         <div className="flex items-center justify-between mb-3.5 sm:mb-5">
+            <div className="flex items-center gap-2">
+               <h2 className="text-base sm:text-2xl font-black text-gray-900">
+                  Best Sellers
+               </h2>
             </div>
             <Link
                href="/shop"
                className="text-[#0f8646] hover:text-[#0c6a38] font-black text-xs sm:text-sm flex items-center gap-0.5 group transition"
             >
-               <span>View All</span>
-               <ChevronRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
+               <span>View all</span>
+               <ChevronRight size={15} className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]" />
             </Link>
          </div>
 
@@ -120,6 +114,12 @@ export default async function Userdashbord() {
            ))}
          </ProductCarousel>
       </div>
+
+      {/* 7. Live Flash Deals with Real Reverse Countdown Clock */}
+      <FlashDeals products={plainFlash} />
+
+      {/* 8. 🥗 1-Click "Cook This Dish" Recipe Ingredient Kits (Direct from MongoDB) */}
+      <RecipeKitsSection kits={plainRecipeKits} />
 
       {/* 7. Order Again (For logged in users with previous order history) */}
       {plainOrderAgain && plainOrderAgain.length > 0 && (
