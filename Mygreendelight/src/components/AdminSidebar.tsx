@@ -22,6 +22,7 @@ import {
   Flame,
   Gift,
   ChefHat,
+  Utensils,
 } from "lucide-react";
 
 export default function AdminSidebar() {
@@ -63,6 +64,11 @@ export default function AdminSidebar() {
       name: "Recipe Kits (Combos)",
       href: "/admin/manage-recipes",
       icon: <ChefHat size={18} />,
+    },
+    {
+      name: "Dinner Decider Wheel",
+      href: "/admin/manage-dinner-wheel",
+      icon: <Utensils size={18} />,
     },
     {
       name: "Coupons & Discounts",

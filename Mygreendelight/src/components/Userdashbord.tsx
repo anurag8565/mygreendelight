@@ -4,6 +4,7 @@ import MandiPriceTicker from './MandiPriceTicker'
 import DeliveryRadarStrip from './DeliveryRadarStrip'
 import Categoryslider from './Categoryslider'
 import RecipeKitsSection from './RecipeKitsSection'
+import DinnerDeciderWheel from './DinnerDeciderWheel'
 import FlashDeals from './FlashDeals'
 import FilteredProduceSection from './FilteredProduceSection'
 import DailyRewardWidget from './DailyRewardWidget'
@@ -22,6 +23,7 @@ import { Flame, Sparkles, RotateCcw, ChevronRight } from 'lucide-react'
 
 import Banner from '@/model/banner.model'
 import RecipeKit from '@/model/recipekit.model'
+import DinnerRecipe from '@/model/dinnerwheel.model'
 import Testimonial from '@/model/testimonial.model'
 import MandiRate from '@/model/mandi.model'
 import { auth } from '@/auth'
@@ -37,6 +39,7 @@ export default async function Userdashbord() {
   const bannersPromise = Banner.find({}).sort({ createdAt: -1 }).limit(5)
   const categoriesPromise = Category.find({}).sort({ createdAt: -1 })
   const recipeKitsPromise = RecipeKit.find({ isActive: true }).sort({ createdAt: -1 })
+  const dinnerRecipesPromise = DinnerRecipe.find({ isActive: true }).sort({ createdAt: -1 })
   const testimonialsPromise = Testimonial.find({ status: 'approved' }).sort({ createdAt: -1 })
   const mandiRatesPromise = MandiRate.find({ isActive: true }).sort({ updatedAt: -1 })
   
@@ -59,13 +62,14 @@ export default async function Userdashbord() {
       });
   }
 
-  const [newGroceries, topGroceries, flashDeals, banners, categories, recipeKits, testimonials, mandiRates, orderAgain] = await Promise.all([
+  const [newGroceries, topGroceries, flashDeals, banners, categories, recipeKits, dinnerRecipes, testimonials, mandiRates, orderAgain] = await Promise.all([
     newGroceriesPromise,
     topGroceriesPromise,
     flashDealsPromise,
     bannersPromise,
     categoriesPromise,
     recipeKitsPromise,
+    dinnerRecipesPromise,
     testimonialsPromise,
     mandiRatesPromise,
     orderAgainGroceriesPromise
@@ -77,6 +81,7 @@ export default async function Userdashbord() {
   const plainBanners = JSON.parse(JSON.stringify(banners))
   const plainCategories = JSON.parse(JSON.stringify(categories))
   const plainRecipeKits = JSON.parse(JSON.stringify(recipeKits))
+  const plainDinnerRecipes = JSON.parse(JSON.stringify(dinnerRecipes))
   const plainTestimonials = JSON.parse(JSON.stringify(testimonials))
   const plainMandiRates = JSON.parse(JSON.stringify(mandiRates))
   const plainOrderAgain = JSON.parse(JSON.stringify(orderAgain))
@@ -100,8 +105,11 @@ export default async function Userdashbord() {
 
       {/* 6. 🥗 1-Click "Cook This Dish" Recipe Ingredient Kits (Direct from MongoDB) */}
       <RecipeKitsSection kits={plainRecipeKits} />
+
+      {/* 7. 🎡 "Aaj Kya Banayein?" Dinner Decider Wheel */}
+      <DinnerDeciderWheel initialRecipes={plainDinnerRecipes} />
       
-      {/* 7. 🏷️ 1-Tap Filter Chips & Daily Mandi Harvest Specials */}
+      {/* 8. 🏷️ 1-Tap Filter Chips & Daily Mandi Harvest Specials */}
       <FilteredProduceSection groceries={plainNew} />
 
       {/* 7. Order Again (For logged in users with previous order history) */}
