@@ -20,13 +20,15 @@ import {
   Leaf,
   ChevronRight,
   Sparkles,
-  Info,
   BadgeCheck,
   ShoppingBag,
+  BookOpen,
+  Info,
 } from "lucide-react";
 import Link from "next/link";
 import Groceryitemcard from "@/components/Groceryitemcard";
 import Footer from "@/components/Footer";
+import StorageGuideModal from "@/components/StorageGuideModal";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -50,6 +52,7 @@ export default function ProductDetailsClient({
   const [submittingReview, setSubmittingReview] = useState(false);
   const [reviewMsg, setReviewMsg] = useState("");
   const [showStickyBar, setShowStickyBar] = useState(false);
+  const [showStorageModal, setShowStorageModal] = useState(false);
 
   // Monitor scroll for bottom sticky purchase bar
   useEffect(() => {
@@ -385,9 +388,27 @@ export default function ProductDetailsClient({
                   {isWishlisted ? "Saved" : "Save for Later"}
                 </span>
               </button>
+
+              {/* 🍅 Kitchen Storage Guide Button */}
+              <button
+                type="button"
+                onClick={() => setShowStorageModal(true)}
+                className="h-12 px-4 rounded-2xl border border-emerald-200 bg-emerald-50 text-emerald-800 font-bold text-xs transition flex items-center gap-1.5 hover:bg-emerald-100 cursor-pointer shadow-2xs"
+              >
+                <BookOpen size={16} />
+                <span>Storage Tips</span>
+              </button>
             </div>
           </div>
         </div>
+
+        {/* Storage Guide Modal */}
+        <StorageGuideModal
+          category={product.category}
+          productName={product.name}
+          isOpen={showStorageModal}
+          onClose={() => setShowStorageModal(false)}
+        />
 
         {/* 4 Trust Feature Strip */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">

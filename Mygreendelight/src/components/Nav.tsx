@@ -278,6 +278,10 @@ export default function Nav({ user }: { user: iUser }) {
             <span>📝 Paste Parchi / List</span>
             <span className="bg-orange-100 text-orange-800 text-[10px] font-black px-2 py-0.5 rounded-full">Auto-Cart</span>
           </Link>
+          <Link href="/produce-guide" onClick={() => setmenuopen(false)} className={`font-semibold py-2 border-b flex items-center justify-between ${pathname === "/produce-guide" ? "text-[#0f8646]" : "text-gray-700"}`}>
+            <span>🍅 Storage & Shelf Life Guide</span>
+            <span className="bg-green-100 text-green-800 text-[10px] font-black px-2 py-0.5 rounded-full">Hacks</span>
+          </Link>
           <Link href="/user/myorder" onClick={() => setmenuopen(false)} className={`font-semibold py-2 border-b ${pathname === "/user/myorder" ? "text-[#0f8646]" : "text-gray-700"}`}>My Orders</Link>
           
           {user.role === "admin" && (

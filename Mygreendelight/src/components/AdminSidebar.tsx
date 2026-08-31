@@ -28,6 +28,7 @@ import {
   Heart,
   FileText,
   Bell,
+  BookOpen,
 } from "lucide-react";
 
 export default function AdminSidebar() {
@@ -99,6 +100,11 @@ export default function AdminSidebar() {
       name: "Harvest Stock Alerts",
       href: "/admin/manage-stock-alerts",
       icon: <Bell size={18} />,
+    },
+    {
+      name: "Produce Storage Guide",
+      href: "/admin/manage-produce-guide",
+      icon: <BookOpen size={18} />,
     },
     {
       name: "Coupons & Discounts",

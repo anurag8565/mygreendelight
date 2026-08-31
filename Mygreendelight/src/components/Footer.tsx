@@ -240,6 +240,9 @@ export default function Footer() {
               <Link href="/wishlist" className="hover:text-white hover:translate-x-1 transition-all">
                 Saved Wishlist
               </Link>
+              <Link href="/produce-guide" className="hover:text-white hover:translate-x-1 transition-all text-yellow-300 font-bold">
+                🍅 Produce Storage Guide
+              </Link>
               <Link href="/about" className="hover:text-white hover:translate-x-1 transition-all">
                 About Our Farms
               </Link>
