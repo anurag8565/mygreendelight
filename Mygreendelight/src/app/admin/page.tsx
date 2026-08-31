@@ -20,6 +20,11 @@ import {
   ExternalLink,
   RefreshCw,
   Loader2,
+  CloudRain,
+  Radio,
+  MapPin,
+  Sparkles,
+  Save,
 } from "lucide-react";
 import AdminSidebar from "@/components/AdminSidebar";
 
@@ -31,6 +36,41 @@ export default function AdminDashboardPage() {
   const [recentOrders, setRecentOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+
+  // 📢 Live Broadcast Announcement State
+  const [broadcastForm, setBroadcastForm] = useState({
+    message: "🌧️ Bhopal Weather Alert: 10-minute deliveries active across all Bhopal pin codes!",
+    type: "weather",
+    isActive: true,
+    linkText: "Shop Fresh",
+    linkUrl: "/shop",
+  });
+  const [broadcastSaving, setBroadcastSaving] = useState(false);
+  const [broadcastSavedMsg, setBroadcastSavedMsg] = useState<string | null>(null);
+
+  useEffect(() => {
+    axios.get("/api/broadcast").then((res) => {
+      if (res.data.success && res.data.broadcast) {
+        setBroadcastForm(res.data.broadcast);
+      }
+    }).catch(() => {});
+  }, []);
+
+  const handleSaveBroadcast = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      setBroadcastSaving(true);
+      const res = await axios.post("/api/broadcast", broadcastForm);
+      if (res.data.success) {
+        setBroadcastSavedMsg("✓ Live store broadcast updated successfully!");
+        setTimeout(() => setBroadcastSavedMsg(null), 4000);
+      }
+    } catch (err: any) {
+      alert(err.response?.data?.message || "Failed to update broadcast");
+    } finally {
+      setBroadcastSaving(false);
+    }
+  };
 
   const fetchDashboardData = async () => {
     try {
@@ -309,6 +349,165 @@ export default function AdminDashboardPage() {
                     ✓ Success History →
                   </span>
                 </Link>
+              </div>
+
+              {/* 1. 📢 Store Announcement & Weather Alert Broadcast Center */}
+              <div className="bg-gradient-to-br from-gray-900 via-slate-900 to-gray-950 text-white rounded-3xl p-6 sm:p-7 shadow-xl border border-gray-800">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 border-b border-gray-800 pb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-2xl bg-amber-500 text-white flex items-center justify-center shadow-xs shrink-0">
+                      <Radio size={20} className="animate-pulse" />
+                    </div>
+                    <div>
+                      <h3 className="font-black text-base text-white">
+                        Live Store Announcement & Weather Broadcast
+                      </h3>
+                      <p className="text-xs text-gray-400">
+                        Publish instant weather warnings, emergency notices or sales banners across all customer devices
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    {broadcastSavedMsg && (
+                      <span className="text-xs font-black text-emerald-400 animate-fade-in">
+                        {broadcastSavedMsg}
+                      </span>
+                    )}
+                    <label className="flex items-center gap-2 cursor-pointer bg-gray-800/80 px-3 py-1.5 rounded-xl border border-gray-700">
+                      <span className="text-xs font-bold text-gray-300">
+                        {broadcastForm.isActive ? "🟢 Active on Store" : "⚪ Disabled"}
+                      </span>
+                      <input
+                        type="checkbox"
+                        checked={broadcastForm.isActive}
+                        onChange={(e) => setBroadcastForm({ ...broadcastForm, isActive: e.target.checked })}
+                        className="w-4 h-4 rounded text-[#0f8646] cursor-pointer"
+                      />
+                    </label>
+                  </div>
+                </div>
+
+                <form onSubmit={handleSaveBroadcast} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+                    <div className="sm:col-span-3">
+                      <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">
+                        Announcement Message (Hindi / English)
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={broadcastForm.message}
+                        onChange={(e) => setBroadcastForm({ ...broadcastForm, message: e.target.value })}
+                        placeholder="e.g. 🌧️ Bhopal Heavy Rain: Fleet is on the move, 10 min express delivery active!"
+                        className="w-full bg-gray-800/90 border border-gray-700 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-bold text-white outline-none focus:border-[#0f8646]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">
+                        Alert Theme / Category
+                      </label>
+                      <select
+                        value={broadcastForm.type}
+                        onChange={(e) => setBroadcastForm({ ...broadcastForm, type: e.target.value as any })}
+                        className="w-full bg-gray-800/90 border border-gray-700 rounded-xl px-3 py-2.5 text-xs font-bold text-white outline-none focus:border-[#0f8646] cursor-pointer"
+                      >
+                        <option value="weather">🌧️ Weather Alert (Blue)</option>
+                        <option value="promo">🎉 Promo / Harvest Offer (Green)</option>
+                        <option value="warning">⚠️ Notice / Delay Alert (Orange)</option>
+                        <option value="info">ℹ️ Store Update (Purple)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
+                    <div className="flex items-center gap-2 flex-1 max-w-md">
+                      <input
+                        type="text"
+                        value={broadcastForm.linkText}
+                        onChange={(e) => setBroadcastForm({ ...broadcastForm, linkText: e.target.value })}
+                        placeholder="Button Text (e.g. Order Now)"
+                        className="w-1/2 bg-gray-800/90 border border-gray-700 rounded-xl px-3 py-2 text-xs font-bold text-white outline-none"
+                      />
+                      <input
+                        type="text"
+                        value={broadcastForm.linkUrl}
+                        onChange={(e) => setBroadcastForm({ ...broadcastForm, linkUrl: e.target.value })}
+                        placeholder="Target Link (e.g. /shop)"
+                        className="w-1/2 bg-gray-800/90 border border-gray-700 rounded-xl px-3 py-2 text-xs font-bold text-white outline-none"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={broadcastSaving}
+                      className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2 rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 shadow-md cursor-pointer disabled:opacity-50"
+                    >
+                      <Save size={14} />
+                      <span>{broadcastSaving ? "Broadcasting..." : "Save & Broadcast Live"}</span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              {/* 2. 🗺️ Bhopal Delivery Locality Demand & Heatmap Breakdown */}
+              <div className="bg-white rounded-3xl border border-gray-200/80 p-6 sm:p-7 shadow-xs">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-[#0f8646] flex items-center justify-center shadow-xs shrink-0">
+                      <MapPin size={20} />
+                    </div>
+                    <div>
+                      <h3 className="font-black text-base text-gray-900">
+                        Bhopal Locality Demand Breakdown & Order Heatmap
+                      </h3>
+                      <p className="text-xs text-gray-500">
+                        Real-time order density from Bhopal Central Hub (10-Min Dispatch Zone)
+                      </p>
+                    </div>
+                  </div>
+
+                  <span className="text-[11px] font-black bg-green-50 text-[#0f8646] border border-green-200 px-3 py-1 rounded-xl">
+                    ⚡ Central Bhopal Hub: Active
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+                  {(summary?.bhopalLocalities || []).map((pocket: any, idx: number) => {
+                    const totalOrdersCount = summary?.totalOrders || 1;
+                    const percent = Math.min(100, Math.round((pocket.count / totalOrdersCount) * 100));
+                    return (
+                      <div
+                        key={idx}
+                        className="bg-gray-50/70 border border-gray-100 rounded-2xl p-4 flex flex-col justify-between gap-2 hover:bg-green-50/50 transition"
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="font-black text-xs text-gray-900 flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-[#0f8646]" />
+                            {pocket.name}
+                          </span>
+                          <span className="text-[11px] font-extrabold text-[#0f8646]">
+                            {pocket.count} Orders
+                          </span>
+                        </div>
+
+                        {/* Progress Bar */}
+                        <div className="w-full bg-gray-200 rounded-full h-1.5 overflow-hidden my-1">
+                          <div
+                            className="bg-[#0f8646] h-1.5 rounded-full transition-all duration-500"
+                            style={{ width: `${Math.max(8, percent)}%` }}
+                          />
+                        </div>
+
+                        <div className="flex items-center justify-between text-[10px] text-gray-400 font-bold">
+                          <span>Revenue: ₹{pocket.revenue}</span>
+                          <span>{percent}% Bhopal Share</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
 
               {/* Quick Actions Bar */}

@@ -8,6 +8,7 @@ import SocketProvider from "@/components/SocketProvider";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import MobileBottomNav from "@/components/MobileBottomNav";
 import InstallAppPrompt from "@/components/InstallAppPrompt";
+import BroadcastBar from "@/components/BroadcastBar";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -41,6 +42,7 @@ export default function RootLayout({
           <StoreProviders>
             <Inituser />
             <SocketProvider />
+            <BroadcastBar />
             {children}
             <WhatsAppWidget />
             <MobileBottomNav />
