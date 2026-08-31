@@ -21,11 +21,11 @@ export async function GET() {
             User.countDocuments({ role: "user" }),
             User.countDocuments({ role: "deliveryboy" }),
             Order.countDocuments({ status: "pending" }),
-            Order.countDocuments({ status: "delivered" }),
+            Order.countDocuments({ status: { $in: ["delivered", "completed"] } }),
             Order.countDocuments({ status: "out of delivery" }),
 
             Order.find({
-                status: "delivered",
+                status: { $in: ["delivered", "completed"] },
             }).select("totalamount"),
         ]);
 

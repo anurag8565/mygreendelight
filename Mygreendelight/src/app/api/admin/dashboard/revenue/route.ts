@@ -34,7 +34,7 @@ for (let i = 6; i >= 0; i--) {
 
   const orders =
     await Order.find({
-      status: "delivered",
+      status: { $in: ["delivered", "completed"] },
       createdAt: {
         $gte: start,
         $lte: end,
