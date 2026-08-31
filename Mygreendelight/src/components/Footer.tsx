@@ -215,6 +215,10 @@ export default function Footer() {
               <Link href="/shop" className="hover:text-white hover:translate-x-1 transition-all">
                 Shop All Produce
               </Link>
+              <Link href="/user/wallet" className="hover:text-white hover:translate-x-1 transition-all flex items-center justify-between text-yellow-300 font-bold">
+                <span>MGD Green Wallet</span>
+                <span className="text-[10px] bg-green-900/80 px-1.5 py-0.5 rounded-sm">+10% Bonus</span>
+              </Link>
               <Link href="/user/myorder" className="hover:text-white hover:translate-x-1 transition-all">
                 Track Live Order
               </Link>

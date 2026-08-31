@@ -266,6 +266,10 @@ export default function Nav({ user }: { user: iUser }) {
           <Link href="/about" onClick={() => setmenuopen(false)} className={`font-semibold py-2 border-b ${pathname === "/about" ? "text-[#0f8646]" : "text-gray-700"}`}>About Us</Link>
           <Link href="/contact" onClick={() => setmenuopen(false)} className={`font-semibold py-2 border-b ${pathname === "/contact" ? "text-[#0f8646]" : "text-gray-700"}`}>Contact Us</Link>
           <Link href="/wishlist" onClick={() => setmenuopen(false)} className={`font-semibold py-2 border-b ${pathname === "/wishlist" ? "text-[#0f8646]" : "text-gray-700"}`}>Wishlist</Link>
+          <Link href="/user/wallet" onClick={() => setmenuopen(false)} className={`font-semibold py-2 border-b flex items-center justify-between ${pathname === "/user/wallet" ? "text-[#0f8646]" : "text-gray-700"}`}>
+            <span>MGD Green Wallet</span>
+            <span className="bg-green-100 text-[#0f8646] text-[10px] font-black px-2 py-0.5 rounded-full">+10% Bonus</span>
+          </Link>
           <Link href="/user/myorder" onClick={() => setmenuopen(false)} className={`font-semibold py-2 border-b ${pathname === "/user/myorder" ? "text-[#0f8646]" : "text-gray-700"}`}>My Orders</Link>
           
           {user.role === "admin" && (
@@ -529,6 +533,10 @@ export default function Nav({ user }: { user: iUser }) {
                       <p className="text-xs text-gray-500">{user.email}</p>
                     </div>
                     <Link href="/user/myorder" className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#0f8646] font-medium border-b">My Orders</Link>
+                    <Link href="/user/wallet" className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#0f8646] font-medium border-b flex items-center justify-between">
+                      <span>MGD Green Wallet</span>
+                      <span className="bg-green-100 text-[#0f8646] text-[10px] font-black px-2 py-0.5 rounded-full">+10% Bonus</span>
+                    </Link>
                     <Link href="/wishlist" className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#0f8646] font-medium border-b flex justify-between">Wishlist {wishlistItems.length > 0 && <span className="bg-[#0f8646] text-white text-[10px] px-2 rounded-full">{wishlistItems.length}</span>}</Link>
                     <button onClick={() => signOut({ callbackUrl: "/login" })} className="w-full text-left px-4 py-3 text-sm text-red-600 hover:bg-red-50 font-medium flex items-center gap-2">
                       <LogOut size={16} /> Logout
