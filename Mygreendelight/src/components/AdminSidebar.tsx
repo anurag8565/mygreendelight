@@ -30,6 +30,7 @@ import {
   Bell,
   BookOpen,
   Percent,
+  Radio,
 } from "lucide-react";
 
 export default function AdminSidebar() {
@@ -151,6 +152,11 @@ export default function AdminSidebar() {
       name: "Hero & Promo Banners",
       href: "/admin/managebanners",
       icon: <ImageIcon size={18} />,
+    },
+    {
+      name: "Broadcast Alerts",
+      href: "/admin/manage-broadcast",
+      icon: <Radio size={18} />,
     },
     {
       name: "Customer Testimonials",
