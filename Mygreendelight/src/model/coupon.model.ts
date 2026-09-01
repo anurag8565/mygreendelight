@@ -2,7 +2,7 @@ import mongoose, { Schema, Document } from "mongoose";
 
 export interface ICoupon extends Document {
   code: string;
-  discountType: "percentage" | "fixed";
+  discountType: "percentage" | "fixed" | "flat";
   discountValue: number;
   minOrderValue: number;
   maxDiscount?: number;
@@ -22,8 +22,9 @@ const CouponSchema = new Schema<ICoupon>(
     },
     discountType: {
       type: String,
-      enum: ["percentage", "fixed"],
+      enum: ["percentage", "fixed", "flat"],
       required: true,
+      default: "fixed",
     },
     discountValue: {
       type: Number,
