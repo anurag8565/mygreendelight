@@ -7,10 +7,11 @@ export async function GET(req: Request) {
   try {
     await connectDb();
     const testimonials = await Testimonial.find({
-      status: { $in: ["approved", "pending"] },
+      status: "approved",
+      comment: { $nin: ["yummy", "bad rice", "test", ""] },
     })
       .sort({ createdAt: -1 })
-      .limit(8);
+      .limit(10);
 
     return NextResponse.json({ success: true, testimonials });
   } catch (error) {
