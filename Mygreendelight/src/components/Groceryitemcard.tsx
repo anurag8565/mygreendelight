@@ -47,7 +47,11 @@ export default function Groceryitemcard({
   const currentCartItemId =
     item._id.toString() + (selectedVariation ? "-" + selectedVariation.weight : "");
 
-  const cartitem = cartdata.find((c) => c.cartItemId === currentCartItemId);
+  const cartitem = cartdata.find(
+    (c) =>
+      c.cartItemId === currentCartItemId ||
+      (!c.cartItemId && c._id?.toString() === item._id?.toString())
+  );
 
   // Dynamic MRP & Discount
   const activeMRP =

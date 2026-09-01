@@ -88,7 +88,11 @@ export default function ProductDetailsClient({
     ? `${product._id}-${product.variations[selectedVarIndex].weight}`
     : product._id;
 
-  const cartItem = cartdata.find((item: any) => item.cartItemId === cartItemId);
+  const cartItem = cartdata.find(
+    (item: any) =>
+      item.cartItemId === cartItemId ||
+      (!item.cartItemId && item._id?.toString() === product._id?.toString())
+  );
   const quantity = cartItem ? cartItem.quantity : 0;
 
   const handleAddToCart = () => {
