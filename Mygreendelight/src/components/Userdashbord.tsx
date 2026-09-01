@@ -3,6 +3,7 @@ import Hero from './Hero'
 import MandiPriceTicker from './MandiPriceTicker'
 import DeliveryRadarStrip from './DeliveryRadarStrip'
 import FastReorderWidget from './FastReorderWidget'
+import FlashFreeGiftRush from './FlashFreeGiftRush'
 import Categoryslider from './Categoryslider'
 import RecipeKitsSection from './RecipeKitsSection'
 import DinnerDeciderWheel from './DinnerDeciderWheel'
@@ -109,6 +110,9 @@ export default async function Userdashbord() {
 
       {/* 3. Live 10-15 Min Express Delivery Radar Strip */}
       <DeliveryRadarStrip />
+
+      {/* 🎁 Flash 3-4 Minute Free Gift Rush (Live Checkout Urgency) */}
+      <FlashFreeGiftRush />
 
       {/* ⚡ 1-Click Fast Reorder Regular Farm Basket */}
       <FastReorderWidget />

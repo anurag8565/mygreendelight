@@ -224,13 +224,23 @@ export default function CartPage() {
                           {itemWeight}
                         </span>
                         <div className="flex items-center gap-1.5 mt-1">
-                          <span className="text-xs sm:text-sm font-black text-[#0f8646]">
-                            ₹{item.price * item.quantity}
-                          </span>
-                          {item.quantity > 1 && (
-                            <span className="text-[10px] text-gray-400">
-                              (₹{item.price}/each)
+                          {item.price === 0 ? (
+                            <span className="bg-emerald-100 text-[#0f8646] font-black text-[10px] uppercase px-2 py-0.5 rounded-md flex items-center gap-1">
+                              <span>🎁 FREE UNLOCKED GIFT</span>
+                              <span className="line-through text-gray-400 font-bold">₹35</span>
+                              <span>₹0</span>
                             </span>
+                          ) : (
+                            <>
+                              <span className="text-xs sm:text-sm font-black text-[#0f8646]">
+                                ₹{item.price * item.quantity}
+                              </span>
+                              {item.quantity > 1 && (
+                                <span className="text-[10px] text-gray-400">
+                                  (₹{item.price}/each)
+                                </span>
+                              )}
+                            </>
                           )}
                         </div>
                       </div>

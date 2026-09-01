@@ -718,11 +718,38 @@ export default function Checkout() {
 
             {/* Order Items & Total Summary */}
             <div className="bg-white rounded-3xl border border-gray-200/80 p-6 shadow-xs">
-              <h3 className="font-extrabold text-sm text-gray-900 mb-4 pb-3 border-b border-gray-100">
-                Order Summary ({cartdata.length} items)
+              <h3 className="font-extrabold text-sm text-gray-900 mb-3 pb-3 border-b border-gray-100 flex items-center justify-between">
+                <span>Order Summary ({cartdata.length} items)</span>
+                <Link href="/user/cart" className="text-[11px] text-[#0f8646] font-bold hover:underline">
+                  Edit Basket
+                </Link>
               </h3>
 
-              <div className="space-y-3 text-xs mb-4">
+              {/* Items Mini List */}
+              <div className="space-y-2 mb-4 max-h-44 overflow-y-auto pr-1">
+                {cartdata.map((item, idx) => (
+                  <div key={idx} className="flex items-center justify-between text-xs py-1">
+                    <div className="flex items-center gap-2 min-w-0 flex-1">
+                      <img src={item.image} alt={item.name} className="w-8 h-8 rounded-lg object-contain bg-gray-50 border border-gray-100 p-0.5 shrink-0" />
+                      <div className="min-w-0 flex-1">
+                        <span className="font-bold text-gray-900 block truncate">{item.name}</span>
+                        <span className="text-[10px] text-gray-400">Qty: {item.quantity} × {item.variation?.weight || item.unit}</span>
+                      </div>
+                    </div>
+                    {item.price === 0 ? (
+                      <span className="text-[10px] font-black text-[#0f8646] bg-green-100 px-2 py-0.5 rounded shrink-0">
+                        🎁 FREE (₹0)
+                      </span>
+                    ) : (
+                      <span className="font-extrabold text-gray-900 shrink-0">
+                        ₹{item.price * item.quantity}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              <div className="space-y-3 text-xs mb-4 pt-3 border-t border-gray-100">
                 <div className="flex justify-between text-gray-600">
                   <span>Subtotal</span>
                   <span className="font-extrabold text-gray-900">₹{subtotal}</span>
