@@ -48,70 +48,12 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  try {
-    await connectDb();
-    const session = await auth();
-
-    if (!session?.user?.id) {
-      return NextResponse.json(
-        { success: false, message: "Please log in to add money" },
-        { status: 401 }
-      );
-    }
-
-    const { amount, packBonus = 0 } = await req.json();
-    const numAmount = Number(amount);
-    const numBonus = Number(packBonus);
-
-    if (!numAmount || numAmount <= 0) {
-      return NextResponse.json(
-        { success: false, message: "Invalid top-up amount" },
-        { status: 400 }
-      );
-    }
-
-    let wallet = await UserWallet.findOne({ user: session.user.id });
-    if (!wallet) {
-      wallet = new UserWallet({ user: session.user.id, balance: 0, totalCashback: 0, transactions: [] });
-    }
-
-    const totalCredit = numAmount + numBonus;
-    wallet.balance += totalCredit;
-    if (numBonus > 0) {
-      wallet.totalCashback += numBonus;
-    }
-
-    wallet.transactions.push({
-      type: "credit",
-      amount: totalCredit,
-      description:
-        numBonus > 0
-          ? `💳 Wallet Recharge (₹${numAmount} + ₹${numBonus} 10% Extra Bonus)`
-          : `💳 Wallet Recharge of ₹${numAmount}`,
-      createdAt: new Date(),
-    });
-
-    await wallet.save();
-
-    // Keep User model in sync for checkout
-    await User.findByIdAndUpdate(session.user.id, {
-      $inc: { walletBalance: totalCredit },
-      $push: {
-        walletHistory: {
-          amount: totalCredit,
-          type: "credit",
-          description: numBonus > 0 ? `Recharge (₹${numAmount} + ₹${numBonus} Bonus)` : `Recharge of ₹${numAmount}`,
-          date: new Date(),
-        },
-      },
-    });
-
-    return NextResponse.json({
-      success: true,
-      balance: wallet.balance,
-      message: `🎉 ₹${totalCredit} added to your MGD Green Wallet!`,
-    });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
-  }
+  return NextResponse.json(
+    {
+      success: false,
+      message:
+        "Direct wallet balance crediting is strictly disabled for security. All recharges must go through the verified Paytm Gateway flow via /api/user/wallet/initiate.",
+    },
+    { status: 403 }
+  );
 }
