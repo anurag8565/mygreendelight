@@ -189,9 +189,11 @@ export default function Checkout() {
     }
 
     setSubmitting(true);
+    const payableAmount = finalPayableTotal;
+
     try {
       if (paymentMethod === "cod") {
-        await axios.post("/api/user/order", {
+        const orderRes = await axios.post("/api/user/order", {
           userid: session?.user?.id,
           items: cartdata.map((item) => ({
             grocery: item._id,
@@ -202,7 +204,7 @@ export default function Checkout() {
             variationWeight: item.variation?.weight,
             quantity: item.quantity,
           })),
-          totalamount: finalPayableTotal,
+          totalamount: payableAmount,
           address: {
             fullname: address.fullname,
             mobile: address.mobile,
@@ -221,11 +223,19 @@ export default function Checkout() {
           deliveryInstructions: deliveryInstructions || "",
           deliverySlot: deliverySlot,
         });
+
+        const createdOrderId = orderRes.data?.order?._id;
+
         dispatch(clearCart());
         try {
           await axios.delete("/api/user/cart");
         } catch (e) {}
-        router.push("/user/ordersuccess");
+
+        if (createdOrderId) {
+          router.push(`/user/ordersuccess?orderId=${createdOrderId}&amount=${payableAmount}`);
+        } else {
+          router.push(`/user/ordersuccess?amount=${payableAmount}`);
+        }
       } else {
         // 💳 Paytm Online Payment Flow
         const result = await axios.post("/api/user/payment", {
