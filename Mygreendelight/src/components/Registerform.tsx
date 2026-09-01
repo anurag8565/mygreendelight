@@ -18,27 +18,36 @@ function Registerform() {
   const [loading, setLoading] = useState(false)
 
   const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
 
     try {
       const result = await axios.post("/api/auth/register", {
         name,
         email,
-        password
-      })
+        password,
+      });
 
-      console.log(result.data)
+      if (result.data) {
+        // Auto-sign in user right after registration
+        const res = await signIn("credentials", {
+          redirect: false,
+          email,
+          password,
+        });
 
-      // optional redirect
-      router.push("/")
-
+        if (res?.ok) {
+          window.location.href = "/";
+        } else {
+          router.push("/login");
+        }
+      }
     } catch (error: any) {
-      console.log(error.response?.data || error.message)
+      alert(error.response?.data?.message || "Registration failed. Please check your details.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
 
 
