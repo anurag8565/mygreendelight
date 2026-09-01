@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { signOut } from "next-auth/react";
 import {
   LayoutDashboard,
   Package,
@@ -31,6 +32,7 @@ import {
   BookOpen,
   Percent,
   Radio,
+  LogOut,
 } from "lucide-react";
 
 export default function AdminSidebar() {
@@ -175,14 +177,23 @@ export default function AdminSidebar() {
           </div>
         </div>
 
-        <Link
-          href="/"
-          target="_blank"
-          className="flex items-center gap-1 bg-white/15 hover:bg-white/25 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition"
-        >
-          <span>Store</span>
-          <ExternalLink size={12} />
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/"
+            className="flex items-center gap-1 bg-white/15 hover:bg-white/25 text-white px-2.5 py-1.5 rounded-xl text-xs font-bold transition"
+          >
+            <span>Store</span>
+            <ExternalLink size={12} />
+          </Link>
+          <button
+            onClick={() => signOut({ callbackUrl: "/login" })}
+            className="flex items-center gap-1 bg-red-600 hover:bg-red-700 text-white px-2.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer shadow-2xs"
+            title="Logout from Admin"
+          >
+            <LogOut size={13} />
+            <span className="hidden sm:inline">Logout</span>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Drawer Overlay */}
@@ -252,21 +263,29 @@ export default function AdminSidebar() {
           </nav>
         </div>
 
-        {/* Bottom Store Link & Status */}
-        <div className="p-4 border-t border-green-800/60 bg-[#073019] shrink-0">
-          <div className="flex items-center gap-2 text-xs text-green-200/80 mb-2.5 px-1">
+        {/* Bottom Store Link, Status & Logout */}
+        <div className="p-4 border-t border-green-800/60 bg-[#073019] shrink-0 space-y-2.5">
+          <div className="flex items-center gap-2 text-xs text-green-200/80 px-1">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
             <span className="font-bold text-[11px] truncate">Bhopal Dark Stores Live</span>
           </div>
 
-          <Link
-            href="/"
-            target="_blank"
-            className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white w-full py-2.5 rounded-xl text-xs font-extrabold transition-all border border-white/10"
-          >
-            <span>View Customer Store</span>
-            <ExternalLink size={13} />
-          </Link>
+          <div className="grid grid-cols-2 gap-2">
+            <Link
+              href="/"
+              className="flex items-center justify-center gap-1.5 bg-white/10 hover:bg-white/20 text-white py-2.5 rounded-xl text-xs font-extrabold transition-all border border-white/10"
+            >
+              <span>Store</span>
+              <ExternalLink size={12} />
+            </Link>
+            <button
+              onClick={() => signOut({ callbackUrl: "/login" })}
+              className="flex items-center justify-center gap-1.5 bg-red-600 hover:bg-red-700 text-white py-2.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer shadow-2xs"
+            >
+              <LogOut size={13} />
+              <span>Logout</span>
+            </button>
+          </div>
         </div>
       </aside>
     </>
