@@ -204,7 +204,7 @@ export default function ShopPage() {
         </div>
 
         {/* Top Header Row */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
           <div>
             <h1 className="text-2xl sm:text-4xl font-black text-gray-900 tracking-tight">
               {searchParam
@@ -213,29 +213,50 @@ export default function ShopPage() {
                 ? categoryParam
                 : "All Fresh Groceries"}
             </h1>
-            <p className="text-xs sm:text-sm text-gray-500 mt-1">
-              Farm-picked fresh vegetables, fruits & daily essentials in Bhopal
+            <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
+              Farm-picked fresh vegetables, fruits & daily staples in Bhopal
             </p>
           </div>
 
-          {/* Quick Mobile Filter Button */}
-          <button
-            onClick={() => setIsMobileFilterOpen(true)}
-            className="lg:hidden self-start flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-xl text-xs font-bold text-gray-700 shadow-xs hover:border-[#0f8646]"
-          >
-            <SlidersHorizontal size={14} className="text-[#0f8646]" />
-            <span>Filters ({activeFilterCount})</span>
-          </button>
+          {/* Inline Quick Search & Mobile Filter Button */}
+          <div className="flex items-center gap-2.5 w-full md:w-auto">
+            <div className="relative flex-1 md:w-72">
+              <input
+                type="text"
+                placeholder="Search farm produce (e.g. Tomato, Palak, Milk)..."
+                defaultValue={searchParam}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    const val = (e.target as HTMLInputElement).value.trim();
+                    let newUrl = "/shop?";
+                    if (categoryParam) newUrl += `category=${encodeURIComponent(categoryParam)}&`;
+                    if (sortParam) newUrl += `sort=${sortParam}&`;
+                    if (val) newUrl += `search=${encodeURIComponent(val)}`;
+                    router.push(newUrl);
+                  }
+                }}
+                className="w-full bg-white border border-gray-200/90 rounded-2xl pl-4 pr-10 py-2.5 text-xs font-bold text-gray-900 outline-none focus:border-[#0f8646] shadow-2xs transition"
+              />
+            </div>
+
+            <button
+              onClick={() => setIsMobileFilterOpen(true)}
+              className="lg:hidden flex items-center gap-1.5 bg-white border border-gray-200 px-3.5 py-2.5 rounded-2xl text-xs font-bold text-gray-700 shadow-2xs hover:border-[#0f8646] shrink-0 cursor-pointer"
+            >
+              <SlidersHorizontal size={14} className="text-[#0f8646]" />
+              <span>Filters ({activeFilterCount})</span>
+            </button>
+          </div>
         </div>
 
         {/* Horizontal Category Quick-Pills Bar */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-6 scrollbar-none">
+        <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-4 scrollbar-none">
           <button
             onClick={() => handleCategoryClick("all")}
-            className={`px-4 py-2 rounded-xl text-xs font-bold shrink-0 transition-all ${
+            className={`px-4 py-2 rounded-2xl text-xs font-bold shrink-0 transition-all cursor-pointer ${
               !categoryParam
                 ? "bg-[#0f8646] text-white shadow-sm"
-                : "bg-white text-gray-700 border border-gray-200 hover:border-green-300 hover:bg-green-50/50"
+                : "bg-white text-gray-700 border border-gray-200/90 hover:border-green-300 hover:bg-green-50/50"
             }`}
           >
             All Aisles
@@ -244,15 +265,54 @@ export default function ShopPage() {
             <button
               key={cat._id}
               onClick={() => handleCategoryClick(cat.name)}
-              className={`px-4 py-2 rounded-xl text-xs font-bold shrink-0 transition-all ${
+              className={`px-4 py-2 rounded-2xl text-xs font-bold shrink-0 transition-all cursor-pointer ${
                 categoryParam === cat.name
                   ? "bg-[#0f8646] text-white shadow-sm"
-                  : "bg-white text-gray-700 border border-gray-200 hover:border-green-300 hover:bg-green-50/50"
+                  : "bg-white text-gray-700 border border-gray-200/90 hover:border-green-300 hover:bg-green-50/50"
               }`}
             >
               {cat.name}
             </button>
           ))}
+        </div>
+
+        {/* Quick Filter Chips (1-Tap Toggles on Mobile & Desktop) */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-6 scrollbar-none">
+          <button
+            onClick={() => setInStockOnly(!inStockOnly)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 transition flex items-center gap-1 cursor-pointer border ${
+              inStockOnly
+                ? "bg-emerald-50 border-emerald-400 text-[#0f8646] font-black"
+                : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
+            }`}
+          >
+            <span>⚡ In Stock Only</span>
+            {inStockOnly && <Check size={12} className="stroke-[3]" />}
+          </button>
+
+          <button
+            onClick={() => setPriceRange(priceRange === 50 ? 1500 : 50)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 transition flex items-center gap-1 cursor-pointer border ${
+              priceRange === 50
+                ? "bg-emerald-50 border-emerald-400 text-[#0f8646] font-black"
+                : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
+            }`}
+          >
+            <span>🔥 Under ₹50</span>
+            {priceRange === 50 && <Check size={12} className="stroke-[3]" />}
+          </button>
+
+          <button
+            onClick={() => setSelectedRating(selectedRating === 4 ? null : 4)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 transition flex items-center gap-1 cursor-pointer border ${
+              selectedRating === 4
+                ? "bg-amber-50 border-amber-400 text-amber-900 font-black"
+                : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
+            }`}
+          >
+            <span>⭐ Top Rated (4★+)</span>
+            {selectedRating === 4 && <Check size={12} className="stroke-[3]" />}
+          </button>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8">
