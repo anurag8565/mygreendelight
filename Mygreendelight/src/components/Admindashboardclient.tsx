@@ -13,6 +13,7 @@ import RevenueChart from "./RevenueChart";
 import OrdersChart from "./OrdersChart";
 import RecentOrdersTable from "./RecentOrdersTable";
 import DeliveryBoyPerformance from "./DeliveryBoyPerformance";
+import AdminMandiProfitAnalytics from "./AdminMandiProfitAnalytics";
 
 export default function Admindashboardclient() {
     const [stats, setStats] =
@@ -146,6 +147,9 @@ export default function Admindashboardclient() {
             </div>
 
         </div>
+
+        {/* 📊 Admin Smart Mandi Margin & Profit Analytics */}
+        <AdminMandiProfitAnalytics />
 
     </div>
 
