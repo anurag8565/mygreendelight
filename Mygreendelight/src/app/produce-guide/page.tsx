@@ -7,10 +7,17 @@ import { auth } from "@/auth";
 import { Thermometer, Clock, Lightbulb, ShieldCheck, Sparkles, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 export default async function ProduceGuidePage() {
-  await connectDb();
+  let guides: any[] = [];
+  try {
+    await connectDb();
+    guides = await ProduceGuide.find({}).sort({ createdAt: 1 });
+  } catch (dbErr) {
+    console.warn("ProduceGuide fetch warning:", dbErr);
+  }
   const session = await auth();
-  const guides = await ProduceGuide.find({}).sort({ createdAt: 1 });
 
   const user = session?.user
     ? {

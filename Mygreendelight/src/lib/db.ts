@@ -11,7 +11,8 @@ if (!cached) {
 const connectDb = async () => {
     const mongourl = getMongoUrl();
     if (!mongourl) {
-        throw new Error("MONGODB_URI is not defined in Environment Variables on Vercel");
+        console.warn("⚠️ MONGODB_URI is not defined in Environment Variables. Database calls will be skipped during static build.");
+        return null;
     }
     if (cached.conn) {
         return cached.conn

@@ -6,11 +6,18 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { auth } from "@/auth";
 
+export const dynamic = "force-dynamic";
+
 export default async function CustomBoxPage() {
-  await connectDb();
+  let plainIngredients: any[] = [];
+  try {
+    await connectDb();
+    const ingredients = await CustomBoxIngredient.find({ isAvailable: true }).sort({ category: 1 });
+    plainIngredients = JSON.parse(JSON.stringify(ingredients));
+  } catch (dbErr) {
+    console.warn("CustomBoxIngredient fetch warning:", dbErr);
+  }
   const session = await auth();
-  const ingredients = await CustomBoxIngredient.find({ isAvailable: true }).sort({ category: 1 });
-  const plainIngredients = JSON.parse(JSON.stringify(ingredients));
 
   const user = session?.user
     ? {

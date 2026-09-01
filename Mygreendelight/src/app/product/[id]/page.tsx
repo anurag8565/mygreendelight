@@ -11,12 +11,11 @@ export const dynamic = "force-dynamic";
 export default async function ProductPage(props: { params: Promise<{ id: string }> }) {
   const { id } = await props.params;
 
-  await connectDb();
-
   // Fetch product
   let product = null;
   let relatedProducts = [];
   try {
+    await connectDb();
     const rawProduct = await Grocery.findById(id).lean();
     if (rawProduct) {
       product = JSON.parse(JSON.stringify(rawProduct));
