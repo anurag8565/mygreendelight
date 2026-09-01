@@ -52,22 +52,47 @@ function OrderSuccessContent() {
         .catch(() => {});
     }
 
-    // Fetch newly generated reward for this user/order
-    axios
-      .get("/api/user/rewards")
-      .then((res) => {
-        if (res.data?.success && res.data.rewards?.length > 0) {
-          const unscratched = res.data.rewards.find((r: any) => !r.isScratched);
-          const activeReward = unscratched || res.data.rewards[0];
-          setReward(activeReward);
-          if (!activeReward.isScratched) {
-            setTimeout(() => {
-              setShowRewardModal(true);
-            }, 1000);
+    // Fetch or Generate Scratch Card Reward for this order
+    const loadReward = async () => {
+      try {
+        const res = await axios.get("/api/user/rewards");
+        if (res.data?.success) {
+          if (res.data.todayClaim) {
+            const claim = res.data.todayClaim;
+            const rewardObj = {
+              _id: claim._id,
+              couponCode: claim.couponCode,
+              discountAmount: claim.discountValue || 30,
+              minOrderAmount: claim.minOrderValue || 199,
+              isScratched: claim.isScratched || false,
+            };
+            setReward(rewardObj);
+            if (!claim.isScratched) {
+              setTimeout(() => setShowRewardModal(true), 1200);
+            }
+          } else {
+            // Generate fresh scratch reward for this successful purchase!
+            const postRes = await axios.post("/api/user/rewards", {});
+            if (postRes.data?.success && postRes.data.reward) {
+              const r = postRes.data.reward;
+              const rewardObj = {
+                _id: r._id,
+                couponCode: r.couponCode,
+                discountAmount: r.discountValue || 30,
+                minOrderAmount: r.minOrderValue || 199,
+                isScratched: false,
+              };
+              setReward(rewardObj);
+              setTimeout(() => setShowRewardModal(true), 1200);
+            }
           }
         }
-      })
-      .catch(() => {});
+      } catch (err) {
+        console.error("Reward load error:", err);
+      }
+    };
+
+    loadReward();
   }, [dispatch, orderId]);
 
   const displayTotal = orderDetails?.totalamount ?? (amountParam ? Number(amountParam) : 0);

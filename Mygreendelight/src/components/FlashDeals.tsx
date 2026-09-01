@@ -1,13 +1,86 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { Flame, ChevronRight, Zap, Sparkles } from "lucide-react";
+import { Flame, Clock, ChevronRight, Zap } from "lucide-react";
 import ProductCarousel from "./ProductCarousel";
 import Groceryitemcard from "./Groceryitemcard";
+import axios from "axios";
 
 export default function FlashDeals({ products = [] }: { products: any[] }) {
-  if (!products || products.length === 0) {
+  const [endTime, setEndTime] = useState<string | null>(null);
+  const [isActive, setIsActive] = useState<boolean>(true);
+  const [badgeText, setBadgeText] = useState<string>("");
+  const [isExpired, setIsExpired] = useState(false);
+  const [timeLeft, setTimeLeft] = useState({
+    hours: "00",
+    minutes: "00",
+    seconds: "00",
+  });
+
+  // 1. Fetch dynamic timer & status configured by Admin in /admin/manage-flash-deals
+  useEffect(() => {
+    axios
+      .get("/api/flash-deal")
+      .then((res) => {
+        if (res.data?.success && res.data?.setting) {
+          const s = res.data.setting;
+          setEndTime(s.endTime);
+          setIsActive(s.isActive !== undefined ? s.isActive : true);
+          setBadgeText(s.badgeText || "FLAT 25% - 40% OFF");
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  // 2. Real-time reverse countdown timer
+  useEffect(() => {
+    const calculateRemaining = () => {
+      const now = Date.now();
+      const targetTime = endTime ? new Date(endTime).getTime() : 0;
+
+      if (!endTime) {
+        // Default midnight timer fallback
+        const midnight = new Date();
+        midnight.setHours(24, 0, 0, 0);
+        const diff = Math.max(0, midnight.getTime() - now);
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / 1000 / 60) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        setTimeLeft({
+          hours: String(hours).padStart(2, "0"),
+          minutes: String(minutes).padStart(2, "0"),
+          seconds: String(seconds).padStart(2, "0"),
+        });
+        setIsExpired(false);
+        return;
+      }
+
+      const diff = targetTime - now;
+      if (diff <= 0) {
+        setIsExpired(true);
+        setTimeLeft({ hours: "00", minutes: "00", seconds: "00" });
+        return;
+      }
+
+      setIsExpired(false);
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      setTimeLeft({
+        hours: String(hours).padStart(2, "0"),
+        minutes: String(minutes).padStart(2, "0"),
+        seconds: String(seconds).padStart(2, "0"),
+      });
+    };
+
+    calculateRemaining();
+    const interval = setInterval(calculateRemaining, 1000);
+    return () => clearInterval(interval);
+  }, [endTime]);
+
+  if (!isActive || !products || products.length === 0) {
     return null;
   }
 
@@ -21,19 +94,27 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
             <div className="w-8 h-8 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center shrink-0 shadow-2xs">
               <Flame size={18} />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-base sm:text-2xl font-black text-gray-900 tracking-tight">
-                  Daily Flash Harvest Deals
-                </h2>
-                <span className="bg-gradient-to-r from-orange-500 to-amber-500 text-white text-[10px] sm:text-[11px] font-black uppercase px-2.5 py-0.5 rounded-full shadow-xs">
-                  🔥 UP TO 35% OFF
-                </span>
-              </div>
-              <p className="text-[10px] sm:text-xs text-gray-500 font-medium">
-                Limited daily farm-direct harvest discounts for Bhopal households
-              </p>
+            
+            <h2 className="text-base sm:text-2xl font-black text-gray-900 tracking-tight">
+              Daily Flash Harvest Deals
+            </h2>
+
+            {/* Live Admin-Controlled Timer */}
+            <div className="flex items-center gap-1.5 bg-red-50 border border-red-200 text-red-600 px-2.5 py-1 rounded-xl text-xs font-black shadow-2xs">
+              <Clock size={13} className="text-red-600 animate-pulse" />
+              <span className="font-mono tracking-wider">
+                {isExpired
+                  ? "Deal Ended"
+                  : `Ends in ${timeLeft.hours}:${timeLeft.minutes}:${timeLeft.seconds}`}
+              </span>
             </div>
+
+            {badgeText && (
+              <span className="hidden md:inline-flex items-center gap-1 text-[11px] font-black text-[#0f8646] bg-green-100/80 border border-green-200 px-2.5 py-0.5 rounded-md uppercase tracking-wider">
+                <Zap size={11} className="text-yellow-500 fill-yellow-500" />
+                {badgeText}
+              </span>
+            )}
           </div>
 
           <Link
