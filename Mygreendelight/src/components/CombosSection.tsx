@@ -66,12 +66,12 @@ export default function CombosSection({
   };
 
   return (
-    <div className="w-full py-5 sm:py-8 bg-white">
+    <div className="w-full py-4 sm:py-8 bg-white">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Section Header */}
-        <div className="flex items-center justify-between mb-4 sm:mb-6">
+        <div className="flex items-center justify-between mb-3.5 sm:mb-6">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center font-black">
+            <div className="w-8 h-8 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center font-black shrink-0">
               <Percent size={18} />
             </div>
             <div>
@@ -79,11 +79,11 @@ export default function CombosSection({
                 <h2 className="text-base sm:text-2xl font-black text-gray-900 tracking-tight">
                   Save-More Value Combos & Multipacks
                 </h2>
-                <span className="hidden sm:inline-block bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-0.5 rounded-full uppercase">
+                <span className="hidden sm:inline-block bg-amber-100 text-amber-800 text-[9px] font-black px-1.5 py-0.2 rounded-full uppercase">
                   Up to 25% Off
                 </span>
               </div>
-              <p className="text-[11px] sm:text-xs text-gray-500 font-medium">
+              <p className="text-[10px] sm:text-xs text-gray-500 font-medium">
                 Curated kitchen produce packs with bundle savings
               </p>
             </div>
@@ -121,7 +121,7 @@ export default function CombosSection({
         {/* Combos Swipe Carousel on Mobile / Grid on Desktop */}
         <div
           ref={scrollRef}
-          className="flex overflow-x-auto gap-4 pb-3 snap-x snap-mandatory scrollbar-none sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-5"
+          className="flex overflow-x-auto gap-3.5 sm:gap-5 pb-3 snap-x snap-mandatory scrollbar-none sm:grid sm:grid-cols-2 lg:grid-cols-4 -mx-3.5 px-3.5 sm:mx-0 sm:px-0"
         >
           {combos.map((c) => {
             const isAdded = addedIds[c._id];
@@ -130,11 +130,11 @@ export default function CombosSection({
                 key={c._id}
                 whileHover={{ y: -4 }}
                 transition={{ duration: 0.2 }}
-                className="w-[280px] xs:w-[310px] sm:w-auto shrink-0 snap-start bg-white rounded-3xl border border-gray-200/90 hover:border-amber-300 p-4 sm:p-5 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between relative overflow-hidden group"
+                className="w-[265px] xs:w-[295px] sm:w-auto shrink-0 snap-start bg-white rounded-3xl border border-gray-200/90 hover:border-amber-300 p-3.5 sm:p-5 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between relative overflow-hidden group"
               >
                 {/* Badge */}
-                <div className="absolute top-3.5 left-3.5 z-10">
-                  <span className="bg-gradient-to-r from-amber-400 to-orange-400 text-gray-950 font-black text-[10px] uppercase px-2.5 py-0.5 rounded-full shadow-xs border border-white/50">
+                <div className="absolute top-3 left-3 z-10">
+                  <span className="bg-gradient-to-r from-amber-400 to-orange-400 text-gray-950 font-black text-[9px] uppercase px-2.5 py-0.5 rounded-full shadow-xs border border-white/50">
                     {c.badge || `Save ${c.discountPercentage || 20}%`}
                   </span>
                 </div>
@@ -161,7 +161,7 @@ export default function CombosSection({
                     {c.items?.map((item: any, i: number) => (
                       <span
                         key={i}
-                        className="text-[9px] font-bold bg-green-50 text-[#0f8646] border border-green-200/80 px-2 py-0.5 rounded-md truncate max-w-full"
+                        className="text-[9px] font-bold bg-green-50 text-[#0f8646] border border-green-200/80 px-1.5 py-0.2 rounded truncate max-w-full"
                       >
                         {item.name}
                       </span>
@@ -170,16 +170,16 @@ export default function CombosSection({
                 </div>
 
                 {/* Price & Action */}
-                <div className="flex items-center justify-between pt-3 border-t border-gray-100 mt-auto">
+                <div className="flex items-center justify-between pt-2.5 border-t border-gray-100 mt-auto">
                   <div>
-                    <span className="text-[9px] sm:text-[10px] text-gray-400 font-bold block uppercase">
+                    <span className="text-[9px] text-gray-400 font-bold block uppercase">
                       Bundle Deal
                     </span>
-                    <div className="flex items-baseline gap-1.5">
+                    <div className="flex items-baseline gap-1">
                       <span className="text-base sm:text-xl font-black text-gray-900">
                         ₹{c.comboPrice}
                       </span>
-                      <span className="text-xs text-gray-400 line-through">
+                      <span className="text-[11px] text-gray-400 line-through">
                         ₹{c.originalPrice}
                       </span>
                     </div>
@@ -188,7 +188,7 @@ export default function CombosSection({
                   <button
                     type="button"
                     onClick={() => handleAddCombo(c)}
-                    className={`px-3.5 sm:px-4 py-2 rounded-xl font-black text-xs flex items-center gap-1 transition-all shadow-xs cursor-pointer ${
+                    className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl font-black text-xs flex items-center gap-1 transition-all shadow-xs cursor-pointer ${
                       isAdded
                         ? "bg-green-700 text-white"
                         : "bg-[#0f8646] hover:bg-[#0c6a38] text-white active:scale-95"
@@ -196,11 +196,11 @@ export default function CombosSection({
                   >
                     {isAdded ? (
                       <>
-                        <Check size={13} /> <span>Added! 🎉</span>
+                        <Check size={12} /> <span>Added! 🎉</span>
                       </>
                     ) : (
                       <>
-                        <ShoppingBag size={13} /> <span>Add Combo</span>
+                        <ShoppingBag size={12} /> <span>Add Combo</span>
                       </>
                     )}
                   </button>
