@@ -1,19 +1,15 @@
 import React from 'react'
 import Hero from './Hero'
 import MandiPriceTicker from './MandiPriceTicker'
-import DeliveryRadarStrip from './DeliveryRadarStrip'
-import FastReorderWidget from './FastReorderWidget'
 import FlashFreeGiftRush from './FlashFreeGiftRush'
 import Categoryslider from './Categoryslider'
-import RecipeKitsSection from './RecipeKitsSection'
-import DinnerDeciderWheel from './DinnerDeciderWheel'
-import CustomBoxBuilder from './CustomBoxBuilder'
+import FilteredProduceSection from './FilteredProduceSection'
+import FastReorderWidget from './FastReorderWidget'
 import FlashDeals from './FlashDeals'
 import CombosSection from './CombosSection'
 import FarmClubVIPBanner from './FarmClubVIPBanner'
-import FilteredProduceSection from './FilteredProduceSection'
 import MorningSubscriptionBanner from './MorningSubscriptionBanner'
-import DailyRewardWidget from './DailyRewardWidget'
+import InteractiveFarmFeatures from './InteractiveFarmFeatures'
 import Grocery from '@/model/groseri.model'
 import Category from '@/model/category.model'
 import ComboBundle from '@/model/combo.model'
@@ -27,12 +23,9 @@ import FarmFreshPromise from './FarmFreshPromise'
 import PreFooter from './PreFooter'
 import Testimonials from './Testimonials'
 import Link from 'next/link'
-import { Flame, Sparkles, RotateCcw, ChevronRight } from 'lucide-react'
+import { Sparkles, RotateCcw, ChevronRight } from 'lucide-react'
 
 import Banner from '@/model/banner.model'
-import RecipeKit from '@/model/recipekit.model'
-import DinnerRecipe from '@/model/dinnerwheel.model'
-import CustomBoxIngredient from '@/model/custombox.model'
 import Testimonial from '@/model/testimonial.model'
 import MandiRate from '@/model/mandi.model'
 import { auth } from '@/auth'
@@ -42,14 +35,11 @@ export default async function Userdashbord() {
   await connectDb()
   const session = await auth()
   
-  const newGroceriesPromise = Grocery.find({}).sort({ createdAt: -1 }).limit(16)
+  const newGroceriesPromise = Grocery.find({}).sort({ createdAt: -1 }).limit(24)
   const topGroceriesPromise = Grocery.find({}).sort({ rating: -1, numReviews: -1 }).limit(10)
   const flashDealsPromise = Grocery.find({ stock: { $gt: 0 } }).sort({ price: 1, rating: -1 }).limit(8)
   const bannersPromise = Banner.find({}).sort({ createdAt: -1 }).limit(5)
   const categoriesPromise = Category.find({}).sort({ createdAt: -1 })
-  const recipeKitsPromise = RecipeKit.find({ isActive: true }).sort({ createdAt: -1 })
-  const dinnerRecipesPromise = DinnerRecipe.find({ isActive: true }).sort({ createdAt: -1 })
-  const customBoxIngredientsPromise = CustomBoxIngredient.find({ isAvailable: true }).sort({ category: 1 })
   const testimonialsPromise = Testimonial.find({ status: 'approved' }).sort({ createdAt: -1 })
   const mandiRatesPromise = MandiRate.find({ isActive: true }).sort({ updatedAt: -1 })
   
@@ -74,15 +64,12 @@ export default async function Userdashbord() {
 
   const comboBundlesPromise = ComboBundle.find({ isActive: true }).lean()
 
-  const [newGroceries, topGroceries, flashDeals, banners, categories, recipeKits, dinnerRecipes, customBoxIngredients, testimonials, mandiRates, orderAgain, comboBundles] = await Promise.all([
+  const [newGroceries, topGroceries, flashDeals, banners, categories, testimonials, mandiRates, orderAgain, comboBundles] = await Promise.all([
     newGroceriesPromise,
     topGroceriesPromise,
     flashDealsPromise,
     bannersPromise,
     categoriesPromise,
-    recipeKitsPromise,
-    dinnerRecipesPromise,
-    customBoxIngredientsPromise,
     testimonialsPromise,
     mandiRatesPromise,
     orderAgainGroceriesPromise,
@@ -94,16 +81,13 @@ export default async function Userdashbord() {
   const plainFlash = JSON.parse(JSON.stringify(flashDeals))
   const plainBanners = JSON.parse(JSON.stringify(banners))
   const plainCategories = JSON.parse(JSON.stringify(categories))
-  const plainRecipeKits = JSON.parse(JSON.stringify(recipeKits))
-  const plainDinnerRecipes = JSON.parse(JSON.stringify(dinnerRecipes))
-  const plainCustomBoxIngredients = JSON.parse(JSON.stringify(customBoxIngredients))
   const plainTestimonials = JSON.parse(JSON.stringify(testimonials))
   const plainMandiRates = JSON.parse(JSON.stringify(mandiRates))
   const plainOrderAgain = JSON.parse(JSON.stringify(orderAgain))
   const plainCombos = JSON.parse(JSON.stringify(comboBundles || []))
 
   return (
-    <div className="bg-white w-full max-w-full overflow-x-hidden">
+    <div className="bg-white w-full max-w-full overflow-x-hidden font-sans">
       {/* 1. High-Converting Sliding Hero Banner (Database-driven from MongoDB) */}
       <Hero banners={plainBanners} />
 
@@ -113,36 +97,27 @@ export default async function Userdashbord() {
       {/* 3. Shop by Category (Zero Flicker & Preloaded from Database) */}
       <Categoryslider categories={plainCategories} />
 
-      {/* 4. Live Bhopal Mandi Rate & Price Drop Ticker */}
-      <MandiPriceTicker initialRates={plainMandiRates} />
-
-      {/* ⚡ 1-Click Fast Reorder Regular Farm Basket */}
-      <FastReorderWidget />
-
-      {/* 5. Live Flash Deals with Real Reverse Countdown Clock */}
-      <FlashDeals products={plainFlash} />
-
-      {/* 6. 🥗 1-Click "Cook This Dish" Recipe Ingredient Kits (Direct from MongoDB) */}
-      <RecipeKitsSection kits={plainRecipeKits} />
-
-      {/* 7. 🎡 "Aaj Kya Banayein?" Dinner Decider Wheel */}
-      <DinnerDeciderWheel initialRecipes={plainDinnerRecipes} />
-
-      {/* 8. 🥑 Craft Your Own Fresh Salad & Detox Box Builder */}
-      <CustomBoxBuilder initialIngredients={plainCustomBoxIngredients} />
-
-      {/* ⚡ Save-More Value Combos & Multipacks */}
-      <CombosSection initialCombos={plainCombos} />
-
-      {/* 🏆 MyGreenDelight Farm Club VIP Green Pass Banner */}
-      <FarmClubVIPBanner />
-      
-      {/* 9. 🏷️ 1-Tap Filter Chips & Daily Mandi Harvest Specials */}
+      {/* 4. 🏷️ 1-Tap Filter Chips & Daily Mandi Harvest Specials (Primary Shopping Feed) */}
       <FilteredProduceSection groceries={plainNew} />
 
-      {/* 7. Order Again (For logged in users with previous order history) */}
+      {/* 5. Live Bhopal Mandi Rate & Price Drop Ticker */}
+      <MandiPriceTicker initialRates={plainMandiRates} />
+
+      {/* ⚡ 1-Click Fast Reorder Regular Farm Basket (Only for Logged in repeat buyers) */}
+      <FastReorderWidget />
+
+      {/* 6. Live Flash Deals & Discounts */}
+      <FlashDeals products={plainFlash} />
+
+      {/* 7. ⚡ Save-More Value Combos & Multipacks */}
+      <CombosSection initialCombos={plainCombos} />
+
+      {/* 8. 🏆 MyGreenDelight Farm Club VIP Green Pass Banner */}
+      <FarmClubVIPBanner />
+
+      {/* 9. Order Again (For logged in users with previous order history) */}
       {plainOrderAgain && plainOrderAgain.length > 0 && (
-        <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 pb-5 sm:pb-8">
+        <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-5 sm:py-8">
            <div className="flex items-center justify-between mb-4 sm:mb-6">
               <div className="flex items-center gap-2.5">
                  <div className="w-8 h-8 rounded-2xl bg-green-100 flex items-center justify-center text-[#0f8646]">
@@ -168,12 +143,6 @@ export default async function Userdashbord() {
            </ProductCarousel>
         </div>
       )}
-
-      {/* 8. Dual Promo Banners */}
-      <PromoBanners banners={plainBanners.slice(1, 3)} />
-
-      {/* 9. Farm to Fork Freshness Promise (Visible on all devices) */}
-      <FarmFreshPromise />
 
       {/* 10. Top Rated Products Grid */}
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-6 sm:py-10">
@@ -207,23 +176,29 @@ export default async function Userdashbord() {
          </div>
       </div>
 
-      {/* 11. 🥛 Subah 7:00 AM Morning Milk & Veggie Subscription Banner */}
+      {/* 11. Dual Authentic Promo Banners */}
+      <PromoBanners banners={plainBanners.slice(1, 3)} />
+
+      {/* 12. 🥗 Specialized Farm Experiences (Custom Salad Box, Recipe Kits, Gift Hampers) */}
+      <InteractiveFarmFeatures />
+
+      {/* 13. 🥛 Subah 7:00 AM Morning Milk & Veggie Subscription Banner */}
       <MorningSubscriptionBanner />
 
-      {/* 👥 Bhopal Society & Colony Group Orders (5% Community OFF) */}
+      {/* 14. 👥 Bhopal Society & Colony Group Orders (5% Community OFF) */}
       <SocietyGroupOrderWidget />
 
-      {/* 12. Why Choose MyGreenDelight Features */}
-      <FeaturesBanner />
-
-      {/* 13. Customer Testimonials & Reviews (Preloaded from MongoDB) */}
+      {/* 15. Customer Testimonials & Reviews (Preloaded from MongoDB) */}
       <Testimonials initialTestimonials={plainTestimonials} />
 
-      {/* 14. PreFooter Trust Elements */}
-      <PreFooter />
+      {/* 16. Farm to Fork Freshness Promise */}
+      <FarmFreshPromise />
 
-      {/* 15. 🎁 Daily Scratch Card & Lucky Farm Reward Widget */}
-      <DailyRewardWidget />
+      {/* 17. Why Choose MyGreenDelight Features */}
+      <FeaturesBanner />
+
+      {/* 18. PreFooter Trust Elements */}
+      <PreFooter />
     </div>
   )
 }
