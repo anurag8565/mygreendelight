@@ -1,8 +1,43 @@
-﻿import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import connectDb from "@/lib/db";
 import { RewardConfig, ScratchReward } from "@/model/reward.model";
 import { auth } from "@/auth";
 import User from "@/model/user.model";
+
+const DEFAULT_REWARDS = [
+  {
+    title: "Flat ₹30 Instant OFF",
+    discountType: "fixed",
+    discountValue: 30,
+    couponPrefix: "FARM30",
+    minOrderValue: 249,
+    description: "Flat ₹30 discount on orders above ₹249",
+  },
+  {
+    title: "Flat 15% Extra Savings",
+    discountType: "percent",
+    discountValue: 15,
+    couponPrefix: "FRESH15",
+    minOrderValue: 299,
+    description: "15% OFF on fresh farm produce",
+  },
+  {
+    title: "Flat ₹50 Mega Discount",
+    discountType: "fixed",
+    discountValue: 50,
+    couponPrefix: "BHOPAL50",
+    minOrderValue: 499,
+    description: "Flat ₹50 OFF on pantry & veggies",
+  },
+  {
+    title: "100% Free 10-Min Delivery",
+    discountType: "fixed",
+    discountValue: 25,
+    couponPrefix: "FREESHIP",
+    minOrderValue: 199,
+    description: "Zero delivery fee on your order",
+  },
+];
 
 export async function GET(req: NextRequest) {
   try {
@@ -22,25 +57,11 @@ export async function GET(req: NextRequest) {
       config = await RewardConfig.create({
         isActive: true,
         dailyLimitPerUser: 1,
-        availableRewards: [
-          {
-            title: "Flat ₹30 Instant OFF",
-            discountType: "fixed",
-            discountValue: 30,
-            couponPrefix: "FARM30",
-            minOrderValue: 249,
-            description: "Flat ₹30 discount on orders above ₹249",
-          },
-          {
-            title: "Flat 15% Extra Savings",
-            discountType: "percent",
-            discountValue: 15,
-            couponPrefix: "FRESH15",
-            minOrderValue: 299,
-            description: "15% OFF on fresh farm produce",
-          },
-        ],
+        availableRewards: DEFAULT_REWARDS,
       });
+    } else if (!config.availableRewards || config.availableRewards.length === 0) {
+      config.availableRewards = DEFAULT_REWARDS as any;
+      await config.save();
     }
 
     const recentClaims = await ScratchReward.find({})

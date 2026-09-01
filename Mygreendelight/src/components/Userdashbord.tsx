@@ -8,6 +8,7 @@ import FastReorderWidget from './FastReorderWidget'
 import FlashDeals from './FlashDeals'
 import CombosSection from './CombosSection'
 import RecipeKitsSection from './RecipeKitsSection'
+import DailyRewardWidget from './DailyRewardWidget'
 import FarmClubVIPBanner from './FarmClubVIPBanner'
 import MorningSubscriptionBanner from './MorningSubscriptionBanner'
 import InteractiveFarmFeatures from './InteractiveFarmFeatures'
@@ -120,7 +121,10 @@ export default async function Userdashbord() {
         <RecipeKitsSection kits={plainRecipeKits} />
       )}
 
-      {/* 9. 🏆 MyGreenDelight Farm Club VIP Green Pass Banner */}
+      {/* 🎁 9. Daily Lucky Scratch Card & Cashback (Managed in Admin /manage-rewards) */}
+      <DailyRewardWidget />
+
+      {/* 10. 🏆 MyGreenDelight Farm Club VIP Green Pass Banner */}
       <FarmClubVIPBanner />
 
       {/* 10. Order Again (For logged in users with previous order history) */}
