@@ -21,6 +21,7 @@ import connectDb from '@/lib/db'
 import Groceryitemcard from './Groceryitemcard'
 import ProductCarousel from './ProductCarousel'
 import PromoBanners from './PromoBanners'
+import SocietyGroupOrderWidget from './SocietyGroupOrderWidget'
 import FeaturesBanner from './FeaturesBanner'
 import FarmFreshPromise from './FarmFreshPromise'
 import PreFooter from './PreFooter'
@@ -208,6 +209,9 @@ export default async function Userdashbord() {
 
       {/* 11. 🥛 Subah 7:00 AM Morning Milk & Veggie Subscription Banner */}
       <MorningSubscriptionBanner />
+
+      {/* 👥 Bhopal Society & Colony Group Orders (5% Community OFF) */}
+      <SocietyGroupOrderWidget />
 
       {/* 12. Why Choose MyGreenDelight Features */}
       <FeaturesBanner />

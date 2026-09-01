@@ -263,6 +263,56 @@ export default function TrackOrderPage() {
               </div>
             </div>
 
+            {/* Live Distance & ETA Radar Badge */}
+            {data?.customerLocation && deliveryBoy?.location?.coordinates && (
+              (() => {
+                const lat1 = data.customerLocation[0];
+                const lon1 = data.customerLocation[1];
+                const lat2 = deliveryBoy.location.coordinates[1];
+                const lon2 = deliveryBoy.location.coordinates[0];
+                
+                const dLat = ((lat2 - lat1) * Math.PI) / 180;
+                const dLon = ((lon2 - lon1) * Math.PI) / 180;
+                const a =
+                  Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                  Math.cos((lat1 * Math.PI) / 180) *
+                    Math.cos((lat2 * Math.PI) / 180) *
+                    Math.sin(dLon / 2) *
+                    Math.sin(dLon / 2);
+                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                const distKm = Math.max(0.3, Number((6371 * c).toFixed(1)));
+                const etaMins = Math.max(2, Math.round(distKm * 2.8 + 2));
+
+                return (
+                  <div className="bg-emerald-50/90 border border-emerald-200 rounded-2xl p-3.5 mb-4 flex items-center justify-between gap-3 shadow-2xs">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-[#0f8646] text-white flex items-center justify-center font-black animate-pulse shrink-0">
+                        <Truck size={20} />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-[10px] font-black uppercase text-[#0f8646] bg-emerald-100 px-2 py-0.2 rounded-md">
+                            Live GPS Transit
+                          </span>
+                          <span className="text-[11px] font-bold text-gray-500">
+                            Speed: ~25 km/h
+                          </span>
+                        </div>
+                        <p className="font-black text-xs sm:text-sm text-gray-900 mt-0.5">
+                          Rider is <span className="text-[#0f8646]">{distKm} km away</span> • Doorstep Arrival in ~{etaMins} Mins
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="shrink-0 flex items-center gap-1 text-[11px] font-black text-emerald-800 bg-white border border-emerald-200 px-3 py-1 rounded-full shadow-2xs">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+                      <span>Live Tracking</span>
+                    </div>
+                  </div>
+                );
+              })()
+            )}
+
             {/* Live Map */}
             {data?.customerLocation && deliveryBoy?.location?.coordinates && (
               <div className="rounded-2xl overflow-hidden border border-gray-200 shadow-inner h-72 mb-4">

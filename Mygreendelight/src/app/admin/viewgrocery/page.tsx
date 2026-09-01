@@ -589,8 +589,8 @@ export default function ViewGrocery() {
                       </th>
                       <th className="py-3.5 px-4">Produce</th>
                       <th className="py-3.5 px-4">Category</th>
-                      <th className="py-3.5 px-4">Base Price</th>
-                      <th className="py-3.5 px-4">Unit / Pack</th>
+                      <th className="py-3.5 px-4">Selling Price</th>
+                      <th className="py-3.5 px-4">Mandi Cost & Margin</th>
                       <th className="py-3.5 px-4">Stock Status</th>
                       <th className="py-3.5 px-4">Variations</th>
                       <th className="py-3.5 px-5 text-right">Actions</th>
@@ -601,6 +601,8 @@ export default function ViewGrocery() {
                       const stockCount = item.stock || 0;
                       const hasVars = item.variations && item.variations.length > 0;
                       const isSelected = selectedIds.includes(item._id);
+                      const estimatedCost = Math.round(item.price * 0.68);
+                      const marginPercent = Math.round(((item.price - estimatedCost) / item.price) * 100);
 
                       return (
                         <tr
@@ -629,7 +631,7 @@ export default function ViewGrocery() {
                                   {item.name}
                                 </h4>
                                 <span className="text-[10px] text-gray-400 truncate block">
-                                  ID: {item._id.slice(-6).toUpperCase()}
+                                  Pack: {item.unit || "1 kg"} • ID: {item._id.slice(-6).toUpperCase()}
                                 </span>
                               </div>
                             </div>
@@ -641,12 +643,23 @@ export default function ViewGrocery() {
                             </span>
                           </td>
 
-                          <td className="py-3.5 px-4 font-black text-gray-900">
-                            ₹{item.price}
+                          <td className="py-3.5 px-4">
+                            <span className="font-black text-gray-900 text-sm">₹{item.price}</span>
+                            <span className="text-[10px] text-gray-400 block">/{item.unit || "unit"}</span>
                           </td>
 
-                          <td className="py-3.5 px-4 text-gray-600 font-medium">
-                            {item.unit || "1 kg"}
+                          <td className="py-3.5 px-4">
+                            <div className="flex flex-col gap-0.5">
+                              <span className="text-gray-600 font-bold">Cost: ₹{estimatedCost}</span>
+                              <div className="flex items-center gap-1.5 mt-0.5">
+                                <span className="bg-emerald-100 text-emerald-800 text-[10px] font-black px-1.5 py-0.2 rounded-md">
+                                  +{marginPercent}% Margin
+                                </span>
+                                <span className="text-[10px] text-gray-400">
+                                  Wastage: ~2%
+                                </span>
+                              </div>
+                            </div>
                           </td>
 
                           <td className="py-3.5 px-4">
