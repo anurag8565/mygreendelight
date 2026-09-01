@@ -19,86 +19,31 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="bg-[#07321a] text-white font-sans border-t border-green-950 pb-24 md:pb-10 w-full max-w-full overflow-hidden">
-      {/* 1. Top Trust Features Strip */}
-      <div className="border-b border-green-900/60 bg-[#052613]">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-5 sm:py-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center shrink-0 text-emerald-300">
-                <Zap size={20} className="animate-pulse" />
-              </div>
-              <div>
-                <h4 className="font-extrabold text-xs sm:text-sm text-white">
-                  10-15 Min Express Delivery
-                </h4>
-                <p className="text-[10px] sm:text-[11px] text-green-200/80">Across all Bhopal localities</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center shrink-0 text-emerald-300">
-                <ShieldCheck size={20} />
-              </div>
-              <div>
-                <h4 className="font-extrabold text-xs sm:text-sm text-white">
-                  100% Farm Fresh Quality
-                </h4>
-                <p className="text-[10px] sm:text-[11px] text-green-200/80">Direct from local Sehore & Raisen farms</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center shrink-0 text-emerald-300">
-                <Truck size={20} />
-              </div>
-              <div>
-                <h4 className="font-extrabold text-xs sm:text-sm text-white">
-                  FREE Delivery on ₹499+
-                </h4>
-                <p className="text-[10px] sm:text-[11px] text-green-200/80">Zero hidden packaging charges</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center shrink-0 text-emerald-300">
-                <Phone size={20} />
-              </div>
-              <div>
-                <h4 className="font-extrabold text-xs sm:text-sm text-white">
-                  24/7 Bhopal Helpline
-                </h4>
-                <p className="text-[10px] sm:text-[11px] text-green-200/80">+91 9981418565</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 2. Main Footer Body */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-10 sm:py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10">
+    <footer className="bg-[#052613] text-white font-sans border-t border-green-950 pb-24 md:pb-10 w-full max-w-full overflow-hidden">
+      {/* Main Footer Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8 sm:py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10">
           
-          {/* Column 1: Store Logo & 2-Line Detail (4 Cols) */}
+          {/* Column 1: Store Logo, Bio & Address (4 Cols) */}
           <div className="lg:col-span-4 flex flex-col">
             <Link
               href="/"
-              className="text-white text-2xl sm:text-3xl font-black flex items-center gap-2 tracking-tight mb-3 group"
+              className="text-white text-xl sm:text-2xl md:text-3xl font-black flex items-center gap-2 tracking-tight mb-2 sm:mb-3 group"
             >
-              <div className="w-9 h-9 rounded-xl bg-white text-[#0f8646] flex items-center justify-center shadow-md">
-                <ShoppingCart className="fill-current w-5 h-5" />
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-white text-[#0f8646] flex items-center justify-center shadow-md">
+                <ShoppingCart className="fill-current w-4 h-4 sm:w-5 sm:h-5" />
               </div>
               <span>MyGreenDelight</span>
             </Link>
 
             <p className="text-xs sm:text-sm text-green-100/90 mb-4 leading-relaxed font-medium">
-              Bhopal’s dedicated farm-to-fork produce network. Delivering 100% ozone-washed, chemical-free fresh vegetables, fruits and pantry essentials straight from local Madhya Pradesh farms in under 15 minutes.
+              Bhopal’s dedicated farm-to-table network. Delivering 100% ozone-washed, chemical-free fresh vegetables, fruits and staples straight from local MP farms in 10-15 minutes.
             </p>
 
             {/* Store Address Box */}
-            <div className="bg-white/10 border border-white/10 rounded-2xl p-3.5 mb-4 backdrop-blur-xs">
-              <span className="text-[10px] font-black text-emerald-300 uppercase tracking-wider block mb-1">
-                📍 Bhopal Central Farm Hub & Store
+            <div className="bg-white/10 border border-white/10 rounded-2xl p-3 mb-4 backdrop-blur-xs">
+              <span className="text-[10px] font-black text-emerald-300 uppercase tracking-wider block mb-0.5">
+                📍 Bhopal Central Farm Hub
               </span>
               <p className="text-xs text-green-100 leading-snug">
                 Plot No. 12, Main Market, Arera Colony, Bhopal, MP - 462016
@@ -106,12 +51,12 @@ export default function Footer() {
             </div>
 
             {/* Social Media Channels */}
-            <div className="flex items-center gap-2.5 mt-1">
+            <div className="flex items-center gap-2">
               <a
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-pink-600 flex items-center justify-center text-white transition-colors"
+                className="w-8 h-8 rounded-xl bg-white/10 hover:bg-pink-600 flex items-center justify-center text-white transition-colors"
                 title="Follow on Instagram"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -122,7 +67,7 @@ export default function Footer() {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-blue-600 flex items-center justify-center text-white transition-colors"
+                className="w-8 h-8 rounded-xl bg-white/10 hover:bg-blue-600 flex items-center justify-center text-white transition-colors"
                 title="Follow on Facebook"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -133,7 +78,7 @@ export default function Footer() {
                 href="https://wa.me/919981418565"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-[#25D366] flex items-center justify-center text-white transition-colors"
+                className="w-8 h-8 rounded-xl bg-[#25D366]/30 hover:bg-[#25D366] flex items-center justify-center text-white transition-colors"
                 title="Connect on WhatsApp"
               >
                 <MessageCircle size={15} />
@@ -142,7 +87,7 @@ export default function Footer() {
                 href="https://youtube.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-red-600 flex items-center justify-center text-white transition-colors"
+                className="w-8 h-8 rounded-xl bg-white/10 hover:bg-red-600 flex items-center justify-center text-white transition-colors"
                 title="Watch on YouTube"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -152,121 +97,81 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Column 2: Farm Produce Aisles (3 Cols) */}
-          <div className="lg:col-span-3 flex flex-col">
-            <h3 className="font-black text-xs sm:text-sm uppercase tracking-wider mb-4 text-emerald-300">
-              Farm Produce Aisles
-            </h3>
-            <div className="flex flex-col gap-2.5 text-xs text-green-100/90 font-medium">
-              <Link
-                href="/shop?category=Vegetables"
-                className="hover:text-white hover:translate-x-1 transition-all flex items-center gap-1.5"
-              >
-                <span>🥬</span>
-                <span>Green Leafy Vegetables</span>
-              </Link>
-              <Link
-                href="/shop?category=Vegetables"
-                className="hover:text-white hover:translate-x-1 transition-all flex items-center gap-1.5"
-              >
-                <span>🥔</span>
-                <span>Daily Potatoes, Onions & Tomatoes</span>
-              </Link>
-              <Link
-                href="/shop?category=Fruits"
-                className="hover:text-white hover:translate-x-1 transition-all flex items-center gap-1.5"
-              >
-                <span>🍎</span>
-                <span>Sweet & Juicy Seasonal Fruits</span>
-              </Link>
-              <Link
-                href="/shop?category=Dairy%20%26%20Bakery"
-                className="hover:text-white hover:translate-x-1 transition-all flex items-center gap-1.5"
-              >
-                <span>🥛</span>
-                <span>Desi A2 Cow Milk & Malai Paneer</span>
-              </Link>
-              <Link
-                href="/shop?category=Vegetables"
-                className="hover:text-white hover:translate-x-1 transition-all flex items-center gap-1.5"
-              >
-                <span>🌿</span>
-                <span>Fresh Herbs, Ginger & Garlic</span>
-              </Link>
-              <Link
-                href="/shop"
-                className="hover:text-white hover:translate-x-1 transition-all flex items-center gap-1.5 text-yellow-300 font-bold"
-              >
-                <span>🥗</span>
-                <span>1-Click Cook Recipe Kits</span>
-              </Link>
-              <Link
-                href="/shop/custom-box"
-                className="hover:text-white hover:translate-x-1 transition-all flex items-center gap-1.5 text-emerald-300 font-bold"
-              >
-                <span>🥑</span>
-                <span>Craft Custom Salad Bowl</span>
-              </Link>
+          {/* Combined 2-Column Grid on Mobile for Categories & Quick Links (5 Cols on Desktop) */}
+          <div className="lg:col-span-5 grid grid-cols-2 gap-4 sm:gap-6">
+            
+            {/* Column 2: Farm Produce Aisles */}
+            <div className="flex flex-col">
+              <h3 className="font-black text-xs sm:text-sm uppercase tracking-wider mb-3 text-emerald-300">
+                Fresh Produce
+              </h3>
+              <div className="flex flex-col gap-2 text-xs text-green-100/90 font-medium">
+                <Link href="/shop?category=Vegetables" className="hover:text-white transition">
+                  🥬 Leafy Greens
+                </Link>
+                <Link href="/shop?category=Vegetables" className="hover:text-white transition">
+                  🥔 Aloo, Pyaaz & Tamatar
+                </Link>
+                <Link href="/shop?category=Fruits" className="hover:text-white transition">
+                  🍎 Farm Fresh Fruits
+                </Link>
+                <Link href="/shop?category=Dairy%20%26%20Bakery" className="hover:text-white transition">
+                  🥛 Desi Cow Milk & Paneer
+                </Link>
+                <Link href="/shop/custom-box" className="hover:text-white transition text-emerald-300 font-bold">
+                  🥑 Custom Salad Box
+                </Link>
+                <Link href="/shop/gift-basket" className="hover:text-white transition text-pink-300 font-bold">
+                  🎁 Gift Hampers
+                </Link>
+              </div>
             </div>
-          </div>
 
-          {/* Column 3: Quick Links & Account (2 Cols) */}
-          <div className="lg:col-span-2 flex flex-col">
-            <h3 className="font-black text-xs sm:text-sm uppercase tracking-wider mb-4 text-emerald-300">
-              Quick Links
-            </h3>
-            <div className="flex flex-col gap-2.5 text-xs text-green-100/90 font-medium">
-              <Link href="/" className="hover:text-white hover:translate-x-1 transition-all">
-                Home
-              </Link>
-              <Link href="/shop" className="hover:text-white hover:translate-x-1 transition-all">
-                Shop All Produce
-              </Link>
-              <Link href="/user/wallet" className="hover:text-white hover:translate-x-1 transition-all flex items-center justify-between text-yellow-300 font-bold">
-                <span>MGD Green Wallet</span>
-                <span className="text-[10px] bg-green-900/80 px-1.5 py-0.5 rounded-sm">+10% Bonus</span>
-              </Link>
-              <Link href="/user/subscriptions" className="hover:text-white hover:translate-x-1 transition-all flex items-center justify-between text-emerald-300 font-bold">
-                <span>🥛 7 AM Subscriptions</span>
-                <span className="text-[10px] bg-blue-950 px-1.5 py-0.5 rounded-sm">New</span>
-              </Link>
-              <Link href="/user/myorder" className="hover:text-white hover:translate-x-1 transition-all">
-                Track Live Order
-              </Link>
-              <Link href="/wishlist" className="hover:text-white hover:translate-x-1 transition-all">
-                Saved Wishlist
-              </Link>
-              <Link href="/produce-guide" className="hover:text-white hover:translate-x-1 transition-all text-yellow-300 font-bold">
-                🍅 Produce Storage Guide
-              </Link>
-              <Link href="/shop/gift-basket" className="hover:text-white hover:translate-x-1 transition-all text-pink-300 font-bold">
-                🎁 Gift a Fresh Hamper
-              </Link>
-              <Link href="/about" className="hover:text-white hover:translate-x-1 transition-all">
-                About Our Farms
-              </Link>
-              <Link href="/contact" className="hover:text-white hover:translate-x-1 transition-all">
-                Help & Contact Us
-              </Link>
+            {/* Column 3: Quick Links */}
+            <div className="flex flex-col">
+              <h3 className="font-black text-xs sm:text-sm uppercase tracking-wider mb-3 text-emerald-300">
+                Quick Links
+              </h3>
+              <div className="flex flex-col gap-2 text-xs text-green-100/90 font-medium">
+                <Link href="/shop" className="hover:text-white transition">
+                  Shop All Produce
+                </Link>
+                <Link href="/user/wallet" className="hover:text-white transition text-yellow-300 font-bold">
+                  MGD Green Wallet
+                </Link>
+                <Link href="/user/vip-pass" className="hover:text-white transition text-amber-300 font-bold">
+                  VIP Farm Pass
+                </Link>
+                <Link href="/user/subscriptions" className="hover:text-white transition text-emerald-300 font-bold">
+                  🥛 7 AM Subscriptions
+                </Link>
+                <Link href="/user/myorder" className="hover:text-white transition">
+                  Track Live Order
+                </Link>
+                <Link href="/contact" className="hover:text-white transition">
+                  Help & Support
+                </Link>
+              </div>
             </div>
+
           </div>
 
           {/* Column 4: Contact & Bhopal Dispatch Hubs (3 Cols) */}
           <div className="lg:col-span-3 flex flex-col">
-            <h3 className="font-black text-xs sm:text-sm uppercase tracking-wider mb-4 text-emerald-300">
-              Order Help & Support
+            <h3 className="font-black text-xs sm:text-sm uppercase tracking-wider mb-3 text-emerald-300">
+              Order Help & Helpline
             </h3>
 
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               <a
                 href="tel:9981418565"
-                className="bg-white/10 hover:bg-white/20 p-3 rounded-2xl flex items-center gap-3 transition-colors border border-white/10"
+                className="bg-white/10 hover:bg-white/20 p-2.5 sm:p-3 rounded-2xl flex items-center gap-3 transition-colors border border-white/10"
               >
                 <div className="w-8 h-8 rounded-xl bg-emerald-500/30 flex items-center justify-center text-emerald-300 shrink-0">
                   <Phone size={16} />
                 </div>
                 <div>
-                  <span className="text-[10px] text-green-200 block font-bold">Direct Call Support</span>
+                  <span className="text-[10px] text-green-200 block font-bold">Call Helpline</span>
                   <span className="text-xs font-black text-white">+91 9981418565</span>
                 </div>
               </a>
@@ -275,25 +180,24 @@ export default function Footer() {
                 href="https://wa.me/919981418565?text=Hello%20MyGreenDelight%20Support,%20I%20need%20help%20with%20my%20order."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#25D366]/20 hover:bg-[#25D366]/30 p-3 rounded-2xl flex items-center gap-3 transition-colors border border-[#25D366]/30"
+                className="bg-[#25D366]/20 hover:bg-[#25D366]/30 p-2.5 sm:p-3 rounded-2xl flex items-center gap-3 transition-colors border border-[#25D366]/30"
               >
                 <div className="w-8 h-8 rounded-xl bg-[#25D366]/40 flex items-center justify-center text-white shrink-0">
                   <MessageCircle size={16} />
                 </div>
                 <div>
-                  <span className="text-[10px] text-green-200 block font-bold">1-Click WhatsApp Order</span>
+                  <span className="text-[10px] text-green-200 block font-bold">WhatsApp Order</span>
                   <span className="text-xs font-black text-white">+91 9981418565</span>
                 </div>
               </a>
 
-              <div className="pt-2 text-[11px] text-green-200/80">
-                <span className="font-bold text-white block mb-1.5">Active Bhopal Delivery Zones:</span>
+              <div className="pt-1 text-[11px] text-green-200/80">
+                <span className="font-bold text-white block mb-1">Bhopal Hubs:</span>
                 <div className="flex flex-wrap gap-1">
                   <span className="bg-white/10 px-2 py-0.5 rounded-md text-[10px]">Arera Colony</span>
                   <span className="bg-white/10 px-2 py-0.5 rounded-md text-[10px]">MP Nagar</span>
-                  <span className="bg-white/10 px-2 py-0.5 rounded-md text-[10px]">Kolar Road</span>
+                  <span className="bg-white/10 px-2 py-0.5 rounded-md text-[10px]">Kolar</span>
                   <span className="bg-white/10 px-2 py-0.5 rounded-md text-[10px]">Hoshangabad Rd</span>
-                  <span className="bg-white/10 px-2 py-0.5 rounded-md text-[10px]">Indrapuri</span>
                 </div>
               </div>
             </div>
@@ -301,11 +205,11 @@ export default function Footer() {
 
         </div>
 
-        {/* 3. Bottom Legal & Payment Badges */}
-        <div className="border-t border-green-900/60 mt-10 pt-6 flex flex-col md:flex-row items-center justify-between text-xs text-green-200/80 gap-4">
-          <p>© {new Date().getFullYear()} MyGreenDelight Bhopal. Handcrafted with 💚 for fresh eating.</p>
+        {/* Bottom Legal & Payment Badges */}
+        <div className="border-t border-green-900/60 mt-8 pt-5 flex flex-col md:flex-row items-center justify-between text-xs text-green-200/80 gap-3 text-center md:text-left">
+          <p>© {new Date().getFullYear()} MyGreenDelight Bhopal. Fresh Farm Deliveries.</p>
 
-          <div className="flex items-center gap-3 text-xs font-semibold flex-wrap text-green-100">
+          <div className="flex items-center justify-center gap-2.5 text-[11px] font-semibold flex-wrap text-green-100">
             <Link href="/privacy-policy" className="hover:text-white transition">
               Privacy Policy
             </Link>
@@ -323,15 +227,15 @@ export default function Footer() {
             </Link>
           </div>
 
-          <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="bg-white/15 px-2.5 py-1 rounded-lg font-black text-[10px] text-white">
-              UPI (GPay / PhonePe / Paytm)
+          <div className="flex items-center justify-center gap-1.5 flex-wrap">
+            <span className="bg-white/10 px-2 py-0.5 rounded-md font-bold text-[10px] text-white">
+              UPI
             </span>
-            <span className="bg-white/15 px-2.5 py-1 rounded-lg font-black text-[10px] text-white">
-              RuPay / Cards
+            <span className="bg-white/10 px-2 py-0.5 rounded-md font-bold text-[10px] text-white">
+              Cards
             </span>
-            <span className="bg-white/15 px-2.5 py-1 rounded-lg font-black text-[10px] text-white">
-              Cash on Delivery (COD)
+            <span className="bg-white/10 px-2 py-0.5 rounded-md font-bold text-[10px] text-white">
+              COD
             </span>
           </div>
         </div>
