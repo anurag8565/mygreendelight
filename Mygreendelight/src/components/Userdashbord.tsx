@@ -185,16 +185,13 @@ export default async function Userdashbord() {
       {/* 13. 🥛 Subah 7:00 AM Morning Milk & Veggie Subscription Banner */}
       <MorningSubscriptionBanner />
 
-      {/* 14. 👥 Bhopal Society & Colony Group Orders (5% Community OFF) */}
-      <SocietyGroupOrderWidget />
-
-      {/* 15. Customer Testimonials & Reviews (Preloaded from MongoDB) */}
+      {/* 14. Customer Testimonials & Reviews (Preloaded from MongoDB) */}
       <Testimonials initialTestimonials={plainTestimonials} />
 
-      {/* 16. Farm to Fork Freshness Promise & Trust Guarantee */}
+      {/* 15. Farm to Fork Freshness Promise & Trust Guarantee */}
       <FarmFreshPromise />
 
-      {/* 17. PreFooter Trust Elements */}
+      {/* 16. PreFooter Trust Elements */}
       <PreFooter />
     </div>
   )
