@@ -89,16 +89,6 @@ export default function AdminSidebar() {
       icon: <Salad size={18} />,
     },
     {
-      name: "Parchi & List Orders",
-      href: "/admin/manage-list-orders",
-      icon: <FileText size={18} />,
-    },
-    {
-      name: "Kisan Gratitude Fund",
-      href: "/admin/farmer-gratitude",
-      icon: <Heart size={18} />,
-    },
-    {
       name: "Harvest Stock Alerts",
       href: "/admin/manage-stock-alerts",
       icon: <Bell size={18} />,

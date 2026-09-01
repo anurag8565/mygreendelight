@@ -49,7 +49,6 @@ export default function Checkout() {
   const [paymentMethod, setPaymentMethod] = useState<"cod" | "online">("cod");
   const [deliverySlot, setDeliverySlot] = useState<string>("Instant Express (30-45 Mins)");
   const [useWallet, setUseWallet] = useState<boolean>(false);
-  const [farmerTip, setFarmerTip] = useState<number>(0);
   const [isSilentDelivery, setIsSilentDelivery] = useState<boolean>(false);
   const [deliveryInstructions, setDeliveryInstructions] = useState<string>("");
   const [searchquery, setsearchquery] = useState("");
@@ -68,7 +67,7 @@ export default function Checkout() {
   const walletDiscount = useWallet
     ? Math.min(availableWallet, Math.max(0, subtotal + deliveryFee - discount))
     : 0;
-  const finalPayableTotal = Math.max(0, total - walletDiscount + farmerTip);
+  const finalPayableTotal = Math.max(0, total - walletDiscount);
 
   const [address, setaddress] = useState({
     fullname: "",
@@ -194,7 +193,6 @@ export default function Checkout() {
           couponCode: couponCode || undefined,
           discount: discount || 0,
           walletDiscount: walletDiscount || 0,
-          farmerTip: farmerTip || 0,
           isSilentDelivery: isSilentDelivery || false,
           deliveryInstructions: deliveryInstructions || "",
           deliverySlot: deliverySlot,
@@ -232,7 +230,6 @@ export default function Checkout() {
           couponCode: couponCode || undefined,
           discount: discount || 0,
           walletDiscount: walletDiscount || 0,
-          farmerTip: farmerTip || 0,
           isSilentDelivery: isSilentDelivery || false,
           deliveryInstructions: deliveryInstructions || "",
           deliverySlot: deliverySlot,
@@ -670,43 +667,6 @@ export default function Checkout() {
               </div>
             )}
 
-            {/* 🧑‍🌾 Tip the Farmer (Kisan Direct Gratitude Bonus) */}
-            <div className="bg-gradient-to-r from-amber-50/70 via-orange-50/50 to-amber-50/80 rounded-3xl border border-amber-200/90 p-5 shadow-xs">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] font-black uppercase tracking-wider bg-orange-100 text-orange-800 px-2.5 py-0.5 rounded-full">
-                  🧑‍🌾 Kisan Gratitude Fund
-                </span>
-              </div>
-              <h3 className="font-extrabold text-sm text-gray-900 mb-1">
-                Tip the Local Farmer Who Harvested Your Produce
-              </h3>
-              <p className="text-xs text-gray-500 mb-3">
-                100% of this gratitude bonus goes directly to our local Sehore & Raisen vegetable farmers.
-              </p>
-
-              <div className="flex items-center gap-2 flex-wrap">
-                {[
-                  { label: "₹10", val: 10 },
-                  { label: "₹20 (Recommended)", val: 20 },
-                  { label: "₹50", val: 50 },
-                  { label: "None", val: 0 },
-                ].map((t) => (
-                  <button
-                    key={t.val}
-                    type="button"
-                    onClick={() => setFarmerTip(t.val)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-black border transition cursor-pointer ${
-                      farmerTip === t.val
-                        ? "bg-orange-500 text-white border-orange-500 shadow-2xs"
-                        : "bg-white text-gray-700 border-gray-200 hover:border-orange-300"
-                    }`}
-                  >
-                    {t.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
             {/* 🔕 Subah 6:30 AM Silent Delivery Mode */}
             <div className="bg-white rounded-3xl border border-gray-200/80 p-5 shadow-xs">
               <div className="flex items-center justify-between">
@@ -779,13 +739,6 @@ export default function Checkout() {
                       <span>GreenPoints Wallet Cash</span>
                     </span>
                     <span>-₹{walletDiscount}</span>
-                  </div>
-                )}
-
-                {farmerTip > 0 && (
-                  <div className="flex justify-between text-orange-700 font-bold bg-orange-50 p-2 rounded-xl border border-orange-200">
-                    <span>🧑‍🌾 Kisan Gratitude Tip</span>
-                    <span>+₹{farmerTip}</span>
                   </div>
                 )}
 

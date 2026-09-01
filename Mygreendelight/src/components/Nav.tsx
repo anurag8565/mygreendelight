@@ -222,10 +222,6 @@ export default function Nav({ user }: { user: iUser }) {
             <span>🥛 7 AM Subscriptions</span>
             <span className="bg-blue-100 text-blue-800 text-[10px] font-black px-2 py-0.5 rounded-full">New</span>
           </Link>
-          <Link href="/user/upload-list" onClick={() => setmenuopen(false)} className={`font-semibold py-2 border-b flex items-center justify-between ${pathname === "/user/upload-list" ? "text-[#0f8646]" : "text-gray-700"}`}>
-            <span>📝 Paste Parchi / List</span>
-            <span className="bg-orange-100 text-orange-800 text-[10px] font-black px-2 py-0.5 rounded-full">Auto-Cart</span>
-          </Link>
           <Link href="/produce-guide" onClick={() => setmenuopen(false)} className={`font-semibold py-2 border-b flex items-center justify-between ${pathname === "/produce-guide" ? "text-[#0f8646]" : "text-gray-700"}`}>
             <span>🍅 Storage & Shelf Life Guide</span>
             <span className="bg-green-100 text-green-800 text-[10px] font-black px-2 py-0.5 rounded-full">Hacks</span>
@@ -492,10 +488,6 @@ export default function Nav({ user }: { user: iUser }) {
                     <Link href="/user/subscriptions" className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#0f8646] font-medium border-b flex items-center justify-between">
                       <span>🥛 7 AM Subscriptions</span>
                       <span className="bg-blue-100 text-blue-800 text-[10px] font-black px-2 py-0.5 rounded-full">New</span>
-                    </Link>
-                    <Link href="/user/upload-list" className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#0f8646] font-medium border-b flex items-center justify-between">
-                      <span>📝 Paste Parchi / List</span>
-                      <span className="bg-orange-100 text-orange-800 text-[10px] font-black px-2 py-0.5 rounded-full">Auto-Cart</span>
                     </Link>
                     <Link href="/wishlist" className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#0f8646] font-medium border-b flex justify-between">Wishlist {wishlistItems.length > 0 && <span className="bg-[#0f8646] text-white text-[10px] px-2 rounded-full">{wishlistItems.length}</span>}</Link>
                     <button onClick={() => signOut({ callbackUrl: "/login" })} className="w-full text-left px-4 py-3 text-sm text-red-600 hover:bg-red-50 font-medium flex items-center gap-2">

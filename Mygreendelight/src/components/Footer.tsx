@@ -230,10 +230,6 @@ export default function Footer() {
                 <span>🥛 7 AM Subscriptions</span>
                 <span className="text-[10px] bg-blue-950 px-1.5 py-0.5 rounded-sm">New</span>
               </Link>
-              <Link href="/user/upload-list" className="hover:text-white hover:translate-x-1 transition-all flex items-center justify-between text-orange-300 font-bold">
-                <span>📝 Paste Parchi / List</span>
-                <span className="text-[10px] bg-orange-950 px-1.5 py-0.5 rounded-sm">Auto-Cart</span>
-              </Link>
               <Link href="/user/myorder" className="hover:text-white hover:translate-x-1 transition-all">
                 Track Live Order
               </Link>
