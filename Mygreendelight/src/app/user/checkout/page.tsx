@@ -20,6 +20,8 @@ import {
   Moon,
   Coins,
   Crown,
+  ShoppingBag,
+  Truck,
 } from "lucide-react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
@@ -231,11 +233,11 @@ export default function Checkout() {
           await axios.delete("/api/user/cart");
         } catch (e) {}
 
-        if (createdOrderId) {
-          router.push(`/user/ordersuccess?orderId=${createdOrderId}&amount=${payableAmount}`);
-        } else {
-          router.push(`/user/ordersuccess?amount=${payableAmount}`);
-        }
+        const successUrl = createdOrderId
+          ? `/user/ordersuccess?orderId=${createdOrderId}&amount=${payableAmount}`
+          : `/user/ordersuccess?amount=${payableAmount}`;
+
+        window.location.replace(successUrl);
       } else {
         // 💳 Paytm Online Payment Flow
         const result = await axios.post("/api/user/payment", {
@@ -321,6 +323,64 @@ export default function Checkout() {
       setSubmitting(false);
     }
   };
+
+  if (submitting) {
+    return (
+      <div className="bg-[#fbfcfb] min-h-screen flex flex-col justify-between font-sans">
+        <Nav user={(userdata as any) || { role: "user" }} />
+        <main className="max-w-md mx-auto px-4 py-24 text-center flex-1 flex flex-col items-center justify-center">
+          <div className="w-16 h-16 rounded-3xl bg-green-100 text-[#0f8646] flex items-center justify-center mb-4 animate-bounce shadow-md">
+            <Truck size={32} />
+          </div>
+          <h2 className="text-xl sm:text-2xl font-black text-gray-900 mb-2">
+            Confirming Your Order...
+          </h2>
+          <p className="text-xs text-gray-500 mb-6">
+            Allocating nearest Bhopal dark store hub and generating your delivery receipt.
+          </p>
+          <div className="flex items-center gap-2 text-xs font-black text-[#0f8646] bg-green-50 px-4 py-2 rounded-full border border-green-200 shadow-2xs">
+            <Loader2 size={16} className="animate-spin" />
+            <span>Connecting Express 10-15 Min Fleet...</span>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!submitting && (!cartdata || cartdata.length === 0)) {
+    return (
+      <div className="bg-[#fbfcfb] min-h-screen flex flex-col justify-between font-sans">
+        <Nav user={(userdata as any) || { role: "user" }} />
+        <main className="max-w-md mx-auto px-4 py-20 text-center flex-1 flex flex-col items-center justify-center">
+          <div className="w-20 h-20 rounded-3xl bg-emerald-50 text-[#0f8646] flex items-center justify-center mb-4 mx-auto border border-emerald-100 shadow-inner">
+            <ShoppingBag size={36} />
+          </div>
+          <h2 className="text-xl sm:text-2xl font-black text-gray-900 mb-2">
+            Your Basket is Empty
+          </h2>
+          <p className="text-xs sm:text-sm text-gray-500 mb-8 max-w-xs mx-auto">
+            You have no items ready for checkout. Please add fresh farm produce from our store.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 w-full max-w-xs mx-auto">
+            <Link
+              href="/shop"
+              className="w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3.5 px-6 rounded-2xl font-black text-xs sm:text-sm shadow-md transition text-center"
+            >
+              Explore Farm Produce ➔
+            </Link>
+            <Link
+              href="/user/myorder"
+              className="w-full bg-white border border-gray-300 hover:border-green-500 text-gray-700 hover:text-[#0f8646] py-3.5 px-6 rounded-2xl font-bold text-xs sm:text-sm text-center transition"
+            >
+              View Orders
+            </Link>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="bg-[#fbfcfb] min-h-screen flex flex-col justify-between">
