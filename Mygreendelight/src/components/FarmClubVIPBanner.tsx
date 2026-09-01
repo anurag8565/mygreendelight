@@ -61,114 +61,107 @@ export default function FarmClubVIPBanner() {
   const daysLeft = vipData?.vipPass?.daysRemaining || 0;
 
   return (
-    <div className="w-full py-8 sm:py-12 bg-white">
+    <div className="w-full py-4 sm:py-8 bg-white">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
-        
         {/* Main VIP Gold / Emerald Container */}
-        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#042412] via-[#094723] to-[#0c592f] p-6 sm:p-10 text-white shadow-xl border-2 border-amber-400/40">
-          
+        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#031d0e] via-[#073b1d] to-[#0b4d27] p-4 sm:p-7 text-white shadow-md border border-amber-400/40">
           {/* Ambient Lighting */}
-          <div className="absolute right-0 top-0 w-96 h-96 bg-amber-400/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute left-0 bottom-0 w-80 h-80 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute right-0 top-0 w-80 h-80 bg-amber-400/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute left-0 bottom-0 w-60 h-60 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
-            
+          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-4 sm:gap-6">
             {/* Left: Headline & Core Perks */}
-            <div className="max-w-2xl">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-400 to-yellow-400 text-gray-950 font-black text-xs uppercase px-3 py-1 rounded-full shadow-md">
-                  <Crown size={15} />
+            <div className="w-full lg:max-w-2xl">
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
+                <span className="inline-flex items-center gap-1 bg-gradient-to-r from-amber-400 to-yellow-400 text-gray-950 font-black text-[10px] sm:text-xs uppercase px-2.5 py-0.5 rounded-full shadow-xs">
+                  <Crown size={13} />
                   <span>MyGreenDelight Farm Club</span>
                 </span>
                 {isMember ? (
-                  <span className="bg-emerald-500/30 border border-emerald-400 text-emerald-200 text-xs font-extrabold px-3 py-0.5 rounded-full">
+                  <span className="bg-emerald-500/30 border border-emerald-400 text-emerald-200 text-[10px] sm:text-xs font-black px-2.5 py-0.5 rounded-full">
                     👑 Active Member ({daysLeft} Days Left)
                   </span>
                 ) : (
-                  <span className="bg-white/10 text-yellow-300 text-xs font-extrabold px-3 py-0.5 rounded-full border border-white/10">
-                    VIP Green Pass
+                  <span className="bg-white/10 text-yellow-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-white/10">
+                    Save ₹400+/mo
                   </span>
                 )}
               </div>
 
-              <h2 className="text-2xl sm:text-4xl font-black tracking-tight text-white leading-tight mb-3">
+              <h2 className="text-base sm:text-2xl font-black tracking-tight text-white leading-tight mb-1.5">
                 Save ₹400+ Every Month On Pure Bhopal Farm Produce
               </h2>
-              <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed mb-6 font-medium">
-                Get unlimited free deliveries, daily discounts on fresh orchard fruits, and early morning 6:30 AM harvest dispatch!
+              <p className="text-[11px] sm:text-xs text-emerald-100/90 leading-relaxed mb-3.5 font-medium">
+                Unlimited free deliveries, 10% extra fruit discount & 6:30 AM priority morning harvest slot!
               </p>
 
-              {/* 3 Core Highlights */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/15">
-                  <div className="flex items-center gap-2 text-yellow-300 font-black text-xs mb-1">
-                    <Zap size={15} />
-                    <span>Flat FREE Delivery</span>
+              {/* 3 Core Highlights in Compact Row */}
+              <div className="grid grid-cols-3 gap-2">
+                <div className="bg-white/10 backdrop-blur-xs rounded-xl p-2 border border-white/10 text-center sm:text-left">
+                  <div className="flex items-center justify-center sm:justify-start gap-1 text-yellow-300 font-black text-[10px] sm:text-xs mb-0.5">
+                    <Zap size={12} className="shrink-0" />
+                    <span className="truncate">Flat FREE Delivery</span>
                   </div>
-                  <p className="text-[11px] text-emerald-100">
-                    ₹0 delivery charges on all orders, no minimum cart value needed!
+                  <p className="text-[9px] sm:text-[10px] text-emerald-100 leading-tight truncate">
+                    ₹0 delivery charges on all orders
                   </p>
                 </div>
 
-                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/15">
-                  <div className="flex items-center gap-2 text-yellow-300 font-black text-xs mb-1">
-                    <Gift size={15} />
-                    <span>10% Extra on Fruits</span>
+                <div className="bg-white/10 backdrop-blur-xs rounded-xl p-2 border border-white/10 text-center sm:text-left">
+                  <div className="flex items-center justify-center sm:justify-start gap-1 text-yellow-300 font-black text-[10px] sm:text-xs mb-0.5">
+                    <Gift size={12} className="shrink-0" />
+                    <span className="truncate">10% Off Fruits</span>
                   </div>
-                  <p className="text-[11px] text-emerald-100">
-                    Daily 10% instant discount auto-unlocked across all seasonal fruits.
+                  <p className="text-[9px] sm:text-[10px] text-emerald-100 leading-tight truncate">
+                    Auto-unlocked daily discount
                   </p>
                 </div>
 
-                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/15">
-                  <div className="flex items-center gap-2 text-yellow-300 font-black text-xs mb-1">
-                    <Sun size={15} />
-                    <span>6:30 AM Priority Slot</span>
+                <div className="bg-white/10 backdrop-blur-xs rounded-xl p-2 border border-white/10 text-center sm:text-left">
+                  <div className="flex items-center justify-center sm:justify-start gap-1 text-yellow-300 font-black text-[10px] sm:text-xs mb-0.5">
+                    <Sun size={12} className="shrink-0" />
+                    <span className="truncate">6:30 AM Slot</span>
                   </div>
-                  <p className="text-[11px] text-emerald-100">
-                    First priority morning slot directly picked from sunrise harvest.
+                  <p className="text-[9px] sm:text-[10px] text-emerald-100 leading-tight truncate">
+                    Priority sunrise harvest delivery
                   </p>
                 </div>
               </div>
             </div>
 
             {/* Right: Pricing Box & Action */}
-            <div className="w-full lg:w-auto shrink-0 bg-white/10 backdrop-blur-xl border-2 border-amber-400/50 rounded-3xl p-6 sm:p-7 flex flex-col items-center text-center shadow-2xl">
-              <span className="text-[11px] font-black uppercase tracking-wider text-amber-300">
-                Exclusive Membership
-              </span>
-              
-              <div className="flex items-baseline gap-1 my-2">
-                <span className="text-3xl sm:text-4xl font-black text-white">₹49</span>
-                <span className="text-xs text-emerald-200 font-bold">/ month</span>
+            <div className="w-full lg:w-auto shrink-0 bg-white/10 backdrop-blur-md border border-amber-400/40 rounded-2xl p-3.5 sm:p-5 flex flex-row lg:flex-col items-center justify-between gap-3 shadow-inner">
+              <div className="text-left lg:text-center">
+                <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-amber-300 block">
+                  VIP Membership
+                </span>
+                <div className="flex items-baseline gap-1 my-0.5">
+                  <span className="text-2xl sm:text-3xl font-black text-white">₹49</span>
+                  <span className="text-[10px] text-emerald-200 font-bold">/ 30 days</span>
+                </div>
               </div>
 
-              <p className="text-[11px] text-emerald-100 max-w-[200px] mb-5">
-                Pay just ₹49 once and unlock 30 days of VIP privileges.
-              </p>
-
-              {!isMember ? (
-                <button
-                  type="button"
-                  onClick={() => setShowModal(true)}
-                  className="w-full bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-400 hover:from-yellow-300 hover:to-amber-300 text-gray-950 font-black py-3 px-6 rounded-2xl text-xs sm:text-sm shadow-xl active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer border border-yellow-200"
-                >
-                  <Crown size={16} />
-                  <span>Join Farm Club for ₹49</span>
-                  <ArrowRight size={15} />
-                </button>
-              ) : (
-                <div className="w-full bg-emerald-700/80 border border-emerald-400/60 py-3 px-6 rounded-2xl text-xs font-black text-white flex items-center justify-center gap-2 shadow-inner">
-                  <Check size={16} className="text-yellow-300" />
-                  <span>VIP Pass Active ({daysLeft} Days)</span>
-                </div>
-              )}
+              <div className="shrink-0">
+                {!isMember ? (
+                  <button
+                    type="button"
+                    onClick={() => setShowModal(true)}
+                    className="bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-400 hover:from-yellow-300 hover:to-amber-300 text-gray-950 font-black py-2.5 px-4 sm:px-6 rounded-xl text-xs shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5 cursor-pointer border border-yellow-200"
+                  >
+                    <Crown size={14} />
+                    <span>Join VIP for ₹49</span>
+                    <ArrowRight size={13} />
+                  </button>
+                ) : (
+                  <div className="bg-emerald-700/90 border border-emerald-400/60 py-2 px-4 rounded-xl text-xs font-black text-white flex items-center justify-center gap-1.5 shadow-inner">
+                    <Check size={14} className="text-yellow-300" />
+                    <span>VIP Active ✓</span>
+                  </div>
+                )}
+              </div>
             </div>
-
           </div>
-
         </div>
-
       </div>
 
       {/* Modal: Join VIP Pass Confirmation */}
@@ -190,19 +183,19 @@ export default function FarmClubVIPBanner() {
                 <X size={18} />
               </button>
 
-              <div className="w-14 h-14 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mb-4 mx-auto shadow-inner">
-                <Crown size={28} />
+              <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mb-3 mx-auto shadow-inner">
+                <Crown size={24} />
               </div>
 
-              <h3 className="text-xl font-black text-center text-gray-900 mb-1">
+              <h3 className="text-lg font-black text-center text-gray-900 mb-1">
                 Activate VIP Farm Club Pass
               </h3>
-              <p className="text-xs text-gray-500 text-center mb-6">
+              <p className="text-xs text-gray-500 text-center mb-5">
                 30 Days of Unlimited Free Delivery & 10% Extra Fruit Discounts
               </p>
 
               {/* Summary Breakdown */}
-              <div className="bg-gray-50 rounded-2xl p-4 border border-gray-200 space-y-2 text-xs mb-6">
+              <div className="bg-gray-50 rounded-2xl p-4 border border-gray-200 space-y-2 text-xs mb-5">
                 <div className="flex justify-between text-gray-600">
                   <span>Membership Duration:</span>
                   <span className="font-bold text-gray-900">30 Days</span>
@@ -229,7 +222,7 @@ export default function FarmClubVIPBanner() {
                 </div>
               )}
 
-              <div className="flex flex-col gap-2.5">
+              <div className="flex flex-col gap-2">
                 <button
                   type="button"
                   onClick={handleJoinVip}
@@ -241,17 +234,15 @@ export default function FarmClubVIPBanner() {
 
                 <Link
                   href="/user/wallet"
-                  className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2.5 rounded-xl text-xs text-center transition"
+                  className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2 rounded-xl text-xs text-center transition"
                 >
                   Recharge Wallet / Add Money
                 </Link>
               </div>
-
             </div>
           </div>
         )}
       </AnimatePresence>
-
     </div>
   );
 }
