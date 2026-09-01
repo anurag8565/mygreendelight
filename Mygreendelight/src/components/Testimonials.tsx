@@ -71,14 +71,15 @@ export default function Testimonials({
   initialTestimonials?: any[];
 }) {
   const sanitizeList = (list: any[]) => {
+    if (!list || list.length === 0) return DEFAULT_BHOPAL_REVIEWS;
     const cleaned = list.filter(
       (t) =>
         t.comment &&
         !/yummy|bad rice|test/i.test(t.comment) &&
         t.location !== "India" &&
-        t.comment.length > 8
+        t.comment.length > 5
     );
-    return cleaned.length >= 3 ? cleaned : DEFAULT_BHOPAL_REVIEWS;
+    return cleaned.length > 0 ? cleaned : DEFAULT_BHOPAL_REVIEWS;
   };
 
   const [testimonials, setTestimonials] = useState<any[]>(
@@ -98,26 +99,30 @@ export default function Testimonials({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedMsg, setSubmittedMsg] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (initialTestimonials.length > 0) {
-      setTestimonials(sanitizeList(initialTestimonials));
-    } else {
-      axios
-        .get("/api/testimonials")
-        .then((res) => {
-          if (res.data?.success && res.data.testimonials?.length > 0) {
-            setTestimonials(sanitizeList(res.data.testimonials));
-          }
-        })
-        .catch(() => {});
+  const fetchLiveTestimonials = async () => {
+    try {
+      const res = await axios.get("/api/testimonials");
+      if (res.data?.success && res.data.testimonials?.length > 0) {
+        setTestimonials(sanitizeList(res.data.testimonials));
+      }
+    } catch (e) {
+      console.error(e);
     }
-  }, [initialTestimonials]);
+  };
+
+  useEffect(() => {
+    fetchLiveTestimonials();
+  }, []);
 
   const scroll = (direction: "left" | "right") => {
     if (scrollContainerRef.current) {
-      const scrollAmount = window.innerWidth > 640 ? 360 : 300;
-      scrollContainerRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
+      const { scrollLeft, clientWidth } = scrollContainerRef.current;
+      const scrollAmount = clientWidth * 0.75;
+      scrollContainerRef.current.scrollTo({
+        left:
+          direction === "left"
+            ? scrollLeft - scrollAmount
+            : scrollLeft + scrollAmount,
         behavior: "smooth",
       });
     }
@@ -134,17 +139,8 @@ export default function Testimonials({
     try {
       const res = await axios.post("/api/testimonials", reviewForm);
       if (res.data.success) {
-        const newReview = {
-          _id: `user-rev-${Date.now()}`,
-          name: reviewForm.name,
-          location: reviewForm.location || "Bhopal Resident",
-          rating: reviewForm.rating,
-          comment: reviewForm.comment,
-          tag: "Verified Customer",
-        };
-
-        setTestimonials((prev) => [newReview, ...prev]);
-        setSubmittedMsg("🎉 Thank you! Your verified review has been published.");
+        setSubmittedMsg("🎉 Thank you! Your review has been saved to database and published.");
+        fetchLiveTestimonials();
         setTimeout(() => {
           setIsModalOpen(false);
           setSubmittedMsg(null);
@@ -170,50 +166,50 @@ export default function Testimonials({
   };
 
   return (
-    <div className="w-full bg-[#fbfdfc] py-8 sm:py-14 border-t border-gray-100 font-sans">
+    <div className="w-full bg-[#fbfdfc] py-6 sm:py-12 border-t border-gray-100 font-sans">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6 sm:mb-8">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 sm:mb-6">
           <div>
-            <span className="inline-flex items-center gap-1 text-[11px] font-black uppercase tracking-wider text-[#0f8646] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 mb-1">
-              <Sparkles size={12} /> Real Bhopal Families Love Us
+            <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-[#0f8646] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 mb-1">
+              <Sparkles size={11} /> Real Bhopal Families Love Us
             </span>
-            <h2 className="text-xl sm:text-3xl font-black text-gray-900 tracking-tight">
+            <h2 className="text-base sm:text-2xl font-black text-gray-900 tracking-tight">
               Customer Reviews & Experiences
             </h2>
-            <p className="text-xs text-gray-500 font-medium mt-0.5">
+            <p className="text-[11px] sm:text-xs text-gray-500 font-medium mt-0.5">
               100% verified farm-to-table delivery feedback from across Bhopal
             </p>
           </div>
 
-          <div className="flex items-center gap-2.5 self-stretch sm:self-auto justify-between sm:justify-end">
-            {/* Desktop Navigation Arrows */}
-            <div className="hidden sm:flex items-center gap-1.5">
+          <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
+            {/* Carousel Left / Right Arrow Controls (Visible on Mobile & Desktop) */}
+            <div className="flex items-center gap-1">
               <button
                 type="button"
                 onClick={() => scroll("left")}
-                className="w-9 h-9 rounded-xl border border-gray-200 bg-white hover:bg-green-50 hover:border-[#0f8646] text-gray-700 hover:text-[#0f8646] transition flex items-center justify-center shadow-2xs cursor-pointer"
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-gray-200 bg-white hover:bg-green-50 hover:border-[#0f8646] text-gray-700 hover:text-[#0f8646] transition flex items-center justify-center shadow-2xs cursor-pointer active:scale-95"
                 title="Previous Review"
               >
-                <ChevronLeft size={18} />
+                <ChevronLeft size={16} />
               </button>
               <button
                 type="button"
                 onClick={() => scroll("right")}
-                className="w-9 h-9 rounded-xl border border-gray-200 bg-white hover:bg-green-50 hover:border-[#0f8646] text-gray-700 hover:text-[#0f8646] transition flex items-center justify-center shadow-2xs cursor-pointer"
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-gray-200 bg-white hover:bg-green-50 hover:border-[#0f8646] text-gray-700 hover:text-[#0f8646] transition flex items-center justify-center shadow-2xs cursor-pointer active:scale-95"
                 title="Next Review"
               >
-                <ChevronRight size={18} />
+                <ChevronRight size={16} />
               </button>
             </div>
 
             <button
               type="button"
               onClick={() => setIsModalOpen(true)}
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2.5 rounded-xl font-black shadow-sm transition-all text-xs flex items-center gap-1.5 cursor-pointer w-full sm:w-auto justify-center"
+              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-3.5 py-2 rounded-xl font-black shadow-xs transition-all text-xs flex items-center gap-1 cursor-pointer"
             >
-              <MessageSquarePlus size={15} />
+              <MessageSquarePlus size={14} />
               <span>Write a Review</span>
             </button>
           </div>
@@ -222,22 +218,22 @@ export default function Testimonials({
         {/* Modern Swipeable Review Carousel */}
         <div
           ref={scrollContainerRef}
-          className="flex items-stretch gap-4 overflow-x-auto pb-4 pt-1 scrollbar-none snap-x scroll-smooth -mx-3.5 px-3.5 sm:mx-0 sm:px-0"
+          className="flex items-stretch gap-3.5 sm:gap-4 overflow-x-auto pb-3 pt-1 scrollbar-none snap-x scroll-smooth -mx-3.5 px-3.5 sm:mx-0 sm:px-0"
         >
           {testimonials.map((t, idx) => (
             <motion.div
               key={t._id || idx}
               whileHover={{ y: -3 }}
-              className="w-[285px] sm:w-[330px] md:w-[350px] shrink-0 snap-start bg-white rounded-3xl p-5 border border-gray-200/80 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between"
+              className="w-[270px] xs:w-[300px] sm:w-[340px] shrink-0 snap-start bg-white rounded-3xl p-4 sm:p-5 border border-gray-200/90 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between"
             >
               <div>
                 {/* Rating Stars & Tag */}
-                <div className="flex items-center justify-between gap-2 mb-3">
+                <div className="flex items-center justify-between gap-2 mb-2.5">
                   <div className="flex items-center gap-0.5 text-amber-400">
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
-                        size={15}
+                        size={13}
                         className={
                           i < (t.rating || 5)
                             ? "fill-amber-400 text-amber-400"
@@ -246,15 +242,15 @@ export default function Testimonials({
                       />
                     ))}
                   </div>
-                  <span className="text-[10px] font-extrabold text-[#0f8646] bg-green-50 border border-green-200 px-2 py-0.5 rounded-full flex items-center gap-1">
-                    <CheckCircle2 size={10} />
-                    <span>{t.tag || "Verified Buyer"}</span>
+                  <span className="text-[9px] font-black text-[#0f8646] bg-green-50 border border-green-200 px-2 py-0.5 rounded-full flex items-center gap-0.5">
+                    <CheckCircle2 size={9} />
+                    <span>{t.tag || "Verified Customer"}</span>
                   </span>
                 </div>
 
                 {/* Comment Text with Quote Icon */}
-                <div className="relative mb-4">
-                  <Quote size={20} className="text-emerald-100 absolute -top-1 -left-1 -z-0" />
+                <div className="relative mb-3.5">
+                  <Quote size={18} className="text-emerald-100 absolute -top-1 -left-1 -z-0" />
                   <p className="text-xs sm:text-[13px] text-gray-700 font-medium leading-relaxed relative z-10 italic">
                     &ldquo;{t.comment}&rdquo;
                   </p>
@@ -262,15 +258,15 @@ export default function Testimonials({
               </div>
 
               {/* Author Info */}
-              <div className="flex items-center gap-3 pt-3.5 border-t border-gray-100">
-                <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-[#0f8646] flex items-center justify-center font-black text-sm shrink-0 border border-emerald-200 shadow-2xs">
+              <div className="flex items-center gap-2.5 pt-3 border-t border-gray-100 mt-auto">
+                <div className="w-9 h-9 rounded-2xl bg-emerald-100 text-[#0f8646] flex items-center justify-center font-black text-xs shrink-0 border border-emerald-200 shadow-2xs">
                   {t.name?.charAt(0) || "U"}
                 </div>
                 <div className="min-w-0">
                   <h4 className="font-black text-xs sm:text-sm text-gray-900 truncate">
                     {t.name}
                   </h4>
-                  <span className="text-[11px] text-gray-400 block truncate">
+                  <span className="text-[10px] text-gray-400 block truncate font-medium">
                     📍 {t.location || "Bhopal, MP"}
                   </span>
                 </div>
@@ -305,10 +301,10 @@ export default function Testimonials({
                 <Star size={24} className="fill-[#0f8646]" />
               </div>
 
-              <h3 className="text-xl font-black text-center text-gray-900 mb-1">
+              <h3 className="text-lg font-black text-center text-gray-900 mb-1">
                 Share Your Farm Experience
               </h3>
-              <p className="text-xs text-gray-500 text-center mb-6">
+              <p className="text-xs text-gray-500 text-center mb-5">
                 Tell Bhopal neighbors about the produce quality & 10-min delivery!
               </p>
 
@@ -330,7 +326,7 @@ export default function Testimonials({
                       onChange={(e) =>
                         setReviewForm({ ...reviewForm, name: e.target.value })
                       }
-                      className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium"
+                      className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium"
                     />
                   </div>
 
@@ -343,7 +339,7 @@ export default function Testimonials({
                       onChange={(e) =>
                         setReviewForm({ ...reviewForm, location: e.target.value })
                       }
-                      className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium cursor-pointer"
+                      className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium cursor-pointer"
                     >
                       <option value="Arera Colony, Bhopal">Arera Colony, Bhopal</option>
                       <option value="Kolar Road, Bhopal">Kolar Road, Bhopal</option>
@@ -359,7 +355,7 @@ export default function Testimonials({
                     <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
                       Rating
                     </label>
-                    <div className="flex items-center gap-2 p-2.5 bg-gray-50 rounded-xl border border-gray-200 justify-center">
+                    <div className="flex items-center gap-2 p-2 bg-gray-50 rounded-xl border border-gray-200 justify-center">
                       {[1, 2, 3, 4, 5].map((star) => (
                         <button
                           type="button"
@@ -368,7 +364,7 @@ export default function Testimonials({
                           className="transition-transform hover:scale-125 cursor-pointer"
                         >
                           <Star
-                            size={26}
+                            size={24}
                             className={
                               reviewForm.rating >= star
                                 ? "text-amber-400 fill-amber-400"
@@ -392,14 +388,14 @@ export default function Testimonials({
                       onChange={(e) =>
                         setReviewForm({ ...reviewForm, comment: e.target.value })
                       }
-                      className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium resize-none"
+                      className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium resize-none"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-3.5 bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                    className="w-full py-3 bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                   >
                     {isSubmitting ? "Submitting Review..." : "Submit Verified Review"}
                   </button>
@@ -409,7 +405,6 @@ export default function Testimonials({
           </div>
         )}
       </AnimatePresence>
-
     </div>
   );
 }
