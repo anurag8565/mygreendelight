@@ -122,8 +122,8 @@ export default function TrackOrderPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50/60 via-white to-green-50/40 p-4 md:p-8 pb-36 sm:pb-20">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-b from-green-50/60 via-white to-green-50/40 p-3.5 sm:p-4 md:p-8 pb-36 sm:pb-20 w-full max-w-full overflow-x-hidden font-sans">
+      <div className="max-w-4xl mx-auto w-full">
         {/* Back Link */}
         <Link
           href="/"
@@ -488,58 +488,58 @@ export default function TrackOrderPage() {
             {/* Address & Total (5 Cols) */}
             <div className="md:col-span-5 space-y-6">
               {/* Delivery Address & Time Slot */}
-              <div className="bg-white rounded-3xl p-6 border border-gray-200/80 shadow-xs">
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-extrabold text-gray-900 text-base flex items-center gap-2">
-                    <MapPin size={18} className="text-[#0f8646]" /> Delivery Address
+              <div className="bg-white rounded-3xl p-5 sm:p-6 border border-gray-200/80 shadow-xs">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                  <h3 className="font-extrabold text-gray-900 text-sm sm:text-base flex items-center gap-2">
+                    <MapPin size={18} className="text-[#0f8646] shrink-0" /> Delivery Address
                   </h3>
-                  <span className="text-[10px] font-black uppercase text-[#0f8646] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                    {order.deliverySlot || "Instant Express"}
+                  <span className="text-[10px] font-black uppercase text-[#0f8646] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 self-start sm:self-auto max-w-full truncate">
+                    {order.deliverySlot || "Instant Express (10-15 Mins)"}
                   </span>
                 </div>
                 <div className="text-xs text-gray-600 space-y-1">
                   <p className="font-bold text-gray-900">{order.address?.fullname}</p>
-                  <p>{order.address?.fulladress}</p>
+                  <p className="break-words">{order.address?.fulladress}</p>
                   <p className="text-gray-500">
                     {order.address?.city}, {order.address?.state} - {order.address?.pincode}
                   </p>
                   <p className="text-gray-500 flex items-center gap-1 pt-1">
-                    <Phone size={12} /> {order.address?.mobile}
+                    <Phone size={12} className="shrink-0" /> {order.address?.mobile}
                   </p>
                 </div>
               </div>
 
               {/* Payment Summary */}
-              <div className="bg-white rounded-3xl p-6 border border-gray-200/80 shadow-xs">
+              <div className="bg-white rounded-3xl p-5 sm:p-6 border border-gray-200/80 shadow-xs">
                 <h3 className="font-extrabold text-gray-900 text-base mb-3 flex items-center gap-2">
-                  <CreditCard size={18} className="text-[#0f8646]" /> Payment Summary
+                  <CreditCard size={18} className="text-[#0f8646] shrink-0" /> Payment Summary
                 </h3>
                 <div className="space-y-2 text-xs text-gray-600">
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
                     <span>Payment Mode:</span>
                     <span className="font-bold uppercase text-gray-900">{order.paymentmethod}</span>
                   </div>
                   {order.discount > 0 && (
-                    <div className="flex justify-between text-green-600">
+                    <div className="flex justify-between items-center text-green-600 font-bold">
                       <span>Discount {order.couponCode && `(${order.couponCode})`}:</span>
-                      <span className="font-bold">-₹{order.discount}</span>
+                      <span>-₹{order.discount}</span>
                     </div>
                   )}
                   {order.walletDiscount > 0 && (
-                    <div className="flex justify-between text-[#0f8646] font-bold">
-                      <span>GreenPoints Wallet Redeemed:</span>
-                      <span className="font-bold">-₹{order.walletDiscount}</span>
+                    <div className="flex justify-between items-center text-[#0f8646] font-bold">
+                      <span>GreenPoints Wallet:</span>
+                      <span>-₹{order.walletDiscount}</span>
                     </div>
                   )}
                   {order.bagReturnCashback > 0 && (
-                    <div className="flex justify-between text-emerald-800 font-bold bg-emerald-50 p-2 rounded-xl border border-emerald-200 text-xs">
+                    <div className="flex justify-between items-center text-emerald-800 font-bold bg-emerald-50 p-2 rounded-xl border border-emerald-200 text-xs">
                       <span>♻️ Eco-Bag Cashback ({order.bagsReturned} Bags):</span>
-                      <span>+₹{order.bagReturnCashback} in Wallet</span>
+                      <span>+₹{order.bagReturnCashback}</span>
                     </div>
                   )}
-                  <div className="flex justify-between pt-2 border-t border-gray-100 text-sm font-extrabold text-gray-900">
+                  <div className="flex justify-between items-center pt-2 border-t border-gray-100 text-sm font-extrabold text-gray-900">
                     <span>Total Amount:</span>
-                    <span className="text-[#0f8646]">
+                    <span className="text-[#0f8646] text-base font-black">
                       ₹{order.totalamount !== undefined && order.totalamount !== null && order.totalamount > 0
                         ? order.totalamount
                         : (order.items?.reduce((sum: number, i: any) => sum + ((Number(i.price) || 0) * (Number(i.quantity) || 1)), 0) || 0)}
@@ -551,7 +551,7 @@ export default function TrackOrderPage() {
                 {order.status === "pending" && (
                   <button
                     onClick={() => setShowCancelModal(true)}
-                    className="w-full mt-4 bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 py-2.5 rounded-2xl text-xs font-black transition flex items-center justify-center gap-1.5 cursor-pointer"
+                    className="w-full mt-4 bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 py-2.5 rounded-2xl text-xs font-black transition flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs"
                   >
                     <X size={14} />
                     <span>Cancel This Order</span>
