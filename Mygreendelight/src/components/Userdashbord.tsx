@@ -105,20 +105,17 @@ export default async function Userdashbord() {
       {/* 1. High-Converting Sliding Hero Banner (Database-driven from MongoDB) */}
       <Hero banners={plainBanners} />
 
-      {/* 2. Live Bhopal Mandi Rate & Price Drop Ticker */}
-      <MandiPriceTicker initialRates={plainMandiRates} />
-
-      {/* 3. Live 10-15 Min Express Delivery Radar Strip */}
-      <DeliveryRadarStrip />
-
-      {/* 🎁 Flash 3-4 Minute Free Gift Rush (Live Checkout Urgency) */}
+      {/* 🎁 2. Flash 3-4 Minute Free Gift Rush & 10-15 Min Express Delivery */}
       <FlashFreeGiftRush />
+
+      {/* 3. Shop by Category (Zero Flicker & Preloaded from Database) */}
+      <Categoryslider categories={plainCategories} />
+
+      {/* 4. Live Bhopal Mandi Rate & Price Drop Ticker */}
+      <MandiPriceTicker initialRates={plainMandiRates} />
 
       {/* ⚡ 1-Click Fast Reorder Regular Farm Basket */}
       <FastReorderWidget />
-
-      {/* 4. Shop by Category (Zero Flicker & Preloaded from Database) */}
-      <Categoryslider categories={plainCategories} />
 
       {/* 5. Live Flash Deals with Real Reverse Countdown Clock */}
       <FlashDeals products={plainFlash} />
