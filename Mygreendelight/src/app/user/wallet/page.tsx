@@ -74,6 +74,26 @@ export default function UserWalletPage() {
     }
   };
 
+  const handleResetBalance = async () => {
+    if (!confirm("Reset your test wallet balance back to the official ₹50 Welcome Farm Gift Bonus?")) {
+      return;
+    }
+    setIsProcessing(true);
+    setMsg(null);
+    try {
+      const res = await axios.post("/api/user/wallet/reset-test");
+      if (res.data.success) {
+        setBalance(res.data.balance || 50);
+        setMsg({ type: "success", text: res.data.message });
+        fetchWallet();
+      }
+    } catch (error: any) {
+      setMsg({ type: "error", text: error.response?.data?.message || "Failed to reset balance." });
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   const handleTopUp = async (amount: number, bonus: number = 0) => {
     if (!amount || amount < 10) {
       alert("Minimum top-up amount is ₹10");
@@ -199,7 +219,17 @@ export default function UserWalletPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              <button
+                type="button"
+                onClick={handleResetBalance}
+                className="bg-white/10 hover:bg-white/20 text-white/90 hover:text-white px-3.5 py-1.5 rounded-xl border border-white/20 text-xs font-bold transition cursor-pointer flex items-center gap-1.5 shadow-2xs"
+                title="Reset old test balance to default ₹50 Welcome Bonus"
+              >
+                <Sparkles size={13} className="text-yellow-300" />
+                <span>Reset Test Data (₹50)</span>
+              </button>
+
               <div className="bg-white/15 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-white/20 text-xs">
                 <span className="font-bold text-white block">100% Safe & Instant</span>
                 <span className="text-[10px] text-green-200">Zero OTP/Bank delays at checkout</span>
