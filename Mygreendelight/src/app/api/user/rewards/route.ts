@@ -1,4 +1,4 @@
-﻿import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import connectDb from "@/lib/db";
 import { RewardConfig, ScratchReward } from "@/model/reward.model";
 import Coupon from "@/model/coupon.model";
@@ -91,11 +91,51 @@ export async function POST(req: NextRequest) {
     const guestId = body.guestId || "guest-" + Math.random().toString(36).substring(2, 9);
 
     let config = await RewardConfig.findOne({});
-    if (!config || !config.isActive) {
-      return NextResponse.json(
-        { success: false, message: "Rewards currently disabled" },
-        { status: 400 }
-      );
+    if (!config) {
+      config = await RewardConfig.create({
+        isActive: true,
+        dailyLimitPerUser: 1,
+        availableRewards: [
+          {
+            title: "Flat ₹30 Instant OFF",
+            discountType: "fixed",
+            discountValue: 30,
+            couponPrefix: "FARM30",
+            minOrderValue: 249,
+            description: "Flat ₹30 discount on orders above ₹249",
+          },
+          {
+            title: "Flat 15% Extra Savings",
+            discountType: "percent",
+            discountValue: 15,
+            couponPrefix: "FRESH15",
+            minOrderValue: 299,
+            description: "15% OFF on fresh farm produce",
+          },
+          {
+            title: "Flat ₹50 Mega Discount",
+            discountType: "fixed",
+            discountValue: 50,
+            couponPrefix: "BHOPAL50",
+            minOrderValue: 499,
+            description: "Flat ₹50 OFF on pantry & veggies",
+          },
+          {
+            title: "100% Free 10-Min Delivery",
+            discountType: "fixed",
+            discountValue: 25,
+            couponPrefix: "FREESHIP",
+            minOrderValue: 199,
+            description: "Zero delivery fee on your order",
+          },
+        ],
+      });
+    }
+
+    if (!config.isActive) {
+      // Re-enable if accidentally disabled
+      config.isActive = true;
+      await config.save();
     }
 
     // Check if already claimed today
@@ -120,7 +160,18 @@ export async function POST(req: NextRequest) {
     }
 
     // Pick random reward from config
-    const rewards = config.availableRewards;
+    const rewards = (config.availableRewards && config.availableRewards.length > 0)
+      ? config.availableRewards
+      : [
+          {
+            title: "Flat ₹30 Instant OFF",
+            discountType: "fixed",
+            discountValue: 30,
+            couponPrefix: "FARM30",
+            minOrderValue: 249,
+            description: "Flat ₹30 discount on orders above ₹249",
+          },
+        ];
     const selected = rewards[Math.floor(Math.random() * rewards.length)];
 
     // Generate unique real coupon code

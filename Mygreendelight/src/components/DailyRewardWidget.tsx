@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState, useEffect } from "react";
 import { Gift, Sparkles, X, Copy, Check, ArrowRight, Clock, Trophy } from "lucide-react";
@@ -44,14 +44,27 @@ export default function DailyRewardWidget() {
     setIsScratching(true);
 
     try {
-      const res = await axios.post("/api/user/rewards", { guestId });
+      let activeGid = guestId;
+      if (!activeGid && typeof window !== "undefined") {
+        activeGid = localStorage.getItem("mgd_reward_guest_id") || "";
+        if (!activeGid) {
+          activeGid = "guest-" + Math.random().toString(36).substring(2, 9);
+          localStorage.setItem("mgd_reward_guest_id", activeGid);
+          setGuestId(activeGid);
+        }
+      }
+
+      const res = await axios.post("/api/user/rewards", { guestId: activeGid });
       if (res.data?.success && res.data.reward) {
         setReward(res.data.reward);
         setIsScratched(true);
         setCanClaim(false);
+      } else {
+        alert(res.data?.message || "Could not claim reward today. Please try again!");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Reward claim error:", error);
+      alert(error.response?.data?.message || "Failed to claim reward. Please refresh and try again.");
     } finally {
       setIsScratching(false);
     }
@@ -115,20 +128,22 @@ export default function DailyRewardWidget() {
               {/* Scratch / Win Card Container */}
               <div className="relative rounded-2xl border-2 border-dashed border-orange-300 p-5 bg-gradient-to-b from-orange-50/70 to-amber-50/50 mb-4 min-h-[140px] flex flex-col items-center justify-center overflow-hidden">
                 {!isScratched ? (
-                  <motion.div
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
+                  <button
+                    type="button"
                     onClick={handleClaimReward}
-                    className="w-full h-full flex flex-col items-center justify-center cursor-pointer py-3"
+                    disabled={isScratching}
+                    className="w-full h-full flex flex-col items-center justify-center cursor-pointer py-4 group active:scale-95 transition-transform"
                   >
-                    <Sparkles size={32} className="text-amber-500 mb-2 animate-spin" />
+                    <div className="w-12 h-12 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mb-2 shadow-inner group-hover:scale-110 transition-transform">
+                      <Sparkles size={24} className={isScratching ? "animate-spin text-orange-600" : "text-amber-600"} />
+                    </div>
                     <span className="text-sm font-black text-orange-950 uppercase tracking-wider">
-                      {isScratching ? "Scratching Lucky Card..." : "👉 Tap Here to Scratch"}
+                      {isScratching ? "Revealing Your Prize..." : "👉 Tap Here to Scratch & Reveal"}
                     </span>
                     <span className="text-[10px] text-gray-500 font-bold mt-1">
-                      1 Free reward every 24 hours
+                      1 Free guaranteed reward every 24 hours
                     </span>
-                  </motion.div>
+                  </button>
                 ) : (
                   <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
