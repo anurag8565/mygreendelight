@@ -7,6 +7,7 @@ export interface ITestimonial extends Document {
   rating: number;
   comment: string;
   image?: string;
+  tag?: string;
   status: "pending" | "approved" | "rejected";
   createdAt: Date;
 }
@@ -15,11 +16,12 @@ const TestimonialSchema: Schema<ITestimonial> = new Schema(
   {
     user: { type: Schema.Types.ObjectId, ref: "User", required: false },
     name: { type: String, required: true },
-    location: { type: String, required: true, default: "India" },
+    location: { type: String, required: true, default: "Bhopal, MP" },
     rating: { type: Number, required: true, min: 1, max: 5 },
     comment: { type: String, required: true },
     image: { type: String, required: false },
-    status: { type: String, enum: ["pending", "approved", "rejected"], default: "pending" }
+    tag: { type: String, default: "Verified Customer" },
+    status: { type: String, enum: ["pending", "approved", "rejected"], default: "approved" }
   },
   { timestamps: true }
 );
