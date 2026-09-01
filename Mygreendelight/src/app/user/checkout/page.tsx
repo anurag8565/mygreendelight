@@ -81,14 +81,15 @@ export default function Checkout() {
       .catch(() => {});
   }, []);
 
+  const [riderTip, setRiderTip] = useState<number>(0);
   const isVipMember = Boolean(vipInfo?.isMember);
   const effectiveDeliveryFee = isVipMember ? 0 : deliveryFee;
 
   const availableWallet = (userdata as any)?.walletBalance || 0;
   const walletDiscount = useWallet
-    ? Math.min(availableWallet, Math.max(0, subtotal + effectiveDeliveryFee - discount))
+    ? Math.min(availableWallet, Math.max(0, subtotal + effectiveDeliveryFee + riderTip - discount))
     : 0;
-  const finalPayableTotal = Math.max(0, subtotal + effectiveDeliveryFee - discount - walletDiscount);
+  const finalPayableTotal = Math.max(0, subtotal + effectiveDeliveryFee + riderTip - discount - walletDiscount);
 
   const [address, setaddress] = useState({
     fullname: "",
@@ -880,6 +881,41 @@ export default function Checkout() {
                     </Link>
                   </div>
                 )}
+
+                {/* 🛵 Tip Your Delivery Partner */}
+                <div className="pt-2 pb-1 border-t border-gray-100">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[11px] font-black text-gray-700 flex items-center gap-1">
+                      <span>🛵 Tip your delivery partner</span>
+                    </span>
+                    {riderTip > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => setRiderTip(0)}
+                        className="text-[10px] text-red-500 font-bold hover:underline cursor-pointer"
+                      >
+                        Remove Tip
+                      </button>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-4 gap-2">
+                    {[10, 20, 30, 50].map((amt) => (
+                      <button
+                        type="button"
+                        key={amt}
+                        onClick={() => setRiderTip(riderTip === amt ? 0 : amt)}
+                        className={`py-1.5 px-2 rounded-xl text-xs font-black transition cursor-pointer flex items-center justify-center gap-1 ${
+                          riderTip === amt
+                            ? "bg-[#0f8646] text-white shadow-xs"
+                            : "bg-gray-50 hover:bg-green-50 text-gray-700 border border-gray-200"
+                        }`}
+                      >
+                        <span>₹{amt}</span>
+                        {amt === 20 && <span>⭐</span>}
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
                 {discount > 0 && (
                   <div className="flex justify-between text-[#0f8646] font-bold bg-green-50 p-2 rounded-xl">
