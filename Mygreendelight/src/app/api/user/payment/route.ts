@@ -59,15 +59,26 @@ export async function POST(req: NextRequest) {
       };
     });
 
+    // Check VIP Farm Club membership
+    const isVip = Boolean(
+      user.vipPass?.isActive &&
+      user.vipPass.endDate &&
+      new Date(user.vipPass.endDate) > new Date()
+    );
+
     // Compute verified total
     const subtotalCalc = sanitizedItems.reduce((sum: number, item: any) => sum + (item.price * item.quantity), 0);
-    const deliveryFeeCalc = subtotalCalc > 0 && subtotalCalc < 100 ? 50 : 0;
+    const deliveryFeeCalc = isVip ? 0 : (subtotalCalc > 0 && subtotalCalc < 100 ? 50 : 0);
     const discountCalc = Number(discount) || 0;
     const walletDiscountCalc = Number(walletDiscount) || 0;
     const computedPayableTotal = Math.max(0, subtotalCalc + deliveryFeeCalc - discountCalc - walletDiscountCalc);
     const finalTotalToSave = (totalamount !== undefined && totalamount !== null && !isNaN(Number(totalamount)))
       ? Number(totalamount)
       : computedPayableTotal;
+
+    if (isVip && subtotalCalc > 0 && subtotalCalc < 100) {
+      await User.findByIdAndUpdate(userid, { $inc: { "vipPass.totalSavings": 50 } });
+    }
 
     // ✅ create order (ispaid = false initially)
     const neworder = await Order.create({

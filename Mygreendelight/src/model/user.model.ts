@@ -29,6 +29,14 @@ interface iUser {
     description: string;
     date: Date;
   }[];
+  vipPass?: {
+    isActive: boolean;
+    planName: string;
+    price: number;
+    startDate: Date;
+    endDate: Date;
+    totalSavings?: number;
+  };
 }
 
 const userSchema = new mongoose.Schema<iUser>(
@@ -112,8 +120,15 @@ const userSchema = new mongoose.Schema<iUser>(
         description: String,
         date: { type: Date, default: Date.now },
       }
-    ]
-
+    ],
+    vipPass: {
+      isActive: { type: Boolean, default: false },
+      planName: { type: String, default: "Farm Club VIP Pass" },
+      price: { type: Number, default: 49 },
+      startDate: { type: Date, default: null },
+      endDate: { type: Date, default: null },
+      totalSavings: { type: Number, default: 0 },
+    },
   },
   {
     timestamps: true,

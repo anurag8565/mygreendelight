@@ -10,6 +10,7 @@ import DinnerDeciderWheel from './DinnerDeciderWheel'
 import CustomBoxBuilder from './CustomBoxBuilder'
 import FlashDeals from './FlashDeals'
 import CombosSection from './CombosSection'
+import FarmClubVIPBanner from './FarmClubVIPBanner'
 import FilteredProduceSection from './FilteredProduceSection'
 import MorningSubscriptionBanner from './MorningSubscriptionBanner'
 import DailyRewardWidget from './DailyRewardWidget'
@@ -131,6 +132,9 @@ export default async function Userdashbord() {
 
       {/* ⚡ Save-More Value Combos & Multipacks */}
       <CombosSection initialCombos={plainCombos} />
+
+      {/* 🏆 MyGreenDelight Farm Club VIP Green Pass Banner */}
+      <FarmClubVIPBanner />
       
       {/* 9. 🏷️ 1-Tap Filter Chips & Daily Mandi Harvest Specials */}
       <FilteredProduceSection groceries={plainNew} />

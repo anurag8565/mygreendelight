@@ -19,6 +19,7 @@ import {
   Sun,
   Moon,
   Coins,
+  Crown,
 } from "lucide-react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
@@ -65,14 +66,27 @@ export default function Checkout() {
   const couponCode = useSelector(selectCouponCode);
   const [searchloading, setsearchloading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [vipInfo, setVipInfo] = useState<any>(null);
   const router = useRouter();
   const { data: session } = useSession();
 
+  useEffect(() => {
+    axios
+      .get("/api/user/vip-pass")
+      .then((res) => {
+        if (res.data.success) setVipInfo(res.data);
+      })
+      .catch(() => {});
+  }, []);
+
+  const isVipMember = Boolean(vipInfo?.isMember);
+  const effectiveDeliveryFee = isVipMember ? 0 : deliveryFee;
+
   const availableWallet = (userdata as any)?.walletBalance || 0;
   const walletDiscount = useWallet
-    ? Math.min(availableWallet, Math.max(0, subtotal + deliveryFee - discount))
+    ? Math.min(availableWallet, Math.max(0, subtotal + effectiveDeliveryFee - discount))
     : 0;
-  const finalPayableTotal = Math.max(0, total - walletDiscount);
+  const finalPayableTotal = Math.max(0, subtotal + effectiveDeliveryFee - discount - walletDiscount);
 
   const [address, setaddress] = useState({
     fullname: "",
@@ -491,6 +505,15 @@ export default function Checkout() {
 
               <div className="space-y-2.5">
                 {[
+                  ...(isVipMember ? [{
+                    id: "👑 6:30 AM First Priority VIP Harvest Delivery",
+                    title: "👑 6:30 AM VIP Priority Harvest",
+                    time: "Tomorrow 6:30 AM – 7:30 AM",
+                    desc: "First priority sunrise harvest dispatch for VIP members",
+                    icon: Crown,
+                    badge: "VIP Club Exclusive",
+                    badgeColor: "bg-amber-300 text-gray-950 font-black",
+                  }] : []),
                   {
                     id: "Instant Express (30-45 Mins)",
                     title: "⚡ Instant Express Delivery",
@@ -758,9 +781,35 @@ export default function Checkout() {
                 <div className="flex justify-between text-gray-600">
                   <span>Delivery Partner Fee</span>
                   <span className="font-extrabold text-gray-900">
-                    {deliveryFee === 0 ? <span className="text-[#0f8646]">FREE</span> : `₹${deliveryFee}`}
+                    {isVipMember ? (
+                      <span className="text-[#0f8646] font-black flex items-center gap-1">
+                        <Crown size={12} className="text-amber-500" />
+                        <span>FREE (VIP Farm Club)</span>
+                      </span>
+                    ) : effectiveDeliveryFee === 0 ? (
+                      <span className="text-[#0f8646]">FREE</span>
+                    ) : (
+                      `₹${effectiveDeliveryFee}`
+                    )}
                   </span>
                 </div>
+
+                {!isVipMember && (
+                  <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200/80 rounded-2xl p-3 flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <div className="w-7 h-7 rounded-lg bg-amber-400 text-gray-950 flex items-center justify-center font-black text-xs shrink-0">
+                        👑
+                      </div>
+                      <div>
+                        <span className="font-black text-xs text-gray-900 block">Join VIP Farm Club (₹49)</span>
+                        <span className="text-[10px] text-gray-500">Flat FREE Delivery & 10% on Fruits!</span>
+                      </div>
+                    </div>
+                    <Link href="/user/vip-pass" className="text-[11px] font-black text-amber-800 bg-amber-200/80 hover:bg-amber-300 px-2.5 py-1 rounded-lg transition shrink-0">
+                      Join ➔
+                    </Link>
+                  </div>
+                )}
 
                 {discount > 0 && (
                   <div className="flex justify-between text-[#0f8646] font-bold bg-green-50 p-2 rounded-xl">
