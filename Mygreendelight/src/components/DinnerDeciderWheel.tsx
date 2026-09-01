@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState, useEffect, useRef } from "react";
 import { Sparkles, Utensils, ChefHat, Clock, Users, ArrowRight, Check, X, ShoppingBag } from "lucide-react";
@@ -60,6 +60,16 @@ export default function DinnerDeciderWheel({ initialRecipes = [] }: { initialRec
     }, 4200);
   };
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsModalOpen(false);
+    };
+    if (isModalOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isModalOpen]);
+
   const handleAddAllToCart = () => {
     if (!selectedRecipe) return;
     const dishId = selectedRecipe._id || selectedRecipe.title;
@@ -100,104 +110,98 @@ export default function DinnerDeciderWheel({ initialRecipes = [] }: { initialRec
               <span>Dinner Decider AI</span>
             </div>
 
-            <h2 className="text-2xl sm:text-4xl font-black leading-tight tracking-tight text-white mb-2">
-              Confused What to Cook Tonight? <br className="hidden sm:inline" />
-              <span className="text-yellow-300">Spin the Farm Recipe Wheel!</span>
+            <h2 className="text-2xl sm:text-4xl font-black mb-3 leading-tight">
+              Aaj Raat Kya Banayein? 🎡
             </h2>
 
-            <p className="text-xs sm:text-sm text-green-100/90 max-w-lg mb-6 leading-relaxed">
-              Ghar par samajh nahi aa raha kya banayein? Wheel ghumaiye, tasty recipe select kijiye aur 1-Click me saari fresh farm ingredients 10 minute me mangwaiye!
+            <p className="text-xs sm:text-sm text-green-100 mb-6 max-w-md leading-relaxed">
+              Confused about tonight's dinner? Spin the AI Farm Wheel! We'll pick a delicious dish and assemble all 100% fresh Bhopal farm ingredients in 1-click.
             </p>
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              disabled={isSpinning}
+            <button
+              type="button"
               onClick={handleSpin}
-              className="bg-yellow-300 hover:bg-yellow-400 text-gray-950 px-6 sm:px-8 py-3 rounded-2xl font-black text-sm sm:text-base shadow-xl flex items-center gap-2 cursor-pointer disabled:opacity-60 transition-all border-2 border-yellow-200"
+              disabled={isSpinning}
+              className={`px-8 py-3.5 rounded-2xl font-black text-sm sm:text-base flex items-center gap-2 shadow-2xl transition-all cursor-pointer ${
+                isSpinning
+                  ? "bg-gray-400 text-gray-200 cursor-not-allowed"
+                  : "bg-yellow-300 hover:bg-yellow-400 text-gray-950 hover:scale-105 active:scale-95 shadow-yellow-500/20"
+              }`}
             >
               <Utensils size={18} />
-              <span>{isSpinning ? "Spinning Wheel..." : "🎡 Spin for Dinner Recipe"}</span>
-            </motion.button>
+              <span>{isSpinning ? "Spinning Live AI Wheel..." : "Spin & Decide My Dinner ➔"}</span>
+            </button>
           </div>
 
-          {/* Right Wheel Visual */}
-          <div className="relative shrink-0 flex items-center justify-center">
-            {/* Top Pointer */}
-            <div className="absolute -top-3 z-30 w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-t-[20px] border-t-yellow-300 drop-shadow-md" />
+          {/* Right Wheel Graphics */}
+          <div className="relative w-64 h-64 sm:w-80 sm:h-80 flex items-center justify-center shrink-0">
+            {/* Top Pointer Needle */}
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 w-0 h-0 border-l-[14px] border-l-transparent border-r-[14px] border-r-transparent border-t-[24px] border-t-yellow-300 drop-shadow-md" />
 
             {/* Rotating SVG Wheel */}
             <div
-              className="w-64 h-64 sm:w-80 sm:h-80 rounded-full border-4 border-white/80 shadow-2xl overflow-hidden relative"
               style={{
                 transform: `rotate(${rotation}deg)`,
-                transition: isSpinning ? "transform 4s cubic-bezier(0.15, 0.9, 0.2, 1)" : "none",
+                transition: isSpinning ? "transform 4.2s cubic-bezier(0.15, 0.9, 0.2, 1)" : "none",
               }}
+              className="w-full h-full rounded-full border-4 border-yellow-300/80 shadow-2xl relative overflow-hidden bg-emerald-950"
             >
-              <svg viewBox="0 0 100 100" className="w-full h-full">
-                {recipes.map((recipe, idx) => {
-                  const startAngle = idx * sliceAngle;
-                  const endAngle = (idx + 1) * sliceAngle;
-                  const x1 = 50 + 50 * Math.cos((Math.PI * startAngle) / 180);
-                  const y1 = 50 + 50 * Math.sin((Math.PI * startAngle) / 180);
-                  const x2 = 50 + 50 * Math.cos((Math.PI * endAngle) / 180);
-                  const y2 = 50 + 50 * Math.sin((Math.PI * endAngle) / 180);
-                  const path = `M50,50 L${x1},${y1} A50,50 0 0,1 ${x2},${y2} Z`;
-
-                  return (
-                    <path
-                      key={recipe._id || idx}
-                      d={path}
-                      fill={recipe.sliceColor || "#0f8646"}
-                      stroke="#ffffff"
-                      strokeWidth="0.6"
-                    />
-                  );
-                })}
-              </svg>
-
-              {/* Dish Labels overlay */}
               {recipes.map((recipe, idx) => {
-                const angle = idx * sliceAngle + sliceAngle / 2;
+                const startAngle = idx * sliceAngle;
+                const endAngle = startAngle + sliceAngle;
+                const isEven = idx % 2 === 0;
+
                 return (
                   <div
-                    key={idx}
-                    className="absolute w-full h-full top-0 left-0 flex items-start justify-center pt-3 pointer-events-none"
-                    style={{ transform: `rotate(${angle + 90}deg)` }}
+                    key={recipe._id || idx}
+                    style={{
+                      transform: `rotate(${startAngle}deg)`,
+                      transformOrigin: "bottom right",
+                    }}
+                    className={`absolute top-0 left-0 w-1/2 h-1/2 flex items-center justify-center text-center p-2 origin-bottom-right border-r border-white/10 ${
+                      isEven ? "bg-[#0b542c]" : "bg-[#0f8646]"
+                    }`}
                   >
-                    <span className="text-[9px] sm:text-[11px] font-black text-white drop-shadow-md max-w-[70px] text-center leading-tight truncate">
-                      {recipe.title.split(" ")[0]}
+                    <span
+                      style={{
+                        transform: `rotate(${sliceAngle / 2}deg)`,
+                      }}
+                      className="text-[10px] sm:text-xs font-black text-white drop-shadow-xs line-clamp-1 max-w-[80px]"
+                    >
+                      {recipe.title}
                     </span>
                   </div>
                 );
               })}
-            </div>
 
-            {/* Center Spin Button Hub */}
-            <button
-              onClick={handleSpin}
-              disabled={isSpinning}
-              className="absolute w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white text-gray-950 font-black text-[11px] sm:text-xs shadow-2xl flex flex-col items-center justify-center border-4 border-yellow-300 z-20 cursor-pointer hover:scale-105 active:scale-95 transition-transform"
-            >
-              <span>SPIN</span>
-              <span className="text-[9px] text-[#0f8646] font-bold">1-Click</span>
-            </button>
+              {/* Center Hub */}
+              <div className="absolute inset-0 m-auto w-14 h-14 rounded-full bg-yellow-300 text-gray-950 font-black flex items-center justify-center shadow-lg border-2 border-white text-xs">
+                <ChefHat size={22} />
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Selected Recipe Reveal Modal */}
+        {/* Recipe Winner Modal Popup */}
         <AnimatePresence>
           {isModalOpen && selectedRecipe && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+            <div
+              onClick={() => setIsModalOpen(false)}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs cursor-pointer"
+            >
               <motion.div
-                initial={{ scale: 0.85, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.85, opacity: 0 }}
-                className="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl border border-gray-100 relative max-h-[90vh] overflow-y-auto"
+                onClick={(e) => e.stopPropagation()}
+                initial={{ scale: 0.85, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.85, opacity: 0, y: 20 }}
+                className="cursor-default bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl border border-gray-100 relative max-h-[90vh] overflow-y-auto text-left"
               >
+                {/* High Contrast Close Button */}
                 <button
+                  type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 bg-gray-100 p-1.5 rounded-full transition cursor-pointer"
+                  className="absolute top-4 right-4 text-gray-500 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 p-2 rounded-full transition-all cursor-pointer shadow-xs border border-gray-200 z-20"
+                  title="Close popup"
                 >
                   <X size={18} />
                 </button>

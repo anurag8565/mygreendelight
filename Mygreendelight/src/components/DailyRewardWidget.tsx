@@ -70,6 +70,16 @@ export default function DailyRewardWidget() {
     }
   };
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    if (isOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen]);
+
   const handleCopy = () => {
     if (!reward?.couponCode) return;
     navigator.clipboard.writeText(reward.couponCode);
@@ -98,17 +108,23 @@ export default function DailyRewardWidget() {
       {/* Modal Popup */}
       <AnimatePresence>
         {isOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+          <div
+            onClick={() => setIsOpen(false)}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs cursor-pointer"
+          >
             <motion.div
+              onClick={(e) => e.stopPropagation()}
               initial={{ scale: 0.85, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.85, opacity: 0, y: 20 }}
-              className="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-gray-100 relative overflow-hidden text-center"
+              className="cursor-default bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-gray-100 relative overflow-hidden text-center"
             >
-              {/* Close Button */}
+              {/* High-Contrast Prominent Close Button */}
               <button
+                type="button"
                 onClick={() => setIsOpen(false)}
-                className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 bg-gray-100 p-1.5 rounded-full transition-colors cursor-pointer"
+                className="absolute top-4 right-4 text-gray-500 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 p-2 rounded-full transition-all cursor-pointer shadow-xs border border-gray-200"
+                title="Close popup"
               >
                 <X size={18} />
               </button>
