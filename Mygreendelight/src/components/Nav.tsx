@@ -480,6 +480,17 @@ export default function Nav({ user }: { user: iUser }) {
                       <p className="font-bold text-gray-800">{user.name || "Guest"}</p>
                       <p className="text-xs text-gray-500">{user.email}</p>
                     </div>
+                    {user.role === "admin" && (
+                      <Link
+                        href="/admin"
+                        className="block px-4 py-2.5 text-xs font-black bg-[#0f8646] text-white hover:bg-[#0c6a38] transition flex items-center justify-between border-b"
+                      >
+                        <span>👑 Open Admin Center</span>
+                        <span className="bg-yellow-300 text-gray-950 text-[9px] px-1.5 py-0.5 rounded font-black">
+                          ADMIN
+                        </span>
+                      </Link>
+                    )}
                     <Link href="/user/myorder" className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#0f8646] font-medium border-b">My Orders</Link>
                     <Link href="/user/wallet" className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#0f8646] font-medium border-b flex items-center justify-between">
                       <span>MGD Green Wallet</span>

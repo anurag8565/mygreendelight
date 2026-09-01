@@ -38,7 +38,11 @@ async function Home() {
     return <EditMobile />
   }
 
-  const plainUser = JSON.parse(JSON.stringify(user))
+  if (user.role === "admin") {
+    redirect("/admin");
+  }
+
+  const plainUser = JSON.parse(JSON.stringify(user));
 
   return (
     <>
@@ -46,15 +50,12 @@ async function Home() {
 
       {user.role === "user" ? (
         <Userdashbord />
-      ) : user.role === "admin" ? (
-        <Admindashbord />
       ) : (
         <Deliveryboydashbord />
       )}
-      <Footer/>
+      <Footer />
     </>
-    
-  )
+  );
 }
 
 export default Home
