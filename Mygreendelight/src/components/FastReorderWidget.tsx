@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState, useEffect } from "react";
 import { Zap, ShoppingBag, Check, ArrowRight, RotateCcw, AlertCircle } from "lucide-react";
@@ -27,7 +27,15 @@ export default function FastReorderWidget() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading || !data || !data.items || data.items.length === 0) {
+  if (
+    loading ||
+    !data ||
+    !data.hasPastOrder ||
+    !data.items ||
+    data.items.length === 0 ||
+    !data.totalCurrentPrice ||
+    data.totalCurrentPrice <= 0
+  ) {
     return null; // Cleanly hide if no previous order
   }
 
