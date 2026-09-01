@@ -14,9 +14,9 @@ export async function POST(req: NextRequest) {
         const { userid, items, paymentmethod, totalamount, address, couponCode, discount, deliverySlot, walletDiscount, farmerTip, isSilentDelivery, deliveryInstructions } = body;
 
         // ❌ validation
-        if (!userid || !items || !paymentmethod || !totalamount || !address) {
+        if (!userid || !items || !Array.isArray(items) || items.length === 0 || !paymentmethod || !address) {
             return NextResponse.json(
-                { success: false, message: "Missing credentials" },
+                { success: false, message: "Missing required order information or empty cart" },
                 { status: 400 }
             );
         }
@@ -38,25 +38,35 @@ export async function POST(req: NextRequest) {
                 grocery: isValid ? item.grocery : undefined,
                 groceryId: item.grocery ? String(item.grocery) : undefined,
                 name: item.name,
-                price: item.price,
+                price: Number(item.price) || 0,
                 unit: item.unit,
                 variationWeight: item.variationWeight,
                 image: item.image,
-                quantity: item.quantity || 1,
+                quantity: Number(item.quantity) || 1,
             };
         });
+
+        // Compute verified total to prevent 0 amount discrepancies
+        const subtotalCalc = sanitizedItems.reduce((sum: number, item: any) => sum + (item.price * item.quantity), 0);
+        const deliveryFeeCalc = subtotalCalc > 0 && subtotalCalc < 100 ? 50 : 0;
+        const discountCalc = Number(discount) || 0;
+        const walletDiscountCalc = Number(walletDiscount) || 0;
+        const computedPayableTotal = Math.max(0, subtotalCalc + deliveryFeeCalc - discountCalc - walletDiscountCalc);
+        const finalTotalToSave = (totalamount !== undefined && totalamount !== null && !isNaN(Number(totalamount)))
+            ? Number(totalamount)
+            : computedPayableTotal;
 
         // ✅ create order
         const neworder = await Order.create({
             user: userid,
             items: sanitizedItems,
             paymentmethod,
-            totalamount,
+            totalamount: finalTotalToSave,
             address,
             couponCode: couponCode || null,
-            discount: discount || 0,
-            walletDiscount: walletDiscount || 0,
-            farmerTip: farmerTip || 0,
+            discount: discountCalc,
+            walletDiscount: walletDiscountCalc,
+            farmerTip: 0,
             isSilentDelivery: isSilentDelivery || false,
             deliveryInstructions: deliveryInstructions || "",
             deliverySlot: deliverySlot || "Instant Express (30-45 Mins)",

@@ -23,7 +23,7 @@ import {
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { clearCart } from "@/redux/CartSlice";
+import { clearCart, hydrateCart } from "@/redux/CartSlice";
 import axios from "axios";
 import {
   selectSubtotal,
@@ -53,6 +53,11 @@ export default function Checkout() {
   const [deliveryInstructions, setDeliveryInstructions] = useState<string>("");
   const [searchquery, setsearchquery] = useState("");
   const { cartdata } = useSelector((state: RootState) => state.cart);
+
+  useEffect(() => {
+    dispatch(hydrateCart());
+  }, [dispatch]);
+
   const subtotal = useSelector(selectSubtotal);
   const deliveryFee = useSelector(selectDeliveryFee);
   const total = useSelector(selectTotal);
@@ -155,6 +160,11 @@ export default function Checkout() {
   }, [position]);
 
   const handelPlaceOrder = async () => {
+    if (!cartdata || cartdata.length === 0) {
+      alert("Your cart is empty. Please add farm produce items to checkout.");
+      router.push("/shop");
+      return;
+    }
     if (!position) {
       alert("Please select delivery location on the map.");
       return;

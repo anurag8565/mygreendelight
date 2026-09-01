@@ -466,7 +466,11 @@ export default function TrackOrderPage() {
                   )}
                   <div className="flex justify-between pt-2 border-t border-gray-100 text-sm font-extrabold text-gray-900">
                     <span>Total Amount:</span>
-                    <span className="text-[#0f8646]">₹{order.totalamount}</span>
+                    <span className="text-[#0f8646]">
+                      ₹{order.totalamount !== undefined && order.totalamount !== null && order.totalamount > 0
+                        ? order.totalamount
+                        : (order.items?.reduce((sum: number, i: any) => sum + ((Number(i.price) || 0) * (Number(i.quantity) || 1)), 0) || 0)}
+                    </span>
                   </div>
                 </div>
 

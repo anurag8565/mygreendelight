@@ -29,7 +29,7 @@ import {
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart, increaseQuantity, decreaseQuantity } from "@/redux/CartSlice";
+import { addToCart, increaseQuantity, decreaseQuantity, hydrateCart } from "@/redux/CartSlice";
 import type { RootState, AppDispatch } from "@/redux/store";
 import { AnimatePresence, motion } from "framer-motion";
 import { createPortal } from "react-dom";
@@ -69,11 +69,12 @@ export default function Nav({ user }: { user: iUser }) {
 
   useEffect(() => {
     setMounted(true);
+    dispatch(hydrateCart());
     if (typeof window !== "undefined") {
       const savedLoc = localStorage.getItem("mgd_user_location");
       if (savedLoc) setLocation(savedLoc);
     }
-  }, []);
+  }, [dispatch]);
 
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [isSearching, setIsSearching] = useState(false);
