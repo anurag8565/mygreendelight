@@ -1,17 +1,32 @@
 "use client";
 
-import React, { useState } from "react";
-import { Sparkles, ShoppingBag, Check, Flame, ArrowRight, Tag, Percent } from "lucide-react";
+import React, { useState, useRef } from "react";
+import {
+  Sparkles,
+  ShoppingBag,
+  Check,
+  Flame,
+  ArrowRight,
+  Tag,
+  Percent,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/CartSlice";
 import { AppDispatch } from "@/redux/store";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-export default function CombosSection({ initialCombos = [] }: { initialCombos?: any[] }) {
+export default function CombosSection({
+  initialCombos = [],
+}: {
+  initialCombos?: any[];
+}) {
   const dispatch = useDispatch<AppDispatch>();
   const [combos] = useState<any[]>(initialCombos);
   const [addedIds, setAddedIds] = useState<Record<string, boolean>>({});
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   if (!combos || combos.length === 0) return null;
 
@@ -36,56 +51,97 @@ export default function CombosSection({ initialCombos = [] }: { initialCombos?: 
     }, 2500);
   };
 
+  const scroll = (direction: "left" | "right") => {
+    if (scrollRef.current) {
+      const { scrollLeft, clientWidth } = scrollRef.current;
+      const scrollAmount = clientWidth * 0.75;
+      scrollRef.current.scrollTo({
+        left:
+          direction === "left"
+            ? scrollLeft - scrollAmount
+            : scrollLeft + scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
-    <div className="w-full py-8 sm:py-12 bg-white">
+    <div className="w-full py-5 sm:py-8 bg-white">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
-        
         {/* Section Header */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-4 sm:mb-6">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center font-black">
-              <Percent size={20} />
+            <div className="w-8 h-8 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center font-black">
+              <Percent size={18} />
             </div>
             <div>
-              <h2 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight">
-                Save-More Value Combos & Multipacks
-              </h2>
-              <p className="text-xs text-gray-500 font-medium">
-                Curated produce packs with up to 25% bundle savings
+              <div className="flex items-center gap-2">
+                <h2 className="text-base sm:text-2xl font-black text-gray-900 tracking-tight">
+                  Save-More Value Combos & Multipacks
+                </h2>
+                <span className="hidden sm:inline-block bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-0.5 rounded-full uppercase">
+                  Up to 25% Off
+                </span>
+              </div>
+              <p className="text-[11px] sm:text-xs text-gray-500 font-medium">
+                Curated kitchen produce packs with bundle savings
               </p>
             </div>
           </div>
 
-          <Link
-            href="/shop"
-            className="text-[#0f8646] hover:text-[#0c6a38] font-black text-xs sm:text-sm flex items-center gap-1 transition"
-          >
-            <span>All Deals</span>
-            <ArrowRight size={14} />
-          </Link>
+          <div className="flex items-center gap-2">
+            {/* Desktop Left/Right Controls */}
+            <div className="hidden sm:flex items-center gap-1">
+              <button
+                onClick={() => scroll("left")}
+                className="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 flex items-center justify-center text-gray-600 transition shadow-2xs cursor-pointer"
+                title="Previous"
+              >
+                <ChevronLeft size={16} />
+              </button>
+              <button
+                onClick={() => scroll("right")}
+                className="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 flex items-center justify-center text-gray-600 transition shadow-2xs cursor-pointer"
+                title="Next"
+              >
+                <ChevronRight size={16} />
+              </button>
+            </div>
+
+            <Link
+              href="/shop"
+              className="text-[#0f8646] hover:text-[#0c6a38] font-black text-xs sm:text-sm flex items-center gap-0.5 transition ml-1"
+            >
+              <span>All Deals</span>
+              <ArrowRight size={14} />
+            </Link>
+          </div>
         </div>
 
-        {/* Combos Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {/* Combos Swipe Carousel on Mobile / Grid on Desktop */}
+        <div
+          ref={scrollRef}
+          className="flex overflow-x-auto gap-4 pb-3 snap-x snap-mandatory scrollbar-none sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-5"
+        >
           {combos.map((c) => {
             const isAdded = addedIds[c._id];
             return (
               <motion.div
                 key={c._id}
-                whileHover={{ y: -6, scale: 1.02 }}
-                transition={{ duration: 0.25 }}
-                className="bg-white rounded-3xl border border-gray-200/90 hover:border-amber-300 p-5 shadow-2xs hover:shadow-xl hover:shadow-amber-500/10 transition-all flex flex-col justify-between relative overflow-hidden group"
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.2 }}
+                className="w-[280px] xs:w-[310px] sm:w-auto shrink-0 snap-start bg-white rounded-3xl border border-gray-200/90 hover:border-amber-300 p-4 sm:p-5 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between relative overflow-hidden group"
               >
                 {/* Badge */}
-                <div className="absolute top-4 left-4 z-10">
-                  <span className="bg-gradient-to-r from-amber-400 to-orange-400 text-gray-950 font-black text-[10px] uppercase px-3 py-1 rounded-full shadow-md border border-white/50">
-                    {c.badge || `Save ${c.discountPercentage}%`}
+                <div className="absolute top-3.5 left-3.5 z-10">
+                  <span className="bg-gradient-to-r from-amber-400 to-orange-400 text-gray-950 font-black text-[10px] uppercase px-2.5 py-0.5 rounded-full shadow-xs border border-white/50">
+                    {c.badge || `Save ${c.discountPercentage || 20}%`}
                   </span>
                 </div>
 
                 <div>
                   {/* Image */}
-                  <div className="w-full h-44 rounded-2xl overflow-hidden bg-gray-50 mb-4 relative shadow-inner">
+                  <div className="w-full h-36 sm:h-44 rounded-2xl overflow-hidden bg-gray-50 mb-3 sm:mb-4 relative shadow-inner">
                     <img
                       src={c.image}
                       alt={c.title}
@@ -93,17 +149,19 @@ export default function CombosSection({ initialCombos = [] }: { initialCombos?: 
                     />
                   </div>
 
-                  <h3 className="font-black text-sm text-gray-900 line-clamp-1 mb-1 group-hover:text-[#0f8646] transition-colors">{c.title}</h3>
-                  <p className="text-[11px] text-gray-500 line-clamp-2 leading-relaxed mb-3">
+                  <h3 className="font-black text-xs sm:text-sm text-gray-900 line-clamp-1 mb-1 group-hover:text-[#0f8646] transition-colors">
+                    {c.title}
+                  </h3>
+                  <p className="text-[10px] sm:text-[11px] text-gray-500 line-clamp-2 leading-relaxed mb-3">
                     {c.subtitle}
                   </p>
 
                   {/* Bundled Items Pills */}
-                  <div className="flex flex-wrap gap-1 mb-4">
+                  <div className="flex flex-wrap gap-1 mb-3 sm:mb-4">
                     {c.items?.map((item: any, i: number) => (
                       <span
                         key={i}
-                        className="text-[9px] font-bold bg-green-50 text-[#0f8646] border border-green-200 px-2 py-0.5 rounded-md"
+                        className="text-[9px] font-bold bg-green-50 text-[#0f8646] border border-green-200/80 px-2 py-0.5 rounded-md truncate max-w-full"
                       >
                         {item.name}
                       </span>
@@ -114,29 +172,35 @@ export default function CombosSection({ initialCombos = [] }: { initialCombos?: 
                 {/* Price & Action */}
                 <div className="flex items-center justify-between pt-3 border-t border-gray-100 mt-auto">
                   <div>
-                    <span className="text-[10px] text-gray-400 font-bold block uppercase">Bundle Deal</span>
+                    <span className="text-[9px] sm:text-[10px] text-gray-400 font-bold block uppercase">
+                      Bundle Deal
+                    </span>
                     <div className="flex items-baseline gap-1.5">
-                      <span className="text-xl font-black text-gray-900">₹{c.comboPrice}</span>
-                      <span className="text-xs text-gray-400 line-through">₹{c.originalPrice}</span>
+                      <span className="text-base sm:text-xl font-black text-gray-900">
+                        ₹{c.comboPrice}
+                      </span>
+                      <span className="text-xs text-gray-400 line-through">
+                        ₹{c.originalPrice}
+                      </span>
                     </div>
                   </div>
 
                   <button
                     type="button"
                     onClick={() => handleAddCombo(c)}
-                    className={`px-4 py-2 rounded-xl font-black text-xs flex items-center gap-1 transition-all shadow-md cursor-pointer ${
+                    className={`px-3.5 sm:px-4 py-2 rounded-xl font-black text-xs flex items-center gap-1 transition-all shadow-xs cursor-pointer ${
                       isAdded
                         ? "bg-green-700 text-white"
-                        : "bg-[#0f8646] hover:bg-[#0c6a38] text-white hover:scale-105 active:scale-95"
+                        : "bg-[#0f8646] hover:bg-[#0c6a38] text-white active:scale-95"
                     }`}
                   >
                     {isAdded ? (
                       <>
-                        <Check size={14} /> <span>Added! 🎉</span>
+                        <Check size={13} /> <span>Added! 🎉</span>
                       </>
                     ) : (
                       <>
-                        <ShoppingBag size={14} /> <span>Add Combo</span>
+                        <ShoppingBag size={13} /> <span>Add Combo</span>
                       </>
                     )}
                   </button>
@@ -145,7 +209,6 @@ export default function CombosSection({ initialCombos = [] }: { initialCombos?: 
             );
           })}
         </div>
-
       </div>
     </div>
   );
