@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React from "react";
 import { motion } from "framer-motion";
@@ -101,30 +101,28 @@ export default function QuickFilterChips({
   onSelectChip,
 }: QuickFilterChipsProps) {
   return (
-    <div className="w-full bg-white py-2.5 sm:py-3.5">
-      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
-        <div className="flex items-center gap-2 overflow-x-auto pb-1.5 scrollbar-none snap-x">
-          {filterChipsList.map((chip) => {
-            const isActive = activeChip === chip.id;
-            return (
-              <motion.button
-                key={chip.id}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.95 }}
-                type="button"
-                onClick={() => onSelectChip(chip.id)}
-                className={`snap-start shrink-0 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs border ${
-                  isActive
-                    ? "bg-[#0f8646] text-white border-[#0f8646] shadow-sm"
-                    : "bg-gray-50 text-gray-700 border-gray-200/80 hover:bg-green-50/70 hover:border-green-300"
-                }`}
-              >
-                <span>{chip.icon}</span>
-                <span>{chip.label}</span>
-              </motion.button>
-            );
-          })}
-        </div>
+    <div className="w-full py-2 mb-2">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none snap-x">
+        {filterChipsList.map((chip) => {
+          const isActive = activeChip === chip.id;
+          return (
+            <motion.button
+              key={chip.id}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.95 }}
+              type="button"
+              onClick={() => onSelectChip(chip.id)}
+              className={`snap-start shrink-0 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs border ${
+                isActive
+                  ? "bg-[#0f8646] text-white border-[#0f8646] shadow-xs"
+                  : "bg-gray-50 text-gray-700 border-gray-200/80 hover:bg-green-50/70 hover:border-green-300"
+              }`}
+            >
+              <span>{chip.icon}</span>
+              <span>{chip.label}</span>
+            </motion.button>
+          );
+        })}
       </div>
     </div>
   );

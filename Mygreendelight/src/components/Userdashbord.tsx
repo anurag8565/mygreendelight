@@ -191,13 +191,10 @@ export default async function Userdashbord() {
       {/* 15. Customer Testimonials & Reviews (Preloaded from MongoDB) */}
       <Testimonials initialTestimonials={plainTestimonials} />
 
-      {/* 16. Farm to Fork Freshness Promise */}
+      {/* 16. Farm to Fork Freshness Promise & Trust Guarantee */}
       <FarmFreshPromise />
 
-      {/* 17. Why Choose MyGreenDelight Features */}
-      <FeaturesBanner />
-
-      {/* 18. PreFooter Trust Elements */}
+      {/* 17. PreFooter Trust Elements */}
       <PreFooter />
     </div>
   )
