@@ -9,6 +9,7 @@ import {
   removeFromCart,
   applyCoupon,
   removeCoupon,
+  hydrateCart,
 } from "@/redux/CartSlice";
 import {
   Trash2,
@@ -42,6 +43,10 @@ export default function CartPage() {
   const [couponInput, setCouponInput] = useState("");
   const [couponLoading, setCouponLoading] = useState(false);
   const [couponError, setCouponError] = useState("");
+
+  React.useEffect(() => {
+    dispatch(hydrateCart());
+  }, [dispatch]);
 
   const { cartdata, couponCode, discountAmount } = useSelector(
     (state: RootState) => state.cart
@@ -97,7 +102,7 @@ export default function CartPage() {
     <div className="bg-[#fbfcfb] min-h-screen flex flex-col justify-between">
       <Nav user={(userdata as any) || { role: "user" }} />
 
-      <main className="max-w-7xl mx-auto px-4 md:px-8 py-8 w-full flex-1">
+      <main className="max-w-7xl mx-auto px-4 md:px-8 py-8 pb-28 lg:pb-8 w-full flex-1">
         {/* Breadcrumb Navigation */}
         <div className="flex items-center gap-2 text-xs text-gray-500 mb-6">
           <Link href="/" className="hover:text-[#0f8646] transition">
@@ -398,6 +403,27 @@ export default function CartPage() {
                 </button>
               </div>
             </div>
+          </div>
+        )}
+
+        {/* Mobile Sticky Bottom Floating Action Bar */}
+        {cartdata.length > 0 && (
+          <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-200 p-3 sm:p-4 shadow-2xl flex items-center justify-between gap-3">
+            <div>
+              <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider block">
+                {cartdata.reduce((a, b) => a + b.quantity, 0)} Items • Total
+              </span>
+              <span className="text-xl font-black text-[#0f8646]">
+                ₹{total}
+              </span>
+            </div>
+            <button
+              onClick={() => router.push("/user/checkout")}
+              className="flex-1 bg-[#0f8646] active:scale-98 hover:bg-[#0c6a38] text-white py-3 px-5 rounded-2xl font-black text-xs shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <span>Proceed to Checkout</span>
+              <ArrowRight size={15} />
+            </button>
           </div>
         )}
       </main>
