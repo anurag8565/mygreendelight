@@ -55,8 +55,8 @@ export default function MobileBottomNav() {
       badge: mounted && wishlistItems.length > 0 ? wishlistItems.length : null,
     },
     {
-      label: userdata?.role === "admin" ? "Admin" : "Orders",
-      href: userdata?.role === "admin" ? "/admin" : "/user/myorder",
+      label: userdata?.role === "admin" ? "Admin" : userdata?.email ? "Account" : "Login",
+      href: userdata?.role === "admin" ? "/admin" : userdata?.email ? "/user/myorder" : "/login",
       icon: User,
     },
   ];

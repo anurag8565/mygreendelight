@@ -467,9 +467,11 @@ export default function Nav({ user }: { user: iUser }) {
                 {user.image ? <img src={user.image} className="w-full h-full rounded-full object-cover" /> : <UserIcon size={20} />}
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] text-gray-500 font-semibold">Login / Signup</span>
-                <div className="text-sm font-bold text-gray-800 flex items-center gap-1 group-hover:text-[#0f8646] transition-colors">
-                  My Account <ChevronDown size={14} />
+                <span className="text-[10px] font-extrabold text-[#0f8646]">
+                  {user?.email ? `Hi, ${user.name ? user.name.split(" ")[0] : "Shopper"}` : "Welcome"}
+                </span>
+                <div className="text-sm font-black text-gray-800 flex items-center gap-1 group-hover:text-[#0f8646] transition-colors">
+                  {user?.email ? "My Profile" : "Login / Signup"} <ChevronDown size={14} />
                 </div>
               </div>
 
