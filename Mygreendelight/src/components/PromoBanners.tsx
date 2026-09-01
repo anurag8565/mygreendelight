@@ -77,50 +77,32 @@ export default function PromoBanners({ banners = [] }: { banners?: any[] }) {
           </div>
         </div>
 
-        {/* Banner 2: Welcome Coupon (Dynamic from DB) */}
+        {/* Banner 2: 10-15 Min Express Delivery & Farm Fresh Guarantee */}
         <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-amber-50 via-orange-50 to-amber-100/80 min-h-[220px] flex items-center justify-between shadow-md hover:shadow-xl transition-all border border-amber-200/80 group p-6 sm:p-8">
           <div className="relative z-10 flex flex-col items-start max-w-xs">
-            <span className="inline-flex items-center gap-1 bg-orange-100 text-orange-700 text-[10px] sm:text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider mb-3 border border-orange-200">
-              <Tag size={12} /> Active Store Coupon
+            <span className="inline-flex items-center gap-1 bg-amber-200/80 text-amber-900 text-[10px] sm:text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider mb-3 border border-amber-300">
+              ⚡ Bhopal Express Guarantee
             </span>
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 leading-tight mb-1">
-              Save More Today <br />
-              <span className="text-orange-600 font-black">With Promo Code</span>
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 leading-tight mb-2">
+              10-15 Min Delivery <br />
+              <span className="text-orange-600 font-black">To Your Doorstep</span>
             </h3>
-            <p className="text-xs text-gray-500 mb-4">
-              Apply this coupon at checkout to unlock instant discounts.
+            <p className="text-xs text-gray-600 mb-5 leading-relaxed">
+              Arera Colony • Kolar Road • MP Nagar • Bairagarh & across all Bhopal hubs with 100% Quality Guarantee.
             </p>
 
-            {/* Click to Copy Coupon Chip */}
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => handleCopyCode(activeCouponCode)}
-                className="bg-white border-2 border-dashed border-orange-300 hover:border-orange-500 px-4 py-2 rounded-xl flex items-center gap-2 text-xs sm:text-sm font-extrabold text-orange-600 shadow-xs hover:shadow-md transition-all cursor-pointer group/btn"
-                title="Click to copy coupon code"
-              >
-                <span>Use Code:</span>
-                <span className="bg-orange-100 px-2 py-0.5 rounded-lg tracking-wider uppercase">
-                  {activeCouponCode}
-                </span>
-                {copied ? (
-                  <Check size={16} className="text-green-600" />
-                ) : (
-                  <Copy size={16} className="text-orange-400 group-hover/btn:text-orange-600" />
-                )}
+            <Link href="/shop">
+              <button className="bg-orange-500 hover:bg-orange-600 text-white font-extrabold px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md hover:shadow-lg transition-all flex items-center gap-1.5 cursor-pointer">
+                <span>Shop Fresh Produce</span>
+                <ArrowRight size={16} />
               </button>
-
-              {copied && (
-                <span className="text-xs font-extrabold text-green-600 animate-fade-in">
-                  Copied! 🎉
-                </span>
-              )}
-            </div>
+            </Link>
           </div>
 
           <div className="relative z-10 shrink-0 w-32 h-32 sm:w-40 sm:h-40 rounded-2xl overflow-hidden shadow-lg border-2 border-white/60 hidden sm:flex items-center justify-center bg-white/40">
             <img
-              src={b2.image}
-              alt={b2.title}
+              src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=800&q=85"
+              alt="Express Delivery"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
           </div>

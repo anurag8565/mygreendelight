@@ -382,15 +382,15 @@ export default function ShopPage() {
                 </div>
                 <div>
                   <h3 className="font-extrabold text-sm sm:text-base">
-                    FREE 10-Minute Delivery &gt; ₹499
+                    ⚡ 10-15 Min Bhopal Express Delivery
                   </h3>
                   <p className="text-xs text-green-100 mt-0.5">
-                    100% farm-fresh produce delivered directly to your Bhopal kitchen
+                    100% Ozone-Washed fresh farm produce straight to your kitchen
                   </p>
                 </div>
               </div>
               <span className="bg-white text-[#0f8646] text-xs font-black px-3.5 py-1.5 rounded-xl shrink-0 shadow-xs uppercase tracking-wider">
-                Code: {activeCoupon}
+                FREE Delivery &gt; ₹199
               </span>
             </div>
 
