@@ -156,7 +156,7 @@ export default function ManageRecipesPage() {
   return (
     <div className="flex min-h-screen bg-gray-50/50">
       <AdminSidebar />
-      <main className="flex-1 p-4 md:p-8 overflow-y-auto">
+      <main className="flex-1 min-w-0 w-full p-4 md:p-8 pt-18 sm:pt-20 lg:pt-8 overflow-y-auto overflow-x-hidden">
         <div className="max-w-7xl mx-auto space-y-6">
           {/* Top Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-gray-100 shadow-xs">

@@ -56,7 +56,7 @@ export default function ManageSubscriptionsPage() {
     <div className="flex min-h-screen bg-gray-50/50">
       <AdminSidebar />
 
-      <main className="flex-1 p-4 sm:p-8 max-w-6xl mx-auto">
+      <main className="flex-1 min-w-0 w-full p-4 sm:p-8 pt-18 sm:pt-20 lg:pt-8 max-w-6xl mx-auto overflow-x-hidden">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div className="flex items-center gap-2">
             <div className="w-9 h-9 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-black">

@@ -167,57 +167,62 @@ export default function AdminSidebar() {
 
   return (
     <>
-      {/* Mobile Top Bar */}
-      <div className="lg:hidden bg-[#0c592f] text-white px-4 py-3 flex items-center justify-between sticky top-0 z-50 shadow-md">
-        <div className="flex items-center gap-2">
+      {/* Mobile Top Header (Fixed at top on phones) */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 h-14 bg-[#093e21] text-white px-4 flex items-center justify-between z-50 shadow-md border-b border-green-800/60">
+        <div className="flex items-center gap-2.5">
           <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="p-1.5 rounded-lg bg-white/10 text-white"
+            onClick={() => setMobileOpen(true)}
+            className="p-2 rounded-xl bg-white/10 text-white hover:bg-white/20 active:scale-95 transition"
+            aria-label="Open Admin Menu"
           >
-            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+            <Menu size={20} />
           </button>
-          <span className="font-black text-base tracking-tight">
-            MyGreenDelight Admin
-          </span>
+          <div className="leading-tight">
+            <span className="font-black text-sm block">MyGreenDelight</span>
+            <span className="text-[9px] text-green-300 font-bold uppercase tracking-widest">
+              Admin Center
+            </span>
+          </div>
         </div>
 
         <Link
           href="/"
           target="_blank"
-          className="flex items-center gap-1 bg-white/15 text-white px-3 py-1.5 rounded-xl text-xs font-bold"
+          className="flex items-center gap-1 bg-white/15 hover:bg-white/25 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition"
         >
           <span>Store</span>
           <ExternalLink size={12} />
         </Link>
       </div>
 
-      {/* Mobile Overlay */}
+      {/* Mobile Drawer Overlay */}
       {mobileOpen && (
         <div
           onClick={() => setMobileOpen(false)}
-          className="fixed inset-0 bg-black/60 z-[9998] lg:hidden backdrop-blur-xs transition-opacity duration-300"
+          className="fixed inset-0 bg-black/60 z-[999] lg:hidden backdrop-blur-xs transition-opacity duration-300"
         />
       )}
 
-      {/* Sidebar Drawer */}
+      {/* Sidebar Drawer for Desktop & Mobile */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-[9999] lg:z-40 w-64 bg-[#093e21] text-white flex flex-col justify-between transition-transform duration-300 ease-in-out shadow-2xl lg:shadow-none lg:translate-x-0 ${
-          mobileOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed top-0 bottom-0 left-0 z-[1000] lg:z-40 w-72 lg:w-64 bg-[#093e21] text-white flex flex-col justify-between transition-transform duration-300 ease-in-out shadow-2xl lg:shadow-none lg:sticky lg:top-0 lg:h-screen lg:shrink-0 ${
+          mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
-        {/* Top Branding */}
+        {/* Top Header & Branding */}
         <div>
-          <div className="p-6 border-b border-green-800/60 flex items-center justify-between">
+          <div className="p-5 border-b border-green-800/60 flex items-center justify-between">
             <Link
               href="/admin"
-              className="flex items-center gap-2.5 font-black text-xl tracking-tight text-white"
+              onClick={() => setMobileOpen(false)}
+              className="flex items-center gap-2.5 font-black text-lg tracking-tight text-white"
             >
-              <div className="w-9 h-9 rounded-xl bg-green-500/20 border border-green-400/40 flex items-center justify-center text-green-300">
-                <Truck size={20} />
+              <div className="w-9 h-9 rounded-xl bg-green-500/20 border border-green-400/40 flex items-center justify-center text-green-300 shrink-0">
+                <Truck size={18} />
               </div>
               <div className="leading-tight">
-                <span className="block font-black text-base">MyGreenDelight</span>
-                <span className="text-[10px] text-green-300 font-bold uppercase tracking-widest">
+                <span className="block font-black text-sm sm:text-base">MyGreenDelight</span>
+                <span className="text-[9px] text-green-300 font-bold uppercase tracking-widest">
                   Admin Center
                 </span>
               </div>
@@ -225,14 +230,15 @@ export default function AdminSidebar() {
 
             <button
               onClick={() => setMobileOpen(false)}
-              className="lg:hidden text-gray-300 hover:text-white"
+              className="lg:hidden p-1.5 text-gray-300 hover:text-white rounded-lg bg-white/10"
+              aria-label="Close Admin Menu"
             >
               <X size={18} />
             </button>
           </div>
 
-          {/* Navigation Links */}
-          <nav className="p-4 space-y-1.5 overflow-y-auto max-h-[calc(100vh-190px)]">
+          {/* Scrollable Navigation Links */}
+          <nav className="p-3.5 space-y-1 overflow-y-auto max-h-[calc(100vh-175px)] scrollbar-thin scrollbar-thumb-green-800">
             {navItems.map((item) => {
               const isActive = pathname === item.href;
               return (
@@ -240,16 +246,16 @@ export default function AdminSidebar() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
-                  className={`flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all ${
+                  className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all ${
                     isActive
                       ? "bg-[#0f8646] text-white shadow-sm font-extrabold"
                       : "text-green-100/70 hover:bg-white/10 hover:text-white"
                   }`}
                 >
-                  <span className={isActive ? "text-white" : "text-green-300"}>
+                  <span className={isActive ? "text-white" : "text-green-300 shrink-0"}>
                     {item.icon}
                   </span>
-                  <span>{item.name}</span>
+                  <span className="truncate">{item.name}</span>
                 </Link>
               );
             })}
@@ -257,10 +263,10 @@ export default function AdminSidebar() {
         </div>
 
         {/* Bottom Store Link & Status */}
-        <div className="p-4 border-t border-green-800/60 bg-[#073019]">
-          <div className="flex items-center gap-2 text-xs text-green-200/80 mb-3 px-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-bold text-[11px]">Bhopal Hubs Live</span>
+        <div className="p-4 border-t border-green-800/60 bg-[#073019] shrink-0">
+          <div className="flex items-center gap-2 text-xs text-green-200/80 mb-2.5 px-1">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+            <span className="font-bold text-[11px] truncate">Bhopal Dark Stores Live</span>
           </div>
 
           <Link
@@ -269,7 +275,7 @@ export default function AdminSidebar() {
             className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white w-full py-2.5 rounded-xl text-xs font-extrabold transition-all border border-white/10"
           >
             <span>View Customer Store</span>
-            <ExternalLink size={14} />
+            <ExternalLink size={13} />
           </Link>
         </div>
       </aside>

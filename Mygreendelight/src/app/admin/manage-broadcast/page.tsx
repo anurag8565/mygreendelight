@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState, useEffect } from "react";
 import AdminSidebar from "@/components/AdminSidebar";
@@ -87,7 +87,7 @@ export default function ManageBroadcastPage() {
     <div className="flex min-h-screen bg-gray-50/50">
       <AdminSidebar />
 
-      <main className="flex-1 p-4 sm:p-8 max-w-5xl mx-auto">
+      <main className="flex-1 min-w-0 w-full p-4 sm:p-8 pt-18 sm:pt-20 lg:pt-8 max-w-5xl mx-auto overflow-x-hidden">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-3">
