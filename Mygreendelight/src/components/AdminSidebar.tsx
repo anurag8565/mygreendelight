@@ -41,12 +41,12 @@ export default function AdminSidebar() {
 
   const navItems = [
     {
-      name: "Dashboard",
+      name: "Dashboard & Analytics",
       href: "/admin",
       icon: <LayoutDashboard size={18} />,
     },
     {
-      name: "Manage Orders",
+      name: "Live Orders & Fleet",
       href: "/admin/manageorder",
       icon: <ShoppingBag size={18} />,
     },
@@ -71,14 +71,19 @@ export default function AdminSidebar() {
       icon: <FolderTree size={18} />,
     },
     {
-      name: "Recipe Kits (Combos)",
-      href: "/admin/manage-recipes",
-      icon: <ChefHat size={18} />,
+      name: "Hero & Promo Banners",
+      href: "/admin/managebanners",
+      icon: <ImageIcon size={18} />,
     },
     {
-      name: "Dinner Decider Wheel",
-      href: "/admin/manage-dinner-wheel",
-      icon: <Utensils size={18} />,
+      name: "Coupons & Discounts",
+      href: "/admin/managecoupons",
+      icon: <Tag size={18} />,
+    },
+    {
+      name: "Value Combos & Packs",
+      href: "/admin/manage-combos",
+      icon: <Percent size={18} />,
     },
     {
       name: "Morning Subscriptions",
@@ -86,9 +91,44 @@ export default function AdminSidebar() {
       icon: <Milk size={18} />,
     },
     {
+      name: "Recipe Kits (Combos)",
+      href: "/admin/manage-recipes",
+      icon: <ChefHat size={18} />,
+    },
+    {
       name: "Custom Salad Boxes",
       href: "/admin/manage-custom-boxes",
       icon: <Salad size={18} />,
+    },
+    {
+      name: "Gift Hampers & Baskets",
+      href: "/admin/manage-gift-baskets",
+      icon: <Gift size={18} />,
+    },
+    {
+      name: "Customer Reviews & Ratings",
+      href: "/admin/managetestimonials",
+      icon: <Star size={18} />,
+    },
+    {
+      name: "Broadcast Alerts",
+      href: "/admin/manage-broadcast",
+      icon: <Radio size={18} />,
+    },
+    {
+      name: "Mandi Live Rates",
+      href: "/admin/manage-mandi",
+      icon: <TrendingUp size={18} />,
+    },
+    {
+      name: "Flash Deals Setting",
+      href: "/admin/manage-flash-deals",
+      icon: <Flame size={18} />,
+    },
+    {
+      name: "Scratch Card Rewards",
+      href: "/admin/manage-rewards",
+      icon: <Gift size={18} />,
     },
     {
       name: "Harvest Stock Alerts",
@@ -101,59 +141,9 @@ export default function AdminSidebar() {
       icon: <BookOpen size={18} />,
     },
     {
-      name: "Value Combos & Packs",
-      href: "/admin/manage-combos",
-      icon: <Percent size={18} />,
-    },
-    {
-      name: "Gift Hampers & Baskets",
-      href: "/admin/manage-gift-baskets",
-      icon: <Gift size={18} />,
-    },
-    {
-      name: "Customer Reviews",
-      href: "/admin/manage-reviews",
-      icon: <Star size={18} />,
-    },
-    {
-      name: "Coupons & Discounts",
-      href: "/admin/managecoupons",
-      icon: <Tag size={18} />,
-    },
-    {
-      name: "Flash Deals Timer",
-      href: "/admin/manage-flash-deals",
-      icon: <Flame size={18} />,
-    },
-    {
-      name: "Scratch Card Rewards",
-      href: "/admin/manage-rewards",
-      icon: <Gift size={18} />,
-    },
-    {
-      name: "Mandi Live Rates",
-      href: "/admin/manage-mandi",
-      icon: <TrendingUp size={18} />,
-    },
-    {
       name: "Customer Inquiries",
       href: "/admin/manageinquiries",
       icon: <MessageSquare size={18} />,
-    },
-    {
-      name: "Hero & Promo Banners",
-      href: "/admin/managebanners",
-      icon: <ImageIcon size={18} />,
-    },
-    {
-      name: "Broadcast Alerts",
-      href: "/admin/manage-broadcast",
-      icon: <Radio size={18} />,
-    },
-    {
-      name: "Customer Testimonials",
-      href: "/admin/managetestimonials",
-      icon: <Star size={18} />,
     },
   ];
 
