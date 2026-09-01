@@ -7,18 +7,18 @@ import FilteredProduceSection from './FilteredProduceSection'
 import FastReorderWidget from './FastReorderWidget'
 import FlashDeals from './FlashDeals'
 import CombosSection from './CombosSection'
+import RecipeKitsSection from './RecipeKitsSection'
 import FarmClubVIPBanner from './FarmClubVIPBanner'
 import MorningSubscriptionBanner from './MorningSubscriptionBanner'
 import InteractiveFarmFeatures from './InteractiveFarmFeatures'
 import Grocery from '@/model/groseri.model'
 import Category from '@/model/category.model'
 import ComboBundle from '@/model/combo.model'
+import RecipeKit from '@/model/recipekit.model'
 import connectDb from '@/lib/db'
 import Groceryitemcard from './Groceryitemcard'
 import ProductCarousel from './ProductCarousel'
 import PromoBanners from './PromoBanners'
-import SocietyGroupOrderWidget from './SocietyGroupOrderWidget'
-import FeaturesBanner from './FeaturesBanner'
 import FarmFreshPromise from './FarmFreshPromise'
 import PreFooter from './PreFooter'
 import Testimonials from './Testimonials'
@@ -42,6 +42,7 @@ export default async function Userdashbord() {
   const categoriesPromise = Category.find({}).sort({ createdAt: -1 })
   const testimonialsPromise = Testimonial.find({ status: 'approved' }).sort({ createdAt: -1 })
   const mandiRatesPromise = MandiRate.find({ isActive: true }).sort({ updatedAt: -1 })
+  const recipeKitsPromise = RecipeKit.find({ isActive: true }).lean()
   
   let orderAgainGroceriesPromise: Promise<any[]> = Promise.resolve([])
   if (session?.user?.id) {
@@ -64,7 +65,7 @@ export default async function Userdashbord() {
 
   const comboBundlesPromise = ComboBundle.find({ isActive: true }).lean()
 
-  const [newGroceries, topGroceries, flashDeals, banners, categories, testimonials, mandiRates, orderAgain, comboBundles] = await Promise.all([
+  const [newGroceries, topGroceries, flashDeals, banners, categories, testimonials, mandiRates, orderAgain, comboBundles, recipeKits] = await Promise.all([
     newGroceriesPromise,
     topGroceriesPromise,
     flashDealsPromise,
@@ -73,7 +74,8 @@ export default async function Userdashbord() {
     testimonialsPromise,
     mandiRatesPromise,
     orderAgainGroceriesPromise,
-    comboBundlesPromise
+    comboBundlesPromise,
+    recipeKitsPromise
   ]);
 
   const plainNew = JSON.parse(JSON.stringify(newGroceries))
@@ -85,37 +87,43 @@ export default async function Userdashbord() {
   const plainMandiRates = JSON.parse(JSON.stringify(mandiRates))
   const plainOrderAgain = JSON.parse(JSON.stringify(orderAgain))
   const plainCombos = JSON.parse(JSON.stringify(comboBundles || []))
+  const plainRecipeKits = JSON.parse(JSON.stringify(recipeKits || []))
 
   return (
     <div className="bg-white w-full max-w-full overflow-x-hidden font-sans">
-      {/* 1. High-Converting Sliding Hero Banner (Database-driven from MongoDB) */}
+      {/* 1. High-Converting Sliding Hero Banner (Managed in Admin /managebanners) */}
       <Hero banners={plainBanners} />
 
-      {/* 🎁 2. Flash 3-4 Minute Free Gift Rush & 10-15 Min Express Delivery */}
+      {/* 🎁 2. Express Produce Welcome Gift & 10-15 Min Delivery */}
       <FlashFreeGiftRush />
 
-      {/* 3. Shop by Category (Zero Flicker & Preloaded from Database) */}
+      {/* 3. Shop by Category (Managed in Admin /manage-categories) */}
       <Categoryslider categories={plainCategories} />
 
-      {/* 4. 🏷️ 1-Tap Filter Chips & Daily Mandi Harvest Specials (Primary Shopping Feed) */}
+      {/* 4. 🏷️ 1-Tap Filter Chips & Daily Mandi Harvest Specials (Managed in Admin /viewgrocery) */}
       <FilteredProduceSection groceries={plainNew} />
 
-      {/* 5. Live Bhopal Mandi Rate & Price Drop Ticker */}
+      {/* 5. Live Bhopal Mandi Rate & Price Drop Ticker (Managed in Admin /manage-mandi) */}
       <MandiPriceTicker initialRates={plainMandiRates} />
 
-      {/* ⚡ 1-Click Fast Reorder Regular Farm Basket (Only for Logged in repeat buyers) */}
+      {/* ⚡ 1-Click Fast Reorder Regular Farm Basket (Only for repeat buyers) */}
       <FastReorderWidget />
 
-      {/* 6. Live Flash Deals & Discounts */}
+      {/* 6. Live Flash Deals & Discounts (Managed in Admin /manage-flash-deals) */}
       <FlashDeals products={plainFlash} />
 
-      {/* 7. ⚡ Save-More Value Combos & Multipacks */}
+      {/* 7. ⚡ Save-More Value Combos & Multipacks (Managed in Admin /manage-combos) */}
       <CombosSection initialCombos={plainCombos} />
 
-      {/* 8. 🏆 MyGreenDelight Farm Club VIP Green Pass Banner */}
+      {/* 8. 🍲 1-Click Cook Recipe Ingredient Kits (Managed in Admin /manage-recipes) */}
+      {plainRecipeKits && plainRecipeKits.length > 0 && (
+        <RecipeKitsSection kits={plainRecipeKits} />
+      )}
+
+      {/* 9. 🏆 MyGreenDelight Farm Club VIP Green Pass Banner */}
       <FarmClubVIPBanner />
 
-      {/* 9. Order Again (For logged in users with previous order history) */}
+      {/* 10. Order Again (For logged in users with previous order history) */}
       {plainOrderAgain && plainOrderAgain.length > 0 && (
         <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-5 sm:py-8">
            <div className="flex items-center justify-between mb-4 sm:mb-6">
@@ -144,7 +152,7 @@ export default async function Userdashbord() {
         </div>
       )}
 
-      {/* 10. Top Rated Products Grid */}
+      {/* 11. Top Rated Products Grid */}
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-6 sm:py-10">
          <div className="flex items-center justify-between mb-4 sm:mb-6">
             <div className="flex items-center gap-2.5">
@@ -176,22 +184,22 @@ export default async function Userdashbord() {
          </div>
       </div>
 
-      {/* 11. Dual Authentic Promo Banners */}
+      {/* 12. Dual Authentic Promo Banners (Managed in Admin /managebanners) */}
       <PromoBanners banners={plainBanners.slice(1, 3)} />
 
-      {/* 12. 🥗 Specialized Farm Experiences (Custom Salad Box, Recipe Kits, Gift Hampers) */}
+      {/* 13. 🥗 Specialized Farm Experiences (Custom Salad Box, Gift Hampers) */}
       <InteractiveFarmFeatures />
 
-      {/* 13. 🥛 Subah 7:00 AM Morning Milk & Veggie Subscription Banner */}
+      {/* 14. 🥛 Subah 7:00 AM Morning Milk & Veggie Subscription Banner */}
       <MorningSubscriptionBanner />
 
-      {/* 14. Customer Testimonials & Reviews (Preloaded from MongoDB) */}
+      {/* 15. Customer Testimonials & Reviews (Managed in Admin /managetestimonials) */}
       <Testimonials initialTestimonials={plainTestimonials} />
 
-      {/* 15. Farm to Fork Freshness Promise & Trust Guarantee */}
+      {/* 16. Farm to Fork Freshness Promise & Trust Guarantee */}
       <FarmFreshPromise />
 
-      {/* 16. PreFooter Trust Elements */}
+      {/* 17. PreFooter Trust Elements */}
       <PreFooter />
     </div>
   )
