@@ -278,7 +278,7 @@ export default function TrackOrderPage() {
 
             {/* Delivery OTP Prompt */}
             {order?.deliveryOtp?.code && (
-              <div className="bg-amber-50 border border-amber-200/80 rounded-2xl p-4 flex items-center justify-between">
+              <div className="bg-amber-50 border border-amber-200/80 rounded-2xl p-4 flex items-center justify-between mb-4">
                 <div>
                   <h4 className="font-bold text-amber-900 text-xs sm:text-sm flex items-center gap-1.5">
                     <ShieldCheck size={16} className="text-amber-600" /> Delivery Verification OTP
@@ -292,6 +292,23 @@ export default function TrackOrderPage() {
                 </div>
               </div>
             )}
+
+            {/* ♻️ Zero-Plastic Eco-Bag Return Mission Card */}
+            <div className="bg-emerald-50/80 border border-emerald-200/90 rounded-2xl p-4 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-emerald-700 text-white flex items-center justify-center font-black text-base shrink-0">
+                  ♻️
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-emerald-950 text-xs sm:text-sm flex items-center gap-1.5">
+                    <span>Return Old Eco-Bags & Earn ₹10 Cashback!</span>
+                  </h4>
+                  <p className="text-[11px] text-emerald-700 mt-0.5">
+                    Hand over any previous MyGreenDelight cloth/eco-bags to the rider. Rider will mark it and ₹10 per bag will be instantly added to your GreenPoints Wallet.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         ) : (
           /* Waiting for Delivery Partner */
@@ -462,6 +479,12 @@ export default function TrackOrderPage() {
                     <div className="flex justify-between text-[#0f8646] font-bold">
                       <span>GreenPoints Wallet Redeemed:</span>
                       <span className="font-bold">-₹{order.walletDiscount}</span>
+                    </div>
+                  )}
+                  {order.bagReturnCashback > 0 && (
+                    <div className="flex justify-between text-emerald-800 font-bold bg-emerald-50 p-2 rounded-xl border border-emerald-200 text-xs">
+                      <span>♻️ Eco-Bag Cashback ({order.bagsReturned} Bags):</span>
+                      <span>+₹{order.bagReturnCashback} in Wallet</span>
                     </div>
                   )}
                   <div className="flex justify-between pt-2 border-t border-gray-100 text-sm font-extrabold text-gray-900">

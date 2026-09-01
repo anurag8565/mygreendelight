@@ -134,6 +134,13 @@ export default function UserWalletPage() {
     }
   };
 
+  const handleCustomTopUp = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (typeof addingAmount === "number" && addingAmount >= 10) {
+      handleTopUp(addingAmount, 0);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50/50 py-8 px-4 sm:px-6 md:px-8">
       <div className="max-w-4xl mx-auto">
@@ -258,28 +265,56 @@ export default function UserWalletPage() {
           </div>
 
           {/* Custom Amount Form */}
-          <div className="border-t border-gray-100 pt-4 flex flex-col sm:flex-row items-center gap-3">
-            <input
-              type="number"
-              value={addingAmount}
-              onChange={(e) => {
-                setAddingAmount(e.target.value === "" ? "" : Number(e.target.value));
-                setSelectedPack(null);
-              }}
-              placeholder="Or enter custom amount (e.g. ₹350)"
-              className="flex-1 w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-bold text-gray-900 outline-none focus:border-[#0f8646] focus:bg-white"
-            />
+          <form onSubmit={handleCustomTopUp} className="flex flex-col sm:flex-row items-center gap-3 pt-4 border-t border-gray-100">
+            <div className="relative flex-1 w-full">
+              <span className="absolute left-3.5 top-2.5 text-gray-400 font-bold text-sm">₹</span>
+              <input
+                type="number"
+                min={10}
+                placeholder="Or enter custom amount (e.g. 300)"
+                value={addingAmount}
+                onChange={(e) => setAddingAmount(e.target.value ? Number(e.target.value) : "")}
+                className="w-full pl-8 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0f8646] transition"
+              />
+            </div>
             <button
-              type="button"
-              onClick={() => {
-                if (typeof addingAmount === "number") handleTopUp(addingAmount, 0);
-              }}
+              type="submit"
               disabled={isProcessing || !addingAmount}
-              className="w-full sm:w-auto bg-gray-900 hover:bg-black text-white px-6 py-2.5 rounded-xl font-black text-xs sm:text-sm transition-all shadow-xs disabled:opacity-50 cursor-pointer"
+              className="w-full sm:w-auto bg-gray-900 hover:bg-black text-white px-6 py-2.5 rounded-xl text-xs font-black transition-all disabled:opacity-50 cursor-pointer shrink-0"
             >
-              {isProcessing ? "Processing..." : "Add Money"}
+              {isProcessing && !selectedPack ? "Processing..." : "Recharge Wallet"}
             </button>
+          </form>
+        </div>
+
+        {/* ♻️ Zero-Plastic Eco-Bag Return Mission Banner */}
+        <div className="bg-gradient-to-r from-emerald-950 via-emerald-900 to-teal-950 rounded-3xl p-5 sm:p-6 text-white shadow-md border border-emerald-700/60 mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-2xl shrink-0 border border-white/20">
+              ♻️
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="bg-yellow-300 text-gray-950 text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md">
+                  Zero Plastic Mission
+                </span>
+                <span className="text-xs text-emerald-200 font-bold">Auto-Wallet Credit</span>
+              </div>
+              <h3 className="text-base sm:text-lg font-black text-white mt-1">
+                Return Old Eco-Bags & Earn ₹10 Cashback Every Time!
+              </h3>
+              <p className="text-xs text-emerald-100/90 leading-relaxed mt-0.5">
+                Hand over your previous MyGreenDelight bags to the delivery partner on arrival. Rider verifies and ₹10 per bag is instantly credited to your GreenPoints Wallet balance.
+              </p>
+            </div>
           </div>
+          <Link
+            href="/shop"
+            className="shrink-0 bg-yellow-300 hover:bg-yellow-400 text-gray-950 font-black text-xs px-5 py-2.5 rounded-xl shadow-md transition-all active:scale-95 flex items-center gap-1.5"
+          >
+            <span>Order Fresh Produce</span>
+            <ArrowRight size={14} />
+          </Link>
         </div>
 
         {/* Transaction History Log */}

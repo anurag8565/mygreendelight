@@ -46,6 +46,8 @@ export interface iorder {
     deliverySlot?: string
     paymentId?: string
     paymentStatus?: "pending" | "completed" | "failed" | null
+    bagsReturned?: number
+    bagReturnCashback?: number
     createdAt?: Date,
     updatedAt?: Date,
     deliveryOtp?: {
@@ -182,6 +184,14 @@ const orderSchema = new mongoose.Schema<iorder>(
             type: String,
             enum: ["pending", "completed", "failed", null],
             default: null,
+        },
+        bagsReturned: {
+            type: Number,
+            default: 0,
+        },
+        bagReturnCashback: {
+            type: Number,
+            default: 0,
         },
     },
     {

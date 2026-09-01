@@ -38,6 +38,7 @@ function Deliveryboy() {
 
   const [activeorder, setactiverder] = useState<any>(null)
   const [userlocation, setuserlocation] = useState<any>(null)
+  const [bagsReturned, setBagsReturned] = useState<number>(0);
   const [dashboardStats, setDashboardStats] =
   useState({
     totalDeliveries: 0,
@@ -503,8 +504,50 @@ useEffect(() => {
                   value={otp}
                   onChange={(e) => setOtp(e.target.value)}
                   placeholder="Enter 4-Digit Customer OTP"
-                  className="w-full text-center font-mono font-black text-xl tracking-widest border-2 border-dashed border-gray-300 focus:border-[#0f8646] p-3 rounded-2xl outline-none bg-gray-50/50 transition"
+                  className="w-full text-center font-mono font-black text-xl tracking-widest border-2 border-dashed border-gray-300 focus:border-[#0f8646] p-3 rounded-2xl outline-none bg-gray-50/50 transition mb-4"
                 />
+
+                {/* ♻️ Zero-Plastic Eco-Bag Return Counter */}
+                <div className="bg-emerald-50/80 border border-emerald-200/90 rounded-2xl p-3.5 text-left mb-2">
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <span className="font-extrabold text-xs text-emerald-900 flex items-center gap-1.5">
+                      <span>♻️ Eco-Bags Collected From Customer</span>
+                    </span>
+                    <span className="text-[10px] font-black bg-emerald-200/80 text-emerald-900 px-2 py-0.5 rounded-full">
+                      ₹10 Cashback / Bag
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-emerald-700 leading-tight mb-2.5">
+                    Did customer return old MyGreenDelight eco-bags? ₹10 per bag will be auto-credited to their GreenPoints Wallet!
+                  </p>
+                  <div className="flex items-center justify-between bg-white p-2 rounded-xl border border-emerald-200">
+                    <span className="text-xs font-bold text-gray-700">Total Bags Handed Over:</span>
+                    <div className="flex items-center gap-3">
+                      <button
+                        type="button"
+                        onClick={() => setBagsReturned((prev) => Math.max(0, prev - 1))}
+                        className="w-7 h-7 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-800 font-black text-sm flex items-center justify-center transition cursor-pointer"
+                      >
+                        -
+                      </button>
+                      <span className="font-mono font-black text-sm text-emerald-800 w-4 text-center">
+                        {bagsReturned}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setBagsReturned((prev) => prev + 1)}
+                        className="w-7 h-7 rounded-lg bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black text-sm flex items-center justify-center transition cursor-pointer"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                  {bagsReturned > 0 && (
+                    <div className="text-[11px] font-extrabold text-[#0f8646] mt-2 flex items-center gap-1">
+                      <span>🎉 ₹{bagsReturned * 10} will be auto-credited to customer wallet!</span>
+                    </div>
+                  )}
+                </div>
               </div>
 
               <button
@@ -517,6 +560,7 @@ useEffect(() => {
                     const result = await axios.post("/api/delivery/verify-otp", {
                       orderId: activeorder.order._id,
                       otp,
+                      bagsReturned,
                     });
                     alert(result.data.message || "Delivery Completed Successfully!");
                     window.location.reload();

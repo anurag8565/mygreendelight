@@ -2,13 +2,14 @@ import connectDb from "@/lib/db";
 import Order from "@/model/order";
 import DeliveryAssignment from "@/model/Deliveryassigment.model";
 import User from "@/model/user.model";
+import UserWallet from "@/model/wallet.model";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
     await connectDb();
 
-    const { orderId, otp } = await req.json();
+    const { orderId, otp, bagsReturned } = await req.json();
 
     if (!orderId || !otp) {
       return NextResponse.json(
@@ -57,10 +58,16 @@ export async function POST(req: Request) {
       );
     }
 
+    // Process Zero-Plastic Eco-Bag Return (₹10 per bag returned)
+    const returnedCount = Math.max(0, parseInt(bagsReturned) || 0);
+    const bagCashback = returnedCount * 10;
+
     // Mark verified & delivered
     order.deliveryOtp.verified = true;
     order.status = "delivered";
     order.ispaid = true; // Auto-mark paid on verified delivery (both COD & Online)
+    order.bagsReturned = returnedCount;
+    order.bagReturnCashback = bagCashback;
 
     await order.save();
 
@@ -87,27 +94,86 @@ export async function POST(req: Request) {
       }
     }
 
-    // Award GreenPoints Cashback to Customer Wallet (3% or min ₹15)
+    // Award Cashback to Customer Wallet
     try {
-      const cashbackAmount = Math.max(15, Math.round(order.totalamount * 0.03));
-      await User.findByIdAndUpdate(order.user, {
-        $inc: { walletBalance: cashbackAmount },
+      const orderCashback = Math.max(15, Math.round((order.totalamount || 0) * 0.03));
+      const totalCredit = orderCashback + bagCashback;
+
+      // 1. Sync UserWallet model
+      let wallet = await UserWallet.findOne({ user: order.user });
+      if (!wallet) {
+        wallet = await UserWallet.create({
+          user: order.user,
+          balance: 0,
+          totalCashback: 0,
+          transactions: [],
+        });
+      }
+
+      wallet.balance += totalCredit;
+      wallet.totalCashback += totalCredit;
+
+      // Log Order Cashback transaction
+      wallet.transactions.push({
+        type: "credit",
+        amount: orderCashback,
+        description: `🌿 Order Delivery Cashback (#${order._id.toString().slice(-6).toUpperCase()})`,
+        orderId: order._id.toString(),
+        createdAt: new Date(),
+      });
+
+      // Log Eco-Bag Return Cashback if bags were collected
+      if (returnedCount > 0) {
+        wallet.transactions.push({
+          type: "credit",
+          amount: bagCashback,
+          description: `♻️ Eco-Bag Return Cashback (${returnedCount} bag${returnedCount > 1 ? "s" : ""} @ ₹10/bag)`,
+          orderId: order._id.toString(),
+          createdAt: new Date(),
+        });
+      }
+      await wallet.save();
+
+      // 2. Sync User model
+      const userUpdates: any = {
+        $inc: { walletBalance: totalCredit },
         $push: {
           walletHistory: {
-            amount: cashbackAmount,
-            type: "credit",
-            description: `GreenPoints Cashback for Order #${order._id.toString().slice(-6).toUpperCase()}`,
-            date: new Date(),
+            $each: [
+              {
+                amount: orderCashback,
+                type: "credit",
+                description: `🌿 Order Delivery Cashback (#${order._id.toString().slice(-6).toUpperCase()})`,
+                date: new Date(),
+              },
+              ...(returnedCount > 0
+                ? [
+                    {
+                      amount: bagCashback,
+                      type: "credit",
+                      description: `♻️ Eco-Bag Return Cashback (${returnedCount} bag${returnedCount > 1 ? "s" : ""} @ ₹10/bag)`,
+                      date: new Date(),
+                    },
+                  ]
+                : []),
+            ],
           },
         },
-      });
+      };
+      await User.findByIdAndUpdate(order.user, userUpdates);
     } catch (e) {
       console.error("Wallet credit error:", e);
     }
 
+    const returnMsg = returnedCount > 0
+      ? `Order Delivered! ₹${bagCashback} Eco-Bag Cashback + Delivery Points credited to customer wallet!`
+      : "Order Delivered Successfully & Payment Verified!";
+
     return NextResponse.json({
       success: true,
-      message: "Order Delivered Successfully & Payment Verified!",
+      message: returnMsg,
+      bagsReturned: returnedCount,
+      bagReturnCashback: bagCashback,
     });
   } catch (error) {
     console.error("VERIFY OTP ERROR:", error);
