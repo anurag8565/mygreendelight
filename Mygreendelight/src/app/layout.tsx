@@ -9,7 +9,6 @@ import WhatsAppWidget from "@/components/WhatsAppWidget";
 import MobileBottomNav from "@/components/MobileBottomNav";
 import BroadcastBar from "@/components/BroadcastBar";
 import MobileStickyCartBar from "@/components/MobileStickyCartBar";
-import AppInstallModal from "@/components/AppInstallModal";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -48,7 +47,6 @@ export default function RootLayout({
             <WhatsAppWidget />
             <MobileStickyCartBar />
             <MobileBottomNav />
-            <AppInstallModal />
           </StoreProviders>
         </Provider>
       </body>
