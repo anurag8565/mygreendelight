@@ -454,7 +454,7 @@ export default function Nav({ user }: { user: iUser }) {
           <div className="flex items-center gap-6">
             <Link href="/user/myorder" className="cursor-pointer hover:text-green-200">Track Order</Link>
             <Link href="/contact" className="cursor-pointer hover:text-green-200">Help & Support</Link>
-            {user.role === "admin" && (
+            {user?.role === "admin" && (
               <Link href="/admin" className="cursor-pointer font-bold text-yellow-300 hover:underline">Admin Center</Link>
             )}
           </div>
@@ -652,11 +652,11 @@ export default function Nav({ user }: { user: iUser }) {
             {/* User Dropdown */}
             <div className="hidden sm:flex items-center gap-3 cursor-pointer group relative" ref={dropdownRef} onClick={() => setOpen(!open)}>
               <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 group-hover:bg-green-50 transition-colors">
-                {user.image ? <img src={user.image} className="w-full h-full rounded-full object-cover" /> : <UserIcon size={20} />}
+                {user?.image ? <img src={user.image} className="w-full h-full rounded-full object-cover" /> : <UserIcon size={20} />}
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] font-extrabold text-[#0f8646]">
-                  {user?.email ? `Hi, ${user.name ? user.name.split(" ")[0] : "Shopper"}` : "Welcome"}
+                  {user?.email ? `Hi, ${user?.name ? user.name.split(" ")[0] : "Shopper"}` : "Welcome"}
                 </span>
                 <div className="text-sm font-black text-gray-800 flex items-center gap-1 group-hover:text-[#0f8646] transition-colors">
                   {user?.email ? "My Profile" : "Login / Signup"} <ChevronDown size={14} />
@@ -668,10 +668,10 @@ export default function Nav({ user }: { user: iUser }) {
                 {open && (
                   <motion.div key="user-menu" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="absolute top-full right-0 mt-3 w-56 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50">
                     <div className="p-4 border-b bg-gray-50">
-                      <p className="font-bold text-gray-800">{user.name || "Guest"}</p>
-                      <p className="text-xs text-gray-500">{user.email}</p>
+                      <p className="font-bold text-gray-800">{user?.name || "Guest"}</p>
+                      <p className="text-xs text-gray-500">{user?.email || "Fresh farm produce"}</p>
                     </div>
-                    {user.role === "admin" && (
+                    {user?.role === "admin" && (
                       <Link
                         href="/admin"
                         className="block px-4 py-2.5 text-xs font-black bg-[#0f8646] text-white hover:bg-[#0c6a38] transition flex items-center justify-between border-b"
