@@ -5,8 +5,58 @@ import Nav from "@/components/Nav";
 import { auth } from "@/auth";
 import User from "@/model/user.model";
 import ProductDetailsClient from "./ProductDetailsClient";
+import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata(props: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await props.params;
+  try {
+    await connectDb();
+    const product = await Grocery.findById(id).lean();
+    if (product) {
+      const priceText = product.price ? `₹${product.price}` : "";
+      const unitText = product.unit ? `(${product.unit})` : "";
+      const title = `${product.name} ${unitText} - ${priceText} | MyGreenDelight Bhopal`;
+      const description =
+        product.description ||
+        `Order fresh ${product.name} online in Bhopal. 10-15 Min Express Delivery direct from sunrise farms. 100% ozone-washed & fresh.`;
+
+      return {
+        title,
+        description,
+        openGraph: {
+          title,
+          description,
+          url: `https://mygreendelight.vercel.app/product/${id}`,
+          siteName: "MyGreenDelight Bhopal",
+          images: [
+            {
+              url: product.image,
+              width: 800,
+              height: 800,
+              alt: product.name,
+            },
+          ],
+          type: "website",
+        },
+        twitter: {
+          card: "summary_large_image",
+          title,
+          description,
+          images: [product.image],
+        },
+      };
+    }
+  } catch (error) {}
+
+  return {
+    title: "Fresh Farm Produce | MyGreenDelight Bhopal",
+    description: "10-15 Min Express Delivery of Farm Fresh Vegetables & Fruits in Bhopal.",
+  };
+}
 
 export default async function ProductPage(props: { params: Promise<{ id: string }> }) {
   const { id } = await props.params;
@@ -19,11 +69,13 @@ export default async function ProductPage(props: { params: Promise<{ id: string 
     const rawProduct = await Grocery.findById(id).lean();
     if (rawProduct) {
       product = JSON.parse(JSON.stringify(rawProduct));
-      
-      const related = await Grocery.find({ 
+
+      const related = await Grocery.find({
         category: product.category,
-        _id: { $ne: product._id }
-      }).limit(4).lean();
+        _id: { $ne: product._id },
+      })
+        .limit(4)
+        .lean();
       relatedProducts = JSON.parse(JSON.stringify(related));
     }
   } catch (error) {

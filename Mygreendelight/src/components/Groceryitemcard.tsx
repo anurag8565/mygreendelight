@@ -196,7 +196,10 @@ export default function Groceryitemcard({
           ) : !cartitem ? (
             <button
               type="button"
-              onClick={() =>
+              onClick={() => {
+                if (typeof window !== "undefined" && navigator.vibrate) {
+                  try { navigator.vibrate(20); } catch (e) {}
+                }
                 dispatch(
                   addToCart({
                     ...item,
@@ -212,8 +215,8 @@ export default function Groceryitemcard({
                       : undefined,
                     quantity: 1,
                   })
-                )
-              }
+                );
+              }}
               className="w-full h-[36px] rounded-xl flex items-center justify-center gap-1 font-black text-xs transition-all border border-[#0f8646] cursor-pointer bg-emerald-50/70 text-[#0f8646] hover:bg-[#0f8646] hover:text-white shadow-2xs active:scale-95 group/btn"
             >
               <Plus size={14} className="stroke-[3] group-hover/btn:rotate-90 transition-transform" />
@@ -224,7 +227,12 @@ export default function Groceryitemcard({
               <button
                 type="button"
                 className="w-10 h-full flex items-center justify-center hover:bg-black/15 transition font-black text-sm active:scale-90 cursor-pointer"
-                onClick={() => dispatch(decreaseQuantity(currentCartItemId))}
+                onClick={() => {
+                  if (typeof window !== "undefined" && navigator.vibrate) {
+                    try { navigator.vibrate(15); } catch (e) {}
+                  }
+                  dispatch(decreaseQuantity(currentCartItemId));
+                }}
               >
                 <Minus size={14} className="stroke-[3]" />
               </button>
@@ -239,7 +247,12 @@ export default function Groceryitemcard({
                     ? "bg-black/25 text-white/50 cursor-not-allowed"
                     : "hover:bg-black/15 cursor-pointer text-white"
                 }`}
-                onClick={() => dispatch(increaseQuantity(currentCartItemId))}
+                onClick={() => {
+                  if (typeof window !== "undefined" && navigator.vibrate) {
+                    try { navigator.vibrate(15); } catch (e) {}
+                  }
+                  dispatch(increaseQuantity(currentCartItemId));
+                }}
               >
                 <Plus size={14} className="stroke-[3]" />
               </button>
