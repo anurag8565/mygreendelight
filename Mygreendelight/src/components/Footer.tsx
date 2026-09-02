@@ -19,7 +19,7 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="bg-[#052613] text-white font-sans border-t border-green-950 pb-24 md:pb-10 w-full max-w-full overflow-hidden">
+    <footer className="bg-[#052613] text-white font-sans border-t border-green-950 pb-36 sm:pb-28 md:pb-12 w-full max-w-full overflow-hidden">
       {/* Main Footer Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8 sm:py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10">
