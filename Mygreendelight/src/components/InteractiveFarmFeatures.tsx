@@ -47,7 +47,7 @@ export default function InteractiveFarmFeatures() {
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth } = scrollRef.current;
-      const scrollAmount = clientWidth > 640 ? clientWidth * 0.75 : clientWidth * 0.86;
+      const scrollAmount = clientWidth > 768 ? clientWidth * 0.7 : clientWidth * 0.86;
       scrollRef.current.scrollTo({
         left:
           direction === "left"
@@ -84,21 +84,21 @@ export default function InteractiveFarmFeatures() {
             type="button"
             onClick={() => scroll("left")}
             aria-label="Scroll left"
-            className="flex absolute -left-2 sm:-left-3.5 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0f8646] w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all shadow-md hover:shadow-lg border border-gray-200/90 active:scale-95 cursor-pointer backdrop-blur-xs"
+            className="flex absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0f8646] w-8 h-8 sm:w-11 sm:h-11 rounded-full items-center justify-center transition-all shadow-md hover:shadow-xl border border-gray-200 active:scale-95 cursor-pointer backdrop-blur-xs"
           >
-            <ChevronLeft size={18} className="stroke-[2.5]" />
+            <ChevronLeft size={20} className="stroke-[2.5]" />
           </button>
 
-          {/* Feature Cards Swipeable Carousel on Mobile / Grid on Desktop */}
+          {/* Feature Cards Swipeable Carousel on Mobile (1 card) and Desktop (2-3 cards) */}
           <div
             ref={scrollRef}
-            className="flex overflow-x-auto gap-3.5 sm:gap-5 pb-3 snap-x snap-mandatory scrollbar-none md:grid md:grid-cols-3 -mx-3.5 px-3.5 md:mx-0 md:px-0 scroll-smooth"
+            className="flex overflow-x-auto gap-3.5 sm:gap-5 pb-3 snap-x snap-mandatory scrollbar-none -mx-3.5 px-3.5 sm:mx-0 sm:px-0 scroll-smooth"
           >
             {features.map((f, idx) => (
               <motion.div
                 key={idx}
                 whileHover={{ y: -4 }}
-                className={`w-[84vw] xs:w-[300px] md:w-auto shrink-0 snap-center md:snap-start rounded-3xl p-4 sm:p-5 border bg-gradient-to-br ${f.gradient} shadow-2xs hover:shadow-md transition-all flex flex-col justify-between`}
+                className="w-[84vw] xs:w-[300px] md:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)] shrink-0 snap-center md:snap-start rounded-3xl p-4 sm:p-5 border bg-gradient-to-br ${f.gradient} shadow-2xs hover:shadow-md transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-3">
@@ -141,9 +141,9 @@ export default function InteractiveFarmFeatures() {
             type="button"
             onClick={() => scroll("right")}
             aria-label="Scroll right"
-            className="flex absolute -right-2 sm:-right-3.5 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0f8646] w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all shadow-md hover:shadow-lg border border-gray-200/90 active:scale-95 cursor-pointer backdrop-blur-xs"
+            className="flex absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0f8646] w-8 h-8 sm:w-11 sm:h-11 rounded-full items-center justify-center transition-all shadow-md hover:shadow-xl border border-gray-200 active:scale-95 cursor-pointer backdrop-blur-xs"
           >
-            <ChevronRight size={18} className="stroke-[2.5]" />
+            <ChevronRight size={20} className="stroke-[2.5]" />
           </button>
         </div>
 

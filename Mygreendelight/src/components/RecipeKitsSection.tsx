@@ -65,7 +65,7 @@ export default function RecipeKitsSection({ kits = [] }: { kits?: any[] }) {
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth } = scrollRef.current;
-      const scrollAmount = clientWidth > 640 ? clientWidth * 0.75 : clientWidth * 0.86;
+      const scrollAmount = clientWidth > 768 ? clientWidth * 0.7 : clientWidth * 0.86;
       scrollRef.current.scrollTo({
         left:
           direction === "left"
@@ -118,15 +118,15 @@ export default function RecipeKitsSection({ kits = [] }: { kits?: any[] }) {
             type="button"
             onClick={() => scroll("left")}
             aria-label="Scroll left"
-            className="flex absolute -left-2 sm:-left-3.5 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0f8646] w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all shadow-md hover:shadow-lg border border-gray-200/90 active:scale-95 cursor-pointer backdrop-blur-xs"
+            className="flex absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0f8646] w-8 h-8 sm:w-11 sm:h-11 rounded-full items-center justify-center transition-all shadow-md hover:shadow-xl border border-gray-200 active:scale-95 cursor-pointer backdrop-blur-xs"
           >
-            <ChevronLeft size={18} className="stroke-[2.5]" />
+            <ChevronLeft size={20} className="stroke-[2.5]" />
           </button>
 
-          {/* Recipe Cards Swipe Carousel on Mobile / Grid on Desktop */}
+          {/* True Sliding Carousel (1 card on mobile, 2-3 cards on desktop) */}
           <div
             ref={scrollRef}
-            className="flex overflow-x-auto gap-3.5 sm:gap-6 pb-3 snap-x snap-mandatory scrollbar-none sm:grid sm:grid-cols-2 lg:grid-cols-3 -mx-3.5 px-3.5 sm:mx-0 sm:px-0 scroll-smooth"
+            className="flex overflow-x-auto gap-3.5 sm:gap-6 pb-3 snap-x snap-mandatory scrollbar-none -mx-3.5 px-3.5 sm:mx-0 sm:px-0 scroll-smooth"
           >
             {activeKits.map((kit: any) => {
               const kitId = kit._id || kit.id;
@@ -140,7 +140,7 @@ export default function RecipeKitsSection({ kits = [] }: { kits?: any[] }) {
                   key={kitId}
                   whileHover={{ y: -4 }}
                   transition={{ duration: 0.2 }}
-                  className="w-[84vw] xs:w-[295px] sm:w-auto shrink-0 snap-center sm:snap-start bg-white rounded-3xl border border-gray-200/90 shadow-2xs hover:shadow-md transition-all overflow-hidden flex flex-col justify-between"
+                  className="w-[84vw] xs:w-[295px] md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] shrink-0 snap-center md:snap-start bg-white rounded-3xl border border-gray-200/90 shadow-2xs hover:shadow-md transition-all overflow-hidden flex flex-col justify-between"
                 >
                   {/* Header Banner */}
                   <div className="p-3.5 sm:p-5 bg-gradient-to-r from-emerald-950 via-emerald-900 to-green-800 text-white relative overflow-hidden">
@@ -206,7 +206,7 @@ export default function RecipeKitsSection({ kits = [] }: { kits?: any[] }) {
                       <button
                         type="button"
                         onClick={() => handleAddKit(kit)}
-                        className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl font-black text-xs transition-all flex items-center gap-1 shadow-xs cursor-pointer ${
+                        className={`px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl font-black text-xs transition-all flex items-center gap-1.5 shadow-xs cursor-pointer ${
                           isAdded
                             ? "bg-emerald-600 text-white ring-2 ring-emerald-300"
                             : "bg-[#0f8646] hover:bg-[#0c6a38] text-white active:scale-95"
@@ -214,12 +214,12 @@ export default function RecipeKitsSection({ kits = [] }: { kits?: any[] }) {
                       >
                         {isAdded ? (
                           <>
-                            <Check size={12} className="stroke-[3]" />
+                            <Check size={13} className="stroke-[3]" />
                             <span>Added! 🛒</span>
                           </>
                         ) : (
                           <>
-                            <Plus size={12} className="stroke-[3]" />
+                            <Plus size={13} className="stroke-[3]" />
                             <span>Add Kit</span>
                           </>
                         )}
@@ -236,9 +236,9 @@ export default function RecipeKitsSection({ kits = [] }: { kits?: any[] }) {
             type="button"
             onClick={() => scroll("right")}
             aria-label="Scroll right"
-            className="flex absolute -right-2 sm:-right-3.5 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0f8646] w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all shadow-md hover:shadow-lg border border-gray-200/90 active:scale-95 cursor-pointer backdrop-blur-xs"
+            className="flex absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0f8646] w-8 h-8 sm:w-11 sm:h-11 rounded-full items-center justify-center transition-all shadow-md hover:shadow-xl border border-gray-200 active:scale-95 cursor-pointer backdrop-blur-xs"
           >
-            <ChevronRight size={18} className="stroke-[2.5]" />
+            <ChevronRight size={20} className="stroke-[2.5]" />
           </button>
         </div>
       </div>

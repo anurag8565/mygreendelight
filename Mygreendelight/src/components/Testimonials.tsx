@@ -210,13 +210,13 @@ export default function Testimonials({
           {/* Modern Swipeable Review Carousel */}
           <div
             ref={scrollContainerRef}
-            className="flex items-stretch gap-3.5 sm:gap-4 overflow-x-auto pb-3 pt-1 scrollbar-none snap-x snap-mandatory scroll-smooth -mx-3.5 px-3.5 sm:mx-0 sm:px-0"
+            className="flex items-stretch gap-3.5 sm:gap-5 overflow-x-auto pb-3 pt-1 scrollbar-none snap-x snap-mandatory scroll-smooth -mx-3.5 px-3.5 sm:mx-0 sm:px-0"
           >
             {testimonials.map((t, idx) => (
               <motion.div
                 key={t._id || idx}
                 whileHover={{ y: -3 }}
-                className="w-[84vw] xs:w-[310px] sm:w-[340px] shrink-0 snap-center sm:snap-start bg-white rounded-3xl p-4 sm:p-5 border border-gray-200/90 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between"
+                className="w-[84vw] xs:w-[310px] md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] shrink-0 snap-center md:snap-start bg-white rounded-3xl p-4 sm:p-5 border border-gray-200/90 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between"
               >
                 <div>
                   {/* Rating Stars & Tag */}
