@@ -22,14 +22,12 @@ import {
   Sparkles,
   BadgeCheck,
   ShoppingBag,
-  BookOpen,
   Info,
   ChevronDown,
 } from "lucide-react";
 import Link from "next/link";
 import Groceryitemcard from "@/components/Groceryitemcard";
 import Footer from "@/components/Footer";
-import StorageGuideModal from "@/components/StorageGuideModal";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -52,7 +50,6 @@ export default function ProductDetailsClient({
   const [comment, setComment] = useState("");
   const [submittingReview, setSubmittingReview] = useState(false);
   const [reviewMsg, setReviewMsg] = useState("");
-  const [showStorageModal, setShowStorageModal] = useState(false);
 
   const isWishlisted = wishlistItems.some((item) => item._id === product._id);
   const hasVariations = product.variations && product.variations.length > 0;
@@ -341,9 +338,9 @@ export default function ProductDetailsClient({
               )}
 
               {/* Action Buttons Row */}
-              <div className="flex items-center gap-3 pt-2">
+              <div className="flex items-center gap-3 pt-2 w-full">
                 {quantity > 0 ? (
-                  <div className="flex items-center bg-[#0f8646] text-white rounded-2xl h-14 w-44 overflow-hidden shadow-md">
+                  <div className="flex items-center bg-[#0f8646] text-white rounded-2xl h-14 w-full sm:w-48 overflow-hidden shadow-md">
                     <button
                       type="button"
                       onClick={() => dispatch(decreaseQuantity(cartItemId))}
@@ -374,7 +371,7 @@ export default function ProductDetailsClient({
                     type="button"
                     onClick={handleAddToCart}
                     disabled={currentStock <= 0}
-                    className={`flex-1 h-14 rounded-2xl font-black text-sm sm:text-base shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 ${
+                    className={`w-full h-14 rounded-2xl font-black text-sm sm:text-base shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 ${
                       currentStock > 0
                         ? "bg-[#0f8646] hover:bg-[#0c6a38] text-white shadow-emerald-700/20"
                         : "bg-gray-200 text-gray-400 cursor-not-allowed"
@@ -384,30 +381,12 @@ export default function ProductDetailsClient({
                     <span>{currentStock > 0 ? `Add to Basket • ₹${currentPrice}` : "Out of Stock"}</span>
                   </button>
                 )}
-
-                {/* Storage Guide Button */}
-                <button
-                  type="button"
-                  onClick={() => setShowStorageModal(true)}
-                  className="h-14 px-4 rounded-2xl border border-emerald-200 bg-emerald-50 text-[#0f8646] font-black text-xs transition flex items-center gap-1.5 hover:bg-emerald-100 cursor-pointer shadow-2xs shrink-0"
-                >
-                  <BookOpen size={16} />
-                  <span className="hidden sm:inline">Storage Tips</span>
-                </button>
               </div>
 
             </div>
 
           </div>
         </div>
-
-        {/* Storage Guide Modal */}
-        <StorageGuideModal
-          category={product.category}
-          productName={product.name}
-          isOpen={showStorageModal}
-          onClose={() => setShowStorageModal(false)}
-        />
 
         {/* 4 Trust Feature Strip */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-8">

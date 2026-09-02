@@ -338,26 +338,6 @@ export default function UserProfileHub() {
               <ChevronRight size={16} className="text-gray-400 group-hover:text-[#0f8646]" />
             </Link>
 
-            <Link
-              href="/produce-guide"
-              className="flex items-center justify-between p-3.5 rounded-2xl border border-gray-100 bg-gray-50/70 hover:bg-green-50/60 hover:border-[#0f8646] transition group"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white text-amber-600 flex items-center justify-center shadow-xs border border-gray-100">
-                  <BookOpen size={20} />
-                </div>
-                <div>
-                  <h4 className="text-xs font-black text-gray-900 group-hover:text-[#0f8646] transition">
-                    Veggie Storage Hacks
-                  </h4>
-                  <span className="text-[11px] text-gray-500 font-medium">
-                    Maximize freshness
-                  </span>
-                </div>
-              </div>
-              <ChevronRight size={16} className="text-gray-400 group-hover:text-[#0f8646]" />
-            </Link>
-
           </div>
         </div>
 

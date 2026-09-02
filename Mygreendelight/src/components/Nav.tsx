@@ -345,15 +345,6 @@ export default function Nav({ user }: { user: iUser }) {
                 <span>🎁 Artisanal Gift Hampers</span>
                 <span className="bg-pink-100 text-pink-800 text-[9px] font-black px-2 py-0.5 rounded-full">Eco</span>
               </Link>
-
-              <Link
-                href="/produce-guide"
-                onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl text-gray-700 hover:bg-gray-50 transition"
-              >
-                <span>🍅 Veggie Storage & Hacks</span>
-                <ArrowRight size={14} className="text-gray-300" />
-              </Link>
             </div>
           </div>
 

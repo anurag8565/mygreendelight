@@ -136,11 +136,6 @@ export default function AdminSidebar() {
       icon: <Bell size={18} />,
     },
     {
-      name: "Produce Storage Guide",
-      href: "/admin/manage-produce-guide",
-      icon: <BookOpen size={18} />,
-    },
-    {
       name: "Customer Inquiries",
       href: "/admin/manageinquiries",
       icon: <MessageSquare size={18} />,
