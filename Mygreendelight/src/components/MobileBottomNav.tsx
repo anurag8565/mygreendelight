@@ -107,8 +107,8 @@ export default function MobileBottomNav() {
           )}
         </AnimatePresence>
 
-        {/* Bottom Navigation Dock */}
-        <nav className="bg-white/95 backdrop-blur-lg border-t border-gray-200/90 px-2 py-2 flex items-center justify-around shadow-[0_-4px_25px_rgba(0,0,0,0.08)]">
+        {/* Bottom Navigation Dock with Safe Area Bottom Padding */}
+        <nav className="bg-white/95 backdrop-blur-lg border-t border-gray-200/90 px-2 pt-1.5 pb-2.5 sm:pb-2 flex items-center justify-around shadow-[0_-4px_25px_rgba(0,0,0,0.08)]">
           {navItems.map((item) => {
             const isActive =
               item.href === "/"

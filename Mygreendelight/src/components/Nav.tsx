@@ -197,57 +197,245 @@ export default function Nav({ user }: { user: iUser }) {
 
   const sidebar = menuopen ? createPortal(
     <AnimatePresence>
-      <motion.div key="backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setmenuopen(false)} className="fixed inset-0 bg-black/40 z-[999]" />
-      <motion.div key="sidebar" initial={{ x: "-100%" }} animate={{ x: 0 }} exit={{ x: "-100%" }} transition={{ duration: 0.3 }} className="fixed top-0 left-0 w-72 h-screen bg-white z-[1000] shadow-2xl p-5 flex flex-col">
-        <div className="flex items-center justify-between border-b pb-4 mb-4">
-          <Link href="/" className="text-[#0f8646] text-2xl font-extrabold flex items-center gap-2" onClick={() => setmenuopen(false)}>
-            <ShoppingCart className="fill-current" />
-            MyGreenDelight
-          </Link>
-          <button onClick={() => setmenuopen(false)} className="p-2 rounded-full hover:bg-gray-100">
-            <X className="text-gray-600" />
+      <motion.div
+        key="backdrop"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={() => setmenuopen(false)}
+        className="fixed inset-0 bg-black/60 backdrop-blur-xs z-[999]"
+      />
+      <motion.div
+        key="sidebar"
+        initial={{ x: "-100%" }}
+        animate={{ x: 0 }}
+        exit={{ x: "-100%" }}
+        transition={{ type: "spring", damping: 30, stiffness: 300 }}
+        className="fixed top-0 left-0 w-[300px] xs:w-[320px] h-screen bg-white z-[1000] shadow-2xl flex flex-col font-sans"
+      >
+        {/* Top Header & User Card */}
+        <div className="p-4 bg-gradient-to-br from-[#072815] to-[#0f8646] text-white relative">
+          <button
+            onClick={() => setmenuopen(false)}
+            className="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition cursor-pointer"
+            title="Close Menu"
+          >
+            <X size={18} />
           </button>
+
+          <Link href="/" className="text-white text-xl font-black flex items-center gap-2 mb-3" onClick={() => setmenuopen(false)}>
+            <div className="w-7 h-7 rounded-lg bg-white text-[#0f8646] flex items-center justify-center shadow-xs">
+              <ShoppingCart size={15} className="fill-current" />
+            </div>
+            <span>MyGreenDelight</span>
+          </Link>
+
+          {/* User Profile Mini Bar */}
+          <div className="flex items-center gap-3 pt-1">
+            <div className="w-10 h-10 rounded-2xl bg-white/20 border border-white/20 text-white flex items-center justify-center font-black text-sm shrink-0">
+              {user?.name ? user.name.charAt(0).toUpperCase() : <UserIcon size={18} />}
+            </div>
+            <div className="min-w-0 flex-1">
+              <h4 className="font-black text-xs sm:text-sm text-white truncate">
+                {user?.name || "Welcome Guest"}
+              </h4>
+              <p className="text-[11px] text-green-100/80 truncate">
+                {user?.email || "Fresh produce delivered in 10 mins"}
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div className="flex flex-col gap-2 overflow-y-auto">
-          <Link href="/" onClick={() => setmenuopen(false)} className={`font-semibold py-2 border-b ${pathname === "/" ? "text-[#0f8646]" : "text-gray-700"}`}>Home</Link>
-          <Link href="/shop" onClick={() => setmenuopen(false)} className={`font-semibold py-2 border-b ${pathname === "/shop" ? "text-[#0f8646]" : "text-gray-700"}`}>Shop</Link>
-          <Link href="/about" onClick={() => setmenuopen(false)} className={`font-semibold py-2 border-b ${pathname === "/about" ? "text-[#0f8646]" : "text-gray-700"}`}>About Us</Link>
-          <Link href="/contact" onClick={() => setmenuopen(false)} className={`font-semibold py-2 border-b ${pathname === "/contact" ? "text-[#0f8646]" : "text-gray-700"}`}>Contact Us</Link>
-          <Link href="/wishlist" onClick={() => setmenuopen(false)} className={`font-semibold py-2 border-b ${pathname === "/wishlist" ? "text-[#0f8646]" : "text-gray-700"}`}>Wishlist</Link>
-          <Link href="/user/wallet" onClick={() => setmenuopen(false)} className={`font-semibold py-2 border-b flex items-center justify-between ${pathname === "/user/wallet" ? "text-[#0f8646]" : "text-gray-700"}`}>
-            <span>MGD Green Wallet</span>
-            <span className="bg-green-100 text-[#0f8646] text-[10px] font-black px-2 py-0.5 rounded-full">+10% Bonus</span>
+        {/* Quick Balance Tiles */}
+        <div className="p-3 grid grid-cols-2 gap-2 bg-emerald-50/50 border-b border-emerald-100/60">
+          <Link
+            href="/user/wallet"
+            onClick={() => setmenuopen(false)}
+            className="bg-white p-2.5 rounded-2xl border border-emerald-200/80 shadow-2xs hover:shadow-xs transition flex flex-col justify-between"
+          >
+            <span className="text-[9px] font-black uppercase text-emerald-700">MGD Wallet</span>
+            <span className="text-xs font-black text-gray-900 mt-0.5">+10% Bonus ➔</span>
           </Link>
-          <Link href="/user/subscriptions" onClick={() => setmenuopen(false)} className={`font-semibold py-2 border-b flex items-center justify-between ${pathname === "/user/subscriptions" ? "text-[#0f8646]" : "text-gray-700"}`}>
-            <span>🥛 7 AM Subscriptions</span>
-            <span className="bg-blue-100 text-blue-800 text-[10px] font-black px-2 py-0.5 rounded-full">New</span>
+
+          <Link
+            href="/user/vip-pass"
+            onClick={() => setmenuopen(false)}
+            className="bg-gradient-to-r from-amber-50 to-yellow-50 p-2.5 rounded-2xl border border-amber-200/80 shadow-2xs hover:shadow-xs transition flex flex-col justify-between"
+          >
+            <span className="text-[9px] font-black uppercase text-amber-800">VIP Farm Pass</span>
+            <span className="text-xs font-black text-amber-900 mt-0.5">Save ₹400+ ➔</span>
           </Link>
-          <Link href="/produce-guide" onClick={() => setmenuopen(false)} className={`font-semibold py-2 border-b flex items-center justify-between ${pathname === "/produce-guide" ? "text-[#0f8646]" : "text-gray-700"}`}>
-            <span>🍅 Storage & Shelf Life Guide</span>
-            <span className="bg-green-100 text-green-800 text-[10px] font-black px-2 py-0.5 rounded-full">Hacks</span>
-          </Link>
-          <Link href="/shop/gift-basket" onClick={() => setmenuopen(false)} className={`font-semibold py-2 border-b flex items-center justify-between ${pathname === "/shop/gift-basket" ? "text-[#0f8646]" : "text-gray-700"}`}>
-            <span>🎁 Gift a Fresh Hamper</span>
-            <span className="bg-pink-100 text-pink-800 text-[10px] font-black px-2 py-0.5 rounded-full">Gift</span>
-          </Link>
-          <Link href="/user/myorder" onClick={() => setmenuopen(false)} className={`font-semibold py-2 border-b ${pathname === "/user/myorder" ? "text-[#0f8646]" : "text-gray-700"}`}>My Orders</Link>
+        </div>
+
+        {/* Scrollable Navigation Aisles */}
+        <div className="flex-1 overflow-y-auto p-3 space-y-4 scrollbar-none text-xs font-bold">
           
-          {user.role === "admin" && (
-            <>
-              <h3 className="mt-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Admin Center</h3>
-              <Link href="/admin" onClick={() => setmenuopen(false)} className="flex items-center gap-3 text-gray-700 py-2 hover:text-[#0f8646] font-bold"><PlusCircle size={18}/> Overview Dashboard</Link>
-              <Link href="/admin/manageorder" onClick={() => setmenuopen(false)} className="flex items-center gap-3 text-gray-700 py-2 hover:text-[#0f8646]"><ClipboardCheck size={18}/> Manage Orders</Link>
-              <Link href="/admin/viewgrocery" onClick={() => setmenuopen(false)} className="flex items-center gap-3 text-gray-700 py-2 hover:text-[#0f8646]"><Box size={18}/> Inventory Stock</Link>
-              <Link href="/admin/addgrocery" onClick={() => setmenuopen(false)} className="flex items-center gap-3 text-gray-700 py-2 hover:text-[#0f8646]"><PlusCircle size={18}/> Add Produce</Link>
-              <Link href="/admin/managecoupons" onClick={() => setmenuopen(false)} className="flex items-center gap-3 text-gray-700 py-2 hover:text-[#0f8646]"><ClipboardCheck size={18}/> Coupons & Deals</Link>
-              <Link href="/admin/manageinquiries" onClick={() => setmenuopen(false)} className="flex items-center gap-3 text-gray-700 py-2 hover:text-[#0f8646]"><ClipboardCheck size={18}/> Customer Inquiries</Link>
-            </>
+          {/* Main Navigation */}
+          <div>
+            <span className="text-[10px] uppercase font-black tracking-wider text-gray-400 block px-2 mb-1.5">
+              Shopping Aisles
+            </span>
+            <div className="space-y-1">
+              <Link
+                href="/"
+                onClick={() => setmenuopen(false)}
+                className={`flex items-center justify-between p-2.5 rounded-xl transition ${
+                  pathname === "/" ? "bg-emerald-50 text-[#0f8646] font-black" : "text-gray-700 hover:bg-gray-50"
+                }`}
+              >
+                <span>🏠 Home</span>
+                <ArrowRight size={14} className="text-gray-300" />
+              </Link>
+
+              <Link
+                href="/shop"
+                onClick={() => setmenuopen(false)}
+                className={`flex items-center justify-between p-2.5 rounded-xl transition ${
+                  pathname === "/shop" ? "bg-emerald-50 text-[#0f8646] font-black" : "text-gray-700 hover:bg-gray-50"
+                }`}
+              >
+                <span>🥬 Shop All Farm Produce</span>
+                <ArrowRight size={14} className="text-gray-300" />
+              </Link>
+
+              <Link
+                href="/shop?category=Combos"
+                onClick={() => setmenuopen(false)}
+                className="flex items-center justify-between p-2.5 rounded-xl text-gray-700 hover:bg-gray-50 transition"
+              >
+                <span>🍲 Value Combos & Recipe Kits</span>
+                <span className="bg-amber-100 text-amber-800 text-[9px] font-black px-2 py-0.5 rounded-full">Save 20%</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Specialized Experiences */}
+          <div>
+            <span className="text-[10px] uppercase font-black tracking-wider text-gray-400 block px-2 mb-1.5">
+              Farm Experiences
+            </span>
+            <div className="space-y-1">
+              <Link
+                href="/user/subscriptions"
+                onClick={() => setmenuopen(false)}
+                className="flex items-center justify-between p-2.5 rounded-xl text-gray-700 hover:bg-gray-50 transition"
+              >
+                <span>🥛 Daily 7 AM Subscriptions</span>
+                <span className="bg-blue-100 text-blue-800 text-[9px] font-black px-2 py-0.5 rounded-full">Popular</span>
+              </Link>
+
+              <Link
+                href="/shop/custom-box"
+                onClick={() => setmenuopen(false)}
+                className="flex items-center justify-between p-2.5 rounded-xl text-gray-700 hover:bg-gray-50 transition"
+              >
+                <span>🥗 Custom Salad Box Builder</span>
+                <span className="bg-emerald-100 text-emerald-800 text-[9px] font-black px-2 py-0.5 rounded-full">Fresh</span>
+              </Link>
+
+              <Link
+                href="/shop/gift-basket"
+                onClick={() => setmenuopen(false)}
+                className="flex items-center justify-between p-2.5 rounded-xl text-gray-700 hover:bg-gray-50 transition"
+              >
+                <span>🎁 Artisanal Gift Hampers</span>
+                <span className="bg-pink-100 text-pink-800 text-[9px] font-black px-2 py-0.5 rounded-full">Eco</span>
+              </Link>
+
+              <Link
+                href="/produce-guide"
+                onClick={() => setmenuopen(false)}
+                className="flex items-center justify-between p-2.5 rounded-xl text-gray-700 hover:bg-gray-50 transition"
+              >
+                <span>🍅 Veggie Storage & Hacks</span>
+                <ArrowRight size={14} className="text-gray-300" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Account & Orders */}
+          <div>
+            <span className="text-[10px] uppercase font-black tracking-wider text-gray-400 block px-2 mb-1.5">
+              My Account
+            </span>
+            <div className="space-y-1">
+              <Link
+                href="/user/myorder"
+                onClick={() => setmenuopen(false)}
+                className="flex items-center justify-between p-2.5 rounded-xl text-gray-700 hover:bg-gray-50 transition"
+              >
+                <span>📦 My Orders & Tracking</span>
+                <ArrowRight size={14} className="text-gray-300" />
+              </Link>
+
+              <Link
+                href="/wishlist"
+                onClick={() => setmenuopen(false)}
+                className="flex items-center justify-between p-2.5 rounded-xl text-gray-700 hover:bg-gray-50 transition"
+              >
+                <span>❤️ Saved Wishlist</span>
+                <ArrowRight size={14} className="text-gray-300" />
+              </Link>
+
+              <Link
+                href="/contact"
+                onClick={() => setmenuopen(false)}
+                className="flex items-center justify-between p-2.5 rounded-xl text-gray-700 hover:bg-gray-50 transition"
+              >
+                <span>📞 24/7 Helpline & Support</span>
+                <ArrowRight size={14} className="text-gray-300" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Admin Shortcuts (If admin) */}
+          {user?.role === "admin" && (
+            <div className="pt-2 border-t border-gray-100">
+              <span className="text-[10px] uppercase font-black tracking-wider text-amber-700 block px-2 mb-1.5">
+                👑 Admin Control Center
+              </span>
+              <div className="space-y-1">
+                <Link href="/admin" onClick={() => setmenuopen(false)} className="flex items-center gap-2 p-2 rounded-xl text-gray-700 hover:bg-amber-50">
+                  <PlusCircle size={15} className="text-[#0f8646]" />
+                  <span>Dashboard Overview</span>
+                </Link>
+                <Link href="/admin/manageorder" onClick={() => setmenuopen(false)} className="flex items-center gap-2 p-2 rounded-xl text-gray-700 hover:bg-amber-50">
+                  <ClipboardCheck size={15} className="text-[#0f8646]" />
+                  <span>Manage Orders</span>
+                </Link>
+                <Link href="/admin/viewgrocery" onClick={() => setmenuopen(false)} className="flex items-center gap-2 p-2 rounded-xl text-gray-700 hover:bg-amber-50">
+                  <Box size={15} className="text-[#0f8646]" />
+                  <span>Inventory Stock</span>
+                </Link>
+              </div>
+            </div>
           )}
 
-          <button onClick={() => { setmenuopen(false); signOut({ callbackUrl: "/login" }); }} className="flex items-center gap-2 mt-4 text-red-600 font-bold py-2">
-            <LogOut size={18} /> Logout
-          </button>
+        </div>
+
+        {/* Drawer Footer (Logout / Login) */}
+        <div className="p-3 border-t border-gray-100 bg-gray-50/80">
+          {user?.email ? (
+            <button
+              onClick={() => {
+                setmenuopen(false);
+                signOut({ callbackUrl: "/login" });
+              }}
+              className="w-full flex items-center justify-center gap-2 text-red-600 font-black py-2.5 rounded-xl hover:bg-red-50 transition text-xs cursor-pointer border border-red-200/60"
+            >
+              <LogOut size={15} />
+              <span>Sign Out Account</span>
+            </button>
+          ) : (
+            <Link
+              href="/login"
+              onClick={() => setmenuopen(false)}
+              className="w-full flex items-center justify-center gap-2 bg-[#0f8646] text-white font-black py-2.5 rounded-xl hover:bg-[#0c6a38] transition text-xs shadow-xs"
+            >
+              <UserIcon size={15} />
+              <span>Login / Register</span>
+            </Link>
+          )}
         </div>
       </motion.div>
     </AnimatePresence>,
