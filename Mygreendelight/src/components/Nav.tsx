@@ -256,7 +256,7 @@ export default function Nav({ user }: { user: iUser }) {
 
   return (
     <>
-      <header className="w-full flex flex-col z-50 bg-white">
+      <header className="w-full flex flex-col z-50 bg-white sticky top-0 shadow-2xs">
         {/* Tier 1: Top Bar (Green) */}
         <div className="bg-[#0f8646] text-white py-1.5 px-4 md:px-8 text-xs font-medium flex justify-between items-center hidden sm:flex">
           <div className="flex items-center gap-2">
@@ -273,7 +273,7 @@ export default function Nav({ user }: { user: iUser }) {
         </div>
 
         {/* Tier 2: Main Middle Bar */}
-        <div className="py-2.5 sm:py-4 px-3 sm:px-4 md:px-8 flex items-center justify-between border-b border-gray-100 gap-2 sm:gap-4 w-full max-w-full overflow-hidden">
+        <div className="pt-3 pb-2 sm:py-4 px-3.5 sm:px-4 md:px-8 flex items-center justify-between border-b sm:border-b-0 border-gray-100/80 gap-2 sm:gap-4 w-full max-w-full overflow-hidden">
           {/* Mobile Menu & Logo */}
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 sm:flex-initial">
             <button onClick={() => setmenuopen(true)} className="lg:hidden p-1 text-gray-700 hover:text-[#0f8646] shrink-0">
