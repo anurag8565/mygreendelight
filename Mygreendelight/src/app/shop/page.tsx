@@ -527,7 +527,7 @@ export default function ShopPage() {
                 </select>
 
                 {/* Grid / List View Toggle */}
-                <div className="hidden sm:flex items-center bg-gray-100 p-1 rounded-xl">
+                <div className="flex items-center bg-gray-100 p-1 rounded-xl">
                   <button
                     type="button"
                     onClick={() => setViewMode("grid")}
