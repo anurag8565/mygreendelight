@@ -57,7 +57,7 @@ export default async function ProductPage(props: { params: Promise<{ id: string 
   return (
     <>
       <Nav user={userData as any} />
-      <div className="min-h-screen bg-white pt-24">
+      <div className="min-h-screen bg-[#fcfdfc] pt-0">
         <ProductDetailsClient product={product} relatedProducts={relatedProducts} />
       </div>
     </>
