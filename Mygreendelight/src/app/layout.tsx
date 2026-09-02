@@ -7,9 +7,9 @@ import "leaflet/dist/leaflet.css";
 import SocketProvider from "@/components/SocketProvider";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import MobileBottomNav from "@/components/MobileBottomNav";
-import InstallAppPrompt from "@/components/InstallAppPrompt";
 import BroadcastBar from "@/components/BroadcastBar";
 import MobileStickyCartBar from "@/components/MobileStickyCartBar";
+import AppInstallModal from "@/components/AppInstallModal";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -48,7 +48,7 @@ export default function RootLayout({
             <WhatsAppWidget />
             <MobileStickyCartBar />
             <MobileBottomNav />
-            <InstallAppPrompt />
+            <AppInstallModal />
           </StoreProviders>
         </Provider>
       </body>

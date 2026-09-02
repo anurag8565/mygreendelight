@@ -26,6 +26,7 @@ import {
   MicOff,
   Plus,
   Minus,
+  Smartphone,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useSelector, useDispatch } from "react-redux";
@@ -270,6 +271,29 @@ export default function Nav({ user }: { user: iUser }) {
           </Link>
         </div>
 
+        {/* 1-Tap App Install Banner */}
+        <div className="px-3 pt-2">
+          <button
+            type="button"
+            onClick={() => {
+              setmenuopen(false);
+              window.dispatchEvent(new CustomEvent('open-mgd-install-modal'));
+            }}
+            className="w-full bg-gradient-to-r from-[#032412] via-[#073b1d] to-[#0f8646] text-white p-2.5 rounded-2xl border border-emerald-400/40 shadow-xs flex items-center justify-between cursor-pointer active:scale-98 transition text-left"
+          >
+            <div className="flex items-center gap-2">
+              <span className="text-base">📲</span>
+              <div>
+                <span className="text-[11px] font-black text-white block leading-tight">Install App on Phone</span>
+                <span className="text-[9px] text-green-200 font-medium">0 MB • Fast 10m Delivery</span>
+              </div>
+            </div>
+            <span className="bg-amber-400 text-gray-950 text-[9px] font-black px-2 py-0.5 rounded-full">
+              Free Install
+            </span>
+          </button>
+        </div>
+
         {/* Scrollable Navigation Aisles */}
         <div className="flex-1 overflow-y-auto p-3 space-y-4 scrollbar-none text-xs font-bold">
           
@@ -454,7 +478,15 @@ export default function Nav({ user }: { user: iUser }) {
             <Truck size={14} />
             <span>FREE DELIVERY on orders above ₹499 in Bhopal</span>
           </div>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-5">
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new CustomEvent('open-mgd-install-modal'))}
+              className="cursor-pointer bg-white/20 hover:bg-yellow-300 text-white hover:text-gray-950 font-black px-2.5 py-0.5 rounded-full transition flex items-center gap-1 shadow-xs active:scale-95"
+            >
+              <Smartphone size={12} />
+              <span>Install App</span>
+            </button>
             <Link href="/user/myorder" className="cursor-pointer hover:text-green-200">Track Order</Link>
             <Link href="/contact" className="cursor-pointer hover:text-green-200">Help & Support</Link>
             {user?.role === "admin" && (
