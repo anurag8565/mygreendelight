@@ -47,7 +47,7 @@ export default function InteractiveFarmFeatures() {
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth } = scrollRef.current;
-      const scrollAmount = clientWidth * 0.75;
+      const scrollAmount = clientWidth > 640 ? clientWidth * 0.75 : clientWidth * 0.86;
       scrollRef.current.scrollTo({
         left:
           direction === "left"
@@ -75,71 +75,76 @@ export default function InteractiveFarmFeatures() {
               Unique farm-to-table services crafted for Bhopal food lovers
             </p>
           </div>
-
-          {/* Desktop Controls */}
-          <div className="hidden md:flex items-center gap-1">
-            <button
-              onClick={() => scroll("left")}
-              className="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 flex items-center justify-center text-gray-600 transition shadow-2xs cursor-pointer"
-              title="Previous"
-            >
-              <ChevronLeft size={16} />
-            </button>
-            <button
-              onClick={() => scroll("right")}
-              className="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 flex items-center justify-center text-gray-600 transition shadow-2xs cursor-pointer"
-              title="Next"
-            >
-              <ChevronRight size={16} />
-            </button>
-          </div>
         </div>
 
-        {/* Feature Cards Swipeable Carousel on Mobile / Grid on Desktop */}
-        <div
-          ref={scrollRef}
-          className="flex overflow-x-auto gap-3.5 sm:gap-5 pb-3 snap-x snap-mandatory scrollbar-none md:grid md:grid-cols-3 -mx-3.5 px-3.5 md:mx-0 md:px-0"
-        >
-          {features.map((f, idx) => (
-            <motion.div
-              key={idx}
-              whileHover={{ y: -4 }}
-              className={`w-[270px] xs:w-[300px] md:w-auto shrink-0 snap-start rounded-3xl p-4 sm:p-5 border bg-gradient-to-br ${f.gradient} shadow-2xs hover:shadow-md transition-all flex flex-col justify-between`}
-            >
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-xs border border-gray-100">
-                    {f.icon}
+        {/* Carousel Container with Side Floating Arrows */}
+        <div className="relative group">
+          {/* Left Arrow Button */}
+          <button
+            type="button"
+            onClick={() => scroll("left")}
+            aria-label="Scroll left"
+            className="flex absolute -left-2 sm:-left-3.5 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0f8646] w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all shadow-md hover:shadow-lg border border-gray-200/90 active:scale-95 cursor-pointer backdrop-blur-xs"
+          >
+            <ChevronLeft size={18} className="stroke-[2.5]" />
+          </button>
+
+          {/* Feature Cards Swipeable Carousel on Mobile / Grid on Desktop */}
+          <div
+            ref={scrollRef}
+            className="flex overflow-x-auto gap-3.5 sm:gap-5 pb-3 snap-x snap-mandatory scrollbar-none md:grid md:grid-cols-3 -mx-3.5 px-3.5 md:mx-0 md:px-0 scroll-smooth"
+          >
+            {features.map((f, idx) => (
+              <motion.div
+                key={idx}
+                whileHover={{ y: -4 }}
+                className={`w-[84vw] xs:w-[300px] md:w-auto shrink-0 snap-center md:snap-start rounded-3xl p-4 sm:p-5 border bg-gradient-to-br ${f.gradient} shadow-2xs hover:shadow-md transition-all flex flex-col justify-between`}
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-xs border border-gray-100">
+                      {f.icon}
+                    </div>
+                    <span className="text-[9px] font-black uppercase text-gray-700 bg-white/90 px-2 py-0.5 rounded-full border border-gray-200/80 shadow-2xs">
+                      {f.badge}
+                    </span>
                   </div>
-                  <span className="text-[9px] font-black uppercase text-gray-700 bg-white/90 px-2 py-0.5 rounded-full border border-gray-200/80 shadow-2xs">
-                    {f.badge}
+
+                  <span className="text-[10px] font-bold text-gray-500 block mb-0.5">
+                    {f.tag}
                   </span>
+
+                  <h3 className="font-black text-sm sm:text-base text-gray-900 leading-snug mb-1.5 line-clamp-1">
+                    {f.title}
+                  </h3>
+
+                  <p className="text-[11px] text-gray-600 leading-relaxed font-medium mb-4 line-clamp-2">
+                    {f.desc}
+                  </p>
                 </div>
 
-                <span className="text-[10px] font-bold text-gray-500 block mb-0.5">
-                  {f.tag}
-                </span>
+                <Link href={f.link}>
+                  <button
+                    type="button"
+                    className={`w-full py-2.5 px-4 rounded-xl font-black text-xs transition-all flex items-center justify-center gap-1 shadow-xs cursor-pointer active:scale-95 ${f.btnColor}`}
+                  >
+                    <span>{f.btnText}</span>
+                    <ArrowRight size={13} />
+                  </button>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
 
-                <h3 className="font-black text-sm sm:text-base text-gray-900 leading-snug mb-1.5 line-clamp-1">
-                  {f.title}
-                </h3>
-
-                <p className="text-[11px] text-gray-600 leading-relaxed font-medium mb-4 line-clamp-2">
-                  {f.desc}
-                </p>
-              </div>
-
-              <Link href={f.link}>
-                <button
-                  type="button"
-                  className={`w-full py-2.5 px-4 rounded-xl font-black text-xs transition-all flex items-center justify-center gap-1 shadow-xs cursor-pointer active:scale-95 ${f.btnColor}`}
-                >
-                  <span>{f.btnText}</span>
-                  <ArrowRight size={13} />
-                </button>
-              </Link>
-            </motion.div>
-          ))}
+          {/* Right Arrow Button */}
+          <button
+            type="button"
+            onClick={() => scroll("right")}
+            aria-label="Scroll right"
+            className="flex absolute -right-2 sm:-right-3.5 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0f8646] w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all shadow-md hover:shadow-lg border border-gray-200/90 active:scale-95 cursor-pointer backdrop-blur-xs"
+          >
+            <ChevronRight size={18} className="stroke-[2.5]" />
+          </button>
         </div>
 
       </div>

@@ -117,7 +117,7 @@ export default function Testimonials({
   const scroll = (direction: "left" | "right") => {
     if (scrollContainerRef.current) {
       const { scrollLeft, clientWidth } = scrollContainerRef.current;
-      const scrollAmount = clientWidth * 0.75;
+      const scrollAmount = clientWidth > 640 ? clientWidth * 0.75 : clientWidth * 0.86;
       scrollContainerRef.current.scrollTo({
         left:
           direction === "left"
@@ -183,27 +183,7 @@ export default function Testimonials({
             </p>
           </div>
 
-          <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-            {/* Carousel Left / Right Arrow Controls (Visible on Mobile & Desktop) */}
-            <div className="flex items-center gap-1">
-              <button
-                type="button"
-                onClick={() => scroll("left")}
-                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-gray-200 bg-white hover:bg-green-50 hover:border-[#0f8646] text-gray-700 hover:text-[#0f8646] transition flex items-center justify-center shadow-2xs cursor-pointer active:scale-95"
-                title="Previous Review"
-              >
-                <ChevronLeft size={16} />
-              </button>
-              <button
-                type="button"
-                onClick={() => scroll("right")}
-                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-gray-200 bg-white hover:bg-green-50 hover:border-[#0f8646] text-gray-700 hover:text-[#0f8646] transition flex items-center justify-center shadow-2xs cursor-pointer active:scale-95"
-                title="Next Review"
-              >
-                <ChevronRight size={16} />
-              </button>
-            </div>
-
+          <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
             <button
               type="button"
               onClick={() => setIsModalOpen(true)}
@@ -215,64 +195,87 @@ export default function Testimonials({
           </div>
         </div>
 
-        {/* Modern Swipeable Review Carousel */}
-        <div
-          ref={scrollContainerRef}
-          className="flex items-stretch gap-3.5 sm:gap-4 overflow-x-auto pb-3 pt-1 scrollbar-none snap-x scroll-smooth -mx-3.5 px-3.5 sm:mx-0 sm:px-0"
-        >
-          {testimonials.map((t, idx) => (
-            <motion.div
-              key={t._id || idx}
-              whileHover={{ y: -3 }}
-              className="w-[270px] xs:w-[300px] sm:w-[340px] shrink-0 snap-start bg-white rounded-3xl p-4 sm:p-5 border border-gray-200/90 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between"
-            >
-              <div>
-                {/* Rating Stars & Tag */}
-                <div className="flex items-center justify-between gap-2 mb-2.5">
-                  <div className="flex items-center gap-0.5 text-amber-400">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        size={13}
-                        className={
-                          i < (t.rating || 5)
-                            ? "fill-amber-400 text-amber-400"
-                            : "text-gray-200"
-                        }
-                      />
-                    ))}
+        {/* Carousel Container with Side Floating Arrows */}
+        <div className="relative group">
+          {/* Left Arrow Button */}
+          <button
+            type="button"
+            onClick={() => scroll("left")}
+            aria-label="Scroll left"
+            className="flex absolute -left-2 sm:-left-3.5 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0f8646] w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all shadow-md hover:shadow-lg border border-gray-200/90 active:scale-95 cursor-pointer backdrop-blur-xs"
+          >
+            <ChevronLeft size={18} className="stroke-[2.5]" />
+          </button>
+
+          {/* Modern Swipeable Review Carousel */}
+          <div
+            ref={scrollContainerRef}
+            className="flex items-stretch gap-3.5 sm:gap-4 overflow-x-auto pb-3 pt-1 scrollbar-none snap-x snap-mandatory scroll-smooth -mx-3.5 px-3.5 sm:mx-0 sm:px-0"
+          >
+            {testimonials.map((t, idx) => (
+              <motion.div
+                key={t._id || idx}
+                whileHover={{ y: -3 }}
+                className="w-[84vw] xs:w-[310px] sm:w-[340px] shrink-0 snap-center sm:snap-start bg-white rounded-3xl p-4 sm:p-5 border border-gray-200/90 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between"
+              >
+                <div>
+                  {/* Rating Stars & Tag */}
+                  <div className="flex items-center justify-between gap-2 mb-2.5">
+                    <div className="flex items-center gap-0.5 text-amber-400">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          size={13}
+                          className={
+                            i < (t.rating || 5)
+                              ? "fill-amber-400 text-amber-400"
+                              : "text-gray-200"
+                          }
+                        />
+                      ))}
+                    </div>
+                    <span className="text-[9px] font-black text-[#0f8646] bg-green-50 border border-green-200 px-2 py-0.5 rounded-full flex items-center gap-0.5">
+                      <CheckCircle2 size={9} />
+                      <span>{t.tag || "Verified Customer"}</span>
+                    </span>
                   </div>
-                  <span className="text-[9px] font-black text-[#0f8646] bg-green-50 border border-green-200 px-2 py-0.5 rounded-full flex items-center gap-0.5">
-                    <CheckCircle2 size={9} />
-                    <span>{t.tag || "Verified Customer"}</span>
-                  </span>
+
+                  {/* Comment Text with Quote Icon */}
+                  <div className="relative mb-3.5">
+                    <Quote size={18} className="text-emerald-100 absolute -top-1 -left-1 -z-0" />
+                    <p className="text-xs sm:text-[13px] text-gray-700 font-medium leading-relaxed relative z-10 italic">
+                      &ldquo;{t.comment}&rdquo;
+                    </p>
+                  </div>
                 </div>
 
-                {/* Comment Text with Quote Icon */}
-                <div className="relative mb-3.5">
-                  <Quote size={18} className="text-emerald-100 absolute -top-1 -left-1 -z-0" />
-                  <p className="text-xs sm:text-[13px] text-gray-700 font-medium leading-relaxed relative z-10 italic">
-                    &ldquo;{t.comment}&rdquo;
-                  </p>
+                {/* Author Info */}
+                <div className="flex items-center gap-2.5 pt-3 border-t border-gray-100 mt-auto">
+                  <div className="w-9 h-9 rounded-2xl bg-emerald-100 text-[#0f8646] flex items-center justify-center font-black text-xs shrink-0 border border-emerald-200 shadow-2xs">
+                    {t.name?.charAt(0) || "U"}
+                  </div>
+                  <div className="min-w-0">
+                    <h4 className="font-black text-xs sm:text-sm text-gray-900 truncate">
+                      {t.name}
+                    </h4>
+                    <span className="text-[10px] text-gray-400 block truncate font-medium">
+                      📍 {t.location || "Bhopal, MP"}
+                    </span>
+                  </div>
                 </div>
-              </div>
+              </motion.div>
+            ))}
+          </div>
 
-              {/* Author Info */}
-              <div className="flex items-center gap-2.5 pt-3 border-t border-gray-100 mt-auto">
-                <div className="w-9 h-9 rounded-2xl bg-emerald-100 text-[#0f8646] flex items-center justify-center font-black text-xs shrink-0 border border-emerald-200 shadow-2xs">
-                  {t.name?.charAt(0) || "U"}
-                </div>
-                <div className="min-w-0">
-                  <h4 className="font-black text-xs sm:text-sm text-gray-900 truncate">
-                    {t.name}
-                  </h4>
-                  <span className="text-[10px] text-gray-400 block truncate font-medium">
-                    📍 {t.location || "Bhopal, MP"}
-                  </span>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+          {/* Right Arrow Button */}
+          <button
+            type="button"
+            onClick={() => scroll("right")}
+            aria-label="Scroll right"
+            className="flex absolute -right-2 sm:-right-3.5 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0f8646] w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all shadow-md hover:shadow-lg border border-gray-200/90 active:scale-95 cursor-pointer backdrop-blur-xs"
+          >
+            <ChevronRight size={18} className="stroke-[2.5]" />
+          </button>
         </div>
 
       </div>
