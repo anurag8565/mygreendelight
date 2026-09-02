@@ -1,8 +1,10 @@
-﻿{
+{
+  "id": "/",
   "name": "MyGreenDelight - 10 Min Fresh Bhopal Grocery",
-  "short_name": "GreenDelight",
+  "short_name": "MyGreenDelight",
   "description": "Farm-fresh organic vegetables, fruits, and daily essentials delivered in 10-15 minutes across Bhopal.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0f8646",
