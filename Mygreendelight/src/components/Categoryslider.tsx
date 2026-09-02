@@ -6,57 +6,6 @@ import Link from "next/link";
 import { ChevronRight, ChevronLeft, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 
-const defaultCategories = [
-  {
-    _id: "1",
-    name: "Vegetables",
-    image:
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=600&q=85",
-  },
-  {
-    _id: "2",
-    name: "Fruits",
-    image:
-      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=600&q=85",
-  },
-  {
-    _id: "3",
-    name: "Dairy & Eggs",
-    image:
-      "https://images.unsplash.com/photo-1628088062854-d1870b4553da?auto=format&fit=crop&w=600&q=85",
-  },
-  {
-    _id: "4",
-    name: "Exotics",
-    image:
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=85",
-  },
-  {
-    _id: "5",
-    name: "Salad Mixes",
-    image:
-      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=85",
-  },
-  {
-    _id: "6",
-    name: "Oils & Ghee",
-    image:
-      "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=600&q=85",
-  },
-  {
-    _id: "7",
-    name: "Wholesome Snacks",
-    image:
-      "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=600&q=85",
-  },
-  {
-    _id: "8",
-    name: "Fresh Juices",
-    image:
-      "https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=600&q=85",
-  },
-];
-
 export default function CategorySlider({
   categories = [],
 }: {
@@ -66,42 +15,32 @@ export default function CategorySlider({
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const [loadedCategories, setLoadedCategories] = useState<any[]>(
+  const [activeCategories, setActiveCategories] = useState<any[]>(
     categories.length > 0 ? categories : []
   );
 
   useEffect(() => {
     if (categories.length > 0) {
-      setLoadedCategories(categories);
+      setActiveCategories(categories);
       return;
     }
 
+    // Fetch live categories directly from MongoDB
     fetch("/api/admin/category")
       .then((res) => res.json())
       .then((data) => {
-        if (data.success && data.categories && data.categories.length >= 4) {
-          // If less than 6 from DB, merge with default categories so carousel has rich sliding content
-          const names = new Set(data.categories.map((c: any) => c.name.toLowerCase()));
-          const extra = defaultCategories.filter((dc) => !names.has(dc.name.toLowerCase()));
-          setLoadedCategories([...data.categories, ...extra]);
-        } else {
-          setLoadedCategories(defaultCategories);
+        if (data.success && data.categories && data.categories.length > 0) {
+          setActiveCategories(data.categories);
         }
       })
-      .catch(() => {
-        setLoadedCategories(defaultCategories);
+      .catch((err) => {
+        console.error("Error fetching categories:", err);
       });
   }, [categories]);
 
-  // Ensure there are always at least 8 categories so the desktop carousel fills nicely
-  const getFullCategories = () => {
-    if (loadedCategories.length >= 6) return loadedCategories;
-    const names = new Set(loadedCategories.map((c: any) => c.name.toLowerCase()));
-    const extra = defaultCategories.filter((dc) => !names.has(dc.name.toLowerCase()));
-    return [...loadedCategories, ...extra];
-  };
+  if (!activeCategories || activeCategories.length === 0) return null;
 
-  const activeCategories = getFullCategories();
+  const isCarouselNeeded = activeCategories.length > 4;
 
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
@@ -123,7 +62,7 @@ export default function CategorySlider({
       const totalScrollable = scrollWidth - clientWidth;
       if (totalScrollable > 0) {
         const progress = scrollLeft / totalScrollable;
-        const totalDots = Math.min(8, activeCategories.length);
+        const totalDots = activeCategories.length;
         const currentIndex = Math.min(
           totalDots - 1,
           Math.floor(progress * totalDots)
@@ -133,10 +72,8 @@ export default function CategorySlider({
     }
   };
 
-  const totalDots = Math.min(8, activeCategories.length);
-
   return (
-    <div className="w-full py-4 sm:py-7 bg-white">
+    <div className="w-full py-3.5 sm:py-6 bg-white">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-3.5 sm:mb-5">
@@ -166,23 +103,29 @@ export default function CategorySlider({
           </Link>
         </div>
 
-        {/* Circular Story Carousel Container */}
+        {/* Categories Container: Evenly distributed grid for 4 items, or swipeable carousel if more */}
         <div className="relative group">
-          {/* Left Arrow Button */}
-          <button
-            type="button"
-            onClick={() => scroll("left")}
-            aria-label="Scroll left"
-            className="flex absolute -left-2 sm:-left-4 top-[38%] -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-700 hover:text-[#0f8646] w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all shadow-md hover:shadow-xl border border-gray-200 active:scale-95 cursor-pointer backdrop-blur-xs"
-          >
-            <ChevronLeft size={18} className="stroke-[2.5]" />
-          </button>
+          {/* Left Arrow Button (Only when carousel is needed) */}
+          {isCarouselNeeded && (
+            <button
+              type="button"
+              onClick={() => scroll("left")}
+              aria-label="Scroll left"
+              className="flex absolute -left-2 sm:-left-4 top-[38%] -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-700 hover:text-[#0f8646] w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all shadow-md hover:shadow-xl border border-gray-200 active:scale-95 cursor-pointer backdrop-blur-xs"
+            >
+              <ChevronLeft size={18} className="stroke-[2.5]" />
+            </button>
+          )}
 
-          {/* Horizontal Circular Carousel */}
+          {/* Categories Row */}
           <div
             ref={scrollRef}
             onScroll={handleScroll}
-            className="flex overflow-x-auto gap-4 sm:gap-6 md:gap-8 pb-3 pt-1 snap-x snap-mandatory scrollbar-none -mx-3.5 px-3.5 sm:mx-0 sm:px-0 scroll-smooth items-start"
+            className={`flex items-start ${
+              isCarouselNeeded
+                ? "overflow-x-auto gap-4 sm:gap-6 md:gap-8 pb-3 pt-1 snap-x snap-mandatory scrollbar-none -mx-3.5 px-3.5 sm:mx-0 sm:px-0 scroll-smooth"
+                : "grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 justify-items-center gap-2 sm:gap-6 max-w-4xl mx-auto py-1"
+            }`}
           >
             {activeCategories.map((item, idx) => (
               <motion.div
@@ -192,10 +135,10 @@ export default function CategorySlider({
                 onClick={() =>
                   router.push(`/shop?category=${encodeURIComponent(item.name)}`)
                 }
-                className="flex flex-col items-center shrink-0 cursor-pointer snap-start group text-center w-[78px] xs:w-[86px] sm:w-[110px] md:w-[130px]"
+                className="flex flex-col items-center shrink-0 cursor-pointer snap-start group text-center w-full max-w-[90px] xs:max-w-[100px] sm:max-w-[140px] md:max-w-[160px]"
               >
-                {/* Perfect Circular Image Frame with Emerald Glow Ring */}
-                <div className="w-[72px] h-[72px] xs:w-[80px] xs:h-[80px] sm:w-[98px] sm:h-[98px] md:w-[115px] md:h-[115px] rounded-full overflow-hidden bg-white border-2 border-white shadow-md ring-2 ring-emerald-100/90 group-hover:ring-[#0f8646] transition-all duration-300 flex items-center justify-center relative p-0.5">
+                {/* Circular Image Frame with Emerald Glow Ring */}
+                <div className="w-[68px] h-[68px] xs:w-[76px] xs:h-[76px] sm:w-[100px] sm:h-[100px] md:w-[120px] md:h-[120px] rounded-full overflow-hidden bg-white border-2 border-white shadow-md ring-2 ring-emerald-100/90 group-hover:ring-[#0f8646] transition-all duration-300 flex items-center justify-center relative p-0.5">
                   <img
                     src={item.image || "/categories/vegetables.jpg"}
                     alt={item.name}
@@ -203,29 +146,31 @@ export default function CategorySlider({
                   />
                 </div>
 
-                {/* Clean Bold Category Label */}
-                <span className="text-[11px] sm:text-xs md:text-sm font-black text-gray-800 group-hover:text-[#0f8646] transition-colors line-clamp-1 mt-2 tracking-tight">
+                {/* Clean Bold Category Label with full text wrap */}
+                <span className="text-[10.5px] xs:text-[11.5px] sm:text-xs md:text-sm font-black text-gray-800 group-hover:text-[#0f8646] transition-colors line-clamp-2 mt-2 tracking-tight text-center leading-tight px-1">
                   {item.name}
                 </span>
               </motion.div>
             ))}
           </div>
 
-          {/* Right Arrow Button (Green Accent like reference screenshot) */}
-          <button
-            type="button"
-            onClick={() => scroll("right")}
-            aria-label="Scroll right"
-            className="flex absolute -right-2 sm:-right-4 top-[38%] -translate-y-1/2 z-20 bg-[#0f8646] hover:bg-[#0c6a38] text-white w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all shadow-md hover:shadow-xl border border-green-600 active:scale-95 cursor-pointer"
-          >
-            <ChevronRight size={18} className="stroke-[2.5]" />
-          </button>
+          {/* Right Arrow Button (Only when carousel is needed) */}
+          {isCarouselNeeded && (
+            <button
+              type="button"
+              onClick={() => scroll("right")}
+              aria-label="Scroll right"
+              className="flex absolute -right-2 sm:-right-4 top-[38%] -translate-y-1/2 z-20 bg-[#0f8646] hover:bg-[#0c6a38] text-white w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all shadow-md hover:shadow-xl border border-green-600 active:scale-95 cursor-pointer"
+            >
+              <ChevronRight size={18} className="stroke-[2.5]" />
+            </button>
+          )}
         </div>
 
-        {/* Carousel Pagination Dots */}
-        {totalDots > 1 && (
+        {/* Carousel Pagination Dots (Only if carousel is active) */}
+        {isCarouselNeeded && activeCategories.length > 1 && (
           <div className="flex items-center justify-center gap-1.5 mt-2">
-            {[...Array(totalDots)].map((_, i) => (
+            {activeCategories.map((_, i) => (
               <span
                 key={i}
                 className={`h-1.5 rounded-full transition-all duration-300 ${
