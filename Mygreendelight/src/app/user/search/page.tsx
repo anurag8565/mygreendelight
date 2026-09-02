@@ -39,13 +39,14 @@ const TRENDING_SEARCHES = [
   { name: "Coriander", icon: "🌿", tag: "Free with Veggies" },
 ];
 
-const CATEGORY_BUBBLES = [
-  { name: "Vegetables", icon: "🥬", color: "from-emerald-500 to-green-600" },
-  { name: "Fruits", icon: "🍎", color: "from-rose-500 to-red-600" },
-  { name: "Dairy & Staples", icon: "🥛", color: "from-blue-500 to-indigo-600" },
-  { name: "Exotics", icon: "🥑", color: "from-teal-500 to-emerald-700" },
-  { name: "Combos", icon: "🍲", color: "from-amber-500 to-orange-600" },
-];
+const CATEGORY_ICONS: Record<string, string> = {
+  vegetables: "🥬",
+  fruits: "🍎",
+  "dairy & staples": "🥛",
+  "dairy & eggs": "🥛",
+  dairy: "🥛",
+  exotics: "🥑",
+};
 
 export default function SearchPage() {
   useGetMe();
@@ -56,6 +57,7 @@ export default function SearchPage() {
 
   const [inputQuery, setInputQuery] = useState(query);
   const [results, setResults] = useState<any[]>([]);
+  const [categories, setCategories] = useState<{ _id: string; name: string }[]>([]);
   const [topProduce, setTopProduce] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
@@ -74,10 +76,22 @@ export default function SearchPage() {
     }
   }, []);
 
-  // Fetch top popular produce for initial landing
+  // Fetch real categories from MongoDB
   useEffect(() => {
     axios
-      .get("/api/groceries?limit=10&sort=newest")
+      .get("/api/admin/category")
+      .then((res) => {
+        if (res.data?.success && res.data.categories) {
+          setCategories(res.data.categories);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  // Fetch real products from MongoDB
+  useEffect(() => {
+    axios
+      .get("/api/groceries?limit=8&sort=newest")
       .then((res) => {
         if (res.data?.success && res.data.groceries) {
           setTopProduce(res.data.groceries);
@@ -86,7 +100,7 @@ export default function SearchPage() {
       .catch(() => {});
   }, []);
 
-  // Live search effect with debouncing
+  // Live search effect
   useEffect(() => {
     setInputQuery(query);
     if (!query.trim()) {
@@ -138,7 +152,6 @@ export default function SearchPage() {
     executeSearch(inputQuery);
   };
 
-  // Voice Search Handler (Web Speech API)
   const toggleVoiceSearch = () => {
     if (typeof window === "undefined") return;
     const SpeechRecognition =
@@ -176,6 +189,11 @@ export default function SearchPage() {
     } catch (e) {
       setIsListening(false);
     }
+  };
+
+  const getCategoryIcon = (name: string) => {
+    const key = name.toLowerCase();
+    return CATEGORY_ICONS[key] || "🌱";
   };
 
   return (
@@ -270,7 +288,7 @@ export default function SearchPage() {
           </form>
         </div>
 
-        {/* 2. IF QUERY IS EMPTY: Show Recent, Trending, Category Bubbles & Morning Favorites */}
+        {/* 2. IF QUERY IS EMPTY: Show Recent, Trending, Category Bubbles & Live Products */}
         {!query && (
           <div className="space-y-6">
             
@@ -337,30 +355,37 @@ export default function SearchPage() {
               </div>
             </div>
 
-            {/* Explore Aisles Category Bubbles */}
-            <div className="bg-white rounded-3xl p-4 sm:p-5 border border-gray-200/90 shadow-2xs">
-              <span className="text-xs font-black uppercase text-gray-400 tracking-wider block mb-3">
-                Explore Shopping Aisles
-              </span>
-              <div className="grid grid-cols-3 sm:grid-cols-5 gap-2.5 sm:gap-3">
-                {CATEGORY_BUBBLES.map((cat, idx) => (
-                  <Link
-                    key={idx}
-                    href={`/shop?category=${encodeURIComponent(cat.name)}`}
-                    className="flex flex-col items-center p-3 rounded-2xl bg-gray-50 hover:bg-emerald-50 border border-gray-200/70 hover:border-emerald-300 transition text-center group"
-                  >
-                    <div className="w-11 h-11 rounded-2xl bg-white shadow-2xs border border-gray-100 flex items-center justify-center text-xl mb-1.5 group-hover:scale-110 transition-transform">
-                      {cat.icon}
-                    </div>
-                    <span className="text-[11px] font-black text-gray-900 group-hover:text-[#0f8646] line-clamp-1">
-                      {cat.name}
-                    </span>
-                  </Link>
-                ))}
+            {/* Live 100% Database Categories (4 Categories Only) */}
+            {categories.length > 0 && (
+              <div className="bg-white rounded-3xl p-4 sm:p-5 border border-gray-200/90 shadow-2xs">
+                <span className="text-xs font-black uppercase text-gray-400 tracking-wider block mb-3">
+                  Explore Shopping Aisles
+                </span>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
+                  {categories.map((cat) => (
+                    <Link
+                      key={cat._id}
+                      href={`/shop?category=${encodeURIComponent(cat.name)}`}
+                      className="flex items-center gap-3 p-3 rounded-2xl bg-gray-50 hover:bg-emerald-50 border border-gray-200/70 hover:border-emerald-300 transition text-left group"
+                    >
+                      <div className="w-10 h-10 rounded-2xl bg-white shadow-2xs border border-gray-100 flex items-center justify-center text-xl shrink-0 group-hover:scale-110 transition-transform">
+                        {getCategoryIcon(cat.name)}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <span className="text-xs font-black text-gray-900 group-hover:text-[#0f8646] block truncate">
+                          {cat.name}
+                        </span>
+                        <span className="text-[9.5px] text-[#0f8646] font-bold block">
+                          10m Express ➔
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
-            {/* Top Morning Bhopal Favorites */}
+            {/* Top Morning Bhopal Favorites (Direct MongoDB Produce) */}
             {topProduce.length > 0 && (
               <div>
                 <div className="flex items-center justify-between mb-3.5">
@@ -371,7 +396,7 @@ export default function SearchPage() {
                         Popular Bhopal Farm Favorites
                       </h2>
                       <p className="text-[10.5px] text-gray-500 font-medium">
-                        Highest ordered sunrise veggies this morning
+                        Live produce available right now in Bhopal store
                       </p>
                     </div>
                   </div>
