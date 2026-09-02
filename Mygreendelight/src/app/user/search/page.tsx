@@ -1,9 +1,24 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { Search, Sparkles, ChevronRight, ShoppingBag, ArrowRight, Loader2 } from "lucide-react";
+import {
+  Search,
+  Sparkles,
+  ChevronRight,
+  ShoppingBag,
+  ArrowRight,
+  Loader2,
+  X,
+  Mic,
+  MicOff,
+  History,
+  TrendingUp,
+  Zap,
+  Flame,
+  RotateCcw,
+} from "lucide-react";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -11,6 +26,26 @@ import Groceryitemcard from "@/components/Groceryitemcard";
 import useGetMe from "@/hooks/useGetMe";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
+import { motion, AnimatePresence } from "framer-motion";
+
+const TRENDING_SEARCHES = [
+  { name: "Tomato", icon: "🍅", tag: "Daily Need" },
+  { name: "Palak", icon: "🥬", tag: "Harvest Special" },
+  { name: "A2 Cow Milk", icon: "🥛", tag: "Morning 7 AM" },
+  { name: "Potato", icon: "🥔", tag: "Top Seller" },
+  { name: "Onion", icon: "🧅", tag: "Mandi Fresh" },
+  { name: "Paneer", icon: "🧀", tag: "Organic" },
+  { name: "Apple", icon: "🍎", tag: "Kashmiri" },
+  { name: "Coriander", icon: "🌿", tag: "Free with Veggies" },
+];
+
+const CATEGORY_BUBBLES = [
+  { name: "Vegetables", icon: "🥬", color: "from-emerald-500 to-green-600" },
+  { name: "Fruits", icon: "🍎", color: "from-rose-500 to-red-600" },
+  { name: "Dairy & Staples", icon: "🥛", color: "from-blue-500 to-indigo-600" },
+  { name: "Exotics", icon: "🥑", color: "from-teal-500 to-emerald-700" },
+  { name: "Combos", icon: "🍲", color: "from-amber-500 to-orange-600" },
+];
 
 export default function SearchPage() {
   useGetMe();
@@ -21,11 +56,40 @@ export default function SearchPage() {
 
   const [inputQuery, setInputQuery] = useState(query);
   const [results, setResults] = useState<any[]>([]);
+  const [topProduce, setTopProduce] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const [isListening, setIsListening] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
+  // Load Recent Searches
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("mgd_recent_searches");
+      if (saved) {
+        try {
+          setRecentSearches(JSON.parse(saved));
+        } catch (e) {}
+      }
+    }
+  }, []);
+
+  // Fetch top popular produce for initial landing
+  useEffect(() => {
+    axios
+      .get("/api/groceries?limit=10&sort=newest")
+      .then((res) => {
+        if (res.data?.success && res.data.groceries) {
+          setTopProduce(res.data.groceries);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  // Live search effect with debouncing
   useEffect(() => {
     setInputQuery(query);
-    if (!query) {
+    if (!query.trim()) {
       setResults([]);
       return;
     }
@@ -33,7 +97,7 @@ export default function SearchPage() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`/api/user/search?query=${encodeURIComponent(query)}`);
+        const res = await axios.get(`/api/user/search?query=${encodeURIComponent(query.trim())}`);
         setResults(res.data || []);
       } catch (error) {
         console.error("Search error:", error);
@@ -45,134 +109,345 @@ export default function SearchPage() {
     fetchData();
   }, [query]);
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (inputQuery.trim()) {
-      router.push(`/user/search?query=${encodeURIComponent(inputQuery.trim())}`);
+  const saveRecentSearch = (text: string) => {
+    const trimmed = text.trim();
+    if (!trimmed) return;
+    const updated = [trimmed, ...recentSearches.filter((s) => s.toLowerCase() !== trimmed.toLowerCase())].slice(0, 6);
+    setRecentSearches(updated);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("mgd_recent_searches", JSON.stringify(updated));
     }
   };
 
-  const quickPills = ["Tomato", "Spinach", "Potato", "Apple", "Banana", "Onion", "Ginger", "Mango"];
+  const clearRecentSearches = () => {
+    setRecentSearches([]);
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("mgd_recent_searches");
+    }
+  };
+
+  const executeSearch = (searchTerm: string) => {
+    const trimmed = searchTerm.trim();
+    if (!trimmed) return;
+    saveRecentSearch(trimmed);
+    router.push(`/user/search?query=${encodeURIComponent(trimmed)}`);
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    executeSearch(inputQuery);
+  };
+
+  // Voice Search Handler (Web Speech API)
+  const toggleVoiceSearch = () => {
+    if (typeof window === "undefined") return;
+    const SpeechRecognition =
+      (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      alert("Voice Search is not supported on this browser.");
+      return;
+    }
+
+    if (isListening) {
+      setIsListening(false);
+      return;
+    }
+
+    try {
+      const recognition = new SpeechRecognition();
+      recognition.lang = "en-IN";
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      recognition.onstart = () => setIsListening(true);
+      recognition.onend = () => setIsListening(false);
+      recognition.onerror = () => setIsListening(false);
+
+      recognition.onresult = (event: any) => {
+        const transcript = event.results[0][0].transcript;
+        if (transcript) {
+          setInputQuery(transcript);
+          executeSearch(transcript);
+        }
+      };
+
+      recognition.start();
+    } catch (e) {
+      setIsListening(false);
+    }
+  };
 
   return (
     <div className="bg-[#fcfdfc] min-h-screen flex flex-col justify-between font-sans">
       <Nav user={(userdata as any) || { role: "user" }} />
 
-      <main className="max-w-7xl mx-auto px-4 md:px-8 py-8 w-full flex-1">
-        {/* Breadcrumb Navigation */}
-        <div className="flex items-center gap-2 text-xs text-gray-500 mb-6">
-          <Link href="/" className="hover:text-[#0f8646] transition">
+      <main className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-4 sm:py-6 pb-36 sm:pb-16 w-full flex-1">
+        
+        {/* Breadcrumbs */}
+        <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-3">
+          <Link href="/" className="hover:text-[#0f8646] transition font-bold">
             Home
           </Link>
           <ChevronRight size={12} />
-          <Link href="/shop" className="hover:text-[#0f8646] transition">
+          <Link href="/shop" className="hover:text-[#0f8646] transition font-bold">
             Shop
           </Link>
           <ChevronRight size={12} />
-          <span className="text-[#0f8646] font-extrabold">Search</span>
+          <span className="text-[#0f8646] font-black">Search</span>
         </div>
 
-        {/* Search Header & Bar */}
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200/80 shadow-2xs mb-8">
-          <h1 className="text-2xl sm:text-3xl font-black text-gray-900 mb-2">
-            Search Fresh Farm Harvest
-          </h1>
-          <p className="text-xs text-gray-500 mb-6">
-            Find daily fresh vegetables, organic fruits, and kitchen essentials in Bhopal
-          </p>
-
-          <form onSubmit={handleSearchSubmit} className="relative max-w-2xl">
-            <Search
-              size={18}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-            />
-            <input
-              type="text"
-              placeholder="Search by vegetable, fruit, or brand..."
-              value={inputQuery}
-              onChange={(e) => setInputQuery(e.target.value)}
-              className="w-full pl-12 pr-28 py-3.5 rounded-2xl border border-gray-200 focus:border-[#0f8646] outline-none text-xs sm:text-sm bg-gray-50/60 font-bold"
-            />
-            <button
-              type="submit"
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2 rounded-xl font-extrabold text-xs transition cursor-pointer"
-            >
-              Search
-            </button>
-          </form>
-
-          {/* Quick Search Suggestions */}
-          <div className="flex items-center gap-2 mt-4 flex-wrap text-xs">
-            <span className="text-gray-400 font-bold flex items-center gap-1 text-[11px]">
-              <Sparkles size={13} className="text-[#0f8646]" /> Popular:
-            </span>
-            {quickPills.map((pill) => (
-              <button
-                key={pill}
-                onClick={() => {
-                  setInputQuery(pill);
-                  router.push(`/user/search?query=${encodeURIComponent(pill)}`);
-                }}
-                className={`px-3 py-1 rounded-xl font-bold transition text-xs cursor-pointer ${
-                  query.toLowerCase() === pill.toLowerCase()
-                    ? "bg-[#0f8646] text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-green-100 hover:text-[#0f8646]"
-                }`}
-              >
-                {pill}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Results Section */}
-        {loading ? (
-          <div className="py-24 flex flex-col items-center justify-center">
-            <Loader2 size={36} className="animate-spin text-[#0f8646] mb-3" />
-            <p className="text-xs font-bold text-gray-500">
-              Searching fresh inventory for "{query}"...
-            </p>
-          </div>
-        ) : query && results.length === 0 ? (
-          /* Empty State */
-          <div className="bg-white rounded-3xl border border-gray-200/80 p-12 text-center max-w-md mx-auto shadow-xs my-8">
-            <div className="w-20 h-20 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-4">
-              <ShoppingBag size={32} />
+        {/* 1. Large Quick-Commerce Search Box */}
+        <div className="bg-white rounded-3xl p-4 sm:p-6 border border-gray-200/90 shadow-2xs mb-6">
+          <div className="flex items-center justify-between gap-2 mb-3">
+            <div>
+              <h1 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight flex items-center gap-2">
+                <span>🔍</span>
+                <span>Search Bhopal Mandi & Produce</span>
+              </h1>
+              <p className="text-[11px] sm:text-xs text-gray-500 font-medium mt-0.5">
+                10-15 Min Express Delivery • Sunrise Farm Direct
+              </p>
             </div>
-            <h2 className="text-lg font-black text-gray-900 mb-2">
-              No produce matching "{query}"
-            </h2>
-            <p className="text-xs text-gray-500 mb-6 leading-relaxed">
-              We couldn't find any items matching your search. Try checking your spelling or explore our fresh aisles!
-            </p>
-            <Link
-              href="/shop"
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-7 py-3 rounded-2xl font-black text-xs shadow-md transition inline-flex items-center gap-2"
-            >
-              <span>Explore All Produce</span>
-              <ArrowRight size={14} />
-            </Link>
+            <span className="bg-emerald-100 text-[#0f8646] text-[10px] font-black uppercase px-2.5 py-1 rounded-full shrink-0">
+              ⚡ 10 Min Dispatch
+            </span>
           </div>
-        ) : (
-          <div>
-            {query && (
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-black text-gray-900">
-                  Showing results for <span className="text-[#0f8646]">"{query}"</span>
-                </h2>
-                <span className="text-xs font-bold text-gray-500">
-                  {results.length} item{results.length !== 1 ? "s" : ""} found
-                </span>
+
+          {/* Search Input Bar */}
+          <form onSubmit={handleSearchSubmit} className="relative w-full">
+            <div className="relative flex items-center">
+              <Search
+                size={18}
+                className="absolute left-4 text-[#0f8646] pointer-events-none"
+              />
+              <input
+                ref={searchInputRef}
+                type="text"
+                placeholder="Search 'tamatar', 'palak', 'fresh milk', 'mango'..."
+                value={inputQuery}
+                onChange={(e) => setInputQuery(e.target.value)}
+                className="w-full pl-11 pr-24 sm:pr-32 py-3.5 rounded-2xl border border-gray-200 focus:border-[#0f8646] outline-none text-xs sm:text-sm bg-gray-50/80 font-bold text-gray-900 shadow-inner transition"
+              />
+
+              {/* Clear (X) Button */}
+              {inputQuery && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInputQuery("");
+                    router.push("/user/search");
+                    searchInputRef.current?.focus();
+                  }}
+                  className="absolute right-20 sm:right-28 p-1 text-gray-400 hover:text-gray-700 transition cursor-pointer"
+                >
+                  <X size={16} />
+                </button>
+              )}
+
+              {/* Voice Search Button */}
+              <button
+                type="button"
+                onClick={toggleVoiceSearch}
+                className={`absolute right-12 sm:right-16 p-2 rounded-xl transition cursor-pointer ${
+                  isListening
+                    ? "bg-red-500 text-white animate-pulse"
+                    : "text-gray-500 hover:text-[#0f8646] hover:bg-gray-100"
+                }`}
+                title="Voice Search"
+              >
+                {isListening ? <MicOff size={16} /> : <Mic size={16} />}
+              </button>
+
+              {/* Search Submit Button */}
+              <button
+                type="submit"
+                className="absolute right-1.5 bg-[#0f8646] hover:bg-[#0c6a38] text-white px-3.5 sm:px-4 py-2 rounded-xl font-black text-xs shadow-xs transition cursor-pointer active:scale-95"
+              >
+                Search
+              </button>
+            </div>
+          </form>
+        </div>
+
+        {/* 2. IF QUERY IS EMPTY: Show Recent, Trending, Category Bubbles & Morning Favorites */}
+        {!query && (
+          <div className="space-y-6">
+            
+            {/* Recent Searches (If Any) */}
+            {recentSearches.length > 0 && (
+              <div className="bg-white rounded-3xl p-4 sm:p-5 border border-gray-200/90 shadow-2xs">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-black uppercase text-gray-400 tracking-wider flex items-center gap-1.5">
+                    <History size={13} className="text-gray-400" />
+                    <span>Recent Searches</span>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={clearRecentSearches}
+                    className="text-[11px] font-black text-red-500 hover:underline cursor-pointer"
+                  >
+                    Clear All
+                  </button>
+                </div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  {recentSearches.map((s, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => executeSearch(s)}
+                      className="px-3 py-1.5 bg-gray-50 hover:bg-emerald-50 text-gray-800 hover:text-[#0f8646] border border-gray-200/80 hover:border-emerald-300 rounded-xl text-xs font-bold transition flex items-center gap-1 cursor-pointer"
+                    >
+                      <span>🕒</span>
+                      <span>{s}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {results.map((item) => (
-                <Groceryitemcard key={item._id} item={item} />
-              ))}
+            {/* Trending Searches in Bhopal */}
+            <div className="bg-white rounded-3xl p-4 sm:p-5 border border-gray-200/90 shadow-2xs">
+              <div className="flex items-center gap-1.5 mb-3 text-xs font-black uppercase text-gray-400 tracking-wider">
+                <Flame size={14} className="text-orange-500" />
+                <span>Trending Produce in Bhopal</span>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5">
+                {TRENDING_SEARCHES.map((item, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => executeSearch(item.name)}
+                    className="bg-gray-50/70 hover:bg-emerald-50/70 border border-gray-200/80 hover:border-emerald-300 p-2.5 rounded-2xl flex items-center justify-between text-left transition cursor-pointer group"
+                  >
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="text-lg shrink-0">{item.icon}</span>
+                      <div className="truncate">
+                        <span className="text-xs font-black text-gray-900 group-hover:text-[#0f8646] block truncate">
+                          {item.name}
+                        </span>
+                        <span className="text-[9.5px] text-gray-400 font-bold block">
+                          {item.tag}
+                        </span>
+                      </div>
+                    </div>
+                    <ArrowRight size={13} className="text-gray-300 group-hover:text-[#0f8646] group-hover:translate-x-0.5 transition-all shrink-0" />
+                  </button>
+                ))}
+              </div>
             </div>
+
+            {/* Explore Aisles Category Bubbles */}
+            <div className="bg-white rounded-3xl p-4 sm:p-5 border border-gray-200/90 shadow-2xs">
+              <span className="text-xs font-black uppercase text-gray-400 tracking-wider block mb-3">
+                Explore Shopping Aisles
+              </span>
+              <div className="grid grid-cols-3 sm:grid-cols-5 gap-2.5 sm:gap-3">
+                {CATEGORY_BUBBLES.map((cat, idx) => (
+                  <Link
+                    key={idx}
+                    href={`/shop?category=${encodeURIComponent(cat.name)}`}
+                    className="flex flex-col items-center p-3 rounded-2xl bg-gray-50 hover:bg-emerald-50 border border-gray-200/70 hover:border-emerald-300 transition text-center group"
+                  >
+                    <div className="w-11 h-11 rounded-2xl bg-white shadow-2xs border border-gray-100 flex items-center justify-center text-xl mb-1.5 group-hover:scale-110 transition-transform">
+                      {cat.icon}
+                    </div>
+                    <span className="text-[11px] font-black text-gray-900 group-hover:text-[#0f8646] line-clamp-1">
+                      {cat.name}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Top Morning Bhopal Favorites */}
+            {topProduce.length > 0 && (
+              <div>
+                <div className="flex items-center justify-between mb-3.5">
+                  <div className="flex items-center gap-2">
+                    <span className="text-base">⚡</span>
+                    <div>
+                      <h2 className="text-sm sm:text-base font-black text-gray-900">
+                        Popular Bhopal Farm Favorites
+                      </h2>
+                      <p className="text-[10.5px] text-gray-500 font-medium">
+                        Highest ordered sunrise veggies this morning
+                      </p>
+                    </div>
+                  </div>
+                  <Link
+                    href="/shop"
+                    className="text-[#0f8646] hover:text-[#0c6a38] font-black text-xs flex items-center gap-0.5 transition"
+                  >
+                    <span>View all</span>
+                    <ChevronRight size={14} />
+                  </Link>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+                  {topProduce.map((item) => (
+                    <Groceryitemcard key={item._id} item={item} />
+                  ))}
+                </div>
+              </div>
+            )}
+
           </div>
         )}
+
+        {/* 3. IF QUERY EXISTS: Show Results or Empty State */}
+        {query && (
+          <div>
+            {loading ? (
+              <div className="py-20 flex flex-col items-center justify-center bg-white rounded-3xl border border-gray-100 shadow-2xs">
+                <Loader2 size={36} className="animate-spin text-[#0f8646] mb-3" />
+                <p className="text-xs font-black text-gray-500">
+                  Searching farm inventory for &ldquo;{query}&rdquo;...
+                </p>
+              </div>
+            ) : results.length === 0 ? (
+              /* Empty Search State with Quick Recommendations */
+              <div className="bg-white rounded-3xl border border-gray-200/90 p-8 sm:p-12 text-center max-w-lg mx-auto shadow-xs my-4">
+                <div className="w-16 h-16 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-3 shadow-inner text-2xl">
+                  🥬
+                </div>
+                <h2 className="text-base sm:text-lg font-black text-gray-900 mb-1">
+                  No produce matching &ldquo;{query}&rdquo;
+                </h2>
+                <p className="text-xs text-gray-500 mb-5 leading-relaxed font-medium">
+                  We couldn&apos;t find an exact match in today&apos;s morning harvest. Try exploring our popular aisles or check our freshest categories!
+                </p>
+                <div className="flex items-center justify-center gap-2 flex-wrap">
+                  <Link
+                    href="/shop"
+                    className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-6 py-2.5 rounded-xl font-black text-xs shadow-md transition inline-flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <span>Explore All Farm Produce</span>
+                    <ArrowRight size={14} />
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <div className="flex items-center justify-between mb-4 bg-white p-3 rounded-2xl border border-gray-200/80 shadow-2xs">
+                  <h2 className="text-xs sm:text-sm font-bold text-gray-700">
+                    Results for <span className="font-black text-gray-900">&ldquo;{query}&rdquo;</span>
+                  </h2>
+                  <span className="text-[11px] font-black text-[#0f8646] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                    {results.length} taaza items found
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+                  {results.map((item) => (
+                    <Groceryitemcard key={item._id} item={item} />
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
       </main>
 
       <Footer />
