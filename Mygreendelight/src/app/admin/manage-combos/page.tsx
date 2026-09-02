@@ -73,6 +73,19 @@ export default function ManageCombosPage() {
     setIsModalOpen(true);
   };
 
+  const handleDelete = async (id: string, title: string) => {
+    if (!confirm(`Are you sure you want to permanently delete combo "${title}" from database?`)) return;
+    try {
+      const res = await axios.delete(`/api/combos?id=${id}`);
+      if (res.data.success) {
+        setMsg({ type: "success", text: `"${title}" has been permanently removed from database!` });
+        fetchCombos();
+      }
+    } catch (error: any) {
+      setMsg({ type: "error", text: error.response?.data?.message || "Failed to delete combo" });
+    }
+  };
+
   return (
     <div className="flex min-h-screen bg-gray-50/50">
       <AdminSidebar />
@@ -149,12 +162,22 @@ export default function ManageCombosPage() {
                   <span className="text-xs text-gray-400 line-through ml-1.5">₹{c.originalPrice}</span>
                 </div>
 
-                <button
-                  onClick={() => handleEdit(c)}
-                  className="text-gray-600 hover:text-[#0f8646] p-1.5 rounded-lg hover:bg-gray-100 transition cursor-pointer"
-                >
-                  <Edit2 size={16} />
-                </button>
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={() => handleEdit(c)}
+                    className="text-gray-600 hover:text-[#0f8646] p-1.5 rounded-lg hover:bg-gray-100 transition cursor-pointer"
+                    title="Edit Combo"
+                  >
+                    <Edit2 size={16} />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(c._id, c.title)}
+                    className="text-gray-400 hover:text-red-600 p-1.5 rounded-lg hover:bg-red-50 transition cursor-pointer"
+                    title="Delete from Database"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
               </div>
             </div>
           ))}

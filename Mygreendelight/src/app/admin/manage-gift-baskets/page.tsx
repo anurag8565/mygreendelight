@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import AdminSidebar from "@/components/AdminSidebar";
-import { Gift, Plus, Edit2, X, CheckCircle2, AlertCircle } from "lucide-react";
+import { Gift, Plus, Edit2, X, CheckCircle2, AlertCircle, Trash2 } from "lucide-react";
 import axios from "axios";
 
 export default function ManageGiftBasketsPage() {
@@ -80,6 +80,19 @@ export default function ManageGiftBasketsPage() {
       isActive: b.isActive,
     });
     setIsModalOpen(true);
+  };
+
+  const handleDelete = async (id: string, title: string) => {
+    if (!confirm(`Are you sure you want to permanently delete hamper "${title}" from database?`)) return;
+    try {
+      const res = await axios.delete(`/api/gift-baskets?id=${id}`);
+      if (res.data.success) {
+        setMsg({ type: "success", text: `"${title}" permanently removed from database!` });
+        fetchBaskets();
+      }
+    } catch (error: any) {
+      setMsg({ type: "error", text: error.response?.data?.message || "Failed to delete hamper" });
+    }
   };
 
   return (
@@ -160,12 +173,22 @@ export default function ManageGiftBasketsPage() {
                   <span className="text-xs text-gray-400 line-through ml-1.5">₹{b.originalPrice}</span>
                 </div>
 
-                <button
-                  onClick={() => handleEdit(b)}
-                  className="text-gray-600 hover:text-[#0f8646] p-1.5 rounded-lg hover:bg-gray-100 transition cursor-pointer"
-                >
-                  <Edit2 size={16} />
-                </button>
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={() => handleEdit(b)}
+                    className="text-gray-600 hover:text-[#0f8646] p-1.5 rounded-lg hover:bg-gray-100 transition cursor-pointer"
+                    title="Edit Hamper"
+                  >
+                    <Edit2 size={16} />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(b._id, b.title)}
+                    className="text-gray-400 hover:text-red-600 p-1.5 rounded-lg hover:bg-red-50 transition cursor-pointer"
+                    title="Delete from Database"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
               </div>
             </div>
           ))}

@@ -71,6 +71,19 @@ export default function ManageCustomBoxesPage() {
     setIsModalOpen(true);
   };
 
+  const handleDelete = async (id: string, name: string) => {
+    if (!confirm(`Are you sure you want to permanently delete "${name}" from database?`)) return;
+    try {
+      const res = await axios.delete(`/api/custom-box?id=${id}`);
+      if (res.data.success) {
+        setMsg({ type: "success", text: `"${name}" permanently deleted from database!` });
+        fetchIngredients();
+      }
+    } catch (error: any) {
+      setMsg({ type: "error", text: error.response?.data?.message || "Failed to delete ingredient" });
+    }
+  };
+
   return (
     <div className="flex min-h-screen bg-gray-50/50">
       <AdminSidebar />
@@ -147,12 +160,22 @@ export default function ManageCustomBoxesPage() {
                 </div>
               </div>
 
-              <button
-                onClick={() => handleEdit(item)}
-                className="text-gray-600 hover:text-[#0f8646] p-2 rounded-lg hover:bg-gray-100 transition cursor-pointer"
-              >
-                <Edit2 size={15} />
-              </button>
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => handleEdit(item)}
+                  className="text-gray-600 hover:text-[#0f8646] p-2 rounded-lg hover:bg-gray-100 transition cursor-pointer"
+                  title="Edit Ingredient"
+                >
+                  <Edit2 size={15} />
+                </button>
+                <button
+                  onClick={() => handleDelete(item._id, item.name)}
+                  className="text-gray-400 hover:text-red-600 p-2 rounded-lg hover:bg-red-50 transition cursor-pointer"
+                  title="Delete from Database"
+                >
+                  <Trash2 size={15} />
+                </button>
+              </div>
             </div>
           ))}
         </div>

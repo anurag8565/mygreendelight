@@ -70,6 +70,19 @@ export default function ManageMandiPage() {
     setIsModalOpen(true);
   };
 
+  const handleDelete = async (id: string, name: string) => {
+    if (!confirm(`Are you sure you want to permanently delete "${name}" from Mandi database?`)) return;
+    try {
+      const res = await axios.delete(`/api/mandi?id=${id}`);
+      if (res.data.success) {
+        setMsg({ type: "success", text: `"${name}" permanently removed from database!` });
+        fetchRates();
+      }
+    } catch (error: any) {
+      setMsg({ type: "error", text: error.response?.data?.message || "Failed to delete item" });
+    }
+  };
+
   return (
     <div className="flex min-h-screen bg-gray-50/50">
       <AdminSidebar />
@@ -159,12 +172,22 @@ export default function ManageMandiPage() {
                       </span>
                     </td>
                     <td className="py-3 px-3 text-right">
-                      <button
-                        onClick={() => handleEdit(item)}
-                        className="text-gray-600 hover:text-[#0f8646] p-1.5 rounded-lg hover:bg-gray-100 transition cursor-pointer"
-                      >
-                        <Edit2 size={15} />
-                      </button>
+                      <div className="flex items-center justify-end gap-1">
+                        <button
+                          onClick={() => handleEdit(item)}
+                          className="text-gray-600 hover:text-[#0f8646] p-1.5 rounded-lg hover:bg-gray-100 transition cursor-pointer"
+                          title="Edit Rate"
+                        >
+                          <Edit2 size={15} />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(item._id, item.itemName)}
+                          className="text-gray-400 hover:text-red-600 p-1.5 rounded-lg hover:bg-red-50 transition cursor-pointer"
+                          title="Delete Rate"
+                        >
+                          <Trash2 size={15} />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
