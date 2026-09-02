@@ -16,16 +16,35 @@ import {
   SlidersHorizontal,
   X,
   Check,
+  Search,
+  Truck,
+  Tag,
+  Flame,
+  ShoppingBag,
 } from "lucide-react";
 import axios from "axios";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import useGetMe from "@/hooks/useGetMe";
 import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import type { RootState } from "@/redux/store";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { createPortal } from "react-dom";
+
+const CATEGORY_ICONS: Record<string, string> = {
+  all: "🌿",
+  vegetables: "🥬",
+  fruits: "🍎",
+  "dairy & staples": "🥛",
+  "dairy & eggs": "🥛",
+  dairy: "🥛",
+  exotics: "🥑",
+  combos: "🍲",
+  "salad mixes": "🥗",
+  "oils & ghee": "🍯",
+  "wholesome snacks": "🍪",
+  "fresh juices": "🧃",
+};
 
 export default function ShopPage() {
   const searchParams = useSearchParams();
@@ -47,33 +66,22 @@ export default function ShopPage() {
   const [priceRange, setPriceRange] = useState(1500);
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
   const [inStockOnly, setInStockOnly] = useState(false);
+  const [under50Only, setUnder50Only] = useState(false);
+  const [bigDiscountOnly, setBigDiscountOnly] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
-  const [activeCoupon, setActiveCoupon] = useState<string>("WELCOME20");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Fetch featured active coupon from database
-  useEffect(() => {
-    axios
-      .get("/api/coupons/featured")
-      .then((res) => {
-        if (res.data?.success && res.data.coupon?.code) {
-          setActiveCoupon(res.data.coupon.code);
-        }
-      })
-      .catch(() => {});
-  }, []);
-
-  // Fetch categories
+  // Fetch real categories from MongoDB
   useEffect(() => {
     const fetchCats = async () => {
       try {
         const res = await axios.get("/api/admin/category");
-        if (res.data.success) {
+        if (res.data.success && res.data.categories) {
           setCategories(res.data.categories);
         }
       } catch (error) {
@@ -83,7 +91,7 @@ export default function ShopPage() {
     fetchCats();
   }, []);
 
-  // Fetch initial groceries when URL params change
+  // Fetch groceries when URL params change
   useEffect(() => {
     const fetchInitial = async () => {
       setLoading(true);
@@ -166,6 +174,8 @@ export default function ShopPage() {
     setPriceRange(1500);
     setSelectedRating(null);
     setInStockOnly(false);
+    setUnder50Only(false);
+    setBigDiscountOnly(false);
     router.push("/shop");
   };
 
@@ -174,6 +184,12 @@ export default function ShopPage() {
     if (item.price > priceRange) return false;
     if (selectedRating && (item.rating || 0) < selectedRating) return false;
     if (inStockOnly && item.stock <= 0) return false;
+    if (under50Only && item.price > 50) return false;
+    if (bigDiscountOnly) {
+      const mrp = item.mrp || Math.round(item.price * 1.25);
+      const discount = Math.round(((mrp - item.price) / mrp) * 100);
+      if (discount < 20) return false;
+    }
     return true;
   });
 
@@ -181,308 +197,343 @@ export default function ShopPage() {
     (categoryParam ? 1 : 0) +
     (selectedRating ? 1 : 0) +
     (inStockOnly ? 1 : 0) +
+    (under50Only ? 1 : 0) +
+    (bigDiscountOnly ? 1 : 0) +
     (priceRange < 1500 ? 1 : 0);
 
+  const getCategoryIcon = (name: string) => {
+    const key = name.toLowerCase();
+    return CATEGORY_ICONS[key] || "🌱";
+  };
+
   return (
-    <div className="bg-[#fcfdfc] min-h-screen flex flex-col justify-between">
+    <div className="bg-[#fcfdfc] min-h-screen flex flex-col justify-between font-sans">
       <Nav user={(userdata as any) || { role: "user" }} />
 
-      <main className="flex-1 max-w-7xl mx-auto px-4 md:px-8 py-6 pb-36 sm:pb-16 w-full">
-        {/* Breadcrumbs & Title */}
-        <div className="flex items-center gap-2 text-xs text-gray-500 mb-3">
-          <Link href="/" className="hover:text-[#0f8646] transition">
+      <main className="flex-1 max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-4 sm:py-6 pb-36 sm:pb-16 w-full">
+        
+        {/* Breadcrumb Navigation */}
+        <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-2.5">
+          <Link href="/" className="hover:text-[#0f8646] transition font-bold">
             Home
           </Link>
           <ChevronRight size={12} />
-          <span className="text-[#0f8646] font-extrabold">Shop Produce</span>
+          <span className="text-[#0f8646] font-black">Shop Produce</span>
           {categoryParam && (
             <>
               <ChevronRight size={12} />
               <span className="text-gray-900 font-bold">{categoryParam}</span>
             </>
           )}
+          {searchParam && (
+            <>
+              <ChevronRight size={12} />
+              <span className="text-gray-900 font-bold">&ldquo;{searchParam}&rdquo;</span>
+            </>
+          )}
         </div>
 
-        {/* Top Header Row */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
+        {/* Top Header Row with Active Title & Mobile Filter Trigger */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
           <div>
-            <h1 className="text-2xl sm:text-4xl font-black text-gray-900 tracking-tight">
-              {searchParam
-                ? `Results for "${searchParam}"`
-                : categoryParam
-                ? categoryParam
-                : "All Fresh Groceries"}
-            </h1>
-            <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
-              Farm-picked fresh vegetables, fruits & daily staples in Bhopal
+            <div className="flex items-center gap-2">
+              <h1 className="text-xl sm:text-3xl font-black text-gray-900 tracking-tight">
+                {searchParam
+                  ? `Results for "${searchParam}"`
+                  : categoryParam
+                  ? categoryParam
+                  : "All Fresh Groceries"}
+              </h1>
+              <span className="text-[10px] font-black uppercase text-[#0f8646] bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
+                Bhopal Farm Direct
+              </span>
+            </div>
+            <p className="text-[11px] sm:text-xs text-gray-500 font-medium mt-0.5">
+              Sunrise farm-harvested veggies, fruits & daily staples delivered in 10-15 mins
             </p>
           </div>
 
-          {/* Inline Quick Search & Mobile Filter Button */}
-          <div className="flex items-center gap-2.5 w-full md:w-auto">
-            <div className="relative flex-1 md:w-72">
-              <input
-                type="text"
-                placeholder="Search farm produce (e.g. Tomato, Palak, Milk)..."
-                defaultValue={searchParam}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    const val = (e.target as HTMLInputElement).value.trim();
-                    let newUrl = "/shop?";
-                    if (categoryParam) newUrl += `category=${encodeURIComponent(categoryParam)}&`;
-                    if (sortParam) newUrl += `sort=${sortParam}&`;
-                    if (val) newUrl += `search=${encodeURIComponent(val)}`;
-                    router.push(newUrl);
-                  }
-                }}
-                className="w-full bg-white border border-gray-200/90 rounded-2xl pl-4 pr-10 py-2.5 text-xs font-bold text-gray-900 outline-none focus:border-[#0f8646] shadow-2xs transition"
-              />
-            </div>
-
-            <button
-              onClick={() => setIsMobileFilterOpen(true)}
-              className="lg:hidden flex items-center gap-1.5 bg-white border border-gray-200 px-3.5 py-2.5 rounded-2xl text-xs font-bold text-gray-700 shadow-2xs hover:border-[#0f8646] shrink-0 cursor-pointer"
-            >
-              <SlidersHorizontal size={14} className="text-[#0f8646]" />
-              <span>Filters ({activeFilterCount})</span>
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={() => setIsMobileFilterOpen(true)}
+            className="lg:hidden flex items-center justify-center gap-1.5 bg-white border border-gray-200/90 px-3.5 py-2 rounded-2xl text-xs font-black text-gray-800 shadow-2xs hover:border-[#0f8646] shrink-0 cursor-pointer self-start sm:self-auto"
+          >
+            <SlidersHorizontal size={14} className="text-[#0f8646]" />
+            <span>Refine Filters ({activeFilterCount})</span>
+          </button>
         </div>
 
-        {/* Horizontal Category Quick-Pills Bar */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-4 scrollbar-none">
+        {/* Horizontal Category Badges Bar with Visual Icons */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 mb-3.5 scrollbar-none -mx-3.5 px-3.5 sm:mx-0 sm:px-0">
           <button
+            type="button"
             onClick={() => handleCategoryClick("all")}
-            className={`px-4 py-2 rounded-2xl text-xs font-bold shrink-0 transition-all cursor-pointer ${
+            className={`px-3.5 py-2 rounded-2xl text-xs font-black shrink-0 transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs ${
               !categoryParam
-                ? "bg-[#0f8646] text-white shadow-sm"
-                : "bg-white text-gray-700 border border-gray-200/90 hover:border-green-300 hover:bg-green-50/50"
+                ? "bg-[#0f8646] text-white shadow-sm ring-2 ring-emerald-300/60"
+                : "bg-white text-gray-800 border border-gray-200/80 hover:border-emerald-300 hover:bg-emerald-50/50"
             }`}
           >
-            All Aisles
+            <span>🌿</span>
+            <span>All Aisles</span>
           </button>
-          {categories.map((cat) => (
-            <button
-              key={cat._id}
-              onClick={() => handleCategoryClick(cat.name)}
-              className={`px-4 py-2 rounded-2xl text-xs font-bold shrink-0 transition-all cursor-pointer ${
-                categoryParam === cat.name
-                  ? "bg-[#0f8646] text-white shadow-sm"
-                  : "bg-white text-gray-700 border border-gray-200/90 hover:border-green-300 hover:bg-green-50/50"
-              }`}
-            >
-              {cat.name}
-            </button>
-          ))}
+
+          {categories.map((cat) => {
+            const isSelected = categoryParam === cat.name;
+            return (
+              <button
+                type="button"
+                key={cat._id}
+                onClick={() => handleCategoryClick(cat.name)}
+                className={`px-3.5 py-2 rounded-2xl text-xs font-black shrink-0 transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs ${
+                  isSelected
+                    ? "bg-[#0f8646] text-white shadow-sm ring-2 ring-emerald-300/60"
+                    : "bg-white text-gray-800 border border-gray-200/80 hover:border-emerald-300 hover:bg-emerald-50/50"
+                }`}
+              >
+                <span>{getCategoryIcon(cat.name)}</span>
+                <span>{cat.name}</span>
+              </button>
+            );
+          })}
         </div>
 
-        {/* Quick Filter Chips (1-Tap Toggles on Mobile & Desktop) */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-6 scrollbar-none">
+        {/* Quick Filter Chips Strip (1-Tap Toggle on Both Mobile & Desktop) */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 mb-5 scrollbar-none -mx-3.5 px-3.5 sm:mx-0 sm:px-0">
           <button
+            type="button"
             onClick={() => setInStockOnly(!inStockOnly)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 transition flex items-center gap-1 cursor-pointer border ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-black shrink-0 transition flex items-center gap-1 cursor-pointer border shadow-2xs active:scale-95 ${
               inStockOnly
-                ? "bg-emerald-50 border-emerald-400 text-[#0f8646] font-black"
-                : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
+                ? "bg-emerald-600 text-white border-emerald-700 ring-2 ring-emerald-200"
+                : "bg-white border-gray-200 text-gray-700 hover:bg-gray-50"
             }`}
           >
-            <span>⚡ In Stock Only</span>
-            {inStockOnly && <Check size={12} className="stroke-[3]" />}
+            <Zap size={12} className={inStockOnly ? "fill-white" : "text-amber-500"} />
+            <span>In Stock Only</span>
+            {inStockOnly && <Check size={12} className="stroke-[3] ml-0.5" />}
           </button>
 
           <button
-            onClick={() => setPriceRange(priceRange === 50 ? 1500 : 50)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 transition flex items-center gap-1 cursor-pointer border ${
-              priceRange === 50
-                ? "bg-emerald-50 border-emerald-400 text-[#0f8646] font-black"
-                : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
+            type="button"
+            onClick={() => setUnder50Only(!under50Only)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-black shrink-0 transition flex items-center gap-1 cursor-pointer border shadow-2xs active:scale-95 ${
+              under50Only
+                ? "bg-orange-500 text-white border-orange-600 ring-2 ring-orange-200"
+                : "bg-white border-gray-200 text-gray-700 hover:bg-gray-50"
             }`}
           >
-            <span>🔥 Under ₹50</span>
-            {priceRange === 50 && <Check size={12} className="stroke-[3]" />}
+            <Flame size={12} className={under50Only ? "fill-white" : "text-orange-500"} />
+            <span>Under ₹50</span>
+            {under50Only && <Check size={12} className="stroke-[3] ml-0.5" />}
           </button>
 
           <button
+            type="button"
             onClick={() => setSelectedRating(selectedRating === 4 ? null : 4)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 transition flex items-center gap-1 cursor-pointer border ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-black shrink-0 transition flex items-center gap-1 cursor-pointer border shadow-2xs active:scale-95 ${
               selectedRating === 4
-                ? "bg-amber-50 border-amber-400 text-amber-900 font-black"
-                : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
+                ? "bg-amber-500 text-white border-amber-600 ring-2 ring-amber-200"
+                : "bg-white border-gray-200 text-gray-700 hover:bg-gray-50"
             }`}
           >
-            <span>⭐ Top Rated (4★+)</span>
-            {selectedRating === 4 && <Check size={12} className="stroke-[3]" />}
+            <Star size={12} className={selectedRating === 4 ? "fill-white" : "text-amber-500 fill-amber-500"} />
+            <span>Top Rated (4★+)</span>
+            {selectedRating === 4 && <Check size={12} className="stroke-[3] ml-0.5" />}
           </button>
+
+          <button
+            type="button"
+            onClick={() => setBigDiscountOnly(!bigDiscountOnly)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-black shrink-0 transition flex items-center gap-1 cursor-pointer border shadow-2xs active:scale-95 ${
+              bigDiscountOnly
+                ? "bg-rose-600 text-white border-rose-700 ring-2 ring-rose-200"
+                : "bg-white border-gray-200 text-gray-700 hover:bg-gray-50"
+            }`}
+          >
+            <Tag size={12} />
+            <span>20%+ OFF</span>
+            {bigDiscountOnly && <Check size={12} className="stroke-[3] ml-0.5" />}
+          </button>
+
+          {activeFilterCount > 0 && (
+            <button
+              type="button"
+              onClick={resetAllFilters}
+              className="px-2.5 py-1.5 rounded-xl text-[11px] font-black text-red-600 hover:bg-red-50 border border-red-200 transition shrink-0 flex items-center gap-1 cursor-pointer"
+            >
+              <RotateCcw size={11} />
+              <span>Reset</span>
+            </button>
+          )}
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Left Sidebar (Desktop Filters) */}
-          <aside className="hidden lg:flex flex-col w-64 shrink-0 gap-5">
-            {/* Category Filter Box */}
-            <div className="bg-white rounded-2xl shadow-xs border border-gray-200/80 p-5">
-              <h3 className="font-extrabold text-gray-900 mb-4 text-xs uppercase tracking-wider">
-                Categories
+        {/* Main Content Layout */}
+        <div className="flex flex-col lg:flex-row gap-6">
+          
+          {/* Desktop Left Sidebar Filters */}
+          <aside className="hidden lg:flex flex-col w-64 shrink-0 gap-4">
+            
+            {/* Categories Filter Box */}
+            <div className="bg-white rounded-3xl shadow-2xs border border-gray-200/90 p-5">
+              <h3 className="font-black text-gray-900 mb-3 text-xs uppercase tracking-wider flex items-center gap-1.5">
+                <span>🥬</span>
+                <span>Categories</span>
               </h3>
-              <div className="flex flex-col space-y-1.5">
+              <div className="flex flex-col space-y-1">
                 <button
+                  type="button"
                   onClick={() => handleCategoryClick("all")}
-                  className={`text-left text-xs font-bold p-2 rounded-xl flex justify-between items-center transition ${
+                  className={`text-left text-xs font-black p-2.5 rounded-xl flex justify-between items-center transition cursor-pointer ${
                     !categoryParam
-                      ? "bg-green-50 text-[#0f8646]"
-                      : "text-gray-600 hover:bg-gray-50"
+                      ? "bg-emerald-50 text-[#0f8646] border border-emerald-200"
+                      : "text-gray-700 hover:bg-gray-50"
                   }`}
                 >
-                  <span>All Products</span>
-                  {!categoryParam && <Check size={14} />}
+                  <span className="flex items-center gap-2">
+                    <span>🌿</span> All Products
+                  </span>
+                  {!categoryParam && <Check size={14} className="stroke-[3]" />}
                 </button>
+
                 {categories.map((cat) => (
                   <button
+                    type="button"
                     key={cat._id}
                     onClick={() => handleCategoryClick(cat.name)}
-                    className={`text-left text-xs font-bold p-2 rounded-xl flex justify-between items-center transition ${
+                    className={`text-left text-xs font-black p-2.5 rounded-xl flex justify-between items-center transition cursor-pointer ${
                       categoryParam === cat.name
-                        ? "bg-green-50 text-[#0f8646]"
-                        : "text-gray-600 hover:bg-gray-50"
+                        ? "bg-emerald-50 text-[#0f8646] border border-emerald-200"
+                        : "text-gray-700 hover:bg-gray-50"
                     }`}
                   >
-                    <span>{cat.name}</span>
-                    {categoryParam === cat.name && <Check size={14} />}
+                    <span className="flex items-center gap-2 truncate">
+                      <span>{getCategoryIcon(cat.name)}</span> {cat.name}
+                    </span>
+                    {categoryParam === cat.name && <Check size={14} className="stroke-[3]" />}
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Filter Controls Box */}
-            <div className="bg-white rounded-2xl shadow-xs border border-gray-200/80 p-5">
+            {/* Price & Rating Box */}
+            <div className="bg-white rounded-3xl shadow-2xs border border-gray-200/90 p-5">
               <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
-                <h3 className="font-extrabold text-gray-900 text-xs uppercase tracking-wider">
+                <h3 className="font-black text-gray-900 text-xs uppercase tracking-wider">
                   Refine By
                 </h3>
                 {activeFilterCount > 0 && (
                   <button
+                    type="button"
                     onClick={resetAllFilters}
-                    className="text-[11px] font-bold text-red-600 hover:underline flex items-center gap-1"
+                    className="text-[11px] font-black text-red-600 hover:underline flex items-center gap-0.5 cursor-pointer"
                   >
                     <RotateCcw size={10} /> Reset
                   </button>
                 )}
               </div>
 
-              {/* In Stock Only Toggle */}
-              <div className="mb-5">
-                <label className="flex items-center justify-between cursor-pointer">
-                  <span className="text-xs font-bold text-gray-800">In Stock Only</span>
-                  <input
-                    type="checkbox"
-                    checked={inStockOnly}
-                    onChange={(e) => setInStockOnly(e.target.checked)}
-                    className="w-4 h-4 accent-[#0f8646] rounded cursor-pointer"
-                  />
-                </label>
-              </div>
-
               {/* Price Range Slider */}
-              <div className="mb-6">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-bold text-gray-800">Max Price:</span>
-                  <span className="text-xs font-extrabold text-[#0f8646]">₹{priceRange}</span>
+              <div className="mb-5">
+                <div className="flex justify-between items-center mb-1.5">
+                  <span className="text-xs font-bold text-gray-700">Max Price:</span>
+                  <span className="text-xs font-black text-[#0f8646]">₹{priceRange}</span>
                 </div>
                 <input
                   type="range"
-                  min="50"
+                  min="30"
                   max="1500"
-                  step="25"
+                  step="20"
                   value={priceRange}
                   onChange={(e) => setPriceRange(Number(e.target.value))}
                   className="w-full accent-[#0f8646] cursor-pointer"
                 />
                 <div className="flex justify-between text-[10px] text-gray-400 font-bold mt-1">
-                  <span>₹50</span>
+                  <span>₹30</span>
                   <span>₹1500+</span>
                 </div>
               </div>
 
               {/* Rating Filter */}
-              <div className="mb-2">
-                <span className="text-xs font-bold text-gray-800 block mb-2.5">Rating</span>
-                {[4, 3, 2].map((star) => (
-                  <label
+              <div>
+                <span className="text-xs font-bold text-gray-700 block mb-2">Customer Rating</span>
+                {[4, 3].map((star) => (
+                  <button
+                    type="button"
                     key={star}
-                    className={`flex items-center justify-between p-2 rounded-xl cursor-pointer text-xs mb-1.5 transition ${
+                    onClick={() => setSelectedRating(selectedRating === star ? null : star)}
+                    className={`w-full flex items-center justify-between p-2 rounded-xl text-xs mb-1.5 transition font-bold cursor-pointer ${
                       selectedRating === star
-                        ? "bg-green-50 font-bold text-[#0f8646]"
+                        ? "bg-amber-50 text-amber-900 border border-amber-200"
                         : "text-gray-600 hover:bg-gray-50"
                     }`}
                   >
-                    <div className="flex items-center gap-1.5">
-                      <input
-                        type="radio"
-                        name="rating"
-                        className="accent-[#0f8646]"
-                        checked={selectedRating === star}
-                        onChange={() => setSelectedRating(selectedRating === star ? null : star)}
-                      />
-                      <span className="flex items-center text-amber-500 font-bold">
-                        {star} <Star size={12} className="fill-amber-500 ml-0.5 inline" /> & above
-                      </span>
-                    </div>
-                  </label>
+                    <span className="flex items-center gap-1">
+                      {[...Array(star)].map((_, i) => (
+                        <Star key={i} size={11} className="fill-amber-400 text-amber-400" />
+                      ))}
+                      <span>& above</span>
+                    </span>
+                    {selectedRating === star && <Check size={13} className="stroke-[3]" />}
+                  </button>
                 ))}
               </div>
             </div>
+
           </aside>
 
-          {/* Right Main Content */}
-          <section className="flex-1 flex flex-col">
-            {/* Promo Strip */}
-            <div className="w-full bg-gradient-to-r from-emerald-700 via-[#0f8646] to-green-700 text-white rounded-2xl p-4 sm:p-5 mb-6 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-                  <Zap size={20} className="text-yellow-300 fill-yellow-300" />
+          {/* Right Product Grid Section */}
+          <section className="flex-1 flex flex-col min-w-0">
+            
+            {/* Express Delivery Banner */}
+            <div className="w-full bg-gradient-to-r from-[#032412] via-[#073b1d] to-[#0f8646] text-white rounded-3xl p-4 sm:p-5 mb-5 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-md relative overflow-hidden">
+              <div className="absolute right-0 top-0 w-60 h-60 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+
+              <div className="flex items-center gap-3 relative z-10 text-center sm:text-left">
+                <div className="w-11 h-11 rounded-2xl bg-white/20 flex items-center justify-center shrink-0 shadow-inner border border-white/20">
+                  <Truck size={22} className="text-yellow-300" />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-sm sm:text-base">
-                    ⚡ 10-15 Min Bhopal Express Delivery
+                  <h3 className="font-black text-sm sm:text-base text-white">
+                    ⚡ 10-15 Min Express Delivery in Bhopal
                   </h3>
-                  <p className="text-xs text-green-100 mt-0.5">
-                    100% Ozone-Washed fresh farm produce straight to your kitchen
+                  <p className="text-[11px] sm:text-xs text-green-100 font-medium mt-0.5">
+                    100% Ozone-Washed sunrise harvest produce straight to your doorstep
                   </p>
                 </div>
               </div>
-              <span className="bg-white text-[#0f8646] text-xs font-black px-3.5 py-1.5 rounded-xl shrink-0 shadow-xs uppercase tracking-wider">
+
+              <span className="relative z-10 bg-white text-[#0f8646] text-xs font-black px-4 py-2 rounded-xl shrink-0 shadow-xs uppercase tracking-wider">
                 FREE Delivery &gt; ₹199
               </span>
             </div>
 
-            {/* Toolbar Row */}
-            <div className="flex flex-col sm:flex-row justify-between items-center bg-white border border-gray-200/80 rounded-2xl px-4 py-3 mb-6 gap-4 shadow-2xs">
-              <p className="text-xs sm:text-sm text-gray-600 font-medium">
-                Showing <span className="font-black text-gray-900">{filteredGroceries.length}</span>{" "}
-                fresh items {categoryParam ? `in ${categoryParam}` : ""}
+            {/* Results Count & Sorting Toolbar */}
+            <div className="flex flex-row justify-between items-center bg-white border border-gray-200/90 rounded-2xl px-3.5 py-2.5 mb-5 gap-3 shadow-2xs">
+              <p className="text-xs sm:text-sm text-gray-700 font-bold truncate">
+                Showing <span className="font-black text-gray-900">{filteredGroceries.length}</span> items
               </p>
 
-              <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+              <div className="flex items-center gap-2.5 shrink-0">
                 {/* Sort Dropdown */}
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-gray-500 font-bold hidden sm:inline">Sort:</span>
-                  <select
-                    value={sortParam || "newest"}
-                    onChange={handleSortChange}
-                    className="border border-gray-200 rounded-xl px-3 py-1.5 text-xs font-bold outline-none focus:border-[#0f8646] bg-gray-50 cursor-pointer"
-                  >
-                    <option value="newest">Newest Harvest</option>
-                    <option value="price_asc">Price: Low to High</option>
-                    <option value="price_desc">Price: High to Low</option>
-                  </select>
-                </div>
+                <select
+                  value={sortParam || "newest"}
+                  onChange={handleSortChange}
+                  className="border border-gray-200 rounded-xl px-2.5 py-1.5 text-xs font-black outline-none focus:border-[#0f8646] bg-gray-50 text-gray-800 cursor-pointer shadow-2xs"
+                >
+                  <option value="newest">🌿 Newest Harvest</option>
+                  <option value="price_asc">💰 Price: Low to High</option>
+                  <option value="price_desc">💎 Price: High to Low</option>
+                </select>
 
-                {/* Grid / List Toggle */}
-                <div className="flex items-center bg-gray-100 p-1 rounded-xl">
+                {/* Grid / List View Toggle */}
+                <div className="hidden sm:flex items-center bg-gray-100 p-1 rounded-xl">
                   <button
+                    type="button"
                     onClick={() => setViewMode("grid")}
-                    className={`p-1.5 rounded-lg transition ${
+                    className={`p-1.5 rounded-lg transition cursor-pointer ${
                       viewMode === "grid"
-                        ? "bg-white text-[#0f8646] shadow-xs"
+                        ? "bg-white text-[#0f8646] shadow-2xs"
                         : "text-gray-500 hover:text-gray-800"
                     }`}
                     title="Grid View"
@@ -490,10 +541,11 @@ export default function ShopPage() {
                     <LayoutGrid size={15} />
                   </button>
                   <button
+                    type="button"
                     onClick={() => setViewMode("list")}
-                    className={`p-1.5 rounded-lg transition ${
+                    className={`p-1.5 rounded-lg transition cursor-pointer ${
                       viewMode === "list"
-                        ? "bg-white text-[#0f8646] shadow-xs"
+                        ? "bg-white text-[#0f8646] shadow-2xs"
                         : "text-gray-500 hover:text-gray-800"
                     }`}
                     title="List View"
@@ -504,245 +556,174 @@ export default function ShopPage() {
               </div>
             </div>
 
-            {/* Active Filter Chips */}
-            {activeFilterCount > 0 && (
-              <div className="flex flex-wrap items-center gap-2 mb-6">
-                <span className="text-xs text-gray-400 font-bold">Active Filters:</span>
-                {categoryParam && (
-                  <span className="inline-flex items-center gap-1 bg-green-50 border border-green-200 text-[#0f8646] text-xs font-bold px-2.5 py-1 rounded-lg">
-                    {categoryParam}
-                    <X size={12} className="cursor-pointer" onClick={() => handleCategoryClick("all")} />
-                  </span>
-                )}
-                {selectedRating && (
-                  <span className="inline-flex items-center gap-1 bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold px-2.5 py-1 rounded-lg">
-                    {selectedRating}★ & above
-                    <X size={12} className="cursor-pointer" onClick={() => setSelectedRating(null)} />
-                  </span>
-                )}
-                {inStockOnly && (
-                  <span className="inline-flex items-center gap-1 bg-blue-50 border border-blue-200 text-blue-800 text-xs font-bold px-2.5 py-1 rounded-lg">
-                    In Stock Only
-                    <X size={12} className="cursor-pointer" onClick={() => setInStockOnly(false)} />
-                  </span>
-                )}
-                {priceRange < 1500 && (
-                  <span className="inline-flex items-center gap-1 bg-gray-100 border border-gray-300 text-gray-700 text-xs font-bold px-2.5 py-1 rounded-lg">
-                    Under ₹{priceRange}
-                    <X size={12} className="cursor-pointer" onClick={() => setPriceRange(1500)} />
-                  </span>
-                )}
-                <button
-                  onClick={resetAllFilters}
-                  className="text-xs text-red-600 font-bold hover:underline ml-2"
-                >
-                  Clear All
-                </button>
-              </div>
-            )}
-
-            {/* Product Grid / List */}
-            {loading && page === 1 ? (
-              <div className="flex flex-col items-center justify-center py-24 gap-3">
-                <Loader2 className="animate-spin text-[#0f8646] w-10 h-10" />
-                <p className="text-xs font-bold text-gray-500">Loading fresh farm produce...</p>
+            {/* Product Grid Area */}
+            {loading && groceries.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-24 bg-white rounded-3xl border border-gray-100 shadow-2xs">
+                <Loader2 size={36} className="animate-spin text-[#0f8646] mb-3" />
+                <p className="text-xs font-black text-gray-500">Loading fresh farm produce...</p>
               </div>
             ) : filteredGroceries.length === 0 ? (
-              <div className="text-center py-20 bg-white rounded-3xl border border-gray-100 p-8 shadow-xs">
-                <div className="w-16 h-16 rounded-full bg-green-50 text-[#0f8646] flex items-center justify-center mx-auto mb-4">
-                  <Sparkles size={28} />
+              <div className="flex flex-col items-center justify-center py-16 px-4 bg-white rounded-3xl border border-gray-200/90 shadow-2xs text-center max-w-md mx-auto">
+                <div className="w-16 h-16 rounded-full bg-green-50 text-[#0f8646] flex items-center justify-center text-2xl mb-3 shadow-inner">
+                  🥬
                 </div>
-                <h3 className="text-lg font-extrabold text-gray-900 mb-1">
-                  No products match your criteria
+                <h3 className="text-base font-black text-gray-900 mb-1">
+                  No matching fresh produce found
                 </h3>
-                <p className="text-xs text-gray-500 max-w-sm mx-auto mb-5">
-                  Try adjusting your price slider, rating filter or choosing another aisle.
+                <p className="text-xs text-gray-500 mb-4 font-medium">
+                  Try adjusting your filters or price range to discover other sunrise veggies.
                 </p>
                 <button
+                  type="button"
                   onClick={resetAllFilters}
-                  className="bg-[#0f8646] text-white px-6 py-2.5 rounded-xl font-bold text-xs shadow-md hover:bg-[#0c6a38] transition"
+                  className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2.5 rounded-xl font-black text-xs shadow-md transition cursor-pointer"
                 >
-                  Reset All Filters
+                  Clear All Filters
                 </button>
               </div>
             ) : (
-              <div className="flex flex-col items-center w-full">
-                <div
-                  className={
-                    viewMode === "grid"
-                      ? "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 w-full"
-                      : "flex flex-col gap-4 w-full"
-                  }
-                >
-                  {filteredGroceries.map((item) => (
-                    <Groceryitemcard
-                      key={item._id}
-                      item={item}
-                      isList={viewMode === "list"}
-                    />
-                  ))}
-                </div>
-
-                {hasMore && (
-                  <button
-                    onClick={loadMore}
-                    disabled={loading}
-                    className="mt-10 px-8 py-3 bg-white border border-gray-300 hover:border-[#0f8646] text-gray-800 hover:text-[#0f8646] rounded-xl font-extrabold text-xs sm:text-sm shadow-xs hover:shadow-md transition flex items-center gap-2 cursor-pointer"
-                  >
-                    {loading ? (
-                      <>
-                        <Loader2 size={16} className="animate-spin text-[#0f8646]" />
-                        <span>Loading more...</span>
-                      </>
-                    ) : (
-                      <span>Load More Fresh Produce</span>
-                    )}
-                  </button>
-                )}
+              <div
+                className={
+                  viewMode === "grid"
+                    ? "grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4"
+                    : "flex flex-col space-y-3"
+                }
+              >
+                {filteredGroceries.map((item) => (
+                  <Groceryitemcard key={item._id} item={item} isList={viewMode === "list"} />
+                ))}
               </div>
             )}
+
+            {/* Load More Button */}
+            {hasMore && filteredGroceries.length > 0 && (
+              <div className="flex justify-center mt-8">
+                <button
+                  type="button"
+                  disabled={loading}
+                  onClick={loadMore}
+                  className="bg-white hover:bg-green-50 text-gray-900 hover:text-[#0f8646] border border-gray-200 hover:border-[#0f8646] font-black text-xs px-6 py-3 rounded-2xl shadow-2xs transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 size={14} className="animate-spin text-[#0f8646]" />
+                      <span>Harvesting more items...</span>
+                    </>
+                  ) : (
+                    <span>Load More Fresh Produce</span>
+                  )}
+                </button>
+              </div>
+            )}
+
           </section>
+
         </div>
+
       </main>
 
-      {/* Mobile Filter Drawer (Bottom Sheet via createPortal) */}
-      {mounted &&
-        typeof document !== "undefined" &&
-        createPortal(
-          <AnimatePresence>
-            {isMobileFilterOpen && (
-              <div className="fixed inset-0 z-[100000] md:hidden flex items-end justify-center">
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
+      {/* Mobile Filters Slide-over Modal */}
+      <AnimatePresence>
+        {isMobileFilterOpen && (
+          <div
+            onClick={() => setIsMobileFilterOpen(false)}
+            className="fixed inset-0 z-[1200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-xs cursor-pointer lg:hidden"
+          >
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-t-3xl sm:rounded-3xl p-5 w-full max-w-md max-h-[85vh] overflow-y-auto shadow-2xl cursor-default text-gray-900"
+            >
+              <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
+                <h3 className="text-base font-black text-gray-900 flex items-center gap-1.5">
+                  <SlidersHorizontal size={16} className="text-[#0f8646]" />
+                  <span>Refine Produce Filters</span>
+                </h3>
+                <button
+                  type="button"
                   onClick={() => setIsMobileFilterOpen(false)}
-                  className="absolute inset-0 bg-black/60 backdrop-blur-xs"
-                />
-                <motion.div
-                  initial={{ y: "100%" }}
-                  animate={{ y: 0 }}
-                  exit={{ y: "100%" }}
-                  transition={{ type: "spring", damping: 26, stiffness: 280 }}
-                  className="relative w-full max-h-[85vh] bg-white rounded-t-3xl shadow-2xl flex flex-col z-10 overflow-hidden"
+                  className="p-1 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200"
                 >
-                  {/* Drag Handle & Header */}
-                  <div className="p-4 border-b border-gray-100 bg-green-50/50 shrink-0">
-                    <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-3" />
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-xl bg-[#0f8646] text-white flex items-center justify-center shadow-xs">
-                          <SlidersHorizontal size={16} />
-                        </div>
-                        <div>
-                          <h3 className="font-black text-base text-gray-900 leading-tight">Filter & Refine</h3>
-                          <p className="text-[11px] text-gray-500 font-medium">Customize by category and price</p>
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => setIsMobileFilterOpen(false)}
-                        className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition cursor-pointer"
-                      >
-                        <X size={16} />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Scrollable Filter Content */}
-                  <div className="p-4 sm:p-5 overflow-y-auto flex-1 space-y-5">
-                    {/* Categories */}
-                    <div>
-                      <span className="text-xs font-black uppercase text-gray-600 tracking-wider block mb-2.5">
-                        Categories
-                      </span>
-                      <div className="flex flex-wrap gap-2">
-                        <button
-                          type="button"
-                          onClick={() => handleCategoryClick("all")}
-                          className={`px-3.5 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
-                            !categoryParam
-                              ? "bg-[#0f8646] text-white shadow-xs"
-                              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                          }`}
-                        >
-                          All Aisles
-                        </button>
-                        {categories.map((cat) => (
-                          <button
-                            type="button"
-                            key={cat._id}
-                            onClick={() => handleCategoryClick(cat.name)}
-                            className={`px-3.5 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
-                              categoryParam === cat.name
-                                ? "bg-[#0f8646] text-white shadow-xs"
-                                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                            }`}
-                          >
-                            {cat.name}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* In Stock */}
-                    <div>
-                      <label className="flex items-center justify-between cursor-pointer bg-gray-50 border border-gray-100 p-3 rounded-2xl">
-                        <span className="text-xs font-black text-gray-800">In Stock Only</span>
-                        <input
-                          type="checkbox"
-                          checked={inStockOnly}
-                          onChange={(e) => setInStockOnly(e.target.checked)}
-                          className="w-4 h-4 accent-[#0f8646] rounded cursor-pointer"
-                        />
-                      </label>
-                    </div>
-
-                    {/* Price */}
-                    <div>
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-xs font-black text-gray-800">Max Price:</span>
-                        <span className="text-sm font-black text-[#0f8646]">₹{priceRange}</span>
-                      </div>
-                      <input
-                        type="range"
-                        min="50"
-                        max="1500"
-                        step="25"
-                        value={priceRange}
-                        onChange={(e) => setPriceRange(Number(e.target.value))}
-                        className="w-full accent-[#0f8646] cursor-pointer"
-                      />
-                      <div className="flex justify-between text-[10px] text-gray-400 font-bold mt-1">
-                        <span>₹50</span>
-                        <span>₹1500+</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Sticky Action Footer */}
-                  <div className="p-4 bg-white border-t border-gray-100 flex gap-3 pb-8 sm:pb-4 shrink-0 shadow-[0_-4px_20px_rgba(0,0,0,0.06)]">
-                    <button
-                      type="button"
-                      onClick={resetAllFilters}
-                      className="flex-1 py-3.5 rounded-xl border border-gray-300 bg-white text-gray-700 font-black text-xs cursor-pointer hover:bg-gray-100 transition shadow-2xs"
-                    >
-                      Reset
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setIsMobileFilterOpen(false)}
-                      className="flex-2 py-3.5 rounded-xl bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black text-xs shadow-md transition cursor-pointer"
-                    >
-                      Apply Filters ({filteredGroceries.length})
-                    </button>
-                  </div>
-                </motion.div>
+                  <X size={18} />
+                </button>
               </div>
-            )}
-          </AnimatePresence>,
-          document.body
+
+              {/* Categories */}
+              <div className="mb-5">
+                <span className="text-xs font-black uppercase text-gray-400 block mb-2">
+                  Categories
+                </span>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleCategoryClick("all")}
+                    className={`p-2.5 rounded-xl text-xs font-black text-left flex items-center justify-between border ${
+                      !categoryParam
+                        ? "bg-emerald-50 text-[#0f8646] border-emerald-300"
+                        : "bg-gray-50 border-gray-200 text-gray-700"
+                    }`}
+                  >
+                    <span>🌿 All Aisles</span>
+                    {!categoryParam && <Check size={12} className="stroke-[3]" />}
+                  </button>
+                  {categories.map((cat) => (
+                    <button
+                      type="button"
+                      key={cat._id}
+                      onClick={() => handleCategoryClick(cat.name)}
+                      className={`p-2.5 rounded-xl text-xs font-black text-left flex items-center justify-between border ${
+                        categoryParam === cat.name
+                          ? "bg-emerald-50 text-[#0f8646] border-emerald-300"
+                          : "bg-gray-50 border-gray-200 text-gray-700"
+                      }`}
+                    >
+                      <span className="truncate">{getCategoryIcon(cat.name)} {cat.name}</span>
+                      {categoryParam === cat.name && <Check size={12} className="stroke-[3]" />}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Max Price */}
+              <div className="mb-5">
+                <div className="flex justify-between items-center mb-1.5">
+                  <span className="text-xs font-black uppercase text-gray-400">Max Price</span>
+                  <span className="text-xs font-black text-[#0f8646]">₹{priceRange}</span>
+                </div>
+                <input
+                  type="range"
+                  min="30"
+                  max="1500"
+                  step="20"
+                  value={priceRange}
+                  onChange={(e) => setPriceRange(Number(e.target.value))}
+                  className="w-full accent-[#0f8646]"
+                />
+              </div>
+
+              <div className="flex gap-2.5 pt-3 border-t border-gray-100">
+                <button
+                  type="button"
+                  onClick={resetAllFilters}
+                  className="flex-1 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 font-black text-xs rounded-xl transition"
+                >
+                  Reset All
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsMobileFilterOpen(false)}
+                  className="flex-1 py-3 bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black text-xs rounded-xl shadow-md transition"
+                >
+                  Apply Filters
+                </button>
+              </div>
+            </motion.div>
+          </div>
         )}
+      </AnimatePresence>
 
       <Footer />
     </div>
