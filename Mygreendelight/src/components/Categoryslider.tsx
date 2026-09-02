@@ -33,6 +33,22 @@ const defaultCategories = [
   },
 ];
 
+// Aesthetic Pastel Tint Palette matching the reference design
+const PASTEL_THEMES = [
+  { bg: "bg-[#eafaf6]", border: "border-[#a4ede0]", hoverBg: "hover:bg-[#daf6f0]", hoverBorder: "hover:border-[#6fe2cc]" }, // Soft Cyan / Spices
+  { bg: "bg-[#fdf0ec]", border: "border-[#fcd3c7]", hoverBg: "hover:bg-[#fde2d9]", hoverBorder: "hover:border-[#fab8a2]" }, // Soft Peach / Dry Fruits
+  { bg: "bg-[#edf5fe]", border: "border-[#c0dcfd]", hoverBg: "hover:bg-[#dbeafd]", hoverBorder: "hover:border-[#96c3fd]" }, // Soft Sky Blue / Veggies
+  { bg: "bg-[#fef0f4]", border: "border-[#fccad7]", hoverBg: "hover:bg-[#fde1e9]", hoverBorder: "hover:border-[#faaec3]" }, // Soft Blush Pink / Exotics
+  { bg: "bg-[#eaf8f0]", border: "border-[#b4eed0]", hoverBg: "hover:bg-[#d6f5e1]", hoverBorder: "hover:border-[#8ae4b3]" }, // Soft Mint Green / Dals
+  { bg: "bg-[#f6effe]", border: "border-[#e0c5fd]", hoverBg: "hover:bg-[#ebd8fe]", hoverBorder: "hover:border-[#c99efd]" }, // Soft Lavender / Ghee & Oils
+  { bg: "bg-[#fef6e9]", border: "border-[#fde1b5]", hoverBg: "hover:bg-[#fdedd0]", hoverBorder: "hover:border-[#fccb86]" }, // Soft Honey / Dehydrated
+  { bg: "bg-[#fef4ec]", border: "border-[#fdd8c0]", hoverBg: "hover:bg-[#fde7d7]", hoverBorder: "hover:border-[#fbb98e]" }, // Soft Apricot / Snacks
+  { bg: "bg-[#fef0f2]", border: "border-[#fccad3]", hoverBg: "hover:bg-[#fde0e5]", hoverBorder: "hover:border-[#fbadbb]" }, // Soft Rose / Dairy
+  { bg: "bg-[#f8f0fe]", border: "border-[#e9c7fd]", hoverBg: "hover:bg-[#f2dbfd]", hoverBorder: "hover:border-[#d99efd]" }, // Soft Violet / Sweeteners
+  { bg: "bg-[#f4f9eb]", border: "border-[#d8eebc]", hoverBg: "hover:bg-[#e7f5d5]", hoverBorder: "hover:border-[#bde393]" }, // Soft Olive / Grains
+  { bg: "bg-[#f0f2fe]", border: "border-[#c9d1fd]", hoverBg: "hover:bg-[#dee3fd]", hoverBorder: "hover:border-[#a3b1fc]" }, // Soft Periwinkle / Ready to cook
+];
+
 export default function CategorySlider({
   categories = [],
 }: {
@@ -68,20 +84,20 @@ export default function CategorySlider({
     loadedCategories.length > 0 ? loadedCategories : defaultCategories;
 
   return (
-    <div className="w-full py-2.5 sm:py-5 bg-white">
+    <div className="w-full py-3 sm:py-6 bg-white">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Section Header */}
-        <div className="flex items-center justify-between mb-2.5 sm:mb-4">
+        <div className="flex items-center justify-between mb-3 sm:mb-5">
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 rounded-lg bg-green-100 text-[#0f8646] flex items-center justify-center font-black text-xs">
               🌿
             </div>
             <div>
-              <h2 className="text-sm sm:text-2xl font-black text-gray-900 tracking-tight">
+              <h2 className="text-base sm:text-2xl font-black text-gray-900 tracking-tight">
                 Shop by Category
               </h2>
-              <p className="text-[10px] sm:text-xs text-gray-400 font-medium">
-                Sunrise farm-harvested veggies & staples
+              <p className="text-[10px] sm:text-xs text-gray-500 font-medium">
+                Sunrise farm-harvested veggies, fruits & daily staples
               </p>
             </div>
           </div>
@@ -98,35 +114,39 @@ export default function CategorySlider({
           </Link>
         </div>
 
-        {/* Categories Grid */}
-        <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 sm:gap-3.5">
-          {activeCategories.slice(0, 8).map((item, idx) => (
-            <motion.div
-              key={item._id || idx}
-              whileHover={{ y: -3, scale: 1.02 }}
-              whileTap={{ scale: 0.96 }}
-              onClick={() =>
-                router.push(`/shop?category=${encodeURIComponent(item.name)}`)
-              }
-              className="flex flex-col items-center bg-gray-50/80 hover:bg-green-50/60 border border-gray-200/90 hover:border-[#0f8646] rounded-2xl p-2 sm:p-3 cursor-pointer shadow-2xs hover:shadow-xs transition-all group text-center"
-            >
-              {/* Image Frame */}
-              <div className="w-13 h-13 sm:w-18 sm:h-18 aspect-square rounded-xl bg-white border border-gray-100 overflow-hidden mb-1.5 p-1 flex items-center justify-center shadow-2xs">
-                <img
-                  src={item.image || "/categories/vegetables.jpg"}
-                  alt={item.name}
-                  className="w-full h-full object-contain group-hover:scale-108 transition-transform duration-300"
-                />
-              </div>
+        {/* Categories Pastel Squircle Grid (Matching Reference Screenshot) */}
+        <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2.5 sm:gap-4">
+          {activeCategories.map((item, idx) => {
+            const theme = PASTEL_THEMES[idx % PASTEL_THEMES.length];
 
-              {/* Title with clean 2-line wrap without ugly truncation */}
-              <div className="h-7 sm:h-8 flex items-center justify-center w-full px-0.5">
-                <h3 className="text-[10px] sm:text-xs font-black text-gray-800 leading-tight group-hover:text-[#0f8646] transition-colors line-clamp-2">
-                  {item.name}
-                </h3>
-              </div>
-            </motion.div>
-          ))}
+            return (
+              <motion.div
+                key={item._id || idx}
+                whileHover={{ y: -4, scale: 1.03 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() =>
+                  router.push(`/shop?category=${encodeURIComponent(item.name)}`)
+                }
+                className={`flex flex-col items-center justify-between ${theme.bg} ${theme.border} ${theme.hoverBg} ${theme.hoverBorder} border-1.5 rounded-[22px] sm:rounded-3xl p-2.5 sm:p-4 cursor-pointer shadow-2xs hover:shadow-md transition-all duration-300 group text-center aspect-[4/4.7] sm:aspect-[4/4.8]`}
+              >
+                {/* Clean Floating Image */}
+                <div className="w-full flex-1 flex items-center justify-center pt-1">
+                  <img
+                    src={item.image || "/categories/vegetables.jpg"}
+                    alt={item.name}
+                    className="w-13 h-13 xs:w-15 xs:h-15 sm:w-18 sm:h-18 object-contain drop-shadow-sm group-hover:scale-110 transition-transform duration-300"
+                  />
+                </div>
+
+                {/* Clean Bold Title */}
+                <div className="w-full pt-1.5">
+                  <h3 className="text-[10.5px] xs:text-[11px] sm:text-xs font-black text-gray-900 leading-tight group-hover:text-black transition-colors line-clamp-2">
+                    {item.name}
+                  </h3>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </div>
