@@ -109,6 +109,9 @@ export default function Nav({ user }: { user: iUser }) {
       if (isOutsideDesktop && isOutsideMobile) {
         setSearchResults([]);
       }
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -461,7 +464,7 @@ export default function Nav({ user }: { user: iUser }) {
         </div>
 
         {/* Tier 2: Main Middle Bar */}
-        <div className="pt-3 pb-2 sm:py-4 px-3.5 sm:px-4 md:px-8 flex items-center justify-between border-b sm:border-b-0 border-gray-100/80 gap-2 sm:gap-4 w-full max-w-full overflow-hidden">
+        <div className="pt-3 pb-2 sm:py-4 px-3.5 sm:px-4 md:px-8 flex items-center justify-between border-b sm:border-b-0 border-gray-100/80 gap-2 sm:gap-4 w-full max-w-full relative z-30">
           {/* Mobile Menu & Logo */}
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 sm:flex-initial">
             <button onClick={() => setmenuopen(true)} className="lg:hidden p-1 text-gray-700 hover:text-[#0f8646] shrink-0">
@@ -650,30 +653,76 @@ export default function Nav({ user }: { user: iUser }) {
           {/* User & Cart */}
           <div className="flex items-center gap-4 shrink-0">
             {/* User Dropdown */}
-            <div className="hidden sm:flex items-center gap-3 cursor-pointer group relative" ref={dropdownRef} onClick={() => setOpen(!open)}>
-              <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 group-hover:bg-green-50 transition-colors">
-                {user?.image ? <img src={user.image} className="w-full h-full rounded-full object-cover" /> : <UserIcon size={20} />}
+            <div
+              className="hidden sm:flex items-center gap-3 cursor-pointer group relative select-none"
+              ref={dropdownRef}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (!user?.email) {
+                  router.push("/login");
+                } else {
+                  setOpen((prev) => !prev);
+                }
+              }}
+            >
+              <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 group-hover:bg-green-50 transition-colors shadow-2xs border border-gray-200/80">
+                {user?.image ? (
+                  <img
+                    src={user.image}
+                    alt={user.name || "User"}
+                    className="w-full h-full rounded-full object-cover"
+                  />
+                ) : (
+                  <UserIcon size={20} />
+                )}
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] font-extrabold text-[#0f8646]">
-                  {user?.email ? `Hi, ${user?.name ? user.name.split(" ")[0] : "Shopper"}` : "Welcome"}
+                  {user?.email
+                    ? `Hi, ${user?.name ? user.name.split(" ")[0] : "Shopper"}`
+                    : "Welcome"}
                 </span>
                 <div className="text-sm font-black text-gray-800 flex items-center gap-1 group-hover:text-[#0f8646] transition-colors">
-                  {user?.email ? "My Profile" : "Login / Signup"} <ChevronDown size={14} />
+                  {user?.email ? "My Profile" : "Login / Signup"}{" "}
+                  <ChevronDown
+                    size={14}
+                    className={`transition-transform duration-200 ${
+                      open ? "rotate-180 text-[#0f8646]" : ""
+                    }`}
+                  />
                 </div>
               </div>
 
               {/* User Menu Popup */}
               <AnimatePresence>
                 {open && (
-                  <motion.div key="user-menu" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="absolute top-full right-0 mt-3 w-56 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50">
-                    <div className="p-4 border-b bg-gray-50">
-                      <p className="font-bold text-gray-800">{user?.name || "Guest"}</p>
-                      <p className="text-xs text-gray-500">{user?.email || "Fresh farm produce"}</p>
+                  <motion.div
+                    key="user-menu"
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    transition={{ duration: 0.15 }}
+                    onClick={(e) => e.stopPropagation()}
+                    className="absolute top-full right-0 mt-3 w-60 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-[999] text-gray-900"
+                  >
+                    <div className="p-4 border-b bg-emerald-50/60 flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-emerald-100 text-[#0f8646] flex items-center justify-center font-black text-base shrink-0 border border-emerald-200">
+                        {user?.name ? user.name.charAt(0).toUpperCase() : "U"}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="font-black text-xs text-gray-900 truncate">
+                          {user?.name || "Shopper"}
+                        </p>
+                        <p className="text-[11px] text-gray-500 truncate font-medium">
+                          {user?.email || "Bhopal Resident"}
+                        </p>
+                      </div>
                     </div>
+
                     {user?.role === "admin" && (
                       <Link
                         href="/admin"
+                        onClick={() => setOpen(false)}
                         className="block px-4 py-2.5 text-xs font-black bg-[#0f8646] text-white hover:bg-[#0c6a38] transition flex items-center justify-between border-b"
                       >
                         <span>👑 Open Admin Center</span>
@@ -682,18 +731,79 @@ export default function Nav({ user }: { user: iUser }) {
                         </span>
                       </Link>
                     )}
-                    <Link href="/user/myorder" className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#0f8646] font-medium border-b">My Orders</Link>
-                    <Link href="/user/wallet" className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#0f8646] font-medium border-b flex items-center justify-between">
-                      <span>MGD Green Wallet</span>
-                      <span className="bg-green-100 text-[#0f8646] text-[10px] font-black px-2 py-0.5 rounded-full">+10% Bonus</span>
+
+                    <Link
+                      href="/user"
+                      onClick={() => setOpen(false)}
+                      className="block px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-[#0f8646] font-bold border-b transition"
+                    >
+                      👤 Account Dashboard
                     </Link>
-                    <Link href="/user/subscriptions" className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#0f8646] font-medium border-b flex items-center justify-between">
+
+                    <Link
+                      href="/user/myorder"
+                      onClick={() => setOpen(false)}
+                      className="block px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-[#0f8646] font-bold border-b transition"
+                    >
+                      📦 My Orders & Tracking
+                    </Link>
+
+                    <Link
+                      href="/user/wallet"
+                      onClick={() => setOpen(false)}
+                      className="block px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-[#0f8646] font-bold border-b flex items-center justify-between transition"
+                    >
+                      <span>🟢 MGD Green Wallet</span>
+                      <span className="bg-green-100 text-[#0f8646] text-[10px] font-black px-2 py-0.5 rounded-full">
+                        +10% Bonus
+                      </span>
+                    </Link>
+
+                    <Link
+                      href="/user/vip-pass"
+                      onClick={() => setOpen(false)}
+                      className="block px-4 py-2.5 text-xs text-gray-700 hover:bg-amber-50 hover:text-amber-800 font-bold border-b flex items-center justify-between transition"
+                    >
+                      <span>👑 Farm Club VIP</span>
+                      <span className="bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-0.5 rounded-full">
+                        VIP Pass
+                      </span>
+                    </Link>
+
+                    <Link
+                      href="/user/subscriptions"
+                      onClick={() => setOpen(false)}
+                      className="block px-4 py-2.5 text-xs text-gray-700 hover:bg-blue-50 hover:text-blue-800 font-bold border-b flex items-center justify-between transition"
+                    >
                       <span>🥛 7 AM Subscriptions</span>
-                      <span className="bg-blue-100 text-blue-800 text-[10px] font-black px-2 py-0.5 rounded-full">New</span>
+                      <span className="bg-blue-100 text-blue-800 text-[10px] font-black px-2 py-0.5 rounded-full">
+                        Daily
+                      </span>
                     </Link>
-                    <Link href="/wishlist" className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#0f8646] font-medium border-b flex justify-between">Wishlist {wishlistItems.length > 0 && <span className="bg-[#0f8646] text-white text-[10px] px-2 rounded-full">{wishlistItems.length}</span>}</Link>
-                    <button onClick={() => signOut({ callbackUrl: "/login" })} className="w-full text-left px-4 py-3 text-sm text-red-600 hover:bg-red-50 font-medium flex items-center gap-2">
-                      <LogOut size={16} /> Logout
+
+                    <Link
+                      href="/wishlist"
+                      onClick={() => setOpen(false)}
+                      className="block px-4 py-2.5 text-xs text-gray-700 hover:bg-rose-50 hover:text-rose-700 font-bold border-b flex justify-between transition"
+                    >
+                      <span>❤️ Saved Wishlist</span>
+                      {wishlistItems.length > 0 && (
+                        <span className="bg-[#0f8646] text-white text-[10px] px-2 rounded-full font-black">
+                          {wishlistItems.length}
+                        </span>
+                      )}
+                    </Link>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setOpen(false);
+                        signOut({ callbackUrl: "/login" });
+                      }}
+                      className="w-full text-left px-4 py-3 text-xs text-red-600 hover:bg-red-50 font-black flex items-center gap-2 transition cursor-pointer"
+                    >
+                      <LogOut size={15} />
+                      <span>Sign Out</span>
                     </button>
                   </motion.div>
                 )}
