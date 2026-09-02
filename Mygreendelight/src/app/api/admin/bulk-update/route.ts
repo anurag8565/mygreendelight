@@ -1,6 +1,7 @@
-﻿import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import connectDb from "@/lib/db";
 import Grocery from "@/model/groseri.model";
+import { auth } from "@/auth";
 
 export const dynamic = "force-dynamic";
 
@@ -11,13 +12,6 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { itemIds, action, value } = body;
 
-    if (!Array.isArray(itemIds) || itemIds.length === 0) {
-      return NextResponse.json(
-        { success: false, message: "No items selected for bulk update" },
-        { status: 400 }
-      );
-    }
-
     if (!action) {
       return NextResponse.json(
         { success: false, message: "Action is required" },
@@ -26,6 +20,45 @@ export async function POST(req: NextRequest) {
     }
 
     let modifiedCount = 0;
+
+    // 1. WIPE ENTIRE INVENTORY
+    if (action === "wipe_all") {
+      const res = await Grocery.deleteMany({});
+      modifiedCount = res.deletedCount;
+      return NextResponse.json({
+        success: true,
+        message: `Successfully wiped all ${modifiedCount} produce items from database!`,
+        modifiedCount,
+      });
+    }
+
+    // 2. DELETE ALL IN A SPECIFIC CATEGORY
+    if (action === "delete_category") {
+      const categoryName = String(value || "").trim();
+      if (!categoryName) {
+        return NextResponse.json(
+          { success: false, message: "Category name required" },
+          { status: 400 }
+        );
+      }
+      const res = await Grocery.deleteMany({
+        category: { $regex: new RegExp(`^${categoryName}$`, "i") },
+      });
+      modifiedCount = res.deletedCount;
+      return NextResponse.json({
+        success: true,
+        message: `Successfully deleted all ${modifiedCount} items in "${categoryName}" from database!`,
+        modifiedCount,
+      });
+    }
+
+    // For item-specific actions, itemIds array is required
+    if (!Array.isArray(itemIds) || itemIds.length === 0) {
+      return NextResponse.json(
+        { success: false, message: "No items selected for bulk update" },
+        { status: 400 }
+      );
+    }
 
     if (action === "discount") {
       const discountPercent = Number(value);

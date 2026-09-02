@@ -31,6 +31,38 @@ export default function BulkUploadPage() {
     errors?: any[];
   } | null>(null);
 
+  // Wipe State
+  const [showWipeModal, setShowWipeModal] = useState(false);
+  const [wipeConfirmText, setWipeConfirmText] = useState("");
+  const [wipeLoading, setWipeLoading] = useState(false);
+
+  const handleExecuteWipe = async () => {
+    if (wipeConfirmText.trim().toUpperCase() !== "DELETE") {
+      alert('Please type "DELETE" to confirm wiping produce from database.');
+      return;
+    }
+
+    try {
+      setWipeLoading(true);
+      const res = await axios.post("/api/admin/bulk-update", {
+        action: "wipe_all",
+      });
+
+      if (res.data.success) {
+        alert(`✓ ${res.data.message}`);
+        setShowWipeModal(false);
+        setWipeConfirmText("");
+      } else {
+        alert(res.data.message || "Wipe failed");
+      }
+    } catch (err: any) {
+      console.error("Wipe error:", err);
+      alert(err.response?.data?.message || "Failed to wipe produce from database.");
+    } finally {
+      setWipeLoading(false);
+    }
+  };
+
   // Sample CSV Template Generator
   const downloadSampleCSV = () => {
     const csvContent =
@@ -199,6 +231,18 @@ export default function BulkUploadPage() {
             >
               <Download size={14} />
               <span>Blank CSV Template</span>
+            </button>
+
+            <button
+              onClick={() => {
+                setWipeConfirmText("");
+                setShowWipeModal(true);
+              }}
+              className="bg-red-50 hover:bg-red-100 border border-red-200 text-red-700 px-3.5 py-2 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
+              title="Wipe Old Products Database"
+            >
+              <Trash2 size={14} />
+              <span>Reset & Wipe Produce DB</span>
             </button>
 
             <Link
@@ -492,9 +536,69 @@ export default function BulkUploadPage() {
               </div>
             </div>
           )}
-        </div>
-      </main>
-    </div>
+        {/* 🧹 BULK WIPE / RESET INVENTORY MODAL */}
+        {showWipeModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in">
+            <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-red-100">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center shrink-0">
+                  <Trash2 size={24} />
+                </div>
+                <div>
+                  <h3 className="text-lg font-black text-gray-900">
+                    Reset & Wipe Produce Database
+                  </h3>
+                  <span className="text-[11px] font-bold text-red-600 uppercase tracking-wider">
+                    ⚠️ Danger Zone • Complete Inventory Reset
+                  </span>
+                </div>
+              </div>
+
+              <p className="text-xs text-gray-600 leading-relaxed mb-4">
+                This will permanently delete <strong>all produce items</strong> uploaded from old CSV/JSON sheets from your
+                MongoDB database. This allows you to start clean and upload a brand new catalog without duplicates.
+              </p>
+
+              <div className="space-y-3 mb-6">
+                <label className="block text-xs font-black text-gray-700">
+                  Type <span className="font-mono text-red-600 bg-red-50 px-1.5 py-0.5 rounded border border-red-200">DELETE</span> to confirm:
+                </label>
+                <input
+                  type="text"
+                  placeholder="Type DELETE"
+                  value={wipeConfirmText}
+                  onChange={(e) => setWipeConfirmText(e.target.value)}
+                  className="w-full px-3.5 py-2.5 rounded-xl border-2 border-red-200 focus:border-red-600 outline-none text-sm font-black text-red-700 tracking-wider font-mono bg-red-50/30"
+                />
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowWipeModal(false);
+                    setWipeConfirmText("");
+                  }}
+                  className="px-4 py-2 rounded-xl text-xs font-black text-gray-600 hover:bg-gray-100 cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  disabled={wipeLoading || wipeConfirmText.trim().toUpperCase() !== "DELETE"}
+                  onClick={handleExecuteWipe}
+                  className="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-black shadow-md transition disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer flex items-center gap-1.5"
+                >
+                  <Trash2 size={14} />
+                  <span>{wipeLoading ? "Wiping Database..." : "Permanently Wipe from Database"}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </main>
   </div>
+</div>
 );
 }

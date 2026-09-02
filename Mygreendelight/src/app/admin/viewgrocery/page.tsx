@@ -74,12 +74,21 @@ export default function ViewGrocery() {
   const [bulkRestockInput, setBulkRestockInput] = useState("25");
   const [bulkCategoryInput, setBulkCategoryInput] = useState("");
 
+  // Wipe / Clean State
+  const [showWipeModal, setShowWipeModal] = useState(false);
+  const [wipeConfirmText, setWipeConfirmText] = useState("");
+  const [wipeCategoryTarget, setWipeCategoryTarget] = useState<string | null>(null);
+
   const toggleSelectAll = () => {
     if (selectedIds.length === filteredGroceries.length && filteredGroceries.length > 0) {
       setSelectedIds([]);
     } else {
       setSelectedIds(filteredGroceries.map((g) => g._id));
     }
+  };
+
+  const selectAllInDatabase = () => {
+    setSelectedIds(groceries.map((g) => g._id));
   };
 
   const toggleSelectItem = (id: string) => {
@@ -96,7 +105,7 @@ export default function ViewGrocery() {
 
     if (
       action === "delete" &&
-      !confirm(`Are you sure you want to delete ${selectedIds.length} selected produce item(s)?`)
+      !confirm(`Are you sure you want to permanently delete ${selectedIds.length} selected produce item(s) from database?`)
     ) {
       return;
     }
@@ -119,6 +128,37 @@ export default function ViewGrocery() {
     } catch (err: any) {
       console.error("Bulk update error:", err);
       alert(err.response?.data?.message || "Failed to execute bulk update.");
+    } finally {
+      setBulkLoading(false);
+    }
+  };
+
+  const handleExecuteWipe = async () => {
+    if (wipeConfirmText.trim().toUpperCase() !== "DELETE") {
+      alert('Please type "DELETE" to confirm wiping produce from database.');
+      return;
+    }
+
+    try {
+      setBulkLoading(true);
+      const res = await axios.post("/api/admin/bulk-update", {
+        action: wipeCategoryTarget ? "delete_category" : "wipe_all",
+        value: wipeCategoryTarget,
+      });
+
+      if (res.data.success) {
+        alert(`✓ ${res.data.message}`);
+        setShowWipeModal(false);
+        setWipeConfirmText("");
+        setWipeCategoryTarget(null);
+        setSelectedIds([]);
+        fetchGroceries();
+      } else {
+        alert(res.data.message || "Wipe failed");
+      }
+    } catch (err: any) {
+      console.error("Wipe error:", err);
+      alert(err.response?.data?.message || "Failed to wipe produce from database.");
     } finally {
       setBulkLoading(false);
     }
@@ -330,6 +370,19 @@ export default function ViewGrocery() {
               <FileSpreadsheet size={15} />
               <span>Bulk CSV Upload</span>
             </Link>
+
+            <button
+              onClick={() => {
+                setWipeCategoryTarget(null);
+                setWipeConfirmText("");
+                setShowWipeModal(true);
+              }}
+              className="bg-red-50 hover:bg-red-100 border border-red-200 text-red-700 px-3.5 py-2 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
+              title="Bulk Wipe & Clean Database"
+            >
+              <Trash2 size={14} />
+              <span>Bulk Clean / Reset</span>
+            </button>
 
             <Link
               href="/admin/addgrocery"
@@ -975,6 +1028,115 @@ export default function ViewGrocery() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* 🧹 BULK WIPE / RESET INVENTORY DANGER ZONE MODAL */}
+      {showWipeModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-red-100">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center shrink-0">
+                <Trash2 size={24} />
+              </div>
+              <div>
+                <h3 className="text-lg font-black text-gray-900">
+                  {wipeCategoryTarget
+                    ? `Wipe All "${wipeCategoryTarget}" Produce`
+                    : "Wipe Entire Produce Inventory"}
+                </h3>
+                <span className="text-[11px] font-bold text-red-600 uppercase tracking-wider">
+                  ⚠️ Danger Zone • Permanent Action
+                </span>
+              </div>
+            </div>
+
+            <p className="text-xs text-gray-600 leading-relaxed mb-4">
+              {wipeCategoryTarget ? (
+                <>
+                  This will permanently delete <strong>all produce items</strong> under category{" "}
+                  <span className="font-bold text-gray-900">&quot;{wipeCategoryTarget}&quot;</span> from your
+                  MongoDB database.
+                </>
+              ) : (
+                <>
+                  This will permanently delete <strong>all {groceries.length} produce items</strong> from your
+                  live MongoDB database. This action cannot be undone. Use this when resetting inventory after
+                  uploading test CSVs.
+                </>
+              )}
+            </p>
+
+            {/* Quick Category Wipe Select (If wiping by category) */}
+            {!wipeCategoryTarget && categories.length > 0 && (
+              <div className="mb-4 bg-gray-50 p-3 rounded-2xl border border-gray-200">
+                <span className="text-[11px] font-black text-gray-700 block mb-1.5">
+                  Or Wipe a Specific Category Only:
+                </span>
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  {categories.map((c) => (
+                    <button
+                      key={c._id}
+                      type="button"
+                      onClick={() => setWipeCategoryTarget(c.name)}
+                      className="px-2.5 py-1 bg-white hover:bg-red-50 text-gray-800 hover:text-red-700 border border-gray-200 hover:border-red-300 rounded-lg text-[11px] font-bold transition cursor-pointer"
+                    >
+                      {c.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {wipeCategoryTarget && (
+              <div className="mb-4 flex items-center justify-between bg-red-50 p-2.5 rounded-xl border border-red-200 text-xs font-bold text-red-800">
+                <span>Targeting Category: <strong>{wipeCategoryTarget}</strong></span>
+                <button
+                  type="button"
+                  onClick={() => setWipeCategoryTarget(null)}
+                  className="text-[11px] text-red-600 hover:underline cursor-pointer"
+                >
+                  Switch to Wipe All
+                </button>
+              </div>
+            )}
+
+            <div className="space-y-3 mb-6">
+              <label className="block text-xs font-black text-gray-700">
+                Type <span className="font-mono text-red-600 bg-red-50 px-1.5 py-0.5 rounded border border-red-200">DELETE</span> to confirm:
+              </label>
+              <input
+                type="text"
+                placeholder="Type DELETE"
+                value={wipeConfirmText}
+                onChange={(e) => setWipeConfirmText(e.target.value)}
+                className="w-full px-3.5 py-2.5 rounded-xl border-2 border-red-200 focus:border-red-600 outline-none text-sm font-black text-red-700 tracking-wider font-mono bg-red-50/30"
+              />
+            </div>
+
+            <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowWipeModal(false);
+                  setWipeConfirmText("");
+                  setWipeCategoryTarget(null);
+                }}
+                className="px-4 py-2 rounded-xl text-xs font-black text-gray-600 hover:bg-gray-100 cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={bulkLoading || wipeConfirmText.trim().toUpperCase() !== "DELETE"}
+                onClick={handleExecuteWipe}
+                className="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-black shadow-md transition disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer flex items-center gap-1.5"
+              >
+                <Trash2 size={14} />
+                <span>{bulkLoading ? "Wiping Database..." : "Permanently Wipe from Database"}</span>
+              </button>
+            </div>
           </div>
         </div>
       )}
