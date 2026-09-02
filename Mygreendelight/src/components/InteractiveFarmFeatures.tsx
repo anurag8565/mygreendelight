@@ -98,7 +98,7 @@ export default function InteractiveFarmFeatures() {
               <motion.div
                 key={idx}
                 whileHover={{ y: -4 }}
-                className="w-[84vw] xs:w-[300px] md:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)] shrink-0 snap-center md:snap-start rounded-3xl p-4 sm:p-5 border bg-gradient-to-br ${f.gradient} shadow-2xs hover:shadow-md transition-all flex flex-col justify-between"
+                className="w-[84vw] xs:w-[300px] md:w-[calc(50%-10px)] shrink-0 snap-center md:snap-start rounded-3xl p-4 sm:p-5 border bg-gradient-to-br ${f.gradient} shadow-2xs hover:shadow-md transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-3">

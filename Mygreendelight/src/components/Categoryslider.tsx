@@ -79,8 +79,11 @@ export default function CategorySlider({
     fetch("/api/admin/category")
       .then((res) => res.json())
       .then((data) => {
-        if (data.success && data.categories && data.categories.length > 0) {
-          setLoadedCategories(data.categories);
+        if (data.success && data.categories && data.categories.length >= 4) {
+          // If less than 6 from DB, merge with default categories so carousel has rich sliding content
+          const names = new Set(data.categories.map((c: any) => c.name.toLowerCase()));
+          const extra = defaultCategories.filter((dc) => !names.has(dc.name.toLowerCase()));
+          setLoadedCategories([...data.categories, ...extra]);
         } else {
           setLoadedCategories(defaultCategories);
         }
@@ -90,8 +93,15 @@ export default function CategorySlider({
       });
   }, [categories]);
 
-  const activeCategories =
-    loadedCategories.length > 0 ? loadedCategories : defaultCategories;
+  // Ensure there are always at least 8 categories so the desktop carousel fills nicely
+  const getFullCategories = () => {
+    if (loadedCategories.length >= 6) return loadedCategories;
+    const names = new Set(loadedCategories.map((c: any) => c.name.toLowerCase()));
+    const extra = defaultCategories.filter((dc) => !names.has(dc.name.toLowerCase()));
+    return [...loadedCategories, ...extra];
+  };
+
+  const activeCategories = getFullCategories();
 
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
@@ -172,7 +182,7 @@ export default function CategorySlider({
           <div
             ref={scrollRef}
             onScroll={handleScroll}
-            className="flex overflow-x-auto gap-4 sm:gap-7 pb-3 pt-1 snap-x snap-mandatory scrollbar-none -mx-3.5 px-3.5 sm:mx-0 sm:px-0 scroll-smooth items-start"
+            className="flex overflow-x-auto gap-4 sm:gap-6 md:gap-8 pb-3 pt-1 snap-x snap-mandatory scrollbar-none -mx-3.5 px-3.5 sm:mx-0 sm:px-0 scroll-smooth items-start"
           >
             {activeCategories.map((item, idx) => (
               <motion.div
@@ -182,10 +192,10 @@ export default function CategorySlider({
                 onClick={() =>
                   router.push(`/shop?category=${encodeURIComponent(item.name)}`)
                 }
-                className="flex flex-col items-center shrink-0 cursor-pointer snap-start group text-center w-[78px] xs:w-[86px] sm:w-[110px]"
+                className="flex flex-col items-center shrink-0 cursor-pointer snap-start group text-center w-[78px] xs:w-[86px] sm:w-[110px] md:w-[130px]"
               >
                 {/* Perfect Circular Image Frame with Emerald Glow Ring */}
-                <div className="w-[72px] h-[72px] xs:w-[80px] xs:h-[80px] sm:w-[98px] sm:h-[98px] rounded-full overflow-hidden bg-white border-2 border-white shadow-md ring-2 ring-emerald-100/90 group-hover:ring-[#0f8646] transition-all duration-300 flex items-center justify-center relative p-0.5">
+                <div className="w-[72px] h-[72px] xs:w-[80px] xs:h-[80px] sm:w-[98px] sm:h-[98px] md:w-[115px] md:h-[115px] rounded-full overflow-hidden bg-white border-2 border-white shadow-md ring-2 ring-emerald-100/90 group-hover:ring-[#0f8646] transition-all duration-300 flex items-center justify-center relative p-0.5">
                   <img
                     src={item.image || "/categories/vegetables.jpg"}
                     alt={item.name}
@@ -194,7 +204,7 @@ export default function CategorySlider({
                 </div>
 
                 {/* Clean Bold Category Label */}
-                <span className="text-[11px] sm:text-xs font-black text-gray-800 group-hover:text-[#0f8646] transition-colors line-clamp-1 mt-2 tracking-tight">
+                <span className="text-[11px] sm:text-xs md:text-sm font-black text-gray-800 group-hover:text-[#0f8646] transition-colors line-clamp-1 mt-2 tracking-tight">
                   {item.name}
                 </span>
               </motion.div>

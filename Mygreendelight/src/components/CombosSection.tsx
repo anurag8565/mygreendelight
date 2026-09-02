@@ -122,7 +122,7 @@ export default function CombosSection({
                   key={c._id}
                   whileHover={{ y: -4 }}
                   transition={{ duration: 0.2 }}
-                  className="w-[84vw] xs:w-[295px] md:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)] shrink-0 snap-center md:snap-start bg-white rounded-3xl border border-gray-200/90 hover:border-amber-300 p-3.5 sm:p-5 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between relative overflow-hidden group/card"
+                  className="w-[84vw] xs:w-[295px] md:w-[calc(50%-10px)] shrink-0 snap-center md:snap-start bg-white rounded-3xl border border-gray-200/90 hover:border-amber-300 p-3.5 sm:p-5 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between relative overflow-hidden group/card"
                 >
                   {/* Badge */}
                   <div className="absolute top-3 left-3 z-10">
