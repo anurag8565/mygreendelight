@@ -103,10 +103,10 @@ export default function CategorySlider({
   }
 
   return (
-    <div className="w-full py-3 sm:py-5 bg-white font-sans">
+    <div className="w-full py-5 sm:py-8 bg-[#f8f9fa] border-y border-gray-100 font-sans">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Header Row */}
-        <div className="flex items-center justify-between mb-3 sm:mb-4">
+        <div className="flex items-center justify-between mb-3.5 sm:mb-5">
           <div>
             <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
               Shop by Category
@@ -151,10 +151,10 @@ export default function CategorySlider({
                 onClick={() =>
                   router.push(`/shop?category=${encodeURIComponent(item.name)}`)
                 }
-                className="group cursor-pointer rounded-2xl sm:rounded-3xl p-2.5 bg-[#fbfbfb] hover:bg-white border border-gray-100 hover:border-gray-200 shadow-[0_1px_4px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] transition-all duration-300 flex flex-col justify-between relative overflow-hidden"
+                className="group cursor-pointer rounded-2xl sm:rounded-3xl p-2.5 sm:p-3 bg-white hover:border-emerald-300 border border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col justify-between relative overflow-hidden"
               >
                 {/* Upper Photo Window */}
-                <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-white mb-2 shadow-2xs">
+                <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-gray-50 mb-2">
                   <img
                     src={imageSrc}
                     alt={config.displayName}

@@ -14,15 +14,15 @@ export default function FeaturedProduceSection({
   if (!products || products.length === 0) return null;
 
   return (
-    <div className="w-full py-3 sm:py-5 bg-white font-sans">
+    <div className="w-full py-5 sm:py-8 bg-[#f8f9fa] border-y border-gray-100 font-sans">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Section Header */}
-        <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4">
+        <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">
           <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
             <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
               👑 Bhopal Bestsellers
             </h2>
-            <span className="bg-amber-50 text-amber-800 border border-amber-200/80 text-[10.5px] font-bold px-2 py-0.5 rounded-full inline-flex items-center gap-1">
+            <span className="bg-amber-50 text-amber-800 border border-amber-200/80 text-[10.5px] font-bold px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">
               <Star size={10} className="fill-amber-500 text-amber-500" />
               <span>4.8+ Rated</span>
             </span>

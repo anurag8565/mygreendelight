@@ -80,42 +80,42 @@ export default async function Userdashbord() {
   const plainCombos = JSON.parse(JSON.stringify(comboBundles || []))
 
   return (
-    <div className="bg-white w-full max-w-full overflow-x-hidden font-sans space-y-1 sm:space-y-2">
-      {/* 1. High-Converting Sliding Hero Banner (Managed in Admin /managebanners) */}
+    <div className="bg-white w-full max-w-full overflow-x-hidden font-sans">
+      {/* 1. Tone 1: Hero Banner (White Background) */}
       <Hero banners={plainBanners} />
 
-      {/* 2. Shop by Category Slider (Managed in Admin /manage-categories) */}
+      {/* 2. Tone 2: Shop by Category Slider (Soft Luxury Gray #f8f9fa) */}
       <Categoryslider categories={plainCategories} />
 
-      {/* 3. 🔥 Live Flash Deals & Steal Discounts (Managed in Admin /manage-flash-deals) */}
+      {/* 3. Tone 1: Live Flash Deals & Steal Discounts (Pure White) */}
       {plainFlash && plainFlash.length > 0 && (
         <FlashDeals products={plainFlash} />
       )}
 
-      {/* 4. 👑 Bhopal Top Bestsellers & Featured Picks (Top Rated & Customer Favorites) */}
+      {/* 4. Tone 2: Bhopal Top Bestsellers & Featured Picks (Soft Luxury Gray #f8f9fa) */}
       {plainFeatured && plainFeatured.length > 0 && (
         <FeaturedProduceSection products={plainFeatured} />
       )}
 
-      {/* 5. Live Bhopal Mandi Rate & Price Drop Ticker (Managed in Admin /manage-mandi) */}
+      {/* 5. Ticker: Live Bhopal Mandi Rate & Price Drop Ticker */}
       <MandiPriceTicker initialRates={plainMandiRates} />
 
-      {/* 6. 🥬 Daily Fresh Farm Mandi & 1-Tap Category Filter Grid (Managed in Admin /viewgrocery) */}
+      {/* 6. Tone 1: Daily Fresh Farm Mandi & 1-Tap Category Filter Grid (Pure White) */}
       <FilteredProduceSection groceries={plainNew} />
 
-      {/* 7. ⚡ Save-More Value Combos & Multipacks (Managed in Admin /manage-combos) */}
+      {/* 7. Tone 2: Save-More Value Combos & Multipacks (Soft Luxury Gray #f8f9fa) */}
       {plainCombos && plainCombos.length > 0 && (
         <CombosSection initialCombos={plainCombos} />
       )}
 
-      {/* 8. 🎁 Daily Lucky Scratch Card & Rewards (Managed in Admin /manage-rewards) */}
+      {/* 8. Tone 1: Daily Lucky Scratch Card & Rewards (Pure White) */}
       <DailyRewardWidget />
 
-      {/* 9. Order Again Carousel (Only for logged in users with previous orders) */}
+      {/* 9. Tone 2: Order Again Carousel (Soft Luxury Gray #f8f9fa) */}
       {plainOrderAgain && plainOrderAgain.length > 0 && (
-        <div className="w-full py-3 sm:py-5 bg-white font-sans">
+        <div className="w-full py-5 sm:py-8 bg-[#f8f9fa] border-y border-gray-100 font-sans">
           <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
-             <div className="flex items-center justify-between mb-3 sm:mb-4">
+             <div className="flex items-center justify-between mb-3.5 sm:mb-5">
                 <div className="flex items-center gap-2">
                    <RotateCcw size={18} className="text-[#0c831f]" />
                    <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
@@ -135,13 +135,13 @@ export default async function Userdashbord() {
         </div>
       )}
 
-      {/* 10. Customer Testimonials & Reviews (Managed in Admin /managetestimonials) */}
+      {/* 10. Tone 1: Customer Testimonials & Reviews (Pure White) */}
       <Testimonials initialTestimonials={plainTestimonials} />
 
-      {/* 11. Farm to Fork Freshness Promise & Trust Guarantee */}
+      {/* 11. Tone 2: Farm to Fork Freshness Promise & Trust Guarantee (Soft Luxury Gray #f8f9fa) */}
       <FarmFreshPromise />
 
-      {/* 12. PreFooter Trust Elements */}
+      {/* 12. Tone 1: PreFooter Trust Elements (Pure White) */}
       <PreFooter />
     </div>
   )
