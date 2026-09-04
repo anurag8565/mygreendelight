@@ -115,7 +115,7 @@ export default function Footer() {
                 <Link href="/shop?category=Fruits" className="hover:text-white transition">
                   🍎 Farm Fresh Fruits
                 </Link>
-                <Link href="/shop?category=Dairy%20%26%20Bakery" className="hover:text-white transition">
+                <Link href="/shop?category=Dairy%20%26%20Staples" className="hover:text-white transition">
                   🥛 Desi Cow Milk & Paneer
                 </Link>
                 <Link href="/shop/custom-box" className="hover:text-white transition text-emerald-300 font-bold">
@@ -136,14 +136,14 @@ export default function Footer() {
                 <Link href="/shop" className="hover:text-white transition">
                   Shop All Produce
                 </Link>
-                <Link href="/user/wallet" className="hover:text-white transition text-yellow-300 font-bold">
-                  MGD Green Wallet
+                <Link href="/offers" className="hover:text-white transition text-amber-300 font-bold">
+                  🏷️ Offers & Coupons
                 </Link>
-                <Link href="/user/vip-pass" className="hover:text-white transition text-amber-300 font-bold">
-                  VIP Farm Pass
+                <Link href="/wishlist" className="hover:text-white transition">
+                  ❤️ Saved Wishlist
                 </Link>
-                <Link href="/user/subscriptions" className="hover:text-white transition text-emerald-300 font-bold">
-                  🥛 7 AM Subscriptions
+                <Link href="/about" className="hover:text-white transition">
+                  🌿 Our Farm Story
                 </Link>
                 <Link href="/user/myorder" className="hover:text-white transition">
                   Track Live Order
