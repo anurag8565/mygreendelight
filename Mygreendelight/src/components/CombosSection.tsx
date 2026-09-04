@@ -23,7 +23,6 @@ export default function CombosSection({
   const [combos] = useState<any[]>(initialCombos);
   const [addedIds, setAddedIds] = useState<Record<string, boolean>>({});
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [currentMobileIndex, setCurrentMobileIndex] = useState(0);
 
   if (!combos || combos.length === 0) return null;
 
@@ -46,14 +45,6 @@ export default function CombosSection({
     setTimeout(() => {
       setAddedIds((prev) => ({ ...prev, [combo._id]: false }));
     }, 2500);
-  };
-
-  const handleScroll = () => {
-    if (scrollRef.current) {
-      const { scrollLeft, clientWidth } = scrollRef.current;
-      const index = Math.round(scrollLeft / (clientWidth * 0.85));
-      setCurrentMobileIndex(Math.min(index, combos.length - 1));
-    }
   };
 
   const scroll = (direction: "left" | "right") => {
@@ -178,7 +169,7 @@ export default function CombosSection({
           })}
         </div>
 
-        {/* 2. MOBILE VIEW: 1 Card Prominent Carousel with Left/Right Buttons & Dots */}
+        {/* 2. MOBILE VIEW: 1 Card Prominent Carousel with Left/Right Buttons */}
         <div className="block md:hidden relative">
           {/* Mobile Left Arrow Button */}
           <button
@@ -192,8 +183,7 @@ export default function CombosSection({
 
           <div
             ref={scrollRef}
-            onScroll={handleScroll}
-            className="flex gap-3 overflow-x-auto scrollbar-none snap-x snap-mandatory py-1 -mx-3.5 px-3.5 touch-pan-x"
+            className="flex gap-3 overflow-x-auto scrollbar-none py-1 -mx-3.5 px-3.5 overscroll-x-contain"
             style={{ WebkitOverflowScrolling: "touch" }}
           >
             {combos.map((combo) => {
@@ -210,7 +200,7 @@ export default function CombosSection({
               return (
                 <div
                   key={combo._id}
-                  className="w-[86vw] xs:w-[88vw] shrink-0 snap-center bg-white rounded-3xl border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.05)] flex flex-col justify-between p-3.5 relative"
+                  className="w-[86vw] xs:w-[88vw] shrink-0 bg-white rounded-3xl border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.05)] flex flex-col justify-between p-3.5 relative"
                 >
                   <div>
                     {/* Full-Bleed 1-Card Mobile Photo */}
@@ -285,20 +275,6 @@ export default function CombosSection({
           >
             <ChevronRight size={16} className="stroke-[2.5]" />
           </button>
-
-          {/* Mobile Dots Indicator */}
-          <div className="flex items-center justify-center gap-1.5 mt-3">
-            {combos.map((_, idx) => (
-              <div
-                key={idx}
-                className={`transition-all rounded-full ${
-                  currentMobileIndex === idx
-                    ? "w-5 h-1.5 bg-[#0c831f]"
-                    : "w-1.5 h-1.5 bg-gray-200"
-                }`}
-              />
-            ))}
-          </div>
         </div>
       </div>
     </div>

@@ -79,7 +79,7 @@ export default async function Userdashbord() {
   const plainCombos = JSON.parse(JSON.stringify(comboBundles || []))
 
   return (
-    <div className="bg-white w-full max-w-full overflow-x-hidden font-sans">
+    <div className="bg-white w-full max-w-full overflow-x-clip font-sans">
       {/* 1. Tone 1: Hero Banner (White Background) */}
       <Hero banners={plainBanners} />
 

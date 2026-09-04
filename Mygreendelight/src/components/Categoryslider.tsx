@@ -130,7 +130,7 @@ export default function CategorySlider({
 
         {/* Real HD Photo Category Swipeable Carousel on Mobile, 5-col Grid on Desktop */}
         <div
-          className="flex md:grid md:grid-cols-5 gap-3 sm:gap-3.5 md:gap-4 overflow-x-auto md:overflow-visible pb-2 pt-1 scrollbar-none snap-x snap-mandatory -mx-3.5 px-3.5 sm:mx-0 sm:px-0 touch-pan-x"
+          className="flex md:grid md:grid-cols-5 gap-3 sm:gap-3.5 md:gap-4 overflow-x-auto md:overflow-visible pb-2 pt-1 scrollbar-none -mx-3.5 px-3.5 sm:mx-0 sm:px-0 overscroll-x-contain"
           style={{ WebkitOverflowScrolling: "touch" }}
         >
           {activeCategories.map((item, idx) => {
