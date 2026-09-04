@@ -20,14 +20,14 @@ export default function ProductCarousel({ children }: { children: React.ReactNod
 
   return (
     <div className="relative w-full max-w-full">
-      {/* Left Floating Arrow Button (Desktop Only) */}
+      {/* Left Floating Arrow Button (Visible on Mobile & Desktop) */}
       <button
         type="button"
         onClick={() => scroll("left")}
         aria-label="Scroll left"
-        className="hidden md:flex absolute -left-3.5 lg:-left-4 top-[75px] -translate-y-1/2 z-20 bg-white hover:bg-gray-50 text-gray-800 hover:text-[#0c831f] w-9 h-9 rounded-full items-center justify-center transition-all shadow-[0_2px_8px_rgba(0,0,0,0.12)] hover:shadow-md border border-gray-200/90 active:scale-90 cursor-pointer"
+        className="flex absolute -left-1 sm:-left-3.5 lg:-left-4 top-[70px] sm:top-[75px] -translate-y-1/2 z-20 bg-white/95 backdrop-blur-xs hover:bg-white text-gray-800 hover:text-[#0c831f] w-7 h-7 sm:w-9 sm:h-9 rounded-full items-center justify-center transition-all shadow-[0_2px_8px_rgba(0,0,0,0.14)] hover:shadow-md border border-gray-200/90 active:scale-90 cursor-pointer"
       >
-        <ChevronLeft size={20} className="stroke-[2.5]" />
+        <ChevronLeft size={16} className="sm:w-5 sm:h-5 stroke-[2.5]" />
       </button>
 
       {/* Scroll Container with full mobile edge bleed and touch support */}
@@ -39,14 +39,14 @@ export default function ProductCarousel({ children }: { children: React.ReactNod
         {children}
       </div>
 
-      {/* Right Floating Arrow Button (Desktop Only) */}
+      {/* Right Floating Arrow Button (Visible on Mobile & Desktop) */}
       <button
         type="button"
         onClick={() => scroll("right")}
         aria-label="Scroll right"
-        className="hidden md:flex absolute -right-3.5 lg:-right-4 top-[75px] -translate-y-1/2 z-20 bg-white hover:bg-gray-50 text-gray-800 hover:text-[#0c831f] w-9 h-9 rounded-full items-center justify-center transition-all shadow-[0_2px_8px_rgba(0,0,0,0.12)] hover:shadow-md border border-gray-200/90 active:scale-90 cursor-pointer"
+        className="flex absolute -right-1 sm:-right-3.5 lg:-right-4 top-[70px] sm:top-[75px] -translate-y-1/2 z-20 bg-white/95 backdrop-blur-xs hover:bg-white text-gray-800 hover:text-[#0c831f] w-7 h-7 sm:w-9 sm:h-9 rounded-full items-center justify-center transition-all shadow-[0_2px_8px_rgba(0,0,0,0.14)] hover:shadow-md border border-gray-200/90 active:scale-90 cursor-pointer"
       >
-        <ChevronRight size={20} className="stroke-[2.5]" />
+        <ChevronRight size={16} className="sm:w-5 sm:h-5 stroke-[2.5]" />
       </button>
     </div>
   );

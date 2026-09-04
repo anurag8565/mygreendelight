@@ -71,7 +71,7 @@ export default function CombosSection({
   };
 
   return (
-    <div className="w-full py-3.5 sm:py-6 bg-white font-sans">
+    <div className="w-full py-5 sm:py-8 bg-[#f8f9fa] border-y border-gray-100 font-sans">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Section Header */}
         <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">
@@ -178,12 +178,23 @@ export default function CombosSection({
           })}
         </div>
 
-        {/* 2. MOBILE VIEW: 1 Card Prominent Carousel with Swipeable Snapping */}
-        <div className="block md:hidden">
+        {/* 2. MOBILE VIEW: 1 Card Prominent Carousel with Left/Right Buttons & Dots */}
+        <div className="block md:hidden relative">
+          {/* Mobile Left Arrow Button */}
+          <button
+            type="button"
+            onClick={() => scroll("left")}
+            aria-label="Scroll left"
+            className="flex absolute -left-1.5 top-[95px] -translate-y-1/2 z-20 bg-white/95 backdrop-blur-xs text-gray-900 w-7 h-7 rounded-full items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.15)] border border-gray-200/90 active:scale-90 cursor-pointer"
+          >
+            <ChevronLeft size={16} className="stroke-[2.5]" />
+          </button>
+
           <div
             ref={scrollRef}
             onScroll={handleScroll}
-            className="flex gap-3 overflow-x-auto scrollbar-none snap-x snap-mandatory py-1 -mx-3.5 px-3.5"
+            className="flex gap-3 overflow-x-auto scrollbar-none snap-x snap-mandatory py-1 -mx-3.5 px-3.5 touch-pan-x"
+            style={{ WebkitOverflowScrolling: "touch" }}
           >
             {combos.map((combo) => {
               const isAdded = addedIds[combo._id];
@@ -264,6 +275,16 @@ export default function CombosSection({
               );
             })}
           </div>
+
+          {/* Mobile Right Arrow Button */}
+          <button
+            type="button"
+            onClick={() => scroll("right")}
+            aria-label="Scroll right"
+            className="flex absolute -right-1.5 top-[95px] -translate-y-1/2 z-20 bg-white/95 backdrop-blur-xs text-gray-900 w-7 h-7 rounded-full items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.15)] border border-gray-200/90 active:scale-90 cursor-pointer"
+          >
+            <ChevronRight size={16} className="stroke-[2.5]" />
+          </button>
 
           {/* Mobile Dots Indicator */}
           <div className="flex items-center justify-center gap-1.5 mt-3">
