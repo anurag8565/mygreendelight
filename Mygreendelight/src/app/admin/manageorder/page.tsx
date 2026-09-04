@@ -289,9 +289,9 @@ export default function ManageOrder() {
 
     if (!custLat || !custLng) return null;
 
-    // If rider has GPS coordinates, compute distance from rider, otherwise from Bhopal Central Hub (23.2599, 77.4126)
-    const originLat = riderLat || 23.259933;
-    const originLng = riderLng || 77.412613;
+    // If rider has GPS coordinates, compute distance from rider, otherwise from Bagsewaniya Store (23.1985, 77.4475)
+    const originLat = riderLat || 23.1985;
+    const originLng = riderLng || 77.4475;
 
     const R = 6371; // Earth radius in km
     const dLat = ((custLat - originLat) * Math.PI) / 180;
@@ -751,7 +751,7 @@ export default function ManageOrder() {
                               <div className="flex items-center gap-1.5 bg-white/90 px-3 py-1.5 rounded-xl border border-emerald-300 shadow-2xs">
                                 <Navigation size={13} className="text-[#0f8646] animate-pulse" />
                                 <span>
-                                  {gpsInfo.hasRiderGPS ? "Live Fleet Radar:" : "Hub to Customer:"}{" "}
+                                  {gpsInfo.hasRiderGPS ? "Live Fleet Radar:" : "Store to Customer:"}{" "}
                                   <strong className="text-[#0f8646] font-black">
                                     {gpsInfo.distKm} km away
                                   </strong>{" "}

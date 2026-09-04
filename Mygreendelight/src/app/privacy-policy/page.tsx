@@ -88,7 +88,7 @@ export default function PrivacyPolicyPage() {
             <div className="bg-green-50/70 p-4 rounded-2xl border border-green-200 text-xs text-gray-800 space-y-1">
               <p><strong>Email:</strong> support@mygreendelight.in / anuragsinghas098@gmail.com</p>
               <p><strong>Support Helpline:</strong> +91 99814 18565 / +91 93012 34567</p>
-              <p><strong>Address:</strong> Plot No. 12, Main Market, Arera Colony, Bhopal, Madhya Pradesh - 462016</p>
+              <p><strong>Address:</strong> Amrai, Bagsewaniya, Bhopal, Madhya Pradesh - 462043</p>
             </div>
           </section>
         </div>

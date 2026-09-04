@@ -50,7 +50,7 @@ export default function Checkout() {
   const dispatch = useDispatch();
   const { userdata } = useSelector((state: RootState) => state.user);
   const [paymentMethod, setPaymentMethod] = useState<"cod" | "online">("cod");
-  const [deliverySlot, setDeliverySlot] = useState<string>("Instant Express (30-45 Mins)");
+  const [deliverySlot, setDeliverySlot] = useState<string>("Early Morning Slot (6:00 AM – 8:30 AM)");
   const [useWallet, setUseWallet] = useState<boolean>(false);
   const [isSilentDelivery, setIsSilentDelivery] = useState<boolean>(false);
   const [deliveryInstructions, setDeliveryInstructions] = useState<string>("");
@@ -331,11 +331,11 @@ export default function Checkout() {
             Confirming Your Order...
           </h2>
           <p className="text-xs text-gray-500 mb-6">
-            Allocating nearest Bhopal dark store hub and generating your delivery receipt.
+            Connecting to Bagsewaniya Store (Amrai) and generating your delivery receipt.
           </p>
           <div className="flex items-center gap-2 text-xs font-black text-[#0f8646] bg-green-50 px-4 py-2 rounded-full border border-green-200 shadow-2xs">
             <Loader2 size={16} className="animate-spin" />
-            <span>Connecting Express 10-15 Min Fleet...</span>
+            <span>Connecting Morning Fresh Harvest Fleet...</span>
           </div>
         </main>
         <Footer />
@@ -571,30 +571,30 @@ export default function Checkout() {
               <div className="space-y-2.5">
                 {[
                   {
-                    id: "Instant Express (30-45 Mins)",
-                    title: "⚡ Instant Express Delivery",
-                    time: "Arriving within 30–45 Mins",
-                    desc: "Direct express dispatch from nearest local hub",
-                    icon: Zap,
-                    badge: "Fastest",
+                    id: "Early Morning Slot (6:00 AM – 8:30 AM)",
+                    title: "🌅 Early Morning Harvest",
+                    time: "6:00 AM – 8:30 AM",
+                    desc: "Direct early morning harvest dispatch from Amrai Store",
+                    icon: Sun,
+                    badge: "Farm Fresh",
                     badgeColor: "bg-emerald-100 text-emerald-800",
                   },
                   {
-                    id: "Morning Mandi Batch (7:00 AM - 9:00 AM)",
-                    title: "🌅 Morning Mandi Batch",
-                    time: "Tomorrow 7:00 AM – 9:00 AM",
-                    desc: "Freshly harvested early morning mandi auction pick",
-                    icon: Sun,
-                    badge: "Crispest",
+                    id: "Morning Fresh Slot (8:30 AM – 11:00 AM)",
+                    title: "🍃 Morning Mandi Batch",
+                    time: "8:30 AM – 11:00 AM",
+                    desc: "Crisp sorted veggies & fruits for breakfast & lunch cooking",
+                    icon: Zap,
+                    badge: "Popular",
                     badgeColor: "bg-amber-100 text-amber-900",
                   },
                   {
-                    id: "Evening Fresh Batch (5:00 PM - 8:00 PM)",
-                    title: "🌆 Evening Fresh Batch",
-                    time: "Today / Tomorrow 5:00 PM – 8:00 PM",
-                    desc: "Sorted & delivered right on time for dinner cooking",
-                    icon: Moon,
-                    badge: "Convenient",
+                    id: "Midday Slot (11:00 AM – 1:00 PM)",
+                    title: "☀️ Midday Fresh Dispatch",
+                    time: "11:00 AM – 1:00 PM",
+                    desc: "Final morning slot delivered fresh right before 1:00 PM",
+                    icon: Clock,
+                    badge: "Same Morning",
                     badgeColor: "bg-blue-100 text-blue-900",
                   },
                 ].map((slot) => {

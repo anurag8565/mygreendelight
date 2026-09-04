@@ -29,7 +29,7 @@ export default function ShippingPolicyPage() {
             Shipping & Delivery Policy
           </h1>
           <p className="text-xs text-gray-500 mt-2">
-            10-15 Min Express & Slot-Based Dispatch Across Bhopal, MP
+            Daily 6:00 AM to 1:00 PM Fresh Morning Deliveries from Amrai, Bagsewaniya, Bhopal
           </p>
         </div>
 
@@ -38,20 +38,23 @@ export default function ShippingPolicyPage() {
           <section className="space-y-3">
             <h2 className="text-lg font-black text-gray-900 flex items-center gap-2">
               <Zap size={18} className="text-[#0f8646]" />
-              <span>1. Delivery Speed & Time Slots</span>
+              <span>1. Daily Delivery Slots & Operational Hours</span>
             </h2>
+            <p className="text-xs text-gray-600">
+              Hamara store subah <strong>6:00 AM se dopehar 1:00 PM</strong> tak active rehta hai taaki aapko subah ka sabse taaza harvest mile:
+            </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
               <div className="p-4 rounded-2xl bg-green-50 border border-green-200">
-                <span className="font-extrabold text-[#0f8646] block text-sm mb-1">Instant Express</span>
-                <p className="text-gray-600">Dispatched in 10-15 mins. Delivered in under 30-45 minutes straight from nearest hub.</p>
+                <span className="font-extrabold text-[#0f8646] block text-sm mb-1">Slot 1: Early Morning</span>
+                <p className="text-gray-600">6:00 AM – 8:30 AM (Sunrise Pooja & Breakfast Essentials)</p>
               </div>
               <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200">
-                <span className="font-extrabold text-amber-800 block text-sm mb-1">Morning Mandi Batch</span>
-                <p className="text-gray-600">Fresh morning harvest delivered between 7:00 AM - 9:00 AM.</p>
+                <span className="font-extrabold text-amber-800 block text-sm mb-1">Slot 2: Mid Morning</span>
+                <p className="text-gray-600">8:30 AM – 11:00 AM (Daily Kitchen & Lunch Produce)</p>
               </div>
               <div className="p-4 rounded-2xl bg-blue-50 border border-blue-200">
-                <span className="font-extrabold text-blue-800 block text-sm mb-1">Evening Fresh Batch</span>
-                <p className="text-gray-600">Dinner preparation produce delivered between 5:00 PM - 8:00 PM.</p>
+                <span className="font-extrabold text-blue-800 block text-sm mb-1">Slot 3: Afternoon Express</span>
+                <p className="text-gray-600">11:00 AM – 1:00 PM (Quick Top-Up & Daily Staples)</p>
               </div>
             </div>
           </section>
@@ -59,13 +62,13 @@ export default function ShippingPolicyPage() {
           <section className="space-y-3">
             <h2 className="text-lg font-black text-gray-900 flex items-center gap-2">
               <MapPin size={18} className="text-[#0f8646]" />
-              <span>2. Delivery Coverage Area</span>
+              <span>2. Store Location & Delivery Coverage Area</span>
             </h2>
             <p>
-              MyGreenDelight currently operates hyper-local delivery hubs covering all major Bhopal zones:
+              <strong>Central Store Address:</strong> Amrai, Bagsewaniya, Bhopal, MP - 462043.
             </p>
             <p className="text-xs text-gray-600">
-              <strong>Covered Areas:</strong> MP Nagar (Zone I & II), Arera Colony (E1-E8), Kolar Road, Shahpura, Gulmohar, Bittan Market, Hoshangabad Road, TT Nagar, New Market, Shivaji Nagar, Chunabhatti, Saket Nagar, and surrounding Bhopal localities.
+              <strong>Covered Areas in Bhopal:</strong> Bagsewaniya, Amrai, AIIMS, Saket Nagar, Hoshangabad Road, MP Nagar, Arera Colony, Gulmohar, Kolar Road, Shahpura, Chunabhatti, aur aas-paas ke sabhi Bhopal sectors.
             </p>
           </section>
 
@@ -75,9 +78,9 @@ export default function ShippingPolicyPage() {
               <span>3. Delivery Charges & Free Shipping Threshold</span>
             </h2>
             <ul className="list-disc pl-5 space-y-1.5 text-xs text-gray-600">
-              <li><strong>FREE Delivery:</strong> Available on all orders with cart subtotal above <strong>₹299</strong> (or ₹499 depending on promotion).</li>
-              <li><strong>Nominal Partner Fee:</strong> A flat ₹30-₹40 delivery fee applies to small basket orders below the threshold to support our local Bhopal delivery fleet.</li>
-              <li><strong>Zero Packaging Surcharge:</strong> We use eco-friendly kraft paper and reusable produce bags with no extra packing cost.</li>
+              <li><strong>FREE Delivery:</strong> Available on all orders with cart subtotal above <strong>₹299</strong>.</li>
+              <li><strong>Nominal Partner Fee:</strong> A small fee applies on smaller orders to support our delivery fleet.</li>
+              <li><strong>Zero Packaging Surcharge:</strong> Clean, hygienic, eco-friendly produce packaging with zero hidden charges.</li>
             </ul>
           </section>
         </div>

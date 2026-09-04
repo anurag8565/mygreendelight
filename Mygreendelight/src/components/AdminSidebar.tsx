@@ -248,7 +248,7 @@ export default function AdminSidebar() {
         <div className="p-4 border-t border-green-800/60 bg-[#073019] shrink-0 space-y-2.5">
           <div className="flex items-center gap-2 text-xs text-green-200/80 px-1">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-            <span className="font-bold text-[11px] truncate">Bhopal Dark Stores Live</span>
+            <span className="font-bold text-[11px] truncate">Amrai Central Store Live</span>
           </div>
 
           <div className="grid grid-cols-2 gap-2">

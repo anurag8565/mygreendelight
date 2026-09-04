@@ -104,10 +104,10 @@ export default function OrderInvoiceModal({
                 Fresh Produce & Mandi Direct Delivery
               </p>
               <p className="text-[11px] text-gray-400">
-                Krishi Mandi Hub, Hoshangabad Road, Bhopal, MP 462001
+                Amrai, Bagsewaniya, Bhopal, MP - 462043
               </p>
               <p className="text-[11px] text-gray-400 font-mono">
-                GSTIN: 23AABCK8901M1Z5 • FSSAI: 11424850000123
+                GSTIN: 23AABCK8901M1Z5 • FSSAI: 11424850000123 • Daily 6:00 AM – 1:00 PM
               </p>
             </div>
 

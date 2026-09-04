@@ -421,10 +421,10 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h4 className="font-extrabold text-gray-900 text-sm">
-                        Bhopal Headquarters
+                        Store Address
                       </h4>
                       <p className="text-[11px] text-gray-600 mt-0.5 leading-relaxed font-medium">
-                        Plot No. 12, Main Market, Arera Colony, Bhopal, MP - 462016
+                        Amrai, Bagsewaniya, Bhopal, MP - 462043
                       </p>
                     </div>
                   </div>
@@ -438,16 +438,16 @@ export default function ContactPage() {
         <section className="max-w-7xl mx-auto px-4 md:px-8 py-10">
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200/80 shadow-xs">
             <div className="grid lg:grid-cols-12 gap-8 items-start">
-              {/* Left: Hubs List (5 Cols) */}
+              {/* Left: Store Info (5 Cols) */}
               <div className="lg:col-span-5">
                 <div className="flex items-center gap-2 mb-1">
                   <Store size={20} className="text-[#0f8646]" />
                   <h2 className="text-xl sm:text-2xl font-black text-gray-900">
-                    Our Bhopal Hubs
+                    Our Bhopal Store
                   </h2>
                 </div>
                 <p className="text-xs text-gray-500 mb-6">
-                  Select a local dark store hub to view live location on the map:
+                  Visit or order directly from our central farm store (Delivery 6:00 AM – 1:00 PM):
                 </p>
 
                 <div className="space-y-3 mb-6">

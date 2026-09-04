@@ -14,7 +14,6 @@ import {
   ArrowRight,
   Mail,
   Zap,
-  Sparkles,
 } from "lucide-react";
 
 export default function Footer() {
@@ -24,8 +23,8 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8 sm:py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10">
           
-          {/* Column 1: Store Logo, Bio & Address (4 Cols) */}
-          <div className="lg:col-span-4 flex flex-col">
+          {/* Column 1: Store Logo, Bio & Address (5 Cols) */}
+          <div className="lg:col-span-5 flex flex-col">
             <Link
               href="/"
               className="text-white text-xl sm:text-2xl md:text-3xl font-black flex items-center gap-2 tracking-tight mb-2 sm:mb-3 group"
@@ -36,18 +35,35 @@ export default function Footer() {
               <span>MyGreenDelight</span>
             </Link>
 
-            <p className="text-xs sm:text-sm text-green-100/90 mb-4 leading-relaxed font-medium">
-              Bhopal’s dedicated farm-to-table network. Delivering 100% ozone-washed, chemical-free fresh vegetables, fruits and staples straight from local MP farms in 10-15 minutes.
+            <p className="text-xs sm:text-sm text-green-100/90 mb-4 leading-relaxed font-medium max-w-md">
+              Bhopal’s dedicated farm-to-table produce store. 100% ozone-washed, chemical-free fresh vegetables, seasonal fruits, and pure dairy staples delivered directly to your doorstep.
             </p>
 
-            {/* Store Address Box */}
-            <div className="bg-white/10 border border-white/10 rounded-2xl p-3 mb-4 backdrop-blur-xs">
-              <span className="text-[10px] font-black text-emerald-300 uppercase tracking-wider block mb-0.5">
-                📍 Bhopal Central Farm Hub
-              </span>
-              <p className="text-xs text-green-100 leading-snug">
-                Plot No. 12, Main Market, Arera Colony, Bhopal, MP - 462016
-              </p>
+            {/* Store Address & Hours Box */}
+            <div className="bg-white/10 border border-white/10 rounded-2xl p-3.5 mb-4 backdrop-blur-xs max-w-md space-y-2">
+              <div className="flex items-start gap-2.5">
+                <MapPin size={16} className="text-emerald-300 shrink-0 mt-0.5" />
+                <div>
+                  <span className="text-[10px] font-black text-emerald-300 uppercase tracking-wider block">
+                    Store Address
+                  </span>
+                  <p className="text-xs text-green-100 font-semibold leading-snug">
+                    Amrai, Bagsewaniya, Bhopal, MP - 462043
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-2.5 pt-1 border-t border-white/10">
+                <Clock size={16} className="text-amber-300 shrink-0 mt-0.5" />
+                <div>
+                  <span className="text-[10px] font-black text-amber-300 uppercase tracking-wider block">
+                    Daily Delivery Hours
+                  </span>
+                  <p className="text-xs text-green-100 font-bold leading-snug">
+                    6:00 AM – 1:00 PM (Morning Fresh Slots)
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* Social Media Channels */}
@@ -83,24 +99,13 @@ export default function Footer() {
               >
                 <MessageCircle size={15} />
               </a>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-8 h-8 rounded-xl bg-white/10 hover:bg-red-600 flex items-center justify-center text-white transition-colors"
-                title="Watch on YouTube"
-              >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
-                </svg>
-              </a>
             </div>
           </div>
 
-          {/* Combined 2-Column Grid on Mobile for Categories & Quick Links (5 Cols on Desktop) */}
-          <div className="lg:col-span-5 grid grid-cols-2 gap-4 sm:gap-6">
+          {/* Column 2: Produce & Quick Links (4 Cols) */}
+          <div className="lg:col-span-4 grid grid-cols-2 gap-4 sm:gap-6">
             
-            {/* Column 2: Farm Produce Aisles */}
+            {/* Produce Categories */}
             <div className="flex flex-col">
               <h3 className="font-black text-xs sm:text-sm uppercase tracking-wider mb-3 text-emerald-300">
                 Fresh Produce
@@ -110,24 +115,21 @@ export default function Footer() {
                   🥬 Leafy Greens
                 </Link>
                 <Link href="/shop?category=Vegetables" className="hover:text-white transition">
-                  🥔 Aloo, Pyaaz & Tamatar
+                  🥔 Daily Essentials
                 </Link>
                 <Link href="/shop?category=Fruits" className="hover:text-white transition">
                   🍎 Farm Fresh Fruits
                 </Link>
                 <Link href="/shop?category=Dairy%20%26%20Staples" className="hover:text-white transition">
-                  🥛 Desi Cow Milk & Paneer
+                  🥛 Desi Cow Milk
                 </Link>
-                <Link href="/shop/custom-box" className="hover:text-white transition text-emerald-300 font-bold">
-                  🥑 Custom Salad Box
-                </Link>
-                <Link href="/shop/gift-basket" className="hover:text-white transition text-pink-300 font-bold">
-                  🎁 Gift Hampers
+                <Link href="/shop" className="hover:text-white transition text-emerald-300 font-bold">
+                  🎁 Value Combos
                 </Link>
               </div>
             </div>
 
-            {/* Column 3: Quick Links */}
+            {/* Quick Links */}
             <div className="flex flex-col">
               <h3 className="font-black text-xs sm:text-sm uppercase tracking-wider mb-3 text-emerald-300">
                 Quick Links
@@ -139,9 +141,6 @@ export default function Footer() {
                 <Link href="/offers" className="hover:text-white transition text-amber-300 font-bold">
                   🏷️ Offers & Coupons
                 </Link>
-                <Link href="/wishlist" className="hover:text-white transition">
-                  ❤️ Saved Wishlist
-                </Link>
                 <Link href="/about" className="hover:text-white transition">
                   🌿 Our Farm Story
                 </Link>
@@ -149,23 +148,23 @@ export default function Footer() {
                   Track Live Order
                 </Link>
                 <Link href="/contact" className="hover:text-white transition">
-                  Help & Support
+                  Contact Support
                 </Link>
               </div>
             </div>
 
           </div>
 
-          {/* Column 4: Contact & Bhopal Dispatch Hubs (3 Cols) */}
+          {/* Column 3: Contact & Order Helpline (3 Cols) */}
           <div className="lg:col-span-3 flex flex-col">
             <h3 className="font-black text-xs sm:text-sm uppercase tracking-wider mb-3 text-emerald-300">
-              Order Help & Helpline
+              Customer Support
             </h3>
 
             <div className="space-y-2.5">
               <a
                 href="tel:9981418565"
-                className="bg-white/10 hover:bg-white/20 p-2.5 sm:p-3 rounded-2xl flex items-center gap-3 transition-colors border border-white/10"
+                className="bg-white/10 hover:bg-white/20 p-3 rounded-2xl flex items-center gap-3 transition-colors border border-white/10"
               >
                 <div className="w-8 h-8 rounded-xl bg-emerald-500/30 flex items-center justify-center text-emerald-300 shrink-0">
                   <Phone size={16} />
@@ -180,26 +179,16 @@ export default function Footer() {
                 href="https://wa.me/919981418565?text=Hello%20MyGreenDelight%20Support,%20I%20need%20help%20with%20my%20order."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#25D366]/20 hover:bg-[#25D366]/30 p-2.5 sm:p-3 rounded-2xl flex items-center gap-3 transition-colors border border-[#25D366]/30"
+                className="bg-[#25D366]/20 hover:bg-[#25D366]/30 p-3 rounded-2xl flex items-center gap-3 transition-colors border border-[#25D366]/30"
               >
                 <div className="w-8 h-8 rounded-xl bg-[#25D366]/40 flex items-center justify-center text-white shrink-0">
                   <MessageCircle size={16} />
                 </div>
                 <div>
-                  <span className="text-[10px] text-green-200 block font-bold">WhatsApp Order</span>
+                  <span className="text-[10px] text-green-200 block font-bold">WhatsApp Support</span>
                   <span className="text-xs font-black text-white">+91 9981418565</span>
                 </div>
               </a>
-
-              <div className="pt-1 text-[11px] text-green-200/80">
-                <span className="font-bold text-white block mb-1">Bhopal Hubs:</span>
-                <div className="flex flex-wrap gap-1">
-                  <span className="bg-white/10 px-2 py-0.5 rounded-md text-[10px]">Arera Colony</span>
-                  <span className="bg-white/10 px-2 py-0.5 rounded-md text-[10px]">MP Nagar</span>
-                  <span className="bg-white/10 px-2 py-0.5 rounded-md text-[10px]">Kolar</span>
-                  <span className="bg-white/10 px-2 py-0.5 rounded-md text-[10px]">Hoshangabad Rd</span>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -207,7 +196,7 @@ export default function Footer() {
 
         {/* Bottom Legal & Payment Badges */}
         <div className="border-t border-green-900/60 mt-8 pt-5 flex flex-col md:flex-row items-center justify-between text-xs text-green-200/80 gap-3 text-center md:text-left">
-          <p>© {new Date().getFullYear()} MyGreenDelight Bhopal. Fresh Farm Deliveries.</p>
+          <p>© {new Date().getFullYear()} MyGreenDelight • Amrai, Bagsewaniya, Bhopal</p>
 
           <div className="flex items-center justify-center gap-2.5 text-[11px] font-semibold flex-wrap text-green-100">
             <Link href="/privacy-policy" className="hover:text-white transition">

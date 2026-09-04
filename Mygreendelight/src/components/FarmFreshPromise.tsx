@@ -38,9 +38,9 @@ export default function FarmFreshPromise() {
     {
       step: "04",
       icon: <Truck className="text-[#0c831f]" size={22} />,
-      title: "Express 10-Min Delivery",
-      desc: "Nearest Bhopal hub se aapke kitchen tak direct superfast delivery.",
-      badge: "Bhopal Hubs",
+      title: "Fresh Morning Delivery",
+      desc: "Amrai store (Bagsewaniya) se direct aapke kitchen tak subah 6:00 AM se 1:00 PM tak superfast delivery.",
+      badge: "6 AM – 1 PM Daily",
     },
   ];
 

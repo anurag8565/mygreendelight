@@ -143,9 +143,9 @@ export default function AboutPage() {
               },
               {
                 icon: <Clock size={24} className="text-[#0f8646]" />,
-                value: "10-15 Min",
-                label: "Express Delivery",
-                sub: "Across all major hubs",
+                value: "6 AM – 1 PM",
+                label: "Delivery Hours",
+                sub: "Daily Morning Fresh Slots",
               },
               {
                 icon: <Leaf size={24} className="text-[#0f8646]" />,
@@ -155,9 +155,9 @@ export default function AboutPage() {
               },
               {
                 icon: <MapPin size={24} className="text-[#0f8646]" />,
-                value: "15+ Hubs",
-                label: "Bhopal Coverage",
-                sub: "Arera, Kolar, MP Nagar, etc.",
+                value: "Bagsewaniya",
+                label: "Central Store",
+                sub: "Amrai, Bhopal - 462043",
               },
             ].map((stat, idx) => (
               <div
@@ -216,14 +216,14 @@ export default function AboutPage() {
                 badge: "The Innovation",
                 icon: <TrendingUp size={22} className="text-[#0f8646]" />,
                 title: "MyGreenDelight Digital Store",
-                desc: "Launched our online website and first dark store in Arera Colony to deliver fresh harvest in under 15 minutes.",
+                desc: "Launched our online platform and central store in Bagsewaniya (Amrai) to deliver pure fresh harvest directly to Bhopal doorsteps.",
               },
               {
                 year: "2026",
-                badge: "Hyper-Local Scale",
+                badge: "Morning Fresh Service",
                 icon: <Sparkles size={22} className="text-[#0f8646]" />,
-                title: "10-Min Bhopal Grid",
-                desc: "Now serving over 50,000 households with live GPS rider tracking, ozone-washed produce, and 100% satisfaction guarantee.",
+                title: "Daily Morning 6 AM – 1 PM Fresh Runs",
+                desc: "Now serving households across Bhopal with prompt morning deliveries, ozone-washed produce, and 100% satisfaction guarantee.",
               },
             ].map((step, idx) => (
               <div
@@ -339,7 +339,7 @@ export default function AboutPage() {
                   href="/contact"
                   className="border-2 border-white/80 hover:bg-white/10 text-white px-7 py-3.5 rounded-2xl font-black text-xs sm:text-sm transition-all"
                 >
-                  Contact Our Hub
+                  Contact Our Store
                 </Link>
               </div>
             </div>

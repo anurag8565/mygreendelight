@@ -463,13 +463,13 @@ export default function AdminDashboardPage() {
                         Bhopal Locality Demand Breakdown & Order Heatmap
                       </h3>
                       <p className="text-xs text-gray-500">
-                        Real-time order density from Bhopal Central Hub (10-Min Dispatch Zone)
+                        Real-time order density from Amrai Store, Bagsewaniya (Daily 6 AM – 1 PM Dispatch)
                       </p>
                     </div>
                   </div>
 
                   <span className="text-[11px] font-black bg-green-50 text-[#0f8646] border border-green-200 px-3 py-1 rounded-xl">
-                    ⚡ Central Bhopal Hub: Active
+                    🌿 Bagsewaniya Store (Amrai): Active
                   </span>
                 </div>
 
@@ -574,7 +574,7 @@ export default function AdminDashboardPage() {
                       Recent Orders
                     </h3>
                     <p className="text-xs text-gray-500 mt-0.5">
-                      Newest incoming customer orders from Bhopal hubs
+                      Newest incoming customer orders across Bhopal
                     </p>
                   </div>
 
