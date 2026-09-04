@@ -1,10 +1,63 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ChevronRight, ChevronLeft, Sparkles } from "lucide-react";
+import { ChevronRight, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
+
+// High-converting category metadata with pastel themes & HD transparent images
+const CATEGORY_THEMES: Record<string, { bg: string; border: string; badge: string; text: string; defaultImg: string; count: string }> = {
+  "vegetables": {
+    bg: "from-emerald-50/90 to-green-100/60",
+    border: "border-emerald-200/80 hover:border-[#0f8646]",
+    badge: "bg-emerald-100 text-[#0f8646]",
+    text: "text-emerald-950",
+    defaultImg: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=400&q=80",
+    count: "220+ Fresh Picks"
+  },
+  "fruits": {
+    bg: "from-amber-50/90 to-orange-100/60",
+    border: "border-amber-200/80 hover:border-orange-500",
+    badge: "bg-amber-100 text-amber-900",
+    text: "text-amber-950",
+    defaultImg: "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=400&q=80",
+    count: "120+ Sweet & Juicy"
+  },
+  "dairy & staples": {
+    bg: "from-sky-50/90 to-blue-100/60",
+    border: "border-sky-200/80 hover:border-blue-500",
+    badge: "bg-sky-100 text-sky-900",
+    text: "text-sky-950",
+    defaultImg: "https://images.unsplash.com/photo-1628088062854-d1870b4553da?auto=format&fit=crop&w=400&q=80",
+    count: "Pure Desi Ghee & Milk"
+  },
+  "exotics": {
+    bg: "from-teal-50/90 to-emerald-100/60",
+    border: "border-teal-200/80 hover:border-teal-500",
+    badge: "bg-teal-100 text-teal-900",
+    text: "text-teal-950",
+    defaultImg: "https://images.unsplash.com/photo-1596560548464-f010549b84d7?auto=format&fit=crop&w=400&q=80",
+    count: "Hydroponic & Exotics"
+  },
+  "ready-to-cook & cut produce": {
+    bg: "from-purple-50/90 to-violet-100/60",
+    border: "border-purple-200/80 hover:border-purple-500",
+    badge: "bg-purple-100 text-purple-900",
+    text: "text-purple-950",
+    defaultImg: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&q=80",
+    count: "Peeled & Chopped"
+  },
+};
+
+// Priority sorting order
+const PRIORITY_ORDER = [
+  "vegetables",
+  "fruits",
+  "dairy & staples",
+  "exotics",
+  "ready-to-cook & cut produce"
+];
 
 export default function CategorySlider({
   categories = [],
@@ -12,81 +65,55 @@ export default function CategorySlider({
   categories?: any[];
 }) {
   const router = useRouter();
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const [activeCategories, setActiveCategories] = useState<any[]>(
-    categories.length > 0 ? categories : []
-  );
+  const [activeCategories, setActiveCategories] = useState<any[]>([]);
 
   useEffect(() => {
-    if (categories.length > 0) {
-      setActiveCategories(categories);
-      return;
-    }
+    let list = categories.length > 0 ? [...categories] : [];
 
-    // Fetch live categories directly from MongoDB
-    fetch("/api/admin/category")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success && data.categories && data.categories.length > 0) {
-          setActiveCategories(data.categories);
-        }
-      })
-      .catch((err) => {
-        console.error("Error fetching categories:", err);
-      });
+    if (list.length === 0) {
+      fetch("/api/admin/category")
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success && data.categories && data.categories.length > 0) {
+            organizeCategories(data.categories);
+          }
+        })
+        .catch(console.error);
+    } else {
+      organizeCategories(list);
+    }
   }, [categories]);
+
+  const organizeCategories = (rawList: any[]) => {
+    // Sort according to preferred customer priority
+    const sorted = [...rawList].sort((a, b) => {
+      const aName = (a.name || "").toLowerCase().trim();
+      const bName = (b.name || "").toLowerCase().trim();
+      const aIdx = PRIORITY_ORDER.indexOf(aName);
+      const bIdx = PRIORITY_ORDER.indexOf(bName);
+      return (aIdx === -1 ? 99 : aIdx) - (bIdx === -1 ? 99 : bIdx);
+    });
+    setActiveCategories(sorted);
+  };
 
   if (!activeCategories || activeCategories.length === 0) return null;
 
-  const isCarouselNeeded = activeCategories.length > 4;
-
-  const scroll = (direction: "left" | "right") => {
-    if (scrollRef.current) {
-      const { scrollLeft, clientWidth } = scrollRef.current;
-      const scrollAmount = clientWidth > 768 ? clientWidth * 0.6 : clientWidth * 0.8;
-      scrollRef.current.scrollTo({
-        left:
-          direction === "left"
-            ? scrollLeft - scrollAmount
-            : scrollLeft + scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  const handleScroll = () => {
-    if (scrollRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-      const totalScrollable = scrollWidth - clientWidth;
-      if (totalScrollable > 0) {
-        const progress = scrollLeft / totalScrollable;
-        const totalDots = activeCategories.length;
-        const currentIndex = Math.min(
-          totalDots - 1,
-          Math.floor(progress * totalDots)
-        );
-        setActiveIndex(currentIndex);
-      }
-    }
-  };
-
   return (
-    <div className="w-full py-3.5 sm:py-6 bg-white">
+    <div className="w-full py-3.5 sm:py-5 bg-white">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
+        
         {/* Section Header */}
-        <div className="flex items-center justify-between mb-3.5 sm:mb-5">
+        <div className="flex items-center justify-between mb-3 sm:mb-4">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-xl bg-green-100 text-[#0f8646] flex items-center justify-center font-black text-xs shadow-2xs">
-              🌿
+            <div className="w-7 h-7 rounded-xl bg-emerald-100 text-[#0f8646] flex items-center justify-center font-black text-xs shadow-2xs">
+              🥬
             </div>
             <div>
               <h2 className="text-base sm:text-2xl font-black text-gray-900 tracking-tight">
                 Shop by Category
               </h2>
-              <p className="text-[10px] sm:text-xs text-gray-400 font-medium">
-                Sunrise farm-harvested veggies, fruits & daily staples
+              <p className="text-[10.5px] sm:text-xs text-gray-400 font-medium">
+                Sunrise farm-harvested veggies, fruits & fresh daily staples
               </p>
             </div>
           </div>
@@ -103,85 +130,54 @@ export default function CategorySlider({
           </Link>
         </div>
 
-        {/* Categories Container: Evenly distributed grid for 4 items, or swipeable carousel if more */}
-        <div className="relative group">
-          {/* Left Arrow Button (Only when carousel is needed) */}
-          {isCarouselNeeded && (
-            <button
-              type="button"
-              onClick={() => scroll("left")}
-              aria-label="Scroll left"
-              className="flex absolute -left-2 sm:-left-4 top-[38%] -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-700 hover:text-[#0f8646] w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all shadow-md hover:shadow-xl border border-gray-200 active:scale-95 cursor-pointer backdrop-blur-xs"
-            >
-              <ChevronLeft size={18} className="stroke-[2.5]" />
-            </button>
-          )}
+        {/* Blinkit/Zepto-style Modern Category Cards Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5 sm:gap-3.5 md:gap-4">
+          {activeCategories.map((item, idx) => {
+            const key = (item.name || "").toLowerCase().trim();
+            const theme = CATEGORY_THEMES[key] || {
+              bg: "from-gray-50 to-emerald-50/40",
+              border: "border-gray-200/80 hover:border-[#0f8646]",
+              badge: "bg-emerald-100 text-[#0f8646]",
+              text: "text-gray-900",
+              defaultImg: "/categories/vegetables.jpg",
+              count: "Fresh Produce"
+            };
 
-          {/* Categories Row */}
-          <div
-            ref={scrollRef}
-            onScroll={handleScroll}
-            className={`flex items-start ${
-              isCarouselNeeded
-                ? "overflow-x-auto gap-4 sm:gap-6 md:gap-8 pb-3 pt-1 snap-x snap-mandatory scrollbar-none -mx-3.5 px-3.5 sm:mx-0 sm:px-0 scroll-smooth"
-                : "grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 justify-items-center gap-2 sm:gap-6 max-w-4xl mx-auto py-1"
-            }`}
-          >
-            {activeCategories.map((item, idx) => (
+            return (
               <motion.div
                 key={item._id || idx}
-                whileHover={{ y: -4, scale: 1.04 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ y: -4, scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
                 onClick={() =>
                   router.push(`/shop?category=${encodeURIComponent(item.name)}`)
                 }
-                className="flex flex-col items-center shrink-0 cursor-pointer snap-start group text-center w-full max-w-[90px] xs:max-w-[100px] sm:max-w-[140px] md:max-w-[160px]"
+                className={`group cursor-pointer rounded-2xl sm:rounded-3xl p-3 sm:p-4 bg-gradient-to-b ${theme.bg} border ${theme.border} shadow-2xs hover:shadow-md transition-all duration-300 flex flex-col justify-between relative overflow-hidden h-[120px] xs:h-[130px] sm:h-[160px]`}
               >
-                {/* Circular Image Frame with Emerald Glow Ring */}
-                <div className="w-[68px] h-[68px] xs:w-[76px] xs:h-[76px] sm:w-[100px] sm:h-[100px] md:w-[120px] md:h-[120px] rounded-full overflow-hidden bg-white border-2 border-white shadow-md ring-2 ring-emerald-100/90 group-hover:ring-[#0f8646] transition-all duration-300 flex items-center justify-center relative p-0.5">
-                  <img
-                    src={item.image || "/categories/vegetables.jpg"}
-                    alt={item.name}
-                    className="w-full h-full object-cover rounded-full group-hover:scale-110 transition-transform duration-500"
-                  />
+                {/* Top Label & Count */}
+                <div className="z-10 relative">
+                  <h3 className={`font-black text-xs sm:text-sm md:text-base ${theme.text} leading-tight line-clamp-1 group-hover:text-[#0f8646] transition-colors`}>
+                    {item.name}
+                  </h3>
+                  <span className="text-[10px] sm:text-[11px] text-gray-500 font-bold block mt-0.5">
+                    {theme.count}
+                  </span>
                 </div>
 
-                {/* Clean Bold Category Label with full text wrap */}
-                <span className="text-[10.5px] xs:text-[11.5px] sm:text-xs md:text-sm font-black text-gray-800 group-hover:text-[#0f8646] transition-colors line-clamp-2 mt-2 tracking-tight text-center leading-tight px-1">
-                  {item.name}
-                </span>
+                {/* Bottom Graphic Image */}
+                <div className="relative flex justify-end items-end mt-auto h-[60px] sm:h-[80px]">
+                  <img
+                    src={item.image || theme.defaultImg}
+                    alt={item.name}
+                    className="h-full w-auto max-w-[85px] sm:max-w-[110px] object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-500 pointer-events-none"
+                    onError={(e: any) => {
+                      e.target.src = theme.defaultImg;
+                    }}
+                  />
+                </div>
               </motion.div>
-            ))}
-          </div>
-
-          {/* Right Arrow Button (Only when carousel is needed) */}
-          {isCarouselNeeded && (
-            <button
-              type="button"
-              onClick={() => scroll("right")}
-              aria-label="Scroll right"
-              className="flex absolute -right-2 sm:-right-4 top-[38%] -translate-y-1/2 z-20 bg-[#0f8646] hover:bg-[#0c6a38] text-white w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all shadow-md hover:shadow-xl border border-green-600 active:scale-95 cursor-pointer"
-            >
-              <ChevronRight size={18} className="stroke-[2.5]" />
-            </button>
-          )}
+            );
+          })}
         </div>
-
-        {/* Carousel Pagination Dots (Only if carousel is active) */}
-        {isCarouselNeeded && activeCategories.length > 1 && (
-          <div className="flex items-center justify-center gap-1.5 mt-2">
-            {activeCategories.map((_, i) => (
-              <span
-                key={i}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  i === activeIndex
-                    ? "w-4 bg-[#0f8646]"
-                    : "w-1.5 bg-gray-200"
-                }`}
-              />
-            ))}
-          </div>
-        )}
 
       </div>
     </div>
