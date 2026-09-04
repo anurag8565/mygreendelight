@@ -122,6 +122,11 @@ export default function AdminSidebar() {
       icon: <Flame size={18} />,
     },
     {
+      name: "Scratch Card Rewards",
+      href: "/admin/manage-rewards",
+      icon: <Gift size={18} />,
+    },
+    {
       name: "Harvest Stock Alerts",
       href: "/admin/manage-stock-alerts",
       icon: <Bell size={18} />,

@@ -5,6 +5,7 @@ import FilteredProduceSection from './FilteredProduceSection'
 import FlashDeals from './FlashDeals'
 import FeaturedProduceSection from './FeaturedProduceSection'
 import CombosSection from './CombosSection'
+import DailyRewardWidget from './DailyRewardWidget'
 import Grocery from '@/model/groseri.model'
 import Category from '@/model/category.model'
 import ComboBundle from '@/model/combo.model'
@@ -97,6 +98,9 @@ export default async function Userdashbord() {
       {plainCombos && plainCombos.length > 0 && (
         <CombosSection initialCombos={plainCombos} />
       )}
+
+      {/* 7. Tone 1: Daily Lucky Scratch Card & Rewards (Pure White) */}
+      <DailyRewardWidget />
 
       {/* 9. Tone 2: Order Again Carousel (Soft Luxury Gray #f8f9fa) */}
       {plainOrderAgain && plainOrderAgain.length > 0 && (
