@@ -96,7 +96,7 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
             </div>
             
             <h2 className="text-base sm:text-2xl font-black text-gray-900 tracking-tight">
-              Daily Flash Harvest Deals
+              🔥 Lightning Flash Deals
             </h2>
 
             {/* Live Admin-Controlled Timer */}

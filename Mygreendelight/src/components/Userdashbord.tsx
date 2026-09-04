@@ -4,6 +4,7 @@ import MandiPriceTicker from './MandiPriceTicker'
 import Categoryslider from './Categoryslider'
 import FilteredProduceSection from './FilteredProduceSection'
 import FlashDeals from './FlashDeals'
+import FeaturedProduceSection from './FeaturedProduceSection'
 import CombosSection from './CombosSection'
 import DailyRewardWidget from './DailyRewardWidget'
 import Grocery from '@/model/groseri.model'
@@ -29,6 +30,7 @@ export default async function Userdashbord() {
   
   const newGroceriesPromise = Grocery.find({}).sort({ createdAt: -1 }).limit(30)
   const flashDealsPromise = Grocery.find({ stock: { $gt: 0 } }).sort({ price: 1, rating: -1 }).limit(10)
+  const featuredGroceriesPromise = Grocery.find({ rating: { $gte: 4.5 } }).sort({ rating: -1, numReviews: -1 }).limit(10)
   const bannersPromise = Banner.find({}).sort({ createdAt: -1 }).limit(5)
   const categoriesPromise = Category.find({}).sort({ createdAt: -1 })
   const testimonialsPromise = Testimonial.find({ status: 'approved' }).sort({ createdAt: -1 })
@@ -55,9 +57,10 @@ export default async function Userdashbord() {
 
   const comboBundlesPromise = ComboBundle.find({ isActive: true }).lean()
 
-  const [newGroceries, flashDeals, banners, categories, testimonials, mandiRates, orderAgain, comboBundles] = await Promise.all([
+  const [newGroceries, flashDeals, featuredGroceries, banners, categories, testimonials, mandiRates, orderAgain, comboBundles] = await Promise.all([
     newGroceriesPromise,
     flashDealsPromise,
+    featuredGroceriesPromise,
     bannersPromise,
     categoriesPromise,
     testimonialsPromise,
@@ -68,6 +71,7 @@ export default async function Userdashbord() {
 
   const plainNew = JSON.parse(JSON.stringify(newGroceries))
   const plainFlash = JSON.parse(JSON.stringify(flashDeals))
+  const plainFeatured = JSON.parse(JSON.stringify(featuredGroceries))
   const plainBanners = JSON.parse(JSON.stringify(banners))
   const plainCategories = JSON.parse(JSON.stringify(categories))
   const plainTestimonials = JSON.parse(JSON.stringify(testimonials))
@@ -83,26 +87,31 @@ export default async function Userdashbord() {
       {/* 2. Shop by Category Slider (Managed in Admin /manage-categories) */}
       <Categoryslider categories={plainCategories} />
 
-      {/* 3. Live Bhopal Mandi Rate & Price Drop Ticker (Managed in Admin /manage-mandi) */}
-      <MandiPriceTicker initialRates={plainMandiRates} />
-
-      {/* 4. 🏷️ Daily Mandi Harvest & 1-Tap Category Filter Grid (Managed in Admin /viewgrocery) */}
-      <FilteredProduceSection groceries={plainNew} />
-
-      {/* 5. Live Flash Deals & Discounts Carousel (Managed in Admin /manage-flash-deals) */}
+      {/* 3. 🔥 Live Flash Deals & Steal Discounts (Managed in Admin /manage-flash-deals) */}
       {plainFlash && plainFlash.length > 0 && (
         <FlashDeals products={plainFlash} />
       )}
 
-      {/* 6. ⚡ Save-More Value Combos & Multipacks (Managed in Admin /manage-combos) */}
+      {/* 4. 👑 Bhopal Top Bestsellers & Featured Picks (Top Rated & Customer Favorites) */}
+      {plainFeatured && plainFeatured.length > 0 && (
+        <FeaturedProduceSection products={plainFeatured} />
+      )}
+
+      {/* 5. Live Bhopal Mandi Rate & Price Drop Ticker (Managed in Admin /manage-mandi) */}
+      <MandiPriceTicker initialRates={plainMandiRates} />
+
+      {/* 6. 🥬 Daily Fresh Farm Mandi & 1-Tap Category Filter Grid (Managed in Admin /viewgrocery) */}
+      <FilteredProduceSection groceries={plainNew} />
+
+      {/* 7. ⚡ Save-More Value Combos & Multipacks (Managed in Admin /manage-combos) */}
       {plainCombos && plainCombos.length > 0 && (
         <CombosSection initialCombos={plainCombos} />
       )}
 
-      {/* 7. 🎁 Daily Lucky Scratch Card & Rewards (Managed in Admin /manage-rewards) */}
+      {/* 8. 🎁 Daily Lucky Scratch Card & Rewards (Managed in Admin /manage-rewards) */}
       <DailyRewardWidget />
 
-      {/* 7. Order Again Carousel (Only for logged in users with previous orders) */}
+      {/* 9. Order Again Carousel (Only for logged in users with previous orders) */}
       {plainOrderAgain && plainOrderAgain.length > 0 && (
         <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-4 sm:py-6">
            <div className="flex items-center justify-between mb-3 sm:mb-4">
@@ -131,13 +140,13 @@ export default async function Userdashbord() {
         </div>
       )}
 
-      {/* 8. Customer Testimonials & Reviews (Managed in Admin /managetestimonials) */}
+      {/* 10. Customer Testimonials & Reviews (Managed in Admin /managetestimonials) */}
       <Testimonials initialTestimonials={plainTestimonials} />
 
-      {/* 9. Farm to Fork Freshness Promise & Trust Guarantee */}
+      {/* 11. Farm to Fork Freshness Promise & Trust Guarantee */}
       <FarmFreshPromise />
 
-      {/* 10. PreFooter Trust Elements */}
+      {/* 12. PreFooter Trust Elements */}
       <PreFooter />
     </div>
   )

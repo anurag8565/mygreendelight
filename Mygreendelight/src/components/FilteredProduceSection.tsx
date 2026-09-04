@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from "react";
 import QuickFilterChips, { filterChipsList } from "./QuickFilterChips";
@@ -31,10 +31,10 @@ export default function FilteredProduceSection({
             </div>
             <div>
               <h2 className="text-base sm:text-2xl font-black text-gray-900 tracking-tight">
-                Daily Mandi Harvest Specials
+                🥬 Daily Fresh Farm Mandi
               </h2>
               <p className="text-[11px] sm:text-xs text-gray-500 font-medium">
-                1-Tap live filtered produce from local Bhopal farms
+                1-Tap live filtered produce from local Bhopal contract farms
               </p>
             </div>
           </div>
