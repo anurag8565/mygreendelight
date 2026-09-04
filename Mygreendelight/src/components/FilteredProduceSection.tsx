@@ -46,7 +46,7 @@ export default function FilteredProduceSection({
         </div>
 
         {/* 1-Tap Quick Filter Chips */}
-        <div className="mb-3">
+        <div className="mb-2.5">
           <QuickFilterChips
             activeChip={activeChip}
             onSelectChip={(id) => setActiveChip(id)}

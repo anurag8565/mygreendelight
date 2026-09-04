@@ -101,8 +101,8 @@ export default function QuickFilterChips({
   onSelectChip,
 }: QuickFilterChipsProps) {
   return (
-    <div className="w-full py-1">
-      <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 scrollbar-none snap-x">
+    <div className="w-full py-0.5">
+      <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-0.5 scrollbar-none snap-x">
         {filterChipsList.map((chip) => {
           const isActive = activeChip === chip.id;
           return (
@@ -111,14 +111,14 @@ export default function QuickFilterChips({
               whileTap={{ scale: 0.96 }}
               type="button"
               onClick={() => onSelectChip(chip.id)}
-              className={`snap-start shrink-0 px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer border ${
+              className={`snap-start shrink-0 px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer border ${
                 isActive
-                  ? "bg-[#0c831f] text-white border-[#0c831f] shadow-xs"
-                  : "bg-[#f8f9fa] text-gray-700 border-gray-200/80 hover:bg-gray-100"
+                  ? "bg-[#0f8646] text-white border-[#0f8646] shadow-2xs"
+                  : "bg-white text-gray-600 border-gray-200/80 hover:bg-gray-50 hover:text-gray-900 hover:border-gray-300"
               }`}
             >
-              <span className="text-xs">{chip.icon}</span>
-              <span>{chip.label}</span>
+              <span className="text-[11px] leading-none">{chip.icon}</span>
+              <span className="whitespace-nowrap tracking-tight">{chip.label}</span>
             </motion.button>
           );
         })}
