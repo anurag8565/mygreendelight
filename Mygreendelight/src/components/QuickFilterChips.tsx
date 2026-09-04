@@ -101,7 +101,7 @@ export default function QuickFilterChips({
   onSelectChip,
 }: QuickFilterChipsProps) {
   return (
-    <div className="w-full py-2 mb-2">
+    <div className="w-full py-1">
       <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none snap-x">
         {filterChipsList.map((chip) => {
           const isActive = activeChip === chip.id;
@@ -112,13 +112,13 @@ export default function QuickFilterChips({
               whileTap={{ scale: 0.95 }}
               type="button"
               onClick={() => onSelectChip(chip.id)}
-              className={`snap-start shrink-0 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs border ${
+              className={`snap-start shrink-0 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-[13px] font-black transition-all flex items-center gap-1.5 cursor-pointer border ${
                 isActive
-                  ? "bg-[#0f8646] text-white border-[#0f8646] shadow-xs"
-                  : "bg-gray-50 text-gray-700 border-gray-200/80 hover:bg-green-50/70 hover:border-green-300"
+                  ? "bg-[#0f8646] text-white border-[#0f8646] shadow-xs shadow-emerald-700/20"
+                  : "bg-white/95 text-gray-700 border-gray-200/90 hover:bg-emerald-50/80 hover:border-emerald-300 shadow-2xs"
               }`}
             >
-              <span>{chip.icon}</span>
+              <span className="text-sm">{chip.icon}</span>
               <span>{chip.label}</span>
             </motion.button>
           );
