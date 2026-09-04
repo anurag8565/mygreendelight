@@ -264,17 +264,17 @@ export default function ShopPage() {
         </div>
 
         {/* Horizontal Category Badges Bar with Visual Icons */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 mb-3.5 scrollbar-none -mx-3.5 px-3.5 sm:mx-0 sm:px-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 mb-2 scrollbar-none -mx-3.5 px-3.5 sm:mx-0 sm:px-0">
           <button
             type="button"
             onClick={() => handleCategoryClick("all")}
-            className={`px-3.5 py-2 rounded-2xl text-xs font-black shrink-0 transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs ${
+            className={`px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold shrink-0 transition-all flex items-center gap-1.5 cursor-pointer ${
               !categoryParam
-                ? "bg-[#0f8646] text-white shadow-sm ring-2 ring-emerald-300/60"
-                : "bg-white text-gray-800 border border-gray-200/80 hover:border-emerald-300 hover:bg-emerald-50/50"
+                ? "bg-[#0f8646] text-white shadow-2xs"
+                : "bg-white text-gray-700 border border-gray-200/80 hover:bg-gray-50 hover:border-gray-300"
             }`}
           >
-            <span>🌿</span>
+            <span className="text-[11px]">🌿</span>
             <span>All Aisles</span>
           </button>
 
@@ -285,84 +285,84 @@ export default function ShopPage() {
                 type="button"
                 key={cat._id}
                 onClick={() => handleCategoryClick(cat.name)}
-                className={`px-3.5 py-2 rounded-2xl text-xs font-black shrink-0 transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs ${
+                className={`px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold shrink-0 transition-all flex items-center gap-1.5 cursor-pointer ${
                   isSelected
-                    ? "bg-[#0f8646] text-white shadow-sm ring-2 ring-emerald-300/60"
-                    : "bg-white text-gray-800 border border-gray-200/80 hover:border-emerald-300 hover:bg-emerald-50/50"
+                    ? "bg-[#0f8646] text-white shadow-2xs"
+                    : "bg-white text-gray-700 border border-gray-200/80 hover:bg-gray-50 hover:border-gray-300"
                 }`}
               >
-                <span>{getCategoryIcon(cat.name)}</span>
-                <span>{cat.name}</span>
+                <span className="text-[11px]">{getCategoryIcon(cat.name)}</span>
+                <span className="whitespace-nowrap">{cat.name}</span>
               </button>
             );
           })}
         </div>
 
         {/* Quick Filter Chips Strip (1-Tap Toggle on Both Mobile & Desktop) */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 mb-5 scrollbar-none -mx-3.5 px-3.5 sm:mx-0 sm:px-0">
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 mb-3.5 scrollbar-none -mx-3.5 px-3.5 sm:mx-0 sm:px-0">
           <button
             type="button"
             onClick={() => setInStockOnly(!inStockOnly)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-black shrink-0 transition flex items-center gap-1 cursor-pointer border shadow-2xs active:scale-95 ${
+            className={`px-2.5 py-0.5 rounded-full text-[10.5px] sm:text-[11px] font-semibold shrink-0 transition flex items-center gap-1 cursor-pointer border ${
               inStockOnly
-                ? "bg-emerald-600 text-white border-emerald-700 ring-2 ring-emerald-200"
-                : "bg-white border-gray-200 text-gray-700 hover:bg-gray-50"
+                ? "bg-emerald-50 text-[#0f8646] border-[#0f8646] shadow-2xs"
+                : "bg-white border-gray-200/80 text-gray-600 hover:bg-gray-50 hover:text-gray-900"
             }`}
           >
-            <Zap size={12} className={inStockOnly ? "fill-white" : "text-amber-500"} />
+            <Zap size={11} className={inStockOnly ? "text-[#0f8646]" : "text-amber-500"} />
             <span>In Stock Only</span>
-            {inStockOnly && <Check size={12} className="stroke-[3] ml-0.5" />}
+            {inStockOnly && <Check size={11} className="stroke-[2.5]" />}
           </button>
 
           <button
             type="button"
             onClick={() => setUnder50Only(!under50Only)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-black shrink-0 transition flex items-center gap-1 cursor-pointer border shadow-2xs active:scale-95 ${
+            className={`px-2.5 py-0.5 rounded-full text-[10.5px] sm:text-[11px] font-semibold shrink-0 transition flex items-center gap-1 cursor-pointer border ${
               under50Only
-                ? "bg-orange-500 text-white border-orange-600 ring-2 ring-orange-200"
-                : "bg-white border-gray-200 text-gray-700 hover:bg-gray-50"
+                ? "bg-emerald-50 text-[#0f8646] border-[#0f8646] shadow-2xs"
+                : "bg-white border-gray-200/80 text-gray-600 hover:bg-gray-50 hover:text-gray-900"
             }`}
           >
-            <Flame size={12} className={under50Only ? "fill-white" : "text-orange-500"} />
+            <Flame size={11} className={under50Only ? "text-[#0f8646]" : "text-orange-500"} />
             <span>Under ₹50</span>
-            {under50Only && <Check size={12} className="stroke-[3] ml-0.5" />}
+            {under50Only && <Check size={11} className="stroke-[2.5]" />}
           </button>
 
           <button
             type="button"
             onClick={() => setSelectedRating(selectedRating === 4 ? null : 4)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-black shrink-0 transition flex items-center gap-1 cursor-pointer border shadow-2xs active:scale-95 ${
+            className={`px-2.5 py-0.5 rounded-full text-[10.5px] sm:text-[11px] font-semibold shrink-0 transition flex items-center gap-1 cursor-pointer border ${
               selectedRating === 4
-                ? "bg-amber-500 text-white border-amber-600 ring-2 ring-amber-200"
-                : "bg-white border-gray-200 text-gray-700 hover:bg-gray-50"
+                ? "bg-emerald-50 text-[#0f8646] border-[#0f8646] shadow-2xs"
+                : "bg-white border-gray-200/80 text-gray-600 hover:bg-gray-50 hover:text-gray-900"
             }`}
           >
-            <Star size={12} className={selectedRating === 4 ? "fill-white" : "text-amber-500 fill-amber-500"} />
+            <Star size={11} className={selectedRating === 4 ? "text-[#0f8646] fill-[#0f8646]" : "text-amber-500 fill-amber-500"} />
             <span>Top Rated (4★+)</span>
-            {selectedRating === 4 && <Check size={12} className="stroke-[3] ml-0.5" />}
+            {selectedRating === 4 && <Check size={11} className="stroke-[2.5]" />}
           </button>
 
           <button
             type="button"
             onClick={() => setBigDiscountOnly(!bigDiscountOnly)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-black shrink-0 transition flex items-center gap-1 cursor-pointer border shadow-2xs active:scale-95 ${
+            className={`px-2.5 py-0.5 rounded-full text-[10.5px] sm:text-[11px] font-semibold shrink-0 transition flex items-center gap-1 cursor-pointer border ${
               bigDiscountOnly
-                ? "bg-rose-600 text-white border-rose-700 ring-2 ring-rose-200"
-                : "bg-white border-gray-200 text-gray-700 hover:bg-gray-50"
+                ? "bg-emerald-50 text-[#0f8646] border-[#0f8646] shadow-2xs"
+                : "bg-white border-gray-200/80 text-gray-600 hover:bg-gray-50 hover:text-gray-900"
             }`}
           >
-            <Tag size={12} />
+            <Tag size={11} className={bigDiscountOnly ? "text-[#0f8646]" : "text-rose-500"} />
             <span>20%+ OFF</span>
-            {bigDiscountOnly && <Check size={12} className="stroke-[3] ml-0.5" />}
+            {bigDiscountOnly && <Check size={11} className="stroke-[2.5]" />}
           </button>
 
           {activeFilterCount > 0 && (
             <button
               type="button"
               onClick={resetAllFilters}
-              className="px-2.5 py-1.5 rounded-xl text-[11px] font-black text-red-600 hover:bg-red-50 border border-red-200 transition shrink-0 flex items-center gap-1 cursor-pointer"
+              className="px-2 py-0.5 rounded-full text-[10.5px] font-semibold text-red-600 hover:bg-red-50 border border-red-200 transition shrink-0 flex items-center gap-1 cursor-pointer"
             >
-              <RotateCcw size={11} />
+              <RotateCcw size={10} />
               <span>Reset</span>
             </button>
           )}
