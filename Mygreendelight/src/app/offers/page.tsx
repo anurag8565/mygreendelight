@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import DailyRewardWidget from "@/components/DailyRewardWidget";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
 import axios from "axios";
@@ -75,12 +74,7 @@ export default function OffersPage() {
           </div>
         </div>
 
-        {/* 1. Daily Lucky Scratch Card Widget */}
-        <div className="mb-8">
-          <DailyRewardWidget />
-        </div>
-
-        {/* 2. Active Promo Codes Grid */}
+        {/* Active Promo Codes Grid */}
         <div className="mb-10">
           <div className="flex items-center justify-between mb-4 sm:mb-6">
             <div className="flex items-center gap-2.5">

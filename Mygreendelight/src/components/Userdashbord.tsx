@@ -5,7 +5,6 @@ import FilteredProduceSection from './FilteredProduceSection'
 import FlashDeals from './FlashDeals'
 import FeaturedProduceSection from './FeaturedProduceSection'
 import CombosSection from './CombosSection'
-import DailyRewardWidget from './DailyRewardWidget'
 import Grocery from '@/model/groseri.model'
 import Category from '@/model/category.model'
 import ComboBundle from '@/model/combo.model'
@@ -94,13 +93,10 @@ export default async function Userdashbord() {
       {/* 5. Tone 1: Daily Fresh Farm Mandi (Pure White) */}
       <FilteredProduceSection groceries={plainNew} />
 
-      {/* 7. Tone 2: Save-More Value Combos & Multipacks (Soft Luxury Gray #f8f9fa) */}
+      {/* 6. Tone 2: Save-More Value Combos & Multipacks (Soft Luxury Gray #f8f9fa) */}
       {plainCombos && plainCombos.length > 0 && (
         <CombosSection initialCombos={plainCombos} />
       )}
-
-      {/* 8. Tone 1: Daily Lucky Scratch Card & Rewards (Pure White) */}
-      <DailyRewardWidget />
 
       {/* 9. Tone 2: Order Again Carousel (Soft Luxury Gray #f8f9fa) */}
       {plainOrderAgain && plainOrderAgain.length > 0 && (

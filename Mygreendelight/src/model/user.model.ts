@@ -111,7 +111,7 @@ const userSchema = new mongoose.Schema<iUser>(
     ],
     walletBalance: {
       type: Number,
-      default: 50, // ₹50 Welcome GreenPoints Bonus
+      default: 0,
     },
     walletHistory: [
       {

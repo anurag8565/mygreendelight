@@ -460,19 +460,6 @@ export default function CartPage() {
                   </div>
                 </div>
 
-                {/* GreenPoints Wallet Notification */}
-                {(userdata as any)?.walletBalance > 0 && (
-                  <div className="mt-4 p-3 bg-emerald-50/80 rounded-xl border border-emerald-200 flex items-center justify-between text-xs">
-                    <div className="flex items-center gap-2 text-emerald-900 font-bold">
-                      <Coins size={15} className="text-[#0f8646]" />
-                      <span>₹{(userdata as any).walletBalance} GreenPoints Available</span>
-                    </div>
-                    <span className="text-[10px] font-black text-[#0f8646] uppercase">
-                      Redeem at Checkout
-                    </span>
-                  </div>
-                )}
-
                 {/* Proceed Button */}
                 <button
                   onClick={() => router.push("/user/checkout")}
