@@ -1,0 +1,4052 @@
+[
+  {
+    "name": "Custard Apple",
+    "category": "Fruits",
+    "price": 180,
+    "mrp": 325,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/CustardAppleGolden.jpg?v=1641812079",
+    "description": "Premium farm-fresh Custard Apple. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 180,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 360,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 720,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/custard-apple-golden"
+  },
+  {
+    "name": "Apple Chilli",
+    "category": "Fruits",
+    "price": 275,
+    "mrp": 275,
+    "unit": "1kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/chilli.jpg?v=1641469403",
+    "description": "Premium farm-fresh Apple Chilli. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1kg",
+        "price": 275,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/apple-chilli"
+  },
+  {
+    "name": "Anaar Indian",
+    "category": "Fruits",
+    "price": 245,
+    "mrp": 163,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/AnaarIndian.jpg?v=1641293910",
+    "description": "Premium farm-fresh Anaar Indian. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 245,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 490,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 980,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/anaar-indian"
+  },
+  {
+    "name": "Guava (amrood) Red",
+    "category": "Fruits",
+    "price": 160,
+    "mrp": 90,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Guava_amrood_Red.jpg?v=1641980685",
+    "description": "Premium farm-fresh Guava (amrood) Red. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 160,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 320,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 640,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/guava-amrood-red"
+  },
+  {
+    "name": "Nakh Kashmiri",
+    "category": "Fruits",
+    "price": 105,
+    "mrp": 195,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/30001461-3_1-fresho-pear-nakh-indian_1.jpg?v=1642238327",
+    "description": "Premium farm-fresh Nakh Kashmiri. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 105,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/nakh-kashmiri"
+  },
+  {
+    "name": "Muscat Grapes Imported",
+    "category": "Fruits",
+    "price": 174,
+    "mrp": 138,
+    "unit": "250gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/files/download.jpg?v=1760357260",
+    "description": "Premium farm-fresh Muscat Grapes Imported. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "250gm",
+        "price": 174,
+        "stock": 50
+      },
+      {
+        "weight": "500Gm",
+        "price": 348,
+        "stock": 50
+      },
+      {
+        "weight": "1Kg",
+        "price": 695,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/grapes-white-indian"
+  },
+  {
+    "name": "Lobhiya",
+    "category": "Vegetables",
+    "price": 38,
+    "mrp": 18,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/lobhiya-1-1024x1024_1.jpg?v=1642153960",
+    "description": "Premium farm-fresh Lobhiya. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 38,
+        "stock": 50
+      },
+      {
+        "weight": "500gm",
+        "price": 75,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 150,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/lobhiya"
+  },
+  {
+    "name": "Mango Chausa",
+    "category": "Fruits",
+    "price": 195,
+    "mrp": 70,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/mango-chaunsa-634603_1.jpg?v=1642156122",
+    "description": "The Chausa is one of the sweetest mangoes , originally from Varanasi, grown in North India. Chausa has bright yellow skin and sweet pulp. About With a golden yellow color, these soft, almost fibreless mangoes have an aromatic pleasant sweet flavour. ...",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 195,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 390,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 720,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/mango-chausa"
+  },
+  {
+    "name": "Rockit Apple",
+    "category": "Fruits",
+    "price": 295,
+    "mrp": 369,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/files/rocketapple.webp?v=1764920398",
+    "description": "Premium farm-fresh Rockit Apple. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 295,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/rockit-apple"
+  },
+  {
+    "name": "Keggs Brown Eggs 6pc",
+    "category": "Vegetables",
+    "price": 150,
+    "mrp": 140,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/files/KEGGS.jpg?v=1781764986",
+    "description": "Premium farm-fresh Keggs Brown Eggs 6pc. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 150,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/keggs-brown-eggs-6pc"
+  },
+  {
+    "name": "Kachi Haldi",
+    "category": "Vegetables",
+    "price": 53,
+    "mrp": 23,
+    "unit": "250gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/KachiHaldi.jpg?v=1642074967",
+    "description": "Premium farm-fresh Kachi Haldi. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250gm",
+        "price": 53,
+        "stock": 50
+      },
+      {
+        "weight": "500gm",
+        "price": 105,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 210,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/kachi-haldi"
+  },
+  {
+    "name": "Kathal",
+    "category": "Vegetables",
+    "price": 90,
+    "mrp": 40,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Bauhinia-Variegata_d92e3a09-11c4-42fb-ac01-e8244a6dbce8.png?v=1646555587",
+    "description": "Premium farm-fresh Kathal. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 90,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 180,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 360,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/kathal"
+  },
+  {
+    "name": "Daab (Tender Coconut)",
+    "category": "Fruits",
+    "price": 100,
+    "mrp": 75,
+    "unit": "1pc",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Daab.jpg?v=1641812223",
+    "description": "Premium farm-fresh Daab (Tender Coconut). Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1pc",
+        "price": 100,
+        "stock": 50
+      },
+      {
+        "weight": "2pc",
+        "price": 200,
+        "stock": 50
+      },
+      {
+        "weight": "3pc",
+        "price": 300,
+        "stock": 50
+      },
+      {
+        "weight": "4pc",
+        "price": 400,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/daab"
+  },
+  {
+    "name": "Kiwi Green",
+    "category": "Exotics",
+    "price": 80,
+    "mrp": 50,
+    "unit": "1pc",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/kiwigreen.png?v=1646198845",
+    "description": "Premium farm-fresh Kiwi Green. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1pc",
+        "price": 80,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/kiwi-green"
+  },
+  {
+    "name": "Tinda",
+    "category": "Vegetables",
+    "price": 110,
+    "mrp": 65,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/tinda.jpg?v=1642243018",
+    "description": "Premium farm-fresh Tinda. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 110,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/tinda"
+  },
+  {
+    "name": "Salad Pata Green",
+    "category": "Vegetables",
+    "price": 135,
+    "mrp": 105,
+    "unit": "300gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/lettusgreen_91bc4433-3bc9-4123-9b87-4dfbf036656b.jpg?v=1690526881",
+    "description": "Premium farm-fresh Salad Pata Green. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "300gm",
+        "price": 135,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/salad-pata-green"
+  },
+  {
+    "name": "Orange Carrot",
+    "category": "Fruits",
+    "price": 60,
+    "mrp": 40,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/carrot-english-wholesaler-in-ahmedabad-500x500_1.jpg?v=1641977745",
+    "description": "Premium farm-fresh Orange Carrot. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 60,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 120,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 240,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/gajar-pili"
+  },
+  {
+    "name": "Kiwi Golden",
+    "category": "Exotics",
+    "price": 100,
+    "mrp": 60,
+    "unit": "1pc",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/GoldenKiwi.jpg?v=1641294212",
+    "description": "Premium farm-fresh Kiwi Golden. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1pc",
+        "price": 100,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/kiwi-golden"
+  },
+  {
+    "name": "Daab (Tender Coconut)",
+    "category": "Fruits",
+    "price": 100,
+    "mrp": 75,
+    "unit": "1pc",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Daab_cf3420ba-feee-4f81-997b-1213e24a90ac.jpg?v=1690526813",
+    "description": "Premium farm-fresh Daab (Tender Coconut). Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1pc",
+        "price": 100,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/daab-tender-coconut"
+  },
+  {
+    "name": "Rice Premium Basmati 5kg",
+    "category": "Vegetables",
+    "price": 650,
+    "mrp": 650,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/RicePremiumBasmati5kg.jpg?v=1645812005",
+    "description": "Premium farm-fresh Rice Premium Basmati 5kg. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 650,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/rice-premium-basmati-5kg"
+  },
+  {
+    "name": "Fps Rice Premium Basmati 1kg",
+    "category": "Vegetables",
+    "price": 130,
+    "mrp": 110,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/90021595_XL1_1.jpg?v=1645853081",
+    "description": "Premium farm-fresh Fps Rice Premium Basmati 1kg. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 130,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-rice-premium-basmati-1kg"
+  },
+  {
+    "name": "Fps Dal Chana 500gm",
+    "category": "Vegetables",
+    "price": 60,
+    "mrp": 85,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/dalchana_108f905d-05b5-401e-9079-68a153fad19a.jpg?v=1642597256",
+    "description": "Premium farm-fresh Fps Dal Chana 500gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 60,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dal-chana-500gm"
+  },
+  {
+    "name": "Fps Dal Masoor Sabut 500gm",
+    "category": "Vegetables",
+    "price": 75,
+    "mrp": 90,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/FpsDalMasoorSabut500gm.jpg?v=1642767253",
+    "description": "Premium farm-fresh Fps Dal Masoor Sabut 500gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 75,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dal-masoor-sabut-500gm"
+  },
+  {
+    "name": "Fps Dal Malka Masoor 500gm",
+    "category": "Vegetables",
+    "price": 70,
+    "mrp": 80,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Dalmasoor.jpg?v=1642663948",
+    "description": "Premium farm-fresh Fps Dal Malka Masoor 500gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 70,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dal-malka-masoor-500gm"
+  },
+  {
+    "name": "Fps Dal Kabuli Chana Big 500gm",
+    "category": "Vegetables",
+    "price": 70,
+    "mrp": 80,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/kabuliChanabig.jpg?v=1642597282",
+    "description": "Premium farm-fresh Fps Dal Kabuli Chana Big 500gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 70,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dal-kabuli-chana-big-500gm"
+  },
+  {
+    "name": "Fps Dal Moong Chilka 500gm",
+    "category": "Vegetables",
+    "price": 80,
+    "mrp": 90,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/moongdalchilka.jpg?v=1642768056",
+    "description": "Premium farm-fresh Fps Dal Moong Chilka 500gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 80,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dal-moong-chilka-500gm"
+  },
+  {
+    "name": "Fps Dal Rajma Chitra 500gm",
+    "category": "Vegetables",
+    "price": 90,
+    "mrp": 99,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/rajmachitra_82129d5a-e29f-4b3b-88e5-9486e19779f9.jpg?v=1642768756",
+    "description": "Premium farm-fresh Fps Dal Rajma Chitra 500gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 90,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dal-rajma-chitra-500gm"
+  },
+  {
+    "name": "Fps Dal Moong Sabut 500gm",
+    "category": "Vegetables",
+    "price": 75,
+    "mrp": 99,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/moongdalsabut.jpg?v=1642768166",
+    "description": "Premium farm-fresh Fps Dal Moong Sabut 500gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 75,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dal-moong-sabut-500gm"
+  },
+  {
+    "name": "Fps Dal Urad Chilka 500gm",
+    "category": "Vegetables",
+    "price": 80,
+    "mrp": 99,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/UradDalchilka.jpg?v=1642768849",
+    "description": "Premium farm-fresh Fps Dal Urad Chilka 500gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 80,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dal-urad-chilka-500gm"
+  },
+  {
+    "name": "Fps Dal Moong Dhuli 500gm",
+    "category": "Vegetables",
+    "price": 85,
+    "mrp": 99,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/MoongDhuliDal.jpg?v=1641313961",
+    "description": "Premium farm-fresh Fps Dal Moong Dhuli 500gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 85,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dal-moong-dhuli-500gm"
+  },
+  {
+    "name": "Fps Dal Black Chana 500gm",
+    "category": "Vegetables",
+    "price": 60,
+    "mrp": 70,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/FpsDalBlackChana500gm.jpg?v=1642595440",
+    "description": "Premium farm-fresh Fps Dal Black Chana 500gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 60,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dal-black-chana-500gm"
+  },
+  {
+    "name": "Fps Dal Arhar 500gm",
+    "category": "Vegetables",
+    "price": 80,
+    "mrp": 99,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/FpsDalArhar1kg_7af7e6bd-cb2e-4619-bd40-d4ba7dfc905d.jpg?v=1642595156",
+    "description": "Premium farm-fresh Fps Dal Arhar 500gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 80,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dal-arhar-500gm"
+  },
+  {
+    "name": "Fps Dal Urad Sabut 500gm",
+    "category": "Vegetables",
+    "price": 80,
+    "mrp": 99,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/uraddalsabut.jpg?v=1642768898",
+    "description": "Premium farm-fresh Fps Dal Urad Sabut 500gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 80,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dal-urad-sabut-500gm"
+  },
+  {
+    "name": "Fps Dal Urad Dhulli 500gm",
+    "category": "Vegetables",
+    "price": 90,
+    "mrp": 99,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/UradDalDhuli.jpg?v=1642768875",
+    "description": "Premium farm-fresh Fps Dal Urad Dhulli 500gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 90,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dal-urad-dhulli-500gm"
+  },
+  {
+    "name": "Medjoul Natural Dates 1kg",
+    "category": "Fruits",
+    "price": 1750,
+    "mrp": 1990,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/MedjoulNaturalDates1kg.jpg?v=1646228217",
+    "description": "Premium farm-fresh Medjoul Natural Dates 1kg. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 1750,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/medjoul-natural-dates-1kg"
+  },
+  {
+    "name": "Date Crown 500gm",
+    "category": "Fruits",
+    "price": 275,
+    "mrp": 315,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/41R2s_ZVfRL_1.jpg?v=1641810670",
+    "description": "Premium farm-fresh Date Crown 500gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 275,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/date-crown-500gm"
+  },
+  {
+    "name": "Kimia Gold Pkt",
+    "category": "Fruits",
+    "price": 220,
+    "mrp": 300,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/kima.png?v=1643803844",
+    "description": "Premium farm-fresh Kimia Gold Pkt. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 220,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/kimia-gold-pkt"
+  },
+  {
+    "name": "Limca 300ml",
+    "category": "Vegetables",
+    "price": 40,
+    "mrp": 40,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/limca300ml.jpg?v=1644323701",
+    "description": "Premium farm-fresh Limca 300ml. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 40,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/limca-300ml"
+  },
+  {
+    "name": "Sprite 300ml Tin",
+    "category": "Vegetables",
+    "price": 40,
+    "mrp": 40,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Sprite300ml.jpg?v=1646304031",
+    "description": "Premium farm-fresh Sprite 300ml Tin. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 40,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/sprite-300ml-tin"
+  },
+  {
+    "name": "Diet Coke 300ml",
+    "category": "Vegetables",
+    "price": 40,
+    "mrp": 40,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/diet.jpg?v=1648203038",
+    "description": "Premium farm-fresh Diet Coke 300ml. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 40,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/diet-coke-300ml"
+  },
+  {
+    "name": "Coca Cola No Sugar 300ml Tin",
+    "category": "Vegetables",
+    "price": 40,
+    "mrp": 40,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/3104rwQ6qHL._SX425__1.jpg?v=1641642231",
+    "description": "Premium farm-fresh Coca Cola No Sugar 300ml Tin. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 40,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/coca-cola-no-sugar-300ml-tin"
+  },
+  {
+    "name": "Coca Cola  300ml Tin",
+    "category": "Vegetables",
+    "price": 40,
+    "mrp": 40,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/coca_cola_can_1_1.jpg?v=1641641229",
+    "description": "Premium farm-fresh Coca Cola  300ml Tin. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 40,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/coca-cola-300ml-tin"
+  },
+  {
+    "name": "Thums Up Can 300 Ml",
+    "category": "Vegetables",
+    "price": 40,
+    "mrp": 40,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/ThumsUpCan300Ml.jpg?v=1646301993",
+    "description": "Premium farm-fresh Thums Up Can 300 Ml. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 40,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/thums-up-can-300-ml"
+  },
+  {
+    "name": "Coca Cola 250 Ml Pet",
+    "category": "Vegetables",
+    "price": 20,
+    "mrp": 20,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/ph0cc049-1-809081_m_1.jpg?v=1641641660",
+    "description": "Premium farm-fresh Coca Cola 250 Ml Pet. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 20,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/coca-cola-250-ml-pet"
+  },
+  {
+    "name": "Sprite 250 Ml",
+    "category": "Vegetables",
+    "price": 20,
+    "mrp": 20,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/250ml_9381ef1c-8c00-445f-b1cd-1d1affd46cf9.jpg?v=1646303954",
+    "description": "Premium farm-fresh Sprite 250 Ml. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 20,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/sprite-250-ml"
+  },
+  {
+    "name": "Thums Up 250 Ml",
+    "category": "Vegetables",
+    "price": 20,
+    "mrp": 20,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/ThumsUpCan250Ml.jpg?v=1646302201",
+    "description": "Premium farm-fresh Thums Up 250 Ml. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 20,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/thums-up-250-ml"
+  },
+  {
+    "name": "Schweppes Original Soda Water 300ml",
+    "category": "Vegetables",
+    "price": 60,
+    "mrp": 60,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/SchweppesOriginalSodaWater300ml.jpg?v=1646300417",
+    "description": "Premium farm-fresh Schweppes Original Soda Water 300ml. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 60,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/schweppes-original-soda-water-300ml"
+  },
+  {
+    "name": "Schweppes Indian Tonic Water 300ml",
+    "category": "Vegetables",
+    "price": 50,
+    "mrp": 50,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/SchweppesIndianTonicWater300ml.jpg?v=1645098811",
+    "description": "Premium farm-fresh Schweppes Indian Tonic Water 300ml. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 50,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/schweppes-indian-tonic-water-300ml"
+  },
+  {
+    "name": "Schweppes Original Ginger Ale 300ml",
+    "category": "Vegetables",
+    "price": 50,
+    "mrp": 50,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/SchweppesOriginalGingerAle300ml.jpg?v=1645099188",
+    "description": "Premium farm-fresh Schweppes Original Ginger Ale 300ml. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 50,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/schweppes-original-ginger-ale-300ml"
+  },
+  {
+    "name": "Kari Patta",
+    "category": "Vegetables",
+    "price": 30,
+    "mrp": 20,
+    "unit": "1 Bunch",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/karipatta.jpg?v=1642154317",
+    "description": "Premium farm-fresh Kari Patta. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 Bunch",
+        "price": 30,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/kari-patta"
+  },
+  {
+    "name": "Loki Goal",
+    "category": "Vegetables",
+    "price": 50,
+    "mrp": 30,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/grocerapp-ghia-pumpkin--5f08128923edb.jpg?v=1642154289",
+    "description": "Premium farm-fresh Loki Goal. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 50,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 100,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/loki-goal"
+  },
+  {
+    "name": "Soya (Dill)",
+    "category": "Vegetables",
+    "price": 63,
+    "mrp": 113,
+    "unit": "250gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/soya.jpg?v=1648202507",
+    "description": "Premium farm-fresh Soya (Dill). Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250gm",
+        "price": 63,
+        "stock": 50
+      },
+      {
+        "weight": "500gm",
+        "price": 125,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 250,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/soya-bunch-kg"
+  },
+  {
+    "name": "Papita Small",
+    "category": "Fruits",
+    "price": 195,
+    "mrp": 195,
+    "unit": "1kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/40114961-3_4-fresho-papaya-small_1.jpg?v=1642262677",
+    "description": "Premium farm-fresh Papita Small. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1kg",
+        "price": 195,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/papita-small"
+  },
+  {
+    "name": "Apple Washington",
+    "category": "Fruits",
+    "price": 160,
+    "mrp": 163,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/BulkWashingtonAppleLargeSize20Kg.jpg?v=1641643782",
+    "description": "Premium farm-fresh Apple Washington. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 160,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 320,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 640,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/bulk-washington-apple-large-size-20kg"
+  },
+  {
+    "name": "Kamal Kakdi",
+    "category": "Vegetables",
+    "price": 125,
+    "mrp": 70,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/KamalKakdi.png?v=1642153551",
+    "description": "Premium farm-fresh Kamal Kakdi. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 125,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/kamal-kakdi"
+  },
+  {
+    "name": "Leek",
+    "category": "Vegetables",
+    "price": 90,
+    "mrp": 188,
+    "unit": "250gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/kamus-leek-seeds-allium-porrum_1.jpg?v=1642152473",
+    "description": "Premium farm-fresh Leek. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250gm",
+        "price": 90,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/leek"
+  },
+  {
+    "name": "Fps Dft Kishmish Long 500gm",
+    "category": "Fruits",
+    "price": 450,
+    "mrp": 350,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/product_30_301_7c1cbe8e-891a-4b38-8b02-26190b248b91.jpg?v=1642845855",
+    "description": "Premium farm-fresh Fps Dft Kishmish Long 500gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 450,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dft-kishmish-ind-long-500gm"
+  },
+  {
+    "name": "Bhutta Dana (Peeled Corn)",
+    "category": "Vegetables",
+    "price": 24,
+    "mrp": 30,
+    "unit": "200Gms",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/peeledcorn_b5441b47-630a-439a-bb7f-5849019d9466.jpg?v=1690526878",
+    "description": "Premium farm-fresh Bhutta Dana (Peeled Corn). Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "200Gms",
+        "price": 24,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/bhutta-dana-peeled-corn"
+  },
+  {
+    "name": "Pear Tanchi Imported",
+    "category": "Fruits",
+    "price": 195,
+    "mrp": 120,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/pear_tanchi_c02bd7fc-3434-4a96-a451-34c5ec14608d.jpg?v=1690526860",
+    "description": "Premium farm-fresh Pear Tanchi Imported. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 195,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/pear-tanchi-imported"
+  },
+  {
+    "name": "Basket 3",
+    "category": "Vegetables",
+    "price": 999,
+    "mrp": 1249,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Basket800X800_0f54da5e-bfa0-4dea-9eeb-51273aa3ea0a.png?v=1666349003",
+    "description": "Apple Gala Ind. 1.5kg, Pineapple 1pc, Apple Golden 500g, Orange 1.5kg, Anaar 600g,...",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 999,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/basket-3"
+  },
+  {
+    "name": "Basket 2",
+    "category": "Vegetables",
+    "price": 1500,
+    "mrp": 1875,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Basket800X800_25019264-bf2f-4ec2-b248-701d3781fdf2.png?v=1666347283",
+    "description": "Orange 1kg, Guava 1kg, Apple Kashmiri 1kg, Pear Imp. 1kg, Sharifa 700g, Mango Perry 600g, Grapes Green 500g,...",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 1500,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/basket-2"
+  },
+  {
+    "name": "Khira Normal",
+    "category": "Vegetables",
+    "price": 50,
+    "mrp": 30,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Kakdi-Cucumber-Green_1_cebd8f73-56e7-4a3c-8b01-171fb7cf77a3.jpg?v=1690526840",
+    "description": "Premium farm-fresh Khira Normal. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 50,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/khira-normal"
+  },
+  {
+    "name": "Shakarkandi (Sweet Potato)",
+    "category": "Vegetables",
+    "price": 95,
+    "mrp": 48,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/shakarkandi_b360c2f5-94a1-4267-a22e-ef49e24dbd32.jpg?v=1690526902",
+    "description": "Premium farm-fresh Shakarkandi (Sweet Potato). Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 95,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/shakarkandi-sweet-potato"
+  },
+  {
+    "name": "Avocado Imported 1 pcs",
+    "category": "Vegetables",
+    "price": 130,
+    "mrp": 163,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/0276-2020-07-24_e5e8b1c3-399f-45d9-82d3-4676fb442743.png?v=1690526915",
+    "description": "Premium farm-fresh Avocado Imported 1 pcs. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 130,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/avocado-imported-500gm"
+  },
+  {
+    "name": "Raw Mango",
+    "category": "Fruits",
+    "price": 90,
+    "mrp": 60,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/ramkela.jpg?v=1646459514",
+    "description": "About Product The raw mango is commonly green in color and is highly appreciated for its nutritional value. They are outstanding suppliers of Vitamin C, which is relatively more than ripe mangoes. Raw mangoes are tangy in taste and have a tempting ar...",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 90,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 180,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 360,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/ram-kela"
+  },
+  {
+    "name": "Fps Dft Badam Big",
+    "category": "Fruits",
+    "price": 750,
+    "mrp": 0,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Badambig_22700ad9-a24e-4b86-9ab0-e6d11f3d4097.jpg?v=1690527804",
+    "description": "Premium farm-fresh Fps Dft Badam Big. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 750,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dft-badam-big"
+  },
+  {
+    "name": "Jimikand (Yam)",
+    "category": "Vegetables",
+    "price": 60,
+    "mrp": 50,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Jimikand.jpg?v=1646296080",
+    "description": "Premium farm-fresh Jimikand (Yam). Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 60,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 120,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 240,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/jimikand"
+  },
+  {
+    "name": "Parsely",
+    "category": "Vegetables",
+    "price": 45,
+    "mrp": 55,
+    "unit": "100gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/shin_c4c07d02-9be6-402b-a021-a38b4530154b.jpg?v=1646736818",
+    "description": "Premium farm-fresh Parsely. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "100gm",
+        "price": 45,
+        "stock": 50
+      },
+      {
+        "weight": "200gm",
+        "price": 90,
+        "stock": 50
+      },
+      {
+        "weight": "300gm",
+        "price": 135,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/parsely"
+  },
+  {
+    "name": "Avocado Imported",
+    "category": "Exotics",
+    "price": 300,
+    "mrp": 239,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/0276-2020-07-24_e5e8b1c3-399f-45d9-82d3-4676fb442743.png?v=1690526915",
+    "description": "Premium farm-fresh Avocado Imported. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 300,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 600,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/avocado-imported"
+  },
+  {
+    "name": "Dragon Fruit",
+    "category": "Exotics",
+    "price": 110,
+    "mrp": 140,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/DragonFruit.jpg?v=1641900945",
+    "description": "Premium farm-fresh Dragon Fruit. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 110,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/dragon-fruit"
+  },
+  {
+    "name": "Apple Royal Gala",
+    "category": "Fruits",
+    "price": 180,
+    "mrp": 130,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/AppleRoyalGala_png.webp?v=1651472951",
+    "description": "Premium farm-fresh Apple Royal Gala. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 180,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 360,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 720,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/apple-royal-gala"
+  },
+  {
+    "name": "Kinley Water 1ltr",
+    "category": "Vegetables",
+    "price": 20,
+    "mrp": 20,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/KinleyWater1ltr.jpg?v=1643804613",
+    "description": "Premium farm-fresh Kinley Water 1ltr. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 20,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/kinley-water-1ltr"
+  },
+  {
+    "name": "Shakarkandi (Sweet Potato)",
+    "category": "Vegetables",
+    "price": 95,
+    "mrp": 48,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/shakarkandi.jpg?v=1642417518",
+    "description": "Premium farm-fresh Shakarkandi (Sweet Potato). Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 95,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 190,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 380,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/shakarkandi"
+  },
+  {
+    "name": "Elaichi Kela (banana Small)",
+    "category": "Fruits",
+    "price": 225,
+    "mrp": 225,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/ElaichiKela_bananaSmall.jpg?v=1642501980",
+    "description": "Premium farm-fresh Elaichi Kela (banana Small). Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 225,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/elaichi-kela-banana-small"
+  },
+  {
+    "name": "Honey Dew Melon",
+    "category": "Fruits",
+    "price": 120,
+    "mrp": 95,
+    "unit": "1kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/honeudew.jpg?v=1646231042",
+    "description": "Premium farm-fresh Honey Dew Melon. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1kg",
+        "price": 120,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 240,
+        "stock": 50
+      },
+      {
+        "weight": "3kg",
+        "price": 360,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/honey-dew-melon"
+  },
+  {
+    "name": "Orange Mandarin",
+    "category": "Fruits",
+    "price": 380,
+    "mrp": 280,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/orangemandarin-freshproduce-1024x1024_1.jpg?v=1642261522",
+    "description": "Premium farm-fresh Orange Mandarin. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 380,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/orange-mandarin"
+  },
+  {
+    "name": "Anaar Extra Large",
+    "category": "Fruits",
+    "price": 390,
+    "mrp": 475,
+    "unit": "1kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/AnaarExtraLarge.jpg?v=1641458205",
+    "description": "Premium farm-fresh Anaar Extra Large. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1kg",
+        "price": 390,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 780,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/anaar-extra-large"
+  },
+  {
+    "name": "Kale",
+    "category": "Exotics",
+    "price": 88,
+    "mrp": 138,
+    "unit": "250gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Kale.jpg?v=1642152057",
+    "description": "Premium farm-fresh Kale. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "250gm",
+        "price": 88,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/kale"
+  },
+  {
+    "name": "Yakult Pack Of 5",
+    "category": "Dairy & Staples",
+    "price": 90,
+    "mrp": 90,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/YakultLightPackOf5pc_e995d3ad-153b-4ea7-9af5-491c24f974de.jpg?v=1645089041",
+    "description": "Premium farm-fresh Yakult Pack Of 5. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 90,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/yakult-pack-of-5"
+  },
+  {
+    "name": "bok choy",
+    "category": "Exotics",
+    "price": 130,
+    "mrp": 150,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Bok_Choy.jpg?v=1641554226",
+    "description": "Premium farm-fresh bok choy. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 130,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 260,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 520,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/bok-choy"
+  },
+  {
+    "name": "Malta Imp",
+    "category": "Fruits",
+    "price": 98,
+    "mrp": 80,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/MaltaImp.jpg?v=1643623998",
+    "description": "Premium farm-fresh Malta Imp. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 98,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 195,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 390,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/malta-imp"
+  },
+  {
+    "name": "Apple  Green Imp",
+    "category": "Fruits",
+    "price": 175,
+    "mrp": 130,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/AppleGreenImp.jpg?v=1641469190",
+    "description": "Premium farm-fresh Apple  Green Imp. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 175,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 350,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 700,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/apple-green-imp"
+  },
+  {
+    "name": "Kinley Water 500ml",
+    "category": "Vegetables",
+    "price": 10,
+    "mrp": 10,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/kinleywater500ml.jpg?v=1643805015",
+    "description": "Premium farm-fresh Kinley Water 500ml. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 10,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/kinley-water-500ml"
+  },
+  {
+    "name": "Medjoul Natural Dates 500gm",
+    "category": "Fruits",
+    "price": 950,
+    "mrp": 1100,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/dates.jpg?v=1644925085",
+    "description": "Premium farm-fresh Medjoul Natural Dates 500gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 950,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/medjoul-natural-dates-500gm"
+  },
+  {
+    "name": "Raw Papaya",
+    "category": "Fruits",
+    "price": 40,
+    "mrp": 35,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/green-papaya-201706_1.jpg?v=1642398393",
+    "description": "Premium farm-fresh Raw Papaya. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 40,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 80,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 160,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/raw-papaya"
+  },
+  {
+    "name": "Green Onion",
+    "category": "Vegetables",
+    "price": 53,
+    "mrp": 38,
+    "unit": "250gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/GreenOnion.jpg?v=1646296372",
+    "description": "Premium farm-fresh Green Onion. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250gm",
+        "price": 53,
+        "stock": 50
+      },
+      {
+        "weight": "500gm",
+        "price": 105,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 210,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/green-onion"
+  },
+  {
+    "name": "Fps Dft Anjeer",
+    "category": "Fruits",
+    "price": 1250,
+    "mrp": 1900,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Anjeer_ee06dd99-dc6a-4e9a-bebc-d561b902767c.jpg?v=1690527805",
+    "description": "Premium farm-fresh Fps Dft Anjeer. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 1250,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dft-anjeer"
+  },
+  {
+    "name": "Fps Dft Kishmish Long 500gm",
+    "category": "Fruits",
+    "price": 450,
+    "mrp": 450,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/product_30_301_6954ffcb-4456-4d6f-83dc-8b048f631cbe.jpg?v=1690527789",
+    "description": "Premium farm-fresh Fps Dft Kishmish Long 500gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 450,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dft-kishmish-long-500gm"
+  },
+  {
+    "name": "Broccoli",
+    "category": "Exotics",
+    "price": 90,
+    "mrp": 75,
+    "unit": "250gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Broccoli.jpg?v=1641640291",
+    "description": "Premium farm-fresh Broccoli. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "250gm",
+        "price": 90,
+        "stock": 50
+      },
+      {
+        "weight": "500gm",
+        "price": 180,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 360,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/broccoli"
+  },
+  {
+    "name": "Salad Pata Red",
+    "category": "Vegetables",
+    "price": 108,
+    "mrp": 209,
+    "unit": "300gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/salad-pata-red-freshproduceshoppe-1024x1024_1.jpg?v=1642399985",
+    "description": "Premium farm-fresh Salad Pata Red. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "300gm",
+        "price": 108,
+        "stock": 50
+      },
+      {
+        "weight": "600gm",
+        "price": 216,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 360,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/salad-pata-red"
+  },
+  {
+    "name": "Grapes Red Imported",
+    "category": "Fruits",
+    "price": 149,
+    "mrp": 138,
+    "unit": "250gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/GrapesRedImp.jpg?v=1641981610",
+    "description": "Premium farm-fresh Grapes Red Imported. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "250gm",
+        "price": 149,
+        "stock": 50
+      },
+      {
+        "weight": "500gm",
+        "price": 298,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 595,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/grapes-red-imp"
+  },
+  {
+    "name": "White Onion",
+    "category": "Vegetables",
+    "price": 210,
+    "mrp": 80,
+    "unit": "1kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/whiteonion.jpg?v=1643634982",
+    "description": "Premium farm-fresh White Onion. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1kg",
+        "price": 210,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/white-onion"
+  },
+  {
+    "name": "Dry Fruit Basket Plate",
+    "category": "Vegetables",
+    "price": 990,
+    "mrp": 990,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Pista500gm.jpg?v=1666340521",
+    "description": "Roasted Pista 500Gms Plate -1...",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 990,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/dry-fruit-box"
+  },
+  {
+    "name": "Walnut 500g",
+    "category": "Fruits",
+    "price": 1050,
+    "mrp": 890,
+    "unit": "1pkt",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/wlnut.jpg?v=1665892764",
+    "description": "Premium farm-fresh Walnut 500g. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1pkt",
+        "price": 1050,
+        "stock": 50
+      },
+      {
+        "weight": "2pkt",
+        "price": 2100,
+        "stock": 50
+      },
+      {
+        "weight": "3pkt",
+        "price": 3150,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/walnut-chillie-500g"
+  },
+  {
+    "name": "Blueberry",
+    "category": "Exotics",
+    "price": 260,
+    "mrp": 360,
+    "unit": "1pkt",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Blueberry.jpg?v=1646281692",
+    "description": "Premium farm-fresh Blueberry. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1pkt",
+        "price": 260,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/blueberry"
+  },
+  {
+    "name": "Pineapple",
+    "category": "Fruits",
+    "price": 180,
+    "mrp": 160,
+    "unit": "1 Pcs",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/pineapple-queen-1-pc-0-20201119_1.jpg?v=1642264484",
+    "description": "Premium farm-fresh Pineapple. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1 Pcs",
+        "price": 180,
+        "stock": 50
+      },
+      {
+        "weight": "2 pcs",
+        "price": 360,
+        "stock": 50
+      },
+      {
+        "weight": "3 pcs",
+        "price": 540,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/pineapple"
+  },
+  {
+    "name": "Tori",
+    "category": "Vegetables",
+    "price": 50,
+    "mrp": 30,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/tori.jpg?v=1642242966",
+    "description": "Premium farm-fresh Tori. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 50,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 100,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/tori"
+  },
+  {
+    "name": "Matar (Green Peas)",
+    "category": "Vegetables",
+    "price": 56,
+    "mrp": 113,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/green-peas-500x500_1.jpg?v=1642230979",
+    "description": "Premium farm-fresh Matar (Green Peas). Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 56,
+        "stock": 50
+      },
+      {
+        "weight": "500g",
+        "price": 140,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 280,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/matar"
+  },
+  {
+    "name": "Palak",
+    "category": "Vegetables",
+    "price": 150,
+    "mrp": 50,
+    "unit": "1kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/1515419-01.jpg?v=1642262466",
+    "description": "Premium farm-fresh Palak. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1kg",
+        "price": 150,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 300,
+        "stock": 50
+      },
+      {
+        "weight": "3kg",
+        "price": 450,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/palak"
+  },
+  {
+    "name": "Mushroom Box",
+    "category": "Exotics",
+    "price": 70,
+    "mrp": 50,
+    "unit": "1box",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/1615630141388_variant_5c80d9cad8b2f755a2d44035_1_1.jpg?v=1642237216",
+    "description": "Premium farm-fresh Mushroom Box. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1box",
+        "price": 70,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/mushroom-box"
+  },
+  {
+    "name": "Kundru",
+    "category": "Vegetables",
+    "price": 45,
+    "mrp": 55,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/ivy-gourd-500x500_1.jpg?v=1642151390",
+    "description": "Premium farm-fresh Kundru. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 45,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 90,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 180,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/kundru"
+  },
+  {
+    "name": "Ginger New",
+    "category": "Vegetables",
+    "price": 70,
+    "mrp": 33,
+    "unit": "250gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/GingerNew.jpg?v=1646299752",
+    "description": "Premium farm-fresh Ginger New. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250gm",
+        "price": 70,
+        "stock": 50
+      },
+      {
+        "weight": "500g",
+        "price": 140,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 280,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/ginger-new"
+  },
+  {
+    "name": "Dhaniya",
+    "category": "Vegetables",
+    "price": 38,
+    "mrp": 38,
+    "unit": "250gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Coriander_Dhaniya_1.jpg?v=1641976599",
+    "description": "Premium farm-fresh Dhaniya. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250gm",
+        "price": 38,
+        "stock": 50
+      },
+      {
+        "weight": "500gm",
+        "price": 75,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 150,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/dhaniya"
+  },
+  {
+    "name": "Shimla Mirch (Capsicum)",
+    "category": "Vegetables",
+    "price": 30,
+    "mrp": 30,
+    "unit": "250gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Capsicum-750x750_1.jpg?v=1642416876",
+    "description": "Premium farm-fresh Shimla Mirch (Capsicum). Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250gm",
+        "price": 30,
+        "stock": 50
+      },
+      {
+        "weight": "500gm",
+        "price": 60,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 120,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/shimla-mirch"
+  },
+  {
+    "name": "Paneer",
+    "category": "Vegetables",
+    "price": 123,
+    "mrp": 90,
+    "unit": "250gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Paneer.jpg?v=1644672587",
+    "description": "Premium farm-fresh Paneer. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250gm",
+        "price": 123,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/paneer"
+  },
+  {
+    "name": "Banana",
+    "category": "Fruits",
+    "price": 24,
+    "mrp": 39,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/depositphotos_19049353-stock-photo-fruit_1.jpg?v=1641545342",
+    "description": "Premium farm-fresh Banana. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 24,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/banana"
+  },
+  {
+    "name": "Zuchini Green",
+    "category": "Vegetables",
+    "price": 78,
+    "mrp": 75,
+    "unit": "300Gms",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Zucchinigrn.jpg?v=1642233306",
+    "description": "Premium farm-fresh Zuchini Green. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "300Gms",
+        "price": 78,
+        "stock": 50
+      },
+      {
+        "weight": "600gm",
+        "price": 156,
+        "stock": 50
+      },
+      {
+        "weight": "1.2gm",
+        "price": 312,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/zuchini-green"
+  },
+  {
+    "name": "Tomato Desi",
+    "category": "Vegetables",
+    "price": 13,
+    "mrp": 38,
+    "unit": "250gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/TomatoDesi.jpg?v=1641299502",
+    "description": "Premium farm-fresh Tomato Desi. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250gm",
+        "price": 13,
+        "stock": 50
+      },
+      {
+        "weight": "500g",
+        "price": 25,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 50,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/tomato-desi"
+  },
+  {
+    "name": "Onion",
+    "category": "Vegetables",
+    "price": 38,
+    "mrp": 19,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Onion.jpg?v=1641299205",
+    "description": "Premium farm-fresh Onion. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 38,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 75,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 150,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/onion"
+  },
+  {
+    "name": "Loki Long",
+    "category": "Vegetables",
+    "price": 50,
+    "mrp": 25,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/loki-long-freshproduceshoppe-1024x1024_1.jpg?v=1642154522",
+    "description": "Premium farm-fresh Loki Long. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 50,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 100,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/loki-long"
+  },
+  {
+    "name": "Lemon",
+    "category": "Vegetables",
+    "price": 53,
+    "mrp": 33,
+    "unit": "250Gms",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Nimbu.jpg?v=1646295775",
+    "description": "Premium farm-fresh Lemon. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250Gms",
+        "price": 53,
+        "stock": 50
+      },
+      {
+        "weight": "500Gms",
+        "price": 105,
+        "stock": 50
+      },
+      {
+        "weight": "1Kg",
+        "price": 210,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/nimbu"
+  },
+  {
+    "name": "Lasan Desi",
+    "category": "Vegetables",
+    "price": 70,
+    "mrp": 45,
+    "unit": "250Gms",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/garlic-desi-1024x1024_1.jpg?v=1642151823",
+    "description": "Premium farm-fresh Lasan Desi. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250Gms",
+        "price": 70,
+        "stock": 50
+      },
+      {
+        "weight": "500gm",
+        "price": 140,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 280,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/lasan-desi"
+  },
+  {
+    "name": "Cauliflower",
+    "category": "Vegetables",
+    "price": 75,
+    "mrp": 70,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/h1018g16207257715328.jpg?v=1641798030",
+    "description": "Premium farm-fresh Cauliflower. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 75,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 150,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 300,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/cauliflower"
+  },
+  {
+    "name": "Chukander",
+    "category": "Vegetables",
+    "price": 45,
+    "mrp": 35,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/vFUqmU4J_400x400_1.jpg?v=1641640288",
+    "description": "Premium farm-fresh Chukander. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 45,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/chukander"
+  },
+  {
+    "name": "Arbi",
+    "category": "Vegetables",
+    "price": 60,
+    "mrp": 48,
+    "unit": "500Gms",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/arbi-600x600-500x500.png?v=1641538546",
+    "description": "Premium farm-fresh Arbi. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500Gms",
+        "price": 60,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/arbi"
+  },
+  {
+    "name": "Amla",
+    "category": "Vegetables",
+    "price": 70,
+    "mrp": 40,
+    "unit": "250Gms",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/amla-fresh-3.jpg?v=1641460181",
+    "description": "Premium farm-fresh Amla. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250Gms",
+        "price": 70,
+        "stock": 50
+      },
+      {
+        "weight": "500gm",
+        "price": 140,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 280,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/amla"
+  },
+  {
+    "name": "Potato (Aloo)",
+    "category": "Vegetables",
+    "price": 20,
+    "mrp": 19,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/AlooNew.jpg?v=1646297339",
+    "description": "Premium farm-fresh Potato (Aloo). Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 20,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 40,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 80,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/aloo-new"
+  },
+  {
+    "name": "Khira Banglore",
+    "category": "Vegetables",
+    "price": 50,
+    "mrp": 45,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/1638945566865_variant_5bffa3317978096c909f650a_1_1.jpg?v=1642071882",
+    "description": "Premium farm-fresh Khira Banglore. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 50,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 100,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 200,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/khira-banglore"
+  },
+  {
+    "name": "Papita",
+    "category": "Fruits",
+    "price": 95,
+    "mrp": 85,
+    "unit": "1kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/PapayaRipe_394x_1.jpg?v=1642262585",
+    "description": "Premium farm-fresh Papita. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1kg",
+        "price": 95,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/papita"
+  },
+  {
+    "name": "Zuchini Yellow",
+    "category": "Vegetables",
+    "price": 78,
+    "mrp": 105,
+    "unit": "300Gms",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/ZuchiniYellow.jpg?v=1642233126",
+    "description": "Premium farm-fresh Zuchini Yellow. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "300Gms",
+        "price": 78,
+        "stock": 50
+      },
+      {
+        "weight": "600gm",
+        "price": 156,
+        "stock": 50
+      },
+      {
+        "weight": "1.2gm",
+        "price": 312,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/zuchini-yellow"
+  },
+  {
+    "name": "Cherry Tomato",
+    "category": "Exotics",
+    "price": 90,
+    "mrp": 113,
+    "unit": "200Gms",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Cherry-Tomatoes_1.jpg?v=1641637829",
+    "description": "Premium farm-fresh Cherry Tomato. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "200Gms",
+        "price": 90,
+        "stock": 50
+      },
+      {
+        "weight": "500gm",
+        "price": 225,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 450,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/cherry-tomato"
+  },
+  {
+    "name": "Tomato Banglore",
+    "category": "Vegetables",
+    "price": 13,
+    "mrp": 38,
+    "unit": "250gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/banglore-tomato.jpg?v=1642242992",
+    "description": "Premium farm-fresh Tomato Banglore. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250gm",
+        "price": 13,
+        "stock": 50
+      },
+      {
+        "weight": "500gm",
+        "price": 25,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 50,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/tomato-banglore"
+  },
+  {
+    "name": "Parmal",
+    "category": "Vegetables",
+    "price": 60,
+    "mrp": 30,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/3-5_1.jpg?v=1642262812",
+    "description": "Premium farm-fresh Parmal. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 60,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 120,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/parmal"
+  },
+  {
+    "name": "Aloo Goli",
+    "category": "Vegetables",
+    "price": 50,
+    "mrp": 30,
+    "unit": "1kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/aloogoli-freshproduceshopp-1024x1024.png?v=1641374541",
+    "description": "Premium farm-fresh Aloo Goli. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1kg",
+        "price": 50,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 100,
+        "stock": 50
+      },
+      {
+        "weight": "3kg",
+        "price": 150,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/aloo-goli"
+  },
+  {
+    "name": "Green Chillies (Mirch Barikh)",
+    "category": "Vegetables",
+    "price": 30,
+    "mrp": 30,
+    "unit": "250gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/0510B54134B012D1A2BAB49593_1599635801097_1.jpg?v=1642237105",
+    "description": "Premium farm-fresh Green Chillies (Mirch Barikh). Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250gm",
+        "price": 30,
+        "stock": 50
+      },
+      {
+        "weight": "500gm",
+        "price": 60,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 120,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/mirch-barikh"
+  },
+  {
+    "name": "Achari Mirch Hari",
+    "category": "Vegetables",
+    "price": 48,
+    "mrp": 20,
+    "unit": "250Gms",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/acharimirchhari-freshproduc-1024x1024.png?v=1641284440",
+    "description": "Premium farm-fresh Achari Mirch Hari. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250Gms",
+        "price": 48,
+        "stock": 50
+      },
+      {
+        "weight": "500gm",
+        "price": 95,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 190,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/achari-mirch-hari"
+  },
+  {
+    "name": "Mint/pudina",
+    "category": "Vegetables",
+    "price": 15,
+    "mrp": 20,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/buy-fresh-mint-leaves-online-bangalore-India-2hrsdelivery.in__1.jpg?v=1642236424",
+    "description": "Premium farm-fresh Mint/pudina. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 15,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/mint-pudina"
+  },
+  {
+    "name": "Karela",
+    "category": "Vegetables",
+    "price": 23,
+    "mrp": 25,
+    "unit": "250gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/karela.jpg?v=1642154291",
+    "description": "Premium farm-fresh Karela. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250gm",
+        "price": 23,
+        "stock": 50
+      },
+      {
+        "weight": "500gm",
+        "price": 45,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 90,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/karela"
+  },
+  {
+    "name": "Iceberg Lettuce",
+    "category": "Exotics",
+    "price": 135,
+    "mrp": 75,
+    "unit": "300gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/IcebergLettuce.png?v=1641984895",
+    "description": "Premium farm-fresh Iceberg Lettuce. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "300gm",
+        "price": 135,
+        "stock": 50
+      },
+      {
+        "weight": "600gm",
+        "price": 270,
+        "stock": 50
+      },
+      {
+        "weight": "1.2gm",
+        "price": 540,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/iceberg-lettuce"
+  },
+  {
+    "name": "Beans",
+    "category": "Vegetables",
+    "price": 80,
+    "mrp": 75,
+    "unit": "500Gms",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Beans.jpg?v=1641546927",
+    "description": "Premium farm-fresh Beans. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500Gms",
+        "price": 80,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 160,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 320,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/beans"
+  },
+  {
+    "name": "Sprout",
+    "category": "Vegetables",
+    "price": 25,
+    "mrp": 40,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/MoongKiDaal.jpg?v=1646229464",
+    "description": "Premium farm-fresh Sprout. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 25,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/moong-ki-daal"
+  },
+  {
+    "name": "Shimla Mirch Red Yellow (Bell Pepar)",
+    "category": "Vegetables",
+    "price": 135,
+    "mrp": 114,
+    "unit": "300gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/shimlared.jpg?v=1646463431",
+    "description": "Premium farm-fresh Shimla Mirch Red Yellow (Bell Pepar). Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "300gm",
+        "price": 135,
+        "stock": 50
+      },
+      {
+        "weight": "600gm",
+        "price": 270,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 450,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/shimla-mirch-red"
+  },
+  {
+    "name": "Lal Bandgobhi",
+    "category": "Vegetables",
+    "price": 125,
+    "mrp": 148,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/redcabbage-freshproduceshoppe-1024x1024_1.jpg?v=1642151647",
+    "description": "Premium farm-fresh Lal Bandgobhi. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 125,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/lal-bandgobhi"
+  },
+  {
+    "name": "Bandgobhi",
+    "category": "Vegetables",
+    "price": 40,
+    "mrp": 60,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/bandhgobhi.jpg?v=1641300178",
+    "description": "Premium farm-fresh Bandgobhi. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 40,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 80,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 160,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/bandgobhi"
+  },
+  {
+    "name": "Bhutta (Sweet Corn)",
+    "category": "Vegetables",
+    "price": 50,
+    "mrp": 40,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Bhutta.jpg?v=1641550274",
+    "description": "Premium farm-fresh Bhutta (Sweet Corn). Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 50,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 100,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 200,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/bhutta"
+  },
+  {
+    "name": "Brinjal Small",
+    "category": "Vegetables",
+    "price": 50,
+    "mrp": 35,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/BrinjalSmall.jpg?v=1641299081",
+    "description": "Premium farm-fresh Brinjal Small. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 50,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 100,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/brinjal-small"
+  },
+  {
+    "name": "Brinjal Goal",
+    "category": "Vegetables",
+    "price": 60,
+    "mrp": 35,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/BrinjalGoal.jpg?v=1641560478",
+    "description": "Premium farm-fresh Brinjal Goal. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 60,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 120,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 240,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/brinjal-goal"
+  },
+  {
+    "name": "Water Melon",
+    "category": "Fruits",
+    "price": 180,
+    "mrp": 158,
+    "unit": "1pc",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/WaterMelon.jpg?v=1642233848",
+    "description": "Premium farm-fresh Water Melon. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1pc",
+        "price": 180,
+        "stock": 50
+      },
+      {
+        "weight": "2pc",
+        "price": 360,
+        "stock": 50
+      },
+      {
+        "weight": "3pc",
+        "price": 540,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/water-melon"
+  },
+  {
+    "name": "Raw Banana",
+    "category": "Fruits",
+    "price": 45,
+    "mrp": 35,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/RawBanana.jpg?v=1646299927",
+    "description": "Premium farm-fresh Raw Banana. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 45,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/raw-banana"
+  },
+  {
+    "name": "Goli Onion",
+    "category": "Vegetables",
+    "price": 70,
+    "mrp": 40,
+    "unit": "1kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/GoliOnion.png?v=1641980343",
+    "description": "Premium farm-fresh Goli Onion. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1kg",
+        "price": 70,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/goli-onion"
+  },
+  {
+    "name": "Lemongrass",
+    "category": "Vegetables",
+    "price": 70,
+    "mrp": 70,
+    "unit": "200gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/lemongrass_1.jpg?v=1642152875",
+    "description": "Premium farm-fresh Lemongrass. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "200gm",
+        "price": 70,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/lemongrass"
+  },
+  {
+    "name": "Drum Stick",
+    "category": "Vegetables",
+    "price": 60,
+    "mrp": 44,
+    "unit": "250gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/DrumStick.jpg?v=1646299725",
+    "description": "Premium farm-fresh Drum Stick. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250gm",
+        "price": 60,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/drum-stick"
+  },
+  {
+    "name": "Celery",
+    "category": "Exotics",
+    "price": 105,
+    "mrp": 108,
+    "unit": "300Gms",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Celery.jpg?v=1641798340",
+    "description": "Premium farm-fresh Celery. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "300Gms",
+        "price": 105,
+        "stock": 50
+      },
+      {
+        "weight": "600gm",
+        "price": 210,
+        "stock": 50
+      },
+      {
+        "weight": "1.2gm",
+        "price": 420,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/celery"
+  },
+  {
+    "name": "Baby Corn Pkt",
+    "category": "Vegetables",
+    "price": 70,
+    "mrp": 60,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/18590-02.png?v=1641540295",
+    "description": "Premium farm-fresh Baby Corn Pkt. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 70,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/baby-corn-pkt"
+  },
+  {
+    "name": "Salad Pata Green",
+    "category": "Vegetables",
+    "price": 135,
+    "mrp": 105,
+    "unit": "300gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/lettusgreen.jpg?v=1646461520",
+    "description": "Premium farm-fresh Salad Pata Green. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "300gm",
+        "price": 135,
+        "stock": 50
+      },
+      {
+        "weight": "600gm",
+        "price": 270,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 540,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/salad-pata-yellow"
+  },
+  {
+    "name": "Lasan China",
+    "category": "Vegetables",
+    "price": 95,
+    "mrp": 56,
+    "unit": "250Gms",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/lasan-china--1024x1024.jpg?v=1642151769",
+    "description": "Premium farm-fresh Lasan China. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250Gms",
+        "price": 95,
+        "stock": 50
+      },
+      {
+        "weight": "500gm",
+        "price": 190,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 380,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/lasan-china"
+  },
+  {
+    "name": "Bhindi",
+    "category": "Vegetables",
+    "price": 24,
+    "mrp": 25,
+    "unit": "250gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Bhindi.jpg?v=1641547311",
+    "description": "Premium farm-fresh Bhindi. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250gm",
+        "price": 24,
+        "stock": 50
+      },
+      {
+        "weight": "500gm",
+        "price": 48,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 95,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/bhindi"
+  },
+  {
+    "name": "Coconut",
+    "category": "Fruits",
+    "price": 80,
+    "mrp": 70,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/76269_0_XL_1.jpg?v=1641643512",
+    "description": "Premium farm-fresh Coconut. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 80,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/coconut"
+  },
+  {
+    "name": "Pumpkin Green Small",
+    "category": "Vegetables",
+    "price": 70,
+    "mrp": 80,
+    "unit": "1kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/SitafalGreenSmall.jpg?v=1642415183",
+    "description": "Premium farm-fresh Pumpkin Green Small. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1kg",
+        "price": 70,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 140,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/sitafal-green-small"
+  },
+  {
+    "name": "Brinjal Long",
+    "category": "Vegetables",
+    "price": 50,
+    "mrp": 35,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/BrinjalLong.jpg?v=1641627205",
+    "description": "Premium farm-fresh Brinjal Long. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 50,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 100,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/brinjal-long"
+  },
+  {
+    "name": "Khira Desi",
+    "category": "Vegetables",
+    "price": 55,
+    "mrp": 35,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/desi-cucumber-500x500_1.jpg?v=1642071951",
+    "description": "Premium farm-fresh Khira Desi. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 55,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 110,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 220,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/khira-desi"
+  },
+  {
+    "name": "Basil",
+    "category": "Exotics",
+    "price": 25,
+    "mrp": 35,
+    "unit": "100Gms",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/basil-leaves-500x500_1.jpg?v=1641546099",
+    "description": "Premium farm-fresh Basil. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "100Gms",
+        "price": 25,
+        "stock": 50
+      },
+      {
+        "weight": "200gm",
+        "price": 50,
+        "stock": 50
+      },
+      {
+        "weight": "300gm",
+        "price": 75,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/basil"
+  },
+  {
+    "name": "Red Bull Energy Drink 250ml",
+    "category": "Vegetables",
+    "price": 125,
+    "mrp": 125,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/RedBullEnergyDrink250ml.jpg?v=1644927293",
+    "description": "Premium farm-fresh Red Bull Energy Drink 250ml. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 125,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/red-bull-energy-drink-250ml"
+  },
+  {
+    "name": "Nestle Activplus Dahi 400gm",
+    "category": "Dairy & Staples",
+    "price": 85,
+    "mrp": 85,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/NestleActivplusDahi400gm.jpg?v=1645086490",
+    "description": "Premium farm-fresh Nestle Activplus Dahi 400gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 85,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/nestle-activplus-dahi-400gm"
+  },
+  {
+    "name": "Nestle Slim Dahi 400gm",
+    "category": "Dairy & Staples",
+    "price": 78,
+    "mrp": 78,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/NestleSlimDahi400gm.jpg?v=1645086682",
+    "description": "Premium farm-fresh Nestle Slim Dahi 400gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 78,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/nestle-slim-dahi-400gm"
+  },
+  {
+    "name": "Nestle A+ Nourish 400 Gm",
+    "category": "Dairy & Staples",
+    "price": 70,
+    "mrp": 65,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/NestleA_Nourish400Gm.jpg?v=1645089239",
+    "description": "Premium farm-fresh Nestle A+ Nourish 400 Gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 70,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/nestle-a-nourish-400-gm"
+  },
+  {
+    "name": "Nestle A+ Nourish 200gm",
+    "category": "Dairy & Staples",
+    "price": 30,
+    "mrp": 30,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/NestleA_Nourish400Gm_28591be3-e378-44e7-b1e5-6ea98878bd6b.jpg?v=1645089501",
+    "description": "Premium farm-fresh Nestle A+ Nourish 200gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 30,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/nestle-a-nourish-200gm"
+  },
+  {
+    "name": "Organic Kashmir Tulsi White Honey 400gm",
+    "category": "Vegetables",
+    "price": 645,
+    "mrp": 645,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/OrganicKashmirTulsiWhiteHoney250gm_e60822f4-c5a6-4e01-9391-cd2f1f719a20.png?v=1647265305",
+    "description": "Premium farm-fresh Organic Kashmir Tulsi White Honey 400gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 645,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/organic-kashmir-tulsi-white-honey-400gm"
+  },
+  {
+    "name": "Thums Up  180ml",
+    "category": "Vegetables",
+    "price": 25,
+    "mrp": 25,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/ThumsUp180ml.png?v=1645099012",
+    "description": "yakult-light-pack-of-5pc...",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 25,
+        "stock": 0
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/thums-up-180ml"
+  },
+  {
+    "name": "Fps Dft Pista 500gm",
+    "category": "Fruits",
+    "price": 890,
+    "mrp": 890,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/pista.jpg?v=1644846329",
+    "description": "Premium farm-fresh Fps Dft Pista 500gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 890,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dft-pista-500gm"
+  },
+  {
+    "name": "Fps Dft Cashew W-320 500gm",
+    "category": "Fruits",
+    "price": 750,
+    "mrp": 750,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/casheww320_c514f19c-9a5a-4e34-9f05-5eb6822d6b14.jpg?v=1642845386",
+    "description": "Premium farm-fresh Fps Dft Cashew W-320 500gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 750,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dft-cashew-w-320-500gm"
+  },
+  {
+    "name": "Fps Dft Cashew W-240 500gm",
+    "category": "Fruits",
+    "price": 925,
+    "mrp": 925,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/casheww240_d4caa0eb-0aee-40eb-b62b-8cf8c3555d7b.jpg?v=1642845337",
+    "description": "Premium farm-fresh Fps Dft Cashew W-240 500gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 925,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dft-cashew-w-240-500gm"
+  },
+  {
+    "name": "Fps Dft Cashew W-180 500gm",
+    "category": "Fruits",
+    "price": 950,
+    "mrp": 950,
+    "unit": "1 kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/casheww180_b9b1769b-d1d2-48f6-b1c1-616460c1123e.png?v=1642845288",
+    "description": "Premium farm-fresh Fps Dft Cashew W-180 500gm. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "1 kg",
+        "price": 950,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dft-cashew-w-180-500gm"
+  },
+  {
+    "name": "Fps Dft Badam Big",
+    "category": "Fruits",
+    "price": 750,
+    "mrp": 0,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Badambig_38880f17-7dfc-44c4-8677-7e44f0736c70.jpg?v=1642771241",
+    "description": "Premium farm-fresh Fps Dft Badam Big. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 750,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 1500,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 3000,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dft-badam-big-500gm"
+  },
+  {
+    "name": "Fps Dft Anjeer",
+    "category": "Fruits",
+    "price": 1575,
+    "mrp": 1900,
+    "unit": "500gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Anjeer.jpg?v=1642771190",
+    "description": "Premium farm-fresh Fps Dft Anjeer. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Store in cool, dry place",
+    "variations": [
+      {
+        "weight": "500gm",
+        "price": 1575,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 3150,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 6300,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/fps-dft-anjeer-1kg"
+  },
+  {
+    "name": "Petha White Small",
+    "category": "Vegetables",
+    "price": 70,
+    "mrp": 80,
+    "unit": "1kg",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/ashground-kumbalam-550x550-1_1.jpg?v=1642264266",
+    "description": "Premium farm-fresh Petha White Small. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1kg",
+        "price": 70,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 160,
+        "stock": 50
+      },
+      {
+        "weight": "3kg",
+        "price": 240,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/petha-white-small"
+  },
+  {
+    "name": "Thyme",
+    "category": "Vegetables",
+    "price": 65,
+    "mrp": 90,
+    "unit": "100gm",
+    "stock": 100,
+    "image": "https://cdn.shopify.com/s/files/1/0551/4133/5088/products/Thyme.jpg?v=1642243045",
+    "description": "Premium farm-fresh Thyme. Naturally grown, handpicked, sanitized and packed under hygienic standards for optimal freshness and taste.",
+    "sourcing": "Farm Fresh Direct Sourcing (FPS Partner Network)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "100gm",
+        "price": 65,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://fpsstore.in/products/thyme"
+  }
+]

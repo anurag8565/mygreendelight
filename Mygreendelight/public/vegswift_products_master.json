@@ -1,0 +1,3757 @@
+[
+  {
+    "name": "Coconut (नया नारियल)",
+    "category": "Fruits",
+    "price": 80,
+    "mrp": 104,
+    "unit": "1 piece",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Coconut-Bta4lEr0.webp",
+    "description": "Fresh tender coconut water – nature’s energy drink.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "1 piece",
+        "price": 80,
+        "stock": 50
+      },
+      {
+        "weight": "2 pieces",
+        "price": 152,
+        "stock": 50
+      },
+      {
+        "weight": "3 pieces",
+        "price": 224,
+        "stock": 50
+      },
+      {
+        "weight": "4 pieces",
+        "price": 80,
+        "stock": 50
+      },
+      {
+        "weight": "5 pieces",
+        "price": 368,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Pahadi Aalu (New) (नया आलू)",
+    "category": "Vegetables",
+    "price": 23,
+    "mrp": 30,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/potato-DfwNLs65.webp",
+    "description": "Farm-fresh Pahadi Aalu, perfect for parathas and fries. Low moisture, high nutrition. Sourced from local Bhopal farms.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 10,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 15,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 23,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 44,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Potato (Old) (आलू)",
+    "category": "Vegetables",
+    "price": 23,
+    "mrp": 30,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/potato-DfwNLs65.webp",
+    "description": "Premium quality regular use potatoes. Handpicked for consistency, ideal for daily curries and sabzi.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 10,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 15,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 23,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 44,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Onion (प्याज़)",
+    "category": "Vegetables",
+    "price": 27,
+    "mrp": 35,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/onion-B0HHN2uv.webp",
+    "description": "Premium Nashik/Shajapur onions with a sharp flavor and long shelf life. Hand-sorted for premium quality.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 10,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 15,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 27,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 51,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Ginger (अदरक)",
+    "category": "Vegetables",
+    "price": 110,
+    "mrp": 143,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/ginger5-DHfONM6t.webp",
+    "description": "Fresh aromatic ginger to boost your immunity and tea flavor. 100% natural, no artificial cleaners.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 33,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 61,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 110,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 209,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Garlic (लहसुन)",
+    "category": "Vegetables",
+    "price": 190,
+    "mrp": 250,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/lassun-kMEmWKTJ.webp",
+    "description": "Spicy large garlic cloves sourced from the best MP farms. Perfect for authentic tadkas and health.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 57,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 105,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 190,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 361,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Radish (मूली)",
+    "category": "Vegetables",
+    "price": 25,
+    "mrp": 33,
+    "unit": "1 bundle",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Radish-DzQlK11M.webp",
+    "description": "Crunchy and fresh white Mooli. Perfect for salads and parathas. Sourced daily for maximum crispness.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 bundle",
+        "price": 25,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Carrot (गाजर)",
+    "category": "Vegetables",
+    "price": 30,
+    "mrp": 39,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/carrots-D5ODYgpt.webp",
+    "description": "Sweet red carrots, rich in Vitamin A. Handpicked from local Bhopal gardens for peak sweetness.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 10,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 17,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 30,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 57,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Beetroot (चुकंदर)",
+    "category": "Vegetables",
+    "price": 65,
+    "mrp": 85,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/saljam-Dfgaz45E.webp",
+    "description": "Iron-rich fresh beetroot. Earthy flavor and vibrant color, perfect for healthy juices and salads.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 20,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 36,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 65,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 124,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Colocasia (अरबी)",
+    "category": "Vegetables",
+    "price": 80,
+    "mrp": 104,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Colocasia-CkGgjPnF.webp",
+    "description": "Fresh and tender Arbi. Selected for its smooth texture and ease of cooking. Great for dry sabzi.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 24,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 44,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 80,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 152,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Peanut (मूंगफली)",
+    "category": "Vegetables",
+    "price": 200,
+    "mrp": 260,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Peanut-Dif3jT_T.webp",
+    "description": "Fresh raw peanuts with shells. High protein snack, perfect for roasting or boiling.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 60,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 110,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 200,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 380,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Desi Tomato (देसी टमाटर)",
+    "category": "Vegetables",
+    "price": 27,
+    "mrp": 35,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/tomato-Dbk6DB12.webp",
+    "description": "Sour and juicy local tomatoes. Cleaned and ozone-washed. Essential for authentic Indian gravies.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 10,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 15,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 27,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 51,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Hybrid Tomato (हाइब्रिड टमाटर)",
+    "category": "Vegetables",
+    "price": 27,
+    "mrp": 35,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/HybridTomato-DTKexuIp.webp",
+    "description": "Firm, thick-skinned tomatoes perfect for salads and sandwich slices. Long-lasting freshness and consistent taste.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 10,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 15,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 27,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 51,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Spicy Chilli (तीखी मिर्ची)",
+    "category": "Vegetables",
+    "price": 99,
+    "mrp": 129,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/SpicyChilli-D72zJt6_.webp",
+    "description": "Super spicy green chillies for those who love heat. Sourced fresh to ensure maximum pungency and flavor.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 30,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 54,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 99,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 188,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Mild Chilli (फीकी मिर्ची)",
+    "category": "Vegetables",
+    "price": 99,
+    "mrp": 129,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/green_chilli-DA4l22T6.webp",
+    "description": "Less spicy green chillies, ideal for pakodas and mild garnishing. Crisp and fresh from local Bhopal farms.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 30,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 54,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 99,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 188,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Capsicum (शिमला मिर्च)",
+    "category": "Vegetables",
+    "price": 49,
+    "mrp": 64,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Capsicum-DoBwVOhb.webp",
+    "description": "Crunchy, vibrant green capsicum. Perfect for stir-fries, pastas, and stuffing. Ozone-washed and chemical-free.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 15,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 27,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 49,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 93,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Coriander (धनिया)",
+    "category": "Vegetables",
+    "price": 80,
+    "mrp": 104,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/dhaniya-CWddj_si.webp",
+    "description": "Freshly harvested aromatic coriander leaves. Essential for garnishing and making the perfect Bhopal-style chutney.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 24,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 44,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 80,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 152,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Fenugreek (मेथी)",
+    "category": "Vegetables",
+    "price": 23,
+    "mrp": 30,
+    "unit": "1 bundle",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Fenugreek-CZhIvb1R.webp",
+    "description": "Fresh, bitter-sweet Methi leaves. Sourced daily to ensure zero wilting. Perfect for parathas and healthy curries.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 bundle",
+        "price": 23,
+        "stock": 50
+      },
+      {
+        "weight": "2 bundles",
+        "price": 23,
+        "stock": 50
+      },
+      {
+        "weight": "5 bundles",
+        "price": 23,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Spinach (पालक)",
+    "category": "Vegetables",
+    "price": 40,
+    "mrp": 52,
+    "unit": "1 bundle",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Spinach-BtlLMCW7.webp",
+    "description": "Tender, iron-rich Palak leaves. Thoroughly cleaned and ready to cook. No cold storage, just farm-fresh goodness.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 bundle",
+        "price": 40,
+        "stock": 50
+      },
+      {
+        "weight": "2 bundles",
+        "price": 40,
+        "stock": 50
+      },
+      {
+        "weight": "5 bundles",
+        "price": 40,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Spring Onion (हरा प्याज़)",
+    "category": "Vegetables",
+    "price": 30,
+    "mrp": 39,
+    "unit": "1 gadi",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/SpringOnion-wP7dDWIZ.webp",
+    "description": "Crisp green stalks with a mild onion flavor. Adds a fresh crunch to your Chinese and Indian dishes.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 gadi",
+        "price": 30,
+        "stock": 50
+      },
+      {
+        "weight": "2 gadi",
+        "price": 30,
+        "stock": 50
+      },
+      {
+        "weight": "5 gadi",
+        "price": 30,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Broccoli (ब्रोकली)",
+    "category": "Vegetables",
+    "price": 85,
+    "mrp": 111,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Broccoli-BLLs-nBl.webp",
+    "description": "Premium exotic healthy greens. Nutrient-dense and fresh, ideal for salads and steam-cooking for a healthy diet.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 26,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 47,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 85,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 162,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Cabbage (पत्ता गोभी)",
+    "category": "Vegetables",
+    "price": 39,
+    "mrp": 51,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/cabbage-C7XH7eRW.webp",
+    "description": "Crispy, layered cabbage heads. Handpicked for weight and freshness. Great for salads, munchurian, and daily sabzi.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 12,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 21,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 39,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 74,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Cauliflower (फूल गोभी)",
+    "category": "Vegetables",
+    "price": 49,
+    "mrp": 64,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/cauliflower-WZg6dOQr.webp",
+    "description": "Snow-white cauliflower heads. Hand-selected for zero-worms and maximum freshness. Ozone-washed for safety.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 15,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 27,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 49,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 93,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Green Peas (मटर)",
+    "category": "Vegetables",
+    "price": 49,
+    "mrp": 64,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/pea_new-DmrNXIIb.webp",
+    "description": "Sweet and tender seasonal peas. Sourced from local MP farms to ensure every pod is full and flavorful.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 15,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 27,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 49,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 93,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Bottle Gourd (लौकी)",
+    "category": "Vegetables",
+    "price": 59,
+    "mrp": 77,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/lauki-BhtDiy89.webp",
+    "description": "Hydrating and light Lauki. Perfect for weight-loss juices and healthy family meals. Sourced fresh daily.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 18,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 32,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 59,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 112,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Sponge Gourd (गिलकी)",
+    "category": "Vegetables",
+    "price": 92,
+    "mrp": 120,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/gourd_new-D5RFp2EB.webp",
+    "description": "Soft and tender Gilki, easy to cook and highly nutritious. A staple for every Bhopal household.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 28,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 51,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 92,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 175,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Black Brinjal (काला बैंगन)",
+    "category": "Vegetables",
+    "price": 72,
+    "mrp": 94,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/BlackBrinjal-CoOd3jik.webp",
+    "description": "Round, shiny black baingan. Perfect for stuffing and roasting. Freshly harvested for the best texture.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 22,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 40,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 72,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 137,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Green Brinjal (हरा बैंगन)",
+    "category": "Vegetables",
+    "price": 49,
+    "mrp": 64,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/brinjal-qkmIK3vf.webp",
+    "description": "Tender round green baingan. Sweet and soft flesh, ideal for traditional Indian curries.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 15,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 27,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 49,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 93,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Long Brinjal (लंबा बैंगन)",
+    "category": "Vegetables",
+    "price": 49,
+    "mrp": 64,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/LongBrinjal-BC_NS1qz.webp",
+    "description": "Premium long black variety. Less seeds and soft texture, perfect for stir-fries and tawa fry.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 15,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 27,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 49,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 93,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Bharta Brinjal (भर्ता बैंगन)",
+    "category": "Vegetables",
+    "price": 60,
+    "mrp": 78,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/BhartBrinjal-CAtIGyK-.webp",
+    "description": "Extra-large baingan specially selected for roasting (Bhartmaking). Smoky flavor and meaty texture.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 18,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 33,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 60,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 114,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Okra (भिंडी)",
+    "category": "Vegetables",
+    "price": 80,
+    "mrp": 104,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/okra-qJKZx8eP.webp",
+    "description": "Fresh, tender Lady Finger. Handpicked for small size and softness to ensure non-sticky cooking.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 24,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 44,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 80,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 152,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Pumpkin (कद्दू)",
+    "category": "Vegetables",
+    "price": 40,
+    "mrp": 52,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/pumpkin-B8b34ygS.webp",
+    "description": "Sweet, vibrant yellow pumpkin. High in Vitamin A and fiber. Great for sweet and savory dishes.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 12,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 22,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 40,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 76,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Apple Gourd (टिंडा)",
+    "category": "Vegetables",
+    "price": 100,
+    "mrp": 130,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/AppleGourd-BUVVc1Rj.webp",
+    "description": "Fresh, seasonal Tinda. Light and easy on the stomach, perfect for a healthy lunch.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 30,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 55,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 100,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 190,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Cluster Beans (गवार फली)",
+    "category": "Vegetables",
+    "price": 120,
+    "mrp": 156,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/ClusterBeans-Bh_eUKdG.webp",
+    "description": "Nutritious and fresh Gawar Phali. Rich in fiber and protein, sourced from local sustainable farms.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 36,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 66,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 120,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 228,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Broad Beans (सेम)",
+    "category": "Vegetables",
+    "price": 38,
+    "mrp": 49,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Broadbeans-CxzFqgUC.webp",
+    "description": "Fresh seasonal Broad Beans (Sem). High fiber content and authentic farm taste. Perfect for winter meals.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 11,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 21,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 38,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 72,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Ivy Gourd (कुंदरू)",
+    "category": "Vegetables",
+    "price": 80,
+    "mrp": 104,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/ivy_gourd_new-DuXGglU-.webp",
+    "description": "Crunchy and fresh Kundru. Great for dry sabzi and high in vitamins. Sourced daily.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 24,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 44,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 80,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 152,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Bitter Gourd (Small) (करेली)",
+    "category": "Vegetables",
+    "price": 80,
+    "mrp": 104,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/karela-DDITaoiG.webp",
+    "description": "Small, extra-bitter kareli. Packed with medicinal benefits. Handpicked for quality and size.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 24,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 44,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 80,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 152,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Pointed Gourd (परवल)",
+    "category": "Vegetables",
+    "price": 80,
+    "mrp": 104,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/pointed_gourd_new-DTE1cW4m.webp",
+    "description": "Fresh Parwal from local farms. Known for its digestive benefits and great taste in traditional curries.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 24,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 44,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 80,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 152,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Cucumber (खीरा)",
+    "category": "Vegetables",
+    "price": 49,
+    "mrp": 64,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Cucumber-CTa_c7rh.webp",
+    "description": "Cool and crunchy salad cucumber. High water content, perfect for hydration. Cleaned and ready to eat.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 15,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 27,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 49,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 93,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Indian Gooseberry (आंवला)",
+    "category": "Vegetables",
+    "price": 70,
+    "mrp": 91,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/IndianGooseberry-BlkB7kd3.webp",
+    "description": "Powerhouse of Vitamin C. Fresh green Amla for immunity-boosting juices and pickles.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 21,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 39,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 70,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 133,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Lemon (नींबू)",
+    "category": "Vegetables",
+    "price": 160,
+    "mrp": 208,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/lemons_pic-BIt4rxnw.webp",
+    "description": "Juicy, thin-skinned yellow lemons. Essential for every kitchen. Sourced fresh to ensure maximum juice.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 48,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 88,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 160,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 304,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Bitter Gourd (Big) (करेला)",
+    "category": "Vegetables",
+    "price": 80,
+    "mrp": 104,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/bitter_gourd_big-ByjTGBK9.webp",
+    "description": "Regular Karela, handpicked for firmness and green color. Best for stuffing and healthy bitter recipes.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 24,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 44,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 80,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 152,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "French Beans (बीन्स)",
+    "category": "Vegetables",
+    "price": 120,
+    "mrp": 156,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/FrenchBeans-DYQnqPSu.webp",
+    "description": "Tender and crisp French Beans. Strings removed, ready for your continental and Indian dishes.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 36,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 66,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 120,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 228,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Yardlong Beans (बरबटी)",
+    "category": "Vegetables",
+    "price": 49,
+    "mrp": 64,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/long_bean_new-tY1dbW4B.webp",
+    "description": "Fresh and long Barbati beans. High in nutrients and sourced from local Bhopal mandi daily.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 15,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 27,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 49,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 93,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Raw Banana (कच्चा केला)",
+    "category": "Vegetables",
+    "price": 60,
+    "mrp": 78,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/RawBanana-C1FqAP78.webp",
+    "description": "Green bananas for authentic chips and healthy vegetable recipes. High in starch and minerals.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 18,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 33,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 60,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 114,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Mushroom (मशरूम (Mushroom))",
+    "category": "Vegetables",
+    "price": 70,
+    "mrp": 91,
+    "unit": "1 packet",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/shiitake-DoyK_IBs.webp",
+    "description": "Farm-pure button mushrooms. White, firm, and hygienically packed for your gourmet cooking.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 packet",
+        "price": 70,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Drumstick (मुनगा (Drumstick))",
+    "category": "Vegetables",
+    "price": 30,
+    "mrp": 39,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Vegswift_Drumsticks-B1BEO0_E.webp",
+    "description": "Fresh, tender drumsticks. Essential for Sambar and healthy South Indian curries. Sourced from local trees.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 10,
+        "stock": 50
+      },
+      {
+        "weight": "500g",
+        "price": 17,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 30,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Premium Banana (प्रीमियम केला)",
+    "category": "Fruits",
+    "price": 25,
+    "mrp": 40,
+    "unit": "6 pcs",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/banana-DVDXiriU.webp",
+    "description": "Soft, ripe, and naturally sweet organic bananas. Packed with potassium for your daily energy boost.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "6 pcs",
+        "price": 25,
+        "stock": 50
+      },
+      {
+        "weight": "12 pcs",
+        "price": 25,
+        "stock": 50
+      },
+      {
+        "weight": "24 pcs",
+        "price": 25,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Red Apple (सेब)",
+    "category": "Fruits",
+    "price": 150,
+    "mrp": 195,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/RedApple_Poster-Ojv_2RV7.webp",
+    "description": "Crisp, sweet, and juicy red apples sourced from the best orchards. Perfect for a healthy daily snack.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 45,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 83,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 150,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 285,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Guava (अमरूद)",
+    "category": "Fruits",
+    "price": 60,
+    "mrp": 78,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Guava-CDA6XZWE.webp",
+    "description": "Sweet, Vitamin-C rich guavas with a soft pink/white heart. Sourced fresh to ensure peak ripeness.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 18,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 33,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 60,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 114,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Black Grapes (काले अंगूर)",
+    "category": "Fruits",
+    "price": 150,
+    "mrp": 195,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Grapes-DQ7AmCNb.webp",
+    "description": "Seedless, juicy black grapes bursting with antioxidants. Sweet and firm, ideal for snacking and desserts.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 45,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 83,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 150,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 285,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Green Grapes (हरे अंगूर)",
+    "category": "Fruits",
+    "price": 150,
+    "mrp": 195,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Grapesgreen-BAPkWD8S.webp",
+    "description": "Crunchy, sweet-sour green grapes. Freshly harvested and handpicked for consistent quality and taste.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 45,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 83,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 150,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 285,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Orange (संतरा)",
+    "category": "Fruits",
+    "price": 79,
+    "mrp": 103,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Orange-CXKkyFaZ.webp",
+    "description": "Juicy, Vitamin-C rich Nagpur oranges. Refreshing taste and easy to peel, perfect for fresh juice or snacks.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 24,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 43,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 79,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 150,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Pomegranate (अनार)",
+    "category": "Fruits",
+    "price": 160,
+    "mrp": 208,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Pomegranate-BdaZh7R_.webp",
+    "description": "Ruby-red premium pomegranates. Rich in antioxidants and perfect for boosting blood flow and heart health.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 48,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 88,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 160,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 304,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Pineapple (अनानास)",
+    "category": "Fruits",
+    "price": 100,
+    "mrp": 130,
+    "unit": "1 pc",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Pineapple-CJJ5TesX.webp",
+    "description": "Sweet and tangy tropical pineapple. Handpicked for ripeness, perfect for digestion and refreshing fruit salads.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "1 pc",
+        "price": 100,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Papaya (पपीता)",
+    "category": "Fruits",
+    "price": 60,
+    "mrp": 78,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/papaya-DJSe0-Wf.webp",
+    "description": "Fresh, ripe papaya. Excellent for digestion and glowing skin. Sourced daily to ensure zero-bruising.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 18,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 33,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 60,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 114,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Kiwi (कीवी)",
+    "category": "Fruits",
+    "price": 130,
+    "mrp": 169,
+    "unit": "1 packet",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/kiwi-BdbrsoWL.webp",
+    "description": "Zesty, vitamin-rich green kiwi. Elite quality fruit, perfect for adding a health boost to your breakfast bowl.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "1 packet",
+        "price": 130,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Dragon Fruit (ड्रैगन फ्रूट)",
+    "category": "Fruits",
+    "price": 100,
+    "mrp": 130,
+    "unit": "1 pc",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/dragon_fruit-B6cVa6r3.webp",
+    "description": "Exotic and nutrient-dense dragon fruit. Vibrant pink skin with a sweet, speckled heart. A visual and health delight.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "1 pc",
+        "price": 100,
+        "stock": 50
+      },
+      {
+        "weight": "2 pcs",
+        "price": 100,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Premium Apple (प्रीमियम सेब)",
+    "category": "Fruits",
+    "price": 250,
+    "mrp": 325,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/RedApple_Poster-Ojv_2RV7.webp",
+    "description": "Elite quality, extra-crisp red apples. Hand-selected for the best size, color, and sweetness in the harvest.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 75,
+        "stock": 50
+      },
+      {
+        "weight": "500g",
+        "price": 138,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 250,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 475,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Standard Apple (स्टैंडर्ड सेब)",
+    "category": "Fruits",
+    "price": 180,
+    "mrp": 234,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Fresh_Apply-BZtQPggs.webp",
+    "description": "Fresh and crunchy apples for your daily health. Consistent quality and great taste at an affordable price.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 54,
+        "stock": 50
+      },
+      {
+        "weight": "500g",
+        "price": 99,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 180,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 342,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Fresh Strawberry (ताज़ा स्ट्रॉबेरी)",
+    "category": "Fruits",
+    "price": 70,
+    "mrp": 91,
+    "unit": "1 packet",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/fresh_strawberry-CWdIfYaf.webp",
+    "description": "Sweet, juicy, and vibrant red strawberries. Rich in Vitamin C and antioxidants, perfect for desserts.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "1 packet",
+        "price": 70,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Standard Banana (स्टैंडर्ड केला)",
+    "category": "Fruits",
+    "price": 40,
+    "mrp": 52,
+    "unit": "12 pcs",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/banana-DVDXiriU.webp",
+    "description": "Daily fresh standard quality bananas. High energy snack, sourced daily from local mandi for freshness.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "12 pcs",
+        "price": 40,
+        "stock": 50
+      },
+      {
+        "weight": "24 pcs",
+        "price": 40,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Kinnow (Kino) (किन्नू)",
+    "category": "Fruits",
+    "price": 85,
+    "mrp": 111,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Orange-CXKkyFaZ.webp",
+    "description": "Sweet and juicy local citrus fruit. High Vitamin C content, perfect for refreshing winter juices.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 26,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 47,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 85,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 162,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Dasgri Aam (Dussehri) (दशहरी आम)",
+    "category": "Fruits",
+    "price": 120,
+    "mrp": 156,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/dussehri_mango-BXQ8ElXw.png",
+    "description": "Sweet, highly aromatic Dussehri mangoes sourced fresh from local orchards.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 36,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 66,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 120,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 228,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Badam Aam (Badami) (बादामी आम)",
+    "category": "Fruits",
+    "price": 100,
+    "mrp": 130,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/badami_mango-DcslI_tN.png",
+    "description": "Delicious, sweet, and pulpy Badami mangoes, packed with vitamins.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 30,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 55,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 100,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 190,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Tota Aam (Totapuri) (तोता आम)",
+    "category": "Fruits",
+    "price": 80,
+    "mrp": 104,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/totapuri_mango-CX1c68_R.png",
+    "description": "Tangy-sweet Totapuri mangoes, distinguished by their parrot-beak shape, ideal for pickling and fresh consumption.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 24,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 44,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 80,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 152,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "watermelon (तरबूज़)",
+    "category": "Fruits",
+    "price": 55,
+    "mrp": 72,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Watermelon-BTrLRhk3.webp",
+    "description": "Hydrating, sweet, and juicy watermelon. The ultimate summer cooler, sourced for maximum sweetness.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 17,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 30,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 55,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 105,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Dahi (Curd) (ताज़ा दही)",
+    "category": "Dairy & Staples",
+    "price": 100,
+    "mrp": 130,
+    "unit": "500g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Curd-C9wiaa1x.webp",
+    "description": "Thick, creamy, and farm-fresh curd made from 100% pure milk. No preservatives, just authentic home-style taste.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "500g",
+        "price": 55,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 100,
+        "stock": 50
+      },
+      {
+        "weight": "2kg",
+        "price": 190,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Paneer (ताज़ा पनीर)",
+    "category": "Dairy & Staples",
+    "price": 120,
+    "mrp": 156,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/paneer_2-BZ7WdcWM.webp",
+    "description": "Malai Paneer that's soft, creamy, and melts in your mouth. Freshly made to ensure maximum protein and zero rubbery texture.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 36,
+        "stock": 50
+      },
+      {
+        "weight": "500g",
+        "price": 66,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 120,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Cow Milk (गाय का दूध)",
+    "category": "Dairy & Staples",
+    "price": 60,
+    "mrp": 78,
+    "unit": "500ml",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Pure, light, and easy-to-digest cow milk. Sourced from local grass-fed cows and delivered fresh within hours of milking.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "500ml",
+        "price": 60,
+        "stock": 50
+      },
+      {
+        "weight": "1L",
+        "price": 60,
+        "stock": 50
+      },
+      {
+        "weight": "2L",
+        "price": 60,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Buffalo Milk (भैंस का दूध)",
+    "category": "Dairy & Staples",
+    "price": 70,
+    "mrp": 91,
+    "unit": "500ml",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Rich, thick, and high-fat buffalo milk. Ideal for making thick curd, aromatic ghee, and traditional Indian sweets at home.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "500ml",
+        "price": 70,
+        "stock": 50
+      },
+      {
+        "weight": "1L",
+        "price": 70,
+        "stock": 50
+      },
+      {
+        "weight": "2L",
+        "price": 70,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Pure Cow Ghee (शुद्ध गाय का घी)",
+    "category": "Dairy & Staples",
+    "price": 1100,
+    "mrp": 1430,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Ghee-DOVyGJyH.webp",
+    "description": "Aromatic golden Danedaar ghee made using traditional Bilona method. Rich in vitamins and health-boosting healthy fats.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 330,
+        "stock": 50
+      },
+      {
+        "weight": "500g",
+        "price": 605,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 1100,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Buffalo Ghee (शुद्ध भैंस का घी)",
+    "category": "Dairy & Staples",
+    "price": 960,
+    "mrp": 1248,
+    "unit": "500g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Ghee-DOVyGJyH.webp",
+    "description": "Rich, white, and granular buffalo ghee. Perfect for daily cooking and adding a traditional touch to your meals.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "500g",
+        "price": 528,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 960,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Normal Ghee (साधारण घी)",
+    "category": "Dairy & Staples",
+    "price": 600,
+    "mrp": 780,
+    "unit": "500g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Ghee-DOVyGJyH.webp",
+    "description": "Quality everyday cooking ghee. Pure and aromatic, suitable for all your kitchen needs at an affordable price.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "500g",
+        "price": 330,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 600,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Organic Potato (जैविक आलू)",
+    "category": "Vegetables",
+    "price": 60,
+    "mrp": 78,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/potato-DfwNLs65.webp",
+    "description": "Certified organic potatoes grown without any chemical fertilizers. Natural taste and high in minerals. Perfect for conscious eating.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 18,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 33,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 60,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 114,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Organic Tomato (जैविक टमाटर)",
+    "category": "Vegetables",
+    "price": 59,
+    "mrp": 77,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/tomato-Dbk6DB12.webp",
+    "description": "Chemical-free premium organic tomatoes. Grown using sustainable farming practices to ensure pure health for your family.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 18,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 32,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 59,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 112,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Organic Onion (जैविक प्याज़)",
+    "category": "Vegetables",
+    "price": 49,
+    "mrp": 64,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/onion-B0HHN2uv.webp",
+    "description": "100% Organic onions. Naturally grown for a stronger flavor and longer shelf life. Pesticide-free guarantee.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 15,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 27,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 49,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 93,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Organic Green Chilli (जैविक हरी मिर्च)",
+    "category": "Vegetables",
+    "price": 130,
+    "mrp": 169,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/green_chilli-DA4l22T6.webp",
+    "description": "Spicy organic green chillies grown in chemical-free soil. Pure, sharp heat without any harmful residues.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 39,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 72,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 130,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 247,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Organic Lemon (जैविक नींबू)",
+    "category": "Vegetables",
+    "price": 200,
+    "mrp": 260,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/lemons_pic-BIt4rxnw.webp",
+    "description": "Fresh, zesty organic lemons. Naturally ripened on trees, perfect for your health drinks and culinary needs.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 60,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 110,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 200,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 380,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Organic Coriander (जैविक धनिया)",
+    "category": "Vegetables",
+    "price": 120,
+    "mrp": 156,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/dhaniya-CWddj_si.webp",
+    "description": "Elite organic coriander leaves with an intense natural aroma. Grown sustainably for the purest garnishing experience.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 36,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 66,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 120,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 228,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Organic Spinach (जैविक पालक)",
+    "category": "Vegetables",
+    "price": 40,
+    "mrp": 52,
+    "unit": "1 bundle",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/Spinach-BtlLMCW7.webp",
+    "description": "Chemical-free tender spinach. Packed with natural iron and grown in nutrient-rich organic soil.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 bundle",
+        "price": 40,
+        "stock": 50
+      },
+      {
+        "weight": "2 bundles",
+        "price": 76,
+        "stock": 40
+      },
+      {
+        "weight": "4 bundles (Family Pack)",
+        "price": 148,
+        "stock": 30
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Organic Carrot (जैविक गाजर)",
+    "category": "Vegetables",
+    "price": 59,
+    "mrp": 77,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/carrots-D5ODYgpt.webp",
+    "description": "Sweet, crunchy organic carrots. High in Beta-carotene and 100% free from synthetic pesticides.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 18,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 32,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 59,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 112,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Organic Banana (जैविक केला)",
+    "category": "Fruits",
+    "price": 90,
+    "mrp": 117,
+    "unit": "12 pcs",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/banana-DVDXiriU.webp",
+    "description": "Naturally ripened chemical-free bananas. Safe for infants and seniors, packed with organic energy.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "12 pcs",
+        "price": 90,
+        "stock": 50
+      },
+      {
+        "weight": "24 pcs",
+        "price": 90,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Organic Apple (जैविक सेब)",
+    "category": "Fruits",
+    "price": 300,
+    "mrp": 390,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/RedApple_Poster-Ojv_2RV7.webp",
+    "description": "Premium organic apples from certified sustainable orchards. Crisp, clean, and 100% healthy.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Store at room temp",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 90,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 165,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 300,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 570,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Fresh Fruit Salad (Glass) (ताज़ा फ्रूट सलाद)",
+    "category": "Vegetables",
+    "price": 60,
+    "mrp": 78,
+    "unit": "1 Glass",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/fruit_salad_glass-DeTrEjph.webp",
+    "description": "Premium fruit salad served in a chilled glass.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 Glass",
+        "price": 60,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Healthy Vegetable Salad (हेल्दी वेजिटेबल सलाद)",
+    "category": "Vegetables",
+    "price": 60,
+    "mrp": 78,
+    "unit": "1 Bowl",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Crispy and fresh cut vegetable mix.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 Bowl",
+        "price": 60,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Dragon Fruit Premium Juice (ड्रैगन फ्रूट प्रीमियम जूस)",
+    "category": "Vegetables",
+    "price": 179,
+    "mrp": 233,
+    "unit": "1 Glass",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Exotic dragon fruit juice. Visual delight & healthy.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 Glass",
+        "price": 179,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Mutton Handi (Ahuna Mutton) (मटन हांडी (अहुना मटन))",
+    "category": "Vegetables",
+    "price": 1475,
+    "mrp": 1918,
+    "unit": "1kg",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Authentic Bihar Champaran Handi mutton. Slow-cooked for 4 hours in a sealed clay pot with whole spices and raw mustard oil for that legendary smoky flavor.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1kg",
+        "price": 1475,
+        "stock": 50
+      },
+      {
+        "weight": "500g",
+        "price": 811,
+        "stock": 50
+      },
+      {
+        "weight": "250g",
+        "price": 443,
+        "stock": 50
+      },
+      {
+        "weight": "4 pieces",
+        "price": 1475,
+        "stock": 50
+      },
+      {
+        "weight": "2 pieces",
+        "price": 2803,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Chicken Handi (चिकन हांडी)",
+    "category": "Vegetables",
+    "price": 800,
+    "mrp": 1040,
+    "unit": "1kg",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Traditional Champaran style Chicken Handi. Juicy chicken slow-cooked in a clay pot with our secret spice blend and slow-fire coal heating.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1kg",
+        "price": 800,
+        "stock": 50
+      },
+      {
+        "weight": "500g",
+        "price": 440,
+        "stock": 50
+      },
+      {
+        "weight": "250g",
+        "price": 240,
+        "stock": 50
+      },
+      {
+        "weight": "4 pieces",
+        "price": 800,
+        "stock": 50
+      },
+      {
+        "weight": "2 pieces",
+        "price": 1520,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Fish Curry (फिश करी)",
+    "category": "Vegetables",
+    "price": 800,
+    "mrp": 1040,
+    "unit": "1kg",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Freshwater fish cooked in authentic Bihari style mustard and garlic gravy. Perfectly balanced spices for a nostalgic home-cooked taste.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1kg",
+        "price": 800,
+        "stock": 50
+      },
+      {
+        "weight": "500g",
+        "price": 440,
+        "stock": 50
+      },
+      {
+        "weight": "250g",
+        "price": 240,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Tawa Roti (तवा रोटी)",
+    "category": "Vegetables",
+    "price": 8,
+    "mrp": 10,
+    "unit": "1 piece",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Soft handmade wheat roti.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 piece",
+        "price": 8,
+        "stock": 50
+      },
+      {
+        "weight": "2 pieces",
+        "price": 15,
+        "stock": 40
+      },
+      {
+        "weight": "4 pieces (Family Pack)",
+        "price": 30,
+        "stock": 30
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Rumali Roti (रूमाली रोटी)",
+    "category": "Vegetables",
+    "price": 10,
+    "mrp": 13,
+    "unit": "1 piece",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Thin and soft rumali roti.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 piece",
+        "price": 10,
+        "stock": 50
+      },
+      {
+        "weight": "2 pieces",
+        "price": 19,
+        "stock": 40
+      },
+      {
+        "weight": "4 pieces (Family Pack)",
+        "price": 37,
+        "stock": 30
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Bati / Litti (लिट्टी / बाटी)",
+    "category": "Vegetables",
+    "price": 15,
+    "mrp": 20,
+    "unit": "1 piece",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Handmade wheat bati / sattu stuffed litti.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "1 piece",
+        "price": 15,
+        "stock": 50
+      },
+      {
+        "weight": "2 pieces",
+        "price": 29,
+        "stock": 40
+      },
+      {
+        "weight": "4 pieces (Family Pack)",
+        "price": 56,
+        "stock": 30
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Plain Rice (प्लेन राइस)",
+    "category": "Vegetables",
+    "price": 80,
+    "mrp": 104,
+    "unit": "Full",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Steamed basmati rice.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "Full",
+        "price": 80,
+        "stock": 50
+      },
+      {
+        "weight": "Half",
+        "price": 80,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Jeera Rice (जीरा राइस)",
+    "category": "Vegetables",
+    "price": 100,
+    "mrp": 130,
+    "unit": "Full",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Cumin tempered basmati rice.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "Full",
+        "price": 100,
+        "stock": 50
+      },
+      {
+        "weight": "Half",
+        "price": 100,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Masala Rice (मसाला राइस)",
+    "category": "Vegetables",
+    "price": 120,
+    "mrp": 156,
+    "unit": "Full",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Spicy and aromatic masala rice.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "Full",
+        "price": 120,
+        "stock": 50
+      },
+      {
+        "weight": "Half",
+        "price": 120,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Chicken Biryani (चिकन बिरयानी)",
+    "category": "Vegetables",
+    "price": 120,
+    "mrp": 156,
+    "unit": "Full",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Authentic dum biryani with succulent chicken.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "Full",
+        "price": 120,
+        "stock": 50
+      },
+      {
+        "weight": "Half",
+        "price": 120,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Egg Biryani (अण्डा बिरयानी)",
+    "category": "Vegetables",
+    "price": 100,
+    "mrp": 130,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Delicious egg biryani.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 30,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 55,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 100,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 190,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Chicken Fry (4 pcs) (चिकन फ्राय)",
+    "category": "Vegetables",
+    "price": 100,
+    "mrp": 130,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Crispy fried chicken pieces.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 30,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 55,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 100,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 190,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Masala Chicken Fry (4 pcs) (मसाला चिकन फ्राय)",
+    "category": "Vegetables",
+    "price": 120,
+    "mrp": 156,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Spicy masala fried chicken.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 36,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 66,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 120,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 228,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Fish Fry (4 pcs) (फिश फ्राय)",
+    "category": "Vegetables",
+    "price": 120,
+    "mrp": 156,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Golden fried fish fillets.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 36,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 66,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 120,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 228,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Masala Fish Fry (4 pcs) (मसाला फिश फ्राय)",
+    "category": "Vegetables",
+    "price": 150,
+    "mrp": 195,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Spicy masala fried fish.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 45,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 83,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 150,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 285,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Litti Chicken (लिट्टी चिकन)",
+    "category": "Vegetables",
+    "price": 120,
+    "mrp": 156,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Bihar style litti served with spicy chicken curry.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 36,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 66,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 120,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 228,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Litti Mutton (लिट्टी मटन)",
+    "category": "Vegetables",
+    "price": 150,
+    "mrp": 195,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Bihar style litti served with spicy mutton gravy.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 45,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 83,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 150,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 285,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Egg Curry (अण्डा करी)",
+    "category": "Vegetables",
+    "price": 100,
+    "mrp": 130,
+    "unit": "4 pieces",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Traditional egg curry.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "4 pieces",
+        "price": 100,
+        "stock": 50
+      },
+      {
+        "weight": "2 pieces",
+        "price": 190,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Masala Egg Curry (मसाला अण्डा करी)",
+    "category": "Vegetables",
+    "price": 120,
+    "mrp": 156,
+    "unit": "Full",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+    "description": "Spicy masala egg curry.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "Full",
+        "price": 120,
+        "stock": 50
+      },
+      {
+        "weight": "Half",
+        "price": 120,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Exotic Fruit Salad (एग्जोटिक फ्रूट सलाद)",
+    "category": "Vegetables",
+    "price": 249,
+    "mrp": 324,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/exotic_fruit_salad-CDwzoBiN.png",
+    "description": "Grape fruit, kiwi, Mango & Berries",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 75,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 137,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 249,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 473,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Lean Protein Bowl (लीन प्रोटीन बाउल)",
+    "category": "Vegetables",
+    "price": 329,
+    "mrp": 428,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/lean_protein_bowl-Da-K5Oba.png",
+    "description": "Grilled Chicken, Broccoli & Quinoa",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 99,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 181,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 329,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 625,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Detox Juice Pack (डिटॉक्स जूस पैक)",
+    "category": "Vegetables",
+    "price": 199,
+    "mrp": 259,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/detox_juice_pack-BZIe_h_a.png",
+    "description": "Set of 3 Cold-pressed juices",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 60,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 109,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 199,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 378,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Avocado Morning (एवोकैडो मॉर्निंग)",
+    "category": "Vegetables",
+    "price": 289,
+    "mrp": 376,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/avocado_morning-CasiZ50J.png",
+    "description": "Sour Dough, Salmon & Poached Egg",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 87,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 159,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 289,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 549,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Budget Potato (Aalu) (बजट आलू)",
+    "category": "Vegetables",
+    "price": 16,
+    "mrp": 23,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/potato-DfwNLs65.webp",
+    "description": "Daily use potatoes with slight size variation. Still great for curries, fries, and daily dishes.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 10,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 15,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 16,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 30,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Budget Onion (Pyaz) (बजट प्याज़)",
+    "category": "Vegetables",
+    "price": 20,
+    "mrp": 27,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/onion-B0HHN2uv.webp",
+    "description": "Standard Nashik onions. Slight size variance but perfect for daily cooking, gravy, and salads.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 10,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 15,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 20,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 38,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Budget Tomato (बजट टमाटर)",
+    "category": "Vegetables",
+    "price": 19,
+    "mrp": 27,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/tomato-Dbk6DB12.webp",
+    "description": "Fresh local tomatoes. May contain slight shape differences but juicy and perfectly suitable for daily curries.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 10,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 15,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 19,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 36,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Budget Banana (बजट केला)",
+    "category": "Vegetables",
+    "price": 28,
+    "mrp": 40,
+    "unit": "12 pcs",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/banana-DVDXiriU.webp",
+    "description": "Standard sweet bananas. Rich in potassium, ideal for milkshakes and daily consumption.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "12 pcs",
+        "price": 28,
+        "stock": 50
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Budget Red Apple (बजट सेब)",
+    "category": "Vegetables",
+    "price": 99,
+    "mrp": 150,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/RedApple_Poster-Ojv_2RV7.webp",
+    "description": "Crunchy daily-health apples. Healthy and rich in fiber, with minor skin spots.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 30,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 54,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 99,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 188,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  },
+  {
+    "name": "Budget Papaya (बजट पपीता)",
+    "category": "Vegetables",
+    "price": 45,
+    "mrp": 60,
+    "unit": "250g",
+    "stock": 100,
+    "image": "https://vegswift.in/assets/papaya-DJSe0-Wf.webp",
+    "description": "Daily fresh standard papayas, sweet and healthy for digestion.",
+    "sourcing": "Local Bhopal Farms (Sourced from Sehore, Raisen & Karond Mandi)",
+    "storage": "Keep refrigerated in vegetable crisper",
+    "variations": [
+      {
+        "weight": "250g",
+        "price": 14,
+        "stock": 40
+      },
+      {
+        "weight": "500g",
+        "price": 25,
+        "stock": 50
+      },
+      {
+        "weight": "1 kg",
+        "price": 45,
+        "stock": 60
+      },
+      {
+        "weight": "2 kg (Saver Pack)",
+        "price": 86,
+        "stock": 40
+      }
+    ],
+    "sourceUrl": "https://vegswift.in/"
+  }
+]

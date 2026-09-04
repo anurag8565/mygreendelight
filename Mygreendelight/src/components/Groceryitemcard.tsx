@@ -146,17 +146,12 @@ export default function Groceryitemcard({
             </h3>
           </Link>
 
-          {/* UNIT / WEIGHT */}
-          <p className="text-[10.5px] text-gray-400 font-bold truncate mt-0.5 h-[16px]">
-            {displayUnit}
-          </p>
-
-          {/* VARIATIONS SELECTOR */}
-          <div className="h-[26px] mt-1">
-            {item.variations && item.variations.length > 0 ? (
+          {/* UNIT / WEIGHT & VARIATIONS SELECTOR */}
+          <div className="mt-1 min-h-[26px]">
+            {item.variations && item.variations.length > 1 ? (
               <select
-                className="w-full text-[10px] sm:text-[11px] font-bold py-0.5 px-2 border border-gray-200 rounded-xl outline-none focus:border-[#0f8646] bg-gray-50 text-gray-800 h-[24px] cursor-pointer shadow-2xs"
-                value={selectedVariation?.weight}
+                className="w-full text-[10.5px] font-bold py-0.5 px-2 border border-emerald-200 rounded-lg outline-none focus:border-[#0f8646] bg-emerald-50/40 text-gray-800 h-[24px] cursor-pointer shadow-2xs hover:border-emerald-400 transition"
+                value={selectedVariation?.weight || item.variations[0]?.weight}
                 onChange={(e) => {
                   const v = item.variations?.find((varItem) => varItem.weight === e.target.value);
                   if (v) setSelectedVariation(v);
@@ -164,11 +159,15 @@ export default function Groceryitemcard({
               >
                 {item.variations.map((v, i) => (
                   <option key={i} value={v.weight}>
-                    {v.weight} - ₹{v.price} {v.stock <= 0 ? "(OOS)" : ""}
+                    {v.weight} - ₹{v.price} {v.stock <= 0 ? "(Out of stock)" : ""}
                   </option>
                 ))}
               </select>
-            ) : null}
+            ) : (
+              <p className="text-[11px] text-gray-400 font-bold truncate h-[24px] flex items-center">
+                {displayUnit}
+              </p>
+            )}
           </div>
 
           {/* PRICE ROW & SAVINGS */}

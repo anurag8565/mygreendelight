@@ -85,11 +85,7 @@ export default function AdminSidebar() {
       href: "/admin/manage-combos",
       icon: <Percent size={18} />,
     },
-    {
-      name: "Morning Subscriptions",
-      href: "/admin/manage-subscriptions",
-      icon: <Milk size={18} />,
-    },
+
     {
       name: "Recipe Kits (Combos)",
       href: "/admin/manage-recipes",

@@ -81,7 +81,7 @@ export default function BulkUploadPage() {
     document.body.removeChild(link);
   };
 
-  // CSV Simple Parser
+  // CSV Robust Parser with RFC 4180 unescaping
   const parseCSV = (text: string) => {
     const lines = text.split(/\r\n|\n/).filter((l) => l.trim() !== "");
     if (lines.length < 2) return [];
@@ -100,21 +100,70 @@ export default function BulkUploadPage() {
       });
 
       if (obj.name && obj.price) {
-        let variations = [];
+        let variations: any[] = [];
         if (obj.variations) {
           try {
-            variations = JSON.parse(obj.variations);
+            let cleanStr = obj.variations;
+            if (typeof cleanStr === "string") {
+              cleanStr = cleanStr.replace(/""/g, '"').trim();
+              if (cleanStr.startsWith('"') && cleanStr.endsWith('"')) {
+                cleanStr = cleanStr.slice(1, -1).replace(/""/g, '"').trim();
+              }
+            }
+            variations = JSON.parse(cleanStr);
           } catch {
             variations = [];
           }
         }
 
+        const basePrice = Number(obj.price) || 40;
+        const defaultUnit = obj.unit || "1 kg";
+        const unitLow = defaultUnit.toLowerCase();
+
+        // Fallback: If variations array is empty, auto-generate standard multi-tier pack variations
+        if (!Array.isArray(variations) || variations.length === 0) {
+          if (unitLow.includes("pc") || unitLow.includes("piece") || unitLow.includes("dozen")) {
+            variations = [
+              { weight: "1 Pc", price: basePrice, stock: 50 },
+              { weight: "2 Pcs Pack", price: Math.round(basePrice * 1.9), stock: 40 },
+              { weight: "4 Pcs Family Pack", price: Math.round(basePrice * 3.7), stock: 30 },
+            ];
+          } else if (unitLow.includes("box") || unitLow.includes("tray")) {
+            variations = [
+              { weight: "1 Box", price: basePrice, stock: 40 },
+              { weight: "2 Boxes (Duo)", price: Math.round(basePrice * 1.9), stock: 30 },
+            ];
+          } else if (unitLow.includes("bundle") || unitLow.includes("bunch")) {
+            variations = [
+              { weight: "1 Bundle", price: basePrice, stock: 50 },
+              { weight: "2 Bundles (Saver)", price: Math.round(basePrice * 1.9), stock: 40 },
+            ];
+          } else if (unitLow.includes("250g")) {
+            variations = [
+              { weight: "250g Pack", price: basePrice, stock: 50 },
+              { weight: "500g (Twin Pack)", price: Math.round(basePrice * 1.9), stock: 40 },
+              { weight: "1 kg (Family Pack)", price: Math.round(basePrice * 3.7), stock: 30 },
+            ];
+          } else {
+            variations = [
+              { weight: "250g", price: Math.max(10, Math.round(basePrice * 0.3)), stock: 50 },
+              { weight: "500g", price: Math.max(15, Math.round(basePrice * 0.55)), stock: 60 },
+              { weight: "1 kg", price: basePrice, stock: 80 },
+              { weight: "2 kg (Bulk Saver)", price: Math.round(basePrice * 1.9), stock: 40 },
+              { weight: "5 kg (Society Sack)", price: Math.round(basePrice * 4.6), stock: 25 },
+            ];
+          }
+        }
+
+        const calculatedMrp = Number(obj.mrp) || Math.round(basePrice * 1.28);
+
         products.push({
           name: obj.name,
           category: obj.category || "Vegetables",
-          price: Number(obj.price) || 0,
-          unit: obj.unit || "1 kg",
-          stock: Number(obj.stock) || 50,
+          price: basePrice,
+          mrp: calculatedMrp,
+          unit: defaultUnit,
+          stock: Number(obj.stock) || 100,
           image: obj.image || "",
           description: obj.description || "",
           sourcing: obj.sourcing || "",
@@ -259,6 +308,65 @@ export default function BulkUploadPage() {
         <div className="p-6 sm:p-8 space-y-6 flex-1 max-w-6xl">
           {/* Ready-Made Datasets Banner Cards */}
           <div className="grid md:grid-cols-2 gap-4">
+            {/* HERO CARD: Ultimate Consolidated Master Dataset (471 Products) */}
+            <div className="bg-gradient-to-br from-[#0c5c30] via-[#0f8646] to-[#084824] text-white rounded-3xl p-6 sm:p-7 shadow-lg border-2 border-emerald-400/40 flex flex-col justify-between relative overflow-hidden md:col-span-2">
+              <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-emerald-300/15 rounded-full blur-2xl pointer-events-none" />
+              <div>
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                  <span className="bg-white text-[#0f8646] text-xs font-black uppercase tracking-wider px-3.5 py-1.2 rounded-full shadow-xs flex items-center gap-1.5">
+                    <Sparkles size={14} className="text-[#0f8646]" />
+                    <span>👑 Ultimate MyGreenDelight Master Catalog (100% Brand Clean)</span>
+                  </span>
+                  <span className="text-xs bg-emerald-950/60 border border-emerald-400/30 px-3 py-1 rounded-full font-black text-emerald-200">
+                    471 Clean Unique Items • Zero Junk & Zero 3rd-Party Names
+                  </span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-black text-white mb-2">
+                  Unified Master Produce & Grocery Catalog (471 Products)
+                </h3>
+                <p className="text-xs sm:text-sm text-emerald-50/90 leading-relaxed mb-6 max-w-4xl">
+                  Consolidated & deduplicated from all regional Bhopal mandis and contract farms. 100% filtered: all cold drinks, water bottles, soda, and cooked non-veg items have been removed. All 3rd-party store names are sanitized. Features Vegetables (217), Fruits (107), Dairy & Staples (78), Exotics (59), Ready-to-Cook (10) with multi-tier pack variations (250g, 500g, 1kg, 2kg, 5kg), realistic pricing & HD images.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-emerald-600/50">
+                <a
+                  href="/mygreendelight_fresh_produce_master.xlsx"
+                  download="mygreendelight_fresh_produce_master.xlsx"
+                  className="bg-white hover:bg-emerald-50 text-[#0c5c30] px-4 py-2.5 rounded-xl text-xs font-black shadow-md transition flex items-center gap-2 cursor-pointer"
+                >
+                  <Download size={15} className="text-[#0f8646]" />
+                  <span>Download Master Excel (.xlsx)</span>
+                </a>
+
+                <a
+                  href="/mygreendelight_fresh_produce_master.csv"
+                  download="mygreendelight_fresh_produce_master.csv"
+                  className="bg-emerald-900/80 hover:bg-emerald-900 text-white border border-emerald-400/50 px-4 py-2.5 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-2 cursor-pointer"
+                >
+                  <FileSpreadsheet size={15} />
+                  <span>Download Master CSV (471)</span>
+                </a>
+
+                <button
+                  onClick={async () => {
+                    try {
+                      const res = await fetch("/mygreendelight_fresh_produce_master.json");
+                      const data = await res.json();
+                      setParsedProducts(data);
+                      setResultMsg(null);
+                    } catch (e) {
+                      alert("Failed to load Ultimate Master dataset");
+                    }
+                  }}
+                  className="bg-emerald-300 hover:bg-emerald-200 text-emerald-950 px-4 py-2.5 rounded-xl text-xs font-black transition flex items-center gap-2 cursor-pointer shadow-xs"
+                >
+                  <Layers size={15} />
+                  <span>Preview & 1-Click Upload (471 Items)</span>
+                </button>
+              </div>
+            </div>
+
             {/* Card 1: Master Merged Bhopal Dataset (115 Products) */}
             <div className="bg-gradient-to-br from-emerald-900 to-green-950 text-white rounded-3xl p-6 shadow-md border border-green-800 flex flex-col justify-between relative overflow-hidden">
               <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-emerald-500/10 rounded-full blur-xl pointer-events-none" />
@@ -266,15 +374,15 @@ export default function BulkUploadPage() {
                 <div className="flex items-center justify-between mb-3">
                   <span className="bg-emerald-500/20 text-emerald-300 text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full border border-emerald-400/30 flex items-center gap-1.5">
                     <Sparkles size={12} />
-                    <span>Master Catalog (Recommended)</span>
+                    <span>Master Catalog (115 Items)</span>
                   </span>
                   <span className="text-xs text-emerald-200 font-bold">115 Produce Items</span>
                 </div>
                 <h3 className="text-lg font-black text-white mb-1">
-                  Complete Bhopal Mandi + EVegetableBazaar CSV
+                  Complete Bhopal Mandi + Farm Harvest CSV
                 </h3>
                 <p className="text-xs text-emerald-100/80 leading-relaxed mb-5">
-                  Includes all 115 farm items (Vegetables, Fruits, Exotics, Dairy) with HD photos, pack sizes (250g–2kg) and verified Bhopal mandi pricing.
+                  Includes 115 farm items (Vegetables, Fruits, Exotics, Dairy) with HD photos, pack sizes (250g–2kg) and verified Bhopal mandi pricing.
                 </p>
               </div>
 
@@ -307,49 +415,394 @@ export default function BulkUploadPage() {
               </div>
             </div>
 
-            {/* Card 2: Gramhat Dataset (63 Products) */}
-            <div className="bg-white rounded-3xl p-6 shadow-xs border border-gray-200/80 flex flex-col justify-between">
+            {/* Card 2: MVF Pune Master Extracted Dataset (52 Products) */}
+            <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-3xl p-6 shadow-xs border border-emerald-200/90 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="bg-amber-50 text-amber-800 text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full border border-amber-200 flex items-center gap-1.5">
-                    <Database size={12} />
-                    <span>Gramhat Produce</span>
+                  <span className="bg-emerald-600 text-white text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-2xs flex items-center gap-1.5">
+                    <Sparkles size={12} />
+                    <span>MVFPune.com Extracted</span>
                   </span>
-                  <span className="text-xs text-gray-500 font-bold">63 Produce Items</span>
+                  <span className="text-xs text-emerald-800 font-bold">52 Products + Variations</span>
                 </div>
                 <h3 className="text-lg font-black text-gray-900 mb-1">
-                  Gramhat.in Extracted Bhopal CSV
+                  Maha Veggie Farm (MVF Pune) Master Dataset
                 </h3>
-                <p className="text-xs text-gray-500 leading-relaxed mb-5">
-                  Original 63 produce items extracted directly from Gramhat Bhopal Mandi catalog with dual English/Hindi produce names.
+                <p className="text-xs text-gray-600 leading-relaxed mb-5">
+                  Extracted directly from mvfpune.com with all pack size variations (250g–2kg), HD farm images, pricing, and category breakdowns.
                 </p>
               </div>
 
-              <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-gray-100">
+              <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-emerald-200/60">
                 <a
-                  href="/gramhat_products.csv"
-                  download="gramhat_bhopal_63_products.csv"
-                  className="bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-900 px-4 py-2.5 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5 cursor-pointer"
+                  href="/mvfpune_products_master.xlsx"
+                  download="mvfpune_products_master.xlsx"
+                  className="bg-emerald-700 hover:bg-emerald-800 text-white px-3.5 py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <Download size={14} />
-                  <span>Download Gramhat CSV (63 Items)</span>
+                  <span>Download Excel (.xlsx)</span>
+                </a>
+
+                <a
+                  href="/mvfpune_products_master.csv"
+                  download="mvfpune_products_master.csv"
+                  className="bg-white hover:bg-emerald-50 border border-emerald-300 text-emerald-800 px-3.5 py-2 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <FileSpreadsheet size={14} />
+                  <span>Download CSV</span>
                 </a>
 
                 <button
                   onClick={async () => {
                     try {
-                      const res = await fetch("/gramhat_products.json");
+                      const res = await fetch("/mvfpune_products_master.json");
                       const data = await res.json();
                       setParsedProducts(data);
                       setResultMsg(null);
                     } catch (e) {
-                      alert("Failed to load Gramhat dataset");
+                      alert("Failed to load MVF Pune dataset");
                     }
                   }}
-                  className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-3.5 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+                  className="bg-emerald-100 hover:bg-emerald-200 text-emerald-900 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <Layers size={14} />
-                  <span>Load Preview (63)</span>
+                  <span>Preview & Upload (52)</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Card 3: FPS Store Extracted Master Dataset (167 Products) */}
+            <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-3xl p-6 shadow-xs border border-amber-200/90 flex flex-col justify-between md:col-span-2">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="bg-amber-600 text-white text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-2xs flex items-center gap-1.5">
+                    <Sparkles size={12} />
+                    <span>FPSStore.in Master Catalog</span>
+                  </span>
+                  <span className="text-xs text-amber-900 font-bold">167 Products + Multi-Pack Sizes</span>
+                </div>
+                <h3 className="text-lg font-black text-gray-900 mb-1">
+                  FPS Store (fpsstore.in) Complete Sourced Dataset
+                </h3>
+                <p className="text-xs text-gray-600 leading-relaxed mb-5">
+                  Full 167 organic & exotic products (Custard Apple, Berries, Hydroponic Greens, Avocado, Mushroom, Exotics) extracted with 1000x1000 HD images, weight variations (250g, 500g, 1kg, 2kg) and real pricing.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-amber-200/60">
+                <a
+                  href="/fpsstore_products_master.xlsx"
+                  download="fpsstore_products_master.xlsx"
+                  className="bg-amber-700 hover:bg-amber-800 text-white px-3.5 py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Download size={14} />
+                  <span>Download Excel (.xlsx)</span>
+                </a>
+
+                <a
+                  href="/fpsstore_products_master.csv"
+                  download="fpsstore_products_master.csv"
+                  className="bg-white hover:bg-amber-50 border border-amber-300 text-amber-900 px-3.5 py-2 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <FileSpreadsheet size={14} />
+                  <span>Download CSV</span>
+                </a>
+
+                <button
+                  onClick={async () => {
+                    try {
+                      const res = await fetch("/fpsstore_products_master.json");
+                      const data = await res.json();
+                      setParsedProducts(data);
+                      setResultMsg(null);
+                    } catch (e) {
+                      alert("Failed to load FPS Store dataset");
+                    }
+                  }}
+                  className="bg-amber-200 hover:bg-amber-300 text-amber-950 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Layers size={14} />
+                  <span>Preview & Upload (167)</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Card 4: Wholesale Mandi Master Dataset (25 Products) */}
+            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-6 shadow-xs border border-blue-200/90 flex flex-col justify-between md:col-span-2">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="bg-blue-600 text-white text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-2xs flex items-center gap-1.5">
+                    <Sparkles size={12} />
+                    <span>WholesaleMandi.com Catalog</span>
+                  </span>
+                  <span className="text-xs text-blue-900 font-bold">25 Fruits, Mangoes & Exotics</span>
+                </div>
+                <h3 className="text-lg font-black text-gray-900 mb-1">
+                  Wholesale Mandi (wholesalemandi.com) Direct Sourced Dataset
+                </h3>
+                <p className="text-xs text-gray-600 leading-relaxed mb-5">
+                  Bulk mandi rates for Mangoes (Imam Pasand, Banganapalli, Senthura), Bananas (Yelakki, Red, Nendram), Dragon Fruit, Blueberry, Thai Guava with bulk tier pack sizes (1kg, 2kg, 5kg).
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-blue-200/60">
+                <a
+                  href="/wholesalemandi_products_master.xlsx"
+                  download="wholesalemandi_products_master.xlsx"
+                  className="bg-blue-700 hover:bg-blue-800 text-white px-3.5 py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Download size={14} />
+                  <span>Download Excel (.xlsx)</span>
+                </a>
+
+                <a
+                  href="/wholesalemandi_products_master.csv"
+                  download="wholesalemandi_products_master.csv"
+                  className="bg-white hover:bg-blue-50 border border-blue-300 text-blue-900 px-3.5 py-2 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <FileSpreadsheet size={14} />
+                  <span>Download CSV</span>
+                </a>
+
+                <button
+                  onClick={async () => {
+                    try {
+                      const res = await fetch("/wholesalemandi_products_master.json");
+                      const data = await res.json();
+                      setParsedProducts(data);
+                      setResultMsg(null);
+                    } catch (e) {
+                      alert("Failed to load Wholesale Mandi dataset");
+                    }
+                  }}
+                  className="bg-blue-200 hover:bg-blue-300 text-blue-950 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Layers size={14} />
+                  <span>Preview & Upload (25)</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Card 5: Ram Bhaji Bhopal Master Dataset (39 Products) */}
+            <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl p-6 shadow-xs border border-green-200/90 flex flex-col justify-between md:col-span-2">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="bg-[#0f8646] text-white text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-2xs flex items-center gap-1.5">
+                    <Sparkles size={12} />
+                    <span>RamBhaji.com Bhopal Catalog</span>
+                  </span>
+                  <span className="text-xs text-green-900 font-bold">39 Bhopal Mandi Produce Items</span>
+                </div>
+                <h3 className="text-lg font-black text-gray-900 mb-1">
+                  Ram Bhaji Bhopal (rambhaji.com) Local Mandi Dataset
+                </h3>
+                <p className="text-xs text-gray-600 leading-relaxed mb-5">
+                  Extracted directly from Bhopal online store Rambhaji with dual English & Hindi produce names (Beetroot चुकंदर, Bharta Brinjal बैगन, Bitter Gourd करेला, Bottle Gourd लौकी, Broccoli ब्रोकोली), authentic rates, and 250g–5kg pack sizes.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-green-200/60">
+                <a
+                  href="/rambhaji_products_master.xlsx"
+                  download="rambhaji_products_master.xlsx"
+                  className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-3.5 py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Download size={14} />
+                  <span>Download Excel (.xlsx)</span>
+                </a>
+
+                <a
+                  href="/rambhaji_products_master.csv"
+                  download="rambhaji_products_master.csv"
+                  className="bg-white hover:bg-green-50 border border-green-300 text-green-900 px-3.5 py-2 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <FileSpreadsheet size={14} />
+                  <span>Download CSV</span>
+                </a>
+
+                <button
+                  onClick={async () => {
+                    try {
+                      const res = await fetch("/rambhaji_products_master.json");
+                      const data = await res.json();
+                      setParsedProducts(data);
+                      setResultMsg(null);
+                    } catch (e) {
+                      alert("Failed to load Ram Bhaji dataset");
+                    }
+                  }}
+                  className="bg-green-100 hover:bg-green-200 text-green-950 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Layers size={14} />
+                  <span>Preview & Upload (39)</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Card 6: VegSwift Bhopal Master Dataset (116 Products) */}
+            <div className="bg-gradient-to-br from-teal-50 to-emerald-50 rounded-3xl p-6 shadow-xs border border-teal-200/90 flex flex-col justify-between md:col-span-2">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="bg-teal-600 text-white text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-2xs flex items-center gap-1.5">
+                    <Sparkles size={12} />
+                    <span>VegSwift.in Bhopal Catalog</span>
+                  </span>
+                  <span className="text-xs text-teal-900 font-bold">116 Bhopal Produce & Dairy Items</span>
+                </div>
+                <h3 className="text-lg font-black text-gray-900 mb-1">
+                  VegSwift Bhopal (vegswift.in) Complete Sourced Dataset
+                </h3>
+                <p className="text-xs text-gray-600 leading-relaxed mb-5">
+                  116 items extracted directly from Bhopal VegSwift platform with dual English/Hindi names (Pahadi Aalu, Nashik Pyaz, Garlic Lahsun, Mooli, Gajar, Arbi, Peanut, Desi Tomato), real mandi rates, and pack sizes (250g, 500g, 1kg, 2kg).
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-teal-200/60">
+                <a
+                  href="/vegswift_products_master.xlsx"
+                  download="vegswift_products_master.xlsx"
+                  className="bg-teal-700 hover:bg-teal-800 text-white px-3.5 py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Download size={14} />
+                  <span>Download Excel (.xlsx)</span>
+                </a>
+
+                <a
+                  href="/vegswift_products_master.csv"
+                  download="vegswift_products_master.csv"
+                  className="bg-white hover:bg-teal-50 border border-teal-300 text-teal-900 px-3.5 py-2 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <FileSpreadsheet size={14} />
+                  <span>Download CSV</span>
+                </a>
+
+                <button
+                  onClick={async () => {
+                    try {
+                      const res = await fetch("/vegswift_products_master.json");
+                      const data = await res.json();
+                      setParsedProducts(data);
+                      setResultMsg(null);
+                    } catch (e) {
+                      alert("Failed to load VegSwift dataset");
+                    }
+                  }}
+                  className="bg-teal-200 hover:bg-teal-300 text-teal-950 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Layers size={14} />
+                  <span>Preview & Upload (116)</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Card 7: KisaanRiksha Master Sourced Dataset (124 Products) */}
+            <div className="bg-gradient-to-br from-lime-50 to-emerald-50 rounded-3xl p-6 shadow-xs border border-lime-200/90 flex flex-col justify-between md:col-span-2">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="bg-lime-700 text-white text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-2xs flex items-center gap-1.5">
+                    <Sparkles size={12} />
+                    <span>KisaanRiksha.com Catalog</span>
+                  </span>
+                  <span className="text-xs text-lime-900 font-bold">124 Products + Cut Veggies</span>
+                </div>
+                <h3 className="text-lg font-black text-gray-900 mb-1">
+                  Kisaan Riksha (kisaanriksha.com) Farm to Doorstep Dataset
+                </h3>
+                <p className="text-xs text-gray-600 leading-relaxed mb-5">
+                  Extracted 124 farm fresh & ready-to-cook chopped produce (Chopped Bhindi, Peeled Lauki, Cleaned Cauliflower Florets, Cut Carrot-Beans Mix, Mixed Veggie Packs) with pack size variations (250g, 500g, 1kg) and HD photos.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-lime-200/60">
+                <a
+                  href="/kisaanriksha_products_master.xlsx"
+                  download="kisaanriksha_products_master.xlsx"
+                  className="bg-lime-800 hover:bg-lime-900 text-white px-3.5 py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Download size={14} />
+                  <span>Download Excel (.xlsx)</span>
+                </a>
+
+                <a
+                  href="/kisaanriksha_products_master.csv"
+                  download="kisaanriksha_products_master.csv"
+                  className="bg-white hover:bg-lime-50 border border-lime-300 text-lime-900 px-3.5 py-2 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <FileSpreadsheet size={14} />
+                  <span>Download CSV</span>
+                </a>
+
+                <button
+                  onClick={async () => {
+                    try {
+                      const res = await fetch("/kisaanriksha_products_master.json");
+                      const data = await res.json();
+                      setParsedProducts(data);
+                      setResultMsg(null);
+                    } catch (e) {
+                      alert("Failed to load KisaanRiksha dataset");
+                    }
+                  }}
+                  className="bg-lime-200 hover:bg-lime-300 text-lime-950 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Layers size={14} />
+                  <span>Preview & Upload (124)</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Card 8: Beybey Farms Bhopal Master Dataset (67 Products) */}
+            <div className="bg-gradient-to-br from-yellow-50 to-amber-50 rounded-3xl p-6 shadow-xs border border-amber-200/90 flex flex-col justify-between md:col-span-2">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="bg-amber-600 text-white text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-2xs flex items-center gap-1.5">
+                    <Sparkles size={12} />
+                    <span>BeyBeyFarms.com Bhopal Catalog</span>
+                  </span>
+                  <span className="text-xs text-amber-900 font-bold">67 Bhopal Farm Harvest Items</span>
+                </div>
+                <h3 className="text-lg font-black text-gray-900 mb-1">
+                  Beybey Farms Bhopal (beybeyfarms.com) Pesticide-Free Dataset
+                </h3>
+                <p className="text-xs text-gray-600 leading-relaxed mb-5">
+                  67 organic, ozone-washed Bhopal farm items (Oyster Mushrooms, Farm Palak, Desi Tamatar, Bhopal Veggies, Ghee & Dairy) with pack size variations (100g, 250g, 500g, 1kg) and HD photos.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-amber-200/60">
+                <a
+                  href="/beybeyfarms_products_master.xlsx"
+                  download="beybeyfarms_products_master.xlsx"
+                  className="bg-amber-800 hover:bg-amber-900 text-white px-3.5 py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Download size={14} />
+                  <span>Download Excel (.xlsx)</span>
+                </a>
+
+                <a
+                  href="/beybeyfarms_products_master.csv"
+                  download="beybeyfarms_products_master.csv"
+                  className="bg-white hover:bg-amber-50 border border-amber-300 text-amber-900 px-3.5 py-2 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <FileSpreadsheet size={14} />
+                  <span>Download CSV</span>
+                </a>
+
+                <button
+                  onClick={async () => {
+                    try {
+                      const res = await fetch("/beybeyfarms_products_master.json");
+                      const data = await res.json();
+                      setParsedProducts(data);
+                      setResultMsg(null);
+                    } catch (e) {
+                      alert("Failed to load Beybey Farms dataset");
+                    }
+                  }}
+                  className="bg-amber-200 hover:bg-amber-300 text-amber-950 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Layers size={14} />
+                  <span>Preview & Upload (67)</span>
                 </button>
               </div>
             </div>
@@ -511,13 +964,20 @@ export default function BulkUploadPage() {
                         <td className="py-3 px-4 font-black text-gray-900">₹{p.price}</td>
                         <td className="py-3 px-4 text-gray-500 font-medium">{p.unit || "kg"}</td>
                         <td className="py-3 px-4 font-bold text-gray-700">{p.stock || 50}</td>
-                        <td className="py-3 px-4 text-gray-500 font-bold">
+                        <td className="py-3 px-4">
                           {p.variations && Array.isArray(p.variations) && p.variations.length > 0 ? (
-                            <span className="bg-gray-100 text-gray-700 px-2 py-0.5 rounded text-[11px]">
-                              {p.variations.length} sizes (250g–2kg)
-                            </span>
+                            <div className="flex flex-wrap gap-1 max-w-xs">
+                              {p.variations.map((v: any, vi: number) => (
+                                <span
+                                  key={vi}
+                                  className="bg-emerald-50 text-emerald-800 border border-emerald-200 px-1.5 py-0.5 rounded-md text-[10px] font-bold"
+                                >
+                                  {v.weight}: ₹{v.price}
+                                </span>
+                              ))}
+                            </div>
                           ) : (
-                            <span className="text-gray-400">Standard</span>
+                            <span className="text-gray-400 font-medium">1 Standard Pack</span>
                           )}
                         </td>
                         <td className="py-3 px-4 text-right">

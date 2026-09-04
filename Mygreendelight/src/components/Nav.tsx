@@ -250,26 +250,7 @@ export default function Nav({ user }: { user: iUser }) {
           </div>
         </div>
 
-        {/* Quick Balance Tiles */}
-        <div className="p-3 grid grid-cols-2 gap-2 bg-emerald-50/50 border-b border-emerald-100/60">
-          <Link
-            href="/user/wallet"
-            onClick={() => setmenuopen(false)}
-            className="bg-white p-2.5 rounded-2xl border border-emerald-200/80 shadow-2xs hover:shadow-xs transition flex flex-col justify-between"
-          >
-            <span className="text-[9px] font-black uppercase text-emerald-700">MGD Wallet</span>
-            <span className="text-xs font-black text-gray-900 mt-0.5">+10% Bonus ➔</span>
-          </Link>
 
-          <Link
-            href="/user/vip-pass"
-            onClick={() => setmenuopen(false)}
-            className="bg-gradient-to-r from-amber-50 to-yellow-50 p-2.5 rounded-2xl border border-amber-200/80 shadow-2xs hover:shadow-xs transition flex flex-col justify-between"
-          >
-            <span className="text-[9px] font-black uppercase text-amber-800">VIP Farm Pass</span>
-            <span className="text-xs font-black text-amber-900 mt-0.5">Save ₹400+ ➔</span>
-          </Link>
-        </div>
 
         {/* Scrollable Navigation Aisles */}
         <div className="flex-1 overflow-y-auto p-3 space-y-4 scrollbar-none text-xs font-bold">
@@ -319,14 +300,7 @@ export default function Nav({ user }: { user: iUser }) {
               Farm Experiences
             </span>
             <div className="space-y-1">
-              <Link
-                href="/user/subscriptions"
-                onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl text-gray-700 hover:bg-gray-50 transition"
-              >
-                <span>🥛 Daily 7 AM Subscriptions</span>
-                <span className="bg-blue-100 text-blue-800 text-[9px] font-black px-2 py-0.5 rounded-full">Popular</span>
-              </Link>
+
 
               <Link
                 href="/shop/custom-box"
@@ -338,12 +312,12 @@ export default function Nav({ user }: { user: iUser }) {
               </Link>
 
               <Link
-                href="/shop/gift-basket"
+                href="/offers"
                 onClick={() => setmenuopen(false)}
                 className="flex items-center justify-between p-2.5 rounded-xl text-gray-700 hover:bg-gray-50 transition"
               >
-                <span>🎁 Artisanal Gift Hampers</span>
-                <span className="bg-pink-100 text-pink-800 text-[9px] font-black px-2 py-0.5 rounded-full">Eco</span>
+                <span>🏷️ Offers & Scratch Rewards</span>
+                <span className="bg-amber-100 text-amber-800 text-[9px] font-black px-2 py-0.5 rounded-full">Win ₹50</span>
               </Link>
             </div>
           </div>
@@ -741,37 +715,17 @@ export default function Nav({ user }: { user: iUser }) {
                     </Link>
 
                     <Link
-                      href="/user/wallet"
-                      onClick={() => setOpen(false)}
-                      className="block px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-[#0f8646] font-bold border-b flex items-center justify-between transition"
-                    >
-                      <span>🟢 MGD Green Wallet</span>
-                      <span className="bg-green-100 text-[#0f8646] text-[10px] font-black px-2 py-0.5 rounded-full">
-                        +10% Bonus
-                      </span>
-                    </Link>
-
-                    <Link
-                      href="/user/vip-pass"
+                      href="/offers"
                       onClick={() => setOpen(false)}
                       className="block px-4 py-2.5 text-xs text-gray-700 hover:bg-amber-50 hover:text-amber-800 font-bold border-b flex items-center justify-between transition"
                     >
-                      <span>👑 Farm Club VIP</span>
+                      <span>🏷️ Offers & Scratch Rewards</span>
                       <span className="bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-0.5 rounded-full">
-                        VIP Pass
+                        Win ₹50
                       </span>
                     </Link>
 
-                    <Link
-                      href="/user/subscriptions"
-                      onClick={() => setOpen(false)}
-                      className="block px-4 py-2.5 text-xs text-gray-700 hover:bg-blue-50 hover:text-blue-800 font-bold border-b flex items-center justify-between transition"
-                    >
-                      <span>🥛 7 AM Subscriptions</span>
-                      <span className="bg-blue-100 text-blue-800 text-[10px] font-black px-2 py-0.5 rounded-full">
-                        Daily
-                      </span>
-                    </Link>
+
 
                     <Link
                       href="/wishlist"

@@ -82,14 +82,8 @@ export default function Checkout() {
   }, []);
 
   const [riderTip, setRiderTip] = useState<number>(0);
-  const isVipMember = Boolean(vipInfo?.isMember);
-  const effectiveDeliveryFee = isVipMember ? 0 : deliveryFee;
-
-  const availableWallet = (userdata as any)?.walletBalance || 0;
-  const walletDiscount = useWallet
-    ? Math.min(availableWallet, Math.max(0, subtotal + effectiveDeliveryFee + riderTip - discount))
-    : 0;
-  const finalPayableTotal = Math.max(0, subtotal + effectiveDeliveryFee + riderTip - discount - walletDiscount);
+  const effectiveDeliveryFee = deliveryFee;
+  const finalPayableTotal = Math.max(0, subtotal + effectiveDeliveryFee + riderTip - discount);
 
   const [address, setaddress] = useState({
     fullname: "",
@@ -221,7 +215,7 @@ export default function Checkout() {
           paymentmethod: "cod",
           couponCode: couponCode || undefined,
           discount: discount || 0,
-          walletDiscount: walletDiscount || 0,
+          walletDiscount: 0,
           isSilentDelivery: isSilentDelivery || false,
           deliveryInstructions: deliveryInstructions || "",
           deliverySlot: deliverySlot,
@@ -266,7 +260,7 @@ export default function Checkout() {
           paymentmethod: "online",
           couponCode: couponCode || undefined,
           discount: discount || 0,
-          walletDiscount: walletDiscount || 0,
+          walletDiscount: 0,
           isSilentDelivery: isSilentDelivery || false,
           deliveryInstructions: deliveryInstructions || "",
           deliverySlot: deliverySlot,
@@ -576,15 +570,6 @@ export default function Checkout() {
 
               <div className="space-y-2.5">
                 {[
-                  ...(isVipMember ? [{
-                    id: "👑 6:30 AM First Priority VIP Harvest Delivery",
-                    title: "👑 6:30 AM VIP Priority Harvest",
-                    time: "Tomorrow 6:30 AM – 7:30 AM",
-                    desc: "First priority sunrise harvest dispatch for VIP members",
-                    icon: Crown,
-                    badge: "VIP Club Exclusive",
-                    badgeColor: "bg-amber-300 text-gray-950 font-black",
-                  }] : []),
                   {
                     id: "Instant Express (30-45 Mins)",
                     title: "⚡ Instant Express Delivery",
@@ -735,41 +720,7 @@ export default function Checkout() {
               </div>
             </div>
 
-            {/* GreenPoints Wallet Redemption Card */}
-            {availableWallet > 0 && (
-              <div className="bg-emerald-50/70 rounded-3xl border border-emerald-200/90 p-5 shadow-xs">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-2xl bg-[#0f8646] text-white flex items-center justify-center shadow-xs">
-                      <Coins size={20} />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="font-extrabold text-sm text-gray-900">
-                          MyGreenDelight GreenPoints
-                        </span>
-                        <span className="text-[10px] font-black bg-emerald-100 text-[#0f8646] px-2 py-0.5 rounded-full">
-                          ₹{availableWallet} Available
-                        </span>
-                      </div>
-                      <span className="text-xs text-gray-500 block">
-                        Use wallet cash to save instantly on this Bhopal produce order
-                      </span>
-                    </div>
-                  </div>
 
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={useWallet}
-                      onChange={(e) => setUseWallet(e.target.checked)}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0f8646]"></div>
-                  </label>
-                </div>
-              </div>
-            )}
 
             {/* 🔕 Subah 6:30 AM Silent Delivery Mode */}
             <div className="bg-white rounded-3xl border border-gray-200/80 p-5 shadow-xs">
@@ -852,35 +803,13 @@ export default function Checkout() {
                 <div className="flex justify-between text-gray-600">
                   <span>Delivery Partner Fee</span>
                   <span className="font-extrabold text-gray-900">
-                    {isVipMember ? (
-                      <span className="text-[#0f8646] font-black flex items-center gap-1">
-                        <Crown size={12} className="text-amber-500" />
-                        <span>FREE (VIP Farm Club)</span>
-                      </span>
-                    ) : effectiveDeliveryFee === 0 ? (
+                    {effectiveDeliveryFee === 0 ? (
                       <span className="text-[#0f8646]">FREE</span>
                     ) : (
                       `₹${effectiveDeliveryFee}`
                     )}
                   </span>
                 </div>
-
-                {!isVipMember && (
-                  <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200/80 rounded-2xl p-3 flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-amber-400 text-gray-950 flex items-center justify-center font-black text-xs shrink-0">
-                        👑
-                      </div>
-                      <div>
-                        <span className="font-black text-xs text-gray-900 block">Join VIP Farm Club (₹49)</span>
-                        <span className="text-[10px] text-gray-500">Flat FREE Delivery & 10% on Fruits!</span>
-                      </div>
-                    </div>
-                    <Link href="/user/vip-pass" className="text-[11px] font-black text-amber-800 bg-amber-200/80 hover:bg-amber-300 px-2.5 py-1 rounded-lg transition shrink-0">
-                      Join ➔
-                    </Link>
-                  </div>
-                )}
 
                 {/* 🛵 Tip Your Delivery Partner */}
                 <div className="pt-2 pb-1 border-t border-gray-100">
@@ -924,15 +853,7 @@ export default function Checkout() {
                   </div>
                 )}
 
-                {walletDiscount > 0 && (
-                  <div className="flex justify-between text-[#0f8646] font-bold bg-emerald-100/70 p-2 rounded-xl border border-emerald-200">
-                    <span className="flex items-center gap-1.5">
-                      <Coins size={13} />
-                      <span>GreenPoints Wallet Cash</span>
-                    </span>
-                    <span>-₹{walletDiscount}</span>
-                  </div>
-                )}
+
 
                 <div className="border-t border-gray-100 pt-3 flex justify-between items-baseline">
                   <div>

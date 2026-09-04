@@ -141,93 +141,57 @@ export default function UserProfileHub() {
           </div>
         </div>
 
-        {/* 3 Core Wallet & Member Tiles */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6">
-          
-          {/* Tile 1: Wallet */}
+        {/* 2 Clean Account Navigation Tiles */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6">
+          {/* Tile 1: My Orders */}
           <Link
-            href="/user/wallet"
+            href="/user/myorder"
             className="bg-white rounded-2xl p-4 border border-emerald-200 shadow-2xs hover:shadow-md transition-all flex items-center justify-between group"
           >
             <div className="flex items-center gap-3">
               <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-[#0f8646] flex items-center justify-center font-black shrink-0 border border-emerald-100 group-hover:scale-105 transition-transform">
-                <Wallet size={22} />
+                <Package size={22} />
               </div>
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block">
-                  MGD Green Wallet
+                  My Orders & Live Tracking
                 </span>
-                <span className="text-xl font-black text-gray-900">
-                  ₹{walletBalance.toFixed(2)}
+                <span className="text-lg font-black text-gray-900">
+                  {activeOrdersCount} Orders Placed
                 </span>
               </div>
             </div>
             <div className="text-right">
-              <span className="text-[10px] font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full block mb-1">
-                +10% Bonus
-              </span>
               <span className="text-xs font-black text-[#0f8646] flex items-center gap-0.5 justify-end">
-                Add Money <ChevronRight size={14} />
+                View Orders <ChevronRight size={14} />
               </span>
             </div>
           </Link>
 
-          {/* Tile 2: VIP Pass */}
+          {/* Tile 2: Saved Wishlist */}
           <Link
-            href="/user/vip-pass"
-            className="bg-white rounded-2xl p-4 border border-amber-200 shadow-2xs hover:shadow-md transition-all flex items-center justify-between group"
+            href="/wishlist"
+            className="bg-white rounded-2xl p-4 border border-rose-200 shadow-2xs hover:shadow-md transition-all flex items-center justify-between group"
           >
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center font-black shrink-0 border border-amber-100 group-hover:scale-105 transition-transform">
-                <Crown size={22} />
+              <div className="w-11 h-11 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center font-black shrink-0 border border-rose-100 group-hover:scale-105 transition-transform">
+                <Heart size={22} />
               </div>
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block">
-                  Farm Club VIP
+                  Saved Produce Wishlist
                 </span>
-                <span className="text-sm font-black text-gray-900 block truncate">
-                  {isVip ? "👑 VIP Active" : "₹49 / Month"}
+                <span className="text-lg font-black text-gray-900">
+                  Favorite Items
                 </span>
               </div>
             </div>
             <div className="text-right">
-              <span className="text-[10px] font-black text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full block mb-1">
-                Free Delivery
-              </span>
-              <span className="text-xs font-black text-amber-700 flex items-center gap-0.5 justify-end">
-                {isVip ? "View Pass" : "Join VIP"} <ChevronRight size={14} />
+              <span className="text-xs font-black text-rose-600 flex items-center gap-0.5 justify-end">
+                View Saved <ChevronRight size={14} />
               </span>
             </div>
           </Link>
-
-          {/* Tile 3: 7 AM Subscriptions */}
-          <Link
-            href="/user/subscriptions"
-            className="bg-white rounded-2xl p-4 border border-blue-200 shadow-2xs hover:shadow-md transition-all flex items-center justify-between group"
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-black shrink-0 border border-blue-100 group-hover:scale-105 transition-transform">
-                <Milk size={22} />
-              </div>
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block">
-                  Daily 7 AM Plan
-                </span>
-                <span className="text-sm font-black text-gray-900 block truncate">
-                  Milk & Breakfast
-                </span>
-              </div>
-            </div>
-            <div className="text-right">
-              <span className="text-[10px] font-black text-blue-800 bg-blue-50 px-2 py-0.5 rounded-full block mb-1">
-                No Daily Order
-              </span>
-              <span className="text-xs font-black text-blue-700 flex items-center gap-0.5 justify-end">
-                Manage <ChevronRight size={14} />
-              </span>
-            </div>
-          </Link>
-
         </div>
 
         {/* Quick Links Menu Grid */}
@@ -319,23 +283,23 @@ export default function UserProfileHub() {
             </Link>
 
             <Link
-              href="/shop/gift-basket"
-              className="flex items-center justify-between p-3.5 rounded-2xl border border-gray-100 bg-gray-50/70 hover:bg-green-50/60 hover:border-[#0f8646] transition group"
+              href="/offers"
+              className="flex items-center justify-between p-3.5 rounded-2xl border border-amber-200 bg-amber-50/70 hover:bg-amber-100/70 hover:border-amber-400 transition group"
             >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white text-pink-600 flex items-center justify-center shadow-xs border border-gray-100">
-                  <Gift size={20} />
+                <div className="w-10 h-10 rounded-xl bg-white text-amber-600 flex items-center justify-center shadow-xs border border-amber-200">
+                  <Sparkles size={20} />
                 </div>
                 <div>
-                  <h4 className="text-xs font-black text-gray-900 group-hover:text-[#0f8646] transition">
-                    Eco Gift Hampers
+                  <h4 className="text-xs font-black text-gray-900 group-hover:text-amber-800 transition">
+                    Offers & Scratch Cards
                   </h4>
-                  <span className="text-[11px] text-gray-500 font-medium">
-                    Artisanal fruit boxes
+                  <span className="text-[11px] text-amber-900/80 font-bold">
+                    Win flat ₹30–₹50 OFF daily
                   </span>
                 </div>
               </div>
-              <ChevronRight size={16} className="text-gray-400 group-hover:text-[#0f8646]" />
+              <ChevronRight size={16} className="text-gray-400 group-hover:text-amber-700" />
             </Link>
 
           </div>
