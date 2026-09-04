@@ -19,13 +19,13 @@ export default function ProductCarousel({ children }: { children: React.ReactNod
   };
 
   return (
-    <div className="relative w-full max-w-full group">
-      {/* Left Floating Arrow Button (Desktop Only, outside cards) */}
+    <div className="relative w-full max-w-full">
+      {/* Left Floating Arrow Button (Always visible on desktop, no hover hide) */}
       <button
         type="button"
         onClick={() => scroll("left")}
         aria-label="Scroll left"
-        className="hidden sm:flex absolute -left-3 md:-left-5 top-[75px] -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0f8646] w-9 h-9 md:w-10 md:h-10 rounded-full items-center justify-center transition-all shadow-md hover:shadow-xl border border-gray-200 active:scale-90 cursor-pointer backdrop-blur-xs opacity-0 group-hover:opacity-100"
+        className="hidden md:flex absolute -left-3.5 lg:-left-4 top-[75px] -translate-y-1/2 z-20 bg-white hover:bg-gray-50 text-gray-800 hover:text-[#0c831f] w-9 h-9 rounded-full items-center justify-center transition-all shadow-[0_2px_8px_rgba(0,0,0,0.12)] hover:shadow-md border border-gray-200/90 active:scale-90 cursor-pointer"
       >
         <ChevronLeft size={20} className="stroke-[2.5]" />
       </button>
@@ -33,17 +33,17 @@ export default function ProductCarousel({ children }: { children: React.ReactNod
       {/* Scroll Container */}
       <div
         ref={scrollRef}
-        className="flex gap-3 sm:gap-4 overflow-x-auto pb-3 pt-1 scrollbar-none snap-x snap-mandatory scroll-smooth px-1"
+        className="flex gap-3 sm:gap-4 overflow-x-auto pb-3 pt-1 scrollbar-none snap-x snap-mandatory scroll-smooth px-0.5"
       >
         {children}
       </div>
 
-      {/* Right Floating Arrow Button (Desktop Only, outside cards) */}
+      {/* Right Floating Arrow Button (Always visible on desktop, no hover hide) */}
       <button
         type="button"
         onClick={() => scroll("right")}
         aria-label="Scroll right"
-        className="hidden sm:flex absolute -right-3 md:-right-5 top-[75px] -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0f8646] w-9 h-9 md:w-10 md:h-10 rounded-full items-center justify-center transition-all shadow-md hover:shadow-xl border border-gray-200 active:scale-90 cursor-pointer backdrop-blur-xs opacity-0 group-hover:opacity-100"
+        className="hidden md:flex absolute -right-3.5 lg:-right-4 top-[75px] -translate-y-1/2 z-20 bg-white hover:bg-gray-50 text-gray-800 hover:text-[#0c831f] w-9 h-9 rounded-full items-center justify-center transition-all shadow-[0_2px_8px_rgba(0,0,0,0.12)] hover:shadow-md border border-gray-200/90 active:scale-90 cursor-pointer"
       >
         <ChevronRight size={20} className="stroke-[2.5]" />
       </button>

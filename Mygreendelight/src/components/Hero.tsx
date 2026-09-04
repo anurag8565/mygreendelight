@@ -154,7 +154,7 @@ export default function Hero({ banners = [] }: HeroProps) {
               <button
                 type="button"
                 onClick={() => setCurrentSlide((prev) => (prev - 1 + activeSlides.length) % activeSlides.length)}
-                className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-30 cursor-pointer hidden sm:flex border border-white/20 shadow-md active:scale-95"
+                className="absolute left-3.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-md flex items-center justify-center transition-all z-30 cursor-pointer hidden sm:flex border border-white/25 shadow-md active:scale-95"
                 title="Previous Slide"
               >
                 <ChevronLeft size={20} className="stroke-[2.5]" />
@@ -162,7 +162,7 @@ export default function Hero({ banners = [] }: HeroProps) {
               <button
                 type="button"
                 onClick={() => setCurrentSlide((prev) => (prev + 1) % activeSlides.length)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-30 cursor-pointer hidden sm:flex border border-white/20 shadow-md active:scale-95"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-md flex items-center justify-center transition-all z-30 cursor-pointer hidden sm:flex border border-white/25 shadow-md active:scale-95"
                 title="Next Slide"
               >
                 <ChevronRight size={20} className="stroke-[2.5]" />
