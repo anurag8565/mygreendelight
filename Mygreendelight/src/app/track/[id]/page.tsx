@@ -153,16 +153,18 @@ export default function TrackOrderPage() {
               {order && (
                 <>
                   <a
-                    href={`https://wa.me/?text=${encodeURIComponent(
-                      `Track my GreenDelight Bhopal grocery delivery live here: https://mygreendelight.vercel.app/track/${params.id}`
+                    href={`https://wa.me/919981418565?text=${encodeURIComponent(
+                      `Hello MyGreenDelight Support! 🌿\n\nI need help regarding my Order #${String(
+                        params.id
+                      ).slice(-6).toUpperCase()}.\nAmount: ₹${order?.totalamount || 0}\nStatus: ${status.toUpperCase()}\n\nLive Tracking: https://mygreendelight.vercel.app/track/${params.id}`
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#0c6a38] px-3 py-2 rounded-2xl text-xs font-black flex items-center gap-1.5 transition shadow-2xs cursor-pointer border border-[#25D366]/30"
-                    title="Share Live Tracking on WhatsApp"
+                    className="bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#0c6a38] px-3.5 py-2 rounded-2xl text-xs font-black flex items-center gap-1.5 transition shadow-2xs cursor-pointer border border-[#25D366]/30"
+                    title="Chat with MyGreenDelight Support on WhatsApp"
                   >
                     <span className="text-sm">💬</span>
-                    <span className="hidden sm:inline">Share</span> WhatsApp
+                    <span>WhatsApp Support</span>
                   </a>
 
                   <button
