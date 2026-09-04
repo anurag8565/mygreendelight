@@ -85,59 +85,64 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
   }
 
   return (
-    <div className="w-full py-4 sm:py-6 bg-gradient-to-b from-orange-50/50 via-amber-50/20 to-white">
+    <div className="w-full py-3.5 sm:py-5 bg-white">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
-        
-        {/* Flash Deals Header Row */}
-        <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">
-          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-            <div className="w-8 h-8 rounded-xl bg-orange-100/90 text-orange-600 flex items-center justify-center shrink-0 shadow-2xs border border-orange-200/60">
-              <Flame size={18} className="fill-orange-500 text-orange-500" />
-            </div>
-            
-            <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
-              Lightning Flash Deals
-            </h2>
+        <div className="rounded-3xl bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-rose-500/10 p-3.5 sm:p-5 md:p-6 border border-orange-200/70 shadow-[0_4px_24px_rgba(249,115,22,0.06)] relative overflow-hidden">
+          {/* Subtle Decorative Flame Glow */}
+          <div className="absolute -top-10 -right-10 w-48 h-48 bg-orange-400/15 rounded-full blur-3xl pointer-events-none" />
 
-            {/* Live Admin-Controlled Timer */}
-            <div className="flex items-center gap-1.5 bg-red-50 border border-red-200/80 text-red-600 px-2.5 py-1 rounded-full text-xs font-black shadow-2xs">
-              <Clock size={13} className="text-red-600 animate-pulse" />
-              <span className="font-mono tracking-wider text-[11px] sm:text-xs">
-                {isExpired
-                  ? "Deal Ended"
-                  : `Ends in ${timeLeft.hours}:${timeLeft.minutes}:${timeLeft.seconds}`}
-              </span>
+          {/* Flash Deals Header Row */}
+          <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5 relative z-10">
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+              <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 text-white flex items-center justify-center shrink-0 shadow-sm shadow-orange-500/30 border border-amber-300">
+                <Flame size={20} className="fill-yellow-200 text-yellow-200 animate-pulse" />
+              </div>
+              
+              <div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
+                    Lightning Flash Deals
+                  </h2>
+                  <span className="bg-gradient-to-r from-red-600 to-orange-500 text-white text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full shadow-2xs tracking-wide">
+                    ⚡ Up to 50% OFF
+                  </span>
+                </div>
+              </div>
+
+              {/* Live Dynamic Rolling Timer */}
+              <div className="flex items-center gap-1.5 bg-white/95 backdrop-blur-xs border border-red-200 text-red-600 px-3 py-1 rounded-full text-xs font-black shadow-2xs ml-0 sm:ml-1">
+                <Clock size={13} className="text-red-600 animate-pulse" />
+                <span className="font-mono tracking-wider text-[11px] sm:text-xs">
+                  {isExpired
+                    ? "Next Batch in 04:00:00"
+                    : `Ends in ${timeLeft.hours}:${timeLeft.minutes}:${timeLeft.seconds}`}
+                </span>
+              </div>
             </div>
 
-            {badgeText && (
-              <span className="hidden md:inline-flex items-center gap-1 text-[11px] font-black text-[#0f8646] bg-emerald-100/80 border border-emerald-200 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                <Zap size={11} className="text-yellow-500 fill-yellow-500" />
-                {badgeText}
-              </span>
-            )}
+            <Link
+              href="/shop"
+              className="text-[#0f8646] hover:text-[#0c6a38] font-black text-xs sm:text-sm flex items-center gap-0.5 group transition bg-white/90 hover:bg-white px-3 py-1.5 rounded-full border border-emerald-200 shadow-2xs shrink-0"
+            >
+              <span>See All</span>
+              <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]" />
+            </Link>
           </div>
 
-          <Link
-            href="/shop"
-            className="text-[#0f8646] hover:text-[#0c6a38] font-black text-xs sm:text-sm flex items-center gap-0.5 group transition bg-emerald-50 hover:bg-emerald-100/80 px-3 py-1.5 rounded-full border border-emerald-200/70 shadow-2xs shrink-0"
-          >
-            <span>See All</span>
-            <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]" />
-          </Link>
+          {/* Product Carousel */}
+          <div className="relative z-10">
+            <ProductCarousel>
+              {products.map((item: any) => (
+                <div
+                  key={item._id}
+                  className="w-[155px] sm:w-[200px] md:w-[210px] snap-start shrink-0 flex flex-col h-[325px] sm:h-[345px]"
+                >
+                  <Groceryitemcard item={item} />
+                </div>
+              ))}
+            </ProductCarousel>
+          </div>
         </div>
-
-        {/* Product Carousel */}
-        <ProductCarousel>
-          {products.map((item: any) => (
-            <div
-              key={item._id}
-              className="w-[155px] sm:w-[200px] md:w-[210px] snap-start shrink-0 flex flex-col h-[325px] sm:h-[345px]"
-            >
-              <Groceryitemcard item={item} />
-            </div>
-          ))}
-        </ProductCarousel>
-
       </div>
     </div>
   );

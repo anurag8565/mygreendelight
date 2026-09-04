@@ -7,14 +7,21 @@ export async function GET() {
   try {
     await connectDb();
     let setting = await FlashDealSetting.findOne().sort({ createdAt: -1 });
-    if (!setting) {
+    const now = new Date();
+    if (!setting || (setting.endTime && new Date(setting.endTime) <= now)) {
       const defaultEndTime = new Date();
-      defaultEndTime.setHours(24, 0, 0, 0); // Tonight midnight
-      setting = await FlashDealSetting.create({
-        endTime: defaultEndTime,
-        badgeText: "FLAT 25% - 40% OFF",
-        isActive: true,
-      });
+      defaultEndTime.setHours(23, 59, 59, 999); // Tonight midnight
+      if (!setting) {
+        setting = await FlashDealSetting.create({
+          endTime: defaultEndTime,
+          badgeText: "FLAT 25% - 50% OFF",
+          isActive: true,
+        });
+      } else {
+        setting.endTime = defaultEndTime;
+        setting.isActive = true;
+        await setting.save();
+      }
     }
     return NextResponse.json({ success: true, setting });
   } catch (error: any) {
