@@ -23,6 +23,7 @@ export default function CombosSection({
   const [combos] = useState<any[]>(initialCombos);
   const [addedIds, setAddedIds] = useState<Record<string, boolean>>({});
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [currentMobileIndex, setCurrentMobileIndex] = useState(0);
 
   if (!combos || combos.length === 0) return null;
 
@@ -47,6 +48,14 @@ export default function CombosSection({
     }, 2500);
   };
 
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, clientWidth } = scrollRef.current;
+      const index = Math.round(scrollLeft / (clientWidth * 0.85));
+      setCurrentMobileIndex(Math.min(index, combos.length - 1));
+    }
+  };
+
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth } = scrollRef.current;
@@ -62,15 +71,15 @@ export default function CombosSection({
   };
 
   return (
-    <div className="w-full py-3 sm:py-5 bg-white font-sans">
+    <div className="w-full py-3.5 sm:py-6 bg-white font-sans">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Section Header */}
-        <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4">
+        <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">
           <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
             <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
               🎁 Value Combos & Multipacks
             </h2>
-            <span className="bg-amber-50 text-amber-800 border border-amber-200/80 text-[10.5px] font-bold px-2 py-0.5 rounded-full">
+            <span className="bg-amber-50 text-amber-800 border border-amber-200/80 text-[10.5px] font-bold px-2.5 py-0.5 rounded-full">
               Up to 25% Off
             </span>
           </div>
@@ -87,26 +96,94 @@ export default function CombosSection({
           </Link>
         </div>
 
-        {/* Carousel Container */}
-        <div className="relative group/carousel">
-          <button
-            onClick={() => scroll("left")}
-            className="hidden md:flex absolute -left-3 top-[80px] z-20 w-8 h-8 rounded-full bg-white shadow-md border border-gray-100 items-center justify-center text-gray-700 hover:text-black hover:bg-gray-50 transition-opacity opacity-0 group-hover/carousel:opacity-100 cursor-pointer"
-            aria-label="Scroll left"
-          >
-            <ChevronLeft size={18} />
-          </button>
-          <button
-            onClick={() => scroll("right")}
-            className="hidden md:flex absolute -right-3 top-[80px] z-20 w-8 h-8 rounded-full bg-white shadow-md border border-gray-100 items-center justify-center text-gray-700 hover:text-black hover:bg-gray-50 transition-opacity opacity-0 group-hover/carousel:opacity-100 cursor-pointer"
-            aria-label="Scroll right"
-          >
-            <ChevronRight size={18} />
-          </button>
+        {/* 1. DESKTOP / TABLET VIEW: Full Width 4-Column Grid (Zero empty side space) */}
+        <div className="hidden md:grid md:grid-cols-4 gap-4 w-full">
+          {combos.map((combo) => {
+            const isAdded = addedIds[combo._id];
+            const discount =
+              combo.originalPrice && combo.originalPrice > combo.comboPrice
+                ? Math.round(
+                    ((combo.originalPrice - combo.comboPrice) /
+                      combo.originalPrice) *
+                      100
+                  )
+                : 0;
 
+            return (
+              <div
+                key={combo._id}
+                className="w-full bg-white rounded-3xl border border-gray-100 hover:border-emerald-300 shadow-[0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] transition-all flex flex-col justify-between p-3 relative group"
+              >
+                <div>
+                  {/* Full-Bleed HD Produce Combo Photo */}
+                  <div className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden bg-gray-100 mb-2.5">
+                    <img
+                      src={combo.image}
+                      alt={combo.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    {discount > 0 && (
+                      <span className="absolute top-2 left-2 bg-[#0c831f] text-white text-[9.5px] font-extrabold px-2 py-0.5 rounded-md shadow-xs">
+                        {discount}% OFF
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Combo Title */}
+                  <h3 className="font-bold text-sm text-gray-900 leading-snug line-clamp-1 group-hover:text-[#0c831f] transition-colors">
+                    {combo.title}
+                  </h3>
+                  <p className="text-[11px] text-gray-400 line-clamp-2 mt-1 min-h-[32px] font-medium leading-tight">
+                    {combo.subtitle || combo.description || "Curated fresh farm produce bundle"}
+                  </p>
+                </div>
+
+                {/* Price & Add Button */}
+                <div className="pt-2.5 border-t border-gray-100 flex items-center justify-between gap-2 mt-2">
+                  <div>
+                    <span className="text-base font-black text-gray-950">
+                      ₹{combo.comboPrice}
+                    </span>
+                    {combo.originalPrice && combo.originalPrice > combo.comboPrice && (
+                      <span className="text-xs text-gray-400 line-through ml-1.5 font-normal">
+                        ₹{combo.originalPrice}
+                      </span>
+                    )}
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => handleAddCombo(combo)}
+                    className={`h-[34px] px-3.5 rounded-xl font-bold text-xs flex items-center gap-1 transition-all cursor-pointer ${
+                      isAdded
+                        ? "bg-[#0c831f] text-white"
+                        : "bg-white text-[#0c831f] border border-[#0c831f] hover:bg-[#0c831f] hover:text-white shadow-2xs active:scale-95"
+                    }`}
+                  >
+                    {isAdded ? (
+                      <>
+                        <Check size={13} className="stroke-[3]" />
+                        <span>Added</span>
+                      </>
+                    ) : (
+                      <>
+                        <Plus size={13} className="stroke-[3]" />
+                        <span>ADD</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* 2. MOBILE VIEW: 1 Card Prominent Carousel with Swipeable Snapping */}
+        <div className="block md:hidden">
           <div
             ref={scrollRef}
-            className="flex gap-3 sm:gap-3.5 overflow-x-auto scrollbar-none snap-x snap-mandatory py-1"
+            onScroll={handleScroll}
+            className="flex gap-3 overflow-x-auto scrollbar-none snap-x snap-mandatory py-1 -mx-3.5 px-3.5"
           >
             {combos.map((combo) => {
               const isAdded = addedIds[combo._id];
@@ -122,40 +199,40 @@ export default function CombosSection({
               return (
                 <div
                   key={combo._id}
-                  className="w-[200px] sm:w-[230px] md:w-[240px] shrink-0 snap-start bg-white rounded-2xl sm:rounded-3xl border border-gray-100 hover:border-emerald-300 shadow-[0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] transition-all flex flex-col justify-between p-2.5 sm:p-3 relative group"
+                  className="w-[86vw] xs:w-[88vw] shrink-0 snap-center bg-white rounded-3xl border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.05)] flex flex-col justify-between p-3.5 relative"
                 >
                   <div>
-                    {/* Full-Bleed HD Produce Combo Photo (object-cover, no gray sidebars) */}
-                    <div className="relative w-full h-[125px] sm:h-[135px] rounded-xl sm:rounded-2xl overflow-hidden bg-gray-100 mb-2">
+                    {/* Full-Bleed 1-Card Mobile Photo */}
+                    <div className="relative w-full h-[155px] xs:h-[175px] rounded-2xl overflow-hidden bg-gray-100 mb-2.5">
                       <img
                         src={combo.image}
                         alt={combo.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover"
                       />
                       {discount > 0 && (
-                        <span className="absolute top-2 left-2 bg-[#0c831f] text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded-md shadow-xs">
+                        <span className="absolute top-2 left-2 bg-[#0c831f] text-white text-[10px] font-extrabold px-2 py-0.5 rounded-md shadow-xs">
                           {discount}% OFF
                         </span>
                       )}
                     </div>
 
                     {/* Combo Title */}
-                    <h3 className="font-bold text-xs sm:text-[13px] text-gray-900 leading-snug line-clamp-1 group-hover:text-[#0c831f] transition-colors">
+                    <h3 className="font-bold text-sm text-gray-900 leading-snug line-clamp-1">
                       {combo.title}
                     </h3>
-                    <p className="text-[10.5px] sm:text-[11px] text-gray-400 line-clamp-2 mt-0.5 min-h-[30px] font-medium leading-tight">
+                    <p className="text-xs text-gray-500 line-clamp-2 mt-1 min-h-[32px] font-medium leading-tight">
                       {combo.subtitle || combo.description || "Curated fresh farm produce bundle"}
                     </p>
                   </div>
 
                   {/* Price & Add Button */}
-                  <div className="pt-2 border-t border-gray-100 flex items-center justify-between gap-1.5 mt-1.5">
+                  <div className="pt-2.5 border-t border-gray-100 flex items-center justify-between gap-2 mt-2">
                     <div>
-                      <span className="text-sm sm:text-base font-black text-gray-950">
+                      <span className="text-base font-black text-gray-950">
                         ₹{combo.comboPrice}
                       </span>
                       {combo.originalPrice && combo.originalPrice > combo.comboPrice && (
-                        <span className="text-[11px] text-gray-400 line-through ml-1 font-normal">
+                        <span className="text-xs text-gray-400 line-through ml-1.5 font-normal">
                           ₹{combo.originalPrice}
                         </span>
                       )}
@@ -164,7 +241,7 @@ export default function CombosSection({
                     <button
                       type="button"
                       onClick={() => handleAddCombo(combo)}
-                      className={`h-[32px] px-3 rounded-xl font-bold text-xs flex items-center gap-1 transition-all cursor-pointer ${
+                      className={`h-[36px] px-4 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer ${
                         isAdded
                           ? "bg-[#0c831f] text-white"
                           : "bg-white text-[#0c831f] border border-[#0c831f] hover:bg-[#0c831f] hover:text-white shadow-2xs active:scale-95"
@@ -172,13 +249,13 @@ export default function CombosSection({
                     >
                       {isAdded ? (
                         <>
-                          <Check size={13} className="stroke-[3]" />
+                          <Check size={14} className="stroke-[3]" />
                           <span>Added</span>
                         </>
                       ) : (
                         <>
-                          <Plus size={13} className="stroke-[3]" />
-                          <span>ADD</span>
+                          <Plus size={14} className="stroke-[3]" />
+                          <span>ADD COMBO</span>
                         </>
                       )}
                     </button>
@@ -186,6 +263,20 @@ export default function CombosSection({
                 </div>
               );
             })}
+          </div>
+
+          {/* Mobile Dots Indicator */}
+          <div className="flex items-center justify-center gap-1.5 mt-3">
+            {combos.map((_, idx) => (
+              <div
+                key={idx}
+                className={`transition-all rounded-full ${
+                  currentMobileIndex === idx
+                    ? "w-5 h-1.5 bg-[#0c831f]"
+                    : "w-1.5 h-1.5 bg-gray-200"
+                }`}
+              />
+            ))}
           </div>
         </div>
       </div>
