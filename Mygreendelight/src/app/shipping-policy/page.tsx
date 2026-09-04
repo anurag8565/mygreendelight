@@ -78,7 +78,7 @@ export default function ShippingPolicyPage() {
               <span>3. Delivery Charges & Free Shipping Threshold</span>
             </h2>
             <ul className="list-disc pl-5 space-y-1.5 text-xs text-gray-600">
-              <li><strong>FREE Delivery:</strong> Available on all orders with cart subtotal above <strong>₹299</strong>.</li>
+              <li><strong>FREE Delivery:</strong> Available on all orders with cart subtotal above <strong>₹199</strong>.</li>
               <li><strong>Nominal Partner Fee:</strong> A small fee applies on smaller orders to support our delivery fleet.</li>
               <li><strong>Zero Packaging Surcharge:</strong> Clean, hygienic, eco-friendly produce packaging with zero hidden charges.</li>
             </ul>

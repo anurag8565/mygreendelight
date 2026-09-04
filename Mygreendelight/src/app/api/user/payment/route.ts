@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
 
     // Compute verified total
     const subtotalCalc = sanitizedItems.reduce((sum: number, item: any) => sum + (item.price * item.quantity), 0);
-    const deliveryFeeCalc = isVip ? 0 : (subtotalCalc > 0 && subtotalCalc < 100 ? 50 : 0);
+    const deliveryFeeCalc = isVip ? 0 : (subtotalCalc > 0 && subtotalCalc < 199 ? 30 : 0);
     const discountCalc = Number(discount) || 0;
     const walletDiscountCalc = Number(walletDiscount) || 0;
     const computedPayableTotal = Math.max(0, subtotalCalc + deliveryFeeCalc - discountCalc - walletDiscountCalc);
@@ -76,8 +76,8 @@ export async function POST(req: NextRequest) {
       ? Number(totalamount)
       : computedPayableTotal;
 
-    if (isVip && subtotalCalc > 0 && subtotalCalc < 100) {
-      await User.findByIdAndUpdate(userid, { $inc: { "vipPass.totalSavings": 50 } });
+    if (isVip && subtotalCalc > 0 && subtotalCalc < 199) {
+      await User.findByIdAndUpdate(userid, { $inc: { "vipPass.totalSavings": 30 } });
     }
 
     // ✅ create order (ispaid = false initially)

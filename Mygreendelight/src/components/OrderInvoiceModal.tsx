@@ -50,7 +50,7 @@ export default function OrderInvoiceModal({
     (acc: number, item: any) => acc + (item.price || 0) * (item.quantity || 1),
     0
   );
-  const deliveryFee = subtotal > 299 ? 0 : 30;
+  const deliveryFee = subtotal >= 199 ? 0 : 30;
   const discount = Math.max(0, subtotal + deliveryFee - (order.totalamount || subtotal));
   const finalTotal = order.totalamount || subtotal + deliveryFee;
 

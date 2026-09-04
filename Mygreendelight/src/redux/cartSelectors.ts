@@ -15,7 +15,7 @@ export const selectSubtotal = createSelector(
 
 export const selectDeliveryFee = createSelector(
   [selectSubtotal],
-  (subtotal) => (subtotal > 0 && subtotal < 100 ? 50 : 0)
+  (subtotal) => (subtotal > 0 && subtotal < 199 ? 30 : 0)
 );
 
 export const selectDiscount = (state: RootState) => Number(state.cart.discountAmount) || 0;

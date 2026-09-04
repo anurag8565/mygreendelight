@@ -67,9 +67,9 @@ export default function CartPage() {
     0
   );
 
-  const freeDeliveryThreshold = 499;
+  const freeDeliveryThreshold = 199;
   const isFreeDelivery = subtotal >= freeDeliveryThreshold;
-  const deliveryFee = subtotal === 0 ? 0 : isFreeDelivery ? 0 : 40;
+  const deliveryFee = subtotal === 0 ? 0 : isFreeDelivery ? 0 : 30;
   const remainingForFreeDelivery = Math.max(0, freeDeliveryThreshold - subtotal);
 
   const total = Math.max(0, subtotal + deliveryFee - discountAmount);
@@ -187,7 +187,7 @@ export default function CartPage() {
                         <strong className="text-[#0f8646]">
                           ₹{remainingForFreeDelivery}
                         </strong>{" "}
-                        more for FREE 10-Min Delivery
+                        more for FREE Delivery
                       </span>
                     )}
                   </span>

@@ -418,7 +418,7 @@ export default function Nav({ user }: { user: iUser }) {
         <div className="bg-[#0f8646] text-white py-1.5 px-4 md:px-8 text-xs font-medium flex justify-between items-center hidden sm:flex">
           <div className="flex items-center gap-2">
             <Truck size={14} />
-            <span>FREE DELIVERY on orders above ₹499 in Bhopal</span>
+            <span>FREE DELIVERY on orders above ₹199 in Bhopal</span>
           </div>
           <div className="flex items-center gap-6">
             <Link href="/user/myorder" className="cursor-pointer hover:text-green-200">Track Order</Link>
