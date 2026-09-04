@@ -1,6 +1,5 @@
 import React from 'react'
 import Hero from './Hero'
-import MandiPriceTicker from './MandiPriceTicker'
 import Categoryslider from './Categoryslider'
 import FilteredProduceSection from './FilteredProduceSection'
 import FlashDeals from './FlashDeals'
@@ -19,7 +18,6 @@ import { RotateCcw } from 'lucide-react'
 
 import Banner from '@/model/banner.model'
 import Testimonial from '@/model/testimonial.model'
-import MandiRate from '@/model/mandi.model'
 import { auth } from '@/auth'
 import Order from '@/model/order'
 
@@ -33,7 +31,6 @@ export default async function Userdashbord() {
   const bannersPromise = Banner.find({}).sort({ createdAt: -1 }).limit(5)
   const categoriesPromise = Category.find({}).sort({ createdAt: -1 })
   const testimonialsPromise = Testimonial.find({ status: 'approved' }).sort({ createdAt: -1 })
-  const mandiRatesPromise = MandiRate.find({ isActive: true }).sort({ updatedAt: -1 })
   
   let orderAgainGroceriesPromise: Promise<any[]> = Promise.resolve([])
   if (session?.user?.id) {
@@ -56,14 +53,13 @@ export default async function Userdashbord() {
 
   const comboBundlesPromise = ComboBundle.find({ isActive: true }).lean()
 
-  const [newGroceries, flashDeals, featuredGroceries, banners, categories, testimonials, mandiRates, orderAgain, comboBundles] = await Promise.all([
+  const [newGroceries, flashDeals, featuredGroceries, banners, categories, testimonials, orderAgain, comboBundles] = await Promise.all([
     newGroceriesPromise,
     flashDealsPromise,
     featuredGroceriesPromise,
     bannersPromise,
     categoriesPromise,
     testimonialsPromise,
-    mandiRatesPromise,
     orderAgainGroceriesPromise,
     comboBundlesPromise,
   ]);
@@ -74,7 +70,6 @@ export default async function Userdashbord() {
   const plainBanners = JSON.parse(JSON.stringify(banners))
   const plainCategories = JSON.parse(JSON.stringify(categories))
   const plainTestimonials = JSON.parse(JSON.stringify(testimonials))
-  const plainMandiRates = JSON.parse(JSON.stringify(mandiRates))
   const plainOrderAgain = JSON.parse(JSON.stringify(orderAgain))
   const plainCombos = JSON.parse(JSON.stringify(comboBundles || []))
 
@@ -96,10 +91,7 @@ export default async function Userdashbord() {
         <FeaturedProduceSection products={plainFeatured} />
       )}
 
-      {/* 5. Ticker: Live Bhopal Mandi Rate & Price Drop Ticker */}
-      <MandiPriceTicker initialRates={plainMandiRates} />
-
-      {/* 6. Tone 1: Daily Fresh Farm Mandi & 1-Tap Category Filter Grid (Pure White) */}
+      {/* 5. Tone 1: Daily Fresh Farm Mandi (Pure White) */}
       <FilteredProduceSection groceries={plainNew} />
 
       {/* 7. Tone 2: Save-More Value Combos & Multipacks (Soft Luxury Gray #f8f9fa) */}
