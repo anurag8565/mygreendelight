@@ -38,9 +38,14 @@ import {
   selectCouponCode,
 } from "@/redux/cartSelectors";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import useGetMe from "@/hooks/useGetMe";
+
+const CheckoutMap = dynamic(() => import("@/components/CheckoutMap"), {
+  ssr: false,
+});
 
 const BHOPAL_AREAS = [
   { name: "Bagsewaniya / Amrai (Store Hub)", pincode: "462043", lat: 23.1985, lng: 77.4475 },
@@ -97,6 +102,10 @@ export default function Checkout() {
   const [isLocating, setIsLocating] = useState(false);
   const [outsideBhopalNotice, setOutsideBhopalNotice] = useState<string | null>(null);
   const [insideBhopalSuccess, setInsideBhopalSuccess] = useState<string | null>(null);
+  const [position, setPosition] = useState<[number, number] | null>([
+    BHOPAL_AREAS[0].lat,
+    BHOPAL_AREAS[0].lng,
+  ]);
 
   useEffect(() => {
     if (userdata) {
@@ -106,6 +115,14 @@ export default function Checkout() {
   }, [userdata]);
 
   const currentArea = BHOPAL_AREAS[selectedAreaIndex] || BHOPAL_AREAS[0];
+
+  const handleAreaChange = (idx: number) => {
+    setSelectedAreaIndex(idx);
+    const ar = BHOPAL_AREAS[idx];
+    if (ar) {
+      setPosition([ar.lat, ar.lng]);
+    }
+  };
 
   const handleGPSDetect = () => {
     if (!navigator.geolocation) {
@@ -227,8 +244,8 @@ export default function Checkout() {
             state: "Madhya Pradesh",
             pincode: currentArea.pincode,
             fulladress: fulladdress,
-            latitude: currentArea.lat,
-            longitude: currentArea.lng,
+            latitude: position ? position[0] : currentArea.lat,
+            longitude: position ? position[1] : currentArea.lng,
           },
           paymentmethod: "cod",
           couponCode: couponCode || undefined,
@@ -272,8 +289,8 @@ export default function Checkout() {
             state: "Madhya Pradesh",
             pincode: currentArea.pincode,
             fulladress: fulladdress,
-            latitude: currentArea.lat,
-            longitude: currentArea.lng,
+            latitude: position ? position[0] : currentArea.lat,
+            longitude: position ? position[1] : currentArea.lng,
           },
           paymentmethod: "online",
           couponCode: couponCode || undefined,
@@ -634,7 +651,7 @@ export default function Checkout() {
                     <MapPin size={16} className="absolute left-3.5 top-3 text-[#0f8646]" />
                     <select
                       value={selectedAreaIndex}
-                      onChange={(e) => setSelectedAreaIndex(Number(e.target.value))}
+                      onChange={(e) => handleAreaChange(Number(e.target.value))}
                       className="w-full bg-emerald-50/30 border border-emerald-200 rounded-xl py-2.5 pl-10 pr-8 text-xs sm:text-sm font-bold text-gray-900 outline-none focus:border-[#0f8646] cursor-pointer appearance-none"
                     >
                       {BHOPAL_AREAS.map((area, idx) => (
@@ -659,6 +676,29 @@ export default function Checkout() {
                     onChange={(e) => setLandmark(e.target.value)}
                     className="w-full bg-gray-50/70 border border-gray-200 rounded-xl py-2.5 px-3.5 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] transition"
                   />
+                </div>
+
+                {/* Interactive Bhopal Map Pinpoint */}
+                <div className="space-y-1.5 pt-1">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-bold text-gray-700 flex items-center gap-1.5">
+                      <MapPin size={14} className="text-[#0f8646]" />
+                      <span>Pinpoint Location on Bhopal Map</span>
+                    </label>
+                    <span className="text-[10px] font-extrabold text-[#0f8646] bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                      Drag Pin to Adjust
+                    </span>
+                  </div>
+
+                  <div className="h-52 sm:h-60 rounded-2xl overflow-hidden border border-emerald-200/80 shadow-xs relative bg-gray-100">
+                    {position && (
+                      <CheckoutMap position={position} setposition={setPosition} />
+                    )}
+                    <div className="absolute top-2.5 left-2.5 z-[400] bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl border border-gray-200/80 shadow-sm text-xs font-bold text-gray-800 flex items-center gap-1.5 pointer-events-none">
+                      <span className="w-2 h-2 rounded-full bg-[#0f8646] animate-pulse" />
+                      <span className="truncate max-w-[200px] sm:max-w-xs">{currentArea.name} ({currentArea.pincode})</span>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Locked City & State summary badge */}
