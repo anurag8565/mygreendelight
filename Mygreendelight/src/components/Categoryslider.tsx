@@ -128,8 +128,11 @@ export default function CategorySlider({
           </Link>
         </div>
 
-        {/* Real HD Photo Category Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5 sm:gap-3.5 md:gap-4">
+        {/* Real HD Photo Category Swipeable Carousel on Mobile, 5-col Grid on Desktop */}
+        <div
+          className="flex md:grid md:grid-cols-5 gap-3 sm:gap-3.5 md:gap-4 overflow-x-auto md:overflow-visible pb-2 pt-1 scrollbar-none snap-x snap-mandatory -mx-3.5 px-3.5 sm:mx-0 sm:px-0 touch-pan-x"
+          style={{ WebkitOverflowScrolling: "touch" }}
+        >
           {activeCategories.map((item, idx) => {
             const rawKey = (item.name || "").toLowerCase().trim();
             const config = CATEGORY_CONFIG[rawKey] || {
@@ -151,7 +154,7 @@ export default function CategorySlider({
                 onClick={() =>
                   router.push(`/shop?category=${encodeURIComponent(item.name)}`)
                 }
-                className="group cursor-pointer rounded-2xl sm:rounded-3xl p-2.5 sm:p-3 bg-white hover:border-emerald-300 border border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col justify-between relative overflow-hidden"
+                className="group cursor-pointer rounded-2xl sm:rounded-3xl p-2.5 sm:p-3 bg-white hover:border-emerald-300 border border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col justify-between relative overflow-hidden w-[125px] xs:w-[135px] sm:w-[150px] md:w-auto shrink-0 snap-start"
               >
                 {/* Upper Photo Window */}
                 <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-gray-50 mb-2">

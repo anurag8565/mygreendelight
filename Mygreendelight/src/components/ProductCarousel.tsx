@@ -20,7 +20,7 @@ export default function ProductCarousel({ children }: { children: React.ReactNod
 
   return (
     <div className="relative w-full max-w-full">
-      {/* Left Floating Arrow Button (Always visible on desktop, no hover hide) */}
+      {/* Left Floating Arrow Button (Desktop Only) */}
       <button
         type="button"
         onClick={() => scroll("left")}
@@ -30,15 +30,16 @@ export default function ProductCarousel({ children }: { children: React.ReactNod
         <ChevronLeft size={20} className="stroke-[2.5]" />
       </button>
 
-      {/* Scroll Container */}
+      {/* Scroll Container with full mobile edge bleed and touch support */}
       <div
         ref={scrollRef}
-        className="flex gap-3 sm:gap-4 overflow-x-auto pb-3 pt-1 scrollbar-none snap-x snap-mandatory scroll-smooth px-0.5"
+        className="flex gap-2.5 sm:gap-4 overflow-x-auto pb-3 pt-1 scrollbar-none snap-x snap-mandatory scroll-smooth -mx-3.5 px-3.5 sm:mx-0 sm:px-0.5 touch-pan-x"
+        style={{ WebkitOverflowScrolling: "touch" }}
       >
         {children}
       </div>
 
-      {/* Right Floating Arrow Button (Always visible on desktop, no hover hide) */}
+      {/* Right Floating Arrow Button (Desktop Only) */}
       <button
         type="button"
         onClick={() => scroll("right")}
