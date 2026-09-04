@@ -44,9 +44,18 @@ export default function CartPage() {
   const [couponInput, setCouponInput] = useState("");
   const [couponLoading, setCouponLoading] = useState(false);
   const [couponError, setCouponError] = useState("");
+  const [addOnProducts, setAddOnProducts] = useState<any[]>([]);
 
   React.useEffect(() => {
     dispatch(hydrateCart());
+    axios
+      .get("/api/groceries?limit=12&sort=price_asc")
+      .then((res) => {
+        if (res.data?.success && res.data.groceries) {
+          setAddOnProducts(res.data.groceries);
+        }
+      })
+      .catch(() => {});
   }, [dispatch]);
 
   const { cartdata, couponCode, discountAmount } = useSelector(
@@ -282,53 +291,65 @@ export default function CartPage() {
                 })}
               </div>
 
-              {/* 🌿 Frequently Added with Produce (Smart Cross-Sell) */}
-              <div className="bg-emerald-50/50 rounded-2xl p-4 border border-emerald-100/90">
-                <span className="text-xs font-black text-emerald-950 uppercase tracking-wider block mb-2.5 flex items-center gap-1.5">
-                  <Sparkles size={14} className="text-[#0f8646]" />
-                  <span>Don&apos;t Forget Fresh Daily Add-Ons</span>
-                </span>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                  {[
-                    { id: "addon-dhaniya", name: "Taaza Dhaniya", price: 15, unit: "100g", image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=200&q=80" },
-                    { id: "addon-mirchi", name: "Hari Mirch", price: 12, unit: "100g", image: "https://images.unsplash.com/photo-1588879462719-74e2d33454fb?auto=format&fit=crop&w=200&q=80" },
-                    { id: "addon-nimbu", name: "Desi Nimbu", price: 10, unit: "2 Pcs", image: "https://images.unsplash.com/photo-1534856966150-c832f7b7f09a?auto=format&fit=crop&w=200&q=80" },
-                    { id: "addon-adrak", name: "Desi Adrak", price: 20, unit: "100g", image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=200&q=80" },
-                  ].map((addon) => {
-                    const isAdded = cartdata.some((c) => c.cartItemId === addon.id);
-                    return (
-                      <div key={addon.id} className="bg-white rounded-xl p-2 border border-gray-200 flex flex-col justify-between items-center text-center shadow-2xs">
-                        <img src={addon.image} alt={addon.name} className="w-10 h-10 object-contain mb-1 rounded-lg" />
-                        <span className="font-bold text-[11px] text-gray-900 line-clamp-1">{addon.name}</span>
-                        <span className="text-[10px] text-gray-500">{addon.unit} • ₹{addon.price}</span>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            if (!isAdded) {
-                              dispatch(addToCart({
-                                _id: addon.id as any,
-                                name: addon.name,
-                                price: addon.price,
-                                unit: addon.unit,
-                                image: addon.image,
-                                category: "Vegetables",
-                                stock: 100,
-                                quantity: 1,
-                                cartItemId: addon.id,
-                              } as any));
-                            }
-                          }}
-                          className={`mt-1.5 w-full py-1 rounded-lg font-black text-[10px] transition cursor-pointer ${
-                            isAdded ? "bg-green-100 text-green-800" : "bg-emerald-50 text-[#0f8646] hover:bg-[#0f8646] hover:text-white border border-emerald-200"
-                          }`}
-                        >
-                          {isAdded ? "✓ Added" : "+ ADD"}
-                        </button>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+              {/* 🌿 Frequently Added with Produce (Smart Cross-Sell with Real DB Products) */}
+              {(() => {
+                const suggestedAddons = addOnProducts
+                  .filter((p) => !cartdata.some((c) => String(c._id) === String(p._id) || c.cartItemId === String(p._id)))
+                  .slice(0, 4);
+
+                if (suggestedAddons.length === 0) return null;
+
+                return (
+                  <div className="bg-emerald-50/50 rounded-2xl p-4 border border-emerald-100/90">
+                    <span className="text-xs font-black text-emerald-950 uppercase tracking-wider block mb-2.5 flex items-center gap-1.5">
+                      <Sparkles size={14} className="text-[#0f8646]" />
+                      <span>Fresh Daily Essentials & Add-Ons</span>
+                    </span>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                      {suggestedAddons.map((product) => {
+                        return (
+                          <div
+                            key={product._id}
+                            className="bg-white rounded-xl p-2.5 border border-gray-200/90 flex flex-col justify-between items-center text-center shadow-2xs hover:border-emerald-200 transition"
+                          >
+                            <div className="w-12 h-12 relative flex items-center justify-center mb-1.5 bg-gray-50 rounded-lg overflow-hidden">
+                              <img
+                                src={product.image || "/placeholder.png"}
+                                alt={product.name}
+                                className="w-full h-full object-contain p-0.5"
+                                onError={(e: any) => {
+                                  e.currentTarget.src = "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=200&q=80";
+                                }}
+                              />
+                            </div>
+                            <span className="font-bold text-[11px] text-gray-900 line-clamp-1">
+                              {product.name}
+                            </span>
+                            <span className="text-[10px] text-gray-500 font-medium">
+                              {product.unit} • <strong className="text-gray-900">₹{product.price}</strong>
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                dispatch(
+                                  addToCart({
+                                    ...product,
+                                    quantity: 1,
+                                    cartItemId: String(product._id),
+                                  })
+                                );
+                              }}
+                              className="mt-2 w-full py-1 rounded-lg font-black text-[10px] bg-emerald-50 text-[#0f8646] hover:bg-[#0f8646] hover:text-white border border-emerald-200 transition cursor-pointer shadow-2xs active:scale-95"
+                            >
+                              + ADD
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })()}
 
               {/* Safety & Guarantee */}
               <div className="bg-green-50/60 border border-green-100 rounded-2xl p-4 flex items-center gap-3">
