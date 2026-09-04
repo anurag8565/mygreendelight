@@ -14,6 +14,10 @@ import {
   Gift,
   PartyPopper,
   Receipt,
+  Users,
+  Copy,
+  Check,
+  Share2,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Nav from "@/components/Nav";
@@ -36,6 +40,7 @@ function OrderSuccessContent() {
   const [reward, setReward] = useState<any>(null);
   const [showRewardModal, setShowRewardModal] = useState(false);
   const [orderDetails, setOrderDetails] = useState<any>(null);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     dispatch(clearCart());
@@ -232,6 +237,54 @@ function OrderSuccessContent() {
               <ShoppingBag size={16} />
               <span>Continue Shopping</span>
             </Link>
+          </div>
+
+          {/* Viral Society / Friends WhatsApp Share Card */}
+          <div className="max-w-md mx-auto mt-6 bg-gradient-to-br from-emerald-600 via-[#0f8646] to-green-800 text-white rounded-3xl p-5 text-left shadow-lg relative overflow-hidden">
+            <div className="flex items-center gap-3 mb-2.5">
+              <div className="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-white shrink-0 shadow-inner">
+                <Users size={20} />
+              </div>
+              <div>
+                <span className="bg-yellow-400 text-gray-950 font-black text-[9px] uppercase px-2 py-0.5 rounded-full inline-block mb-0.5">
+                  🎁 Society Group Perk
+                </span>
+                <h3 className="text-sm font-black leading-snug">
+                  Share with your Society WhatsApp Group!
+                </h3>
+              </div>
+            </div>
+            <p className="text-xs text-emerald-100 leading-relaxed mb-3.5">
+              Apne colony / society group me share karein taaki sabhi ko farm-fresh sabzi & fruits mandi rates par milein.
+            </p>
+
+            <div className="flex items-center gap-2">
+              <a
+                href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
+                  `🌿 Hey neighbors! I just ordered farm-fresh vegetables & fruits from MyGreenDelight Bhopal. Super fresh produce directly delivered at Mandi rates! Order yours here: ${typeof window !== "undefined" ? window.location.origin : "https://mygreendelight.in"}`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 bg-white hover:bg-emerald-50 text-[#0f8646] py-2.5 px-3.5 rounded-xl font-black text-xs shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                <span className="text-sm">📲</span>
+                <span>Share on WhatsApp</span>
+              </a>
+
+              <button
+                type="button"
+                onClick={() => {
+                  const text = `🌿 Hey neighbors! I just ordered farm-fresh vegetables & fruits from MyGreenDelight Bhopal. Super fresh produce at Mandi rates! Order now: ${window.location.origin}`;
+                  navigator.clipboard.writeText(text);
+                  setCopied(true);
+                  setTimeout(() => setCopied(false), 2000);
+                }}
+                className="bg-emerald-900/60 hover:bg-emerald-900 border border-white/20 text-white px-3 py-2.5 rounded-xl font-black text-xs transition flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                {copied ? <Check size={14} className="text-yellow-300" /> : <Copy size={14} />}
+                <span>{copied ? "Copied!" : "Copy"}</span>
+              </button>
+            </div>
           </div>
 
           {/* WhatsApp Direct Updates Button */}
