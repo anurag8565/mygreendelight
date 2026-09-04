@@ -101,6 +101,25 @@ export default function Checkout() {
     return R * c;
   };
 
+  const BHOPAL_AREAS = [
+    { name: "Bagsewaniya / Amrai (Store Location)", pincode: "462043", lat: 23.1985, lng: 77.4475 },
+    { name: "MP Nagar (Zone 1 & 2)", pincode: "462011", lat: 23.2332, lng: 77.4343 },
+    { name: "Arera Colony (E1-E8 / 10 No. Market)", pincode: "462016", lat: 23.2167, lng: 77.4267 },
+    { name: "Kolar Road / Sarvdharm", pincode: "462042", lat: 23.175, lng: 77.418 },
+    { name: "Bawadiya Kalan / Gulmohar", pincode: "462039", lat: 23.1895, lng: 77.442 },
+    { name: "TT Nagar / New Market", pincode: "462003", lat: 23.239, lng: 77.401 },
+    { name: "Saket Nagar / AIIMS Bhopal", pincode: "462020", lat: 23.209, lng: 77.456 },
+    { name: "Shahpura / Manisha Market", pincode: "462016", lat: 23.195, lng: 77.425 },
+    { name: "Ayodhya Bypass / Minal Residency", pincode: "462022", lat: 23.268, lng: 77.469 },
+    { name: "Indrapuri / BHEL Township", pincode: "462021", lat: 23.242, lng: 77.478 },
+    { name: "Hoshangabad Road / Misrod", pincode: "462026", lat: 23.162, lng: 77.465 },
+    { name: "Shivaji Nagar / 6 No. Stop", pincode: "462016", lat: 23.228, lng: 77.421 },
+    { name: "Katara Hills / Bagmugaliya", pincode: "462043", lat: 23.178, lng: 77.485 },
+    { name: "Koh-e-Fiza / VIP Road", pincode: "462001", lat: 23.275, lng: 77.382 },
+  ];
+
+  const [selectedBhopalArea, setSelectedBhopalArea] = useState<string>("Bagsewaniya / Amrai (Store Location)");
+
   const [address, setaddress] = useState({
     fullname: "",
     mobile: "",
@@ -125,35 +144,50 @@ export default function Checkout() {
     }
   }, [userdata]);
 
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const { latitude, longitude } = pos.coords;
-          const dist = getDistanceFromBhopalKm(latitude, longitude);
-          if (dist > 35) {
-            // Outside Bhopal (e.g. Agra, Delhi, etc.)
-            setposition([23.1985, 77.4475]); // Keep pinned to Bhopal
-            setOutsideBhopalWarning(
-              `📍 Your device GPS detected a location outside Bhopal (${dist.toFixed(0)} km away). MyGreenDelight delivers exclusively across Bhopal (MP - 462xxx). Please search or select your Bhopal delivery address.`
-            );
-          } else {
-            setposition([latitude, longitude]);
-            setOutsideBhopalWarning(null);
-          }
-        },
-        (err) => {
-          console.log("Location error:", err);
-          setposition([23.1985, 77.4475]);
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 0,
-        }
-      );
+  const handleSelectBhopalArea = (areaName: string) => {
+    const found = BHOPAL_AREAS.find((a) => a.name === areaName);
+    if (found) {
+      setSelectedBhopalArea(found.name);
+      setposition([found.lat, found.lng]);
+      setOutsideBhopalWarning(null);
+      setaddress((prev) => ({
+        ...prev,
+        pincode: found.pincode,
+        city: "Bhopal",
+        state: "Madhya Pradesh",
+        fulladress: prev.fulladress
+          ? prev.fulladress
+          : `${found.name}, Bhopal`,
+      }));
     }
-  }, []);
+  };
+
+  const handleUseGPS = () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser.");
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { latitude, longitude } = pos.coords;
+        const dist = getDistanceFromBhopalKm(latitude, longitude);
+        if (dist > 35) {
+          setposition([23.1985, 77.4475]); // Stay in Bhopal
+          setOutsideBhopalWarning(
+            `📍 Your device GPS detected a location outside Bhopal (${dist.toFixed(0)} km away). MyGreenDelight delivers exclusively across Bhopal (MP - 462xxx). Your map location is locked to Bhopal Store.`
+          );
+        } else {
+          setposition([latitude, longitude]);
+          setOutsideBhopalWarning(null);
+        }
+      },
+      (err) => {
+        console.log("GPS error:", err);
+        setposition([23.1985, 77.4475]);
+      },
+      { enableHighAccuracy: true, timeout: 8000 }
+    );
+  };
 
   const handelsearchquery = async () => {
     if (!searchquery.trim()) return;
@@ -169,12 +203,12 @@ export default function Checkout() {
         const newLat = results[0].y;
         const newLng = results[0].x;
         const dist = getDistanceFromBhopalKm(newLat, newLng);
-        if (dist <= 40) {
+        if (dist <= 35) {
           setposition([newLat, newLng]);
           setOutsideBhopalWarning(null);
         } else {
           setOutsideBhopalWarning(
-            "The searched place is outside our Bhopal delivery zone. Please choose a location within Bhopal."
+            "The searched place is outside our Bhopal delivery zone. Please select a locality within Bhopal."
           );
         }
       }
@@ -212,12 +246,19 @@ export default function Checkout() {
           const rawPostcode = result.data.address?.postcode || "";
           const validPostcode = rawPostcode.startsWith("462") ? rawPostcode : "462043";
 
+          // Format clean address without outside city artifacts
+          let cleanAddr = result.data.display_name || "";
+          if (cleanAddr) {
+            const parts = cleanAddr.split(",").map((p: string) => p.trim());
+            cleanAddr = parts.slice(0, 4).join(", ");
+          }
+
           setaddress((prev) => ({
             ...prev,
             city: "Bhopal",
             state: "Madhya Pradesh",
             pincode: validPostcode,
-            fulladress: result.data.display_name || prev.fulladress,
+            fulladress: cleanAddr || prev.fulladress,
           }));
         }
       } catch (error) {
@@ -478,34 +519,63 @@ export default function Checkout() {
           {/* Left Column: Delivery Address & Map (7 cols) */}
           <div className="lg:col-span-7 space-y-6">
             <div className="bg-white rounded-3xl border border-gray-200/80 p-6 sm:p-8 shadow-xs">
-              <div className="flex items-center justify-between mb-5">
-                <h2 className="font-extrabold text-base text-gray-900 flex items-center gap-2">
-                  <MapPin size={18} className="text-[#0f8646]" />
-                  <span>1. Delivery Address</span>
-                </h2>
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h2 className="font-extrabold text-base text-gray-900 flex items-center gap-2">
+                    <MapPin size={18} className="text-[#0f8646]" />
+                    <span>1. Delivery Address (Bhopal Only)</span>
+                  </h2>
+                  <p className="text-[11px] text-gray-500 mt-0.5">
+                    Express 10-15 min doorstep delivery from Amrai / Bagsewaniya Hub
+                  </p>
+                </div>
                 <button
                   type="button"
-                  onClick={() => {
-                    if (navigator.geolocation) {
-                      navigator.geolocation.getCurrentPosition((pos) => {
-                        const dist = getDistanceFromBhopalKm(pos.coords.latitude, pos.coords.longitude);
-                        if (dist > 35) {
-                          setposition([23.1985, 77.4475]);
-                          setOutsideBhopalWarning(
-                            `📍 Your device GPS detected a location outside Bhopal (${dist.toFixed(0)} km away). MyGreenDelight delivers exclusively across Bhopal (MP - 462xxx). Please search or select your Bhopal delivery address.`
-                          );
-                        } else {
-                          setposition([pos.coords.latitude, pos.coords.longitude]);
-                          setOutsideBhopalWarning(null);
-                        }
-                      });
-                    }
-                  }}
-                  className="inline-flex items-center gap-1.5 bg-green-50 text-[#0f8646] hover:bg-green-100 px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition cursor-pointer"
+                  onClick={handleUseGPS}
+                  className="inline-flex items-center gap-1.5 bg-green-50 text-[#0f8646] hover:bg-green-100 px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition cursor-pointer shrink-0"
                 >
                   <Target size={14} />
                   <span>Use GPS Location</span>
                 </button>
+              </div>
+
+              {/* Bhopal Locality 1-Click Quick Selector */}
+              <div className="mb-5 bg-gradient-to-br from-emerald-50/60 to-green-50/30 border border-emerald-200/80 rounded-2xl p-3.5">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[11px] font-black text-[#0f8646] uppercase tracking-wider flex items-center gap-1">
+                    <MapPin size={12} /> Select Bhopal Locality / Colony
+                  </span>
+                  <span className="text-[10px] font-bold text-gray-400">1-Tap Pinpoint</span>
+                </div>
+
+                <div className="flex flex-wrap gap-1.5 mb-2.5">
+                  {BHOPAL_AREAS.slice(0, 8).map((area) => (
+                    <button
+                      key={area.name}
+                      type="button"
+                      onClick={() => handleSelectBhopalArea(area.name)}
+                      className={`text-[11px] font-bold px-2.5 py-1 rounded-lg border transition cursor-pointer ${
+                        selectedBhopalArea === area.name
+                          ? "bg-[#0f8646] text-white border-[#0f8646] shadow-2xs"
+                          : "bg-white text-gray-700 border-gray-200 hover:border-[#0f8646] hover:text-[#0f8646]"
+                      }`}
+                    >
+                      {area.name.split("/")[0].trim()} ({area.pincode})
+                    </button>
+                  ))}
+                </div>
+
+                <select
+                  value={selectedBhopalArea}
+                  onChange={(e) => handleSelectBhopalArea(e.target.value)}
+                  className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-xs font-bold text-gray-800 outline-none focus:border-[#0f8646] cursor-pointer"
+                >
+                  {BHOPAL_AREAS.map((area) => (
+                    <option key={area.name} value={area.name}>
+                      📍 {area.name} — Pincode: {area.pincode}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               {/* Outside Bhopal Warning if GPS detects outside */}
@@ -561,7 +631,7 @@ export default function Checkout() {
 
                 <div>
                   <label className="block text-xs font-bold text-gray-700 mb-1">
-                    House / Flat No. & Street Address (Bhopal) *
+                    House / Flat No., Society & Street Address (Bhopal) *
                   </label>
                   <textarea
                     rows={2}

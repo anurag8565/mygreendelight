@@ -33,13 +33,14 @@ export async function POST(req: NextRequest) {
 
         // Validate Bhopal Delivery Zone
         const pincodeStr = String(address?.pincode || "").trim();
-        const cityStr = String(address?.city || "").toLowerCase().trim();
-        if (!pincodeStr.startsWith("462") && !cityStr.includes("bhopal")) {
+        if (!pincodeStr.startsWith("462")) {
             return NextResponse.json(
                 { success: false, message: "Delivery is available exclusively across Bhopal city (MP - 462xxx)." },
                 { status: 400 }
             );
         }
+        address.city = "Bhopal";
+        address.state = "Madhya Pradesh";
 
         // Sanitize items: ensure invalid/custom ObjectIds don't crash Mongoose
         const sanitizedItems = items.map((item: any) => {

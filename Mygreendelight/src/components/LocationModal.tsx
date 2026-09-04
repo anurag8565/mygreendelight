@@ -49,7 +49,20 @@ export default function LocationModal({
     }
   }, []);
 
-  // Real-time live OpenStreetMap Geocoding search (Real API, zero dummy)
+  const POPULAR_BHOPAL_AREAS = [
+    { name: "Bagsewaniya (Amrai)", tag: "Store Hub" },
+    { name: "MP Nagar Zone 1 & 2", tag: "Express" },
+    { name: "Arera Colony (10 No.)", tag: "Express" },
+    { name: "Kolar Road / Sarvdharm", tag: "Express" },
+    { name: "Bawadiya Kalan", tag: "Express" },
+    { name: "TT Nagar / New Market", tag: "Express" },
+    { name: "Saket Nagar / AIIMS", tag: "Express" },
+    { name: "Shahpura / Manisha Mkt", tag: "Express" },
+    { name: "Ayodhya Bypass / Minal", tag: "Express" },
+    { name: "Indrapuri / BHEL", tag: "Express" },
+  ];
+
+  // Real-time live OpenStreetMap Geocoding search (Real API, zero dummy, Bhopal bounded)
   useEffect(() => {
     if (!searchQuery.trim() || searchQuery.trim().length < 2) {
       setLiveSuggestions([]);
@@ -64,12 +77,12 @@ export default function LocationModal({
       try {
         const queryWithContext = searchQuery.toLowerCase().includes("bhopal")
           ? searchQuery.trim()
-          : `${searchQuery.trim()}, Bhopal, Madhya Pradesh`;
+          : `${searchQuery.trim()}, Bhopal`;
 
         const res = await fetch(
           `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
             queryWithContext
-          )}&countrycodes=in&limit=6&addressdetails=1`
+          )}&countrycodes=in&viewbox=77.20,23.40,77.60,23.05&bounded=1&limit=6&addressdetails=1`
         );
         const data = await res.json();
         if (Array.isArray(data)) {
@@ -330,7 +343,33 @@ export default function LocationModal({
                 </div>
               )}
 
-              {/* 3. Manual Flat / House / Full Address Input */}
+              {/* 3. Popular Bhopal Delivery Localities */}
+              <div className="space-y-1.5 pt-1">
+                <span className="text-xs font-black text-gray-700 uppercase tracking-wider flex items-center gap-1">
+                  <MapPin size={12} className="text-[#0f8646]" />
+                  Popular Bhopal Localities (1-Tap Select)
+                </span>
+                <div className="grid grid-cols-2 gap-1.5">
+                  {POPULAR_BHOPAL_AREAS.map((area, idx) => (
+                    <div
+                      key={idx}
+                      onClick={() => saveLocationChoice(`${area.name}, Bhopal`)}
+                      className={`p-2 rounded-xl border text-left transition cursor-pointer flex items-center justify-between ${
+                        currentLocation.includes(area.name)
+                          ? "bg-green-50 border-[#0f8646] text-[#0f8646] font-black"
+                          : "bg-gray-50/70 border-gray-100 hover:border-[#0f8646] text-gray-700 font-bold"
+                      }`}
+                    >
+                      <span className="text-[11px] truncate">{area.name}</span>
+                      <span className="text-[9px] font-black px-1.5 py-0.5 rounded bg-emerald-100/80 text-emerald-800 shrink-0 ml-1">
+                        {area.tag}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 4. Manual Flat / House / Full Address Input */}
               <form onSubmit={handleCustomSubmit} className="space-y-1.5 pt-1">
                 <label className="text-xs font-black text-gray-700 uppercase tracking-wider block">
                   Or Type Complete Doorstep Address
