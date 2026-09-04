@@ -361,7 +361,7 @@
   },
   {
     "name": "Nagaland Kew Pineapple",
-    "category": "Dairy & Staples",
+    "category": "Fruits",
     "price": 220,
     "mrp": 282,
     "unit": "1 Pc",
@@ -495,7 +495,7 @@
   },
   {
     "name": "Okra (Bhindi)",
-    "category": "Ready-to-Cook & Cut Produce",
+    "category": "Vegetables",
     "price": 55,
     "mrp": 70,
     "unit": "1 kg",
@@ -526,7 +526,7 @@
   },
   {
     "name": "Bottle Gourd (लौकी)",
-    "category": "Ready-to-Cook & Cut Produce",
+    "category": "Vegetables",
     "price": 39,
     "mrp": 50,
     "unit": "1 kg",
@@ -557,7 +557,7 @@
   },
   {
     "name": "Sweet Basil",
-    "category": "Dairy & Staples",
+    "category": "Exotics",
     "price": 24,
     "mrp": 31,
     "unit": "1 kg",
@@ -588,7 +588,7 @@
   },
   {
     "name": "Baby Spinach",
-    "category": "Exotics",
+    "category": "Vegetables",
     "price": 48,
     "mrp": 61,
     "unit": "1 kg",
@@ -650,7 +650,7 @@
   },
   {
     "name": "Yellow Dragon Fruit",
-    "category": "Exotics",
+    "category": "Fruits",
     "price": 260,
     "mrp": 333,
     "unit": "1 Pc",
@@ -794,7 +794,7 @@
   },
   {
     "name": "Avocado - 1 Pc.",
-    "category": "Dairy & Staples",
+    "category": "Exotics",
     "price": 180,
     "mrp": 230,
     "unit": "1 kg",
@@ -825,7 +825,7 @@
   },
   {
     "name": "Dragon Fruit (ड्रैगन फ्रूट)",
-    "category": "Exotics",
+    "category": "Fruits",
     "price": 112,
     "mrp": 143,
     "unit": "1 Pc",
@@ -1669,7 +1669,7 @@
   },
   {
     "name": "Green Bell Pepper",
-    "category": "Ready-to-Cook & Cut Produce",
+    "category": "Exotics",
     "price": 70,
     "mrp": 90,
     "unit": "1 kg",
@@ -1803,7 +1803,7 @@
   },
   {
     "name": "Coriander (धनिया)",
-    "category": "Dairy & Staples",
+    "category": "Vegetables",
     "price": 50,
     "mrp": 64,
     "unit": "100g Pack",
@@ -2030,7 +2030,7 @@
   },
   {
     "name": "Lemon Grass",
-    "category": "Exotics",
+    "category": "Vegetables",
     "price": 51,
     "mrp": 65,
     "unit": "100g Pack",
@@ -2061,7 +2061,7 @@
   },
   {
     "name": "Purple Cabbage",
-    "category": "Vegetables",
+    "category": "Exotics",
     "price": 90,
     "mrp": 115,
     "unit": "250g Pack",
@@ -2247,7 +2247,7 @@
   },
   {
     "name": "Coconut (नया नारियल)",
-    "category": "Vegetables",
+    "category": "Fruits",
     "price": 80,
     "mrp": 102,
     "unit": "1 piece",
@@ -2712,7 +2712,7 @@
   },
   {
     "name": "Sponge Gourd (गिलकी)",
-    "category": "Dairy & Staples",
+    "category": "Vegetables",
     "price": 70,
     "mrp": 90,
     "unit": "250g",
@@ -3363,7 +3363,7 @@
   },
   {
     "name": "Kiwi (कीवी)",
-    "category": "Exotics",
+    "category": "Fruits",
     "price": 134,
     "mrp": 172,
     "unit": "1 packet",
@@ -3425,7 +3425,7 @@
   },
   {
     "name": "Standard Apple (स्टैंडर्ड सेब)",
-    "category": "Dairy & Staples",
+    "category": "Fruits",
     "price": 180,
     "mrp": 230,
     "unit": "250g",
@@ -3590,7 +3590,7 @@
   },
   {
     "name": "Badam Aam (Badami) (बादामी आम)",
-    "category": "Dairy & Staples",
+    "category": "Fruits",
     "price": 260,
     "mrp": 333,
     "unit": "250g Pack",
@@ -3838,7 +3838,7 @@
   },
   {
     "name": "Organic Green Chilli (जैविक हरी मिर्च)",
-    "category": "Dairy & Staples",
+    "category": "Vegetables",
     "price": 95,
     "mrp": 122,
     "unit": "250g",
@@ -3910,7 +3910,7 @@
   },
   {
     "name": "Healthy Vegetable Salad (हेल्दी वेजिटेबल सलाद)",
-    "category": "Ready-to-Cook & Cut Produce",
+    "category": "Vegetables",
     "price": 60,
     "mrp": 77,
     "unit": "1 Bowl",
@@ -3941,7 +3941,7 @@
   },
   {
     "name": "Dragon Fruit Premium Juice (ड्रैगन फ्रूट प्रीमियम जूस)",
-    "category": "Exotics",
+    "category": "Fruits",
     "price": 179,
     "mrp": 229,
     "unit": "1 Glass",
@@ -3969,37 +3969,6 @@
     ],
     "rating": 4.8,
     "reviewsCount": 37
-  },
-  {
-    "name": "Fish Curry (फिश करी)",
-    "category": "Dairy & Staples",
-    "price": 800,
-    "mrp": 1024,
-    "unit": "1kg",
-    "stock": 100,
-    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
-    "description": "Freshwater fish cooked in authentic Bihari style mustard and garlic gravy. Perfectly balanced spices for a nostalgic home-cooked taste.",
-    "sourcing": "Direct Bhopal Contract Farms & Karond Krishi Mandi (MyGreenDelight Certified Harvest)",
-    "storage": "Store in cool dry place or refrigerate dairy items below 4°C",
-    "variations": [
-      {
-        "weight": "1 kg Pack",
-        "price": 160,
-        "stock": 50
-      },
-      {
-        "weight": "5 kg Bag",
-        "price": 800,
-        "stock": 40
-      },
-      {
-        "weight": "10 kg Mega Saver",
-        "price": 1560,
-        "stock": 20
-      }
-    ],
-    "rating": 4.9,
-    "reviewsCount": 20
   },
   {
     "name": "Tawa Roti (तवा रोटी)",
@@ -4065,7 +4034,7 @@
   },
   {
     "name": "Exotic Fruit Salad (एग्जोटिक फ्रूट सलाद)",
-    "category": "Exotics",
+    "category": "Fruits",
     "price": 249,
     "mrp": 319,
     "unit": "250g",
@@ -4251,7 +4220,7 @@
   },
   {
     "name": "Budget Banana (बजट केला)",
-    "category": "Dairy & Staples",
+    "category": "Fruits",
     "price": 28,
     "mrp": 36,
     "unit": "12 pcs",
@@ -4406,7 +4375,7 @@
   },
   {
     "name": "Ready-to-Cook Mixed Veg",
-    "category": "Ready-to-Cook & Cut Produce",
+    "category": "Vegetables",
     "price": 60,
     "mrp": 77,
     "unit": "250gm",
@@ -4991,7 +4960,7 @@
   },
   {
     "name": "Primium Fruits And Dry Fruits Bucket",
-    "category": "Fruits",
+    "category": "Dairy & Staples",
     "price": 220,
     "mrp": 282,
     "unit": "1 kg",
@@ -5032,7 +5001,7 @@
   },
   {
     "name": "Blueberry (ब्लूबेरी)",
-    "category": "Vegetables",
+    "category": "Fruits",
     "price": 235,
     "mrp": 301,
     "unit": "1 kg",
@@ -5371,7 +5340,7 @@
   },
   {
     "name": "Imported Fruits Salad",
-    "category": "Exotics",
+    "category": "Fruits",
     "price": 160,
     "mrp": 205,
     "unit": "1 kg",
@@ -6387,7 +6356,7 @@
   },
   {
     "name": "Cabbage - Purple/पत्ता गोभी - बैंगनी Patta Gobhee",
-    "category": "Dairy & Staples",
+    "category": "Vegetables",
     "price": 180,
     "mrp": 230,
     "unit": "1 kg",
@@ -6788,7 +6757,7 @@
   },
   {
     "name": "Cabbage/patta gobhee - पत्ता गोभी",
-    "category": "Dairy & Staples",
+    "category": "Vegetables",
     "price": 40,
     "mrp": 51,
     "unit": "1 kg",
@@ -7188,7 +7157,7 @@
   },
   {
     "name": "Amla/ Gooseberry - ��मला",
-    "category": "Vegetables",
+    "category": "Fruits",
     "price": 25,
     "mrp": 32,
     "unit": "1 kg",
@@ -7311,7 +7280,7 @@
   },
   {
     "name": "Lettuce /सलाद पत्ता Salaad Patta",
-    "category": "Dairy & Staples",
+    "category": "Exotics",
     "price": 150,
     "mrp": 192,
     "unit": "1 kg",
@@ -7383,7 +7352,7 @@
   },
   {
     "name": "Coconut Water / नारियल पानी nariyal pani",
-    "category": "Vegetables",
+    "category": "Fruits",
     "price": 65,
     "mrp": 83,
     "unit": "1 kg",
@@ -7424,7 +7393,7 @@
   },
   {
     "name": "Banana Leaf/केले का पत्ता Kele ka Patta",
-    "category": "Dairy & Staples",
+    "category": "Fruits",
     "price": 25,
     "mrp": 32,
     "unit": "1 kg",
@@ -8697,7 +8666,7 @@
   },
   {
     "name": "Daab (Tender Coconut)",
-    "category": "Vegetables",
+    "category": "Fruits",
     "price": 100,
     "mrp": 128,
     "unit": "1pc",
@@ -8851,7 +8820,7 @@
   },
   {
     "name": "Kiwi Golden",
-    "category": "Exotics",
+    "category": "Fruits",
     "price": 100,
     "mrp": 128,
     "unit": "1pc",
@@ -9470,7 +9439,7 @@
   },
   {
     "name": "Kari Patta",
-    "category": "Dairy & Staples",
+    "category": "Vegetables",
     "price": 30,
     "mrp": 38,
     "unit": "1 Bunch",
@@ -9568,7 +9537,7 @@
   },
   {
     "name": "Papita Small",
-    "category": "Vegetables",
+    "category": "Fruits",
     "price": 195,
     "mrp": 250,
     "unit": "1kg",
@@ -9825,7 +9794,7 @@
   },
   {
     "name": "Basket 3",
-    "category": "Fruits",
+    "category": "Vegetables",
     "price": 220,
     "mrp": 282,
     "unit": "1 kg",
@@ -9866,7 +9835,7 @@
   },
   {
     "name": "Basket 2",
-    "category": "Fruits",
+    "category": "Vegetables",
     "price": 220,
     "mrp": 282,
     "unit": "1 kg",
@@ -10277,7 +10246,7 @@
   },
   {
     "name": "Honey Dew Melon",
-    "category": "Dairy & Staples",
+    "category": "Fruits",
     "price": 120,
     "mrp": 154,
     "unit": "1kg",
@@ -10585,7 +10554,7 @@
   },
   {
     "name": "Dft Anjeer",
-    "category": "Vegetables",
+    "category": "Dairy & Staples",
     "price": 80,
     "mrp": 102,
     "unit": "500gm",
@@ -10739,7 +10708,7 @@
   },
   {
     "name": "Dry Fruit Basket Plate",
-    "category": "Fruits",
+    "category": "Dairy & Staples",
     "price": 220,
     "mrp": 282,
     "unit": "1 kg",
@@ -11351,7 +11320,7 @@
   },
   {
     "name": "Papita",
-    "category": "Vegetables",
+    "category": "Fruits",
     "price": 95,
     "mrp": 122,
     "unit": "1kg",
@@ -12492,7 +12461,7 @@
   },
   {
     "name": "Dft Pista 500gm",
-    "category": "Vegetables",
+    "category": "Dairy & Staples",
     "price": 80,
     "mrp": 102,
     "unit": "1 kg",
@@ -12801,7 +12770,7 @@
   },
   {
     "name": "Cabbage in",
-    "category": "Dairy & Staples",
+    "category": "Vegetables",
     "price": 40,
     "mrp": 51,
     "unit": "1 kg",
@@ -13172,7 +13141,7 @@
   },
   {
     "name": "Purple Cabbage in",
-    "category": "Vegetables",
+    "category": "Exotics",
     "price": 60,
     "mrp": 77,
     "unit": "0.5 kg",
@@ -13336,7 +13305,7 @@
   },
   {
     "name": "Fresh Ratnagiri Alphonso",
-    "category": "Vegetables",
+    "category": "Fruits",
     "price": 80,
     "mrp": 102,
     "unit": "1 Dozen / 1 kg",
@@ -13460,7 +13429,7 @@
   },
   {
     "name": "Ratnagiri Alphonso in",
-    "category": "Dairy & Staples",
+    "category": "Fruits",
     "price": 480,
     "mrp": 614,
     "unit": "1 Dozen / 1 kg",
@@ -13615,7 +13584,7 @@
   },
   {
     "name": "Ratnagiri Amrut Payri in",
-    "category": "Vegetables",
+    "category": "Fruits",
     "price": 80,
     "mrp": 102,
     "unit": "1 kg",
@@ -13656,7 +13625,7 @@
   },
   {
     "name": "Amrut Payari in",
-    "category": "Fruits",
+    "category": "Vegetables",
     "price": 220,
     "mrp": 282,
     "unit": "250g",
@@ -14293,7 +14262,7 @@
   },
   {
     "name": "Blueberry Imported",
-    "category": "Exotics",
+    "category": "Fruits",
     "price": 229,
     "mrp": 293,
     "unit": "1 Box",
@@ -14360,7 +14329,7 @@
   },
   {
     "name": "Kiwi Imported",
-    "category": "Exotics",
+    "category": "Fruits",
     "price": 69,
     "mrp": 88,
     "unit": "1 Pc",
@@ -16177,7 +16146,7 @@
   },
   {
     "name": "Kiwi Fruit",
-    "category": "Exotics",
+    "category": "Fruits",
     "price": 130,
     "mrp": 166,
     "unit": "1 Pack (3 Pcs)",
@@ -16372,7 +16341,7 @@
   },
   {
     "name": "Tender Coconut / Nariyal Pani",
-    "category": "Vegetables",
+    "category": "Fruits",
     "price": 75,
     "mrp": 96,
     "unit": "1 Pc",
@@ -16444,7 +16413,7 @@
   },
   {
     "name": "Ash Gourd / Bhura Kaddu",
-    "category": "Dairy & Staples",
+    "category": "Vegetables",
     "price": 80,
     "mrp": 102,
     "unit": "1 kg",
@@ -16516,7 +16485,7 @@
   },
   {
     "name": "Bharta Eggplant (भर्ता बैंगन)",
-    "category": "Dairy & Staples",
+    "category": "Vegetables",
     "price": 80,
     "mrp": 102,
     "unit": "1 kg",
@@ -16629,7 +16598,7 @@
   },
   {
     "name": "Essential Trio",
-    "category": "Dairy & Staples",
+    "category": "Vegetables",
     "price": 80,
     "mrp": 102,
     "unit": "1 kg",
@@ -16701,7 +16670,7 @@
   },
   {
     "name": "Long Beans (Barbati)",
-    "category": "Dairy & Staples",
+    "category": "Vegetables",
     "price": 30,
     "mrp": 38,
     "unit": "1 kg",
@@ -16732,7 +16701,7 @@
   },
   {
     "name": "Potato / Aloo",
-    "category": "Dairy & Staples",
+    "category": "Vegetables",
     "price": 28,
     "mrp": 36,
     "unit": "1 kg",
