@@ -114,17 +114,17 @@ export default async function Userdashbord() {
       {/* 9. Order Again Carousel (Only for logged in users with previous orders) */}
       {plainOrderAgain && plainOrderAgain.length > 0 && (
         <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-4 sm:py-6">
-           <div className="flex items-center justify-between mb-3 sm:mb-4">
-              <div className="flex items-center gap-2">
-                 <div className="w-7 h-7 rounded-xl bg-green-100 flex items-center justify-center text-[#0f8646]">
-                    <RotateCcw size={16} />
+           <div className="flex items-center justify-between mb-3.5 sm:mb-5">
+              <div className="flex items-center gap-2.5">
+                 <div className="w-8 h-8 rounded-xl bg-emerald-100/90 flex items-center justify-center text-[#0f8646] shadow-2xs border border-emerald-200/60 font-black">
+                    <RotateCcw size={16} className="stroke-[2.5]" />
                  </div>
                  <div>
-                    <h2 className="text-base sm:text-xl font-black text-gray-900">
+                    <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
                        Order Again
                     </h2>
-                    <p className="text-[11px] text-gray-500">
-                       Quickly reorder your previous staples
+                    <p className="text-[11px] sm:text-xs text-gray-500 font-medium hidden xs:block">
+                       Quickly reorder your previous staples with 1 tap
                     </p>
                  </div>
               </div>
@@ -132,7 +132,7 @@ export default async function Userdashbord() {
 
            <ProductCarousel>
              {plainOrderAgain.map((item: any) => (
-                <div key={item._id} className="w-[155px] sm:w-[200px] md:w-[210px] snap-start shrink-0 flex flex-col h-[300px] sm:h-[320px]">
+                <div key={item._id} className="w-[155px] sm:w-[200px] md:w-[210px] snap-start shrink-0 flex flex-col h-[325px] sm:h-[345px]">
                    <Groceryitemcard item={item} />
                 </div>
              ))}

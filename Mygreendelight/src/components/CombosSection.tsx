@@ -66,35 +66,35 @@ export default function CombosSection({
   };
 
   return (
-    <div className="w-full py-4 sm:py-8 bg-white">
+    <div className="w-full py-4 sm:py-6 bg-white">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Section Header */}
-        <div className="flex items-center justify-between mb-3.5 sm:mb-6">
+        <div className="flex items-center justify-between mb-3.5 sm:mb-5">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center font-black shrink-0">
-              <Percent size={18} />
+            <div className="w-8 h-8 rounded-xl bg-amber-100/90 text-amber-700 flex items-center justify-center font-black shrink-0 shadow-2xs border border-amber-200/60">
+              <Percent size={17} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-base sm:text-2xl font-black text-gray-900 tracking-tight">
-                  Save-More Value Combos & Multipacks
+                <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
+                  Value Combos & Multipacks
                 </h2>
-                <span className="hidden sm:inline-block bg-amber-100 text-amber-800 text-[9px] font-black px-1.5 py-0.2 rounded-full uppercase">
+                <span className="hidden sm:inline-block bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-0.5 rounded-full uppercase shadow-2xs border border-amber-200">
                   Up to 25% Off
                 </span>
               </div>
-              <p className="text-[10px] sm:text-xs text-gray-500 font-medium">
-                Curated kitchen produce packs with bundle savings
+              <p className="text-[11px] sm:text-xs text-gray-500 font-medium hidden xs:block">
+                Curated kitchen produce packs with bulk bundle savings
               </p>
             </div>
           </div>
 
           <Link
             href="/shop"
-            className="text-[#0f8646] hover:text-[#0c6a38] font-black text-xs sm:text-sm flex items-center gap-0.5 transition ml-1"
+            className="text-[#0f8646] hover:text-[#0c6a38] font-black text-xs sm:text-sm flex items-center gap-0.5 group transition bg-emerald-50 hover:bg-emerald-100/80 px-3 py-1.5 rounded-full border border-emerald-200/70 shadow-2xs shrink-0"
           >
-            <span>All Deals</span>
-            <ArrowRight size={14} />
+            <span>See All</span>
+            <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]" />
           </Link>
         </div>
 

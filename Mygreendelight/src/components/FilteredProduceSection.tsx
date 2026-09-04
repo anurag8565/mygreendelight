@@ -21,19 +21,19 @@ export default function FilteredProduceSection({
   const filteredItems = groceries.filter(currentChipObj.filterFn);
 
   return (
-    <div className="w-full bg-white py-3 sm:py-6">
+    <div className="w-full bg-white py-4 sm:py-6">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Section Header */}
-        <div className="flex items-center justify-between mb-2 sm:mb-3">
+        <div className="flex items-center justify-between mb-3.5 sm:mb-4">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-2xl bg-emerald-100 flex items-center justify-center text-[#0f8646] font-black">
-              <Sparkles size={18} />
+            <div className="w-8 h-8 rounded-xl bg-emerald-100/90 text-[#0f8646] flex items-center justify-center font-black shadow-2xs border border-emerald-200/60">
+              <Sparkles size={17} />
             </div>
             <div>
-              <h2 className="text-base sm:text-2xl font-black text-gray-900 tracking-tight">
-                🥬 Daily Fresh Farm Mandi
+              <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
+                Daily Fresh Farm Mandi
               </h2>
-              <p className="text-[11px] sm:text-xs text-gray-500 font-medium">
+              <p className="text-[11px] sm:text-xs text-gray-500 font-medium hidden xs:block">
                 1-Tap live filtered produce from local Bhopal contract farms
               </p>
             </div>
@@ -41,11 +41,11 @@ export default function FilteredProduceSection({
 
           <Link
             href="/shop"
-            className="text-[#0f8646] hover:text-[#0c6a38] font-black text-xs sm:text-sm flex items-center gap-0.5 group transition"
+            className="text-[#0f8646] hover:text-[#0c6a38] font-black text-xs sm:text-sm flex items-center gap-0.5 group transition bg-emerald-50 hover:bg-emerald-100/80 px-3 py-1.5 rounded-full border border-emerald-200/70 shadow-2xs shrink-0"
           >
-            <span>View all</span>
+            <span>See All</span>
             <ChevronRight
-              size={15}
+              size={14}
               className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]"
             />
           </Link>
@@ -63,7 +63,7 @@ export default function FilteredProduceSection({
             {filteredItems.map((item: any) => (
               <div
                 key={item._id}
-                className="w-[155px] sm:w-[200px] md:w-[210px] snap-start shrink-0 flex flex-col h-[300px] sm:h-[320px]"
+                className="w-[155px] sm:w-[200px] md:w-[210px] snap-start shrink-0 flex flex-col h-[325px] sm:h-[345px]"
               >
                 <Groceryitemcard item={item} />
               </div>

@@ -69,16 +69,16 @@ export default function Groceryitemcard({
     <motion.div
       whileHover={{ y: -4 }}
       transition={{ duration: 0.2 }}
-      className={`w-full bg-white rounded-3xl border border-gray-200/90 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between relative group ${
+      className={`w-full bg-white rounded-3xl border border-gray-200/80 hover:border-emerald-300 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_24px_rgba(15,134,70,0.10)] transition-all flex flex-col justify-between relative group ${
         isList
           ? "flex-row max-w-full gap-4 p-4 min-h-[140px]"
-          : "h-[325px] sm:h-[345px] p-3 sm:p-3.5"
+          : "h-[325px] sm:h-[345px] p-2.5 sm:p-3"
       }`}
     >
       {/* 1. TOP IMAGE BOX */}
       <Link
         href={`/product/${item._id}`}
-        className={`relative bg-gray-50/80 rounded-2xl flex items-center justify-center cursor-pointer overflow-hidden shrink-0 border border-gray-100 ${
+        className={`relative bg-gradient-to-b from-gray-50/90 via-gray-50/50 to-emerald-50/20 rounded-2xl flex items-center justify-center cursor-pointer overflow-hidden shrink-0 border border-gray-100/90 ${
           isList
             ? "w-[120px] h-[120px] sm:w-[140px] sm:h-[140px]"
             : "w-full h-[130px] sm:h-[145px]"
@@ -92,13 +92,13 @@ export default function Groceryitemcard({
 
         {/* Discount Badge */}
         {discountPercent > 0 && (
-          <span className="absolute top-2 left-2 bg-gradient-to-r from-emerald-600 to-[#0f8646] text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-xs border border-white/40">
+          <span className="absolute top-2 left-2 bg-gradient-to-r from-emerald-600 to-[#0f8646] text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-2xs border border-white/30">
             {discountPercent}% OFF
           </span>
         )}
 
         {/* 10 Min Delivery Tag */}
-        <span className="absolute bottom-1.5 left-2 bg-white/95 backdrop-blur-xs text-gray-800 text-[8.5px] font-black px-1.5 py-0.2 rounded-md shadow-2xs flex items-center gap-0.5 border border-gray-200/60">
+        <span className="absolute bottom-1.5 left-2 bg-white/95 backdrop-blur-xs text-gray-800 text-[8.5px] font-black px-1.5 py-0.5 rounded-md shadow-2xs flex items-center gap-0.5 border border-gray-200/60">
           <Zap size={9} className="text-amber-500 fill-amber-500" />
           <span>10 MINS</span>
         </span>

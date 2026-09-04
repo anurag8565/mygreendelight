@@ -172,10 +172,10 @@ export default function Testimonials({
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 sm:mb-6">
           <div>
-            <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-[#0f8646] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 mb-1">
+            <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-[#0f8646] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200/80 mb-1.5 shadow-2xs">
               <Sparkles size={11} /> Real Bhopal Families Love Us
             </span>
-            <h2 className="text-base sm:text-2xl font-black text-gray-900 tracking-tight">
+            <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
               Customer Reviews & Experiences
             </h2>
             <p className="text-[11px] sm:text-xs text-gray-500 font-medium mt-0.5">
@@ -187,7 +187,7 @@ export default function Testimonials({
             <button
               type="button"
               onClick={() => setIsModalOpen(true)}
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-3.5 py-2 rounded-xl font-black shadow-xs transition-all text-xs flex items-center gap-1 cursor-pointer"
+              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-full font-black shadow-2xs transition-all text-xs flex items-center gap-1.5 cursor-pointer active:scale-95"
             >
               <MessageSquarePlus size={14} />
               <span>Write a Review</span>

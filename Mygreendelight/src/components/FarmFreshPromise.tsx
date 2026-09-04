@@ -50,13 +50,13 @@ export default function FarmFreshPromise() {
   ];
 
   return (
-    <div className="w-full py-8 sm:py-12 bg-gradient-to-b from-green-50/40 via-white to-green-50/30 border-y border-green-100/60 font-sans">
+    <div className="w-full py-8 sm:py-12 bg-gradient-to-b from-emerald-50/40 via-white to-green-50/30 border-y border-emerald-100/60 font-sans">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 mb-6 sm:mb-8">
           <div>
-            <div className="inline-flex items-center gap-1.5 bg-green-100 text-[#0f8646] text-[10px] sm:text-xs font-black px-2.5 py-0.5 rounded-full mb-2">
+            <div className="inline-flex items-center gap-1.5 bg-emerald-100/90 text-[#0f8646] text-[10px] sm:text-xs font-black px-2.5 py-0.5 rounded-full mb-2 border border-emerald-200/60 shadow-2xs">
               <Leaf size={12} />
               <span>FARM TO FORK PROMISE</span>
             </div>
@@ -70,10 +70,10 @@ export default function FarmFreshPromise() {
 
           <Link
             href="/about"
-            className="inline-flex items-center gap-1 text-[#0f8646] hover:text-[#0c6a38] font-black text-xs sm:text-sm group self-start md:self-auto"
+            className="inline-flex items-center gap-1 text-[#0f8646] hover:text-[#0c6a38] font-black text-xs sm:text-sm group self-start md:self-auto bg-emerald-50 hover:bg-emerald-100/80 px-3 py-1.5 rounded-full border border-emerald-200/70 shadow-2xs"
           >
             <span>Hamari Story Jaanein</span>
-            <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+            <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]" />
           </Link>
         </div>
 

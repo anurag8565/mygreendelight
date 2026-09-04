@@ -85,24 +85,24 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
   }
 
   return (
-    <div className="w-full py-4 sm:py-6 bg-gradient-to-b from-orange-50/40 via-amber-50/20 to-white">
+    <div className="w-full py-4 sm:py-6 bg-gradient-to-b from-orange-50/50 via-amber-50/20 to-white">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         
         {/* Flash Deals Header Row */}
         <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-            <div className="w-8 h-8 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center shrink-0 shadow-2xs">
-              <Flame size={18} />
+            <div className="w-8 h-8 rounded-xl bg-orange-100/90 text-orange-600 flex items-center justify-center shrink-0 shadow-2xs border border-orange-200/60">
+              <Flame size={18} className="fill-orange-500 text-orange-500" />
             </div>
             
-            <h2 className="text-base sm:text-2xl font-black text-gray-900 tracking-tight">
-              🔥 Lightning Flash Deals
+            <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
+              Lightning Flash Deals
             </h2>
 
             {/* Live Admin-Controlled Timer */}
-            <div className="flex items-center gap-1.5 bg-red-50 border border-red-200 text-red-600 px-2.5 py-1 rounded-xl text-xs font-black shadow-2xs">
+            <div className="flex items-center gap-1.5 bg-red-50 border border-red-200/80 text-red-600 px-2.5 py-1 rounded-full text-xs font-black shadow-2xs">
               <Clock size={13} className="text-red-600 animate-pulse" />
-              <span className="font-mono tracking-wider">
+              <span className="font-mono tracking-wider text-[11px] sm:text-xs">
                 {isExpired
                   ? "Deal Ended"
                   : `Ends in ${timeLeft.hours}:${timeLeft.minutes}:${timeLeft.seconds}`}
@@ -110,7 +110,7 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
             </div>
 
             {badgeText && (
-              <span className="hidden md:inline-flex items-center gap-1 text-[11px] font-black text-[#0f8646] bg-green-100/80 border border-green-200 px-2.5 py-0.5 rounded-md uppercase tracking-wider">
+              <span className="hidden md:inline-flex items-center gap-1 text-[11px] font-black text-[#0f8646] bg-emerald-100/80 border border-emerald-200 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                 <Zap size={11} className="text-yellow-500 fill-yellow-500" />
                 {badgeText}
               </span>
@@ -119,10 +119,10 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
 
           <Link
             href="/shop"
-            className="text-[#0f8646] hover:text-[#0c6a38] font-black text-xs sm:text-sm flex items-center gap-0.5 group transition shrink-0"
+            className="text-[#0f8646] hover:text-[#0c6a38] font-black text-xs sm:text-sm flex items-center gap-0.5 group transition bg-emerald-50 hover:bg-emerald-100/80 px-3 py-1.5 rounded-full border border-emerald-200/70 shadow-2xs shrink-0"
           >
-            <span>See all</span>
-            <ChevronRight size={15} className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]" />
+            <span>See All</span>
+            <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]" />
           </Link>
         </div>
 
@@ -131,7 +131,7 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
           {products.map((item: any) => (
             <div
               key={item._id}
-              className="w-[155px] sm:w-[200px] md:w-[210px] snap-start shrink-0 flex flex-col h-[300px] sm:h-[320px]"
+              className="w-[155px] sm:w-[200px] md:w-[210px] snap-start shrink-0 flex flex-col h-[325px] sm:h-[345px]"
             >
               <Groceryitemcard item={item} />
             </div>
