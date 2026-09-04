@@ -13,13 +13,13 @@ export interface FilterChip {
 export const filterChipsList: FilterChip[] = [
   {
     id: "all",
-    label: "All Farm Produce",
+    label: "All Produce",
     icon: "🌱",
     filterFn: () => true,
   },
   {
     id: "leafy",
-    label: "Saag & Leafy Greens",
+    label: "Saag & Leafy",
     icon: "🥬",
     filterFn: (item) =>
       item.name?.toLowerCase().includes("palak") ||
@@ -33,7 +33,7 @@ export const filterChipsList: FilterChip[] = [
   },
   {
     id: "daily",
-    label: "Aloo, Pyaaz & Tamatar",
+    label: "Daily Essentials",
     icon: "🥔",
     filterFn: (item) =>
       item.name?.toLowerCase().includes("potato") ||
@@ -47,7 +47,7 @@ export const filterChipsList: FilterChip[] = [
   },
   {
     id: "fruits",
-    label: "Taaza Farm Fruits",
+    label: "Fresh Fruits",
     icon: "🍎",
     filterFn: (item) => item.category?.toLowerCase().includes("fruit"),
   },
@@ -65,7 +65,7 @@ export const filterChipsList: FilterChip[] = [
   },
   {
     id: "jain",
-    label: "100% Jain Friendly",
+    label: "Jain Friendly",
     icon: "🟢",
     filterFn: (item) => {
       const name = item.name?.toLowerCase() || "";
@@ -85,7 +85,7 @@ export const filterChipsList: FilterChip[] = [
   },
   {
     id: "under49",
-    label: "Under ₹49 Specials",
+    label: "Under ₹49",
     icon: "⚡",
     filterFn: (item) => (item.price || 0) <= 49,
   },
@@ -102,23 +102,22 @@ export default function QuickFilterChips({
 }: QuickFilterChipsProps) {
   return (
     <div className="w-full py-1">
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none snap-x">
+      <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 scrollbar-none snap-x">
         {filterChipsList.map((chip) => {
           const isActive = activeChip === chip.id;
           return (
             <motion.button
               key={chip.id}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.95 }}
+              whileTap={{ scale: 0.96 }}
               type="button"
               onClick={() => onSelectChip(chip.id)}
-              className={`snap-start shrink-0 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-[13px] font-black transition-all flex items-center gap-1.5 cursor-pointer border ${
+              className={`snap-start shrink-0 px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer border ${
                 isActive
-                  ? "bg-[#0f8646] text-white border-[#0f8646] shadow-xs shadow-emerald-700/20"
-                  : "bg-white/95 text-gray-700 border-gray-200/90 hover:bg-emerald-50/80 hover:border-emerald-300 shadow-2xs"
+                  ? "bg-[#0c831f] text-white border-[#0c831f] shadow-xs"
+                  : "bg-[#f8f9fa] text-gray-700 border-gray-200/80 hover:bg-gray-100"
               }`}
             >
-              <span className="text-sm">{chip.icon}</span>
+              <span className="text-xs">{chip.icon}</span>
               <span>{chip.label}</span>
             </motion.button>
           );

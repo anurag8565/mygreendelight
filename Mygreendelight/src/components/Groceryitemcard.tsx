@@ -3,7 +3,7 @@
 import { addToCart, decreaseQuantity, increaseQuantity } from "@/redux/CartSlice";
 import { toggleWishlist } from "@/redux/WishlistSlice";
 import { AppDispatch, RootState } from "@/redux/store";
-import { ShoppingCart, Heart, Plus, Minus, Bell, Zap, Sparkles } from "lucide-react";
+import { Heart, Plus, Minus, Bell, Zap } from "lucide-react";
 import mongoose from "mongoose";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -67,38 +67,38 @@ export default function Groceryitemcard({
 
   return (
     <motion.div
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.2 }}
-      className={`w-full bg-white rounded-3xl border border-gray-200/80 hover:border-emerald-300 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_24px_rgba(15,134,70,0.10)] transition-all flex flex-col justify-between relative group ${
+      whileHover={{ y: -3 }}
+      transition={{ duration: 0.15 }}
+      className={`w-full bg-white rounded-2xl sm:rounded-3xl border border-gray-100 hover:border-emerald-300 shadow-[0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] transition-all flex flex-col justify-between relative group font-sans ${
         isList
-          ? "flex-row max-w-full gap-4 p-4 min-h-[140px]"
-          : "h-[325px] sm:h-[345px] p-2.5 sm:p-3"
+          ? "flex-row max-w-full gap-4 p-3.5 min-h-[135px]"
+          : "h-[320px] sm:h-[340px] p-2.5 sm:p-3"
       }`}
     >
       {/* 1. TOP IMAGE BOX */}
       <Link
         href={`/product/${item._id}`}
-        className={`relative bg-gradient-to-b from-gray-50/90 via-gray-50/50 to-emerald-50/20 rounded-2xl flex items-center justify-center cursor-pointer overflow-hidden shrink-0 border border-gray-100/90 ${
+        className={`relative bg-[#f8f9fa] rounded-xl sm:rounded-2xl flex items-center justify-center cursor-pointer overflow-hidden shrink-0 border border-gray-100/80 ${
           isList
-            ? "w-[120px] h-[120px] sm:w-[140px] sm:h-[140px]"
+            ? "w-[110px] h-[110px] sm:w-[130px] sm:h-[130px]"
             : "w-full h-[130px] sm:h-[145px]"
         }`}
       >
         <img
           src={item.image}
           alt={item.name}
-          className="w-full h-full object-contain group-hover:scale-108 transition-transform duration-500 p-2"
+          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 p-2"
         />
 
         {/* Discount Badge */}
         {discountPercent > 0 && (
-          <span className="absolute top-2 left-2 bg-gradient-to-r from-emerald-600 to-[#0f8646] text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-2xs border border-white/30">
+          <span className="absolute top-2 left-2 bg-[#0c831f] text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded-md shadow-xs">
             {discountPercent}% OFF
           </span>
         )}
 
         {/* 10 Min Delivery Tag */}
-        <span className="absolute bottom-1.5 left-2 bg-white/95 backdrop-blur-xs text-gray-800 text-[8.5px] font-black px-1.5 py-0.5 rounded-md shadow-2xs flex items-center gap-0.5 border border-gray-200/60">
+        <span className="absolute bottom-1.5 left-2 bg-white/95 backdrop-blur-xs text-gray-800 text-[8.5px] font-black px-1.5 py-0.5 rounded-md shadow-2xs flex items-center gap-0.5 border border-gray-200/50">
           <Zap size={9} className="text-amber-500 fill-amber-500" />
           <span>10 MINS</span>
         </span>
@@ -116,10 +116,10 @@ export default function Groceryitemcard({
               console.log("Error updating wishlist", error);
             }
           }}
-          className="absolute top-2 right-2 p-1.5 bg-white/95 backdrop-blur-xs rounded-full shadow-2xs hover:bg-gray-100 transition-colors z-10 cursor-pointer border border-gray-200/60 active:scale-90"
+          className="absolute top-2 right-2 p-1.5 bg-white/90 backdrop-blur-xs rounded-full shadow-2xs hover:bg-white transition-colors z-10 cursor-pointer border border-gray-100 active:scale-90"
         >
           <Heart
-            size={14}
+            size={13}
             className={
               isLiked ? "text-rose-500 fill-rose-500" : "text-gray-400 hover:text-rose-500"
             }
@@ -129,7 +129,7 @@ export default function Groceryitemcard({
         {/* Out of Stock Overlay */}
         {displayStock <= 0 && (
           <div className="absolute inset-0 bg-white/80 backdrop-blur-2xs flex items-center justify-center z-10">
-            <span className="bg-red-600 text-white font-black text-[10px] uppercase px-3 py-1 rounded-full shadow-md">
+            <span className="bg-red-600 text-white font-black text-[10px] uppercase px-2.5 py-1 rounded-full shadow-md">
               Out of Stock
             </span>
           </div>
@@ -141,16 +141,16 @@ export default function Groceryitemcard({
         <div>
           {/* TITLE (Strict 2-line clamp) */}
           <Link href={`/product/${item._id}`}>
-            <h3 className="text-xs sm:text-[13px] font-black text-gray-900 leading-snug line-clamp-2 h-[34px] sm:h-[36px] group-hover:text-[#0f8646] transition-colors">
+            <h3 className="text-xs sm:text-[13px] font-bold text-gray-900 leading-snug line-clamp-2 h-[34px] sm:h-[36px] group-hover:text-[#0c831f] transition-colors">
               {item.name}
             </h3>
           </Link>
 
           {/* UNIT / WEIGHT & VARIATIONS SELECTOR */}
-          <div className="mt-1 min-h-[26px]">
+          <div className="mt-1 min-h-[24px]">
             {item.variations && item.variations.length > 1 ? (
               <select
-                className="w-full text-[10.5px] font-bold py-0.5 px-2 border border-emerald-200 rounded-lg outline-none focus:border-[#0f8646] bg-emerald-50/40 text-gray-800 h-[24px] cursor-pointer shadow-2xs hover:border-emerald-400 transition"
+                className="w-full text-[10px] font-semibold py-0.5 px-2 border border-gray-200 rounded-lg outline-none focus:border-[#0c831f] bg-gray-50 text-gray-700 h-[22px] cursor-pointer shadow-2xs"
                 value={selectedVariation?.weight || item.variations[0]?.weight}
                 onChange={(e) => {
                   const v = item.variations?.find((varItem) => varItem.weight === e.target.value);
@@ -164,18 +164,18 @@ export default function Groceryitemcard({
                 ))}
               </select>
             ) : (
-              <p className="text-[11px] text-gray-400 font-bold truncate h-[24px] flex items-center">
+              <p className="text-[11px] text-gray-400 font-medium truncate h-[22px] flex items-center">
                 {displayUnit}
               </p>
             )}
           </div>
 
           {/* PRICE ROW & SAVINGS */}
-          <div className="flex items-baseline gap-1.5 mt-1.5 h-[22px]">
+          <div className="flex items-baseline gap-1.5 mt-1 h-[20px]">
             <span className="text-sm sm:text-base font-black text-gray-950">
               ₹{displayPrice}
             </span>
-            <span className="text-[11px] text-gray-400 line-through font-medium">
+            <span className="text-[11px] text-gray-400 line-through font-normal">
               ₹{activeMRP}
             </span>
           </div>
@@ -187,10 +187,10 @@ export default function Groceryitemcard({
             <button
               type="button"
               onClick={() => setShowAlertModal(true)}
-              className="w-full h-[36px] rounded-xl flex items-center justify-center gap-1 font-black text-[11px] transition-all bg-amber-50 text-amber-800 border border-amber-300 hover:bg-amber-100 shadow-2xs cursor-pointer active:scale-95"
+              className="w-full h-[34px] rounded-xl flex items-center justify-center gap-1 font-bold text-[11px] transition-all bg-amber-50 text-amber-800 border border-amber-200 hover:bg-amber-100 shadow-2xs cursor-pointer active:scale-95"
             >
               <Bell size={12} className="stroke-[2.5]" />
-              <span>🔔 Notify Me</span>
+              <span>Notify Me</span>
             </button>
           ) : !cartitem ? (
             <button
@@ -216,16 +216,16 @@ export default function Groceryitemcard({
                   })
                 );
               }}
-              className="w-full h-[36px] rounded-xl flex items-center justify-center gap-1 font-black text-xs transition-all border border-[#0f8646] cursor-pointer bg-emerald-50/70 text-[#0f8646] hover:bg-[#0f8646] hover:text-white shadow-2xs active:scale-95 group/btn"
+              className="w-full h-[34px] rounded-xl flex items-center justify-center gap-1 font-black text-xs transition-all border border-[#0c831f] cursor-pointer bg-white text-[#0c831f] hover:bg-[#0c831f] hover:text-white shadow-2xs active:scale-95"
             >
-              <Plus size={14} className="stroke-[3] group-hover/btn:rotate-90 transition-transform" />
+              <Plus size={13} className="stroke-[3]" />
               <span>ADD</span>
             </button>
           ) : (
-            <div className="flex items-center justify-between bg-[#0f8646] text-white rounded-xl overflow-hidden h-[36px] shadow-sm">
+            <div className="flex items-center justify-between bg-[#0c831f] text-white rounded-xl overflow-hidden h-[34px] shadow-xs">
               <button
                 type="button"
-                className="w-10 h-full flex items-center justify-center hover:bg-black/15 transition font-black text-sm active:scale-90 cursor-pointer"
+                className="w-9 h-full flex items-center justify-center hover:bg-black/15 transition font-black text-sm active:scale-90 cursor-pointer"
                 onClick={() => {
                   if (typeof window !== "undefined" && navigator.vibrate) {
                     try { navigator.vibrate(15); } catch (e) {}
@@ -233,7 +233,7 @@ export default function Groceryitemcard({
                   dispatch(decreaseQuantity(currentCartItemId));
                 }}
               >
-                <Minus size={14} className="stroke-[3]" />
+                <Minus size={13} className="stroke-[3]" />
               </button>
               <span className="flex-1 text-center font-black text-xs text-white">
                 {cartitem.quantity}
@@ -241,7 +241,7 @@ export default function Groceryitemcard({
               <button
                 type="button"
                 disabled={cartitem.quantity >= displayStock}
-                className={`w-10 h-full flex items-center justify-center transition font-black text-sm active:scale-90 ${
+                className={`w-9 h-full flex items-center justify-center transition font-black text-sm active:scale-90 ${
                   cartitem.quantity >= displayStock
                     ? "bg-black/25 text-white/50 cursor-not-allowed"
                     : "hover:bg-black/15 cursor-pointer text-white"
@@ -253,7 +253,7 @@ export default function Groceryitemcard({
                   dispatch(increaseQuantity(currentCartItemId));
                 }}
               >
-                <Plus size={14} className="stroke-[3]" />
+                <Plus size={13} className="stroke-[3]" />
               </button>
             </div>
           )}
