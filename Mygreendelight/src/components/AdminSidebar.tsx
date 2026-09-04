@@ -32,6 +32,8 @@ import {
   BookOpen,
   Percent,
   Radio,
+  Building2,
+  Users,
   LogOut,
 } from "lucide-react";
 
@@ -79,6 +81,11 @@ export default function AdminSidebar() {
       name: "Coupons & Discounts",
       href: "/admin/managecoupons",
       icon: <Tag size={18} />,
+    },
+    {
+      name: "Society Pools & Discounts",
+      href: "/admin/manage-societies",
+      icon: <Building2 size={18} />,
     },
     {
       name: "Value Combos & Packs",

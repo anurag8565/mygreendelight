@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDb from "@/lib/db";
 import Society from "@/model/society.model";
 import Order from "@/model/order";
+import { auth } from "@/auth";
+import User from "@/model/user.model";
 
 const INITIAL_BHOPAL_SOCIETIES = [
   {
@@ -75,58 +77,108 @@ const INITIAL_BHOPAL_SOCIETIES = [
 export async function GET(req: NextRequest) {
   try {
     await connectDb();
+    const session = await auth();
+    if (!session?.user?.email) {
+      return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
+    }
 
-    // Auto seed if collection is completely empty
+    const user = await User.findOne({ email: session.user.email });
+    if (!user || user.role !== "admin") {
+      return NextResponse.json({ success: false, message: "Admin access required" }, { status: 403 });
+    }
+
+    // Auto seed if collection is empty
     const count = await Society.countDocuments();
     if (count === 0) {
       await Society.insertMany(INITIAL_BHOPAL_SOCIETIES);
     }
 
-    const societies = await Society.find({ isActive: true }).sort({ createdAt: -1 });
+    const societies = await Society.find().sort({ createdAt: -1 });
 
-    // Check orders placed in the last 48 hours for society pool
+    // Calculate actual matching orders placed in the last 48 hours for each society
     const sinceTime = new Date(Date.now() - 48 * 60 * 60 * 1000);
-
     const recentOrders = await Order.find({
       createdAt: { $gte: sinceTime },
       status: { $ne: "cancelled" },
-    }).select("address createdAt");
+    }).select("address createdAt totalamount");
 
-    const poolResults = societies.map((doc) => {
+    const enrichedSocieties = societies.map((doc) => {
       const soc = doc.toObject();
       const keywords = (soc.keywords && soc.keywords.length > 0)
         ? soc.keywords
         : [soc.name.toLowerCase(), soc.locality.toLowerCase()];
 
-      // Match actual live orders against society keywords
-      const matchCount = recentOrders.filter((ord) => {
+      const matchingOrders = recentOrders.filter((ord) => {
         const fullAddr = (ord.address?.fulladress || "").toLowerCase();
         const city = (ord.address?.city || "").toLowerCase();
         return keywords.some((kw: string) => fullAddr.includes(kw.toLowerCase()) || city.includes(kw.toLowerCase()));
-      }).length;
-
-      const isUnlocked = matchCount >= soc.targetOrders;
+      });
 
       return {
-        id: soc._id.toString(),
-        slug: soc.slug,
-        name: soc.name,
-        locality: soc.locality,
-        landmark: soc.landmark,
-        pincode: soc.pincode,
-        targetOrders: soc.targetOrders,
-        discountPercent: soc.discountPercent,
-        currentOrders: matchCount,
-        isUnlocked,
-        ordersNeeded: Math.max(0, soc.targetOrders - matchCount),
+        ...soc,
+        currentOrders: matchingOrders.length,
+        isUnlocked: matchingOrders.length >= soc.targetOrders,
+        ordersNeeded: Math.max(0, soc.targetOrders - matchingOrders.length),
       };
     });
 
     return NextResponse.json({
       success: true,
-      societies: poolResults,
-      discountPercent: 5,
-      totalActivePools: poolResults.filter((p) => p.isUnlocked).length,
+      societies: enrichedSocieties,
+    });
+  } catch (error: any) {
+    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
+  }
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    await connectDb();
+    const session = await auth();
+    if (!session?.user?.email) {
+      return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
+    }
+
+    const user = await User.findOne({ email: session.user.email });
+    if (!user || user.role !== "admin") {
+      return NextResponse.json({ success: false, message: "Admin access required" }, { status: 403 });
+    }
+
+    const body = await req.json();
+    const { name, locality, landmark, pincode, targetOrders, discountPercent, keywords, isActive } = body;
+
+    if (!name || !locality) {
+      return NextResponse.json({ success: false, message: "Name and Locality are required" }, { status: 400 });
+    }
+
+    const slug = name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
+    const existing = await Society.findOne({ slug });
+    if (existing) {
+      return NextResponse.json({ success: false, message: "Society with this name already exists" }, { status: 400 });
+    }
+
+    const newSociety = await Society.create({
+      name,
+      slug,
+      locality,
+      landmark: landmark || "",
+      pincode: pincode || "462001",
+      targetOrders: Number(targetOrders) || 3,
+      discountPercent: Number(discountPercent) || 5,
+      keywords: Array.isArray(keywords)
+        ? keywords
+        : (keywords ? keywords.split(",").map((k: string) => k.trim()).filter(Boolean) : [locality.toLowerCase()]),
+      isActive: isActive !== undefined ? isActive : true,
+    });
+
+    return NextResponse.json({
+      success: true,
+      society: newSociety,
+      message: "Society created successfully in database",
     });
   } catch (error: any) {
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
