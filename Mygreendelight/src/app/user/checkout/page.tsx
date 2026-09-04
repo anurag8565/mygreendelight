@@ -85,18 +85,35 @@ export default function Checkout() {
   const effectiveDeliveryFee = deliveryFee;
   const finalPayableTotal = Math.max(0, subtotal + effectiveDeliveryFee + riderTip - discount);
 
+  const BHOPAL_CENTER = { lat: 23.1985, lng: 77.4475 };
+
+  const getDistanceFromBhopalKm = (lat: number, lon: number) => {
+    const R = 6371;
+    const dLat = ((lat - BHOPAL_CENTER.lat) * Math.PI) / 180;
+    const dLon = ((lon - BHOPAL_CENTER.lng) * Math.PI) / 180;
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos((BHOPAL_CENTER.lat * Math.PI) / 180) *
+        Math.cos((lat * Math.PI) / 180) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  };
+
   const [address, setaddress] = useState({
     fullname: "",
     mobile: "",
     city: "Bhopal",
     state: "Madhya Pradesh",
-    pincode: "462001",
+    pincode: "462043",
     fulladress: "",
   });
 
   const [position, setposition] = useState<[number, number] | null>([
-    23.2599, 77.4126,
-  ]); // Default to Bhopal coords
+    23.1985, 77.4475,
+  ]); // Default to Amrai, Bagsewaniya, Bhopal
+  const [outsideBhopalWarning, setOutsideBhopalWarning] = useState<string | null>(null);
 
   useEffect(() => {
     if (userdata?.name && !address.fullname) {
@@ -113,10 +130,21 @@ export default function Checkout() {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           const { latitude, longitude } = pos.coords;
-          setposition([latitude, longitude]);
+          const dist = getDistanceFromBhopalKm(latitude, longitude);
+          if (dist > 35) {
+            // Outside Bhopal (e.g. Agra, Delhi, etc.)
+            setposition([23.1985, 77.4475]); // Keep pinned to Bhopal
+            setOutsideBhopalWarning(
+              `📍 Your device GPS detected a location outside Bhopal (${dist.toFixed(0)} km away). MyGreenDelight delivers exclusively across Bhopal (MP - 462xxx). Please search or select your Bhopal delivery address.`
+            );
+          } else {
+            setposition([latitude, longitude]);
+            setOutsideBhopalWarning(null);
+          }
         },
         (err) => {
           console.log("Location error:", err);
+          setposition([23.1985, 77.4475]);
         },
         {
           enableHighAccuracy: true,
@@ -138,7 +166,17 @@ export default function Checkout() {
       });
 
       if (results.length) {
-        setposition([results[0].y, results[0].x]);
+        const newLat = results[0].y;
+        const newLng = results[0].x;
+        const dist = getDistanceFromBhopalKm(newLat, newLng);
+        if (dist <= 40) {
+          setposition([newLat, newLng]);
+          setOutsideBhopalWarning(null);
+        } else {
+          setOutsideBhopalWarning(
+            "The searched place is outside our Bhopal delivery zone. Please choose a location within Bhopal."
+          );
+        }
       }
     } catch (err) {
       console.log(err);
@@ -150,17 +188,36 @@ export default function Checkout() {
   useEffect(() => {
     const fetchaddress = async () => {
       if (!position) return;
+      const dist = getDistanceFromBhopalKm(position[0], position[1]);
+      if (dist > 35) {
+        setOutsideBhopalWarning(
+          "⚠️ Selected location is outside Bhopal. Delivery is available exclusively across Bhopal city (MP - 462xxx)."
+        );
+        setaddress((prev) => ({
+          ...prev,
+          city: "Bhopal",
+          state: "Madhya Pradesh",
+          pincode: "462043",
+        }));
+        return;
+      }
+
+      setOutsideBhopalWarning(null);
+
       try {
         const result = await axios.get(
           `https://nominatim.openstreetmap.org/reverse?lat=${position[0]}&lon=${position[1]}&format=json`
         );
         if (result.data) {
+          const rawPostcode = result.data.address?.postcode || "";
+          const validPostcode = rawPostcode.startsWith("462") ? rawPostcode : "462043";
+
           setaddress((prev) => ({
             ...prev,
-            city: result.data.address?.city || result.data.address?.town || "Bhopal",
-            state: result.data.address?.state || "Madhya Pradesh",
-            pincode: result.data.address?.postcode || "462001",
-            fulladress: result.data.display_name,
+            city: "Bhopal",
+            state: "Madhya Pradesh",
+            pincode: validPostcode,
+            fulladress: result.data.display_name || prev.fulladress,
           }));
         }
       } catch (error) {
@@ -178,6 +235,19 @@ export default function Checkout() {
     }
     if (!position) {
       alert("Please select delivery location on the map.");
+      return;
+    }
+    const dist = getDistanceFromBhopalKm(position[0], position[1]);
+    if (dist > 35) {
+      alert(
+        "⚠️ Delivery is available exclusively across Bhopal city (MP - 462xxx). Please select an address within Bhopal."
+      );
+      return;
+    }
+    if (!address.pincode.startsWith("462")) {
+      alert(
+        "⚠️ Please enter a valid Bhopal pincode (must start with 462, e.g. 462043, 462001)."
+      );
       return;
     }
     if (!address.fullname.trim() || !address.mobile.trim()) {
@@ -418,7 +488,16 @@ export default function Checkout() {
                   onClick={() => {
                     if (navigator.geolocation) {
                       navigator.geolocation.getCurrentPosition((pos) => {
-                        setposition([pos.coords.latitude, pos.coords.longitude]);
+                        const dist = getDistanceFromBhopalKm(pos.coords.latitude, pos.coords.longitude);
+                        if (dist > 35) {
+                          setposition([23.1985, 77.4475]);
+                          setOutsideBhopalWarning(
+                            `📍 Your device GPS detected a location outside Bhopal (${dist.toFixed(0)} km away). MyGreenDelight delivers exclusively across Bhopal (MP - 462xxx). Please search or select your Bhopal delivery address.`
+                          );
+                        } else {
+                          setposition([pos.coords.latitude, pos.coords.longitude]);
+                          setOutsideBhopalWarning(null);
+                        }
                       });
                     }
                   }}
@@ -428,6 +507,17 @@ export default function Checkout() {
                   <span>Use GPS Location</span>
                 </button>
               </div>
+
+              {/* Outside Bhopal Warning if GPS detects outside */}
+              {outsideBhopalWarning && (
+                <div className="mb-4 bg-amber-50 border border-amber-300 rounded-2xl p-3.5 flex items-start gap-2.5 text-amber-950 text-xs shadow-2xs">
+                  <MapPin size={18} className="text-amber-600 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-black block text-amber-900">Bhopal Delivery Service Only</span>
+                    <p className="mt-0.5 text-amber-800 leading-relaxed">{outsideBhopalWarning}</p>
+                  </div>
+                </div>
+              )}
 
               {/* Form Fields */}
               <div className="space-y-4">
@@ -471,11 +561,11 @@ export default function Checkout() {
 
                 <div>
                   <label className="block text-xs font-bold text-gray-700 mb-1">
-                    House / Flat No. & Street Address *
+                    House / Flat No. & Street Address (Bhopal) *
                   </label>
                   <textarea
                     rows={2}
-                    placeholder="e.g. Flat 302, Green Meadows, Arera Colony"
+                    placeholder="e.g. Flat 302, Green Meadows, Amrai / Bagsewaniya / Arera Colony"
                     value={address.fulladress}
                     onChange={(e) =>
                       setaddress((prev) => ({ ...prev, fulladress: e.target.value }))
@@ -486,12 +576,15 @@ export default function Checkout() {
 
                 <div className="grid grid-cols-3 gap-3">
                   <div>
-                    <label className="block text-xs font-bold text-gray-700 mb-1">City</label>
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="block text-xs font-bold text-gray-700">City</label>
+                      <span className="text-[9px] font-black text-[#0f8646] bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">Bhopal Only</span>
+                    </div>
                     <input
                       type="text"
-                      value={address.city}
-                      onChange={(e) => setaddress((prev) => ({ ...prev, city: e.target.value }))}
-                      className="w-full border border-gray-200 rounded-xl p-2.5 text-xs font-bold outline-none focus:border-[#0f8646] bg-gray-50/60"
+                      value="Bhopal"
+                      readOnly
+                      className="w-full border border-gray-200 rounded-xl p-2.5 text-xs font-black outline-none bg-emerald-50/40 text-emerald-950 cursor-not-allowed"
                     />
                   </div>
 
@@ -499,20 +592,36 @@ export default function Checkout() {
                     <label className="block text-xs font-bold text-gray-700 mb-1">State</label>
                     <input
                       type="text"
-                      value={address.state}
-                      onChange={(e) => setaddress((prev) => ({ ...prev, state: e.target.value }))}
-                      className="w-full border border-gray-200 rounded-xl p-2.5 text-xs font-bold outline-none focus:border-[#0f8646] bg-gray-50/60"
+                      value="Madhya Pradesh"
+                      readOnly
+                      className="w-full border border-gray-200 rounded-xl p-2.5 text-xs font-black outline-none bg-emerald-50/40 text-emerald-950 cursor-not-allowed"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-gray-700 mb-1">Pincode</label>
+                    <label className="block text-xs font-bold text-gray-700 mb-1">
+                      Bhopal Pincode (462xxx) *
+                    </label>
                     <input
                       type="text"
+                      maxLength={6}
+                      placeholder="462043"
                       value={address.pincode}
-                      onChange={(e) => setaddress((prev) => ({ ...prev, pincode: e.target.value }))}
-                      className="w-full border border-gray-200 rounded-xl p-2.5 text-xs font-bold outline-none focus:border-[#0f8646] bg-gray-50/60"
+                      onChange={(e) => {
+                        const val = e.target.value.replace(/\D/g, "").slice(0, 6);
+                        setaddress((prev) => ({ ...prev, pincode: val }));
+                      }}
+                      className={`w-full border rounded-xl p-2.5 text-xs font-black outline-none bg-gray-50/60 ${
+                        address.pincode && !address.pincode.startsWith("462")
+                          ? "border-red-500 text-red-600 bg-red-50/40"
+                          : "border-gray-200 focus:border-[#0f8646]"
+                      }`}
                     />
+                    {address.pincode && !address.pincode.startsWith("462") && (
+                      <span className="text-[10px] text-red-600 font-bold block mt-0.5">
+                        Must start with 462
+                      </span>
+                    )}
                   </div>
                 </div>
 

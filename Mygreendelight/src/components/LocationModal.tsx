@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
@@ -113,12 +113,34 @@ export default function LocationModal({
       async (position) => {
         try {
           const { latitude, longitude } = position.coords;
+          
+          // Check distance from Bhopal
+          const R = 6371;
+          const bhopalLat = 23.259933;
+          const bhopalLng = 77.412613;
+          const dLat = ((latitude - bhopalLat) * Math.PI) / 180;
+          const dLon = ((longitude - bhopalLng) * Math.PI) / 180;
+          const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos((bhopalLat * Math.PI) / 180) *
+              Math.cos((latitude * Math.PI) / 180) *
+              Math.sin(dLon / 2) *
+              Math.sin(dLon / 2);
+          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+          const distKm = R * c;
+
+          if (distKm > 35) {
+            alert("📍 Note: MyGreenDelight operates exclusively across Bhopal city. Location set to Bhopal Central.");
+            saveLocationChoice("Bagsewaniya (Amrai), Bhopal");
+            return;
+          }
+
           const res = await fetch(
             `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`
           );
           const data = await res.json();
 
-          let detected = "Bhopal, Madhya Pradesh";
+          let detected = "Bagsewaniya (Amrai), Bhopal";
           if (data?.display_name) {
             const parts = data.display_name.split(",");
             detected = parts.slice(0, 3).join(", ").trim();
@@ -129,7 +151,7 @@ export default function LocationModal({
           saveLocationChoice(detected);
         } catch (error) {
           console.error("GPS detection error:", error);
-          saveLocationChoice("Bhopal, Madhya Pradesh");
+          saveLocationChoice("Bagsewaniya (Amrai), Bhopal");
         } finally {
           setIsDetecting(false);
         }

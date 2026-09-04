@@ -44,6 +44,16 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Validate Bhopal Delivery Zone
+    const pincodeStr = String(address?.pincode || "").trim();
+    const cityStr = String(address?.city || "").toLowerCase().trim();
+    if (!pincodeStr.startsWith("462") && !cityStr.includes("bhopal")) {
+      return NextResponse.json(
+        { success: false, message: "Delivery is available exclusively across Bhopal city (MP - 462xxx)." },
+        { status: 400 }
+      );
+    }
+
     // Sanitize items: ensure invalid/custom ObjectIds don't crash Mongoose
     const sanitizedItems = items.map((item: any) => {
       const isValid = item.grocery && mongoose.Types.ObjectId.isValid(item.grocery);
