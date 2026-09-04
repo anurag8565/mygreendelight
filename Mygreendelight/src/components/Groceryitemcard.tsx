@@ -87,6 +87,10 @@ export default function Groceryitemcard({
         <img
           src={item.image}
           alt={item.name}
+          onError={(e) => {
+            (e.target as HTMLImageElement).src =
+              "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=500&q=80";
+          }}
           className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 p-2"
         />
 

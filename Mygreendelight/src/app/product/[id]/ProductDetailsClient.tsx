@@ -177,6 +177,10 @@ export default function ProductDetailsClient({
                 <img
                   src={product.image}
                   alt={product.name}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src =
+                      "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=500&q=80";
+                  }}
                   className="w-full h-full object-contain group-hover:scale-108 transition-transform duration-500 drop-shadow-md"
                 />
 
