@@ -35,6 +35,7 @@ export default function LocationModal({
   const [isSearchingLive, setIsSearchingLive] = useState(false);
   const [liveSuggestions, setLiveSuggestions] = useState<any[]>([]);
   const [recentLocations, setRecentLocations] = useState<string[]>([]);
+  const [outsideWarning, setOutsideWarning] = useState<string | null>(null);
   const searchDebounceRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -122,6 +123,7 @@ export default function LocationModal({
     }
 
     setIsDetecting(true);
+    setOutsideWarning(null);
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         try {
@@ -143,8 +145,9 @@ export default function LocationModal({
           const distKm = R * c;
 
           if (distKm > 35) {
-            alert("📍 Note: MyGreenDelight operates exclusively across Bhopal city. Location set to Bhopal Central.");
-            saveLocationChoice("Bagsewaniya (Amrai), Bhopal");
+            setOutsideWarning(
+              `🚫 GPS location is outside Bhopal (~${distKm.toFixed(0)} km away). MyGreenDelight operates exclusively across Bhopal city limits (MP - 462xxx).`
+            );
             return;
           }
 
@@ -237,6 +240,16 @@ export default function LocationModal({
 
             {/* Content Body */}
             <div className="p-4 sm:p-5 overflow-y-auto flex-1 space-y-4">
+              {/* Red Warning Banner for Outside Bhopal */}
+              {outsideWarning && (
+                <div className="p-3.5 bg-red-50 border-2 border-red-300 rounded-2xl flex items-start gap-2.5 text-red-950 text-xs shadow-2xs">
+                  <span className="text-base">🚫</span>
+                  <div>
+                    <span className="font-black block text-red-900">Delivery Unavailable</span>
+                    <p className="text-[11px] text-red-800 font-medium leading-relaxed">{outsideWarning}</p>
+                  </div>
+                </div>
+              )}
               {/* 1. GPS Auto-Detect Button */}
               <button
                 type="button"

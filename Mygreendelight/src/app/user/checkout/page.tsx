@@ -94,7 +94,9 @@ export default function Checkout() {
   const [landmark, setLandmark] = useState("");
   const [fullname, setFullname] = useState("");
   const [mobile, setMobile] = useState("");
+  const [isLocating, setIsLocating] = useState(false);
   const [outsideBhopalNotice, setOutsideBhopalNotice] = useState<string | null>(null);
+  const [insideBhopalSuccess, setInsideBhopalSuccess] = useState<string | null>(null);
 
   useEffect(() => {
     if (userdata) {
@@ -107,11 +109,16 @@ export default function Checkout() {
 
   const handleGPSDetect = () => {
     if (!navigator.geolocation) {
-      alert("Geolocation is not supported on your device");
+      alert("Geolocation is not supported on your browser/device.");
       return;
     }
+    setIsLocating(true);
+    setOutsideBhopalNotice(null);
+    setInsideBhopalSuccess(null);
+
     navigator.geolocation.getCurrentPosition(
       (pos) => {
+        setIsLocating(false);
         const { latitude, longitude } = pos.coords;
         // Distance calculation from Bhopal Center
         const bhopalLat = 23.2599;
@@ -129,13 +136,13 @@ export default function Checkout() {
         const distKm = R * c;
 
         if (distKm > 35) {
+          // OUTSIDE BHOPAL -> RED WARNING
           setOutsideBhopalNotice(
-            `📍 Your device GPS is outside Bhopal (${distKm.toFixed(0)} km away). MyGreenDelight provides 10-15 min express delivery exclusively across Bhopal. Your delivery location is locked to Bhopal Store Hub.`
+            `🚫 Delivery Unavailable at Your Current GPS Location! Your device location is outside Bhopal (~${distKm.toFixed(0)} km away). MyGreenDelight delivers exclusively across Bhopal city (MP - 462xxx). Please select your Bhopal delivery area from the dropdown below.`
           );
-          setSelectedAreaIndex(0);
+          setInsideBhopalSuccess(null);
         } else {
-          setOutsideBhopalNotice(null);
-          // Find nearest Bhopal area
+          // INSIDE BHOPAL -> GREEN SUCCESS & AUTO SELECT NEAREST AREA
           let nearestIdx = 0;
           let minD = 9999;
           BHOPAL_AREAS.forEach((ar, idx) => {
@@ -146,12 +153,18 @@ export default function Checkout() {
             }
           });
           setSelectedAreaIndex(nearestIdx);
+          setInsideBhopalSuccess(
+            `✅ Location Verified: Closest Bhopal delivery hub pinpointed as "${BHOPAL_AREAS[nearestIdx].name}" (PIN: ${BHOPAL_AREAS[nearestIdx].pincode}).`
+          );
+          setOutsideBhopalNotice(null);
         }
       },
       (err) => {
-        console.log("GPS detect:", err);
+        setIsLocating(false);
+        console.log("GPS detect error:", err);
+        alert("Could not access GPS. Please ensure location permissions are allowed in your browser.");
       },
-      { enableHighAccuracy: true, timeout: 6000 }
+      { enableHighAccuracy: true, timeout: 8000 }
     );
   };
 
@@ -426,14 +439,51 @@ export default function Checkout() {
           </div>
         </div>
 
-        {/* Outside Bhopal Alert if GPS queried */}
+        {/* Outside Bhopal Alert: RED WARNING */}
         {outsideBhopalNotice && (
-          <div className="mb-6 bg-amber-50 border border-amber-300 rounded-2xl p-4 flex items-start gap-3 text-amber-950 text-xs shadow-xs">
-            <AlertCircle size={18} className="text-amber-600 shrink-0 mt-0.5" />
-            <div>
-              <span className="font-black text-amber-900 block text-sm">Bhopal Delivery Notice</span>
-              <p className="mt-0.5 text-amber-800 leading-relaxed">{outsideBhopalNotice}</p>
+          <div className="mb-6 bg-red-50 border-2 border-red-300 rounded-2xl p-4 sm:p-5 flex items-start justify-between gap-3 text-red-950 shadow-sm animate-pulse">
+            <div className="flex items-start gap-3">
+              <AlertCircle size={22} className="text-red-600 shrink-0 mt-0.5" />
+              <div>
+                <span className="font-black text-red-900 block text-sm sm:text-base">
+                  Delivery Unavailable Outside Bhopal
+                </span>
+                <p className="mt-1 text-xs text-red-800 leading-relaxed font-medium">
+                  {outsideBhopalNotice}
+                </p>
+              </div>
             </div>
+            <button
+              type="button"
+              onClick={() => setOutsideBhopalNotice(null)}
+              className="text-red-500 hover:text-red-800 p-1 font-bold text-xs cursor-pointer shrink-0"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+
+        {/* Inside Bhopal Success Banner: GREEN CONFIRMATION */}
+        {insideBhopalSuccess && (
+          <div className="mb-6 bg-emerald-50 border border-emerald-300 rounded-2xl p-4 flex items-start justify-between gap-3 text-emerald-950 shadow-2xs">
+            <div className="flex items-start gap-2.5">
+              <CheckCircle2 size={20} className="text-[#0f8646] shrink-0 mt-0.5" />
+              <div>
+                <span className="font-black text-emerald-900 block text-xs sm:text-sm">
+                  Bhopal Location Verified
+                </span>
+                <p className="mt-0.5 text-xs text-emerald-800 font-medium">
+                  {insideBhopalSuccess}
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setInsideBhopalSuccess(null)}
+              className="text-emerald-600 hover:text-emerald-900 p-1 font-bold text-xs cursor-pointer shrink-0"
+            >
+              ✕
+            </button>
           </div>
         )}
 
@@ -461,10 +511,11 @@ export default function Checkout() {
                 <button
                   type="button"
                   onClick={handleGPSDetect}
-                  className="inline-flex items-center gap-1.5 text-[11px] font-extrabold text-[#0f8646] bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-xl transition cursor-pointer"
+                  disabled={isLocating}
+                  className="inline-flex items-center gap-1.5 text-[11px] font-extrabold text-[#0f8646] bg-emerald-50 hover:bg-emerald-100 px-3.5 py-2 rounded-xl transition cursor-pointer disabled:opacity-60 shadow-2xs"
                 >
-                  <Navigation size={12} />
-                  <span>Auto-detect Area</span>
+                  <Navigation size={13} className={isLocating ? "animate-spin" : ""} />
+                  <span>{isLocating ? "Detecting GPS..." : "Locate My Area"}</span>
                 </button>
               </div>
 
