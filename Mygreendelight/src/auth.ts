@@ -7,6 +7,13 @@ import Google from "next-auth/providers/google"
 
 process.env.AUTH_TRUST_HOST = "true";
 
+if (process.env.NEXTAUTH_URL && (process.env.NEXTAUTH_URL.includes("vercel.app") || process.env.NEXTAUTH_URL.includes("mygreendelight.com"))) {
+    process.env.NEXTAUTH_URL = "https://subziquick.in";
+}
+if (process.env.AUTH_URL && (process.env.AUTH_URL.includes("vercel.app") || process.env.AUTH_URL.includes("mygreendelight.com"))) {
+    process.env.AUTH_URL = "https://subziquick.in";
+}
+
 const FALLBACK_SECRET = "quickbasket_super_secret_key_2026_subziquick_production_jwt";
 if (!process.env.AUTH_SECRET) {
     process.env.AUTH_SECRET = (process.env.NEXTAUTH_SECRET || "").trim() || FALLBACK_SECRET;
