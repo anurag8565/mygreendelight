@@ -38,18 +38,19 @@ import VoiceSearchModal from "./VoiceSearchModal";
 import MiniCart from "./MiniCart";
 import LocationModal from "./LocationModal";
 import Logo from "./Logo";
+import useGetMe from "@/hooks/useGetMe";
 
 interface iUser {
   _id?: mongoose.Types.ObjectId;
   name: string;
   email: string;
-  password: string;
-  mobile?: string;
-  role: "user" | "admin" | "deliveryboy";
+  role: string;
   image?: string;
+  mobile?: string;
 }
 
 export default function Nav({ user }: { user?: iUser | null }) {
+  useGetMe();
   const router = useRouter();
   const pathname = usePathname();
   const dispatch = useDispatch<AppDispatch>();
@@ -67,9 +68,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
   const { userdata } = useSelector((state: RootState) => state.user);
   const { data: session } = useSession();
 
-  const currentUser: any = (user && user.email)
-    ? user
-    : (userdata && (userdata as any).email)
+  const currentUser: any = (userdata && (userdata as any).email)
     ? userdata
     : (session?.user && session.user.email)
     ? {
@@ -78,6 +77,8 @@ export default function Nav({ user }: { user?: iUser | null }) {
         role: (session.user as any).role || "user",
         image: session.user.image || "",
       }
+    : (user && user.email)
+    ? user
     : null;
 
   const [search, setSearch] = useState("");
