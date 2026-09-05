@@ -13,46 +13,58 @@ const CATEGORY_CONFIG: Record<
     displayName: string;
     subTitle: string;
     badge: string;
+    badgeColor: string;
     imgUrl: string;
+    accentBg: string;
   }
 > = {
   vegetables: {
     displayName: "Daily Vegetables",
-    subTitle: "Farm Fresh Today",
-    badge: "Fresh Today",
+    subTitle: "Farm Harvested Today",
+    badge: "100% Fresh",
+    badgeColor: "bg-emerald-600/90 text-white",
     imgUrl: "/categories/vegetables.jpg",
+    accentBg: "from-emerald-50/70 to-green-50/20",
   },
   fruits: {
     displayName: "Fresh Fruits",
-    subTitle: "Sweet & Juicy",
-    badge: "Seasonal",
+    subTitle: "Juicy & Naturally Sweet",
+    badge: "Seasonal Sweet",
+    badgeColor: "bg-amber-600/90 text-white",
     imgUrl: "/categories/fruits.jpg",
-  },
-  "dairy & staples": {
-    displayName: "Dairy & Staples",
-    subTitle: "Milk, Ghee & Atta",
-    badge: "100% Pure",
-    imgUrl: "/categories/dairy.jpg",
+    accentBg: "from-amber-50/70 to-orange-50/20",
   },
   exotics: {
     displayName: "Exotics & Greens",
-    subTitle: "Hydroponic Picks",
-    badge: "Premium",
+    subTitle: "Hydroponic & Gourmet",
+    badge: "Premium Quality",
+    badgeColor: "bg-purple-600/90 text-white",
     imgUrl: "/categories/exotic.jpg",
+    accentBg: "from-purple-50/70 to-pink-50/20",
+  },
+  "dairy & staples": {
+    displayName: "Dairy & Staples",
+    subTitle: "Pure Milk & Farm Staples",
+    badge: "100% Pure",
+    badgeColor: "bg-blue-600/90 text-white",
+    imgUrl: "/categories/dairy.jpg",
+    accentBg: "from-blue-50/70 to-sky-50/20",
   },
   "ready-to-cook & cut produce": {
     displayName: "Cut & Ready",
-    subTitle: "Peeled & Chopped",
+    subTitle: "Chopped & Peeled",
     badge: "Zero Prep",
+    badgeColor: "bg-teal-600/90 text-white",
     imgUrl: "/categories/ready_to_cook.jpg",
+    accentBg: "from-teal-50/70 to-emerald-50/20",
   },
 };
 
 const PRIORITY_ORDER = [
   "vegetables",
   "fruits",
-  "dairy & staples",
   "exotics",
+  "dairy & staples",
   "ready-to-cook & cut produce",
 ];
 
@@ -82,7 +94,7 @@ export default function CategorySlider({
   }, [categories]);
 
   const organizeCategories = (list: any[]) => {
-    // Only use categories that actually exist in the database
+    // Only use categories that strictly exist in the database
     const sorted = [...list].sort((a, b) => {
       const nameA = (a.name || "").toLowerCase().trim();
       const nameB = (b.name || "").toLowerCase().trim();
@@ -105,8 +117,7 @@ export default function CategorySlider({
 
   const count = activeCategories.length;
 
-  // Dynamically adapt grid columns on tablet/desktop so layout is always balanced
-  // e.g. 3 categories -> 3 columns, 4 categories -> 4 columns, 5 categories -> 5 columns
+  // Responsive desktop grid configuration based on exact category count
   const desktopGridClass =
     count === 1
       ? "md:grid-cols-1 max-w-sm mx-auto"
@@ -116,56 +127,63 @@ export default function CategorySlider({
       ? "md:grid-cols-3 max-w-5xl mx-auto"
       : count === 4
       ? "md:grid-cols-4 max-w-6xl mx-auto"
-      : "md:grid-cols-5";
+      : "md:grid-cols-5 max-w-7xl mx-auto";
 
   return (
-    <section className="w-full py-5 sm:py-7 md:py-8 bg-[#f8f9fa] border-y border-gray-100/80 font-sans overflow-hidden">
+    <section className="w-full py-5 sm:py-8 md:py-10 bg-gradient-to-b from-[#f8faf9] via-white to-[#f8faf9] border-y border-gray-100 font-sans">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Header Row */}
-        <div className="flex items-center justify-between mb-3.5 sm:mb-5">
+        <div className="flex items-center justify-between gap-3 mb-4 sm:mb-6">
           <div>
-            <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight flex items-center gap-2">
-              <span>Shop by Category</span>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="bg-emerald-100 text-[#0c831f] text-[10px] sm:text-xs font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
+                🌱 Fresh Harvest
+              </span>
+            </div>
+            <h2 className="text-lg sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
+              Shop by Category
             </h2>
-            <p className="text-[11px] sm:text-xs text-gray-500 font-medium hidden xs:block mt-0.5">
-              Farm-fresh morning picks, seasonal fruits &amp; premium varieties
+            <p className="text-[11px] sm:text-xs md:text-sm text-gray-500 font-medium mt-0.5">
+              Direct from local Bhopal contract farms • Hand-picked daily at 5:00 AM
             </p>
           </div>
 
           <Link
             href="/shop"
-            className="text-[#0c831f] hover:text-[#096618] font-black text-xs sm:text-sm flex items-center gap-1 group transition bg-white px-3 py-1.5 rounded-xl border border-gray-200/70 shadow-2xs hover:shadow-xs"
+            className="text-[#0c831f] hover:text-[#096618] font-black text-xs sm:text-sm flex items-center gap-1.5 group transition bg-white hover:bg-emerald-50/50 px-3.5 sm:px-4 py-2 rounded-2xl border border-gray-200/80 shadow-xs hover:border-[#0c831f]/30 shrink-0"
           >
-            <span>See All</span>
+            <span>Explore All</span>
             <ChevronRight
-              size={14}
+              size={15}
               className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]"
             />
           </Link>
         </div>
 
-        {/* Responsive Layout:
+        {/* Dynamic Responsive Layout:
             - Mobile (< 768px):
-              - If 3 categories: Crisp 3-column grid that fills the screen without scrolling!
-              - If > 3 categories: Smooth touch horizontal scroll with snap
-            - Tablet & Desktop (>= 768px):
-              - Balanced dynamic grid matching exact category count
+              - 3 categories -> perfectly fitted 3-column grid without unnecessary horizontal scroll
+              - 4+ categories -> smooth horizontal swipe track with touch snap
+            - Desktop (>= 768px):
+              - Balanced 3, 4 or 5-column grid with generous spacing and hover lift
         */}
         <div
           className={`${
             count <= 3
               ? "grid grid-cols-3"
               : "flex overflow-x-auto scrollbar-none -mx-3.5 px-3.5 sm:mx-0 sm:px-0 overscroll-x-contain snap-x snap-mandatory"
-          } md:grid ${desktopGridClass} gap-2.5 sm:gap-3.5 md:gap-4 lg:gap-5 pb-2 pt-1`}
+          } md:grid ${desktopGridClass} gap-2.5 sm:gap-4 md:gap-6 pb-2 pt-1`}
           style={{ WebkitOverflowScrolling: "touch" }}
         >
           {activeCategories.map((item, idx) => {
             const rawKey = (item.name || "").toLowerCase().trim();
             const config = CATEGORY_CONFIG[rawKey] || {
               displayName: item.name,
-              subTitle: "Farm Fresh",
-              badge: "Fresh",
+              subTitle: "Farm Fresh Produce",
+              badge: "Farm Fresh",
+              badgeColor: "bg-gray-900/85 text-white",
               imgUrl: item.image || "/categories/vegetables.jpg",
+              accentBg: "from-gray-50 to-gray-100/40",
             };
 
             const imageSrc =
@@ -176,41 +194,49 @@ export default function CategorySlider({
             return (
               <motion.div
                 key={item._id || item.name || idx}
-                whileHover={{ y: -4 }}
-                whileTap={{ scale: 0.97 }}
+                whileHover={{ y: -6 }}
+                whileTap={{ scale: 0.96 }}
                 onClick={() =>
                   router.push(`/shop?category=${encodeURIComponent(item.name)}`)
                 }
-                className={`group cursor-pointer rounded-2xl sm:rounded-3xl p-2 sm:p-2.5 md:p-3.5 bg-white hover:border-[#0c831f]/40 border border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(12,131,31,0.12)] transition-all duration-300 flex flex-col justify-between relative overflow-hidden ${
-                  count <= 3 ? "w-full" : "w-[115px] xs:w-[130px] sm:w-[145px] md:w-auto shrink-0 snap-start"
+                className={`group cursor-pointer rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 md:p-5 bg-gradient-to-b ${config.accentBg} bg-white hover:bg-white border border-gray-200/80 hover:border-[#0c831f]/50 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_36px_rgba(12,131,31,0.14)] transition-all duration-300 flex flex-col justify-between relative overflow-hidden ${
+                  count <= 3 ? "w-full" : "w-[120px] xs:w-[135px] sm:w-[155px] md:w-auto shrink-0 snap-start"
                 } select-none`}
               >
-                {/* Upper Photo Window */}
-                <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-gray-50 mb-2">
+                {/* Upper Photo Frame */}
+                <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-white border border-gray-100/90 shadow-2xs mb-2.5 sm:mb-3.5">
                   <img
                     src={imageSrc}
                     alt={config.displayName}
-                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
                     onError={(e: any) => {
                       e.target.src = config.imgUrl || "/categories/vegetables.jpg";
                     }}
                   />
 
-                  {/* Gradient Overlay on Hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  {/* Soft Vignette Overlay on Hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                  {/* Floating Micro Badge */}
-                  <span className="absolute top-1.5 left-1.5 text-[8px] sm:text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-md shadow-xs bg-gray-900/85 backdrop-blur-xs text-white">
+                  {/* Floating Pill Badge */}
+                  <span
+                    className={`absolute top-1.5 left-1.5 sm:top-2 sm:left-2 text-[8px] sm:text-[10px] font-black uppercase tracking-wider px-1.5 sm:px-2 py-0.5 rounded-lg shadow-xs backdrop-blur-xs ${config.badgeColor}`}
+                  >
                     {config.badge}
                   </span>
                 </div>
 
-                {/* Card Title & Subtitle */}
-                <div className="px-0.5 pb-0.5 text-center">
-                  <h3 className="font-extrabold text-[11px] xs:text-xs sm:text-sm text-gray-900 leading-tight group-hover:text-[#0c831f] transition-colors truncate">
-                    {config.displayName}
-                  </h3>
-                  <p className="text-[9px] xs:text-[10px] sm:text-[11px] text-gray-400 font-medium truncate mt-0.5">
+                {/* Card Title, Subtitle & Action Arrow */}
+                <div className="text-center sm:text-left px-0.5">
+                  <div className="flex items-center justify-center sm:justify-between gap-1">
+                    <h3 className="font-black text-xs sm:text-base md:text-lg text-gray-900 leading-tight group-hover:text-[#0c831f] transition-colors truncate">
+                      {config.displayName}
+                    </h3>
+                    <div className="hidden sm:flex w-6 h-6 rounded-full bg-emerald-50 text-[#0c831f] items-center justify-center group-hover:bg-[#0c831f] group-hover:text-white transition-all shadow-2xs shrink-0">
+                      <ChevronRight size={13} className="stroke-[3]" />
+                    </div>
+                  </div>
+
+                  <p className="text-[10px] sm:text-xs text-gray-500 font-medium truncate mt-0.5 sm:mt-1">
                     {config.subTitle}
                   </p>
                 </div>
