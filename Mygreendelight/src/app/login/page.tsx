@@ -44,10 +44,12 @@ function LoginFormContent() {
   // Handle URL auth errors (e.g. from OAuth callbacks)
   useEffect(() => {
     if (authError) {
-      if (authError.includes("OAuth") || authError === "Callback" || authError === "AccessDenied") {
-        setErrorMessage("Google Sign-In could not be completed. Please ensure your Google account is verified or log in with email/password.");
+      if (authError === "Configuration") {
+        setErrorMessage("Google OAuth setup is pending in Vercel settings. Please sign in with email/password or add GOOGLE_CLIENT_ID.");
+      } else if (authError.includes("OAuth") || authError === "Callback" || authError === "AccessDenied") {
+        setErrorMessage(`Google Sign-In failed (${authError}). Please try again or log in with your email/password.`);
       } else {
-        setErrorMessage("Authentication encountered an issue. Please try again.");
+        setErrorMessage(`Authentication error: ${authError}. Please try again.`);
       }
     }
   }, [authError]);

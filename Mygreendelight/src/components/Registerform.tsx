@@ -51,10 +51,12 @@ function RegisterFormContent({ onBack }: RegisterformProps) {
   // Handle URL auth errors (e.g. from OAuth callbacks)
   useEffect(() => {
     if (authError) {
-      if (authError.includes("OAuth") || authError === "Callback" || authError === "AccessDenied") {
-        setErrorMessage("Google Sign-Up could not be completed. Please enter your name, email and password below to create your account.");
+      if (authError === "Configuration") {
+        setErrorMessage("Google OAuth setup is pending in Vercel settings. Please create your account with email/password below.");
+      } else if (authError.includes("OAuth") || authError === "Callback" || authError === "AccessDenied") {
+        setErrorMessage(`Google Sign-Up failed (${authError}). Please create your account with name, email and password below.`);
       } else {
-        setErrorMessage("Authentication encountered an issue. Please try again.");
+        setErrorMessage(`Authentication error: ${authError}. Please try again.`);
       }
     }
   }, [authError]);
