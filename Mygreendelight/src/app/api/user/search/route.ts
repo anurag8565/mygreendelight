@@ -16,6 +16,7 @@ export async function GET(req: Request) {
     const cleanQuery = query.trim();
 
     const results = await Grocery.find({
+      status: { $ne: "draft" },
       $or: [
         { name: { $regex: cleanQuery, $options: "i" } },
         { category: { $regex: cleanQuery, $options: "i" } },

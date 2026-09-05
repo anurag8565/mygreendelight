@@ -82,6 +82,8 @@ export async function POST(req: NextRequest) {
     const mrp = formdata.get("mrp") as string || "";
     const rating = formdata.get("rating") as string || "4.8";
     const isTopRated = formdata.get("isTopRated") === "true";
+    const isFeatured = formdata.get("isFeatured") === "true";
+    const status = (formdata.get("status") as string) === "draft" ? "draft" : "published";
 
     // =========================
     // CREATE GROCERY
@@ -93,6 +95,8 @@ export async function POST(req: NextRequest) {
       mrp: mrp ? Number(mrp) : Math.round(Number(price) * 1.25),
       rating: Number(rating) || 4.8,
       isTopRated,
+      isFeatured,
+      status,
       stock: Number(stock),
       image: imageurl,
       category,

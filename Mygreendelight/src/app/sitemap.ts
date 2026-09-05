@@ -78,8 +78,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.85,
     }));
 
-    // Fetch products
-    const products = await Groseri.find({}, { _id: 1, slug: 1, updatedAt: 1 }).lean().limit(1500);
+    // Fetch published products (exclude drafts)
+    const products = await Groseri.find({ status: { $ne: "draft" } }, { _id: 1, slug: 1, updatedAt: 1 }).lean().limit(1500);
     productRoutes = products.map((item: any) => ({
       url: `${baseUrl}/product/${item.slug || item._id}`,
       lastModified: item.updatedAt ? new Date(item.updatedAt) : new Date(),

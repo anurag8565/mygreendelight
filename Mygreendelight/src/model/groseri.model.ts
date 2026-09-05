@@ -7,6 +7,8 @@ export interface IGrosery {
   mrp?: number;
   discount?: number;
   isTopRated?: boolean;
+  isFeatured?: boolean;
+  status?: "published" | "draft";
   unit: string;
   image: string;
   category: string;
@@ -54,6 +56,19 @@ const GrocerySchema = new mongoose.Schema<IGrosery>(
     isTopRated: {
       type: Boolean,
       default: false,
+    },
+
+    isFeatured: {
+      type: Boolean,
+      default: false,
+      index: true,
+    },
+
+    status: {
+      type: String,
+      enum: ["published", "draft"],
+      default: "published",
+      index: true,
     },
 
     unit: {

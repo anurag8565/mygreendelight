@@ -20,6 +20,9 @@ import {
   AlertTriangle,
   TrendingDown,
   Boxes,
+  Star,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 import AdminSidebar from "@/components/AdminSidebar";
 
@@ -31,6 +34,10 @@ type Grocery = {
   category?: string;
   image?: string;
   stock?: number;
+  isFeatured?: boolean;
+  status?: "published" | "draft";
+  isTopRated?: boolean;
+  rating?: number;
   description?: string;
   sourcing?: string;
   storage?: string;
@@ -43,6 +50,7 @@ export default function ViewGrocery() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [statusFilter, setStatusFilter] = useState<"all" | "published" | "draft" | "featured">("all");
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedGrocery, setSelectedGrocery] = useState<any>(null);
   const [updating, setUpdating] = useState(false);
@@ -53,6 +61,8 @@ export default function ViewGrocery() {
     mrp: 0,
     rating: 4.8,
     isTopRated: false,
+    isFeatured: false,
+    status: "published" as "published" | "draft",
     stock: 0,
     unit: "",
     category: "",
@@ -216,8 +226,68 @@ export default function ViewGrocery() {
     ).length;
   }, [groceries]);
 
+  const publishedCount = React.useMemo(
+    () => groceries.filter((g) => g.status !== "draft").length,
+    [groceries]
+  );
+
+  const draftCount = React.useMemo(
+    () => groceries.filter((g) => g.status === "draft").length,
+    [groceries]
+  );
+
+  const featuredCount = React.useMemo(
+    () => groceries.filter((g) => g.isFeatured).length,
+    [groceries]
+  );
+
+  // 1-Click Toggle Featured ⭐
+  const toggleFeatured = async (item: Grocery) => {
+    const newVal = !item.isFeatured;
+    setGroceries((prev) =>
+      prev.map((g) => (g._id === item._id ? { ...g, isFeatured: newVal } : g))
+    );
+    try {
+      await axios.put(`/api/admin/grocery/${item._id}`, { isFeatured: newVal });
+    } catch (err) {
+      console.error("Failed to toggle featured:", err);
+      // rollback on error
+      setGroceries((prev) =>
+        prev.map((g) => (g._id === item._id ? { ...g, isFeatured: item.isFeatured } : g))
+      );
+    }
+  };
+
+  // 1-Click Toggle Status (Published 🟢 / Draft 🟡)
+  const toggleStatus = async (item: Grocery) => {
+    const newStatus: "published" | "draft" = item.status === "draft" ? "published" : "draft";
+    setGroceries((prev) =>
+      prev.map((g) => (g._id === item._id ? { ...g, status: newStatus } : g))
+    );
+    try {
+      await axios.put(`/api/admin/grocery/${item._id}`, { status: newStatus });
+    } catch (err) {
+      console.error("Failed to toggle status:", err);
+      // rollback on error
+      setGroceries((prev) =>
+        prev.map((g) => (g._id === item._id ? { ...g, status: item.status } : g))
+      );
+    }
+  };
+
   useEffect(() => {
     let result = groceries;
+
+    // 1. Status / Featured Filter
+    if (statusFilter === "published") {
+      result = result.filter((g) => g.status !== "draft");
+    } else if (statusFilter === "draft") {
+      result = result.filter((g) => g.status === "draft");
+    } else if (statusFilter === "featured") {
+      result = result.filter((g) => g.isFeatured);
+    }
+
+    // 2. Category / Stock Filter
     if (selectedCategory === "low_stock") {
       result = result.filter(
         (item) =>
@@ -239,6 +309,8 @@ export default function ViewGrocery() {
           selectedCategory.trim().toLowerCase()
       );
     }
+
+    // 3. Search Filter
     if (searchTerm.trim() !== "") {
       const q = searchTerm.toLowerCase();
       result = result.filter(
@@ -247,8 +319,9 @@ export default function ViewGrocery() {
           (item.category && item.category.toLowerCase().includes(q))
       );
     }
+
     setFilteredGroceries(result);
-  }, [searchTerm, selectedCategory, groceries]);
+  }, [searchTerm, selectedCategory, statusFilter, groceries]);
 
   const quickRestock = async (item: Grocery, addAmount: number = 25) => {
     const newStock = (item.stock || 0) + addAmount;
@@ -290,6 +363,8 @@ export default function ViewGrocery() {
       mrp: (item as any).mrp || 0,
       rating: (item as any).rating || 4.8,
       isTopRated: (item as any).isTopRated || false,
+      isFeatured: Boolean(item.isFeatured),
+      status: item.status || "published",
       stock: item.stock || 0,
       unit: item.unit || "",
       category: item.category || "",
@@ -423,75 +498,128 @@ export default function ViewGrocery() {
           )}
 
           {/* Filter & Search Bar */}
-          <div className="bg-white p-4 rounded-3xl border border-gray-200/80 shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-4">
-            {/* Category & Stock Filter Pills */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
+          <div className="bg-white p-4 rounded-3xl border border-gray-200/80 shadow-2xs flex flex-col gap-3">
+            {/* Row 1: Status & Featured Tabs */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-gray-100">
               <button
-                onClick={() => setSelectedCategory("all")}
-                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer ${
-                  selectedCategory === "all"
-                    ? "bg-[#0f8646] text-white shadow-xs"
-                    : "bg-gray-50 text-gray-600 hover:bg-gray-100"
+                onClick={() => setStatusFilter("all")}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer ${
+                  statusFilter === "all"
+                    ? "bg-gray-900 text-white shadow-xs"
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                 }`}
               >
                 All Produce ({groceries.length})
               </button>
 
-              {/* Low Stock Mandi Filter Pill */}
               <button
-                onClick={() => setSelectedCategory("low_stock")}
-                className={`px-3.5 py-2 rounded-xl text-xs font-black transition shrink-0 cursor-pointer flex items-center gap-1.5 ${
-                  selectedCategory === "low_stock"
+                onClick={() => setStatusFilter("published")}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition shrink-0 cursor-pointer flex items-center gap-1.5 ${
+                  statusFilter === "published"
+                    ? "bg-emerald-600 text-white shadow-xs"
+                    : "bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100"
+                }`}
+              >
+                <Eye size={13} />
+                <span>🟢 Published Live ({publishedCount})</span>
+              </button>
+
+              <button
+                onClick={() => setStatusFilter("draft")}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition shrink-0 cursor-pointer flex items-center gap-1.5 ${
+                  statusFilter === "draft"
                     ? "bg-amber-500 text-white shadow-xs"
                     : "bg-amber-50 text-amber-900 border border-amber-200 hover:bg-amber-100"
                 }`}
               >
-                <AlertTriangle size={13} />
-                <span>Low Stock ({lowStockCount})</span>
+                <EyeOff size={13} />
+                <span>🟡 Hidden Drafts ({draftCount})</span>
               </button>
 
-              {/* Out of Stock Filter Pill */}
-              {outOfStockCount > 0 && (
-                <button
-                  onClick={() => setSelectedCategory("out_of_stock")}
-                  className={`px-3.5 py-2 rounded-xl text-xs font-black transition shrink-0 cursor-pointer flex items-center gap-1.5 ${
-                    selectedCategory === "out_of_stock"
-                      ? "bg-red-600 text-white shadow-xs"
-                      : "bg-red-50 text-red-700 border border-red-200 hover:bg-red-100"
-                  }`}
-                >
-                  <span>Out of Stock ({outOfStockCount})</span>
-                </button>
-              )}
+              <button
+                onClick={() => setStatusFilter("featured")}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition shrink-0 cursor-pointer flex items-center gap-1.5 ${
+                  statusFilter === "featured"
+                    ? "bg-yellow-500 text-gray-950 shadow-xs"
+                    : "bg-yellow-50 text-yellow-900 border border-yellow-200 hover:bg-yellow-100"
+                }`}
+              >
+                <Star size={13} className="fill-yellow-500" />
+                <span>⭐ Featured Picks ({featuredCount})</span>
+              </button>
+            </div>
 
-              {distinctCategories.map((cat) => (
+            {/* Row 2: Category & Search */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pt-1">
+              {/* Category & Stock Filter Pills */}
+              <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
                 <button
-                  key={cat.name}
-                  onClick={() => setSelectedCategory(cat.name)}
-                  className={`px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer ${
-                    selectedCategory.toLowerCase() === cat.name.toLowerCase()
+                  onClick={() => setSelectedCategory("all")}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer ${
+                    selectedCategory === "all"
                       ? "bg-[#0f8646] text-white shadow-xs"
                       : "bg-gray-50 text-gray-600 hover:bg-gray-100"
                   }`}
                 >
-                  {cat.name} ({cat.count})
+                  All Categories
                 </button>
-              ))}
-            </div>
 
-            {/* Search Input */}
-            <div className="relative w-full md:w-72">
-              <Search
-                size={16}
-                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"
-              />
-              <input
-                type="text"
-                placeholder="Search produce by name..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 text-xs font-bold border border-gray-200 rounded-xl outline-none focus:border-[#0f8646] bg-gray-50/60"
-              />
+                {/* Low Stock Mandi Filter Pill */}
+                <button
+                  onClick={() => setSelectedCategory("low_stock")}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-black transition shrink-0 cursor-pointer flex items-center gap-1.5 ${
+                    selectedCategory === "low_stock"
+                      ? "bg-amber-500 text-white shadow-xs"
+                      : "bg-amber-50 text-amber-900 border border-amber-200 hover:bg-amber-100"
+                  }`}
+                >
+                  <AlertTriangle size={13} />
+                  <span>Low Stock ({lowStockCount})</span>
+                </button>
+
+                {/* Out of Stock Filter Pill */}
+                {outOfStockCount > 0 && (
+                  <button
+                    onClick={() => setSelectedCategory("out_of_stock")}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-black transition shrink-0 cursor-pointer flex items-center gap-1.5 ${
+                      selectedCategory === "out_of_stock"
+                        ? "bg-red-600 text-white shadow-xs"
+                        : "bg-red-50 text-red-700 border border-red-200 hover:bg-red-100"
+                    }`}
+                  >
+                    <span>Out of Stock ({outOfStockCount})</span>
+                  </button>
+                )}
+
+                {distinctCategories.map((cat) => (
+                  <button
+                    key={cat.name}
+                    onClick={() => setSelectedCategory(cat.name)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer ${
+                      selectedCategory.toLowerCase() === cat.name.toLowerCase()
+                        ? "bg-[#0f8646] text-white shadow-xs"
+                        : "bg-gray-50 text-gray-600 hover:bg-gray-100"
+                    }`}
+                  >
+                    {cat.name} ({cat.count})
+                  </button>
+                ))}
+              </div>
+
+              {/* Search Input */}
+              <div className="relative w-full md:w-72">
+                <Search
+                  size={16}
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"
+                />
+                <input
+                  type="text"
+                  placeholder="Search produce by name..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 text-xs font-bold border border-gray-200 rounded-xl outline-none focus:border-[#0f8646] bg-gray-50/60"
+                />
+              </div>
             </div>
           </div>
 
@@ -507,60 +635,101 @@ export default function ViewGrocery() {
                     {selectedIds.length} Produce Item(s) Selected
                   </h3>
                   <p className="text-[11px] text-gray-400">
-                    Apply bulk discounts, restock or update categories in 1-click
+                    Publish/Draft, Feature picks, apply bulk discounts, restock or move category
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2.5 flex-wrap">
+              <div className="flex items-center gap-2 flex-wrap">
+                {/* Bulk Publish / Draft */}
+                <button
+                  disabled={bulkLoading}
+                  onClick={() => handleBulkAction("bulk_publish")}
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black px-3 py-1.5 rounded-xl transition flex items-center gap-1 cursor-pointer disabled:opacity-50"
+                  title="Make selected items live on website"
+                >
+                  <Eye size={13} />
+                  <span>Publish 🟢</span>
+                </button>
+
+                <button
+                  disabled={bulkLoading}
+                  onClick={() => handleBulkAction("bulk_draft")}
+                  className="bg-amber-600 hover:bg-amber-700 text-white text-xs font-black px-3 py-1.5 rounded-xl transition flex items-center gap-1 cursor-pointer disabled:opacity-50"
+                  title="Hide selected items from website"
+                >
+                  <EyeOff size={13} />
+                  <span>Draft (Hide) 🟡</span>
+                </button>
+
+                {/* Bulk Feature / Unfeature */}
+                <button
+                  disabled={bulkLoading}
+                  onClick={() => handleBulkAction("bulk_feature")}
+                  className="bg-yellow-500 hover:bg-yellow-600 text-gray-950 text-xs font-black px-3 py-1.5 rounded-xl transition flex items-center gap-1 cursor-pointer disabled:opacity-50"
+                  title="Feature selected items on Homepage"
+                >
+                  <Star size={13} className="fill-current" />
+                  <span>Feature ⭐</span>
+                </button>
+
+                <button
+                  disabled={bulkLoading}
+                  onClick={() => handleBulkAction("bulk_unfeature")}
+                  className="bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs font-bold px-2.5 py-1.5 rounded-xl transition cursor-pointer disabled:opacity-50"
+                  title="Remove from featured picks"
+                >
+                  Unfeature
+                </button>
+
                 {/* 1. Bulk Discount */}
-                <div className="flex items-center gap-1.5 bg-gray-800 p-1 rounded-xl border border-gray-700">
+                <div className="flex items-center gap-1 bg-gray-800 p-1 rounded-xl border border-gray-700">
                   <input
                     type="number"
                     min="1"
                     max="90"
                     value={bulkDiscountInput}
                     onChange={(e) => setBulkDiscountInput(e.target.value)}
-                    className="w-12 px-2 py-1 text-xs font-black text-white bg-gray-900 rounded-lg outline-none text-center"
+                    className="w-11 px-1.5 py-1 text-xs font-black text-white bg-gray-900 rounded-lg outline-none text-center"
                     placeholder="10"
                   />
-                  <span className="text-xs font-bold text-gray-400">% OFF</span>
+                  <span className="text-[11px] font-bold text-gray-400">% OFF</span>
                   <button
                     disabled={bulkLoading}
                     onClick={() => handleBulkAction("discount", bulkDiscountInput)}
-                    className="bg-[#0f8646] hover:bg-[#0c6a38] text-white text-xs font-black px-2.5 py-1 rounded-lg transition disabled:opacity-50 cursor-pointer"
+                    className="bg-[#0f8646] hover:bg-[#0c6a38] text-white text-xs font-black px-2 py-1 rounded-lg transition disabled:opacity-50 cursor-pointer"
                   >
                     Apply
                   </button>
                 </div>
 
                 {/* 2. Bulk Restock */}
-                <div className="flex items-center gap-1.5 bg-gray-800 p-1 rounded-xl border border-gray-700">
+                <div className="flex items-center gap-1 bg-gray-800 p-1 rounded-xl border border-gray-700">
                   <input
                     type="number"
                     min="1"
                     value={bulkRestockInput}
                     onChange={(e) => setBulkRestockInput(e.target.value)}
-                    className="w-14 px-2 py-1 text-xs font-black text-white bg-gray-900 rounded-lg outline-none text-center"
+                    className="w-12 px-1.5 py-1 text-xs font-black text-white bg-gray-900 rounded-lg outline-none text-center"
                     placeholder="25"
                   />
                   <button
                     disabled={bulkLoading}
                     onClick={() => handleBulkAction("restock", bulkRestockInput)}
-                    className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black px-2.5 py-1 rounded-lg transition disabled:opacity-50 cursor-pointer"
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black px-2 py-1 rounded-lg transition disabled:opacity-50 cursor-pointer"
                   >
-                    + Restock
+                    +Restock
                   </button>
                 </div>
 
                 {/* 3. Bulk Category Move */}
-                <div className="flex items-center gap-1.5 bg-gray-800 p-1 rounded-xl border border-gray-700">
+                <div className="flex items-center gap-1 bg-gray-800 p-1 rounded-xl border border-gray-700">
                   <select
                     value={bulkCategoryInput}
                     onChange={(e) => setBulkCategoryInput(e.target.value)}
-                    className="bg-gray-900 text-white text-xs font-bold px-2 py-1 rounded-lg outline-none"
+                    className="bg-gray-900 text-white text-xs font-bold px-2 py-1 rounded-lg outline-none max-w-[110px]"
                   >
-                    <option value="">Move Category...</option>
+                    <option value="">Move...</option>
                     {categories.map((c) => (
                       <option key={c._id} value={c.name}>
                         {c.name}
@@ -571,9 +740,9 @@ export default function ViewGrocery() {
                     <button
                       disabled={bulkLoading}
                       onClick={() => handleBulkAction("change_category", bulkCategoryInput)}
-                      className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-black px-2.5 py-1 rounded-lg transition disabled:opacity-50 cursor-pointer"
+                      className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-black px-2 py-1 rounded-lg transition disabled:opacity-50 cursor-pointer"
                     >
-                      Move
+                      Go
                     </button>
                   )}
                 </div>
@@ -641,6 +810,8 @@ export default function ViewGrocery() {
                         />
                       </th>
                       <th className="py-3.5 px-4">Produce</th>
+                      <th className="py-3.5 px-3 text-center">⭐ Featured</th>
+                      <th className="py-3.5 px-3 text-center">Status</th>
                       <th className="py-3.5 px-4">Category</th>
                       <th className="py-3.5 px-4">Selling Price</th>
                       <th className="py-3.5 px-4">Mandi Cost & Margin</th>
@@ -656,13 +827,15 @@ export default function ViewGrocery() {
                       const isSelected = selectedIds.includes(item._id);
                       const estimatedCost = Math.round(item.price * 0.68);
                       const marginPercent = Math.round(((item.price - estimatedCost) / item.price) * 100);
+                      const isItemFeatured = Boolean(item.isFeatured);
+                      const isDraft = item.status === "draft";
 
                       return (
                         <tr
                           key={item._id}
                           className={`hover:bg-gray-50/60 transition group ${
                             isSelected ? "bg-green-50/40" : ""
-                          }`}
+                          } ${isDraft ? "opacity-75 bg-amber-50/20" : ""}`}
                         >
                           <td className="py-3.5 px-4">
                             <input
@@ -680,14 +853,70 @@ export default function ViewGrocery() {
                                 className="w-11 h-11 object-contain rounded-xl bg-gray-50 border border-gray-100 p-1 shrink-0"
                               />
                               <div className="min-w-0">
-                                <h4 className="font-extrabold text-gray-900 text-xs sm:text-sm">
-                                  {item.name}
-                                </h4>
+                                <div className="flex items-center gap-1.5 flex-wrap">
+                                  <h4 className="font-extrabold text-gray-900 text-xs sm:text-sm">
+                                    {item.name}
+                                  </h4>
+                                  {isItemFeatured && (
+                                    <span className="bg-yellow-400 text-gray-950 font-black text-[9px] px-1.5 py-0.5 rounded shadow-2xs">
+                                      ⭐ FEATURED
+                                    </span>
+                                  )}
+                                  {isDraft && (
+                                    <span className="bg-amber-100 text-amber-900 font-black text-[9px] px-1.5 py-0.5 rounded border border-amber-200">
+                                      DRAFT
+                                    </span>
+                                  )}
+                                </div>
                                 <span className="text-[10px] text-gray-400 truncate block">
                                   Pack: {item.unit || "1 kg"} • ID: {item._id.slice(-6).toUpperCase()}
                                 </span>
                               </div>
                             </div>
+                          </td>
+
+                          {/* 1-Click Toggle Featured ⭐ */}
+                          <td className="py-3.5 px-3 text-center">
+                            <button
+                              onClick={() => toggleFeatured(item)}
+                              className={`p-1.5 rounded-xl transition inline-flex items-center gap-1 text-[11px] font-black cursor-pointer border ${
+                                isItemFeatured
+                                  ? "bg-yellow-50 text-yellow-800 border-yellow-300 shadow-2xs hover:bg-yellow-100"
+                                  : "bg-gray-50 text-gray-400 border-gray-200 hover:text-yellow-600 hover:border-yellow-200 hover:bg-yellow-50/50"
+                              }`}
+                              title={isItemFeatured ? "Click to unfeature" : "Click to mark as Featured Pick ⭐"}
+                            >
+                              <Star
+                                size={14}
+                                className={isItemFeatured ? "fill-yellow-500 text-yellow-500" : "text-gray-400"}
+                              />
+                              <span>{isItemFeatured ? "Featured" : "Star"}</span>
+                            </button>
+                          </td>
+
+                          {/* 1-Click Toggle Status (Published / Draft) */}
+                          <td className="py-3.5 px-3 text-center">
+                            <button
+                              onClick={() => toggleStatus(item)}
+                              className={`px-2.5 py-1 rounded-xl text-[11px] font-black transition inline-flex items-center gap-1 cursor-pointer border ${
+                                isDraft
+                                  ? "bg-amber-50 text-amber-800 border-amber-300 hover:bg-amber-100"
+                                  : "bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100"
+                              }`}
+                              title={isDraft ? "Click to Publish Live on Store" : "Click to Save as Draft (Hide from Store)"}
+                            >
+                              {isDraft ? (
+                                <>
+                                  <EyeOff size={11} />
+                                  <span>🟡 Draft</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Eye size={11} />
+                                  <span>🟢 Live</span>
+                                </>
+                              )}
+                            </button>
                           </td>
 
                           <td className="py-3.5 px-4">
@@ -802,6 +1031,36 @@ export default function ViewGrocery() {
             </div>
 
             <form onSubmit={updateGrocery} className="space-y-4 text-xs font-bold">
+              {/* Status & Featured Banner in Edit Modal */}
+              <div className="grid sm:grid-cols-2 gap-3 bg-gray-50 p-3.5 rounded-2xl border border-gray-200">
+                <div>
+                  <label className="block text-gray-700 mb-1 font-extrabold">Visibility & Publishing Status</label>
+                  <select
+                    value={editForm.status}
+                    onChange={(e) => setEditForm({ ...editForm, status: e.target.value as "published" | "draft" })}
+                    className="w-full p-2 rounded-xl border border-gray-300 outline-none focus:border-[#0f8646] bg-white font-bold text-xs"
+                  >
+                    <option value="published">🟢 Published (Live on Storefront)</option>
+                    <option value="draft">🟡 Draft (Hidden from Customers)</option>
+                  </select>
+                </div>
+
+                <div className="flex items-center gap-2.5 pt-4">
+                  <input
+                    type="checkbox"
+                    id="edit-featured-check"
+                    checked={editForm.isFeatured}
+                    onChange={(e) =>
+                      setEditForm({ ...editForm, isFeatured: e.target.checked })
+                    }
+                    className="w-4 h-4 accent-yellow-500 rounded cursor-pointer"
+                  />
+                  <label htmlFor="edit-featured-check" className="cursor-pointer text-gray-900 font-extrabold text-xs flex items-center gap-1">
+                    <span>⭐ Mark as Featured Produce Pick</span>
+                  </label>
+                </div>
+              </div>
+
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-gray-700 mb-1">Produce Name *</label>

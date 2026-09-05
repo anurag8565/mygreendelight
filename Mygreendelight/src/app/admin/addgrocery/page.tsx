@@ -12,6 +12,8 @@ import {
   Trash2,
   CheckCircle2,
   Image as ImageIcon,
+  EyeOff,
+  Star,
 } from "lucide-react";
 import AdminSidebar from "@/components/AdminSidebar";
 
@@ -26,6 +28,8 @@ export default function AddGrocery() {
     mrp: "",
     rating: "4.8",
     isTopRated: false,
+    isFeatured: false,
+    status: "published" as "published" | "draft",
     category: "",
     unit: "kg",
     stock: "50",
@@ -85,12 +89,13 @@ export default function AddGrocery() {
     setImagePreview(URL.createObjectURL(file));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmitWithStatus = async (statusOverride?: "published" | "draft") => {
     if (!formData.image) {
       alert("Please select a produce image.");
       return;
     }
+
+    const currentStatus = statusOverride || formData.status;
 
     try {
       setLoading(true);
@@ -102,6 +107,8 @@ export default function AddGrocery() {
       data.append("mrp", formData.mrp);
       data.append("rating", formData.rating);
       data.append("isTopRated", String(formData.isTopRated));
+      data.append("isFeatured", String(formData.isFeatured));
+      data.append("status", currentStatus);
       data.append("stock", formData.stock);
       data.append("category", formData.category);
       data.append("unit", formData.unit);
@@ -114,13 +121,16 @@ export default function AddGrocery() {
       const res = await axios.post("/api/admin/addgrocery", data);
 
       if (res.status === 200 || res.status === 201) {
-        setSuccessMsg(`✓ "${formData.name}" added to inventory successfully!`);
+        const statusLabel = currentStatus === "draft" ? "(Saved as Hidden Draft 🟡)" : "(Published Live 🟢)";
+        setSuccessMsg(`✓ "${formData.name}" added successfully ${statusLabel}!`);
         setFormData({
           name: "",
           price: "",
           mrp: "",
           rating: "4.8",
           isTopRated: false,
+          isFeatured: false,
+          status: "published",
           category: "",
           unit: "kg",
           stock: "50",
@@ -138,6 +148,11 @@ export default function AddGrocery() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await handleSubmitWithStatus();
   };
 
   return (
@@ -482,24 +497,79 @@ export default function AddGrocery() {
                 ))}
               </div>
 
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-4 bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black rounded-2xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 text-xs sm:text-sm disabled:opacity-50 cursor-pointer"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 size={18} className="animate-spin" />
-                    <span>Uploading & Publishing Produce...</span>
-                  </>
-                ) : (
-                  <>
-                    <PackagePlus size={18} />
-                    <span>Publish Produce to Store</span>
-                  </>
-                )}
-              </button>
+              {/* Publishing Status & Featured Options Card */}
+              <div className="grid sm:grid-cols-2 gap-4 bg-gray-50 p-4 rounded-2xl border border-gray-200">
+                <div>
+                  <label className="block text-gray-700 uppercase tracking-wider mb-1.5 font-extrabold">
+                    Visibility & Publishing Status
+                  </label>
+                  <select
+                    value={formData.status}
+                    onChange={(e) =>
+                      setFormData({ ...formData, status: e.target.value as "published" | "draft" })
+                    }
+                    className="w-full p-2.5 rounded-xl border border-gray-300 outline-none focus:border-[#0f8646] bg-white font-bold text-xs sm:text-sm"
+                  >
+                    <option value="published">🟢 Published (Visible to all Customers)</option>
+                    <option value="draft">🟡 Draft (Hidden from Website, saved in Admin)</option>
+                  </select>
+                  <p className="text-[10px] text-gray-400 mt-1 font-normal">
+                    Draft items won&apos;t show on Homepage, categories, search or Google.
+                  </p>
+                </div>
+
+                <div className="flex flex-col justify-center space-y-2 pt-1 sm:pt-4">
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="checkbox"
+                      id="featured-check"
+                      checked={formData.isFeatured}
+                      onChange={(e) =>
+                        setFormData({ ...formData, isFeatured: e.target.checked })
+                      }
+                      className="w-5 h-5 accent-yellow-500 rounded cursor-pointer"
+                    />
+                    <label htmlFor="featured-check" className="cursor-pointer text-gray-900 font-extrabold text-xs">
+                      ⭐ Feature in &quot;Bhopal Top Picks &amp; Bestsellers&quot;
+                    </label>
+                  </div>
+                  <p className="text-[10px] text-gray-400 font-normal ml-8">
+                    Featured produce shows a ⭐ FEATURED badge and priority ranking.
+                  </p>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                <button
+                  type="button"
+                  disabled={loading}
+                  onClick={() => handleSubmitWithStatus("draft")}
+                  className="flex-1 py-4 bg-amber-50 hover:bg-amber-100 text-amber-900 border-2 border-amber-300 font-black rounded-2xl shadow-xs transition-all flex items-center justify-center gap-2 text-xs sm:text-sm disabled:opacity-50 cursor-pointer"
+                >
+                  <EyeOff size={16} />
+                  <span>Save as Draft (Hide from Store) 🟡</span>
+                </button>
+
+                <button
+                  type="button"
+                  disabled={loading}
+                  onClick={() => handleSubmitWithStatus("published")}
+                  className="flex-1 py-4 bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black rounded-2xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 text-xs sm:text-sm disabled:opacity-50 cursor-pointer"
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 size={18} className="animate-spin" />
+                      <span>Saving Produce...</span>
+                    </>
+                  ) : (
+                    <>
+                      <PackagePlus size={18} />
+                      <span>Publish Live to Store 🟢</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </form>
         </div>

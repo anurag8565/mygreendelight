@@ -140,6 +140,30 @@ export async function POST(req: NextRequest) {
         { $set: { category: categoryName } }
       );
       modifiedCount = res.modifiedCount;
+    } else if (action === "bulk_publish") {
+      const res = await Grocery.updateMany(
+        { _id: { $in: itemIds } },
+        { $set: { status: "published" } }
+      );
+      modifiedCount = res.modifiedCount;
+    } else if (action === "bulk_draft") {
+      const res = await Grocery.updateMany(
+        { _id: { $in: itemIds } },
+        { $set: { status: "draft" } }
+      );
+      modifiedCount = res.modifiedCount;
+    } else if (action === "bulk_feature") {
+      const res = await Grocery.updateMany(
+        { _id: { $in: itemIds } },
+        { $set: { isFeatured: true } }
+      );
+      modifiedCount = res.modifiedCount;
+    } else if (action === "bulk_unfeature") {
+      const res = await Grocery.updateMany(
+        { _id: { $in: itemIds } },
+        { $set: { isFeatured: false } }
+      );
+      modifiedCount = res.modifiedCount;
     } else if (action === "delete") {
       const res = await Grocery.deleteMany({ _id: { $in: itemIds } });
       modifiedCount = res.deletedCount;

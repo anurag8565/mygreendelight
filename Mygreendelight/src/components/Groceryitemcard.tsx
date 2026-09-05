@@ -20,6 +20,8 @@ interface IGrosery {
   image: string;
   category: string;
   stock: number;
+  isFeatured?: boolean;
+  status?: string;
   variations?: { weight: string; price: number; stock: number }[];
   createdAt: Date;
   updatedAt: Date;
@@ -94,12 +96,20 @@ export default function Groceryitemcard({
           className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 p-2"
         />
 
-        {/* Discount Badge */}
-        {discountPercent > 0 && (
-          <span className="absolute top-2 left-2 bg-[#0c831f] text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded-md shadow-xs">
-            {discountPercent}% OFF
-          </span>
-        )}
+        {/* Badges Container */}
+        <div className="absolute top-2 left-2 flex flex-col gap-1 z-10">
+          {item.isFeatured && (
+            <span className="bg-amber-500 text-white text-[8.5px] font-black px-1.5 py-0.5 rounded-md shadow-xs flex items-center gap-0.5 tracking-tight">
+              <span>⭐</span>
+              <span>FEATURED</span>
+            </span>
+          )}
+          {discountPercent > 0 && (
+            <span className="bg-[#0c831f] text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded-md shadow-xs">
+              {discountPercent}% OFF
+            </span>
+          )}
+        </div>
 
         {/* Fresh Mandi Produce Tag */}
         <span className="absolute bottom-1.5 left-2 bg-white/95 backdrop-blur-xs text-emerald-800 text-[8.5px] font-black px-1.5 py-0.5 rounded-md shadow-2xs flex items-center gap-0.5 border border-emerald-200/60">

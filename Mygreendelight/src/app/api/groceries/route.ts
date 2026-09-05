@@ -12,11 +12,17 @@ export async function GET(req: NextRequest) {
     const category = url.searchParams.get("category");
     const sort = url.searchParams.get("sort");
     const search = url.searchParams.get("search");
+    const featured = url.searchParams.get("featured");
     const skip = (page - 1) * limit;
 
-    const query: any = {};
+    const query: any = {
+      status: { $ne: "draft" },
+    };
     if (category) {
       query.category = category;
+    }
+    if (featured === "true") {
+      query.isFeatured = true;
     }
     
     if (search) {
