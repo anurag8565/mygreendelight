@@ -5,15 +5,7 @@ import User from "./model/user.model"
 import bcrypt from "bcryptjs"
 import Google from "next-auth/providers/google"
 
-process.env.AUTH_TRUST_HOST = "true";
-
 const FALLBACK_SECRET = "quickbasket_super_secret_key_2026_subziquick_production_jwt";
-if (!process.env.AUTH_SECRET) {
-    process.env.AUTH_SECRET = (process.env.NEXTAUTH_SECRET || "").trim() || FALLBACK_SECRET;
-}
-if (!process.env.NEXTAUTH_SECRET) {
-    process.env.NEXTAUTH_SECRET = process.env.AUTH_SECRET;
-}
 
 const googleClientId = (
     process.env.GOOGLE_CLIENT_ID ||
@@ -30,52 +22,67 @@ const googleClientSecret = (
     ""
 ).trim();
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
-    trustHost: true,
-    providers: [
-        Credentials({
-            credentials: {
-                email: { label: "Email", type: "email" },
-                password: { label: "Password", type: "password" }
-            },
-            async authorize(credentials) {
-                try {
-                    await connectDb()
-
-                    const rawEmail = credentials?.email as string
-                    const email = rawEmail ? rawEmail.trim().toLowerCase() : ""
-                    const password = credentials?.password as string
-
-                    const user = await User.findOne({ 
-                        email: { $regex: new RegExp(`^${email}$`, "i") } 
-                    })
-
-                    if (!user) return null
-
-                    const isMatch = await bcrypt.compare(password, user.password)
-
-                    if (!isMatch) return null
-
-                    return {
-                        id: user._id.toString(),
-                        name: user.name,
-                        email: user.email,
-                        role: user.role,
-                        image: user.image || "",
-                    }
-
-                } catch (error) {
-                    console.error("Authorize error:", error)
-                    return null
+const providers: any[] = [
+    Credentials({
+        name: "credentials",
+        credentials: {
+            email: { label: "Email", type: "email" },
+            password: { label: "Password", type: "password" }
+        },
+        async authorize(credentials) {
+            try {
+                if (!credentials?.email || !credentials?.password) {
+                    return null;
                 }
+
+                await connectDb();
+
+                const email = (credentials.email as string).trim().toLowerCase();
+                const password = credentials.password as string;
+
+                const user = await User.findOne({ 
+                    email: { $regex: new RegExp(`^${email}$`, "i") } 
+                });
+
+                if (!user || !user.password) {
+                    return null;
+                }
+
+                const isMatch = await bcrypt.compare(password, user.password);
+
+                if (!isMatch) {
+                    return null;
+                }
+
+                return {
+                    id: user._id.toString(),
+                    name: user.name,
+                    email: user.email,
+                    role: user.role || "user",
+                    image: user.image || "",
+                };
+
+            } catch (error) {
+                console.error("Authorize error in NextAuth:", error);
+                return null;
             }
-        }),
+        }
+    })
+];
+
+if (googleClientId && googleClientSecret) {
+    providers.push(
         Google({
             clientId: googleClientId,
             clientSecret: googleClientSecret,
             allowDangerousEmailAccountLinking: true,
         })
-    ],
+    );
+}
+
+export const { handlers, signIn, signOut, auth } = NextAuth({
+    trustHost: true,
+    providers,
     callbacks: {
         async signIn({ user, account }) {
             if (account?.provider === "google" && user?.email) {
@@ -175,5 +182,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         strategy: "jwt",
         maxAge: 10 * 24 * 60 * 60
     },
-    secret: process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET || FALLBACK_SECRET
+    secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || FALLBACK_SECRET
 })
