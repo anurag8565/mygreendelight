@@ -18,7 +18,7 @@ const CATEGORY_CONFIG: Record<
 > = {
   vegetables: {
     displayName: "Daily Vegetables",
-    subTitle: "Farm Harvested",
+    subTitle: "Farm Fresh Today",
     badge: "Fresh Today",
     imgUrl: "/categories/vegetables.jpg",
   },
@@ -48,6 +48,14 @@ const CATEGORY_CONFIG: Record<
   },
 };
 
+const DEFAULT_CATEGORIES = [
+  { name: "Vegetables", image: "/categories/vegetables.jpg" },
+  { name: "Fruits", image: "/categories/fruits.jpg" },
+  { name: "Dairy & Staples", image: "/categories/dairy.jpg" },
+  { name: "Exotics", image: "/categories/exotic.jpg" },
+  { name: "Ready-to-Cook & Cut Produce", image: "/categories/ready_to_cook.jpg" },
+];
+
 const PRIORITY_ORDER = [
   "vegetables",
   "fruits",
@@ -65,7 +73,7 @@ export default function CategorySlider({
   const [activeCategories, setActiveCategories] = useState<any[]>([]);
 
   useEffect(() => {
-    let list = categories.length > 0 ? [...categories] : [];
+    let list = Array.isArray(categories) && categories.length > 0 ? [...categories] : [];
 
     if (list.length === 0) {
       fetch("/api/admin/category")
@@ -73,16 +81,37 @@ export default function CategorySlider({
         .then((data) => {
           if (data.success && data.categories && data.categories.length > 0) {
             organizeCategories(data.categories);
+          } else {
+            organizeCategories(DEFAULT_CATEGORIES);
           }
         })
-        .catch(console.error);
+        .catch(() => {
+          organizeCategories(DEFAULT_CATEGORIES);
+        });
     } else {
       organizeCategories(list);
     }
   }, [categories]);
 
   const organizeCategories = (list: any[]) => {
-    const sorted = [...list].sort((a, b) => {
+    // Merge with defaults to ensure all 5 core categories exist
+    const map = new Map<string, any>();
+
+    // 1. Add defaults
+    DEFAULT_CATEGORIES.forEach((d) => {
+      map.set(d.name.toLowerCase().trim(), d);
+    });
+
+    // 2. Override/add from DB
+    list.forEach((item) => {
+      if (item && item.name) {
+        map.set(item.name.toLowerCase().trim(), item);
+      }
+    });
+
+    const merged = Array.from(map.values());
+
+    const sorted = merged.sort((a, b) => {
       const nameA = (a.name || "").toLowerCase().trim();
       const nameB = (b.name || "").toLowerCase().trim();
 
@@ -103,22 +132,22 @@ export default function CategorySlider({
   }
 
   return (
-    <div className="w-full py-5 sm:py-8 bg-[#f8f9fa] border-y border-gray-100 font-sans">
+    <section className="w-full py-5 sm:py-7 md:py-8 bg-[#f8f9fa] border-y border-gray-100/80 font-sans overflow-hidden">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Header Row */}
         <div className="flex items-center justify-between mb-3.5 sm:mb-5">
           <div>
-            <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
-              Shop by Category
+            <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight flex items-center gap-2">
+              <span>Shop by Category</span>
             </h2>
             <p className="text-[11px] sm:text-xs text-gray-500 font-medium hidden xs:block mt-0.5">
-              Farm-fresh morning picks, seasonal fruits & pure dairy staples
+              Farm-fresh morning picks, seasonal fruits &amp; pure dairy staples
             </p>
           </div>
 
           <Link
             href="/shop"
-            className="text-[#0c831f] hover:text-[#096618] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition"
+            className="text-[#0c831f] hover:text-[#096618] font-black text-xs sm:text-sm flex items-center gap-1 group transition bg-white px-3 py-1.5 rounded-xl border border-gray-200/70 shadow-2xs hover:shadow-xs"
           >
             <span>See All</span>
             <ChevronRight
@@ -128,9 +157,12 @@ export default function CategorySlider({
           </Link>
         </div>
 
-        {/* Real HD Photo Category Swipeable Carousel on Mobile, 5-col Grid on Desktop */}
+        {/* Responsive Layout:
+            - Mobile (< 768px): Smooth touch horizontal scroll with snap alignment and edge-to-edge feel
+            - Tablet & Desktop (>= 768px): Balanced 5-column grid spanning 100% width cleanly
+        */}
         <div
-          className="flex md:grid md:grid-cols-5 gap-3 sm:gap-3.5 md:gap-4 overflow-x-auto md:overflow-visible pb-2 pt-1 scrollbar-none -mx-3.5 px-3.5 sm:mx-0 sm:px-0 overscroll-x-contain"
+          className="flex md:grid md:grid-cols-5 gap-2.5 sm:gap-3.5 md:gap-4 lg:gap-5 overflow-x-auto md:overflow-visible pb-2 pt-1 scrollbar-none -mx-3.5 px-3.5 sm:mx-0 sm:px-0 overscroll-x-contain snap-x snap-mandatory"
           style={{ WebkitOverflowScrolling: "touch" }}
         >
           {activeCategories.map((item, idx) => {
@@ -142,43 +174,47 @@ export default function CategorySlider({
               imgUrl: item.image || "/categories/vegetables.jpg",
             };
 
-            const imageSrc = item.image && item.image.startsWith("/categories/") 
-              ? item.image 
-              : config.imgUrl;
+            const imageSrc =
+              item.image && (item.image.startsWith("/categories/") || item.image.startsWith("http"))
+                ? item.image
+                : config.imgUrl;
 
             return (
               <motion.div
-                key={item._id || idx}
-                whileHover={{ y: -3 }}
-                whileTap={{ scale: 0.98 }}
+                key={item._id || item.name || idx}
+                whileHover={{ y: -4 }}
+                whileTap={{ scale: 0.97 }}
                 onClick={() =>
                   router.push(`/shop?category=${encodeURIComponent(item.name)}`)
                 }
-                className="group cursor-pointer rounded-2xl sm:rounded-3xl p-2.5 sm:p-3 bg-white hover:border-emerald-300 border border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col justify-between relative overflow-hidden w-[125px] xs:w-[135px] sm:w-[150px] md:w-auto shrink-0 snap-start"
+                className="group cursor-pointer rounded-2xl sm:rounded-3xl p-2 sm:p-2.5 md:p-3 bg-white hover:border-[#0c831f]/40 border border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(12,131,31,0.12)] transition-all duration-300 flex flex-col justify-between relative overflow-hidden w-[115px] xs:w-[130px] sm:w-[145px] md:w-auto shrink-0 snap-start select-none"
               >
                 {/* Upper Photo Window */}
                 <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-gray-50 mb-2">
                   <img
                     src={imageSrc}
                     alt={config.displayName}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
                     onError={(e: any) => {
-                      e.target.src = config.imgUrl;
+                      e.target.src = config.imgUrl || "/categories/vegetables.jpg";
                     }}
                   />
 
+                  {/* Gradient Overlay on Hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+
                   {/* Floating Micro Badge */}
-                  <span className="absolute top-2 left-2 text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-md shadow-xs bg-gray-900/80 backdrop-blur-xs text-white">
+                  <span className="absolute top-1.5 left-1.5 text-[8px] sm:text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-md shadow-xs bg-gray-900/85 backdrop-blur-xs text-white">
                     {config.badge}
                   </span>
                 </div>
 
                 {/* Card Title & Subtitle */}
-                <div className="px-1 pb-0.5 text-center">
-                  <h3 className="font-bold text-xs sm:text-sm text-gray-900 leading-tight group-hover:text-[#0c831f] transition-colors truncate">
+                <div className="px-0.5 pb-0.5 text-center">
+                  <h3 className="font-extrabold text-[11px] xs:text-xs sm:text-sm text-gray-900 leading-tight group-hover:text-[#0c831f] transition-colors truncate">
                     {config.displayName}
                   </h3>
-                  <p className="text-[10px] sm:text-[11px] text-gray-400 font-medium truncate mt-0.5">
+                  <p className="text-[9px] xs:text-[10px] sm:text-[11px] text-gray-400 font-medium truncate mt-0.5">
                     {config.subTitle}
                   </p>
                 </div>
@@ -187,6 +223,6 @@ export default function CategorySlider({
           })}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
