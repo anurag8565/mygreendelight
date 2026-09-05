@@ -45,8 +45,8 @@ export default async function Userdashbord() {
     const flashDealsPromise = Grocery.find({ stock: { $gt: 0 }, status: { $ne: 'draft' } }).sort({ price: 1, rating: -1 }).limit(10).lean();
     const featuredGroceriesPromise = Grocery.find({
       status: { $ne: 'draft' },
-      $or: [{ isFeatured: true }, { rating: { $gte: 4.8 } }]
-    }).sort({ isFeatured: -1, rating: -1, numReviews: -1 }).limit(12).lean();
+      isFeatured: true,
+    }).sort({ createdAt: -1 }).limit(16).lean();
     const bannersPromise = Banner.find({}).sort({ createdAt: -1 }).limit(5).lean();
     const categoriesPromise = Category.find({}).sort({ createdAt: -1 }).lean();
     const testimonialsPromise = Testimonial.find({ status: 'approved' }).sort({ createdAt: -1 }).lean();

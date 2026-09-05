@@ -1,6 +1,10 @@
 import connectDb from "@/lib/db";
 import Category from "@/model/category.model";
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 // Fetch all categories (deduplicated by name)
 export async function GET() {
@@ -66,6 +70,11 @@ export async function POST(req: NextRequest) {
       image: uploadResponse.secure_url,
     });
 
+    try {
+      revalidatePath("/", "layout");
+      revalidatePath("/shop");
+    } catch (_) {}
+
     return NextResponse.json(
       { success: true, message: "Category added successfully", category },
       { status: 201 }
@@ -99,7 +108,20 @@ export async function DELETE(req: NextRequest) {
       );
     }
 
-    await Category.findByIdAndDelete(id);
+    const deleted = await Category.findByIdAndDelete(id);
+
+    if (!deleted) {
+      return NextResponse.json(
+        { success: false, message: "Category not found" },
+        { status: 404 }
+      );
+    }
+
+    try {
+      revalidatePath("/", "layout");
+      revalidatePath("/shop");
+    } catch (_) {}
+
     return NextResponse.json(
       { success: true, message: "Category deleted successfully" },
       { status: 200 }

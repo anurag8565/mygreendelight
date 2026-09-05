@@ -48,14 +48,6 @@ const CATEGORY_CONFIG: Record<
   },
 };
 
-const DEFAULT_CATEGORIES = [
-  { name: "Vegetables", image: "/categories/vegetables.jpg" },
-  { name: "Fruits", image: "/categories/fruits.jpg" },
-  { name: "Dairy & Staples", image: "/categories/dairy.jpg" },
-  { name: "Exotics", image: "/categories/exotic.jpg" },
-  { name: "Ready-to-Cook & Cut Produce", image: "/categories/ready_to_cook.jpg" },
-];
-
 const PRIORITY_ORDER = [
   "vegetables",
   "fruits",
@@ -79,39 +71,19 @@ export default function CategorySlider({
       fetch("/api/admin/category")
         .then((res) => res.json())
         .then((data) => {
-          if (data.success && data.categories && data.categories.length > 0) {
+          if (data.success && Array.isArray(data.categories)) {
             organizeCategories(data.categories);
-          } else {
-            organizeCategories(DEFAULT_CATEGORIES);
           }
         })
-        .catch(() => {
-          organizeCategories(DEFAULT_CATEGORIES);
-        });
+        .catch(console.error);
     } else {
       organizeCategories(list);
     }
   }, [categories]);
 
   const organizeCategories = (list: any[]) => {
-    // Merge with defaults to ensure all 5 core categories exist
-    const map = new Map<string, any>();
-
-    // 1. Add defaults
-    DEFAULT_CATEGORIES.forEach((d) => {
-      map.set(d.name.toLowerCase().trim(), d);
-    });
-
-    // 2. Override/add from DB
-    list.forEach((item) => {
-      if (item && item.name) {
-        map.set(item.name.toLowerCase().trim(), item);
-      }
-    });
-
-    const merged = Array.from(map.values());
-
-    const sorted = merged.sort((a, b) => {
+    // Only use categories that actually exist in the database
+    const sorted = [...list].sort((a, b) => {
       const nameA = (a.name || "").toLowerCase().trim();
       const nameB = (b.name || "").toLowerCase().trim();
 
@@ -131,6 +103,21 @@ export default function CategorySlider({
     return null;
   }
 
+  const count = activeCategories.length;
+
+  // Dynamically adapt grid columns on tablet/desktop so layout is always balanced
+  // e.g. 3 categories -> 3 columns, 4 categories -> 4 columns, 5 categories -> 5 columns
+  const desktopGridClass =
+    count === 1
+      ? "md:grid-cols-1 max-w-sm mx-auto"
+      : count === 2
+      ? "md:grid-cols-2 max-w-2xl mx-auto"
+      : count === 3
+      ? "md:grid-cols-3 max-w-5xl mx-auto"
+      : count === 4
+      ? "md:grid-cols-4 max-w-6xl mx-auto"
+      : "md:grid-cols-5";
+
   return (
     <section className="w-full py-5 sm:py-7 md:py-8 bg-[#f8f9fa] border-y border-gray-100/80 font-sans overflow-hidden">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
@@ -141,7 +128,7 @@ export default function CategorySlider({
               <span>Shop by Category</span>
             </h2>
             <p className="text-[11px] sm:text-xs text-gray-500 font-medium hidden xs:block mt-0.5">
-              Farm-fresh morning picks, seasonal fruits &amp; pure dairy staples
+              Farm-fresh morning picks, seasonal fruits &amp; premium varieties
             </p>
           </div>
 
@@ -158,11 +145,18 @@ export default function CategorySlider({
         </div>
 
         {/* Responsive Layout:
-            - Mobile (< 768px): Smooth touch horizontal scroll with snap alignment and edge-to-edge feel
-            - Tablet & Desktop (>= 768px): Balanced 5-column grid spanning 100% width cleanly
+            - Mobile (< 768px):
+              - If 3 categories: Crisp 3-column grid that fills the screen without scrolling!
+              - If > 3 categories: Smooth touch horizontal scroll with snap
+            - Tablet & Desktop (>= 768px):
+              - Balanced dynamic grid matching exact category count
         */}
         <div
-          className="flex md:grid md:grid-cols-5 gap-2.5 sm:gap-3.5 md:gap-4 lg:gap-5 overflow-x-auto md:overflow-visible pb-2 pt-1 scrollbar-none -mx-3.5 px-3.5 sm:mx-0 sm:px-0 overscroll-x-contain snap-x snap-mandatory"
+          className={`${
+            count <= 3
+              ? "grid grid-cols-3"
+              : "flex overflow-x-auto scrollbar-none -mx-3.5 px-3.5 sm:mx-0 sm:px-0 overscroll-x-contain snap-x snap-mandatory"
+          } md:grid ${desktopGridClass} gap-2.5 sm:gap-3.5 md:gap-4 lg:gap-5 pb-2 pt-1`}
           style={{ WebkitOverflowScrolling: "touch" }}
         >
           {activeCategories.map((item, idx) => {
@@ -187,7 +181,9 @@ export default function CategorySlider({
                 onClick={() =>
                   router.push(`/shop?category=${encodeURIComponent(item.name)}`)
                 }
-                className="group cursor-pointer rounded-2xl sm:rounded-3xl p-2 sm:p-2.5 md:p-3 bg-white hover:border-[#0c831f]/40 border border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(12,131,31,0.12)] transition-all duration-300 flex flex-col justify-between relative overflow-hidden w-[115px] xs:w-[130px] sm:w-[145px] md:w-auto shrink-0 snap-start select-none"
+                className={`group cursor-pointer rounded-2xl sm:rounded-3xl p-2 sm:p-2.5 md:p-3.5 bg-white hover:border-[#0c831f]/40 border border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(12,131,31,0.12)] transition-all duration-300 flex flex-col justify-between relative overflow-hidden ${
+                  count <= 3 ? "w-full" : "w-[115px] xs:w-[130px] sm:w-[145px] md:w-auto shrink-0 snap-start"
+                } select-none`}
               >
                 {/* Upper Photo Window */}
                 <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-gray-50 mb-2">
