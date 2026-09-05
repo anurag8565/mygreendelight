@@ -16,9 +16,6 @@ if (!process.env.NEXTAUTH_SECRET) {
     process.env.NEXTAUTH_SECRET = process.env.AUTH_SECRET;
 }
 
-const GOOGLE_CLIENT_ID = (process.env.GOOGLE_CLIENT_ID || process.env.AUTH_GOOGLE_ID || "").trim();
-const GOOGLE_CLIENT_SECRET = (process.env.GOOGLE_CLIENT_SECRET || process.env.AUTH_GOOGLE_SECRET || "").trim();
-
 export const { handlers, signIn, signOut, auth } = NextAuth({
     trustHost: true,
     providers: [
@@ -59,14 +56,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 }
             }
         }),
-        ...(GOOGLE_CLIENT_ID && GOOGLE_CLIENT_SECRET
-            ? [
-                Google({
-                    clientId: GOOGLE_CLIENT_ID,
-                    clientSecret: GOOGLE_CLIENT_SECRET,
-                })
-            ]
-            : [])
+        Google({
+            clientId: (process.env.GOOGLE_CLIENT_ID || process.env.AUTH_GOOGLE_ID || "").trim(),
+            clientSecret: (process.env.GOOGLE_CLIENT_SECRET || process.env.AUTH_GOOGLE_SECRET || "").trim(),
+        })
     ],
     callbacks: {
         async signIn({ user, account }) {
