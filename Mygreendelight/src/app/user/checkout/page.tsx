@@ -91,7 +91,9 @@ export default function Checkout() {
   const discount = useSelector(selectDiscount);
   const couponCode = useSelector(selectCouponCode);
 
-  const [paymentMethod, setPaymentMethod] = useState<"cod" | "online">("cod");
+  const [paymentMethod, setPaymentMethod] = useState<"cod" | "upi">("cod");
+  const [upiRefNumber, setUpiRefNumber] = useState<string>("");
+  const [copiedUpi, setCopiedUpi] = useState<boolean>(false);
   const [deliverySlot, setDeliverySlot] = useState<string>("Early Morning Slot (6:00 AM – 8:30 AM)");
   const [isSilentDelivery, setIsSilentDelivery] = useState<boolean>(false);
   const [deliveryInstructions, setDeliveryInstructions] = useState<string>("");
@@ -238,133 +240,56 @@ export default function Checkout() {
       .join(", ");
 
     try {
-      if (paymentMethod === "cod") {
-        const orderRes = await axios.post("/api/user/order", {
-          userid: activeUserId,
-          items: cartdata.map((item) => ({
-            grocery: item._id,
-            name: item.name,
-            price: item.price,
-            unit: item.unit,
-            image: item.image,
-            variationWeight: item.variation?.weight,
-            quantity: item.quantity,
-          })),
-          totalamount: payableAmount,
-          address: {
-            fullname: fullname.trim(),
-            mobile: mobile.trim(),
-            city: "Bhopal",
-            state: "Madhya Pradesh",
-            pincode: currentArea.pincode,
-            fulladress: fulladdress,
-            latitude: position ? position[0] : currentArea.lat,
-            longitude: position ? position[1] : currentArea.lng,
-          },
-          paymentmethod: "cod",
-          couponCode: couponCode || undefined,
-          discount: discount || 0,
-          walletDiscount: 0,
-          isSilentDelivery: isSilentDelivery || false,
-          deliveryInstructions: deliveryInstructions || "",
-          deliverySlot: deliverySlot,
-        });
+      const orderRes = await axios.post("/api/user/order", {
+        userid: activeUserId,
+        items: cartdata.map((item) => ({
+          grocery: item._id,
+          name: item.name,
+          price: item.price,
+          unit: item.unit,
+          image: item.image,
+          variationWeight: item.variation?.weight,
+          quantity: item.quantity,
+        })),
+        totalamount: payableAmount,
+        address: {
+          fullname: fullname.trim(),
+          mobile: mobile.trim(),
+          city: "Bhopal",
+          state: "Madhya Pradesh",
+          pincode: currentArea.pincode,
+          fulladress: fulladdress,
+          latitude: position ? position[0] : currentArea.lat,
+          longitude: position ? position[1] : currentArea.lng,
+        },
+        paymentmethod: paymentMethod, // "cod" | "upi"
+        paymentId: paymentMethod === "upi" ? (upiRefNumber.trim() ? `UTR_${upiRefNumber.trim()}` : `UPI_${Date.now()}`) : null,
+        couponCode: couponCode || undefined,
+        discount: discount || 0,
+        walletDiscount: 0,
+        isSilentDelivery: isSilentDelivery || false,
+        deliveryInstructions: deliveryInstructions || "",
+        deliverySlot: deliverySlot,
+      });
 
-        if (!orderRes.data?.success) {
-          alert(orderRes.data?.message || "Could not place order. Please try again.");
-          setSubmitting(false);
-          return;
-        }
-
-        const createdOrderId = orderRes.data?.order?._id;
-
-        dispatch(clearCart());
-        try {
-          await axios.delete("/api/user/cart");
-        } catch (e) {}
-
-        const successUrl = createdOrderId
-          ? `/user/ordersuccess?orderId=${createdOrderId}&amount=${payableAmount}`
-          : `/user/ordersuccess?amount=${payableAmount}`;
-
-        window.location.replace(successUrl);
-      } else {
-        // 💳 Paytm Online Payment Flow
-        const result = await axios.post("/api/user/payment", {
-          userid: activeUserId,
-          items: cartdata.map((item) => ({
-            grocery: item._id,
-            name: item.name,
-            price: item.price,
-            unit: item.unit,
-            image: item.image,
-            variationWeight: item.variation?.weight,
-            quantity: item.quantity,
-          })),
-          totalamount: finalPayableTotal,
-          address: {
-            fullname: fullname.trim(),
-            mobile: mobile.trim(),
-            city: "Bhopal",
-            state: "Madhya Pradesh",
-            pincode: currentArea.pincode,
-            fulladress: fulladdress,
-            latitude: position ? position[0] : currentArea.lat,
-            longitude: position ? position[1] : currentArea.lng,
-          },
-          paymentmethod: "online",
-          couponCode: couponCode || undefined,
-          discount: discount || 0,
-          walletDiscount: 0,
-          isSilentDelivery: isSilentDelivery || false,
-          deliveryInstructions: deliveryInstructions || "",
-          deliverySlot: deliverySlot,
-        });
-
-        if (result.data?.success && result.data?.txnToken) {
-          const { orderId, txnToken, amount, mid } = result.data;
-
-          const script = document.createElement("script");
-          script.src = `https://securegw.paytm.in/merchantpgpui/checkoutjs/merchants/${mid}.js`;
-          script.crossOrigin = "anonymous";
-          script.onload = () => {
-            const config = {
-              root: "",
-              flow: "DEFAULT",
-              data: {
-                orderId: orderId,
-                token: txnToken,
-                tokenType: "TXN_TOKEN",
-                amount: String(amount),
-              },
-              handler: {
-                notifyMerchant: (eventName: string, data: any) => {
-                  console.log("Paytm Event:", eventName, data);
-                },
-              },
-            };
-            if ((window as any).Paytm?.CheckoutJS) {
-              (window as any).Paytm.CheckoutJS.init(config)
-                .then(() => {
-                  (window as any).Paytm.CheckoutJS.invoke();
-                })
-                .catch((err: any) => {
-                  console.error("Paytm Checkout Error:", err);
-                  alert("Payment gateway error. Please try again.");
-                  setSubmitting(false);
-                });
-            }
-          };
-          script.onerror = () => {
-            alert("Failed to load payment gateway. Please try again.");
-            setSubmitting(false);
-          };
-          document.body.appendChild(script);
-          return;
-        } else {
-          alert(result.data?.message || "Failed to initiate payment.");
-        }
+      if (!orderRes.data?.success) {
+        alert(orderRes.data?.message || "Could not place order. Please try again.");
+        setSubmitting(false);
+        return;
       }
+
+      const createdOrderId = orderRes.data?.order?._id;
+
+      dispatch(clearCart());
+      try {
+        await axios.delete("/api/user/cart");
+      } catch (e) {}
+
+      const successUrl = createdOrderId
+        ? `/user/ordersuccess?orderId=${createdOrderId}&amount=${payableAmount}&method=${paymentMethod}`
+        : `/user/ordersuccess?amount=${payableAmount}&method=${paymentMethod}`;
+
+      window.location.replace(successUrl);
     } catch (error: any) {
       console.error(error);
       alert(error.response?.data?.message || "Failed to place order. Please try again.");
@@ -960,7 +885,7 @@ export default function Checkout() {
                         </span>
                       </div>
                       <span className="text-xs text-gray-500 font-medium block mt-0.5">
-                        Pay via Cash or UPI directly to rider at doorstep
+                        Pay via Cash or UPI directly to delivery partner at doorstep
                       </span>
                     </div>
                   </div>
@@ -976,41 +901,137 @@ export default function Checkout() {
                   </div>
                 </label>
 
-                {/* Online Payment */}
-                <label
-                  onClick={() => setPaymentMethod("online")}
-                  className={`p-4 rounded-2xl border cursor-pointer transition-all flex items-center justify-between ${
-                    paymentMethod === "online"
-                      ? "border-[#0f8646] bg-emerald-50/40 shadow-xs"
+                {/* Direct UPI Payment (GPay, PhonePe, Paytm, QR) */}
+                <div
+                  className={`rounded-2xl border transition-all overflow-hidden ${
+                    paymentMethod === "upi"
+                      ? "border-[#0f8646] bg-emerald-50/30 shadow-sm"
                       : "border-gray-200 hover:border-gray-300 bg-white"
                   }`}
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center shrink-0">
-                      <CreditCard size={20} />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-black text-xs sm:text-sm text-gray-900">
-                          Pay Online (UPI / Cards / NetBanking)
+                  <label
+                    onClick={() => setPaymentMethod("upi")}
+                    className="p-4 cursor-pointer flex items-center justify-between"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 via-blue-600 to-green-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+                        <Zap size={20} />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-1.5">
+                          <span className="font-black text-xs sm:text-sm text-gray-900">
+                            Pay via UPI / QR Code
+                          </span>
+                          <span className="text-[9px] font-black uppercase bg-gradient-to-r from-purple-100 to-green-100 text-purple-900 px-1.5 py-0.5 rounded">
+                            0% Extra Fee
+                          </span>
+                        </div>
+                        <span className="text-xs text-gray-500 font-medium block mt-0.5">
+                          Google Pay, PhonePe, Paytm, BHIM or Scan QR
                         </span>
                       </div>
-                      <span className="text-xs text-gray-500 font-medium block mt-0.5">
-                        Paytm Gateway — GPay, PhonePe, Cards & Net Banking
-                      </span>
                     </div>
-                  </div>
 
-                  <div
-                    className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ml-2 ${
-                      paymentMethod === "online"
-                        ? "border-[#0f8646] bg-[#0f8646] text-white"
-                        : "border-gray-300 bg-white"
-                    }`}
-                  >
-                    {paymentMethod === "online" && <Check size={12} strokeWidth={3} />}
-                  </div>
-                </label>
+                    <div
+                      className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ml-2 ${
+                        paymentMethod === "upi"
+                          ? "border-[#0f8646] bg-[#0f8646] text-white"
+                          : "border-gray-300 bg-white"
+                      }`}
+                    >
+                      {paymentMethod === "upi" && <Check size={12} strokeWidth={3} />}
+                    </div>
+                  </label>
+
+                  {/* UPI QR & 1-Click Pay Extended Box */}
+                  {paymentMethod === "upi" && (
+                    <div className="p-4 pt-0 border-t border-emerald-100/80 bg-white space-y-4">
+                      {/* Mobile 1-Click Pay Apps Button */}
+                      <div className="pt-3">
+                        <span className="text-[11px] font-bold text-gray-600 block mb-2">
+                          ⚡ Tap to Pay Directly on Phone (Mobile UPI Apps):
+                        </span>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                          <a
+                            href={`upi://pay?pa=9981418565-2@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Fresh%20Order`}
+                            className="bg-[#5f259f] hover:bg-[#4a1c7d] text-white py-2 px-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs transition"
+                          >
+                            <span>PhonePe</span>
+                          </a>
+                          <a
+                            href={`upi://pay?pa=9981418565-2@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Fresh%20Order`}
+                            className="bg-[#1a73e8] hover:bg-[#1557b0] text-white py-2 px-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs transition"
+                          >
+                            <span>GPay</span>
+                          </a>
+                          <a
+                            href={`upi://pay?pa=9981418565-2@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Fresh%20Order`}
+                            className="bg-[#00baf2] hover:bg-[#0092bf] text-white py-2 px-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs transition col-span-2 sm:col-span-1"
+                          >
+                            <span>Paytm / BHIM</span>
+                          </a>
+                        </div>
+                      </div>
+
+                      {/* Dynamic QR Code Box */}
+                      <div className="bg-emerald-50/50 p-4 rounded-2xl border border-emerald-200/80 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+                        <div className="relative bg-white p-2 rounded-xl shadow-xs border border-gray-200 shrink-0">
+                          <img
+                            src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(
+                              `upi://pay?pa=9981418565-2@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Fresh%20Order`
+                            )}`}
+                            alt="SubziQuick UPI QR"
+                            className="w-28 h-28 object-contain"
+                          />
+                          <span className="text-[9px] font-bold text-gray-500 block text-center mt-1">
+                            Scan with Any App
+                          </span>
+                        </div>
+
+                        <div className="space-y-1.5 flex-1">
+                          <span className="text-[10px] font-black uppercase text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-md inline-block">
+                            Direct Bank Transfer
+                          </span>
+                          <h4 className="font-extrabold text-xs sm:text-sm text-gray-900">
+                            Scan & Pay ₹{finalPayableTotal}
+                          </h4>
+                          
+                          {/* Copyable UPI ID */}
+                          <div className="flex items-center gap-2 pt-1">
+                            <code className="bg-white border border-gray-200 px-2 py-1 rounded-lg text-xs font-mono font-bold text-gray-800">
+                              9981418565-2@ybl
+                            </code>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                navigator.clipboard.writeText("9981418565-2@ybl");
+                                setCopiedUpi(true);
+                                setTimeout(() => setCopiedUpi(false), 2000);
+                              }}
+                              className="text-[11px] font-bold text-[#0f8646] hover:underline cursor-pointer flex items-center gap-1"
+                            >
+                              {copiedUpi ? "✓ Copied" : "Copy ID"}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Optional UTR / Reference ID Field */}
+                      <div>
+                        <label className="block text-xs font-bold text-gray-700 mb-1">
+                          UPI UTR / 12-Digit Reference No. <span className="text-gray-400 font-normal">(Optional after paying)</span>
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="e.g. 423987123456 (from your payment receipt)"
+                          value={upiRefNumber}
+                          onChange={(e) => setUpiRefNumber(e.target.value)}
+                          className="w-full bg-gray-50/70 border border-gray-200 rounded-xl py-2 px-3 text-xs font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] transition"
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -1141,7 +1162,7 @@ export default function Checkout() {
               >
                 <CheckCircle2 size={18} />
                 <span>
-                  {paymentMethod === "cod" ? "Place COD Order" : "Proceed to Pay"} • ₹{finalPayableTotal}
+                  {paymentMethod === "cod" ? "Place COD Order" : "Confirm & Place UPI Order"} • ₹{finalPayableTotal}
                 </span>
               </button>
 
@@ -1173,7 +1194,7 @@ export default function Checkout() {
         >
           <CheckCircle2 size={16} />
           <span>
-            {paymentMethod === "cod" ? "Place Order (COD)" : "Pay Now"} • ₹{finalPayableTotal}
+            {paymentMethod === "cod" ? "Place COD Order" : "Confirm UPI Order"} • ₹{finalPayableTotal}
           </span>
         </button>
       </div>

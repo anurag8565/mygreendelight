@@ -114,7 +114,7 @@ const orderSchema = new mongoose.Schema<iorder>(
 
         paymentmethod: {
             type: String,
-            enum: ["cod", "online"],
+            enum: ["cod", "online", "upi"],
             default: "cod",
         },
 

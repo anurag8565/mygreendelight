@@ -142,7 +142,7 @@ function OrderSuccessContent() {
                 <span>Order ID: <span className="text-[#0f8646] font-mono">{formattedOrderId}</span></span>
               </div>
               <span className="bg-white text-emerald-800 font-extrabold text-[10px] uppercase px-2.5 py-0.5 rounded-full border border-emerald-200">
-                {orderDetails?.paymentmethod === "cod" ? "Cash On Delivery" : "Online Verified"}
+                {orderDetails?.paymentmethod === "cod" ? "Cash On Delivery" : "UPI Direct (Verified)"}
               </span>
             </div>
 

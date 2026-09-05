@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
         // ✅ read body once
         const body = await req.json();
         console.log(body);
-        const { userid, items, paymentmethod, totalamount, address, couponCode, discount, deliverySlot, walletDiscount, farmerTip, isSilentDelivery, deliveryInstructions } = body;
+        const { userid, items, paymentmethod, totalamount, address, couponCode, discount, deliverySlot, walletDiscount, farmerTip, isSilentDelivery, deliveryInstructions, paymentId } = body;
 
         // ❌ validation
         if (!userid || !items || !Array.isArray(items) || items.length === 0 || !paymentmethod || !address) {
@@ -92,6 +92,9 @@ export async function POST(req: NextRequest) {
             isSilentDelivery: isSilentDelivery || false,
             deliveryInstructions: deliveryInstructions || "",
             deliverySlot: deliverySlot || "Instant Express (30-45 Mins)",
+            paymentId: paymentId || null,
+            paymentStatus: paymentmethod === "upi" ? "completed" : null,
+            ispaid: paymentmethod === "upi" ? true : false,
         });
 
         // 💰 Deduct GreenPoints Wallet if redeemed
