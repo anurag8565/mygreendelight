@@ -39,12 +39,25 @@ function RegisterFormContent({ onBack }: RegisterformProps) {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const authError = searchParams.get("error");
+
   // If already authenticated, redirect seamlessly
   useEffect(() => {
     if (status === "authenticated") {
       router.replace(callbackUrl);
     }
   }, [status, callbackUrl, router]);
+
+  // Handle URL auth errors (e.g. from OAuth callbacks)
+  useEffect(() => {
+    if (authError) {
+      if (authError.includes("OAuth") || authError === "Callback" || authError === "AccessDenied") {
+        setErrorMessage("Google Sign-Up could not be completed. Please enter your name, email and password below to create your account.");
+      } else {
+        setErrorMessage("Authentication encountered an issue. Please try again.");
+      }
+    }
+  }, [authError]);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();

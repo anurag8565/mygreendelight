@@ -59,10 +59,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 }
             }
         }),
-        Google({
-            clientId: GOOGLE_CLIENT_ID,
-            clientSecret: GOOGLE_CLIENT_SECRET,
-        })
+        ...(GOOGLE_CLIENT_ID && GOOGLE_CLIENT_SECRET
+            ? [
+                Google({
+                    clientId: GOOGLE_CLIENT_ID,
+                    clientSecret: GOOGLE_CLIENT_SECRET,
+                    authorization: {
+                        params: {
+                            prompt: "select_account",
+                            access_type: "offline",
+                            response_type: "code"
+                        }
+                    }
+                })
+            ]
+            : [])
     ],
     callbacks: {
         async signIn({ user, account }) {
