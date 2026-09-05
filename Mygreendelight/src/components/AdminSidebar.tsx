@@ -25,6 +25,7 @@ import {
   Gift,
   LogOut,
   Globe,
+  Sparkles,
 } from "lucide-react";
 import Logo from "./Logo";
 
@@ -112,9 +113,14 @@ export default function AdminSidebar() {
           icon: <MessageSquare size={17} />,
         },
         {
-          name: "Customer Reviews",
+          name: "Store Testimonials",
           href: "/admin/managetestimonials",
           icon: <Star size={17} />,
+        },
+        {
+          name: "Product Item Reviews",
+          href: "/admin/manage-reviews",
+          icon: <Sparkles size={17} />,
         },
         {
           name: "Broadcast Alerts",
