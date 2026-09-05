@@ -5,9 +5,11 @@ import User from "./model/user.model"
 import bcrypt from "bcryptjs"
 import Google from "next-auth/providers/google"
 
+process.env.AUTH_TRUST_HOST = "true";
+
 const FALLBACK_SECRET = "quickbasket_super_secret_key_2026_subziquick_production_jwt";
 if (!process.env.AUTH_SECRET) {
-    process.env.AUTH_SECRET = process.env.NEXTAUTH_SECRET || FALLBACK_SECRET;
+    process.env.AUTH_SECRET = (process.env.NEXTAUTH_SECRET || "").trim() || FALLBACK_SECRET;
 }
 if (!process.env.NEXTAUTH_SECRET) {
     process.env.NEXTAUTH_SECRET = process.env.AUTH_SECRET;
@@ -48,70 +50,69 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     }
 
                 } catch (error) {
-                    console.error(error)
+                    console.error("Authorize error:", error)
                     return null
                 }
             }
         }),
         Google({
-            clientId: process.env.GOOGLE_CLIENT_ID || "dummy_client_id",
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET || "dummy_client_secret",
+            clientId: process.env.GOOGLE_CLIENT_ID || "",
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
         })
     ],
     callbacks: {
         async signIn({ user, account }) {
-
             if (account?.provider === "google") {
+                try {
+                    await connectDb();
 
-                await connectDb();
-
-                let existingUser =
-                    await User.findOne({
+                    let existingUser = await User.findOne({
                         email: user.email,
                     });
 
-                if (!existingUser) {
-
-                    existingUser = await User.create({
-                        name: user.name,
-                        email: user.email,
-                        image: user.image,
-                        password: "",
-                        role: "user",
-                        walletBalance: 50,
-                        walletHistory: [
-                            {
-                                amount: 50,
-                                type: "credit",
-                                description: "🎉 Welcome Farm Gift Bonus",
-                                date: new Date(),
-                            },
-                        ],
-                    });
-
-                    try {
-                        const UserWallet = (await import("./model/wallet.model")).default;
-                        await UserWallet.create({
-                            user: existingUser._id,
-                            balance: 50,
-                            totalCashback: 50,
-                            transactions: [
+                    if (!existingUser) {
+                        existingUser = await User.create({
+                            name: user.name || "Customer",
+                            email: user.email,
+                            image: user.image,
+                            password: "",
+                            role: "user",
+                            walletBalance: 50,
+                            walletHistory: [
                                 {
-                                    type: "credit",
                                     amount: 50,
+                                    type: "credit",
                                     description: "🎉 Welcome Farm Gift Bonus",
-                                    createdAt: new Date(),
+                                    date: new Date(),
                                 },
                             ],
                         });
-                    } catch (wErr) {
-                        console.warn("Wallet create error on Google signin:", wErr);
+
+                        try {
+                            const UserWallet = (await import("./model/wallet.model")).default;
+                            await UserWallet.create({
+                                user: existingUser._id,
+                                balance: 50,
+                                totalCashback: 50,
+                                transactions: [
+                                    {
+                                        type: "credit",
+                                        amount: 50,
+                                        description: "🎉 Welcome Farm Gift Bonus",
+                                        createdAt: new Date(),
+                                    },
+                                ],
+                            });
+                        } catch (wErr) {
+                            console.warn("Wallet create error on Google signin:", wErr);
+                        }
                     }
 
+                    user.id = existingUser._id.toString();
+                    user.role = existingUser.role;
+                } catch (error) {
+                    console.error("Google signIn DB sync error:", error);
                 }
-
-                user.id = existingUser._id.toString();
-                user.role = existingUser.role;
             }
 
             return true;
