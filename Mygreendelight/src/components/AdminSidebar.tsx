@@ -21,6 +21,8 @@ import {
   Percent,
   Radio,
   Building2,
+  Flame,
+  Gift,
   LogOut,
 } from "lucide-react";
 
@@ -62,6 +64,16 @@ export default function AdminSidebar() {
     {
       groupTitle: "Marketing & Growth",
       items: [
+        {
+          name: "Flash Deals & Timer",
+          href: "/admin/manage-flash-deals",
+          icon: <Flame size={17} />,
+        },
+        {
+          name: "Scratch Card Rewards",
+          href: "/admin/manage-rewards",
+          icon: <Gift size={17} />,
+        },
         {
           name: "Coupons & Discounts",
           href: "/admin/managecoupons",
