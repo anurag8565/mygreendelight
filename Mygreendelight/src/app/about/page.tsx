@@ -62,17 +62,17 @@ export default function AboutPage() {
 
                   <div className="text-gray-600 text-sm sm:text-base leading-relaxed space-y-3 mb-8">
                     <p>
-                      Covid-19 ke dauraan jab papa ki naukri chali gayi thi, tab unhone himmat nahi haari aur thele par Bhopal ki sadko par taaza sabzi bechna shuru kiya.
+                      Hamari shuruaat hui Bhopal ki Karond Mandi ke trusted bulk traders aur kisanon ke sath direct aur mazboot rishte bana kar — taaki har vegetable aur fruit ki best quality aur genuine wholesale rate mil sake.
                     </p>
                     <p>
-                      Maine dekhi unki subah 4 baje ki kadi mehnat, imandari aur hamari struggle. Wahi se ek soch aayi — <em>"Kyun na hum kisanon se seedha judkar, poore Bhopal ko Mandi rate par bilkul taaza aur saaf sabzi same-day ghar tak pahunchayein?"</em>
+                      2025 me humne Bhopal ki housing societies aur colonies me <strong>Eco-Friendly EV Auto (Electric Auto)</strong> ke zariye taaza sabzi direct doorstep par pahunchana shuru kiya. Logon ka zabardast pyaar aur bharosa dekhkar humne socha — <em>&quot;Kyun na poore Bhopal ko online platform ke zariye same-day taaza Mandi produce ghar baithe deliver karein?&quot;</em>
                     </p>
                   </div>
 
                   <div className="bg-gradient-to-r from-green-50 via-emerald-50/60 to-white border-l-4 border-[#0f8646] p-5 rounded-r-2xl mb-8 shadow-2xs">
                     <p className="text-gray-900 font-extrabold text-sm sm:text-base leading-snug">
                       SubziQuick sirf ek grocery app nahi hai, <br />
-                      yeh hamare parivaar ka sapna aur Bhopal ka bharosa hai.
+                      yeh Mandi ki taazgi, EV eco-delivery aur Bhopal ka vishwaas hai.
                     </p>
                   </div>
 
@@ -119,10 +119,10 @@ export default function AboutPage() {
                 <div className="absolute -bottom-6 sm:-bottom-8 -left-2 sm:-left-6 bg-white/95 backdrop-blur-md rounded-3xl shadow-xl p-5 max-w-[240px] border border-green-100 text-left">
                   <Quote size={20} className="text-[#0f8646] mb-1" />
                   <p className="text-xs font-black text-gray-900 leading-snug">
-                    "Papa ki mehnat, hamara sapna, aapka bharosa."
+                    &quot;Mandi ki taazgi, EV auto ka bharosa, Bhopal ki apni SubziQuick.&quot;
                   </p>
                   <span className="text-[10px] text-gray-400 font-bold mt-1 block">
-                    — SubziQuick Founder Family
+                    — SubziQuick Team
                   </span>
                 </div>
               </div>
@@ -191,39 +191,39 @@ export default function AboutPage() {
               The Journey of SubziQuick
             </h2>
             <p className="text-xs sm:text-sm text-gray-500 mt-2">
-              From a humble street cart to Bhopal’s most loved Mandi fresh & same-day produce delivery network
+              From Karond Mandi bulk partnerships and EV Auto deliveries to Bhopal&apos;s most loved online fresh produce network
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
-                year: "2020",
-                badge: "The Hardship",
-                icon: <Briefcase size={22} className="text-[#0f8646]" />,
-                title: "Job Loss & Resilience",
-                desc: "Covid pandemic struck and my father lost his job. Without losing heart, he started selling fresh vegetables on a street cart.",
-              },
-              {
-                year: "2022",
-                badge: "The Spark",
+                year: "Mandi Roots",
+                badge: "Bulk Network",
                 icon: <Store size={22} className="text-[#0f8646]" />,
-                title: "Direct Farm Connections",
-                desc: "We built trusted relationships with local farmers in Raisen & Sehore, eliminating middlemen to give fair prices to both farmers and families.",
+                title: "Karond Mandi Bulk Relations",
+                desc: "Built trusted relationships with wholesale Mandi traders and bulk farmers, securing direct access to top-grade daily harvests at true wholesale rates.",
               },
               {
-                year: "2024",
-                badge: "The Innovation",
-                icon: <TrendingUp size={22} className="text-[#0f8646]" />,
-                title: "SubziQuick Digital Store",
-                desc: "Launched our online platform and central store in Bagsewaniya (Amrai) to deliver pure fresh harvest directly to Bhopal doorsteps.",
+                year: "2025",
+                badge: "Eco Doorstep",
+                icon: <Truck size={22} className="text-[#0f8646]" />,
+                title: "EV Auto Society Selling",
+                desc: "Introduced eco-friendly Electric Auto (EV) mobile fresh delivery across Bhopal colonies and societies, earning the trust of thousands of local families.",
               },
               {
                 year: "2026",
-                badge: "Express Fresh Service",
+                badge: "Digital Platform",
+                icon: <TrendingUp size={22} className="text-[#0f8646]" />,
+                title: "SubziQuick Online Launch",
+                desc: "Scaled into a full digital web platform (subziquick.in) with central store hub in Bagsewaniya, offering 1-click ordering and direct zero-fee payments.",
+              },
+              {
+                year: "Present",
+                badge: "Express Service",
                 icon: <Sparkles size={22} className="text-[#0f8646]" />,
-                title: "Same-Day Bhopal Mandi Runs (6 AM – 10 PM)",
-                desc: "Now serving households across Bhopal with prompt deliveries, ozone-washed produce, and 100% satisfaction guarantee.",
+                title: "Same-Day Bhopal Mandi Runs",
+                desc: "Serving 19+ localities with 100% ozone-washed produce, morning & express slots (6 AM – 10 PM), and zero-compromise quality guarantee.",
               },
             ].map((step, idx) => (
               <div
@@ -232,7 +232,7 @@ export default function AboutPage() {
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-2xl font-black text-[#0f8646]">
+                    <span className="text-xl font-black text-[#0f8646]">
                       {step.year}
                     </span>
                     <div className="w-10 h-10 rounded-2xl bg-green-50 flex items-center justify-center">
