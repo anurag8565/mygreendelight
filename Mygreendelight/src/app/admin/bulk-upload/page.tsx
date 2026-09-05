@@ -18,6 +18,7 @@ import {
   Database,
   Layers,
 } from "lucide-react";
+import * as XLSX from "xlsx";
 import AdminSidebar from "@/components/AdminSidebar";
 
 export default function BulkUploadPage() {
@@ -175,6 +176,12 @@ export default function BulkUploadPage() {
     return products;
   };
 
+  const scrollToPreview = () => {
+    setTimeout(() => {
+      document.getElementById("dataset-preview")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 150);
+  };
+
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (!selectedFile) return;
@@ -182,30 +189,113 @@ export default function BulkUploadPage() {
     setFile(selectedFile);
     setResultMsg(null);
 
-    const reader = new FileReader();
+    const fileName = selectedFile.name.toLowerCase();
 
-    if (selectedFile.name.endsWith(".json")) {
+    // 1. Handle JSON
+    if (fileName.endsWith(".json")) {
+      const reader = new FileReader();
       reader.onload = (event) => {
         try {
           const parsed = JSON.parse(event.target?.result as string);
-          if (Array.isArray(parsed)) {
+          if (Array.isArray(parsed) && parsed.length > 0) {
             setParsedProducts(parsed);
+            scrollToPreview();
           } else {
-            alert("JSON file must contain an array of products.");
+            alert("JSON file must contain a non-empty array of products.");
           }
         } catch (err) {
           alert("Invalid JSON format.");
         }
       };
       reader.readAsText(selectedFile);
-    } else {
+    } 
+    // 2. Handle Excel (.xlsx, .xls)
+    else if (fileName.endsWith(".xlsx") || fileName.endsWith(".xls")) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const buffer = event.target?.result as ArrayBuffer;
+          const workbook = XLSX.read(buffer, { type: "array" });
+          const firstSheetName = workbook.SheetNames[0];
+          const sheet = workbook.Sheets[firstSheetName];
+          const rawRows: any[] = XLSX.utils.sheet_to_json(sheet);
+
+          if (rawRows.length === 0) {
+            alert("The uploaded Excel sheet contains no rows.");
+            return;
+          }
+
+          const products = rawRows.map((r) => {
+            const getVal = (keys: string[]) => {
+              for (const k of keys) {
+                const foundKey = Object.keys(r).find((ok) => ok.trim().toLowerCase() === k.toLowerCase());
+                if (foundKey && r[foundKey] !== undefined) return r[foundKey];
+              }
+              return "";
+            };
+
+            const name = String(getVal(["name", "produce name", "product name", "item"])).trim();
+            const category = String(getVal(["category", "cat"])).trim() || "Vegetables";
+            const price = Number(getVal(["price", "rate", "base price", "selling price"])) || 40;
+            const mrp = Number(getVal(["mrp", "original price"])) || Math.round(price * 1.28);
+            const unit = String(getVal(["unit", "pack", "size"])).trim() || "1 kg";
+            const stock = Number(getVal(["stock", "qty", "quantity"])) || 100;
+            const image = String(getVal(["image", "img", "photo", "image url"])).trim();
+            const description = String(getVal(["description", "desc"])).trim();
+            const sourcing = String(getVal(["sourcing", "source", "origin"])).trim();
+            const storage = String(getVal(["storage", "shelf life"])).trim();
+
+            let variations: any[] = [];
+            const rawVars = getVal(["variations", "variants", "pack sizes"]);
+            if (rawVars) {
+              try {
+                variations = typeof rawVars === "string" ? JSON.parse(rawVars) : rawVars;
+              } catch {
+                variations = [];
+              }
+            }
+
+            return {
+              name,
+              category,
+              price,
+              mrp,
+              unit,
+              stock,
+              image,
+              description,
+              sourcing,
+              storage,
+              variations,
+            };
+          }).filter((p) => p.name && p.price > 0);
+
+          if (products.length === 0) {
+            alert("Could not find valid produce columns (Name, Price) in Excel sheet.");
+            return;
+          }
+
+          setParsedProducts(products);
+          scrollToPreview();
+        } catch (err: any) {
+          console.error("Excel parse error:", err);
+          alert("Failed to parse Excel file: " + (err.message || "Unknown error"));
+        }
+      };
+      reader.readAsArrayBuffer(selectedFile);
+    } 
+    // 3. Handle CSV
+    else {
+      const reader = new FileReader();
       reader.onload = (event) => {
         const text = event.target?.result as string;
         const products = parseCSV(text);
         if (products.length === 0) {
           alert("Could not parse any valid product rows from CSV. Please check the template format.");
+          return;
         }
         setParsedProducts(products);
+        scrollToPreview();
       };
       reader.readAsText(selectedFile);
     }
@@ -355,6 +445,7 @@ export default function BulkUploadPage() {
                       const data = await res.json();
                       setParsedProducts(data);
                       setResultMsg(null);
+                      scrollToPreview();
                     } catch (e) {
                       alert("Failed to load Ultimate Master dataset");
                     }
@@ -403,6 +494,7 @@ export default function BulkUploadPage() {
                       const data = await res.json();
                       setParsedProducts(data);
                       setResultMsg(null);
+                      scrollToPreview();
                     } catch (e) {
                       alert("Failed to load Master dataset");
                     }
@@ -459,6 +551,7 @@ export default function BulkUploadPage() {
                       const data = await res.json();
                       setParsedProducts(data);
                       setResultMsg(null);
+                      scrollToPreview();
                     } catch (e) {
                       alert("Failed to load MVF Pune dataset");
                     }
@@ -515,6 +608,7 @@ export default function BulkUploadPage() {
                       const data = await res.json();
                       setParsedProducts(data);
                       setResultMsg(null);
+                      scrollToPreview();
                     } catch (e) {
                       alert("Failed to load FPS Store dataset");
                     }
@@ -571,6 +665,7 @@ export default function BulkUploadPage() {
                       const data = await res.json();
                       setParsedProducts(data);
                       setResultMsg(null);
+                      scrollToPreview();
                     } catch (e) {
                       alert("Failed to load Wholesale Mandi dataset");
                     }
@@ -627,6 +722,7 @@ export default function BulkUploadPage() {
                       const data = await res.json();
                       setParsedProducts(data);
                       setResultMsg(null);
+                      scrollToPreview();
                     } catch (e) {
                       alert("Failed to load Ram Bhaji dataset");
                     }
@@ -683,6 +779,7 @@ export default function BulkUploadPage() {
                       const data = await res.json();
                       setParsedProducts(data);
                       setResultMsg(null);
+                      scrollToPreview();
                     } catch (e) {
                       alert("Failed to load VegSwift dataset");
                     }
@@ -739,6 +836,7 @@ export default function BulkUploadPage() {
                       const data = await res.json();
                       setParsedProducts(data);
                       setResultMsg(null);
+                      scrollToPreview();
                     } catch (e) {
                       alert("Failed to load KisaanRiksha dataset");
                     }
@@ -795,6 +893,7 @@ export default function BulkUploadPage() {
                       const data = await res.json();
                       setParsedProducts(data);
                       setResultMsg(null);
+                      scrollToPreview();
                     } catch (e) {
                       alert("Failed to load Beybey Farms dataset");
                     }
@@ -850,7 +949,7 @@ export default function BulkUploadPage() {
               <input
                 type="file"
                 id="bulk-file"
-                accept=".csv, application/json, text/csv"
+                accept=".xlsx, .xls, .csv, application/json, text/csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                 onChange={handleFileUpload}
                 className="hidden"
               />
@@ -873,7 +972,7 @@ export default function BulkUploadPage() {
 
           {/* Live Preview Table */}
           {parsedProducts.length > 0 && (
-            <div className="bg-white rounded-3xl border border-gray-200/80 p-6 sm:p-8 shadow-xs">
+            <div id="dataset-preview" className="bg-white rounded-3xl border border-gray-200/80 p-6 sm:p-8 shadow-xs scroll-mt-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                 <div>
                   <h3 className="font-black text-lg text-gray-900 flex items-center gap-2">
