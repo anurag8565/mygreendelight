@@ -71,8 +71,58 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "GroceryStore",
+    "name": "SubziQuick Bhopal",
+    "image": "https://subziquick.in/hero_basket.jpg",
+    "url": "https://subziquick.in",
+    "telephone": "+919981418565",
+    "email": "support@subziquick.in",
+    "priceRange": "₹₹",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Amrai, Bagsewaniya",
+      "addressLocality": "Bhopal",
+      "addressRegion": "Madhya Pradesh",
+      "postalCode": "462043",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 23.1956,
+      "longitude": 77.4645
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "06:00",
+        "closes": "22:00"
+      }
+    ],
+    "servesCuisine": "Fresh Vegetables, Fruits, Dairy, Groceries",
+    "sameAs": [
+      "https://wa.me/919981418565"
+    ]
+  };
+
   return (
     <html lang="en" className="overflow-x-hidden">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="w-full min-h-screen bg-linear-to-b from-green-50 to-white text-gray-900 overflow-x-hidden">
         <Provider>
           <StoreProviders>

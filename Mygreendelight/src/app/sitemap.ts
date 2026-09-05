@@ -1,9 +1,11 @@
 import { MetadataRoute } from "next";
+import connectDb from "@/lib/db";
+import Groseri from "@/model/groseri.model";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://subziquick.in";
 
-  return [
+  const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
       lastModified: new Date(),
@@ -59,4 +61,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.3,
     },
   ];
+
+  let productRoutes: MetadataRoute.Sitemap = [];
+  try {
+    await connectDb();
+    const products = await Groseri.find({}, { _id: 1, updatedAt: 1 }).lean().limit(1000);
+    productRoutes = products.map((item: any) => ({
+      url: `${baseUrl}/product/${item._id}`,
+      lastModified: item.updatedAt ? new Date(item.updatedAt) : new Date(),
+      changeFrequency: "daily",
+      priority: 0.8,
+    }));
+  } catch (err) {
+    console.warn("Sitemap product fetch error:", err);
+  }
+
+  return [...staticRoutes, ...productRoutes];
 }
