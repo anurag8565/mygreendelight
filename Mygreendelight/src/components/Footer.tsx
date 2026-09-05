@@ -187,9 +187,22 @@ export default function Footer() {
 
         </div>
 
+        {/* Bhopal Local SEO & Delivery Zones Section */}
+        <div className="border-t border-green-900/60 mt-8 pt-6 pb-2 text-xs text-green-200/80">
+          <h4 className="font-bold text-emerald-300 text-xs mb-2 tracking-wide uppercase">
+            📍 Same-Day Fresh Vegetable & Fruit Delivery Areas in Bhopal:
+          </h4>
+          <p className="leading-relaxed text-[11px] text-green-100/70">
+            Arera Colony • MP Nagar • Kolar Road • Bagsewaniya • Gulmohar Colony • Shahpura • Hoshangabad Road • Saket Nagar • BHEL • Chunabhatti • TT Nagar • Misrod • Awadhpuri • Katara Hills • Ayodhya Bypass • Indrapuri • Govindpura • Trilanga • Bawadiya Kalan • Salaiya • Habibganj • MP Nagar Zone 1 & 2 • New Market • Koh-e-Fiza • Lalghati • Airport Road.
+          </p>
+          <p className="mt-2 text-[10px] text-green-300/60">
+            Popular Searches: Online Sabzi Delivery Bhopal | Fresh Vegetables Online Bhopal | Karond Mandi Fresh Fruits Home Delivery | Buy Farm Fresh Vegetables Online MP | SubziQuick Bhopal Same Day Delivery.
+          </p>
+        </div>
+
         {/* Bottom Legal & Payment Badges */}
-        <div className="border-t border-green-900/60 mt-8 pt-5 flex flex-col md:flex-row items-center justify-between text-xs text-green-200/80 gap-3 text-center md:text-left">
-          <p>© {new Date().getFullYear()} SubziQuick • Amrai, Bagsewaniya, Bhopal</p>
+        <div className="border-t border-green-900/60 mt-4 pt-4 flex flex-col md:flex-row items-center justify-between text-xs text-green-200/80 gap-3 text-center md:text-left">
+          <p>© {new Date().getFullYear()} SubziQuick • Amrai, Bagsewaniya, Bhopal, Madhya Pradesh</p>
 
           <div className="flex items-center justify-center gap-2.5 text-[11px] font-semibold flex-wrap text-green-100">
             <Link href="/privacy-policy" className="hover:text-white transition">

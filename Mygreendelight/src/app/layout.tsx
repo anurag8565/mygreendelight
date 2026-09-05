@@ -112,7 +112,30 @@ export default function RootLayout({
         "closes": "22:00"
       }
     ],
-    "servesCuisine": "Fresh Vegetables, Fruits, Dairy, Groceries",
+    "areaServed": [
+      "Bhopal",
+      "MP Nagar",
+      "Arera Colony",
+      "Kolar Road",
+      "Bagsewaniya",
+      "Gulmohar",
+      "Shahpura",
+      "Hoshangabad Road",
+      "Saket Nagar",
+      "BHEL Bhopal",
+      "Chunabhatti",
+      "TT Nagar",
+      "Misrod",
+      "Awadhpuri",
+      "Katara Hills",
+      "Ayodhya Bypass",
+      "Indrapuri",
+      "Bawadiya Kalan",
+      "Trilanga"
+    ],
+    "paymentAccepted": "Cash, UPI, Credit Card, Debit Card, Net Banking",
+    "currenciesAccepted": "INR",
+    "servesCuisine": "Fresh Vegetables, Seasonal Fruits, Mandi Produce, Dairy, Groceries",
     "sameAs": [
       "https://wa.me/919981418565"
     ]
