@@ -6,25 +6,33 @@ import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import { signIn } from "next-auth/react";
 
-function Registerform() {
+interface RegisterformProps {
+  onBack?: () => void;
+}
 
-  const router = useRouter()
+function Registerform({ onBack }: RegisterformProps) {
+  const router = useRouter();
 
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [googleLoading, setGoogleLoading] = useState(false);
-  const [password, setPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage("");
     setLoading(true);
 
     try {
+      const cleanEmail = email.trim().toLowerCase();
+      const cleanName = name.trim();
+
       const result = await axios.post("/api/auth/register", {
-        name,
-        email,
+        name: cleanName,
+        email: cleanEmail,
         password,
       });
 
@@ -32,7 +40,7 @@ function Registerform() {
         // Auto-sign in user right after registration
         const res = await signIn("credentials", {
           redirect: false,
-          email,
+          email: cleanEmail,
           password,
         });
 
@@ -43,29 +51,34 @@ function Registerform() {
         }
       }
     } catch (error: any) {
-      alert(error.response?.data?.message || "Registration failed. Please check your details.");
+      const msg = error.response?.data?.message || error.response?.data?.error || "Registration failed. Please check your details.";
+      setErrorMessage(msg);
     } finally {
       setLoading(false);
     }
   };
 
-
+  const handleBackClick = () => {
+    if (onBack) {
+      onBack();
+    } else {
+      router.back();
+    }
+  };
 
   return (
-
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50 flex items-center justify-center p-4">
-
-
       {/* BACK BUTTON */}
       <button
-        onClick={() => router.push("/register")}
-        className=" absolute top-5 left-5 flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-xl shadow-lg hover:bg-green-700 hover:scale-105 transition-all">
+        onClick={handleBackClick}
+        className="absolute top-5 left-5 flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-xl shadow-lg hover:bg-green-700 hover:scale-105 transition-all"
+      >
         <ArrowLeft size={18} />
         Back
       </button>
 
       {/* CARD */}
-      <div className=" w-full max-w-md bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-green-100 p-8 ">
+      <div className="w-full max-w-md bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-green-100 p-8">
 
         {/* HEADER */}
         <div className="text-center mb-6">
@@ -78,9 +91,16 @@ function Registerform() {
           </h1>
 
           <p className="text-gray-500 mt-2">
-            Join My Green Delight today
+            Join SubziQuick today
           </p>
         </div>
+
+        {errorMessage && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl flex items-center gap-2 animate-shake">
+            <span className="font-semibold">⚠️</span>
+            <span>{errorMessage}</span>
+          </div>
+        )}
 
         {/* FORM */}
         <form

@@ -13,31 +13,34 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = async (
     e: React.FormEvent
   ) => {
     e.preventDefault();
-
+    setErrorMessage("");
     setLoading(true);
 
     try {
+      const cleanEmail = email.trim().toLowerCase();
       const res = await signIn(
         "credentials",
         {
-          email,
+          email: cleanEmail,
           password,
           redirect: false,
         }
       );
 
       if (res?.error) {
-        alert("Invalid email or password");
+        setErrorMessage("Invalid email or password. Please try again.");
       } else {
         window.location.href = "/";
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      setErrorMessage("Something went wrong during login. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -80,6 +83,13 @@ function Login() {
             Login to continue shopping
           </p>
         </div>
+
+        {errorMessage && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl flex items-center gap-2 animate-shake">
+            <span className="font-semibold">⚠️</span>
+            <span>{errorMessage}</span>
+          </div>
+        )}
 
         {/* Form */}
 

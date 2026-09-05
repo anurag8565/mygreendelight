@@ -9,13 +9,12 @@ function Welcome({nextstep}:proptype) {
     return (
         <div className='flex flex-col justify-center items-center p-6 min-h-screen text-center'>
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className='flex items-center gap-3 '>
-                <ShoppingCart className='text-green-600 w-10 h-10' />
-                <h1 className='text-4xl font-bold text-green-600'>MY GREEN DELIGHT</h1>
+                <ShoppingCart className='text-[#0f8646] w-10 h-10' />
+                <h1 className='text-4xl font-black text-[#0f8646] tracking-tight'>SUBZIQUICK</h1>
             </motion.div>
-            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.5 }} className='mt-4 text-lg text-gray-600 max-w-md'>
-                My Green Delight: your one-stop grocery shop.
-                Fast, smart, and hassle-free shopping.
-                Delivered to your door.
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.5 }} className='mt-4 text-base text-gray-600 max-w-md font-medium'>
+                SubziQuick: Bhopal&apos;s trusted Mandi fresh produce & grocery store.
+                Same-day doorstep delivery at fair Mandi prices.
             </motion.p>
             <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5, duration: 0.6 }} className='mt-10 flex items-center gap-10 justify-center'>
                 <Bike className='text-orange-600 w-24 h-24 md:h-32 md:w-32' />
