@@ -3,70 +3,76 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 
-// High-converting quick-commerce metadata with HD studio images & color themes
-const CATEGORY_CONFIG: Record<
+// Clean, high-converting category metadata
+const CATEGORY_MAP: Record<
   string,
   {
-    displayName: string;
-    subTitle: string;
-    badge: string;
-    badgeColor: string;
+    title: string;
+    subtitle: string;
+    tag: string;
     imgUrl: string;
-    accentBg: string;
+    bgGradient: string;
+    borderColor: string;
+    textColor: string;
+    badgeBg: string;
   }
 > = {
   vegetables: {
-    displayName: "Daily Vegetables",
-    subTitle: "Farm Harvested Today",
-    badge: "100% Fresh",
-    badgeColor: "bg-emerald-600/90 text-white",
+    title: "Vegetables",
+    subtitle: "Farm Fresh Daily Harvest",
+    tag: "Daily Fresh",
     imgUrl: "/categories/vegetables.jpg",
-    accentBg: "from-emerald-50/70 to-green-50/20",
+    bgGradient: "bg-gradient-to-b from-emerald-50/90 to-green-50/40",
+    borderColor: "border-emerald-200/80",
+    textColor: "text-emerald-950",
+    badgeBg: "bg-emerald-600 text-white",
   },
   fruits: {
-    displayName: "Fresh Fruits",
-    subTitle: "Juicy & Naturally Sweet",
-    badge: "Seasonal Sweet",
-    badgeColor: "bg-amber-600/90 text-white",
+    title: "Fruits",
+    subtitle: "Juicy & Naturally Sweet",
+    tag: "Sweet & Juicy",
     imgUrl: "/categories/fruits.jpg",
-    accentBg: "from-amber-50/70 to-orange-50/20",
+    bgGradient: "bg-gradient-to-b from-amber-50/90 to-orange-50/40",
+    borderColor: "border-amber-200/80",
+    textColor: "text-amber-950",
+    badgeBg: "bg-amber-600 text-white",
   },
   exotics: {
-    displayName: "Exotics & Greens",
-    subTitle: "Hydroponic & Gourmet",
-    badge: "Premium Quality",
-    badgeColor: "bg-purple-600/90 text-white",
+    title: "Exotics",
+    subtitle: "Hydroponic & Gourmet Greens",
+    tag: "Gourmet Fresh",
     imgUrl: "/categories/exotic.jpg",
-    accentBg: "from-purple-50/70 to-pink-50/20",
+    bgGradient: "bg-gradient-to-b from-purple-50/90 to-fuchsia-50/40",
+    borderColor: "border-purple-200/80",
+    textColor: "text-purple-950",
+    badgeBg: "bg-purple-600 text-white",
   },
   "dairy & staples": {
-    displayName: "Dairy & Staples",
-    subTitle: "Pure Milk & Farm Staples",
-    badge: "100% Pure",
-    badgeColor: "bg-blue-600/90 text-white",
+    title: "Dairy & Staples",
+    subtitle: "Pure Milk & Daily Essentials",
+    tag: "100% Pure",
     imgUrl: "/categories/dairy.jpg",
-    accentBg: "from-blue-50/70 to-sky-50/20",
+    bgGradient: "bg-gradient-to-b from-blue-50/90 to-sky-50/40",
+    borderColor: "border-blue-200/80",
+    textColor: "text-blue-950",
+    badgeBg: "bg-blue-600 text-white",
   },
   "ready-to-cook & cut produce": {
-    displayName: "Cut & Ready",
-    subTitle: "Chopped & Peeled",
-    badge: "Zero Prep",
-    badgeColor: "bg-teal-600/90 text-white",
+    title: "Cut Produce",
+    subtitle: "Zero Prep & Washed",
+    tag: "Zero Prep",
     imgUrl: "/categories/ready_to_cook.jpg",
-    accentBg: "from-teal-50/70 to-emerald-50/20",
+    bgGradient: "bg-gradient-to-b from-teal-50/90 to-emerald-50/40",
+    borderColor: "border-teal-200/80",
+    textColor: "text-teal-950",
+    badgeBg: "bg-teal-600 text-white",
   },
 };
 
-const PRIORITY_ORDER = [
-  "vegetables",
-  "fruits",
-  "exotics",
-  "dairy & staples",
-  "ready-to-cook & cut produce",
-];
+const PRIORITY = ["vegetables", "fruits", "exotics", "dairy & staples", "ready-to-cook & cut produce"];
 
 export default function CategorySlider({
   categories = [],
@@ -84,27 +90,26 @@ export default function CategorySlider({
         .then((res) => res.json())
         .then((data) => {
           if (data.success && Array.isArray(data.categories)) {
-            organizeCategories(data.categories);
+            sortAndSet(data.categories);
           }
         })
         .catch(console.error);
     } else {
-      organizeCategories(list);
+      sortAndSet(list);
     }
   }, [categories]);
 
-  const organizeCategories = (list: any[]) => {
-    // Only use categories that strictly exist in the database
+  const sortAndSet = (list: any[]) => {
     const sorted = [...list].sort((a, b) => {
       const nameA = (a.name || "").toLowerCase().trim();
       const nameB = (b.name || "").toLowerCase().trim();
 
-      const indexA = PRIORITY_ORDER.indexOf(nameA);
-      const indexB = PRIORITY_ORDER.indexOf(nameB);
+      const idxA = PRIORITY.indexOf(nameA);
+      const idxB = PRIORITY.indexOf(nameB);
 
-      if (indexA !== -1 && indexB !== -1) return indexA - indexB;
-      if (indexA !== -1) return -1;
-      if (indexB !== -1) return 1;
+      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+      if (idxA !== -1) return -1;
+      if (idxB !== -1) return 1;
       return 0;
     });
 
@@ -117,73 +122,45 @@ export default function CategorySlider({
 
   const count = activeCategories.length;
 
-  // Responsive desktop grid configuration based on exact category count
-  const desktopGridClass =
-    count === 1
-      ? "md:grid-cols-1 max-w-sm mx-auto"
-      : count === 2
-      ? "md:grid-cols-2 max-w-2xl mx-auto"
-      : count === 3
-      ? "md:grid-cols-3 max-w-5xl mx-auto"
-      : count === 4
-      ? "md:grid-cols-4 max-w-6xl mx-auto"
-      : "md:grid-cols-5 max-w-7xl mx-auto";
-
   return (
-    <section className="w-full py-5 sm:py-8 md:py-10 bg-gradient-to-b from-[#f8faf9] via-white to-[#f8faf9] border-y border-gray-100 font-sans">
+    <section className="w-full py-4 sm:py-7 bg-white font-sans border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Header Row */}
-        <div className="flex items-center justify-between gap-3 mb-4 sm:mb-6">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="bg-emerald-100 text-[#0c831f] text-[10px] sm:text-xs font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
-                🌱 Fresh Harvest
-              </span>
-            </div>
-            <h2 className="text-lg sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
-              Shop by Category
+        <div className="flex items-center justify-between gap-2 mb-3 sm:mb-5">
+          <div className="flex items-center gap-2">
+            <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight flex items-center gap-1.5">
+              <span>Shop by Category</span>
             </h2>
-            <p className="text-[11px] sm:text-xs md:text-sm text-gray-500 font-medium mt-0.5">
-              Direct from local Bhopal contract farms • Hand-picked daily at 5:00 AM
-            </p>
           </div>
 
           <Link
             href="/shop"
-            className="text-[#0c831f] hover:text-[#096618] font-black text-xs sm:text-sm flex items-center gap-1.5 group transition bg-white hover:bg-emerald-50/50 px-3.5 sm:px-4 py-2 rounded-2xl border border-gray-200/80 shadow-xs hover:border-[#0c831f]/30 shrink-0"
+            className="text-[#0c831f] hover:text-[#096618] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition shrink-0"
           >
-            <span>Explore All</span>
+            <span>See All</span>
             <ChevronRight
-              size={15}
+              size={14}
               className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]"
             />
           </Link>
         </div>
 
-        {/* Dynamic Responsive Layout:
-            - Mobile (< 768px):
-              - 3 categories -> perfectly fitted 3-column grid without unnecessary horizontal scroll
-              - 4+ categories -> smooth horizontal swipe track with touch snap
-            - Desktop (>= 768px):
-              - Balanced 3, 4 or 5-column grid with generous spacing and hover lift
+        {/* 
+          MOBILE UI: Clean 3-Column Touch Cards (Zepto/Blinkit Style)
+          DESKTOP UI: Wide interactive 3-column banner cards
         */}
-        <div
-          className={`${
-            count <= 3
-              ? "grid grid-cols-3"
-              : "flex overflow-x-auto scrollbar-none -mx-3.5 px-3.5 sm:mx-0 sm:px-0 overscroll-x-contain snap-x snap-mandatory"
-          } md:grid ${desktopGridClass} gap-2.5 sm:gap-4 md:gap-6 pb-2 pt-1`}
-          style={{ WebkitOverflowScrolling: "touch" }}
-        >
+        <div className="grid grid-cols-3 md:grid-cols-3 max-w-5xl md:mx-auto gap-2.5 sm:gap-4 md:gap-6">
           {activeCategories.map((item, idx) => {
             const rawKey = (item.name || "").toLowerCase().trim();
-            const config = CATEGORY_CONFIG[rawKey] || {
-              displayName: item.name,
-              subTitle: "Farm Fresh Produce",
-              badge: "Farm Fresh",
-              badgeColor: "bg-gray-900/85 text-white",
+            const config = CATEGORY_MAP[rawKey] || {
+              title: item.name,
+              subtitle: "Fresh Harvested Produce",
+              tag: "Farm Fresh",
               imgUrl: item.image || "/categories/vegetables.jpg",
-              accentBg: "from-gray-50 to-gray-100/40",
+              bgGradient: "bg-gradient-to-b from-gray-50 to-slate-50",
+              borderColor: "border-gray-200",
+              textColor: "text-gray-900",
+              badgeBg: "bg-gray-800 text-white",
             };
 
             const imageSrc =
@@ -194,50 +171,44 @@ export default function CategorySlider({
             return (
               <motion.div
                 key={item._id || item.name || idx}
-                whileHover={{ y: -6 }}
-                whileTap={{ scale: 0.96 }}
+                whileTap={{ scale: 0.95 }}
+                whileHover={{ y: -4 }}
                 onClick={() =>
                   router.push(`/shop?category=${encodeURIComponent(item.name)}`)
                 }
-                className={`group cursor-pointer rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 md:p-5 bg-gradient-to-b ${config.accentBg} bg-white hover:bg-white border border-gray-200/80 hover:border-[#0c831f]/50 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_36px_rgba(12,131,31,0.14)] transition-all duration-300 flex flex-col justify-between relative overflow-hidden ${
-                  count <= 3 ? "w-full" : "w-[120px] xs:w-[135px] sm:w-[155px] md:w-auto shrink-0 snap-start"
-                } select-none`}
+                className={`group cursor-pointer rounded-2xl sm:rounded-3xl p-2 sm:p-4 md:p-5 ${config.bgGradient} border ${config.borderColor} shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between select-none relative overflow-hidden`}
               >
-                {/* Upper Photo Frame */}
-                <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-white border border-gray-100/90 shadow-2xs mb-2.5 sm:mb-3.5">
+                {/* Image Section */}
+                <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-white shadow-2xs">
                   <img
                     src={imageSrc}
-                    alt={config.displayName}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
+                    alt={config.title}
+                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 ease-out"
                     onError={(e: any) => {
                       e.target.src = config.imgUrl || "/categories/vegetables.jpg";
                     }}
                   />
-
-                  {/* Soft Vignette Overlay on Hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                  {/* Floating Pill Badge */}
-                  <span
-                    className={`absolute top-1.5 left-1.5 sm:top-2 sm:left-2 text-[8px] sm:text-[10px] font-black uppercase tracking-wider px-1.5 sm:px-2 py-0.5 rounded-lg shadow-xs backdrop-blur-xs ${config.badgeColor}`}
-                  >
-                    {config.badge}
-                  </span>
+                  {/* Subtle Gradient Overlay on Hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
 
-                {/* Card Title, Subtitle & Action Arrow */}
-                <div className="text-center sm:text-left px-0.5">
+                {/* Text Content */}
+                <div className="mt-2 sm:mt-3 text-center sm:text-left flex flex-col justify-between">
                   <div className="flex items-center justify-center sm:justify-between gap-1">
-                    <h3 className="font-black text-xs sm:text-base md:text-lg text-gray-900 leading-tight group-hover:text-[#0c831f] transition-colors truncate">
-                      {config.displayName}
+                    <h3 className={`font-black text-xs sm:text-base md:text-lg ${config.textColor} leading-tight tracking-tight`}>
+                      {config.title}
                     </h3>
-                    <div className="hidden sm:flex w-6 h-6 rounded-full bg-emerald-50 text-[#0c831f] items-center justify-center group-hover:bg-[#0c831f] group-hover:text-white transition-all shadow-2xs shrink-0">
+                    <div className="hidden sm:flex w-6 h-6 rounded-full bg-white/90 text-[#0c831f] items-center justify-center group-hover:bg-[#0c831f] group-hover:text-white transition-all shadow-2xs shrink-0">
                       <ChevronRight size={13} className="stroke-[3]" />
                     </div>
                   </div>
 
-                  <p className="text-[10px] sm:text-xs text-gray-500 font-medium truncate mt-0.5 sm:mt-1">
-                    {config.subTitle}
+                  {/* Mobile Tag / Desktop Subtitle */}
+                  <p className="text-[10px] text-gray-500 font-medium sm:hidden mt-0.5 truncate">
+                    {config.tag}
+                  </p>
+                  <p className="hidden sm:block text-xs text-gray-500 font-medium truncate mt-1">
+                    {config.subtitle}
                   </p>
                 </div>
               </motion.div>
@@ -248,3 +219,4 @@ export default function CategorySlider({
     </section>
   );
 }
+
