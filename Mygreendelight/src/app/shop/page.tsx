@@ -320,68 +320,6 @@ export default function ShopPage() {
           </div>
         </div>
 
-        {/* 🌟 2. Quick Filter Chips Bar */}
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar mb-4 text-xs font-bold">
-          <button
-            type="button"
-            onClick={() => setUnder50Only(!under50Only)}
-            className={`px-3 py-1.5 rounded-full shrink-0 border transition cursor-pointer flex items-center gap-1.5 ${
-              under50Only
-                ? "bg-emerald-800 text-white border-emerald-800 shadow-xs"
-                : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
-            }`}
-          >
-            <span>⚡ Under ₹50</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setBigDiscountOnly(!bigDiscountOnly)}
-            className={`px-3 py-1.5 rounded-full shrink-0 border transition cursor-pointer flex items-center gap-1.5 ${
-              bigDiscountOnly
-                ? "bg-emerald-800 text-white border-emerald-800 shadow-xs"
-                : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
-            }`}
-          >
-            <span>🔥 20%+ Off</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setSelectedRating(selectedRating === 4 ? null : 4)}
-            className={`px-3 py-1.5 rounded-full shrink-0 border transition cursor-pointer flex items-center gap-1.5 ${
-              selectedRating === 4
-                ? "bg-emerald-800 text-white border-emerald-800 shadow-xs"
-                : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
-            }`}
-          >
-            <Star size={12} className={selectedRating === 4 ? "fill-yellow-300 text-yellow-300" : "fill-amber-400 text-amber-400"} />
-            <span>4★ & Above</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setInStockOnly(!inStockOnly)}
-            className={`px-3 py-1.5 rounded-full shrink-0 border transition cursor-pointer flex items-center gap-1.5 ${
-              inStockOnly
-                ? "bg-emerald-800 text-white border-emerald-800 shadow-xs"
-                : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
-            }`}
-          >
-            <span>📦 In Stock Only</span>
-          </button>
-
-          {activeFilterCount > 0 && (
-            <button
-              type="button"
-              onClick={resetAllFilters}
-              className="text-red-600 hover:text-red-700 font-black px-2.5 py-1 text-xs shrink-0 flex items-center gap-1 cursor-pointer"
-            >
-              <RotateCcw size={11} /> Reset
-            </button>
-          )}
-        </div>
-
         {/* Main Content Layout */}
         <div className="flex flex-col lg:flex-row gap-6">
           
