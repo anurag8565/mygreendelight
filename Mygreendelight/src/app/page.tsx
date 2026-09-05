@@ -14,36 +14,41 @@ import React from 'react'
 export const dynamic = "force-dynamic";
 
 async function Home() {
-
-  await connectDb()
-
-  const session = await auth()
-
-  if (!session?.user) {
-    redirect("/login")
+  try {
+    await connectDb();
+  } catch (err) {
+    console.error("DB connection error on Home:", err);
   }
 
-  const userId = session.user.id;
-  const user = userId 
-    ? await User.findById(userId) 
-    : await User.findOne({ email: session.user.email });
-
-  if (!user) {
-    redirect('/login')
+  let session = null;
+  try {
+    session = await auth();
+  } catch (err) {
+    console.warn("Auth check warning on Home:", err);
   }
 
-  // Only regular users / delivery boys need to complete their profile
-  const incomplee = user.role !== "admin" && (!user.mobile || !user.role)
-
-  if (incomplee) {
-    return <EditMobile />
+  let user = null;
+  if (session?.user) {
+    try {
+      const userId = session.user.id;
+      user = userId 
+        ? await User.findById(userId) 
+        : await User.findOne({ email: session.user.email });
+    } catch (uErr) {
+      console.error("User lookup error on Home:", uErr);
+    }
   }
 
-  const plainUser = JSON.parse(JSON.stringify(user));
+  // Only logged-in regular users / delivery boys with incomplete profiles need completion
+  if (user && user.role !== "admin" && (!user.mobile || !user.role)) {
+    return <EditMobile />;
+  }
+
+  const plainUser = user ? JSON.parse(JSON.stringify(user)) : null;
 
   return (
     <>
-      {user.role === "admin" && (
+      {user?.role === "admin" && (
         <div className="bg-[#093e21] text-white py-2 px-4 text-xs font-bold flex items-center justify-between sticky top-0 z-[100] shadow-md border-b border-green-800">
           <div className="flex items-center gap-2">
             <span className="bg-yellow-400 text-gray-950 text-[10px] px-2 py-0.5 rounded font-black tracking-wide">
@@ -64,7 +69,7 @@ async function Home() {
       )}
       <Nav user={plainUser} />
 
-      {user.role === "deliveryboy" ? (
+      {user?.role === "deliveryboy" ? (
         <Deliveryboydashbord />
       ) : (
         <Userdashbord />

@@ -22,56 +22,86 @@ import { auth } from '@/auth'
 import Order from '@/model/order'
 
 export default async function Userdashbord() {
-  await connectDb()
-  const session = await auth()
-  
-  const newGroceriesPromise = Grocery.find({}).sort({ createdAt: -1 }).limit(30)
-  const flashDealsPromise = Grocery.find({ stock: { $gt: 0 } }).sort({ price: 1, rating: -1 }).limit(10)
-  const featuredGroceriesPromise = Grocery.find({ rating: { $gte: 4.5 } }).sort({ rating: -1, numReviews: -1 }).limit(10)
-  const bannersPromise = Banner.find({}).sort({ createdAt: -1 }).limit(5)
-  const categoriesPromise = Category.find({}).sort({ createdAt: -1 })
-  const testimonialsPromise = Testimonial.find({ status: 'approved' }).sort({ createdAt: -1 })
-  
-  let orderAgainGroceriesPromise: Promise<any[]> = Promise.resolve([])
-  if (session?.user?.id) {
-    orderAgainGroceriesPromise = Order.find({ user: session.user.id })
-      .sort({ createdAt: -1 })
-      .limit(5)
-      .then(orders => {
-        const recentProductIds = new Set();
-        orders.forEach((order: any) => {
-          order.items?.forEach((item: any) => {
-            if (item.grocery) recentProductIds.add(item.grocery.toString());
-          });
-        });
-        if (recentProductIds.size > 0) {
-          return Grocery.find({ _id: { $in: Array.from(recentProductIds) } }).limit(10);
-        }
-        return [];
-      });
+  let session = null;
+  try {
+    session = await auth();
+  } catch (authErr) {
+    console.warn("Userdashbord auth check warning:", authErr);
   }
 
-  const comboBundlesPromise = ComboBundle.find({ isActive: true }).lean()
+  let newGroceries: any[] = [];
+  let flashDeals: any[] = [];
+  let featuredGroceries: any[] = [];
+  let banners: any[] = [];
+  let categories: any[] = [];
+  let testimonials: any[] = [];
+  let orderAgain: any[] = [];
+  let comboBundles: any[] = [];
 
-  const [newGroceries, flashDeals, featuredGroceries, banners, categories, testimonials, orderAgain, comboBundles] = await Promise.all([
-    newGroceriesPromise,
-    flashDealsPromise,
-    featuredGroceriesPromise,
-    bannersPromise,
-    categoriesPromise,
-    testimonialsPromise,
-    orderAgainGroceriesPromise,
-    comboBundlesPromise,
-  ]);
+  try {
+    await connectDb();
 
-  const plainNew = JSON.parse(JSON.stringify(newGroceries))
-  const plainFlash = JSON.parse(JSON.stringify(flashDeals))
-  const plainFeatured = JSON.parse(JSON.stringify(featuredGroceries))
-  const plainBanners = JSON.parse(JSON.stringify(banners))
-  const plainCategories = JSON.parse(JSON.stringify(categories))
-  const plainTestimonials = JSON.parse(JSON.stringify(testimonials))
-  const plainOrderAgain = JSON.parse(JSON.stringify(orderAgain))
-  const plainCombos = JSON.parse(JSON.stringify(comboBundles || []))
+    const newGroceriesPromise = Grocery.find({}).sort({ createdAt: -1 }).limit(30).lean();
+    const flashDealsPromise = Grocery.find({ stock: { $gt: 0 } }).sort({ price: 1, rating: -1 }).limit(10).lean();
+    const featuredGroceriesPromise = Grocery.find({ rating: { $gte: 4.5 } }).sort({ rating: -1, numReviews: -1 }).limit(10).lean();
+    const bannersPromise = Banner.find({}).sort({ createdAt: -1 }).limit(5).lean();
+    const categoriesPromise = Category.find({}).sort({ createdAt: -1 }).lean();
+    const testimonialsPromise = Testimonial.find({ status: 'approved' }).sort({ createdAt: -1 }).lean();
+
+    let orderAgainGroceriesPromise: Promise<any[]> = Promise.resolve([]);
+    if (session?.user?.id) {
+      orderAgainGroceriesPromise = Order.find({ user: session.user.id })
+        .sort({ createdAt: -1 })
+        .limit(5)
+        .lean()
+        .then(async orders => {
+          const recentProductIds = new Set();
+          orders.forEach((order: any) => {
+            order.items?.forEach((item: any) => {
+              if (item.grocery) recentProductIds.add(item.grocery.toString());
+            });
+          });
+          if (recentProductIds.size > 0) {
+            return Grocery.find({ _id: { $in: Array.from(recentProductIds) } }).limit(10).lean();
+          }
+          return [];
+        })
+        .catch(() => []);
+    }
+
+    const comboBundlesPromise = ComboBundle.find({ isActive: true }).lean().catch(() => []);
+
+    const results = await Promise.all([
+      newGroceriesPromise.catch(() => []),
+      flashDealsPromise.catch(() => []),
+      featuredGroceriesPromise.catch(() => []),
+      bannersPromise.catch(() => []),
+      categoriesPromise.catch(() => []),
+      testimonialsPromise.catch(() => []),
+      orderAgainGroceriesPromise,
+      comboBundlesPromise,
+    ]);
+
+    newGroceries = results[0] || [];
+    flashDeals = results[1] || [];
+    featuredGroceries = results[2] || [];
+    banners = results[3] || [];
+    categories = results[4] || [];
+    testimonials = results[5] || [];
+    orderAgain = results[6] || [];
+    comboBundles = results[7] || [];
+  } catch (err) {
+    console.error("Userdashbord data fetch error:", err);
+  }
+
+  const plainNew = JSON.parse(JSON.stringify(newGroceries || []));
+  const plainFlash = JSON.parse(JSON.stringify(flashDeals || []));
+  const plainFeatured = JSON.parse(JSON.stringify(featuredGroceries || []));
+  const plainBanners = JSON.parse(JSON.stringify(banners || []));
+  const plainCategories = JSON.parse(JSON.stringify(categories || []));
+  const plainTestimonials = JSON.parse(JSON.stringify(testimonials || []));
+  const plainOrderAgain = JSON.parse(JSON.stringify(orderAgain || []));
+  const plainCombos = JSON.parse(JSON.stringify(comboBundles || []));
 
   return (
     <div className="bg-white w-full max-w-full overflow-x-clip font-sans">
