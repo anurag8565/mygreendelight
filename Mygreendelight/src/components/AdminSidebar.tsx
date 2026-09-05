@@ -17,23 +17,10 @@ import {
   ExternalLink,
   Menu,
   X,
-  ShieldAlert,
   Truck,
-  TrendingUp,
-  Flame,
-  Gift,
-  ChefHat,
-  Utensils,
-  Milk,
-  Salad,
-  Heart,
-  FileText,
-  Bell,
-  BookOpen,
   Percent,
   Radio,
   Building2,
-  Users,
   LogOut,
 } from "lucide-react";
 
@@ -41,107 +28,81 @@ export default function AdminSidebar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const navItems = [
+  const navGroups = [
     {
-      name: "Dashboard & Analytics",
-      href: "/admin",
-      icon: <LayoutDashboard size={18} />,
+      groupTitle: "Store Operations",
+      items: [
+        {
+          name: "Dashboard & Analytics",
+          href: "/admin",
+          icon: <LayoutDashboard size={17} />,
+        },
+        {
+          name: "Live Orders & Fleet",
+          href: "/admin/manageorder",
+          icon: <ShoppingBag size={17} />,
+        },
+        {
+          name: "All Produce & Stock",
+          href: "/admin/viewgrocery",
+          icon: <Package size={17} />,
+        },
+        {
+          name: "Add New Produce",
+          href: "/admin/addgrocery",
+          icon: <PlusCircle size={17} />,
+        },
+        {
+          name: "Store Categories",
+          href: "/admin/manage-categories",
+          icon: <FolderTree size={17} />,
+        },
+      ],
     },
     {
-      name: "Live Orders & Fleet",
-      href: "/admin/manageorder",
-      icon: <ShoppingBag size={18} />,
+      groupTitle: "Marketing & Growth",
+      items: [
+        {
+          name: "Coupons & Discounts",
+          href: "/admin/managecoupons",
+          icon: <Tag size={17} />,
+        },
+        {
+          name: "Hero & Promo Banners",
+          href: "/admin/managebanners",
+          icon: <ImageIcon size={17} />,
+        },
+        {
+          name: "Society Group Pools",
+          href: "/admin/manage-societies",
+          icon: <Building2 size={17} />,
+        },
+        {
+          name: "Value Combos & Packs",
+          href: "/admin/manage-combos",
+          icon: <Percent size={17} />,
+        },
+      ],
     },
     {
-      name: "All Produce & Stock",
-      href: "/admin/viewgrocery",
-      icon: <Package size={18} />,
-    },
-    {
-      name: "Add New Produce",
-      href: "/admin/addgrocery",
-      icon: <PlusCircle size={18} />,
-    },
-    {
-      name: "Bulk Import (CSV/JSON)",
-      href: "/admin/bulk-upload",
-      icon: <FolderTree size={18} />,
-    },
-    {
-      name: "Categories",
-      href: "/admin/manage-categories",
-      icon: <FolderTree size={18} />,
-    },
-    {
-      name: "Hero & Promo Banners",
-      href: "/admin/managebanners",
-      icon: <ImageIcon size={18} />,
-    },
-    {
-      name: "Coupons & Discounts",
-      href: "/admin/managecoupons",
-      icon: <Tag size={18} />,
-    },
-    {
-      name: "Society Pools & Discounts",
-      href: "/admin/manage-societies",
-      icon: <Building2 size={18} />,
-    },
-    {
-      name: "Value Combos & Packs",
-      href: "/admin/manage-combos",
-      icon: <Percent size={18} />,
-    },
-
-    {
-      name: "Recipe Kits (Combos)",
-      href: "/admin/manage-recipes",
-      icon: <ChefHat size={18} />,
-    },
-    {
-      name: "Custom Salad Boxes",
-      href: "/admin/manage-custom-boxes",
-      icon: <Salad size={18} />,
-    },
-    {
-      name: "Gift Hampers & Baskets",
-      href: "/admin/manage-gift-baskets",
-      icon: <Gift size={18} />,
-    },
-    {
-      name: "Customer Reviews & Ratings",
-      href: "/admin/managetestimonials",
-      icon: <Star size={18} />,
-    },
-    {
-      name: "Broadcast Alerts",
-      href: "/admin/manage-broadcast",
-      icon: <Radio size={18} />,
-    },
-    {
-      name: "Mandi Live Rates",
-      href: "/admin/manage-mandi",
-      icon: <TrendingUp size={18} />,
-    },
-    {
-      name: "Flash Deals Setting",
-      href: "/admin/manage-flash-deals",
-      icon: <Flame size={18} />,
-    },
-    {
-      name: "Scratch Card Rewards",
-      href: "/admin/manage-rewards",
-      icon: <Gift size={18} />,
-    },
-    {
-      name: "Harvest Stock Alerts",
-      href: "/admin/manage-stock-alerts",
-      icon: <Bell size={18} />,
-    },
-    {
-      name: "Customer Inquiries",
-      href: "/admin/manageinquiries",
-      icon: <MessageSquare size={18} />,
+      groupTitle: "Support & Communication",
+      items: [
+        {
+          name: "Customer Inquiries",
+          href: "/admin/manageinquiries",
+          icon: <MessageSquare size={17} />,
+        },
+        {
+          name: "Customer Reviews",
+          href: "/admin/managetestimonials",
+          icon: <Star size={17} />,
+        },
+        {
+          name: "Broadcast Alerts",
+          href: "/admin/manage-broadcast",
+          icon: <Radio size={17} />,
+        },
+      ],
     },
   ];
 
@@ -227,27 +188,36 @@ export default function AdminSidebar() {
           </div>
 
           {/* Scrollable Navigation Links */}
-          <nav className="p-3.5 space-y-1 overflow-y-auto max-h-[calc(100vh-175px)] scrollbar-thin scrollbar-thumb-green-800">
-            {navItems.map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all ${
-                    isActive
-                      ? "bg-[#0f8646] text-white shadow-sm font-extrabold"
-                      : "text-green-100/70 hover:bg-white/10 hover:text-white"
-                  }`}
-                >
-                  <span className={isActive ? "text-white" : "text-green-300 shrink-0"}>
-                    {item.icon}
-                  </span>
-                  <span className="truncate">{item.name}</span>
-                </Link>
-              );
-            })}
+          <nav className="p-3 space-y-4 overflow-y-auto max-h-[calc(100vh-175px)] scrollbar-thin scrollbar-thumb-green-800">
+            {navGroups.map((group, gIdx) => (
+              <div key={gIdx}>
+                <span className="px-3 text-[10px] font-black uppercase tracking-wider text-green-400/60 block mb-1.5">
+                  {group.groupTitle}
+                </span>
+                <div className="space-y-1">
+                  {group.items.map((item) => {
+                    const isActive = pathname === item.href;
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setMobileOpen(false)}
+                        className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition-all ${
+                          isActive
+                            ? "bg-[#0f8646] text-white shadow-sm font-extrabold"
+                            : "text-green-100/75 hover:bg-white/10 hover:text-white"
+                        }`}
+                      >
+                        <span className={isActive ? "text-white" : "text-green-300/80 shrink-0"}>
+                          {item.icon}
+                        </span>
+                        <span className="truncate">{item.name}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </nav>
         </div>
 
