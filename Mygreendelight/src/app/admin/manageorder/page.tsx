@@ -63,6 +63,7 @@ interface OrderType {
   _id: string;
   totalamount: number;
   paymentmethod: string;
+  paymentId?: string;
   status: string;
   ispaid: boolean;
   createdAt: string;
@@ -860,10 +861,23 @@ export default function ManageOrder() {
                     )}
 
                     {/* Card Footer */}
-                    <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between">
-                      <span className="text-xs text-gray-500 font-bold uppercase">
-                        Mode: {order.paymentmethod}
-                      </span>
+                    <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between flex-wrap gap-2">
+                      <div className="flex items-center gap-2">
+                        <span className={`text-[11px] font-black uppercase px-2.5 py-0.5 rounded-md ${
+                          order.paymentmethod === "upi"
+                            ? "bg-purple-100 text-purple-900 border border-purple-200"
+                            : order.paymentmethod === "online"
+                            ? "bg-blue-100 text-blue-900"
+                            : "bg-gray-100 text-gray-800"
+                        }`}>
+                          Mode: {order.paymentmethod || "COD"}
+                        </span>
+                        {order.paymentId && (
+                          <span className="text-[11px] font-mono font-bold text-gray-600 bg-gray-100 px-2 py-0.5 rounded-md border border-gray-200">
+                            Ref: {order.paymentId}
+                          </span>
+                        )}
+                      </div>
                       <span className="text-base font-black text-[#0f8646]">
                         Total: ₹{order.totalamount}
                       </span>

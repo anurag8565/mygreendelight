@@ -108,7 +108,9 @@ export default function OrderPackingSlipModal({
             <div className="flex justify-between pt-1">
               <span className="text-gray-500 font-bold">Payment:</span>
               <span className="font-black text-gray-900 uppercase">
-                {order.paymentmethod === "online" ? "PREPAID (ONLINE)" : `COLLECT ₹${order.totalamount} (COD)`}
+                {order.paymentmethod === "online" || order.paymentmethod === "upi" || order.ispaid
+                  ? `PAID (${order.paymentmethod?.toUpperCase() || "ONLINE"})`
+                  : `COLLECT ₹${order.totalamount} (COD)`}
               </span>
             </div>
           </div>

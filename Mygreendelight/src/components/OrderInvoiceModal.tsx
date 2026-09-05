@@ -213,7 +213,7 @@ export default function OrderInvoiceModal({
               <p className="text-gray-600 text-[11px] leading-relaxed">
                 100% natural, sorted directly from Bhopal Mandi & local organic farms.
                 For inquiries or quick support, WhatsApp us at{" "}
-                <span className="font-bold text-gray-900">+91 93012 34567</span>.
+                <span className="font-bold text-gray-900">+91 99814 18565</span>.
               </p>
             </div>
 
