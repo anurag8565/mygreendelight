@@ -54,7 +54,7 @@ export default function ShopPage() {
   useGetMe();
   const { userdata } = useSelector((state: RootState) => state.user);
 
-  const [categories, setCategories] = useState<{ _id: string; name: string }[]>([]);
+  const [categories, setCategories] = useState<{ _id: string; name: string; image?: string }[]>([]);
   const [groceries, setGroceries] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -199,9 +199,12 @@ export default function ShopPage() {
     (bigDiscountOnly ? 1 : 0) +
     (priceRange < 1500 ? 1 : 0);
 
-  const getCategoryImage = (name: string) => {
+  const getCategoryImage = (name: string, fallbackImg?: string) => {
+    if (fallbackImg && (fallbackImg.startsWith("http") || fallbackImg.startsWith("/"))) {
+      return fallbackImg;
+    }
     const key = name.toLowerCase().trim();
-    return CATEGORY_IMAGES[key] || "/categories/vegetables.jpg";
+    return CATEGORY_IMAGES[key] || fallbackImg || "/categories/vegetables.jpg";
   };
 
   return (
@@ -232,7 +235,7 @@ export default function ShopPage() {
         </div>
 
         {/* Top Header Row with Active Title & Mobile Filter Trigger */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-xl sm:text-3xl font-black text-gray-900 tracking-tight">
@@ -257,8 +260,126 @@ export default function ShopPage() {
             className="lg:hidden flex items-center justify-center gap-1.5 bg-white border border-gray-200/90 px-3.5 py-2 rounded-2xl text-xs font-black text-gray-800 shadow-2xs hover:border-[#0f8646] shrink-0 cursor-pointer self-start sm:self-auto"
           >
             <SlidersHorizontal size={14} className="text-[#0f8646]" />
-            <span>Refine Filters ({activeFilterCount})</span>
+            <span>More Filters ({activeFilterCount})</span>
           </button>
+        </div>
+
+        {/* 🌟 1. Real Visual Category Tabs (Scrollable Ribbon with Real Images) */}
+        <div className="mb-3">
+          <div className="flex items-center gap-2.5 overflow-x-auto no-scrollbar pb-2 pt-1 scroll-smooth">
+            {/* "All Items" Tab */}
+            <button
+              type="button"
+              onClick={() => handleCategoryClick("all")}
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-2xl shrink-0 transition-all font-black text-xs cursor-pointer shadow-2xs border ${
+                !categoryParam
+                  ? "bg-[#0f8646] text-white border-[#0f8646] shadow-sm scale-102"
+                  : "bg-white text-gray-700 border-gray-200/90 hover:border-emerald-300 hover:bg-emerald-50/50"
+              }`}
+            >
+              <span className="w-6 h-6 rounded-xl overflow-hidden bg-white/20 flex items-center justify-center shrink-0 border border-white/20">
+                <img
+                  src="/categories/vegetables.jpg"
+                  alt="All"
+                  className="w-full h-full object-cover"
+                />
+              </span>
+              <span>All Produce</span>
+            </button>
+
+            {/* Real MongoDB Categories */}
+            {categories.map((cat) => {
+              const isActive = categoryParam === cat.name;
+              const catImg = getCategoryImage(cat.name, cat.image);
+
+              return (
+                <button
+                  type="button"
+                  key={cat._id}
+                  onClick={() => handleCategoryClick(cat.name)}
+                  className={`flex items-center gap-2 px-3.5 py-2 rounded-2xl shrink-0 transition-all font-black text-xs cursor-pointer shadow-2xs border ${
+                    isActive
+                      ? "bg-[#0f8646] text-white border-[#0f8646] shadow-sm scale-102"
+                      : "bg-white text-gray-700 border-gray-200/90 hover:border-emerald-300 hover:bg-emerald-50/50"
+                  }`}
+                >
+                  <span className="w-6 h-6 rounded-xl overflow-hidden bg-gray-100 flex items-center justify-center shrink-0 border border-black/5">
+                    <img
+                      src={catImg}
+                      alt={cat.name}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.currentTarget as HTMLImageElement).src = "/categories/vegetables.jpg";
+                      }}
+                    />
+                  </span>
+                  <span className="truncate">{cat.name}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* 🌟 2. Quick Filter Chips Bar */}
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar mb-4 text-xs font-bold">
+          <button
+            type="button"
+            onClick={() => setUnder50Only(!under50Only)}
+            className={`px-3 py-1.5 rounded-full shrink-0 border transition cursor-pointer flex items-center gap-1.5 ${
+              under50Only
+                ? "bg-emerald-800 text-white border-emerald-800 shadow-xs"
+                : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
+            }`}
+          >
+            <span>⚡ Under ₹50</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setBigDiscountOnly(!bigDiscountOnly)}
+            className={`px-3 py-1.5 rounded-full shrink-0 border transition cursor-pointer flex items-center gap-1.5 ${
+              bigDiscountOnly
+                ? "bg-emerald-800 text-white border-emerald-800 shadow-xs"
+                : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
+            }`}
+          >
+            <span>🔥 20%+ Off</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setSelectedRating(selectedRating === 4 ? null : 4)}
+            className={`px-3 py-1.5 rounded-full shrink-0 border transition cursor-pointer flex items-center gap-1.5 ${
+              selectedRating === 4
+                ? "bg-emerald-800 text-white border-emerald-800 shadow-xs"
+                : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
+            }`}
+          >
+            <Star size={12} className={selectedRating === 4 ? "fill-yellow-300 text-yellow-300" : "fill-amber-400 text-amber-400"} />
+            <span>4★ & Above</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setInStockOnly(!inStockOnly)}
+            className={`px-3 py-1.5 rounded-full shrink-0 border transition cursor-pointer flex items-center gap-1.5 ${
+              inStockOnly
+                ? "bg-emerald-800 text-white border-emerald-800 shadow-xs"
+                : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
+            }`}
+          >
+            <span>📦 In Stock Only</span>
+          </button>
+
+          {activeFilterCount > 0 && (
+            <button
+              type="button"
+              onClick={resetAllFilters}
+              className="text-red-600 hover:text-red-700 font-black px-2.5 py-1 text-xs shrink-0 flex items-center gap-1 cursor-pointer"
+            >
+              <RotateCcw size={11} /> Reset
+            </button>
+          )}
         </div>
 
         {/* Main Content Layout */}
