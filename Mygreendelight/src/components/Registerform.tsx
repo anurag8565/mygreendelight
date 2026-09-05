@@ -16,7 +16,6 @@ import {
   Truck,
   Leaf,
   Home,
-  CheckCircle2,
 } from "lucide-react";
 import Logo from "@/components/Logo";
 
@@ -80,15 +79,15 @@ export default function Registerform({ onBack }: RegisterformProps) {
       
       {/* Background Ambient Glows */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-emerald-300/15 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-green-400/15 rounded-full blur-3xl" />
+        <div className="absolute top-0 right-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-emerald-300/15 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-green-400/15 rounded-full blur-3xl" />
       </div>
 
       {/* Main Split Authentication Card */}
-      <div className="w-full max-w-5xl bg-white rounded-3xl sm:rounded-[32px] shadow-2xl border border-gray-100/80 overflow-hidden grid lg:grid-cols-12 relative z-10">
+      <div className="w-full max-w-sm sm:max-w-md lg:max-w-5xl bg-white rounded-3xl lg:rounded-[32px] shadow-xl sm:shadow-2xl border border-gray-100/90 overflow-hidden grid lg:grid-cols-12 relative z-10">
         
-        {/* ================= LEFT COLUMN: HERO & BRAND STORY (5 Cols) ================= */}
-        <div className="lg:col-span-5 bg-gradient-to-br from-[#063319] via-[#094824] to-[#0f8646] text-white p-6 sm:p-10 flex flex-col justify-between relative overflow-hidden">
+        {/* ================= LEFT COLUMN: HERO & BRAND STORY (Desktop only / lg:block) ================= */}
+        <div className="hidden lg:flex lg:col-span-5 bg-gradient-to-br from-[#063319] via-[#094824] to-[#0f8646] text-white p-8 lg:p-10 flex-col justify-between relative overflow-hidden">
           
           {/* Subtle background decorative shapes */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-2xl pointer-events-none" />
@@ -116,7 +115,7 @@ export default function Registerform({ onBack }: RegisterformProps) {
           </div>
 
           {/* Member Benefits Highlights */}
-          <div className="my-8 space-y-3.5 relative z-10">
+          <div className="my-8 space-y-3 relative z-10">
             <div className="flex items-center gap-3 bg-white/10 border border-white/10 p-3 rounded-2xl backdrop-blur-xs">
               <div className="w-8 h-8 rounded-xl bg-emerald-400/20 text-emerald-300 flex items-center justify-center shrink-0">
                 <Leaf size={16} />
@@ -155,23 +154,33 @@ export default function Registerform({ onBack }: RegisterformProps) {
           </div>
         </div>
 
-        {/* ================= RIGHT COLUMN: INTERACTIVE SIGNUP FORM (7 Cols) ================= */}
-        <div className="lg:col-span-7 p-6 sm:p-10 lg:p-12 flex flex-col justify-between bg-white">
+        {/* ================= RIGHT COLUMN: COMPACT & CLEAN SIGNUP (Mobile + Desktop) ================= */}
+        <div className="lg:col-span-7 p-5 sm:p-8 lg:p-12 flex flex-col justify-between bg-white">
           
-          {/* Top Switcher & Home Button */}
           <div>
-            <div className="flex items-center justify-between gap-2 mb-6">
+            {/* Mobile-Only Header Brand Bar */}
+            <div className="lg:hidden flex items-center justify-between pb-4 mb-4 border-b border-gray-100">
+              <Link href="/" className="inline-block">
+                <Logo variant="default" showTagline={false} />
+              </Link>
+              <span className="text-[10px] font-black uppercase tracking-wide bg-emerald-50 text-emerald-800 px-2.5 py-1 rounded-full border border-emerald-200/60">
+                Bhopal Express
+              </span>
+            </div>
+
+            {/* Top Switcher & Home Button */}
+            <div className="flex items-center justify-between gap-2 mb-5">
               {/* Tabs Switcher */}
-              <div className="flex items-center bg-gray-100/90 p-1 rounded-2xl border border-gray-200/70 text-xs font-black">
+              <div className="flex items-center bg-gray-100/90 p-1 rounded-xl sm:rounded-2xl border border-gray-200/70 text-xs font-black">
                 <Link
                   href="/login"
-                  className="px-4 py-2 rounded-xl text-gray-500 hover:text-gray-900 transition"
+                  className="px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-gray-500 hover:text-gray-900 transition text-xs font-bold"
                 >
                   Sign In
                 </Link>
                 <button
                   type="button"
-                  className="px-4 py-2 rounded-xl bg-white text-gray-900 shadow-xs cursor-default"
+                  className="px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl bg-white text-gray-900 shadow-xs cursor-default text-xs font-bold"
                 >
                   Create Account
                 </button>
@@ -180,7 +189,7 @@ export default function Registerform({ onBack }: RegisterformProps) {
               {/* Back to Home Link */}
               <Link
                 href="/"
-                className="flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-[#0f8646] transition bg-gray-50 hover:bg-emerald-50 px-3 py-2 rounded-xl border border-gray-200/80"
+                className="flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-[#0f8646] transition bg-gray-50 hover:bg-emerald-50 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl border border-gray-200/80"
               >
                 <Home size={14} />
                 <span className="hidden sm:inline">Store</span>
@@ -188,19 +197,19 @@ export default function Registerform({ onBack }: RegisterformProps) {
             </div>
 
             {/* Form Title */}
-            <div className="mb-6">
-              <h1 className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight">
-                Get Started with SubziQuick 🌱
+            <div className="mb-4 sm:mb-6">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-black text-gray-900 tracking-tight">
+                Create Account 🌱
               </h1>
-              <p className="text-xs sm:text-sm text-gray-500 mt-1">
-                Create an account to order fresh mandi produce with fast same-day delivery
+              <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
+                Join SubziQuick for fresh mandi produce at wholesale prices
               </p>
             </div>
 
             {/* Error Message Alert */}
             {errorMessage && (
-              <div className="mb-5 p-3.5 bg-red-50 border border-red-200 text-red-800 text-xs font-bold rounded-2xl flex items-center gap-2.5 animate-shake shadow-2xs">
-                <span className="w-5 h-5 rounded-full bg-red-200 text-red-800 flex items-center justify-center shrink-0 text-[11px] font-black">
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-800 text-xs font-bold rounded-xl flex items-center gap-2 animate-shake shadow-2xs">
+                <span className="w-4 h-4 rounded-full bg-red-200 text-red-800 flex items-center justify-center shrink-0 text-[10px] font-black">
                   !
                 </span>
                 <span>{errorMessage}</span>
@@ -219,17 +228,17 @@ export default function Registerform({ onBack }: RegisterformProps) {
                 }
               }}
               disabled={googleLoading}
-              className="w-full py-3.5 px-4 rounded-2xl border border-gray-300 bg-white hover:bg-gray-50 text-gray-800 text-xs sm:text-sm font-black flex items-center justify-center gap-3 transition-all hover:shadow-md cursor-pointer disabled:opacity-60 mb-5"
+              className="w-full py-2.5 sm:py-3 px-4 rounded-xl sm:rounded-2xl border border-gray-300 bg-white hover:bg-gray-50 text-gray-800 text-xs sm:text-sm font-bold flex items-center justify-center gap-2.5 transition-all hover:shadow-sm cursor-pointer disabled:opacity-60 mb-4 sm:mb-5"
             >
               {googleLoading ? (
                 <>
-                  <span className="w-5 h-5 border-2 border-[#0f8646] border-t-transparent rounded-full animate-spin" />
+                  <span className="w-4 h-4 border-2 border-[#0f8646] border-t-transparent rounded-full animate-spin" />
                   <span>Connecting to Google...</span>
                 </>
               ) : (
                 <>
                   {/* Official Multi-colored Google Vector Logo */}
-                  <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" viewBox="0 0 24 24">
                     <path
                       d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                       fill="#4285F4"
@@ -247,65 +256,65 @@ export default function Registerform({ onBack }: RegisterformProps) {
                       fill="#EA4335"
                     />
                   </svg>
-                  <span>Sign up with Google (1-Click)</span>
+                  <span>Sign up with Google</span>
                 </>
               )}
             </button>
 
             {/* Clean Divider */}
-            <div className="flex items-center my-5">
+            <div className="flex items-center my-3.5 sm:my-5">
               <div className="flex-1 border-t border-gray-200" />
-              <span className="px-3 text-[11px] font-bold text-gray-400 uppercase tracking-wider">
+              <span className="px-2.5 text-[10px] sm:text-[11px] font-bold text-gray-400 uppercase tracking-wider">
                 Or sign up with email
               </span>
               <div className="flex-1 border-t border-gray-200" />
             </div>
 
             {/* Registration Form */}
-            <form onSubmit={handleRegister} className="space-y-4">
+            <form onSubmit={handleRegister} className="space-y-3 sm:space-y-3.5">
               {/* Full Name Input */}
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1.5">
+                <label className="block text-xs font-bold text-gray-700 mb-1">
                   Full Name
                 </label>
                 <div className="relative">
-                  <User size={16} className="absolute left-3.5 top-3.5 text-gray-400" />
+                  <User size={15} className="absolute left-3.5 top-3 text-gray-400" />
                   <input
                     type="text"
                     required
-                    placeholder="Anurag Singh"
+                    placeholder="Your Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-gray-50/70 border border-gray-200 rounded-2xl py-3 pl-10 pr-4 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] focus:ring-2 focus:ring-emerald-100 transition"
+                    className="w-full bg-gray-50/70 border border-gray-200 rounded-xl sm:rounded-2xl py-2.5 sm:py-3 pl-9 sm:pl-10 pr-4 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] focus:ring-2 focus:ring-emerald-100 transition"
                   />
                 </div>
               </div>
 
               {/* Email Address Input */}
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1.5">
+                <label className="block text-xs font-bold text-gray-700 mb-1">
                   Email Address
                 </label>
                 <div className="relative">
-                  <Mail size={16} className="absolute left-3.5 top-3.5 text-gray-400" />
+                  <Mail size={15} className="absolute left-3.5 top-3 text-gray-400" />
                   <input
                     type="email"
                     required
                     placeholder="name@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-gray-50/70 border border-gray-200 rounded-2xl py-3 pl-10 pr-4 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] focus:ring-2 focus:ring-emerald-100 transition"
+                    className="w-full bg-gray-50/70 border border-gray-200 rounded-xl sm:rounded-2xl py-2.5 sm:py-3 pl-9 sm:pl-10 pr-4 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] focus:ring-2 focus:ring-emerald-100 transition"
                   />
                 </div>
               </div>
 
               {/* Password Input */}
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1.5">
+                <label className="block text-xs font-bold text-gray-700 mb-1">
                   Create Password
                 </label>
                 <div className="relative">
-                  <Lock size={16} className="absolute left-3.5 top-3.5 text-gray-400" />
+                  <Lock size={15} className="absolute left-3.5 top-3 text-gray-400" />
                   <input
                     type={showPassword ? "text" : "password"}
                     required
@@ -313,14 +322,14 @@ export default function Registerform({ onBack }: RegisterformProps) {
                     placeholder="Minimum 6 characters"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full bg-gray-50/70 border border-gray-200 rounded-2xl py-3 pl-10 pr-11 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] focus:ring-2 focus:ring-emerald-100 transition"
+                    className="w-full bg-gray-50/70 border border-gray-200 rounded-xl sm:rounded-2xl py-2.5 sm:py-3 pl-9 sm:pl-10 pr-10 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] focus:ring-2 focus:ring-emerald-100 transition"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3.5 top-3.5 text-gray-400 hover:text-gray-700 cursor-pointer"
+                    className="absolute right-3 top-3 text-gray-400 hover:text-gray-700 cursor-pointer"
                   >
-                    {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                   </button>
                 </div>
               </div>
@@ -329,22 +338,22 @@ export default function Registerform({ onBack }: RegisterformProps) {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3.5 rounded-2xl bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black text-xs sm:text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                className="w-full py-3 sm:py-3.5 rounded-xl sm:rounded-2xl bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black text-xs sm:text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 mt-2"
               >
                 {loading ? (
                   <>
-                    <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                     <span>Creating Account...</span>
                   </>
                 ) : (
-                  <span>Create SubziQuick Account ➔</span>
+                  <span>Create Account ➔</span>
                 )}
               </button>
             </form>
           </div>
 
           {/* Bottom Help & Switch to Login */}
-          <div className="mt-8 pt-4 border-t border-gray-100 text-center space-y-2">
+          <div className="mt-5 sm:mt-8 pt-3 sm:pt-4 border-t border-gray-100 text-center space-y-1.5">
             <p className="text-xs text-gray-500">
               Already have an account?{" "}
               <Link
@@ -355,7 +364,7 @@ export default function Registerform({ onBack }: RegisterformProps) {
               </Link>
             </p>
 
-            <div className="flex items-center justify-center gap-4 text-[11px] text-gray-400 pt-1">
+            <div className="flex items-center justify-center gap-3 text-[10px] sm:text-[11px] text-gray-400 pt-0.5">
               <span className="flex items-center gap-1">
                 <ShieldCheck size={12} className="text-[#0f8646]" /> 100% Data Privacy
               </span>
@@ -364,9 +373,9 @@ export default function Registerform({ onBack }: RegisterformProps) {
                 href="https://wa.me/919981418565"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-gray-600"
+                className="hover:text-gray-600 font-medium"
               >
-                Need Help? WhatsApp Us
+                WhatsApp Help
               </a>
             </div>
           </div>
