@@ -28,7 +28,7 @@ import {
   Minus,
   Smartphone,
 } from "lucide-react";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart, increaseQuantity, decreaseQuantity, hydrateCart } from "@/redux/CartSlice";
 import type { RootState, AppDispatch } from "@/redux/store";
@@ -38,19 +38,18 @@ import VoiceSearchModal from "./VoiceSearchModal";
 import MiniCart from "./MiniCart";
 import LocationModal from "./LocationModal";
 import Logo from "./Logo";
-import useGetMe from "@/hooks/useGetMe";
 
 interface iUser {
   _id?: mongoose.Types.ObjectId;
   name: string;
   email: string;
-  role: string;
-  image?: string;
+  password: string;
   mobile?: string;
+  role: "user" | "admin" | "deliveryboy";
+  image?: string;
 }
 
 export default function Nav({ user }: { user?: iUser | null }) {
-  useGetMe();
   const router = useRouter();
   const pathname = usePathname();
   const dispatch = useDispatch<AppDispatch>();
@@ -65,22 +64,6 @@ export default function Nav({ user }: { user?: iUser | null }) {
   const [mounted, setMounted] = useState(false);
   const { cartdata } = useSelector((state: RootState) => state.cart);
   const { items: wishlistItems } = useSelector((state: RootState) => state.wishlist);
-  const { userdata } = useSelector((state: RootState) => state.user);
-  const { data: session } = useSession();
-
-  const currentUser: any = (userdata && (userdata as any).email)
-    ? userdata
-    : (session?.user && session.user.email)
-    ? {
-        name: session.user.name || "Customer",
-        email: session.user.email || "",
-        role: (session.user as any).role || "user",
-        image: session.user.image || "",
-      }
-    : (user && user.email)
-    ? user
-    : null;
-
   const [search, setSearch] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
@@ -252,14 +235,14 @@ export default function Nav({ user }: { user?: iUser | null }) {
           {/* User Profile Mini Bar */}
           <div className="flex items-center gap-3 pt-1">
             <div className="w-10 h-10 rounded-2xl bg-white/20 border border-white/20 text-white flex items-center justify-center font-black text-sm shrink-0">
-              {currentUser?.name ? currentUser.name.charAt(0).toUpperCase() : <UserIcon size={18} />}
+              {user?.name ? user.name.charAt(0).toUpperCase() : <UserIcon size={18} />}
             </div>
             <div className="min-w-0 flex-1">
               <h4 className="font-black text-xs sm:text-sm text-white truncate">
-                {currentUser?.name || "Welcome Guest"}
+                {user?.name || "Welcome Guest"}
               </h4>
               <p className="text-[11px] text-green-100/80 truncate">
-                {currentUser?.email || "Mandi fresh produce • Same-day delivery"}
+                {user?.email || "Mandi fresh produce • Same-day delivery"}
               </p>
             </div>
           </div>
@@ -373,7 +356,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
           </div>
 
           {/* Admin Shortcuts (If admin) */}
-          {currentUser?.role === "admin" && (
+          {user?.role === "admin" && (
             <div className="pt-2 border-t border-gray-100">
               <span className="text-[10px] uppercase font-black tracking-wider text-amber-700 block px-2 mb-1.5">
                 👑 Admin Control Center
@@ -399,7 +382,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
 
         {/* Drawer Footer (Logout / Login) */}
         <div className="p-3 border-t border-gray-100 bg-gray-50/80">
-          {currentUser?.email ? (
+          {user?.email ? (
             <button
               onClick={() => {
                 setmenuopen(false);
@@ -636,18 +619,18 @@ export default function Nav({ user }: { user?: iUser | null }) {
               ref={dropdownRef}
               onClick={(e) => {
                 e.stopPropagation();
-                if (!currentUser?.email) {
+                if (!user?.email) {
                   router.push("/login");
                 } else {
                   setOpen((prev) => !prev);
                 }
               }}
             >
-              <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 group-hover:bg-green-50 transition-colors shadow-2xs border border-gray-200/80 overflow-hidden">
-                {currentUser?.image ? (
+              <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 group-hover:bg-green-50 transition-colors shadow-2xs border border-gray-200/80">
+                {user?.image ? (
                   <img
-                    src={currentUser.image}
-                    alt={currentUser.name || "User"}
+                    src={user.image}
+                    alt={user.name || "User"}
                     className="w-full h-full rounded-full object-cover"
                   />
                 ) : (
@@ -656,12 +639,12 @@ export default function Nav({ user }: { user?: iUser | null }) {
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] font-extrabold text-[#0f8646]">
-                  {currentUser?.email
-                    ? `Hi, ${currentUser?.name ? currentUser.name.split(" ")[0] : "Shopper"}`
+                  {user?.email
+                    ? `Hi, ${user?.name ? user.name.split(" ")[0] : "Shopper"}`
                     : "Welcome"}
                 </span>
                 <div className="text-sm font-black text-gray-800 flex items-center gap-1 group-hover:text-[#0f8646] transition-colors">
-                  {currentUser?.email ? "My Profile" : "Login / Signup"}{" "}
+                  {user?.email ? "My Profile" : "Login / Signup"}{" "}
                   <ChevronDown
                     size={14}
                     className={`transition-transform duration-200 ${
@@ -685,19 +668,19 @@ export default function Nav({ user }: { user?: iUser | null }) {
                   >
                     <div className="p-4 border-b bg-emerald-50/60 flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full bg-emerald-100 text-[#0f8646] flex items-center justify-center font-black text-base shrink-0 border border-emerald-200">
-                        {currentUser?.name ? currentUser.name.charAt(0).toUpperCase() : "U"}
+                        {user?.name ? user.name.charAt(0).toUpperCase() : "U"}
                       </div>
                       <div className="min-w-0">
                         <p className="font-black text-xs text-gray-900 truncate">
-                          {currentUser?.name || "Shopper"}
+                          {user?.name || "Shopper"}
                         </p>
                         <p className="text-[11px] text-gray-500 truncate font-medium">
-                          {currentUser?.email || "Bhopal Resident"}
+                          {user?.email || "Bhopal Resident"}
                         </p>
                       </div>
                     </div>
 
-                    {currentUser?.role === "admin" && (
+                    {user?.role === "admin" && (
                       <Link
                         href="/admin"
                         onClick={() => setOpen(false)}

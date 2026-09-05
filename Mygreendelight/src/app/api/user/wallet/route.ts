@@ -3,30 +3,23 @@ import connectDb from "@/lib/db";
 import UserWallet from "@/model/wallet.model";
 import User from "@/model/user.model";
 import { auth } from "@/auth";
-import mongoose from "mongoose";
 
 export async function GET(req: NextRequest) {
   try {
     await connectDb();
-    let session = null;
-    try {
-      session = await auth();
-    } catch (sErr) {
-      console.warn("Session check warning in wallet GET:", sErr);
-    }
+    const session = await auth();
 
-    const userId = session?.user?.id;
-    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+    if (!session?.user?.id) {
       return NextResponse.json(
-        { success: false, message: "Please log in to view wallet", balance: 0, transactions: [] },
-        { status: 200 }
+        { success: false, message: "Please log in to view wallet" },
+        { status: 401 }
       );
     }
 
-    let wallet = await UserWallet.findOne({ user: userId });
+    let wallet = await UserWallet.findOne({ user: session.user.id });
     if (!wallet) {
       wallet = await UserWallet.create({
-        user: userId,
+        user: session.user.id,
         balance: 50,
         totalCashback: 50,
         transactions: [
@@ -41,17 +34,16 @@ export async function GET(req: NextRequest) {
     }
 
     // Keep User model in sync for checkout
-    await User.findByIdAndUpdate(userId, { walletBalance: wallet.balance }).catch(() => {});
+    await User.findByIdAndUpdate(session.user.id, { walletBalance: wallet.balance });
 
     return NextResponse.json({
       success: true,
       balance: wallet.balance,
       totalCashback: wallet.totalCashback,
-      transactions: (wallet.transactions || []).slice().reverse(),
+      transactions: wallet.transactions.slice().reverse(),
     });
   } catch (error: any) {
-    console.error("Wallet API GET error:", error);
-    return NextResponse.json({ success: true, balance: 0, transactions: [] }, { status: 200 });
+    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }
 

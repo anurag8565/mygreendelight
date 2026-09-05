@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
-import { useSession } from "next-auth/react";
 import type { RootState } from "@/redux/store";
 import {
   Home,
@@ -24,13 +23,6 @@ export default function MobileBottomNav() {
   const { cartdata } = useSelector((state: RootState) => state.cart);
   const { items: wishlistItems } = useSelector((state: RootState) => state.wishlist);
   const { userdata } = useSelector((state: RootState) => state.user);
-  const { data: session } = useSession();
-
-  const activeUser = userdata?.email
-    ? userdata
-    : session?.user?.email
-    ? session.user
-    : null;
 
   useEffect(() => {
     setMounted(true);
@@ -63,8 +55,8 @@ export default function MobileBottomNav() {
       badge: mounted && wishlistItems.length > 0 ? wishlistItems.length : null,
     },
     {
-      label: (activeUser as any)?.role === "admin" ? "Admin" : activeUser?.email ? "Account" : "Login",
-      href: (activeUser as any)?.role === "admin" ? "/admin" : activeUser?.email ? "/user/myorder" : "/login",
+      label: userdata?.role === "admin" ? "Admin" : userdata?.email ? "Account" : "Login",
+      href: userdata?.role === "admin" ? "/admin" : userdata?.email ? "/user/myorder" : "/login",
       icon: User,
     },
   ];

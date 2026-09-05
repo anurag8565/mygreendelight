@@ -6,57 +6,39 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     await connectDb();
-    let session = null;
-    try {
-      session = await auth();
-    } catch (sErr) {
-      console.warn("Session check error in wishlist GET:", sErr);
-    }
+    const session = await auth();
 
     if (!session?.user?.email) {
-      return NextResponse.json({ success: true, wishlist: [] }, { status: 200 });
+      return NextResponse.json({ success: false, items: [] }, { status: 401 });
     }
 
     const Grocery = (await import("@/model/groseri.model")).default;
-    const cleanEmail = session.user.email.trim().toLowerCase();
-    const user = await User.findOne({ 
-      email: { $regex: new RegExp(`^${cleanEmail}$`, "i") } 
-    }).populate("wishlist");
-
+    const user = await User.findOne({ email: session.user.email }).populate("wishlist");
     return NextResponse.json({
       success: true,
       wishlist: user?.wishlist || [],
     });
   } catch (error: any) {
-    console.error("Wishlist API GET error:", error);
-    return NextResponse.json({ success: true, wishlist: [] }, { status: 200 });
+    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }
 
 export async function POST(req: Request) {
   try {
     await connectDb();
-    let session = null;
-    try {
-      session = await auth();
-    } catch (sErr) {
-      console.warn("Session check error in wishlist POST:", sErr);
-    }
+    const session = await auth();
 
     if (!session?.user?.email) {
       return NextResponse.json({ message: "Not Authenticated" }, { status: 401 });
     }
 
-    const { productId } = await req.json().catch(() => ({}));
+    const { productId } = await req.json();
 
     if (!productId) {
       return NextResponse.json({ message: "Product ID required" }, { status: 400 });
     }
 
-    const cleanEmail = session.user.email.trim().toLowerCase();
-    const user = await User.findOne({ 
-      email: { $regex: new RegExp(`^${cleanEmail}$`, "i") } 
-    });
+    const user = await User.findOne({ email: session.user.email });
 
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
