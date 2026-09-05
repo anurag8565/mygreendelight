@@ -4,7 +4,6 @@ import connectDb from "./lib/db"
 import User from "./model/user.model"
 import bcrypt from "bcryptjs"
 import Google from "next-auth/providers/google"
-import mongoose from "mongoose"
 
 process.env.AUTH_TRUST_HOST = "true";
 
@@ -92,7 +91,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                         existingUser = await User.create({
                             name: user.name || "Customer",
                             email: cleanEmail,
-                            image: user.image,
+                            image: user.image || "",
                             password: "",
                             role: "user",
                             walletBalance: 50,
@@ -140,34 +139,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         async jwt({ token, user, trigger, session }) {
             if (user) {
+                token.id = user.id || token.sub;
                 token.name = user.name;
                 token.email = user.email;
                 token.role = (user as any).role || "user";
                 if (user.image) token.picture = user.image;
-                if (user.id && mongoose.Types.ObjectId.isValid(user.id)) {
-                    token.id = user.id;
-                }
-            }
-
-            // Guarantee token.id is the real MongoDB _id
-            if (!token.id || !mongoose.Types.ObjectId.isValid(token.id as string)) {
-                if (token.email) {
-                    try {
-                        await connectDb();
-                        const dbUser = await User.findOne({
-                            email: { $regex: new RegExp(`^${token.email}$`, "i") }
-                        });
-                        if (dbUser) {
-                            token.id = dbUser._id.toString();
-                            token.role = dbUser.role || "user";
-                            if (dbUser.image && !token.picture) {
-                                token.picture = dbUser.image;
-                            }
-                        }
-                    } catch (err) {
-                        console.error("JWT user db lookup error:", err);
-                    }
-                }
             }
 
             if (trigger === "update" && session?.role) {
