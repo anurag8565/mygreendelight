@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { Zap, MapPin, ChevronRight } from "lucide-react";
+import { Zap, MapPin, ChevronRight, Truck } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function DeliveryRadarStrip() {
@@ -27,7 +27,7 @@ export default function DeliveryRadarStrip() {
 
           <div className="flex items-center flex-wrap gap-1.5 font-medium">
             <span className="font-extrabold text-yellow-300 flex items-center gap-1">
-              <Zap size={14} className="fill-yellow-300" /> 10-15 Min Express Delivery Active:
+              <Truck size={14} className="text-yellow-300" /> Same-Day Fresh Delivery Active:
             </span>
             <span className="text-green-100 hidden md:inline">
               Arera Colony • Kolar Road • MP Nagar • Bairagarh

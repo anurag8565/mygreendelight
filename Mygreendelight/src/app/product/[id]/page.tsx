@@ -22,7 +22,7 @@ export async function generateMetadata(props: {
       const title = `${product.name} ${unitText} - ${priceText} | SubziQuick Bhopal`;
       const description =
         product.description ||
-        `Order fresh ${product.name} online in Bhopal on SubziQuick. 10-15 Min Express Delivery direct from sunrise farms. 100% ozone-washed & fresh.`;
+        `Order farm fresh ${product.name} online in Bhopal at Mandi rates on SubziQuick. 100% ozone-washed & pesticide-safe with same-day home delivery across Bhopal.`;
 
       return {
         title,
@@ -53,8 +53,8 @@ export async function generateMetadata(props: {
   } catch (error) {}
 
   return {
-    title: "Fresh Farm Produce | SubziQuick Bhopal",
-    description: "10-15 Min Express Delivery of Farm Fresh Vegetables & Fruits in Bhopal on SubziQuick.",
+    title: "Mandi Fresh Farm Produce | SubziQuick Bhopal",
+    description: "Daily Karond Mandi fresh vegetables, fruits & staples with same-day home delivery in Bhopal on SubziQuick.",
   };
 }
 

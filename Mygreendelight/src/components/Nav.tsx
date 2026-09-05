@@ -242,7 +242,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                 {user?.name || "Welcome Guest"}
               </h4>
               <p className="text-[11px] text-green-100/80 truncate">
-                {user?.email || "Fresh produce delivered in 10 mins"}
+                {user?.email || "Mandi fresh produce • Same-day delivery"}
               </p>
             </div>
           </div>
@@ -440,7 +440,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                 onClick={() => setShowLocationPopup(true)} 
                 className="lg:hidden flex items-center gap-1 text-[10px] font-bold text-gray-500 hover:text-[#0f8646] transition text-left mt-0.5"
               >
-                <span className="text-[#0f8646] font-black shrink-0">⚡ 10 MINS</span>
+                <span className="text-[#0f8646] font-black shrink-0">🌿 Same-Day</span>
                 <span>•</span>
                 <span className="truncate max-w-[95px] sm:max-w-[140px]">{location}</span>
                 <ChevronDown size={10} className="shrink-0" />

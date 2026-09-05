@@ -67,7 +67,7 @@ export default function FlashFreeGiftRush() {
                 </span>
               </div>
               <p className="text-[10px] text-emerald-300 font-medium truncate hidden sm:block">
-                Added directly to your order basket with 10-15 min delivery
+                Added directly to your order basket with same-day fresh delivery
               </p>
             </div>
           </div>

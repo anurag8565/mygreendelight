@@ -46,7 +46,7 @@ export default function PrivacyPolicyPage() {
             </p>
             <ul className="list-disc pl-5 space-y-1.5 text-xs text-gray-600">
               <li><strong>Contact Information:</strong> Full name, mobile phone number, and email address for order OTP and delivery notifications.</li>
-              <li><strong>Delivery Coordinates:</strong> Bhopal street address, GPS location / coordinates to enable fast 10-15 minute rider navigation.</li>
+              <li><strong>Delivery Coordinates:</strong> Bhopal street address, GPS location / coordinates to enable accurate same-day rider navigation.</li>
               <li><strong>Order Data:</strong> Basket produce selections, payment preferences (Cash on Delivery or Paytm/UPI online payment), and delivery time-slot choices.</li>
             </ul>
           </section>

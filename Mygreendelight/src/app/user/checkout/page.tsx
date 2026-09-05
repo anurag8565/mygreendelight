@@ -498,8 +498,8 @@ export default function Checkout() {
                 <h1 className="text-base sm:text-lg font-black tracking-tight">
                   Express Bhopal Doorstep Delivery
                 </h1>
-                <span className="text-[10px] font-black uppercase tracking-wider bg-white/20 text-emerald-100 px-2 py-0.5 rounded-full">
-                  10-15 MIN
+                <span className="text-[10px] font-black uppercase tracking-wider bg-white/20 text-emerald-100 px-2.5 py-0.5 rounded-full">
+                  SAME-DAY FRESH
                 </span>
               </div>
               <p className="text-xs text-emerald-100/90 font-medium">

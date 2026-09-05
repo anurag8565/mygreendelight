@@ -126,7 +126,7 @@ export default function UserProfileHub() {
                 <div className="flex items-center justify-center sm:justify-start gap-3 mt-2 text-[11px] text-green-200">
                   <span>📍 Bhopal Central Hub</span>
                   <span>•</span>
-                  <span>⚡ 10-15 Min Express</span>
+                  <span>🌿 Same-Day Mandi Fresh</span>
                 </div>
               </div>
             </div>

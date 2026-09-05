@@ -228,10 +228,10 @@ export default function ProductDetailsClient({
                   </button>
                 </div>
 
-                {/* 10 Min Delivery Overlay Tag */}
-                <span className="absolute bottom-3.5 left-3.5 bg-white/95 backdrop-blur-xs text-gray-900 text-[10px] font-black px-3 py-1 rounded-full shadow-2xs flex items-center gap-1 border border-gray-200/80">
-                  <Zap size={11} className="text-amber-500 fill-amber-500" />
-                  <span>10-15 Min Bhopal Delivery</span>
+                {/* Mandi Fresh Produce Tag */}
+                <span className="absolute bottom-3.5 left-3.5 bg-white/95 backdrop-blur-xs text-emerald-900 text-[10px] font-black px-3 py-1 rounded-full shadow-2xs flex items-center gap-1.5 border border-emerald-200/80">
+                  <span className="text-xs">🌿</span>
+                  <span>Mandi Fresh • Same-Day Bhopal</span>
                 </span>
 
                 {/* Out of Stock Overlay */}
@@ -405,12 +405,12 @@ export default function ProductDetailsClient({
           </div>
 
           <div className="bg-white border border-gray-200/90 rounded-2xl p-4 flex items-center gap-3 shadow-2xs">
-            <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
               <Clock size={20} />
             </div>
             <div>
-              <h4 className="font-black text-xs text-gray-900">10-15 Min Fast Delivery</h4>
-              <p className="text-[10px] text-gray-500 font-medium">Across all Bhopal hubs</p>
+              <h4 className="font-black text-xs text-gray-900">Same-Day Fresh Delivery</h4>
+              <p className="text-[10px] text-gray-500 font-medium">Morning & Evening slots across Bhopal</p>
             </div>
           </div>
 

@@ -496,7 +496,7 @@ export default function TrackOrderPage() {
                     <MapPin size={18} className="text-[#0f8646] shrink-0" /> Delivery Address
                   </h3>
                   <span className="text-[10px] font-black uppercase text-[#0f8646] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 self-start sm:self-auto max-w-full truncate">
-                    {order.deliverySlot || "Instant Express (10-15 Mins)"}
+                    {order.deliverySlot || "Same-Day Express Dispatch"}
                   </span>
                 </div>
                 <div className="text-xs text-gray-600 space-y-1">

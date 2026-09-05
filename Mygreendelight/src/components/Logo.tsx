@@ -121,7 +121,7 @@ export default function Logo({
                 : "text-[#0f8646]"
             }`}
           >
-            10-Min Farm Fresh • Bhopal
+            Mandi Fresh • Same Day Delivery
           </span>
         )}
       </div>

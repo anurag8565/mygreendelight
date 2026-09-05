@@ -257,11 +257,11 @@ export default function SearchPage() {
                 <span>Search Bhopal Mandi & Produce</span>
               </h1>
               <p className="text-[11px] sm:text-xs text-gray-500 font-medium mt-0.5">
-                10-15 Min Express Delivery • Sunrise Farm Direct
+                Daily Karond Mandi Fresh Produce • Same-Day Delivery in Bhopal
               </p>
             </div>
             <span className="bg-emerald-100 text-[#0f8646] text-[10px] font-black uppercase px-2.5 py-1 rounded-full shrink-0">
-              ⚡ 10 Min Dispatch
+              🌿 Mandi Fresh
             </span>
           </div>
 

@@ -97,7 +97,7 @@ export default function RecipeKitsSection({ kits = [] }: { kits?: any[] }) {
                 </span>
               </div>
               <p className="text-[10px] sm:text-xs text-gray-500 mt-0.5">
-                Exact pre-measured farm ingredients delivered in 10 minutes
+                Exact pre-measured fresh Mandi ingredients delivered right to your doorstep
               </p>
             </div>
           </div>

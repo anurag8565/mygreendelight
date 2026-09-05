@@ -13,7 +13,7 @@ export default function Hero({ banners = [] }: HeroProps) {
   const defaultSlides = [
     {
       _id: "s1",
-      badge: "⚡ 10-15 Min Express Delivery",
+      badge: "🌿 Mandi Fresh • Same Day Delivery",
       title: "Sunrise Harvested Farm Vegetables & Fruits",
       subtitle: "100% Ozone-Washed • Direct from Local Bhopal & Sehore Farms",
       btnText: "Shop Fresh Produce",
@@ -35,7 +35,7 @@ export default function Hero({ banners = [] }: HeroProps) {
       _id: "s3",
       badge: "🥛 100% Pure Organic Dairy",
       title: "Pure Desi A2 Cow Milk & Golden Bilona Ghee",
-      subtitle: "Fresh Morning Batch Delivered in 10-15 Mins • 100% Pure & Organic",
+      subtitle: "Fresh Morning Batch Delivered Same-Day • 100% Pure & Organic",
       btnText: "Shop Pure Dairy",
       link: "/shop?category=Dairy%20%26%20Staples",
       image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=1600&q=85",
@@ -120,7 +120,7 @@ export default function Hero({ banners = [] }: HeroProps) {
                 {/* Micro Badge */}
                 <div className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md text-white text-[9.5px] sm:text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider mb-2 sm:mb-3 border border-white/30 shadow-xs">
                   <Sparkles size={12} className="text-yellow-300 fill-yellow-300 animate-pulse" />
-                  <span>{slide.badge || "⚡ 10-15 Min Express Delivery"}</span>
+                  <span>{slide.badge || "🌿 Mandi Fresh • Same Day Delivery"}</span>
                 </div>
 
                 {/* Title */}

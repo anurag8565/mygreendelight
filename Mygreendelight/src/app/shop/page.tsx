@@ -246,11 +246,11 @@ export default function ShopPage() {
                   : "All Fresh Groceries"}
               </h1>
               <span className="text-[10px] font-black uppercase text-[#0f8646] bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
-                10-15 Min Express
+                Mandi Fresh • Same Day
               </span>
             </div>
             <p className="text-[11px] sm:text-xs text-gray-500 font-medium mt-0.5">
-              Sunrise farm-harvested veggies, fruits & daily staples delivered in 10-15 mins
+              Daily Karond Mandi fresh vegetables, fruits & staples delivered same-day in Bhopal
             </p>
           </div>
 
@@ -462,7 +462,7 @@ export default function ShopPage() {
                 </div>
                 <div>
                   <h3 className="font-black text-sm sm:text-base text-white">
-                    ⚡ 10-15 Min Express Delivery in Bhopal
+                    🌿 Daily Mandi Fresh Produce • Same-Day Delivery in Bhopal
                   </h3>
                   <p className="text-[11px] sm:text-xs text-green-100 font-medium mt-0.5">
                     100% Ozone-Washed sunrise harvest produce straight to your doorstep

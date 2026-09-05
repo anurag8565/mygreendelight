@@ -101,10 +101,10 @@ export default function Groceryitemcard({
           </span>
         )}
 
-        {/* 10 Min Delivery Tag */}
-        <span className="absolute bottom-1.5 left-2 bg-white/95 backdrop-blur-xs text-gray-800 text-[8.5px] font-black px-1.5 py-0.5 rounded-md shadow-2xs flex items-center gap-0.5 border border-gray-200/50">
-          <Zap size={9} className="text-amber-500 fill-amber-500" />
-          <span>10 MINS</span>
+        {/* Fresh Mandi Produce Tag */}
+        <span className="absolute bottom-1.5 left-2 bg-white/95 backdrop-blur-xs text-emerald-800 text-[8.5px] font-black px-1.5 py-0.5 rounded-md shadow-2xs flex items-center gap-0.5 border border-emerald-200/60">
+          <span className="text-[9px]">🌿</span>
+          <span>MANDI FRESH</span>
         </span>
 
         {/* Wishlist Button */}

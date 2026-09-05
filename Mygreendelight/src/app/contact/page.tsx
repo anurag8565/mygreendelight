@@ -111,7 +111,7 @@ export default function ContactPage() {
 
   const faqs = [
     {
-      q: "How can I track my 10-minute delivery?",
+      q: "How can I track my same-day delivery?",
       a: "You can track your rider in real-time using our live Leaflet GPS tracking map on the Track Order page or directly from your My Orders dashboard.",
     },
     {
@@ -487,7 +487,7 @@ export default function ContactPage() {
                             {hub.address}
                           </p>
                           <p className="text-[11px] text-[#0f8646] font-bold mt-1">
-                            ⚡ 10-15 Min Express Delivery Active
+                            🌿 Same-Day Fresh Delivery Active
                           </p>
                         </div>
                       </div>

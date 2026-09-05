@@ -30,7 +30,7 @@ const DEFAULT_REWARDS = [
     description: "Flat ₹50 OFF on pantry & veggies",
   },
   {
-    title: "100% Free 10-Min Delivery",
+    title: "100% Free Express Delivery",
     discountType: "fixed",
     discountValue: 25,
     couponPrefix: "FREESHIP",

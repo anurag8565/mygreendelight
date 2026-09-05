@@ -42,7 +42,7 @@ export async function GET(req: NextRequest) {
             description: "Flat ₹50 OFF on pantry & veggies",
           },
           {
-            title: "100% Free 10-Min Delivery",
+            title: "100% Free Express Delivery",
             discountType: "fixed",
             discountValue: 25,
             couponPrefix: "FREESHIP",
@@ -121,7 +121,7 @@ export async function POST(req: NextRequest) {
             description: "Flat ₹50 OFF on pantry & veggies",
           },
           {
-            title: "100% Free 10-Min Delivery",
+            title: "100% Free Express Delivery",
             discountType: "fixed",
             discountValue: 25,
             couponPrefix: "FREESHIP",

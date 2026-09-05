@@ -39,7 +39,7 @@ export default function AdminDashboardPage() {
 
   // 📢 Live Broadcast Announcement State
   const [broadcastForm, setBroadcastForm] = useState({
-    message: "🌧️ Bhopal Weather Alert: 10-minute deliveries active across all Bhopal pin codes!",
+    message: "🌧️ Bhopal Weather Alert: Same-day fresh deliveries active across all Bhopal pin codes!",
     type: "weather",
     isActive: true,
     linkText: "Shop Fresh",
@@ -122,7 +122,7 @@ export default function AdminDashboardPage() {
                 Admin Overview
               </h1>
               <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5">
-                Live store metrics, revenue & 10-min delivery fleet operations
+                Live store metrics, revenue & express delivery fleet operations
               </p>
             </div>
 
@@ -399,7 +399,7 @@ export default function AdminDashboardPage() {
                         required
                         value={broadcastForm.message}
                         onChange={(e) => setBroadcastForm({ ...broadcastForm, message: e.target.value })}
-                        placeholder="e.g. 🌧️ Bhopal Heavy Rain: Fleet is on the move, 10 min express delivery active!"
+                        placeholder="e.g. 🌧️ Bhopal Heavy Rain: Fleet is on the move, same-day express delivery active!"
                         className="w-full bg-gray-800/90 border border-gray-700 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-bold text-white outline-none focus:border-[#0f8646]"
                       />
                     </div>

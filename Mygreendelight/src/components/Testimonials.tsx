@@ -308,7 +308,7 @@ export default function Testimonials({
                 Share Your Farm Experience
               </h3>
               <p className="text-xs text-gray-500 text-center mb-5">
-                Tell Bhopal neighbors about the produce quality & 10-min delivery!
+                Tell Bhopal neighbors about the produce quality & same-day fresh delivery!
               </p>
 
               {submittedMsg ? (
@@ -386,7 +386,7 @@ export default function Testimonials({
                     <textarea
                       required
                       rows={3}
-                      placeholder="e.g. Taaza sabzi direct khet se aayi, 10 minute me delivery aur packing bahut clean thi!"
+                      placeholder="e.g. Taaza sabzi direct Mandi se aayi, same-day delivery aur packing bahut clean thi!"
                       value={reviewForm.comment}
                       onChange={(e) =>
                         setReviewForm({ ...reviewForm, comment: e.target.value })

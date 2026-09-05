@@ -20,8 +20,8 @@ export default function FeaturesBanner() {
     },
     {
       icon: <Truck className="text-[#0f8646]" size={26} />,
-      title: "Express 10-Min Delivery",
-      desc: "Delivered to your doorstep in Bhopal within minutes",
+      title: "Same-Day Fresh Delivery",
+      desc: "Daily morning & evening fresh produce dispatch across Bhopal",
       bg: "hover:border-teal-300 bg-teal-50/40",
     },
     {

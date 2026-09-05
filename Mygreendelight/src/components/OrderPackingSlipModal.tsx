@@ -72,7 +72,7 @@ export default function OrderPackingSlipModal({
               SUBZIQUICK
             </h2>
             <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">
-              10-15 Min Farm Fresh Grocery Bhopal
+              Mandi Fresh • Same Day Delivery Bhopal
             </p>
             <div className="mt-2 bg-gray-100 py-1 px-3 rounded-lg inline-block text-xs font-black text-gray-900 border border-gray-200">
               BAG SLIP #{orderShortId}

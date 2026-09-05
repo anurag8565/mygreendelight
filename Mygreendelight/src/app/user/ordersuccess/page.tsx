@@ -164,9 +164,9 @@ function OrderSuccessContent() {
             <div className="bg-gray-50/80 border border-gray-100 rounded-2xl p-3.5">
               <div className="flex items-center gap-2 text-[#0f8646] mb-1">
                 <Clock size={16} />
-                <span className="font-extrabold text-xs text-gray-900">10-15 Mins</span>
+                <span className="font-extrabold text-xs text-gray-900">Same-Day Slot</span>
               </div>
-              <p className="text-[10px] text-gray-500">Express Delivery</p>
+              <p className="text-[10px] text-gray-500">Fresh Mandi Dispatch</p>
             </div>
 
             <div className="bg-gray-50/80 border border-gray-100 rounded-2xl p-3.5">

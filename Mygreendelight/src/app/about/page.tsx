@@ -65,7 +65,7 @@ export default function AboutPage() {
                       Covid-19 ke dauraan jab papa ki naukri chali gayi thi, tab unhone himmat nahi haari aur thele par Bhopal ki sadko par taaza sabzi bechna shuru kiya.
                     </p>
                     <p>
-                      Maine dekhi unki subah 4 baje ki kadi mehnat, imandari aur hamari struggle. Wahi se ek soch aayi — <em>"Kyun na hum kisanon se seedha judkar, poore Bhopal ko 10-15 minute me bilkul taaza aur saaf sabzi ghar tak pahunchayein?"</em>
+                      Maine dekhi unki subah 4 baje ki kadi mehnat, imandari aur hamari struggle. Wahi se ek soch aayi — <em>"Kyun na hum kisanon se seedha judkar, poore Bhopal ko Mandi rate par bilkul taaza aur saaf sabzi same-day ghar tak pahunchayein?"</em>
                     </p>
                   </div>
 
@@ -191,7 +191,7 @@ export default function AboutPage() {
               The Journey of SubziQuick
             </h2>
             <p className="text-xs sm:text-sm text-gray-500 mt-2">
-              From a humble street cart to Bhopal’s most loved 10-minute fresh produce network
+              From a humble street cart to Bhopal’s most loved Mandi fresh & same-day produce delivery network
             </p>
           </div>
 
@@ -275,7 +275,7 @@ export default function AboutPage() {
                   </div>
                   <h3 className="text-xl font-black text-gray-900 mb-3">Our Mission</h3>
                   <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
-                    To make healthy, clean, chemical-free farm produce accessible to every Bhopal kitchen within 10-15 minutes at honest farm prices.
+                    To make healthy, clean, chemical-free farm produce accessible to every Bhopal kitchen with guaranteed same-day delivery at honest Mandi rates.
                   </p>
                 </div>
                 <div className="mt-6 pt-4 border-t border-gray-100 flex items-center gap-2 text-xs font-bold text-[#0f8646]">
@@ -326,7 +326,7 @@ export default function AboutPage() {
                 Aaiiye, Saath Milkar Ek Sehatmand Bhopal Banayein!
               </h2>
               <p className="text-green-100 text-xs sm:text-sm leading-relaxed mb-8">
-                Order your daily fresh vegetables & seasonal fruits today and get free 10-minute delivery to your doorstep.
+                Order your daily fresh vegetables & seasonal fruits today and get reliable same-day delivery right to your doorstep in Bhopal.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link

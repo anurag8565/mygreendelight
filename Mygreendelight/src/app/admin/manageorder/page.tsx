@@ -331,7 +331,7 @@ export default function ManageOrder() {
       msg += `Your order is confirmed & our farm team in Bhopal is carefully packing your fresh groceries! 🥦🍅`;
     } else if (currentStatus === "out of delivery") {
       const rider = order.assigneddelliveryboy?.name ? `with rider ${order.assigneddelliveryboy.name}` : "";
-      msg += `Your order is OUT FOR DELIVERY ${rider}! Our 10-minute fleet is on the way to your address. 🛵💨`;
+      msg += `Your order is OUT FOR DELIVERY ${rider}! Our delivery fleet is on the way to your address. 🛵💨`;
     } else if (currentStatus === "delivered" || currentStatus === "completed") {
       msg += `Your order has been DELIVERED successfully. Enjoy your fresh harvest! ⭐`;
     } else if (currentStatus === "cancelled") {
