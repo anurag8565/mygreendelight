@@ -277,8 +277,15 @@ function LoginFormContent() {
               onClick={async () => {
                 try {
                   setGoogleLoading(true);
-                  await signIn("google", { callbackUrl });
+                  const res = await signIn("google", { callbackUrl, redirect: false });
+                  if (res?.error) {
+                    setErrorMessage("Google Sign-In is temporarily unavailable. Please use Email & Password below.");
+                    setGoogleLoading(false);
+                  } else if (res?.url) {
+                    window.location.href = res.url;
+                  }
                 } catch (error) {
+                  setErrorMessage("Google Sign-In is temporarily unavailable. Please use Email & Password below.");
                   setGoogleLoading(false);
                 }
               }}

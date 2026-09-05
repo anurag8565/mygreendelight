@@ -299,8 +299,15 @@ function RegisterFormContent({ onBack }: RegisterformProps) {
               onClick={async () => {
                 try {
                   setGoogleLoading(true);
-                  await signIn("google", { callbackUrl });
+                  const res = await signIn("google", { callbackUrl, redirect: false });
+                  if (res?.error) {
+                    setErrorMessage("Google Sign-Up is temporarily unavailable. Please create your account with Email & Password below.");
+                    setGoogleLoading(false);
+                  } else if (res?.url) {
+                    window.location.href = res.url;
+                  }
                 } catch (error) {
+                  setErrorMessage("Google Sign-Up is temporarily unavailable. Please create your account with Email & Password below.");
                   setGoogleLoading(false);
                 }
               }}
