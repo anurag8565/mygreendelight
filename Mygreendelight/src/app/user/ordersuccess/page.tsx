@@ -261,7 +261,7 @@ function OrderSuccessContent() {
             <div className="flex items-center gap-2">
               <a
                 href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
-                  `🌿 Hey neighbors! I just ordered farm-fresh vegetables & fruits from MyGreenDelight Bhopal. Super fresh produce directly delivered at Mandi rates! Order yours here: ${typeof window !== "undefined" ? window.location.origin : "https://mygreendelight.in"}`
+                  `🌿 Hey neighbors! I just ordered farm-fresh vegetables & fruits from SubziQuick Bhopal. Super fresh produce directly delivered at Mandi rates! Order yours here: ${typeof window !== "undefined" ? window.location.origin : "https://subziquick.in"}`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"

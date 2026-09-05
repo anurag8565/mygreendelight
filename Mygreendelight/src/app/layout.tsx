@@ -19,13 +19,14 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "MyGreenDelight | Bhopal Mandi Farm Fresh Grocery | Bhopal's #1 Farm Fresh Online Grocery Store",
-  description: "Bhopal's #1 Farm Fresh Online Grocery Store - 10-15 Min Express Delivery",
+  metadataBase: new URL("https://subziquick.in"),
+  title: "SubziQuick | Bhopal Mandi Farm Fresh Grocery | Bhopal's #1 Express Online Grocery Store",
+  description: "SubziQuick - Bhopal's #1 Farm Fresh Online Grocery Store - 10-15 Min Express Delivery at Mandi Rates",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "GreenDelight",
+    title: "SubziQuick",
   },
 };
 
