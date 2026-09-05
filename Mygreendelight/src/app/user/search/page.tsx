@@ -29,23 +29,56 @@ import type { RootState } from "@/redux/store";
 import { motion, AnimatePresence } from "framer-motion";
 
 const TRENDING_SEARCHES = [
-  { name: "Tomato", icon: "🍅", tag: "Daily Need" },
-  { name: "Palak", icon: "🥬", tag: "Harvest Special" },
-  { name: "A2 Cow Milk", icon: "🥛", tag: "Morning 7 AM" },
-  { name: "Potato", icon: "🥔", tag: "Top Seller" },
-  { name: "Onion", icon: "🧅", tag: "Mandi Fresh" },
-  { name: "Paneer", icon: "🧀", tag: "Organic" },
-  { name: "Apple", icon: "🍎", tag: "Kashmiri" },
-  { name: "Coriander", icon: "🌿", tag: "Free with Veggies" },
+  {
+    name: "Tomato",
+    image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=200&auto=format&fit=crop&q=80",
+    tag: "Daily Need",
+  },
+  {
+    name: "Palak",
+    image: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=200&auto=format&fit=crop&q=80",
+    tag: "Harvest Special",
+  },
+  {
+    name: "A2 Cow Milk",
+    image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=200&auto=format&fit=crop&q=80",
+    tag: "Morning 7 AM",
+  },
+  {
+    name: "Potato",
+    image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=200&auto=format&fit=crop&q=80",
+    tag: "Top Seller",
+  },
+  {
+    name: "Onion",
+    image: "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=200&auto=format&fit=crop&q=80",
+    tag: "Mandi Fresh",
+  },
+  {
+    name: "Paneer",
+    image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=200&auto=format&fit=crop&q=80",
+    tag: "Organic",
+  },
+  {
+    name: "Apple",
+    image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=200&auto=format&fit=crop&q=80",
+    tag: "Kashmiri",
+  },
+  {
+    name: "Coriander",
+    image: "https://images.unsplash.com/photo-1608686207856-001b95cf60ca?w=200&auto=format&fit=crop&q=80",
+    tag: "Free with Veggies",
+  },
 ];
 
-const CATEGORY_ICONS: Record<string, string> = {
-  vegetables: "🥬",
-  fruits: "🍎",
-  "dairy & staples": "🥛",
-  "dairy & eggs": "🥛",
-  dairy: "🥛",
-  exotics: "🥑",
+const CATEGORY_IMAGES: Record<string, string> = {
+  vegetables: "/categories/vegetables.jpg",
+  fruits: "/categories/fruits.jpg",
+  "dairy & staples": "/categories/dairy.jpg",
+  "dairy & eggs": "/categories/dairy.jpg",
+  dairy: "/categories/dairy.jpg",
+  exotics: "/categories/exotic.jpg",
+  "ready-to-cook & cut produce": "/categories/ready_to_cook.jpg",
 };
 
 export default function SearchPage() {
@@ -191,9 +224,9 @@ export default function SearchPage() {
     }
   };
 
-  const getCategoryIcon = (name: string) => {
-    const key = name.toLowerCase();
-    return CATEGORY_ICONS[key] || "🌱";
+  const getCategoryImage = (name: string) => {
+    const key = name.toLowerCase().trim();
+    return CATEGORY_IMAGES[key] || "/categories/vegetables.jpg";
   };
 
   return (
@@ -324,22 +357,32 @@ export default function SearchPage() {
               </div>
             )}
 
-            {/* Trending Searches in Bhopal */}
+            {/* Trending Searches in Bhopal with Real Product Photos */}
             <div className="bg-white rounded-3xl p-4 sm:p-5 border border-gray-200/90 shadow-2xs">
               <div className="flex items-center gap-1.5 mb-3 text-xs font-black uppercase text-gray-400 tracking-wider">
                 <Flame size={14} className="text-orange-500" />
                 <span>Trending Produce in Bhopal</span>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
                 {TRENDING_SEARCHES.map((item, idx) => (
                   <button
                     key={idx}
                     type="button"
                     onClick={() => executeSearch(item.name)}
-                    className="bg-gray-50/70 hover:bg-emerald-50/70 border border-gray-200/80 hover:border-emerald-300 p-2.5 rounded-2xl flex items-center justify-between text-left transition cursor-pointer group"
+                    className="bg-gray-50/80 hover:bg-emerald-50/80 border border-gray-200/80 hover:border-emerald-300 p-2.5 rounded-2xl flex items-center justify-between text-left transition cursor-pointer group shadow-2xs"
                   >
-                    <div className="flex items-center gap-2 min-w-0">
-                      <span className="text-lg shrink-0">{item.icon}</span>
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <div className="w-10 h-10 rounded-xl bg-white border border-gray-100 overflow-hidden shrink-0 flex items-center justify-center p-0.5 shadow-2xs group-hover:scale-105 transition-transform">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="w-full h-full object-cover rounded-lg"
+                          onError={(e) => {
+                            (e.currentTarget as HTMLImageElement).src =
+                              "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=200&auto=format&fit=crop&q=80";
+                          }}
+                        />
+                      </div>
                       <div className="truncate">
                         <span className="text-xs font-black text-gray-900 group-hover:text-[#0f8646] block truncate">
                           {item.name}
@@ -355,7 +398,7 @@ export default function SearchPage() {
               </div>
             </div>
 
-            {/* Live 100% Database Categories (4 Categories Only) */}
+            {/* Live 100% Database Categories with Real HD Category Images */}
             {categories.length > 0 && (
               <div className="bg-white rounded-3xl p-4 sm:p-5 border border-gray-200/90 shadow-2xs">
                 <span className="text-xs font-black uppercase text-gray-400 tracking-wider block mb-3">
@@ -366,10 +409,17 @@ export default function SearchPage() {
                     <Link
                       key={cat._id}
                       href={`/shop?category=${encodeURIComponent(cat.name)}`}
-                      className="flex items-center gap-3 p-3 rounded-2xl bg-gray-50 hover:bg-emerald-50 border border-gray-200/70 hover:border-emerald-300 transition text-left group"
+                      className="flex items-center gap-3 p-2.5 sm:p-3 rounded-2xl bg-gray-50 hover:bg-emerald-50 border border-gray-200/70 hover:border-emerald-300 transition text-left group shadow-2xs"
                     >
-                      <div className="w-10 h-10 rounded-2xl bg-white shadow-2xs border border-gray-100 flex items-center justify-center text-xl shrink-0 group-hover:scale-110 transition-transform">
-                        {getCategoryIcon(cat.name)}
+                      <div className="w-11 h-11 rounded-2xl bg-white shadow-2xs border border-gray-100 overflow-hidden shrink-0 group-hover:scale-105 transition-transform">
+                        <img
+                          src={getCategoryImage(cat.name)}
+                          alt={cat.name}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            (e.currentTarget as HTMLImageElement).src = "/categories/vegetables.jpg";
+                          }}
+                        />
                       </div>
                       <div className="min-w-0 flex-1">
                         <span className="text-xs font-black text-gray-900 group-hover:text-[#0f8646] block truncate">

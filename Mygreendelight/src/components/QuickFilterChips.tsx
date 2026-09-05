@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 export interface FilterChip {
   id: string;
   label: string;
-  icon: string;
+  image: string;
   filterFn: (item: any) => boolean;
 }
 
@@ -14,13 +14,13 @@ export const filterChipsList: FilterChip[] = [
   {
     id: "all",
     label: "All Produce",
-    icon: "🌱",
+    image: "/categories/vegetables.jpg",
     filterFn: () => true,
   },
   {
     id: "leafy",
     label: "Saag & Leafy",
-    icon: "🥬",
+    image: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=80&auto=format&fit=crop&q=80",
     filterFn: (item) =>
       item.name?.toLowerCase().includes("palak") ||
       item.name?.toLowerCase().includes("spinach") ||
@@ -34,7 +34,7 @@ export const filterChipsList: FilterChip[] = [
   {
     id: "daily",
     label: "Daily Essentials",
-    icon: "🥔",
+    image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=80&auto=format&fit=crop&q=80",
     filterFn: (item) =>
       item.name?.toLowerCase().includes("potato") ||
       item.name?.toLowerCase().includes("aloo") ||
@@ -48,13 +48,13 @@ export const filterChipsList: FilterChip[] = [
   {
     id: "fruits",
     label: "Fresh Fruits",
-    icon: "🍎",
+    image: "/categories/fruits.jpg",
     filterFn: (item) => item.category?.toLowerCase().includes("fruit"),
   },
   {
     id: "dairy",
     label: "Desi Dairy & Milk",
-    icon: "🥛",
+    image: "/categories/dairy.jpg",
     filterFn: (item) =>
       item.category?.toLowerCase().includes("dairy") ||
       item.name?.toLowerCase().includes("milk") ||
@@ -66,7 +66,7 @@ export const filterChipsList: FilterChip[] = [
   {
     id: "jain",
     label: "Jain Friendly",
-    icon: "🟢",
+    image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=80&auto=format&fit=crop&q=80",
     filterFn: (item) => {
       const name = item.name?.toLowerCase() || "";
       const isRoot =
@@ -86,7 +86,7 @@ export const filterChipsList: FilterChip[] = [
   {
     id: "under49",
     label: "Under ₹49",
-    icon: "⚡",
+    image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=80&auto=format&fit=crop&q=80",
     filterFn: (item) => (item.price || 0) <= 49,
   },
 ];
@@ -117,7 +117,16 @@ export default function QuickFilterChips({
                   : "bg-white text-gray-600 border-gray-200/80 hover:bg-gray-50 hover:text-gray-900 hover:border-gray-300"
               }`}
             >
-              <span className="text-[11px] leading-none">{chip.icon}</span>
+              <div className="w-4 h-4 rounded-full overflow-hidden shrink-0 border border-black/10 bg-white">
+                <img
+                  src={chip.image}
+                  alt={chip.label}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src = "/categories/vegetables.jpg";
+                  }}
+                />
+              </div>
               <span className="whitespace-nowrap tracking-tight">{chip.label}</span>
             </motion.button>
           );

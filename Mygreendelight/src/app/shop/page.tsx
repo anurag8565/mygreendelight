@@ -31,19 +31,17 @@ import type { RootState } from "@/redux/store";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
-const CATEGORY_ICONS: Record<string, string> = {
-  all: "🌿",
-  vegetables: "🥬",
-  fruits: "🍎",
-  "dairy & staples": "🥛",
-  "dairy & eggs": "🥛",
-  dairy: "🥛",
-  exotics: "🥑",
-  combos: "🍲",
-  "salad mixes": "🥗",
-  "oils & ghee": "🍯",
-  "wholesome snacks": "🍪",
-  "fresh juices": "🧃",
+const CATEGORY_IMAGES: Record<string, string> = {
+  all: "/categories/vegetables.jpg",
+  vegetables: "/categories/vegetables.jpg",
+  fruits: "/categories/fruits.jpg",
+  "dairy & staples": "/categories/dairy.jpg",
+  "dairy & eggs": "/categories/dairy.jpg",
+  dairy: "/categories/dairy.jpg",
+  exotics: "/categories/exotic.jpg",
+  combos: "/combo_banner.jpg",
+  "salad mixes": "/categories/exotic.jpg",
+  "ready-to-cook & cut produce": "/categories/ready_to_cook.jpg",
 };
 
 export default function ShopPage() {
@@ -201,9 +199,9 @@ export default function ShopPage() {
     (bigDiscountOnly ? 1 : 0) +
     (priceRange < 1500 ? 1 : 0);
 
-  const getCategoryIcon = (name: string) => {
-    const key = name.toLowerCase();
-    return CATEGORY_ICONS[key] || "🌱";
+  const getCategoryImage = (name: string) => {
+    const key = name.toLowerCase().trim();
+    return CATEGORY_IMAGES[key] || "/categories/vegetables.jpg";
   };
 
   return (
@@ -245,7 +243,7 @@ export default function ShopPage() {
                   : "All Fresh Groceries"}
               </h1>
               <span className="text-[10px] font-black uppercase text-[#0f8646] bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
-                Bhopal Farm Direct
+                10-15 Min Express
               </span>
             </div>
             <p className="text-[11px] sm:text-xs text-gray-500 font-medium mt-0.5">
@@ -272,7 +270,9 @@ export default function ShopPage() {
             {/* Categories Filter Box */}
             <div className="bg-white rounded-3xl shadow-2xs border border-gray-200/90 p-5">
               <h3 className="font-black text-gray-900 mb-3 text-xs uppercase tracking-wider flex items-center gap-1.5">
-                <span>🥬</span>
+                <span className="w-4 h-4 rounded-full overflow-hidden border border-black/10 inline-block shrink-0">
+                  <img src="/categories/vegetables.jpg" alt="Produce" className="w-full h-full object-cover" />
+                </span>
                 <span>Categories</span>
               </h3>
               <div className="flex flex-col space-y-1">
@@ -285,8 +285,11 @@ export default function ShopPage() {
                       : "text-gray-700 hover:bg-gray-50"
                   }`}
                 >
-                  <span className="flex items-center gap-2">
-                    <span>🌿</span> All Products
+                  <span className="flex items-center gap-2.5">
+                    <span className="w-5 h-5 rounded-md overflow-hidden bg-white border border-gray-200 shrink-0">
+                      <img src="/categories/vegetables.jpg" alt="All" className="w-full h-full object-cover" />
+                    </span>
+                    <span>All Products</span>
                   </span>
                   {!categoryParam && <Check size={14} className="stroke-[3]" />}
                 </button>
@@ -302,8 +305,18 @@ export default function ShopPage() {
                         : "text-gray-700 hover:bg-gray-50"
                     }`}
                   >
-                    <span className="flex items-center gap-2 truncate">
-                      <span>{getCategoryIcon(cat.name)}</span> {cat.name}
+                    <span className="flex items-center gap-2.5 truncate">
+                      <span className="w-5 h-5 rounded-md overflow-hidden bg-white border border-gray-200 shrink-0">
+                        <img
+                          src={getCategoryImage(cat.name)}
+                          alt={cat.name}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            (e.currentTarget as HTMLImageElement).src = "/categories/vegetables.jpg";
+                          }}
+                        />
+                      </span>
+                      <span className="truncate">{cat.name}</span>
                     </span>
                     {categoryParam === cat.name && <Check size={14} className="stroke-[3]" />}
                   </button>
@@ -561,7 +574,12 @@ export default function ShopPage() {
                         : "bg-gray-50 border-gray-200 text-gray-700"
                     }`}
                   >
-                    <span>🌿 All Aisles</span>
+                    <span className="flex items-center gap-2">
+                      <span className="w-4 h-4 rounded-full overflow-hidden bg-white border border-gray-200 shrink-0">
+                        <img src="/categories/vegetables.jpg" alt="All" className="w-full h-full object-cover" />
+                      </span>
+                      <span>All Aisles</span>
+                    </span>
                     {!categoryParam && <Check size={12} className="stroke-[3]" />}
                   </button>
                   {categories.map((cat) => (
@@ -575,7 +593,19 @@ export default function ShopPage() {
                           : "bg-gray-50 border-gray-200 text-gray-700"
                       }`}
                     >
-                      <span className="truncate">{getCategoryIcon(cat.name)} {cat.name}</span>
+                      <span className="flex items-center gap-2 truncate">
+                        <span className="w-4 h-4 rounded-full overflow-hidden bg-white border border-gray-200 shrink-0">
+                          <img
+                            src={getCategoryImage(cat.name)}
+                            alt={cat.name}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).src = "/categories/vegetables.jpg";
+                            }}
+                          />
+                        </span>
+                        <span className="truncate">{cat.name}</span>
+                      </span>
                       {categoryParam === cat.name && <Check size={12} className="stroke-[3]" />}
                     </button>
                   ))}
