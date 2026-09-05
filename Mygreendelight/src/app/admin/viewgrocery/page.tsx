@@ -197,35 +197,6 @@ export default function ViewGrocery() {
     fetchGroceries();
   }, []);
 
-  const distinctCategories = React.useMemo(() => {
-    const map = new Map<string, number>();
-    groceries.forEach((g) => {
-      if (!g.category) return;
-      const cat = g.category.trim();
-      const capitalized = cat.charAt(0).toUpperCase() + cat.slice(1);
-      map.set(capitalized, (map.get(capitalized) || 0) + 1);
-    });
-    return Array.from(map.entries()).map(([name, count]) => ({ name, count }));
-  }, [groceries]);
-
-  const lowStockCount = React.useMemo(() => {
-    return groceries.filter(
-      (g) =>
-        (g.stock || 0) < 10 ||
-        g.variations?.some((v) => (v.stock || 0) < 10)
-    ).length;
-  }, [groceries]);
-
-  const outOfStockCount = React.useMemo(() => {
-    return groceries.filter(
-      (g) =>
-        (g.stock || 0) === 0 &&
-        (!g.variations ||
-          g.variations.length === 0 ||
-          g.variations.every((v) => (v.stock || 0) === 0))
-    ).length;
-  }, [groceries]);
-
   const publishedCount = React.useMemo(
     () => groceries.filter((g) => g.status !== "draft").length,
     [groceries]
@@ -237,9 +208,61 @@ export default function ViewGrocery() {
   );
 
   const featuredCount = React.useMemo(
-    () => groceries.filter((g) => g.isFeatured).length,
+    () => groceries.filter((g) => Boolean(g.isFeatured)).length,
     [groceries]
   );
+
+  // Filter produce according to active status tab so category counts reflect current view
+  const statusScopedGroceries = React.useMemo(() => {
+    if (statusFilter === "published") {
+      return groceries.filter((g) => g.status !== "draft");
+    } else if (statusFilter === "draft") {
+      return groceries.filter((g) => g.status === "draft");
+    } else if (statusFilter === "featured") {
+      return groceries.filter((g) => Boolean(g.isFeatured));
+    }
+    return groceries;
+  }, [groceries, statusFilter]);
+
+  const distinctCategories = React.useMemo(() => {
+    // Preserve all category names in list even if 0 count in current filter
+    const allCatNames = new Set<string>();
+    groceries.forEach((g) => {
+      if (!g.category) return;
+      const cat = g.category.trim();
+      allCatNames.add(cat.charAt(0).toUpperCase() + cat.slice(1));
+    });
+
+    const map = new Map<string, number>();
+    allCatNames.forEach((name) => map.set(name, 0));
+
+    statusScopedGroceries.forEach((g) => {
+      if (!g.category) return;
+      const cat = g.category.trim();
+      const capitalized = cat.charAt(0).toUpperCase() + cat.slice(1);
+      map.set(capitalized, (map.get(capitalized) || 0) + 1);
+    });
+
+    return Array.from(map.entries()).map(([name, count]) => ({ name, count }));
+  }, [groceries, statusScopedGroceries]);
+
+  const lowStockCount = React.useMemo(() => {
+    return statusScopedGroceries.filter(
+      (g) =>
+        (g.stock || 0) < 10 ||
+        g.variations?.some((v) => (v.stock || 0) < 10)
+    ).length;
+  }, [statusScopedGroceries]);
+
+  const outOfStockCount = React.useMemo(() => {
+    return statusScopedGroceries.filter(
+      (g) =>
+        (g.stock || 0) === 0 &&
+        (!g.variations ||
+          g.variations.length === 0 ||
+          g.variations.every((v) => (v.stock || 0) === 0))
+    ).length;
+  }, [statusScopedGroceries]);
 
   // 1-Click Toggle Featured ⭐
   const toggleFeatured = async (item: Grocery) => {
@@ -561,7 +584,7 @@ export default function ViewGrocery() {
                       : "bg-gray-50 text-gray-600 hover:bg-gray-100"
                   }`}
                 >
-                  All Categories
+                  All Categories ({statusScopedGroceries.length})
                 </button>
 
                 {/* Low Stock Mandi Filter Pill */}
