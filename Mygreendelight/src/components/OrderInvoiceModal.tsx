@@ -4,8 +4,6 @@ import React, { useRef } from "react";
 import {
   Printer,
   X,
-  Download,
-  CheckCircle2,
   Phone,
   MapPin,
   Calendar,
@@ -13,6 +11,11 @@ import {
   Truck,
   FileText,
   ShieldCheck,
+  CheckCircle2,
+  Sparkles,
+  QrCode,
+  Clock,
+  User,
 } from "lucide-react";
 import Logo from "./Logo";
 
@@ -36,6 +39,8 @@ export default function OrderInvoiceModal({
   };
 
   const orderShortId = String(order._id).slice(-6).toUpperCase();
+  const invoiceNumber = `INV-SZQ-${orderShortId}`;
+  
   const orderDate = new Date(order.createdAt || Date.now()).toLocaleDateString(
     "en-IN",
     {
@@ -51,28 +56,47 @@ export default function OrderInvoiceModal({
     (acc: number, item: any) => acc + (item.price || 0) * (item.quantity || 1),
     0
   );
+  
   const deliveryFee = subtotal >= 199 ? 0 : 30;
-  const discount = Math.max(0, subtotal + deliveryFee - (order.totalamount || subtotal));
-  const finalTotal = order.totalamount || subtotal + deliveryFee;
+  const calculatedTotal = subtotal + deliveryFee;
+  const discount = Math.max(0, calculatedTotal - (order.totalamount || calculatedTotal));
+  const finalTotal = order.totalamount ?? calculatedTotal;
+  const totalSavings = discount + (deliveryFee === 0 ? 30 : 0);
+
+  const isPrepaid =
+    order.paymentmethod === "online" ||
+    order.paymentmethod === "upi" ||
+    order.ispaid;
+
+  const verificationUrl = `https://subziquick.in/track/${order._id}`;
+  const qrCodeApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=${encodeURIComponent(
+    verificationUrl
+  )}`;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-950/70 backdrop-blur-xs print:p-0 print:bg-white">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-gray-950/75 backdrop-blur-xs print:p-0 print:bg-white print:static">
       {/* Modal Container */}
-      <div className="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col border border-gray-100 print:border-none print:shadow-none print:max-h-none print:w-full print:rounded-none">
-        {/* Modal Action Header (Hidden during Print) */}
-        <div className="px-6 py-4 bg-gray-900 text-white flex items-center justify-between print:hidden">
-          <div className="flex items-center gap-2">
-            <FileText size={18} className="text-[#0f8646]" />
-            <span className="font-black text-sm">Tax Invoice & Delivery Receipt</span>
+      <div className="bg-white w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col border border-gray-100 print:border-none print:shadow-none print:max-h-none print:w-full print:rounded-none">
+        
+        {/* Top Control Bar (Hidden during Print) */}
+        <div className="px-5 py-3.5 sm:px-6 sm:py-4 bg-gray-900 text-white flex items-center justify-between print:hidden shrink-0">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-[#0f8646] flex items-center justify-center text-white">
+              <FileText size={16} />
+            </div>
+            <div>
+              <span className="font-extrabold text-sm block">Tax Invoice & Delivery Receipt</span>
+              <span className="text-[10px] text-gray-400 font-mono">Order #{orderShortId}</span>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2">
             <button
               onClick={handlePrint}
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 transition shadow-sm cursor-pointer"
+              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 transition shadow-sm cursor-pointer hover:shadow-md"
             >
-              <Printer size={15} />
-              <span>Print Invoice</span>
+              <Printer size={14} />
+              <span>Print / Download PDF</span>
             </button>
 
             <button
@@ -84,174 +108,235 @@ export default function OrderInvoiceModal({
           </div>
         </div>
 
-        {/* Printable Area */}
+        {/* Printable Invoice Area */}
         <div
           ref={invoiceRef}
           id="printable-invoice"
-          className="p-8 sm:p-10 overflow-y-auto flex-1 bg-white font-sans text-gray-800 print:p-6"
+          className="p-6 sm:p-8 md:p-10 overflow-y-auto flex-1 bg-white font-sans text-gray-800 print:p-4 print:overflow-visible"
         >
-          {/* Company & Invoice Header */}
-          <div className="flex justify-between items-start border-b-2 border-green-700/80 pb-6 mb-6">
+          {/* Top Brand Header */}
+          <div className="flex flex-col sm:flex-row justify-between items-start gap-4 pb-6 border-b-2 border-emerald-600/90">
             <div>
               <Logo showTagline={true} />
-              <p className="text-[11px] text-gray-400 mt-2">
-                Amrai, Bagsewaniya, Bhopal, MP - 462043
-              </p>
-              <p className="text-[11px] text-gray-400 font-mono">
-                GSTIN: 23AABCK8901M1Z5 • FSSAI: 11424850000123 • Daily 6:00 AM – 1:00 PM • support@subziquick.in
-              </p>
+              <div className="mt-2.5 space-y-0.5 text-[11px] text-gray-500">
+                <p className="font-bold text-gray-700">SubziQuick Fresh Retail & Logistics</p>
+                <p>Amrai, Bagsewaniya, Bhopal, Madhya Pradesh - 462043</p>
+                <p className="font-mono text-[10px] text-gray-400">
+                  GSTIN: 23AABCS1234F1Z0 • FSSAI Lic: 11424850000123
+                </p>
+                <p className="text-[10px] text-gray-500">
+                  Customer Care: <strong>+91 99814 18565</strong> • support@subziquick.in
+                </p>
+              </div>
             </div>
 
-            <div className="text-right">
-              <span className="bg-emerald-50 text-[#0f8646] border border-emerald-300 font-black text-[11px] uppercase tracking-wider px-3 py-1 rounded-lg inline-block mb-2">
+            <div className="flex flex-row sm:flex-col items-start sm:items-end justify-between w-full sm:w-auto gap-2">
+              <span className="bg-emerald-50 text-[#0f8646] border border-emerald-300 font-black text-xs uppercase tracking-widest px-3.5 py-1 rounded-xl shadow-2xs">
                 TAX INVOICE
               </span>
-              <p className="text-sm font-black text-gray-900">
-                Invoice #: <span className="font-mono">INV-{orderShortId}</span>
-              </p>
-              <p className="text-xs text-gray-500 font-medium">{orderDate}</p>
-              <span
-                className={`text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full inline-block mt-1 ${
-                  order.ispaid
-                    ? "bg-green-100 text-green-800"
-                    : "bg-amber-100 text-amber-900"
-                }`}
-              >
-                Payment: {order.ispaid ? "PAID ONLINE" : "CASH ON DELIVERY (COD)"}
-              </span>
+              <div className="text-left sm:text-right space-y-0.5">
+                <p className="text-sm font-black text-gray-900 font-mono tracking-tight">
+                  {invoiceNumber}
+                </p>
+                <p className="text-xs text-gray-500 font-medium flex items-center sm:justify-end gap-1">
+                  <Calendar size={12} className="text-gray-400" />
+                  <span>{orderDate}</span>
+                </p>
+                <div className="pt-1">
+                  <span
+                    className={`text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md inline-block border ${
+                      isPrepaid
+                        ? "bg-green-50 text-green-800 border-green-200"
+                        : "bg-amber-50 text-amber-800 border-amber-200"
+                    }`}
+                  >
+                    {isPrepaid
+                      ? `PAID VIA ${order.paymentmethod?.toUpperCase() || "ONLINE"}`
+                      : "CASH ON DELIVERY (COD)"}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Customer & Delivery Details */}
-          <div className="grid grid-cols-2 gap-6 bg-gray-50/80 rounded-2xl p-4 border border-gray-200 mb-6 text-xs">
-            <div>
-              <span className="text-[10px] font-black text-gray-400 uppercase tracking-wider block mb-1">
+          {/* Billing & Shipping Section + Order QR */}
+          <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 bg-emerald-50/30 rounded-2xl p-4 sm:p-5 border border-emerald-100/90 my-5 text-xs">
+            {/* Customer Details (7 Cols) */}
+            <div className="sm:col-span-7 space-y-1.5">
+              <span className="text-[10px] font-black text-emerald-800 uppercase tracking-wider block">
                 BILLED & DELIVERED TO:
               </span>
-              <p className="font-black text-gray-900 text-sm">
-                {order.address?.fullname || order.user?.name || "Customer"}
+              <p className="font-extrabold text-gray-900 text-sm flex items-center gap-1.5">
+                <User size={14} className="text-[#0f8646]" />
+                <span>{order.address?.fullname || order.user?.name || "Valued Customer"}</span>
               </p>
-              <p className="font-bold text-gray-600 mt-0.5 flex items-center gap-1">
-                <Phone size={12} className="text-[#0f8646]" />
-                <span>{order.address?.mobile || "N/A"}</span>
+              <p className="font-bold text-gray-700 flex items-center gap-1.5">
+                <Phone size={13} className="text-[#0f8646]" />
+                <span>+91 {order.address?.mobile || order.user?.mobile || "N/A"}</span>
               </p>
-              <p className="text-gray-600 mt-1 leading-relaxed">
-                {order.address?.fulladress || "Bhopal, Madhya Pradesh"}
-              </p>
+              <div className="flex items-start gap-1.5 pt-0.5 text-gray-600 leading-relaxed">
+                <MapPin size={13} className="text-[#0f8646] shrink-0 mt-0.5" />
+                <span>
+                  {order.address?.fulladress || "Bhopal, Madhya Pradesh - 462xxx"}
+                </span>
+              </div>
             </div>
 
-            <div className="border-l border-gray-200 pl-6">
-              <span className="text-[10px] font-black text-gray-400 uppercase tracking-wider block mb-1">
-                ORDER DISPATCH INFO:
-              </span>
-              <p className="text-gray-700">
-                <strong>Status:</strong>{" "}
-                <span className="capitalize font-black text-[#0f8646]">
-                  {order.status}
+            {/* Dispatch & Delivery Meta (5 Cols) */}
+            <div className="sm:col-span-5 sm:border-l border-emerald-200/80 sm:pl-4 space-y-1.5 flex flex-col justify-between">
+              <div>
+                <span className="text-[10px] font-black text-emerald-800 uppercase tracking-wider block">
+                  DISPATCH LOGISTICS:
                 </span>
-              </p>
-              <p className="text-gray-700 mt-0.5">
-                <strong>Delivery Rider:</strong>{" "}
-                {order.assigneddelliveryboy?.name ? (
-                  <span>
-                    {order.assigneddelliveryboy.name} (
-                    {order.assigneddelliveryboy.mobile})
+                <p className="text-gray-700 mt-1">
+                  <strong>Slot:</strong>{" "}
+                  <span className="text-[#0f8646] font-bold">
+                    {order.deliverySlot || "Instant Mandi Fresh Express"}
                   </span>
-                ) : (
-                  <span className="text-gray-400 italic">SubziQuick Express Fleet</span>
+                </p>
+                <p className="text-gray-700">
+                  <strong>Rider:</strong>{" "}
+                  <span className="font-bold">
+                    {order.assigneddelliveryboy?.name
+                      ? `${order.assigneddelliveryboy.name} (${order.assigneddelliveryboy.mobile || "Assigned"})`
+                      : "SubziQuick Fleet Dispatch"}
+                  </span>
+                </p>
+                {order.paymentId && (
+                  <p className="text-gray-700 font-mono text-[11px] truncate">
+                    <strong>Ref/UTR:</strong> {order.paymentId}
+                  </p>
                 )}
-              </p>
-              <p className="text-gray-700 mt-0.5">
-                <strong>Delivery Slot:</strong>{" "}
-                <span className="text-[#0f8646] font-bold">
-                  {order.deliverySlot || "Instant Express (30-45 Mins)"}
-                </span>
-              </p>
-              <p className="text-gray-700 mt-0.5">
-                <strong>Delivery Type:</strong> Same-Day Bhopal Mandi Fresh Dispatch
-              </p>
+              </div>
+
+              <div className="flex items-center gap-2.5 pt-2 border-t border-emerald-200/60">
+                <img
+                  src={qrCodeApiUrl}
+                  alt="Order QR Code"
+                  className="w-12 h-12 rounded-lg border border-emerald-300 bg-white p-0.5 shrink-0"
+                />
+                <div className="text-[10px] text-gray-500 leading-tight">
+                  <span className="font-bold text-gray-800 block">Scan to Track</span>
+                  <span>Official SubziQuick Digital Receipt</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Itemized Table */}
-          <div className="mb-6 overflow-hidden rounded-xl border border-gray-200">
+          {/* Itemized Produce Table */}
+          <div className="mb-5 overflow-hidden rounded-2xl border border-gray-200 shadow-2xs">
             <table className="w-full text-left border-collapse text-xs">
               <thead>
-                <tr className="bg-gray-100/90 text-[10px] font-black uppercase text-gray-600 border-b border-gray-200">
-                  <th className="py-2.5 px-3">#</th>
-                  <th className="py-2.5 px-3">Produce Item</th>
-                  <th className="py-2.5 px-3">Pack / Size</th>
-                  <th className="py-2.5 px-3 text-right">Price</th>
-                  <th className="py-2.5 px-3 text-center">Qty</th>
-                  <th className="py-2.5 px-3 text-right">Total Amount</th>
+                <tr className="bg-gray-100/90 text-[10px] font-black uppercase text-gray-700 border-b border-gray-200">
+                  <th className="py-2.5 px-3.5 text-center w-10">#</th>
+                  <th className="py-2.5 px-3.5">Produce Item</th>
+                  <th className="py-2.5 px-3.5">Pack / Weight</th>
+                  <th className="py-2.5 px-3.5 text-right">Price</th>
+                  <th className="py-2.5 px-3.5 text-center">Qty</th>
+                  <th className="py-2.5 px-3.5 text-right">Amount</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
-                {(order.items || []).map((item: any, idx: number) => (
-                  <tr key={idx} className="hover:bg-gray-50/50">
-                    <td className="py-2 px-3 text-gray-400 font-mono text-[11px]">{idx + 1}</td>
-                    <td className="py-2 px-3 font-bold text-gray-900">{item.name}</td>
-                    <td className="py-2 px-3 text-gray-500 font-medium">{item.variationWeight || item.unit || "1 kg"}</td>
-                    <td className="py-2 px-3 text-right font-medium">₹{item.price}</td>
-                    <td className="py-2 px-3 text-center font-bold">{item.quantity}</td>
-                    <td className="py-2 px-3 text-right font-black text-gray-900">
-                      ₹{(item.price || 0) * (item.quantity || 1)}
-                    </td>
-                  </tr>
-                ))}
+                {(order.items || []).map((item: any, idx: number) => {
+                  const itemPrice = Number(item.price) || 0;
+                  const itemQty = Number(item.quantity) || 1;
+                  const lineTotal = itemPrice * itemQty;
+
+                  return (
+                    <tr
+                      key={idx}
+                      className={idx % 2 === 0 ? "bg-white" : "bg-gray-50/50"}
+                    >
+                      <td className="py-2 px-3.5 text-center text-gray-400 font-mono text-[11px]">
+                        {idx + 1}
+                      </td>
+                      <td className="py-2 px-3.5 font-bold text-gray-900">
+                        {item.name}
+                      </td>
+                      <td className="py-2 px-3.5 text-gray-600 font-medium">
+                        {item.variationWeight || item.unit || "1 pack"}
+                      </td>
+                      <td className="py-2 px-3.5 text-right text-gray-700 font-medium">
+                        ₹{itemPrice}
+                      </td>
+                      <td className="py-2 px-3.5 text-center font-black text-gray-900">
+                        {itemQty}
+                      </td>
+                      <td className="py-2 px-3.5 text-right font-black text-gray-900">
+                        ₹{lineTotal}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
 
-          {/* Totals & Notes Section */}
-          <div className="grid grid-cols-2 gap-6 pt-2">
-            {/* Payment & Barcode Note */}
-            <div className="bg-green-50/50 rounded-2xl p-4 border border-green-200/80 text-xs">
-              <span className="font-extrabold text-[#0f8646] uppercase text-[10px] tracking-wider block mb-1">
-                FARM DIRECT QUALITY GUARANTEE
-              </span>
-              <p className="text-gray-600 text-[11px] leading-relaxed">
-                100% natural, sorted directly from Bhopal Mandi & local organic farms.
-                For inquiries or quick support, WhatsApp us at{" "}
-                <span className="font-bold text-gray-900">+91 99814 18565</span>.
-              </p>
+          {/* Totals, Savings & Farm Guarantee Section */}
+          <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 pt-2 items-start">
+            {/* Guarantee & Notes (7 Cols) */}
+            <div className="sm:col-span-7 space-y-3">
+              <div className="bg-emerald-50/60 rounded-2xl p-4 border border-emerald-200/90 text-xs">
+                <div className="flex items-center gap-1.5 font-black text-[#0f8646] uppercase text-[10px] tracking-wider mb-1">
+                  <ShieldCheck size={14} />
+                  <span>100% KAROND MANDI FRESHNESS GUARANTEE</span>
+                </div>
+                <p className="text-gray-600 text-[11px] leading-relaxed">
+                  All vegetables & fruits are handpicked daily from Karond Mandi & sorted under strict quality checks. 
+                  If you are unsatisfied with any produce, instant replacement or refund is available via WhatsApp helpline.
+                </p>
+              </div>
+
+              {totalSavings > 0 && (
+                <div className="bg-green-100/70 border border-green-300 rounded-2xl p-3 flex items-center gap-2.5 text-xs font-black text-green-900">
+                  <Sparkles size={16} className="text-green-700 shrink-0" />
+                  <span>🎉 You saved a total of ₹{totalSavings} on this order!</span>
+                </div>
+              )}
             </div>
 
-            {/* Calculations */}
-            <div className="space-y-1.5 text-xs text-right">
+            {/* Calculations Breakdown (5 Cols) */}
+            <div className="sm:col-span-5 bg-gray-50/80 rounded-2xl p-4 border border-gray-200 space-y-2 text-xs">
               <div className="flex justify-between text-gray-600 font-medium">
                 <span>Items Subtotal:</span>
-                <span className="font-bold">₹{subtotal}</span>
+                <span className="font-bold text-gray-900">₹{subtotal}</span>
               </div>
+
               <div className="flex justify-between text-gray-600 font-medium">
-                <span>Delivery Charges:</span>
+                <span>Delivery Partner Fee:</span>
                 <span className="font-bold">
                   {deliveryFee === 0 ? (
-                    <span className="text-[#0f8646] font-bold">FREE</span>
+                    <span className="text-[#0f8646] font-bold bg-green-100 px-1.5 py-0.5 rounded text-[10px]">
+                      FREE
+                    </span>
                   ) : (
                     `₹${deliveryFee}`
                   )}
                 </span>
               </div>
+
               {discount > 0 && (
                 <div className="flex justify-between text-emerald-700 font-bold">
-                  <span>Coupon / Promo Discount:</span>
+                  <span>Special Discount:</span>
                   <span>-₹{discount}</span>
                 </div>
               )}
+
               {order.walletDiscount > 0 && (
                 <div className="flex justify-between text-emerald-700 font-bold">
-                  <span>GreenPoints Wallet Redeemed:</span>
+                  <span>GreenPoints Redeemed:</span>
                   <span>-₹{order.walletDiscount}</span>
                 </div>
               )}
+
               {order.bagReturnCashback > 0 && (
-                <div className="flex justify-between text-emerald-800 font-bold bg-emerald-50 p-1.5 rounded-lg border border-emerald-200 text-[11px]">
-                  <span>♻️ Eco-Bag Cashback ({order.bagsReturned} Bags):</span>
-                  <span>+₹{order.bagReturnCashback} (Credited)</span>
+                <div className="flex justify-between text-emerald-800 font-bold bg-emerald-100/70 p-1.5 rounded-lg border border-emerald-200 text-[10px]">
+                  <span>♻️ Eco-Bag Cashback:</span>
+                  <span>-₹{order.bagReturnCashback}</span>
                 </div>
               )}
-              <div className="flex justify-between text-base font-black text-gray-900 pt-2 border-t-2 border-gray-900">
+
+              <div className="flex justify-between text-sm sm:text-base font-black text-gray-900 pt-2 border-t-2 border-gray-900">
                 <span>Grand Total:</span>
                 <span className="text-[#0f8646] text-lg font-black">
                   ₹{finalTotal}
@@ -260,10 +345,14 @@ export default function OrderInvoiceModal({
             </div>
           </div>
 
-          {/* Footer Note */}
-          <div className="text-center mt-8 pt-4 border-t border-gray-100 text-[10px] text-gray-400">
-            <p>Thank you for supporting local Madhya Pradesh farmers and choosing SubziQuick!</p>
-            <p className="font-mono mt-0.5">Computer Generated Invoice • No Physical Signature Required</p>
+          {/* Footer Legal & Gratitude */}
+          <div className="text-center mt-6 pt-4 border-t border-gray-200 text-[10px] text-gray-400 space-y-1">
+            <p className="font-bold text-gray-600">
+              Thank you for trusting SubziQuick — Delivering Bhopal&apos;s Freshest Harvest!
+            </p>
+            <p className="font-mono text-gray-400">
+              This is a computer-generated tax invoice. No physical signature is required.
+            </p>
           </div>
         </div>
       </div>
