@@ -6,9 +6,8 @@ import Nav from '@/components/Nav'
 import Userdashbord from '@/components/Userdashbord'
 import connectDb from '@/lib/db'
 import User from '@/model/user.model'
-import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowRight, Shield } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import React from 'react'
 
 export const dynamic = "force-dynamic";
@@ -28,12 +27,11 @@ async function Home() {
   }
 
   let user = null;
-  if (session?.user) {
+  if (session?.user?.email) {
     try {
-      const userId = session.user.id;
-      user = userId 
-        ? await User.findById(userId) 
-        : await User.findOne({ email: session.user.email });
+      user = await User.findOne({
+        email: { $regex: new RegExp(`^${session.user.email}$`, "i") }
+      });
     } catch (uErr) {
       console.error("User lookup error on Home:", uErr);
     }

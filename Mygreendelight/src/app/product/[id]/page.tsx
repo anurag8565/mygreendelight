@@ -105,8 +105,10 @@ export default async function ProductPage(props: { params: Promise<{ id: string 
   let userData = { role: "user" }; // default fallback
   try {
     const session = await auth();
-    if (session?.user?.id) {
-      const user = await User.findById(session.user.id).lean();
+    if (session?.user?.email) {
+      const user = await User.findOne({
+        email: { $regex: new RegExp(`^${session.user.email}$`, "i") }
+      }).lean();
       if (user) {
         userData = JSON.parse(JSON.stringify(user));
       }

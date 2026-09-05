@@ -4,17 +4,9 @@ import connectDb from "./lib/db"
 import User from "./model/user.model"
 import bcrypt from "bcryptjs"
 import Google from "next-auth/providers/google"
+import mongoose from "mongoose"
 
 process.env.AUTH_TRUST_HOST = "true";
-
-if (!process.env.NEXTAUTH_URL && !process.env.AUTH_URL) {
-    process.env.NEXTAUTH_URL = "https://subziquick.in";
-    process.env.AUTH_URL = "https://subziquick.in";
-}
-
-if (process.env.VERCEL_URL && !process.env.NEXTAUTH_URL) {
-    delete (process.env as any).VERCEL_URL;
-}
 
 const FALLBACK_SECRET = "quickbasket_super_secret_key_2026_subziquick_production_jwt";
 if (!process.env.AUTH_SECRET) {
@@ -74,18 +66,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     ],
     callbacks: {
         async signIn({ user, account }) {
-            if (account?.provider === "google") {
+            if (account?.provider === "google" && user?.email) {
                 try {
                     await connectDb();
 
+                    const cleanEmail = user.email.trim().toLowerCase();
                     let existingUser = await User.findOne({
-                        email: user.email,
+                        email: { $regex: new RegExp(`^${cleanEmail}$`, "i") },
                     });
 
                     if (!existingUser) {
                         existingUser = await User.create({
                             name: user.name || "Customer",
-                            email: user.email,
+                            email: cleanEmail,
                             image: user.image,
                             password: "",
                             role: "user",
@@ -122,7 +115,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
                     if (existingUser?._id) {
                         user.id = existingUser._id.toString();
-                        user.role = existingUser.role || "user";
+                        (user as any).role = existingUser.role || "user";
                     }
                 } catch (error) {
                     console.error("Google signIn DB sync error:", error);
@@ -134,11 +127,34 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         async jwt({ token, user, trigger, session }) {
             if (user) {
-                token.id = user.id || token.sub;
                 token.name = user.name;
                 token.email = user.email;
                 token.role = (user as any).role || "user";
                 if (user.image) token.picture = user.image;
+                if (user.id && mongoose.Types.ObjectId.isValid(user.id)) {
+                    token.id = user.id;
+                }
+            }
+
+            // Guarantee token.id is the real MongoDB _id
+            if (!token.id || !mongoose.Types.ObjectId.isValid(token.id as string)) {
+                if (token.email) {
+                    try {
+                        await connectDb();
+                        const dbUser = await User.findOne({
+                            email: { $regex: new RegExp(`^${token.email}$`, "i") }
+                        });
+                        if (dbUser) {
+                            token.id = dbUser._id.toString();
+                            token.role = dbUser.role || "user";
+                            if (dbUser.image && !token.picture) {
+                                token.picture = dbUser.image;
+                            }
+                        }
+                    } catch (err) {
+                        console.error("JWT user db lookup error:", err);
+                    }
+                }
             }
 
             if (trigger === "update" && session?.role) {
@@ -149,7 +165,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
 
         async session({ session, token }) {
-            if (session.user) {
+            if (session?.user) {
                 session.user.id = (token.id || token.sub) as string;
                 session.user.name = token.name as string;
                 session.user.email = token.email as string;
@@ -170,5 +186,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         strategy: "jwt",
         maxAge: 10 * 24 * 60 * 60
     },
-    secret: process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET || "quickbasket_super_secret_key_2026_random_string"
+    secret: process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET || FALLBACK_SECRET
 })
