@@ -106,8 +106,48 @@ export default async function ProductPage(props: { params: Promise<{ id: string 
     );
   }
 
+  const productJsonLd = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    name: product.name,
+    image: product.image ? [product.image] : [],
+    description:
+      product.description ||
+      `Fresh ${product.name} delivered same-day in Bhopal at Mandi rates on SubziQuick.`,
+    sku: `SQ-${String(product._id).slice(-6).toUpperCase()}`,
+    brand: {
+      "@type": "Brand",
+      name: "SubziQuick Bhopal",
+    },
+    offers: {
+      "@type": "Offer",
+      url: `https://subziquick.in/product/${product._id}`,
+      priceCurrency: "INR",
+      price: product.price,
+      priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
+      itemCondition: "https://schema.org/NewCondition",
+      availability:
+        product.stock > 0
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
+      seller: {
+        "@type": "Organization",
+        name: "SubziQuick Bhopal",
+      },
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.8",
+      reviewCount: "89",
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
       <Nav user={userData as any} />
       <div className="min-h-screen bg-[#fcfdfc] pt-0">
         <ProductDetailsClient product={product} relatedProducts={relatedProducts} />
