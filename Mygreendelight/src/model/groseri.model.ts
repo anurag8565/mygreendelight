@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-interface IGrosery {
+export interface IGrosery {
   _id?: mongoose.Types.ObjectId;
   name: string;
   price: number;
@@ -14,6 +14,13 @@ interface IGrosery {
   description?: string;
   sourcing?: string;
   storage?: string;
+  // SEO & Google Ranking fields
+  slug?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  metaKeywords?: string;
+  focusKeyword?: string;
+  canonicalUrl?: string;
   variations?: { weight: string; price: number; stock: number; mrp?: number }[];
   reviews?: { user: mongoose.Types.ObjectId; name: string; rating: number; comment: string; date: Date }[];
   rating?: number;
@@ -78,6 +85,32 @@ const GrocerySchema = new mongoose.Schema<IGrosery>(
       default: "",
     },
     storage: {
+      type: String,
+      default: "",
+    },
+    // SEO & Google Ranking Schema Fields
+    slug: {
+      type: String,
+      index: true,
+      default: "",
+    },
+    metaTitle: {
+      type: String,
+      default: "",
+    },
+    metaDescription: {
+      type: String,
+      default: "",
+    },
+    metaKeywords: {
+      type: String,
+      default: "",
+    },
+    focusKeyword: {
+      type: String,
+      default: "",
+    },
+    canonicalUrl: {
       type: String,
       default: "",
     },

@@ -24,6 +24,7 @@ import {
   Flame,
   Gift,
   LogOut,
+  Globe,
 } from "lucide-react";
 import Logo from "./Logo";
 
@@ -94,6 +95,11 @@ export default function AdminSidebar() {
           name: "Value Combos & Packs",
           href: "/admin/manage-combos",
           icon: <Percent size={17} />,
+        },
+        {
+          name: "SEO & Google Ranking",
+          href: "/admin/manage-seo",
+          icon: <Globe size={17} />,
         },
       ],
     },
