@@ -24,6 +24,7 @@ import {
   Check,
   AlertCircle,
   Lock,
+  Loader2,
 } from "lucide-react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
@@ -72,11 +73,17 @@ export default function Checkout() {
   const { userdata } = useSelector((state: RootState) => state.user);
   const { cartdata } = useSelector((state: RootState) => state.cart);
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     dispatch(hydrateCart());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (status === "unauthenticated" && !userdata) {
+      router.replace("/login?callbackUrl=/user/checkout");
+    }
+  }, [status, userdata, router]);
 
   const subtotal = useSelector(selectSubtotal);
   const deliveryFee = useSelector(selectDeliveryFee);
@@ -365,6 +372,44 @@ export default function Checkout() {
       setSubmitting(false);
     }
   };
+
+  if (status === "loading") {
+    return (
+      <div className="bg-[#f8faf9] min-h-screen flex flex-col justify-between font-sans">
+        <Nav user={(userdata as any) || null} />
+        <main className="max-w-md mx-auto px-4 py-24 text-center flex-1 flex flex-col items-center justify-center">
+          <Loader2 className="w-12 h-12 text-[#0f8646] animate-spin mb-4" />
+          <h2 className="text-xl font-black text-gray-900 mb-1">Checking Authentication...</h2>
+          <p className="text-xs text-gray-500">Connecting you securely to checkout.</p>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (status === "unauthenticated" && !userdata) {
+    return (
+      <div className="bg-[#f8faf9] min-h-screen flex flex-col justify-between font-sans">
+        <Nav user={null} />
+        <main className="max-w-md mx-auto px-4 py-24 text-center flex-1 flex flex-col items-center justify-center">
+          <div className="w-16 h-16 rounded-3xl bg-amber-50 text-amber-600 flex items-center justify-center mb-4 mx-auto border border-amber-200 shadow-inner">
+            <Lock size={32} />
+          </div>
+          <h2 className="text-xl font-black text-gray-900 mb-2">Please Login to Continue</h2>
+          <p className="text-xs text-gray-500 mb-6">
+            Aapko order place karne ke liye pehle Login / Signup karna hoga.
+          </p>
+          <Link
+            href="/login?callbackUrl=/user/checkout"
+            className="w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3.5 px-6 rounded-2xl font-black text-xs sm:text-sm shadow-md transition text-center"
+          >
+            Login / Create Account ➔
+          </Link>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   if (submitting) {
     return (

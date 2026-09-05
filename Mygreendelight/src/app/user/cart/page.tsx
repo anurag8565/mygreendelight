@@ -34,10 +34,12 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import useGetMe from "@/hooks/useGetMe";
 import { motion } from "framer-motion";
+import { useSession } from "next-auth/react";
 
 export default function CartPage() {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
+  const { data: session } = useSession();
   useGetMe();
   const { userdata } = useSelector((state: RootState) => state.user);
 
@@ -462,7 +464,14 @@ export default function CartPage() {
 
                 {/* Proceed Button */}
                 <button
-                  onClick={() => router.push("/user/checkout")}
+                  onClick={() => {
+                    const isLoggedIn = Boolean(session?.user || userdata?._id);
+                    if (!isLoggedIn) {
+                      router.push("/login?callbackUrl=/user/checkout");
+                    } else {
+                      router.push("/user/checkout");
+                    }
+                  }}
                   className="w-full mt-5 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3.5 rounded-2xl font-black text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <span>Proceed to Delivery & Payment</span>
@@ -485,7 +494,14 @@ export default function CartPage() {
               </span>
             </div>
             <button
-              onClick={() => router.push("/user/checkout")}
+              onClick={() => {
+                const isLoggedIn = Boolean(session?.user || userdata?._id);
+                if (!isLoggedIn) {
+                  router.push("/login?callbackUrl=/user/checkout");
+                } else {
+                  router.push("/user/checkout");
+                }
+              }}
               className="flex-1 bg-[#0f8646] active:scale-98 hover:bg-[#0c6a38] text-white py-3 px-5 rounded-2xl font-black text-xs shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>Proceed to Checkout</span>

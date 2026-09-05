@@ -48,7 +48,7 @@ interface iUser {
   image?: string;
 }
 
-export default function Nav({ user }: { user: iUser }) {
+export default function Nav({ user }: { user?: iUser | null }) {
   const router = useRouter();
   const pathname = usePathname();
   const dispatch = useDispatch<AppDispatch>();
