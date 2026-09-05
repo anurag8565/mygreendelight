@@ -152,6 +152,27 @@ export default function CartPage() {
           </Link>
         </div>
 
+        {cartdata.length > 0 && !Boolean(session?.user || userdata?._id) && (
+          <div className="bg-gradient-to-r from-emerald-800 to-[#0f8646] text-white p-3.5 sm:p-4 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-3 shadow-md mb-6">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center text-white shrink-0">
+                <Lock size={18} />
+              </div>
+              <div>
+                <h4 className="text-xs sm:text-sm font-black">Login to Complete Your Order</h4>
+                <p className="text-[11px] text-emerald-100">Bhopal door-to-door express delivery with live order tracking.</p>
+              </div>
+            </div>
+            <Link
+              href="/login?callbackUrl=/user/checkout"
+              className="bg-yellow-400 hover:bg-yellow-300 text-gray-950 px-4 py-2 rounded-xl font-black text-xs transition shadow-sm shrink-0 flex items-center gap-1.5"
+            >
+              <span>Login / Register Now</span>
+              <ArrowRight size={13} />
+            </Link>
+          </div>
+        )}
+
         {cartdata.length === 0 ? (
           /* Empty Cart State */
           <div className="bg-white rounded-3xl border border-gray-200/80 p-12 text-center max-w-lg mx-auto shadow-xs my-8">
@@ -364,30 +385,30 @@ export default function CartPage() {
             </div>
 
             {/* Right: Bill Breakdown & Promo (5 cols) */}
-            <div className="lg:col-span-5 space-y-5">
+            <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-3.5">
               {/* Promo Code Card */}
-              <div className="bg-white rounded-3xl border border-gray-200/80 p-5 shadow-xs">
-                <h3 className="font-extrabold text-xs uppercase text-gray-400 tracking-wider mb-3 flex items-center gap-1.5">
-                  <Tag size={14} className="text-[#0f8646]" />
+              <div className="bg-white rounded-2xl border border-gray-200/80 p-3.5 sm:p-4 shadow-xs">
+                <h3 className="font-extrabold text-[11px] uppercase text-gray-400 tracking-wider mb-2.5 flex items-center gap-1.5">
+                  <Tag size={13} className="text-[#0f8646]" />
                   <span>Promo Code & Coupons</span>
                 </h3>
 
                 {couponCode ? (
-                  <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-2xl p-3.5">
+                  <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-xl p-2.5">
                     <div>
-                      <span className="font-black text-sm text-[#0f8646] block uppercase tracking-wider">
+                      <span className="font-black text-xs text-[#0f8646] block uppercase tracking-wider">
                         {couponCode} APPLIED
                       </span>
-                      <span className="text-xs text-green-700 font-medium">
+                      <span className="text-[11px] text-green-700 font-medium">
                         You saved ₹{discountAmount} on this order!
                       </span>
                     </div>
                     <button
                       onClick={handleRemoveCoupon}
-                      className="p-1.5 rounded-full hover:bg-green-200/50 text-gray-500 hover:text-red-600 transition"
+                      className="p-1 rounded-full hover:bg-green-200/50 text-gray-500 hover:text-red-600 transition"
                       title="Remove coupon"
                     >
-                      <X size={16} />
+                      <X size={15} />
                     </button>
                   </div>
                 ) : (
@@ -398,19 +419,19 @@ export default function CartPage() {
                         placeholder="ENTER COUPON CODE"
                         value={couponInput}
                         onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
-                        className="flex-1 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider outline-none focus:border-[#0f8646] bg-gray-50"
+                        className="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-xs font-bold uppercase tracking-wider outline-none focus:border-[#0f8646] bg-gray-50"
                       />
                       <button
                         onClick={() => handleApplyCoupon()}
                         disabled={couponLoading || !couponInput.trim()}
-                        className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 rounded-xl text-xs font-extrabold shadow-sm disabled:opacity-50 transition cursor-pointer"
+                        className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 rounded-xl text-xs font-extrabold shadow-sm disabled:opacity-50 transition cursor-pointer"
                       >
                         {couponLoading ? "Checking..." : "Apply"}
                       </button>
                     </div>
 
                     {couponError && (
-                      <p className="text-xs font-bold text-red-500 mt-2">
+                      <p className="text-[11px] font-bold text-red-500 mt-1.5">
                         {couponError}
                       </p>
                     )}
@@ -419,12 +440,13 @@ export default function CartPage() {
               </div>
 
               {/* Bill Details Card */}
-              <div className="bg-white rounded-3xl border border-gray-200/80 p-6 shadow-xs">
-                <h3 className="font-extrabold text-sm text-gray-900 mb-4 pb-3 border-b border-gray-100">
-                  Bill Summary
+              <div className="bg-white rounded-2xl border border-gray-200/80 p-4 sm:p-5 shadow-xs">
+                <h3 className="font-extrabold text-xs text-gray-900 mb-3 pb-2 border-b border-gray-100 flex items-center justify-between">
+                  <span>Bill Summary</span>
+                  <span className="text-[10px] text-gray-400 font-bold uppercase">{cartdata.length} Items</span>
                 </h3>
 
-                <div className="space-y-3 text-xs">
+                <div className="space-y-2 text-xs">
                   <div className="flex justify-between text-gray-600">
                     <span>Items Subtotal</span>
                     <span className="font-extrabold text-gray-900">₹{subtotal}</span>
@@ -434,7 +456,7 @@ export default function CartPage() {
                     <span>Delivery Partner Fee</span>
                     <span className="font-extrabold text-gray-900">
                       {deliveryFee === 0 ? (
-                        <span className="text-[#0f8646]">FREE</span>
+                        <span className="text-[#0f8646] font-black">FREE</span>
                       ) : (
                         `₹${deliveryFee}`
                       )}
@@ -442,34 +464,26 @@ export default function CartPage() {
                   </div>
 
                   {discountAmount > 0 && (
-                    <div className="flex justify-between text-[#0f8646] font-bold bg-green-50 p-2 rounded-xl">
+                    <div className="flex justify-between text-[#0f8646] font-bold bg-green-50 p-1.5 rounded-lg text-xs">
                       <span>Promo Discount ({couponCode})</span>
                       <span>-₹{discountAmount}</span>
                     </div>
                   )}
 
-                  <div className="border-t border-gray-100 pt-3 flex justify-between items-baseline">
+                  <div className="border-t border-gray-100 pt-2.5 flex justify-between items-baseline">
                     <div>
-                      <span className="text-base font-black text-gray-900 block">
+                      <span className="text-sm font-black text-gray-900 block">
                         To Pay
                       </span>
-                      <span className="text-[10px] text-gray-400 font-medium">
+                      <span className="text-[9px] text-gray-400 font-medium">
                         Inclusive of all taxes
                       </span>
                     </div>
-                    <span className="text-2xl font-black text-[#0f8646]">
+                    <span className="text-xl font-black text-[#0f8646]">
                       ₹{total}
                     </span>
                   </div>
                 </div>
-
-                {/* Login Prompt Notice if not logged in */}
-                {!Boolean(session?.user || userdata?._id) && (
-                  <div className="mt-4 p-3 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center gap-2.5 text-xs text-emerald-900 font-semibold shadow-2xs">
-                    <Lock size={16} className="text-[#0f8646] shrink-0" />
-                    <span>Order place karne ke liye pehle Login karein. Cart items safe rahenge.</span>
-                  </div>
-                )}
 
                 {/* Proceed Button */}
                 <button
@@ -481,7 +495,7 @@ export default function CartPage() {
                       router.push("/user/checkout");
                     }
                   }}
-                  className="w-full mt-4 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3.5 rounded-2xl font-black text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full mt-4 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3.5 rounded-xl font-black text-xs sm:text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
                 >
                   {Boolean(session?.user || userdata?._id) ? (
                     <>
@@ -490,9 +504,9 @@ export default function CartPage() {
                     </>
                   ) : (
                     <>
-                      <Lock size={16} />
-                      <span>Login to Place Order</span>
-                      <ArrowRight size={16} />
+                      <Lock size={15} />
+                      <span>Login to Place Order (₹{total})</span>
+                      <ArrowRight size={15} />
                     </>
                   )}
                 </button>
