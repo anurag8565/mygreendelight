@@ -59,6 +59,9 @@ export const metadata: Metadata = {
     description: "Daily Mandi Fresh Farm Produce delivered same-day to your doorstep in Bhopal.",
   },
   manifest: "/manifest.json",
+  verification: {
+    google: "googled4b785d2d9597368",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
