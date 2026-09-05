@@ -143,9 +143,9 @@ export default function AboutPage() {
               },
               {
                 icon: <Clock size={24} className="text-[#0f8646]" />,
-                value: "6 AM – 1 PM",
-                label: "Delivery Hours",
-                sub: "Daily Morning Fresh Slots",
+                value: "6 AM – 10 PM",
+                label: "Store & Delivery Hours",
+                sub: "Daily Express & Morning Slots",
               },
               {
                 icon: <Leaf size={24} className="text-[#0f8646]" />,
@@ -220,10 +220,10 @@ export default function AboutPage() {
               },
               {
                 year: "2026",
-                badge: "Morning Fresh Service",
+                badge: "Express Fresh Service",
                 icon: <Sparkles size={22} className="text-[#0f8646]" />,
-                title: "Daily Morning 6 AM – 1 PM Fresh Runs",
-                desc: "Now serving households across Bhopal with prompt morning deliveries, ozone-washed produce, and 100% satisfaction guarantee.",
+                title: "Same-Day Bhopal Mandi Runs (6 AM – 10 PM)",
+                desc: "Now serving households across Bhopal with prompt deliveries, ozone-washed produce, and 100% satisfaction guarantee.",
               },
             ].map((step, idx) => (
               <div
