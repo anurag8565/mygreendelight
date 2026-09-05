@@ -1,6 +1,10 @@
 import connectDb from "@/lib/db";
 import Grocery from "@/model/groseri.model";
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function GET(
   req: NextRequest,
@@ -61,6 +65,11 @@ export async function PUT(
       );
     }
 
+    try {
+      revalidatePath("/", "layout");
+      revalidatePath("/shop");
+    } catch (_) {}
+
     return NextResponse.json({
       success: true,
       grocery,
@@ -101,6 +110,11 @@ export async function DELETE(
         { status: 404 }
       );
     }
+
+    try {
+      revalidatePath("/", "layout");
+      revalidatePath("/shop");
+    } catch (_) {}
 
     return NextResponse.json({
       success: true,

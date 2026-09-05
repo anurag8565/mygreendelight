@@ -2,8 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDb from "@/lib/db";
 import Grocery from "@/model/groseri.model";
 import { auth } from "@/auth";
+import { revalidatePath } from "next/cache";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function POST(req: NextRequest) {
   try {
@@ -168,6 +170,11 @@ export async function POST(req: NextRequest) {
       const res = await Grocery.deleteMany({ _id: { $in: itemIds } });
       modifiedCount = res.deletedCount;
     }
+
+    try {
+      revalidatePath("/", "layout");
+      revalidatePath("/shop");
+    } catch (_) {}
 
     return NextResponse.json({
       success: true,
