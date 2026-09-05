@@ -67,6 +67,15 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     title: "SubziQuick",
   },
+  icons: {
+    icon: [
+      { url: "/icon.png" },
+      { url: "/favicon.png", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
 };
 
 export default function RootLayout({
