@@ -169,17 +169,15 @@ export default function Footer() {
               </a>
 
               <a
-                href="https://wa.me/919981418565?text=Hello%20SubziQuick%20Support,%20I%20need%20help%20with%20my%20order."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[#25D366]/20 hover:bg-[#25D366]/30 p-3 rounded-2xl flex items-center gap-3 transition-colors border border-[#25D366]/30"
+                href="mailto:anuragsinghas098@gmail.com"
+                className="bg-white/10 hover:bg-white/20 p-3 rounded-2xl flex items-center gap-3 transition-colors border border-white/10"
               >
-                <div className="w-8 h-8 rounded-xl bg-[#25D366]/40 flex items-center justify-center text-white shrink-0">
-                  <MessageCircle size={16} />
+                <div className="w-8 h-8 rounded-xl bg-blue-500/30 flex items-center justify-center text-blue-300 shrink-0">
+                  <Mail size={16} />
                 </div>
                 <div>
-                  <span className="text-[10px] text-green-200 block font-bold">WhatsApp Support</span>
-                  <span className="text-xs font-black text-white">+91 9981418565</span>
+                  <span className="text-[10px] text-green-200 block font-bold">Email Inquiries</span>
+                  <span className="text-xs font-black text-white">anuragsinghas098@gmail.com</span>
                 </div>
               </a>
             </div>

@@ -125,7 +125,7 @@ export default function OrderInvoiceModal({
                   GSTIN: 23AABCS1234F1Z0 • FSSAI Lic: 11424850000123
                 </p>
                 <p className="text-[10px] text-gray-500">
-                  Customer Care: <strong>+91 99814 18565</strong> • support@subziquick.in
+                  Customer Care: <strong>+91 99814 18565</strong> • anuragsinghas098@gmail.com
                 </p>
               </div>
             </div>

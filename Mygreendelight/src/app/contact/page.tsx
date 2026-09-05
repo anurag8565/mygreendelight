@@ -412,7 +412,7 @@ export default function ContactPage() {
 
                   {/* Email Us */}
                   <a
-                    href="mailto:support@subziquick.in"
+                    href="mailto:anuragsinghas098@gmail.com"
                     className="flex items-start gap-4 p-4 rounded-2xl hover:bg-green-50/70 transition-colors border border-gray-100 group"
                   >
                     <div className="w-11 h-11 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
@@ -423,10 +423,10 @@ export default function ContactPage() {
                         Email Inquiries
                       </h4>
                       <p className="text-xs font-black text-blue-700 mt-0.5">
-                        support@subziquick.in
+                        anuragsinghas098@gmail.com
                       </p>
                       <p className="text-[11px] text-gray-400 mt-0.5 font-medium">
-                        Detailed inquiries & business partnerships
+                        Detailed inquiries & customer support
                       </p>
                     </div>
                   </a>

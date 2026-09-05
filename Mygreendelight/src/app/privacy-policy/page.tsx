@@ -86,7 +86,7 @@ export default function PrivacyPolicyPage() {
               If you have any questions regarding your data privacy, you can reach our Bhopal customer grievance desk:
             </p>
             <div className="bg-green-50/70 p-4 rounded-2xl border border-green-200 text-xs text-gray-800 space-y-1">
-              <p><strong>Email:</strong> support@subziquick.in / anuragsinghas098@gmail.com</p>
+              <p><strong>Email:</strong> anuragsinghas098@gmail.com</p>
               <p><strong>Support Helpline:</strong> +91 99814 18565</p>
               <p><strong>Address:</strong> Amrai, Bagsewaniya, Bhopal, Madhya Pradesh - 462043</p>
             </div>

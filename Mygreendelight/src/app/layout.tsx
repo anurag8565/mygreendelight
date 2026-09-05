@@ -117,7 +117,7 @@ export default function RootLayout({
     "image": "https://subziquick.in/hero_basket.jpg",
     "url": "https://subziquick.in",
     "telephone": "+919981418565",
-    "email": "support@subziquick.in",
+    "email": "anuragsinghas098@gmail.com",
     "priceRange": "₹₹",
     "address": {
       "@type": "PostalAddress",
