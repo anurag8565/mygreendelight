@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import {
   User,
   Mail,
@@ -16,6 +16,7 @@ import {
   Truck,
   Leaf,
   Home,
+  Loader2,
 } from "lucide-react";
 import Logo from "@/components/Logo";
 
@@ -23,8 +24,12 @@ interface RegisterformProps {
   onBack?: () => void;
 }
 
-export default function Registerform({ onBack }: RegisterformProps) {
+function RegisterFormContent({ onBack }: RegisterformProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
+
+  const { data: session, status } = useSession();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -33,6 +38,13 @@ export default function Registerform({ onBack }: RegisterformProps) {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  // If already authenticated, redirect seamlessly
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.replace(callbackUrl);
+    }
+  }, [status, callbackUrl, router]);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,9 +70,9 @@ export default function Registerform({ onBack }: RegisterformProps) {
         });
 
         if (res?.ok) {
-          window.location.href = "/";
+          window.location.href = callbackUrl;
         } else {
-          router.push("/login");
+          router.push(callbackUrl !== "/" ? `/login?callbackUrl=${encodeURIComponent(callbackUrl)}` : "/login");
         }
       }
     } catch (error: any) {
@@ -86,7 +98,7 @@ export default function Registerform({ onBack }: RegisterformProps) {
       {/* Main Split Authentication Card */}
       <div className="w-full max-w-sm sm:max-w-md lg:max-w-5xl bg-white rounded-3xl lg:rounded-[32px] shadow-xl sm:shadow-2xl border border-gray-100/90 overflow-hidden grid lg:grid-cols-12 relative z-10">
         
-        {/* ================= LEFT COLUMN: HERO & BRAND STORY (Desktop only / lg:block) ================= */}
+        {/* ================= LEFT COLUMN: HERO & BRAND STORY (Desktop only / lg:flex) ================= */}
         <div className="hidden lg:flex lg:col-span-5 bg-gradient-to-br from-[#063319] via-[#094824] to-[#0f8646] text-white p-8 lg:p-10 flex-col justify-between relative overflow-hidden">
           
           {/* Subtle background decorative shapes */}
@@ -173,7 +185,7 @@ export default function Registerform({ onBack }: RegisterformProps) {
               {/* Tabs Switcher */}
               <div className="flex items-center bg-gray-100/90 p-1 rounded-xl sm:rounded-2xl border border-gray-200/70 text-xs font-black">
                 <Link
-                  href="/login"
+                  href={callbackUrl !== "/" ? `/login?callbackUrl=${encodeURIComponent(callbackUrl)}` : "/login"}
                   className="px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-gray-500 hover:text-gray-900 transition text-xs font-bold"
                 >
                   Sign In
@@ -222,7 +234,7 @@ export default function Registerform({ onBack }: RegisterformProps) {
               onClick={async () => {
                 try {
                   setGoogleLoading(true);
-                  await signIn("google", { callbackUrl: "/" });
+                  await signIn("google", { callbackUrl });
                 } catch (error) {
                   setGoogleLoading(false);
                 }
@@ -357,7 +369,7 @@ export default function Registerform({ onBack }: RegisterformProps) {
             <p className="text-xs text-gray-500">
               Already have an account?{" "}
               <Link
-                href="/login"
+                href={callbackUrl !== "/" ? `/login?callbackUrl=${encodeURIComponent(callbackUrl)}` : "/login"}
                 className="font-black text-[#0f8646] hover:underline"
               >
                 Sign In Instead
@@ -382,5 +394,22 @@ export default function Registerform({ onBack }: RegisterformProps) {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function Registerform(props: RegisterformProps) {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#f8faf9] flex items-center justify-center">
+          <div className="flex items-center gap-2 text-[#0f8646] font-bold">
+            <Loader2 className="w-6 h-6 animate-spin" />
+            <span>Loading SubziQuick...</span>
+          </div>
+        </div>
+      }
+    >
+      <RegisterFormContent {...props} />
+    </Suspense>
   );
 }

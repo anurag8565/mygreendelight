@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { signIn, useSession } from "next-auth/react";
 import {
   Mail,
   Lock,
@@ -14,12 +14,16 @@ import {
   Truck,
   Leaf,
   Home,
-  CheckCircle2,
+  Loader2,
 } from "lucide-react";
 import Logo from "@/components/Logo";
 
-export default function LoginPage() {
+function LoginFormContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
+
+  const { data: session, status } = useSession();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,6 +31,13 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  // If already authenticated, redirect seamlessly
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.replace(callbackUrl);
+    }
+  }, [status, callbackUrl, router]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,7 +55,7 @@ export default function LoginPage() {
       if (res?.error) {
         setErrorMessage("Invalid email or password. Please check and try again.");
       } else {
-        window.location.href = "/";
+        window.location.href = callbackUrl;
       }
     } catch (error: any) {
       setErrorMessage("Something went wrong during login. Please try again.");
@@ -65,7 +76,7 @@ export default function LoginPage() {
       {/* Main Split Authentication Card */}
       <div className="w-full max-w-sm sm:max-w-md lg:max-w-5xl bg-white rounded-3xl lg:rounded-[32px] shadow-xl sm:shadow-2xl border border-gray-100/90 overflow-hidden grid lg:grid-cols-12 relative z-10">
         
-        {/* ================= LEFT COLUMN: HERO & BRAND STORY (Desktop only / lg:block) ================= */}
+        {/* ================= LEFT COLUMN: HERO & BRAND STORY (Desktop only / lg:flex) ================= */}
         <div className="hidden lg:flex lg:col-span-5 bg-gradient-to-br from-[#063319] via-[#094824] to-[#0f8646] text-white p-8 lg:p-10 flex-col justify-between relative overflow-hidden">
           
           {/* Subtle background decorative shapes */}
@@ -158,7 +169,7 @@ export default function LoginPage() {
                   Sign In
                 </button>
                 <Link
-                  href="/register"
+                  href={callbackUrl !== "/" ? `/register?callbackUrl=${encodeURIComponent(callbackUrl)}` : "/register"}
                   className="px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-gray-500 hover:text-gray-900 transition text-xs font-bold"
                 >
                   Create Account
@@ -201,7 +212,7 @@ export default function LoginPage() {
               onClick={async () => {
                 try {
                   setGoogleLoading(true);
-                  await signIn("google", { callbackUrl: "/" });
+                  await signIn("google", { callbackUrl });
                 } catch (error) {
                   setGoogleLoading(false);
                 }
@@ -327,7 +338,7 @@ export default function LoginPage() {
             <p className="text-xs text-gray-500">
               Don&apos;t have an account?{" "}
               <Link
-                href="/register"
+                href={callbackUrl !== "/" ? `/register?callbackUrl=${encodeURIComponent(callbackUrl)}` : "/register"}
                 className="font-black text-[#0f8646] hover:underline"
               >
                 Create Account
@@ -352,5 +363,22 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#f8faf9] flex items-center justify-center">
+          <div className="flex items-center gap-2 text-[#0f8646] font-bold">
+            <Loader2 className="w-6 h-6 animate-spin" />
+            <span>Loading SubziQuick...</span>
+          </div>
+        </div>
+      }
+    >
+      <LoginFormContent />
+    </Suspense>
   );
 }
