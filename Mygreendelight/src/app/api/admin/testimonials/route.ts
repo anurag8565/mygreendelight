@@ -32,10 +32,11 @@ export async function POST(req: Request) {
 
     // Action: Seed verified Bhopal reviews
     if (action === "seed_bhopal") {
-      // Clean old dummy reviews first
+      // Clean old dummy reviews and existing seed names first to prevent duplicates
       await Testimonial.deleteMany({
         $or: [
-          { comment: { $regex: /yummy|bad rice|test/i } },
+          { comment: { $regex: /yummy|bad rice|test|dgj|dfcjf|dgcjcjg/i } },
+          { name: { $in: ["Dr. Ananya Sharma", "Rajesh K. Verma", "Pooja Malhotra", "Vikram Saxena", "Meenakshi Joshi", "u", "fj", "fgj"] } },
           { location: "India" },
           { comment: { $exists: false } }
         ]
