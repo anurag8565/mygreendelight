@@ -5,6 +5,14 @@ import User from "./model/user.model"
 import bcrypt from "bcryptjs"
 import Google from "next-auth/providers/google"
 
+const FALLBACK_SECRET = "quickbasket_super_secret_key_2026_subziquick_production_jwt";
+if (!process.env.AUTH_SECRET) {
+    process.env.AUTH_SECRET = process.env.NEXTAUTH_SECRET || FALLBACK_SECRET;
+}
+if (!process.env.NEXTAUTH_SECRET) {
+    process.env.NEXTAUTH_SECRET = process.env.AUTH_SECRET;
+}
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
     trustHost: true,
     providers: [
