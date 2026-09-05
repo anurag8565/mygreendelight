@@ -3,7 +3,7 @@
 import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import {
   Mail,
   Lock,
@@ -15,6 +15,8 @@ import {
   Leaf,
   Home,
   Loader2,
+  LogOut,
+  UserCheck,
 } from "lucide-react";
 import Logo from "@/components/Logo";
 
@@ -33,13 +35,6 @@ function LoginFormContent() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const authError = searchParams.get("error");
-
-  // If already authenticated, redirect seamlessly
-  useEffect(() => {
-    if (status === "authenticated") {
-      router.replace(callbackUrl);
-    }
-  }, [status, callbackUrl, router]);
 
   // Handle URL auth errors (e.g. from OAuth callbacks)
   useEffect(() => {
@@ -78,6 +73,61 @@ function LoginFormContent() {
       setLoading(false);
     }
   };
+
+  // If already authenticated, show friendly session card with sign out & proceed options
+  if (status === "authenticated" && session?.user) {
+    return (
+      <div className="min-h-screen bg-[#f8faf9] flex items-center justify-center p-4 sm:p-6 font-sans">
+        {/* Background Ambient Glows */}
+        <div className="fixed inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-0 left-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-emerald-300/15 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-green-400/15 rounded-full blur-3xl" />
+        </div>
+
+        <div className="w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-gray-100/90 text-center relative z-10">
+          <div className="w-20 h-20 rounded-full bg-emerald-100 text-[#0f8646] flex items-center justify-center mx-auto mb-4 text-2xl font-black shadow-inner overflow-hidden">
+            {session.user.image ? (
+              <img src={session.user.image} alt="Profile" className="w-full h-full object-cover" />
+            ) : (
+              <UserCheck size={36} />
+            )}
+          </div>
+
+          <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-800 text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full border border-emerald-200 mb-2">
+            ✓ Currently Signed In
+          </span>
+
+          <h2 className="text-xl sm:text-2xl font-black text-gray-900">
+            Welcome Back, {session.user.name || "Customer"}!
+          </h2>
+          <p className="text-xs sm:text-sm text-gray-500 mt-1 mb-6">
+            Signed in as <span className="font-bold text-gray-800">{session.user.email}</span>
+          </p>
+
+          <div className="space-y-3">
+            <Link
+              href={callbackUrl}
+              className="w-full py-3.5 rounded-2xl bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black text-xs sm:text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <span>Continue Shopping ➔</span>
+            </Link>
+
+            <button
+              type="button"
+              onClick={async () => {
+                await signOut({ redirect: false });
+                window.location.reload();
+              }}
+              className="w-full py-3 rounded-2xl bg-gray-100 hover:bg-red-50 hover:text-red-700 hover:border-red-200 border border-transparent text-gray-700 font-bold text-xs sm:text-sm transition flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <LogOut size={15} />
+              <span>Log Out / Switch Account</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#f8faf9] flex items-center justify-center p-3 sm:p-6 lg:p-10 font-sans">
