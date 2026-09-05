@@ -212,16 +212,15 @@ export default function ViewGrocery() {
     [groceries]
   );
 
-  // Filter produce according to active status tab so category counts reflect current view
+  // Filter produce according to active status tab so category counts reflect live store produce
   const statusScopedGroceries = React.useMemo(() => {
-    if (statusFilter === "published") {
-      return groceries.filter((g) => g.status !== "draft");
-    } else if (statusFilter === "draft") {
+    if (statusFilter === "draft") {
       return groceries.filter((g) => g.status === "draft");
     } else if (statusFilter === "featured") {
-      return groceries.filter((g) => Boolean(g.isFeatured));
+      return groceries.filter((g) => Boolean(g.isFeatured) && g.status !== "draft");
     }
-    return groceries;
+    // For both "all" and "published", category counts show live published items so drafting immediately reduces count
+    return groceries.filter((g) => g.status !== "draft");
   }, [groceries, statusFilter]);
 
   const distinctCategories = React.useMemo(() => {
