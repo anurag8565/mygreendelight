@@ -26,6 +26,7 @@ import {
   ArrowRight,
   Sparkles,
   Coins,
+  Lock,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -462,6 +463,14 @@ export default function CartPage() {
                   </div>
                 </div>
 
+                {/* Login Prompt Notice if not logged in */}
+                {!Boolean(session?.user || userdata?._id) && (
+                  <div className="mt-4 p-3 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center gap-2.5 text-xs text-emerald-900 font-semibold shadow-2xs">
+                    <Lock size={16} className="text-[#0f8646] shrink-0" />
+                    <span>Order place karne ke liye pehle Login karein. Cart items safe rahenge.</span>
+                  </div>
+                )}
+
                 {/* Proceed Button */}
                 <button
                   onClick={() => {
@@ -472,10 +481,20 @@ export default function CartPage() {
                       router.push("/user/checkout");
                     }
                   }}
-                  className="w-full mt-5 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3.5 rounded-2xl font-black text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full mt-4 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3.5 rounded-2xl font-black text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <span>Proceed to Delivery & Payment</span>
-                  <ArrowRight size={16} />
+                  {Boolean(session?.user || userdata?._id) ? (
+                    <>
+                      <span>Proceed to Delivery & Payment</span>
+                      <ArrowRight size={16} />
+                    </>
+                  ) : (
+                    <>
+                      <Lock size={16} />
+                      <span>Login to Place Order</span>
+                      <ArrowRight size={16} />
+                    </>
+                  )}
                 </button>
               </div>
             </div>
@@ -504,8 +523,18 @@ export default function CartPage() {
               }}
               className="flex-1 bg-[#0f8646] active:scale-98 hover:bg-[#0c6a38] text-white py-3 px-5 rounded-2xl font-black text-xs shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
-              <span>Proceed to Checkout</span>
-              <ArrowRight size={15} />
+              {Boolean(session?.user || userdata?._id) ? (
+                <>
+                  <span>Proceed to Checkout</span>
+                  <ArrowRight size={15} />
+                </>
+              ) : (
+                <>
+                  <Lock size={14} />
+                  <span>Login to Order</span>
+                  <ArrowRight size={14} />
+                </>
+              )}
             </button>
           </div>
         )}
