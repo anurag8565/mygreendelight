@@ -32,7 +32,7 @@ export default function MorningHarvestNotifier() {
       setPermission(result);
       if (result === "granted") {
         setSubscribed(true);
-        new Notification("🌿 MyGreenDelight Harvest Alert Activated!", {
+        new Notification("🌿 SubziQuick Harvest Alert Activated!", {
           body: "You'll receive daily 6:30 AM farm-fresh Mandi harvest updates and priority delivery slots.",
           icon: "/hero_basket.jpg",
         });

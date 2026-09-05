@@ -29,7 +29,7 @@ export default function TermsConditionsPage() {
             Terms & Conditions
           </h1>
           <p className="text-xs text-gray-500 mt-2">
-            Effective Date: August 2026 • MyGreenDelight Online Produce Services
+            Effective Date: August 2026 • SubziQuick Online Produce Services
           </p>
         </div>
 
@@ -41,7 +41,7 @@ export default function TermsConditionsPage() {
               <span>1. Agreement to Terms</span>
             </h2>
             <p>
-              By accessing our website (<strong>mygreendelight.in</strong>) or placing an order for fruits, vegetables, and daily staples, you agree to be bound by these Terms and Conditions. Our services are currently active exclusively within the municipal limits of Bhopal, Madhya Pradesh.
+              By accessing our website (<strong>subziquick.in</strong>) or placing an order for fruits, vegetables, and daily staples, you agree to be bound by these Terms and Conditions. Our services are currently active exclusively within the municipal limits of Bhopal, Madhya Pradesh.
             </p>
           </section>
 
@@ -73,7 +73,7 @@ export default function TermsConditionsPage() {
               <span>4. User Account & Wallet Balance</span>
             </h2>
             <p>
-              GreenPoints wallet cash and promo discounts are promotional in nature, non-transferable to external bank accounts, and can only be redeemed against future orders placed on MyGreenDelight.
+              GreenPoints wallet cash and promo discounts are promotional in nature, non-transferable to external bank accounts, and can only be redeemed against future orders placed on SubziQuick.
             </p>
           </section>
         </div>

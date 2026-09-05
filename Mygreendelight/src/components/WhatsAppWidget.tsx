@@ -4,7 +4,7 @@ import React from "react";
 
 export default function WhatsAppWidget() {
   const phoneNumber = "919981418565"; 
-  const message = "Hi, I need some help with my order on MyGreenDelight.";
+  const message = "Hi, I need some help with my order on SubziQuick.";
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
   return (

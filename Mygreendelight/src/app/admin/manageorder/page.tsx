@@ -326,7 +326,7 @@ export default function ManageOrder() {
     const shortId = String(order._id).slice(-6).toUpperCase();
     const currentStatus = (statuses[order._id] || order.status || "pending").toLowerCase();
 
-    let msg = `Hi ${name}! 🌿 Your MyGreenDelight Order #${shortId} (₹${order.totalamount}) status update: `;
+    let msg = `Hi ${name}! 🌿 Your SubziQuick Order #${shortId} (₹${order.totalamount}) status update: `;
     if (currentStatus === "pending") {
       msg += `Your order is confirmed & our farm team in Bhopal is carefully packing your fresh groceries! 🥦🍅`;
     } else if (currentStatus === "out of delivery") {
@@ -404,7 +404,7 @@ export default function ManageOrder() {
     link.setAttribute("href", encodedUri);
     link.setAttribute(
       "download",
-      `MyGreenDelight_Orders_${new Date().toISOString().slice(0, 10)}.csv`
+      `SubziQuick_Orders_${new Date().toISOString().slice(0, 10)}.csv`
     );
     document.body.appendChild(link);
     link.click();

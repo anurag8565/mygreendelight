@@ -135,7 +135,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: "🎉 Welcome to MyGreenDelight Farm Club VIP! Free Delivery & Extra Discounts Unlocked!",
+      message: "🎉 Welcome to SubziQuick Farm Club VIP! Free Delivery & Extra Discounts Unlocked!",
       vipPass: {
         isActive: true,
         planName: "Farm Club VIP Pass",

@@ -108,7 +108,7 @@ export default function ProductDetailsClient({
 
   const handleWhatsAppShare = () => {
     const text = encodeURIComponent(
-      `Check out fresh ${product.name} on MyGreenDelight Bhopal! 🥬🍎\n\nOrder here: ${window.location.href}`
+      `Check out fresh ${product.name} on SubziQuick Bhopal! 🥬🍎\n\nOrder here: ${window.location.href}`
     );
     window.open(`https://wa.me/?text=${text}`, "_blank");
   };

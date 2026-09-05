@@ -155,7 +155,7 @@ export default function AdminDashboardPage() {
               <div className="py-24 flex flex-col items-center justify-center">
                 <Loader2 size={36} className="animate-spin text-[#0f8646] mb-3" />
                 <p className="text-xs font-bold text-gray-500">
-                  Loading MyGreenDelight Live Metrics...
+                  Loading SubziQuick Live Metrics...
                 </p>
               </div>
             ) : (

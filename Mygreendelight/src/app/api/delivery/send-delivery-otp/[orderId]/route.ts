@@ -38,10 +38,10 @@ export async function POST(
       try {
         await sendMail(
           order.user.email,
-          "MyGreenDelight Bhopal - Delivery Verification OTP",
+          "SubziQuick Bhopal - Delivery Verification OTP",
           `
           <div style="font-family:sans-serif; max-width: 500px; padding: 24px; border: 1px solid #e5e7eb; border-radius: 16px;">
-            <h2 style="color: #0f8646; margin-bottom: 8px;">MyGreenDelight Bhopal Delivery OTP</h2>
+            <h2 style="color: #0f8646; margin-bottom: 8px;">SubziQuick Bhopal Delivery OTP</h2>
             <p style="color: #4b5563; font-size: 14px;">Your delivery partner is at your doorstep. Please share this verification OTP with the rider:</p>
             <div style="background-color: #f0fdf4; border: 1px dashed #0f8646; border-radius: 12px; text-align: center; padding: 16px; margin: 20px 0;">
               <h1 style="color: #0f8646; letter-spacing: 6px; margin: 0; font-size: 32px;">${otp}</h1>

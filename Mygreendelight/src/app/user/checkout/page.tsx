@@ -162,7 +162,7 @@ export default function Checkout() {
         if (distKm > 35) {
           // OUTSIDE BHOPAL -> RED WARNING
           setOutsideBhopalNotice(
-            `🚫 Delivery Unavailable at Your Current GPS Location! Your device location is outside Bhopal (~${distKm.toFixed(0)} km away). MyGreenDelight delivers exclusively across Bhopal city (MP - 462xxx). Please select your Bhopal delivery area from the dropdown below.`
+            `🚫 Delivery Unavailable at Your Current GPS Location! Your device location is outside Bhopal (~${distKm.toFixed(0)} km away). SubziQuick delivers exclusively across Bhopal city (MP - 462xxx). Please select your Bhopal delivery area from the dropdown below.`
           );
           setInsideBhopalSuccess(null);
         } else {

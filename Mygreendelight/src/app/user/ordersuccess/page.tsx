@@ -274,7 +274,7 @@ function OrderSuccessContent() {
               <button
                 type="button"
                 onClick={() => {
-                  const text = `🌿 Hey neighbors! I just ordered farm-fresh vegetables & fruits from MyGreenDelight Bhopal. Super fresh produce at Mandi rates! Order now: ${window.location.origin}`;
+                  const text = `🌿 Hey neighbors! I just ordered farm-fresh vegetables & fruits from SubziQuick Bhopal. Super fresh produce at Mandi rates! Order now: ${window.location.origin}`;
                   navigator.clipboard.writeText(text);
                   setCopied(true);
                   setTimeout(() => setCopied(false), 2000);
@@ -290,7 +290,7 @@ function OrderSuccessContent() {
           {/* WhatsApp Direct Updates Button */}
           <div className="max-w-md mx-auto mt-4 pt-4 border-t border-gray-100">
             <a
-              href={`https://wa.me/919981418565?text=Hello%20MyGreenDelight!%20I%20just%20placed%20order%20${formattedOrderId}.%20Please%20send%20me%20live%20delivery%20updates%20on%20WhatsApp.`}
+              href={`https://wa.me/919981418565?text=Hello%20SubziQuick!%20I%20just%20placed%20order%20${formattedOrderId}.%20Please%20send%20me%20live%20delivery%20updates%20on%20WhatsApp.`}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full bg-[#25D366] hover:bg-[#1ebe5b] text-white py-3 px-5 rounded-2xl font-black text-xs shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"

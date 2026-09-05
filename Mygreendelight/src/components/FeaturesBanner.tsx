@@ -41,7 +41,7 @@ export default function FeaturesBanner() {
             WHY CHOOSE US
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-2">
-            Why Bhopal Trusts MyGreenDelight
+            Why Bhopal Trusts SubziQuick
           </h2>
         </div>
 

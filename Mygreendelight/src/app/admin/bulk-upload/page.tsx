@@ -75,7 +75,7 @@ export default function BulkUploadPage() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.setAttribute("href", url);
-    link.setAttribute("download", "mygreendelight_sample_template.csv");
+    link.setAttribute("download", "subziquick_sample_template.csv");
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -315,7 +315,7 @@ export default function BulkUploadPage() {
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                   <span className="bg-white text-[#0f8646] text-xs font-black uppercase tracking-wider px-3.5 py-1.2 rounded-full shadow-xs flex items-center gap-1.5">
                     <Sparkles size={14} className="text-[#0f8646]" />
-                    <span>👑 Ultimate MyGreenDelight Master Catalog (100% Brand Clean)</span>
+                    <span>👑 Ultimate SubziQuick Master Catalog (100% Brand Clean)</span>
                   </span>
                   <span className="text-xs bg-emerald-950/60 border border-emerald-400/30 px-3 py-1 rounded-full font-black text-emerald-200">
                     471 Clean Unique Items • Zero Junk & Zero 3rd-Party Names
@@ -331,8 +331,8 @@ export default function BulkUploadPage() {
 
               <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-emerald-600/50">
                 <a
-                  href="/mygreendelight_fresh_produce_master.xlsx"
-                  download="mygreendelight_fresh_produce_master.xlsx"
+                  href="/subziquick_fresh_produce_master.xlsx"
+                  download="subziquick_fresh_produce_master.xlsx"
                   className="bg-white hover:bg-emerald-50 text-[#0c5c30] px-4 py-2.5 rounded-xl text-xs font-black shadow-md transition flex items-center gap-2 cursor-pointer"
                 >
                   <Download size={15} className="text-[#0f8646]" />
@@ -340,8 +340,8 @@ export default function BulkUploadPage() {
                 </a>
 
                 <a
-                  href="/mygreendelight_fresh_produce_master.csv"
-                  download="mygreendelight_fresh_produce_master.csv"
+                  href="/subziquick_fresh_produce_master.csv"
+                  download="subziquick_fresh_produce_master.csv"
                   className="bg-emerald-900/80 hover:bg-emerald-900 text-white border border-emerald-400/50 px-4 py-2.5 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-2 cursor-pointer"
                 >
                   <FileSpreadsheet size={15} />
@@ -351,7 +351,7 @@ export default function BulkUploadPage() {
                 <button
                   onClick={async () => {
                     try {
-                      const res = await fetch("/mygreendelight_fresh_produce_master.json");
+                      const res = await fetch("/subziquick_fresh_produce_master.json");
                       const data = await res.json();
                       setParsedProducts(data);
                       setResultMsg(null);

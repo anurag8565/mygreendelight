@@ -11,7 +11,7 @@ export interface StoreLocation {
 export const BHOPAL_HUBS: StoreLocation[] = [
   {
     id: "amrai-bagsewaniya",
-    name: "MyGreenDelight Store",
+    name: "SubziQuick Store",
     address: "Amrai, Bagsewaniya, Bhopal, MP - 462043",
     phone: "+91 9981418565",
     hours: "6:00 AM - 1:00 PM",

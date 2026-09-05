@@ -154,14 +154,14 @@ export default function TrackOrderPage() {
                 <>
                   <a
                     href={`https://wa.me/919981418565?text=${encodeURIComponent(
-                      `Hello MyGreenDelight Support! 🌿\n\nI need help regarding my Order #${String(
+                      `Hello SubziQuick Support! 🌿\n\nI need help regarding my Order #${String(
                         params.id
-                      ).slice(-6).toUpperCase()}.\nAmount: ₹${order?.totalamount || 0}\nStatus: ${status.toUpperCase()}\n\nLive Tracking: https://mygreendelight.vercel.app/track/${params.id}`
+                      ).slice(-6).toUpperCase()}.\nAmount: ₹${order?.totalamount || 0}\nStatus: ${status.toUpperCase()}\n\nLive Tracking: https://subziquick.in/track/${params.id}`
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#0c6a38] px-3.5 py-2 rounded-2xl text-xs font-black flex items-center gap-1.5 transition shadow-2xs cursor-pointer border border-[#25D366]/30"
-                    title="Chat with MyGreenDelight Support on WhatsApp"
+                    title="Chat with SubziQuick Support on WhatsApp"
                   >
                     <span className="text-sm">💬</span>
                     <span>WhatsApp Support</span>
@@ -228,7 +228,7 @@ export default function TrackOrderPage() {
             <div>
               <h3 className="font-extrabold text-lg">Order Delivered Successfully!</h3>
               <p className="text-green-100 text-xs mt-0.5">
-                Thank you for choosing MyGreenDelight. Enjoy your farm-fresh groceries!
+                Thank you for choosing SubziQuick. Enjoy your farm-fresh groceries!
               </p>
             </div>
           </div>
@@ -356,7 +356,7 @@ export default function TrackOrderPage() {
                     <span>Return Old Eco-Bags & Earn ₹10 Cashback!</span>
                   </h4>
                   <p className="text-[11px] text-emerald-700 mt-0.5">
-                    Hand over any previous MyGreenDelight cloth/eco-bags to the rider. Rider will mark it and ₹10 per bag will be instantly added to your GreenPoints Wallet.
+                    Hand over any previous SubziQuick cloth/eco-bags to the rider. Rider will mark it and ₹10 per bag will be instantly added to your GreenPoints Wallet.
                   </p>
                 </div>
               </div>

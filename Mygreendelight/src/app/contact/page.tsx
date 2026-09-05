@@ -157,7 +157,7 @@ export default function ContactPage() {
                 <div className="relative w-full max-w-sm rounded-3xl overflow-hidden shadow-xl border-4 border-white">
                   <img
                     src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=700&q=80"
-                    alt="MyGreenDelight Customer Support"
+                    alt="SubziQuick Customer Support"
                     className="w-full h-56 sm:h-64 object-cover"
                   />
                   <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-xl shadow-xs text-xs font-extrabold text-gray-900 flex items-center gap-2">
@@ -372,7 +372,7 @@ export default function ContactPage() {
 
                   {/* WhatsApp Us */}
                   <a
-                    href="https://wa.me/919981418565?text=Hello%20MyGreenDelight%20Support,%20I%20need%20help%20with%20my%20order."
+                    href="https://wa.me/919981418565?text=Hello%20SubziQuick%20Support,%20I%20need%20help%20with%20my%20order."
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-start gap-4 p-4 rounded-2xl hover:bg-green-50/70 transition-colors border border-gray-100 group"
@@ -395,7 +395,7 @@ export default function ContactPage() {
 
                   {/* Email Us */}
                   <a
-                    href="mailto:support@mygreendelight.in"
+                    href="mailto:support@subziquick.in"
                     className="flex items-start gap-4 p-4 rounded-2xl hover:bg-green-50/70 transition-colors border border-gray-100 group"
                   >
                     <div className="w-11 h-11 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
@@ -406,7 +406,7 @@ export default function ContactPage() {
                         Email Inquiries
                       </h4>
                       <p className="text-xs font-black text-blue-700 mt-0.5">
-                        support@mygreendelight.in
+                        support@subziquick.in
                       </p>
                       <p className="text-[11px] text-gray-400 mt-0.5 font-medium">
                         Detailed inquiries & business partnerships

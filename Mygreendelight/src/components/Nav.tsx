@@ -37,6 +37,7 @@ import { createPortal } from "react-dom";
 import VoiceSearchModal from "./VoiceSearchModal";
 import MiniCart from "./MiniCart";
 import LocationModal from "./LocationModal";
+import Logo from "./Logo";
 
 interface iUser {
   _id?: mongoose.Types.ObjectId;
@@ -227,12 +228,9 @@ export default function Nav({ user }: { user?: iUser | null }) {
             <X size={18} />
           </button>
 
-          <Link href="/" className="text-white text-xl font-black flex items-center gap-2 mb-3" onClick={() => setmenuopen(false)}>
-            <div className="w-7 h-7 rounded-lg bg-white text-[#0f8646] flex items-center justify-center shadow-xs">
-              <ShoppingCart size={15} className="fill-current" />
-            </div>
-            <span>MyGreenDelight</span>
-          </Link>
+          <div className="mb-3" onClick={() => setmenuopen(false)}>
+            <Logo variant="white" showTagline={false} />
+          </div>
 
           {/* User Profile Mini Bar */}
           <div className="flex items-center gap-3 pt-1">
@@ -437,10 +435,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
               <Menu size={22} />
             </button>
             <div className="flex flex-col min-w-0">
-              <Link href="/" className="text-[#0f8646] text-base sm:text-xl md:text-3xl font-extrabold flex items-center gap-1 md:gap-2 tracking-tight truncate">
-                <ShoppingCart className="fill-current w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 shrink-0" />
-                <span className="truncate">MyGreenDelight</span>
-              </Link>
+              <Logo className="shrink-0" />
               <button 
                 onClick={() => setShowLocationPopup(true)} 
                 className="lg:hidden flex items-center gap-1 text-[10px] font-bold text-gray-500 hover:text-[#0f8646] transition text-left mt-0.5"

@@ -304,7 +304,7 @@ export default function UserWalletPage() {
                 Return Old Eco-Bags & Earn ₹10 Cashback Every Time!
               </h3>
               <p className="text-xs text-emerald-100/90 leading-relaxed mt-0.5">
-                Hand over your previous MyGreenDelight bags to the delivery partner on arrival. Rider verifies and ₹10 per bag is instantly credited to your GreenPoints Wallet balance.
+                Hand over your previous SubziQuick bags to the delivery partner on arrival. Rider verifies and ₹10 per bag is instantly credited to your GreenPoints Wallet balance.
               </p>
             </div>
           </div>

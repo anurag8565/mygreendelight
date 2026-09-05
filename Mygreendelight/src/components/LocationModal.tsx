@@ -146,7 +146,7 @@ export default function LocationModal({
 
           if (distKm > 35) {
             setOutsideWarning(
-              `🚫 GPS location is outside Bhopal (~${distKm.toFixed(0)} km away). MyGreenDelight operates exclusively across Bhopal city limits (MP - 462xxx).`
+              `🚫 GPS location is outside Bhopal (~${distKm.toFixed(0)} km away). SubziQuick operates exclusively across Bhopal city limits (MP - 462xxx).`
             );
             return;
           }

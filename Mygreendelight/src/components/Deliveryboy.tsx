@@ -306,7 +306,7 @@ useEffect(() => {
 
     const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${userlocation.latitude},${userlocation.longitude}`;
     const whatsappMsg = encodeURIComponent(
-      `Hello ${customerName}, I am your MyGreenDelight Delivery Partner on the way to your address (${customerAddress}) with your farm-fresh produce order #${orderShortId}. Total: ₹${totalAmount} (${isPaid ? "Paid Online" : "Cash on Delivery"}).`
+      `Hello ${customerName}, I am your SubziQuick Delivery Partner on the way to your address (${customerAddress}) with your farm-fresh produce order #${orderShortId}. Total: ₹${totalAmount} (${isPaid ? "Paid Online" : "Cash on Delivery"}).`
     );
     const whatsappUrl = `https://wa.me/91${customerMobile.replace(/\D/g, "")}?text=${whatsappMsg}`;
 
@@ -518,7 +518,7 @@ useEffect(() => {
                     </span>
                   </div>
                   <p className="text-[11px] text-emerald-700 leading-tight mb-2.5">
-                    Did customer return old MyGreenDelight eco-bags? ₹10 per bag will be auto-credited to their GreenPoints Wallet!
+                    Did customer return old SubziQuick eco-bags? ₹10 per bag will be auto-credited to their GreenPoints Wallet!
                   </p>
                   <div className="flex items-center justify-between bg-white p-2 rounded-xl border border-emerald-200">
                     <span className="text-xs font-bold text-gray-700">Total Bags Handed Over:</span>

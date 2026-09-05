@@ -19,10 +19,10 @@ export async function generateMetadata(props: {
     if (product) {
       const priceText = product.price ? `₹${product.price}` : "";
       const unitText = product.unit ? `(${product.unit})` : "";
-      const title = `${product.name} ${unitText} - ${priceText} | MyGreenDelight Bhopal`;
+      const title = `${product.name} ${unitText} - ${priceText} | SubziQuick Bhopal`;
       const description =
         product.description ||
-        `Order fresh ${product.name} online in Bhopal. 10-15 Min Express Delivery direct from sunrise farms. 100% ozone-washed & fresh.`;
+        `Order fresh ${product.name} online in Bhopal on SubziQuick. 10-15 Min Express Delivery direct from sunrise farms. 100% ozone-washed & fresh.`;
 
       return {
         title,
@@ -30,8 +30,8 @@ export async function generateMetadata(props: {
         openGraph: {
           title,
           description,
-          url: `https://mygreendelight.vercel.app/product/${id}`,
-          siteName: "MyGreenDelight Bhopal",
+          url: `https://subziquick.in/product/${id}`,
+          siteName: "SubziQuick Bhopal",
           images: [
             {
               url: product.image,
@@ -53,8 +53,8 @@ export async function generateMetadata(props: {
   } catch (error) {}
 
   return {
-    title: "Fresh Farm Produce | MyGreenDelight Bhopal",
-    description: "10-15 Min Express Delivery of Farm Fresh Vegetables & Fruits in Bhopal.",
+    title: "Fresh Farm Produce | SubziQuick Bhopal",
+    description: "10-15 Min Express Delivery of Farm Fresh Vegetables & Fruits in Bhopal on SubziQuick.",
   };
 }
 

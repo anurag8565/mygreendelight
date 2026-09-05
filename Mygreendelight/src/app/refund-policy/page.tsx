@@ -84,7 +84,7 @@ export default function RefundPolicyPage() {
                 <tbody className="divide-y divide-gray-100 text-gray-600">
                   <tr>
                     <td className="p-3 font-bold text-gray-900">GreenPoints Wallet</td>
-                    <td className="p-3">MyGreenDelight Wallet Balance</td>
+                    <td className="p-3">SubziQuick Wallet Balance</td>
                     <td className="p-3 font-bold text-[#0f8646]">Instant (0 seconds)</td>
                   </tr>
                   <tr>

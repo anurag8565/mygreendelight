@@ -75,7 +75,7 @@ export default function FarmClubVIPBanner() {
               <div className="flex items-center gap-2 mb-2 flex-wrap">
                 <span className="inline-flex items-center gap-1 bg-gradient-to-r from-amber-400 to-yellow-400 text-gray-950 font-black text-[10px] sm:text-xs uppercase px-2.5 py-0.5 rounded-full shadow-xs">
                   <Crown size={13} />
-                  <span>MyGreenDelight Farm Club</span>
+                  <span>SubziQuick Farm Club</span>
                 </span>
                 {isMember ? (
                   <span className="bg-emerald-500/30 border border-emerald-400 text-emerald-200 text-[10px] sm:text-xs font-black px-2.5 py-0.5 rounded-full">

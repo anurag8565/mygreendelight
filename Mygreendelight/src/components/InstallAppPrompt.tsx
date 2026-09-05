@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useEffect, useState } from "react";
 import { Download, X, Smartphone, Sparkles } from "lucide-react";
@@ -78,7 +78,7 @@ export default function InstallAppPrompt() {
           </div>
           <div>
             <div className="flex items-center gap-1">
-              <span className="text-xs font-black text-white">Install GreenDelight App</span>
+              <span className="text-xs font-black text-white">Install SubziQuick App</span>
               <span className="bg-yellow-400 text-black text-[9px] font-black px-1.5 py-0.2 rounded-full uppercase">
                 Fast
               </span>

@@ -59,7 +59,7 @@ export default function FarmFreshPromise() {
               Kisan Se Seedha Aapke Kitchen Tak
             </h2>
             <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5 max-w-xl font-medium">
-              MyGreenDelight ka waada: Har sabzi aur fruit 100% fresh, natural aur local farmers se directly sourced.
+              SubziQuick ka waada: Har sabzi aur fruit 100% fresh, natural aur local farmers se directly sourced.
             </p>
           </div>
 

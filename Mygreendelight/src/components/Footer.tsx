@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
 import {
@@ -15,6 +13,7 @@ import {
   Mail,
   Zap,
 } from "lucide-react";
+import Logo from "./Logo";
 
 export default function Footer() {
   return (
@@ -25,18 +24,12 @@ export default function Footer() {
           
           {/* Column 1: Store Logo, Bio & Address (5 Cols) */}
           <div className="lg:col-span-5 flex flex-col">
-            <Link
-              href="/"
-              className="text-white text-xl sm:text-2xl md:text-3xl font-black flex items-center gap-2 tracking-tight mb-2 sm:mb-3 group"
-            >
-              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-white text-[#0f8646] flex items-center justify-center shadow-md">
-                <ShoppingCart className="fill-current w-4 h-4 sm:w-5 sm:h-5" />
-              </div>
-              <span>MyGreenDelight</span>
-            </Link>
+            <div className="mb-3">
+              <Logo variant="white" />
+            </div>
 
             <p className="text-xs sm:text-sm text-green-100/90 mb-4 leading-relaxed font-medium max-w-md">
-              Bhopal’s dedicated farm-to-table produce store. 100% ozone-washed, chemical-free fresh vegetables, seasonal fruits, and pure dairy staples delivered directly to your doorstep.
+              Bhopal’s dedicated 10-minute farm-to-table produce store. 100% ozone-washed, chemical-free fresh vegetables, seasonal fruits, and pure daily essentials delivered straight to your doorstep.
             </p>
 
             {/* Store Address & Hours Box */}
@@ -176,7 +169,7 @@ export default function Footer() {
               </a>
 
               <a
-                href="https://wa.me/919981418565?text=Hello%20MyGreenDelight%20Support,%20I%20need%20help%20with%20my%20order."
+                href="https://wa.me/919981418565?text=Hello%20SubziQuick%20Support,%20I%20need%20help%20with%20my%20order."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#25D366]/20 hover:bg-[#25D366]/30 p-3 rounded-2xl flex items-center gap-3 transition-colors border border-[#25D366]/30"
@@ -196,7 +189,7 @@ export default function Footer() {
 
         {/* Bottom Legal & Payment Badges */}
         <div className="border-t border-green-900/60 mt-8 pt-5 flex flex-col md:flex-row items-center justify-between text-xs text-green-200/80 gap-3 text-center md:text-left">
-          <p>© {new Date().getFullYear()} MyGreenDelight • Amrai, Bagsewaniya, Bhopal</p>
+          <p>© {new Date().getFullYear()} SubziQuick • Amrai, Bagsewaniya, Bhopal</p>
 
           <div className="flex items-center justify-center gap-2.5 text-[11px] font-semibold flex-wrap text-green-100">
             <Link href="/privacy-policy" className="hover:text-white transition">

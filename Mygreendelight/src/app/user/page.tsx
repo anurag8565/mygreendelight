@@ -121,7 +121,7 @@ export default function UserProfileHub() {
                   )}
                 </div>
                 <p className="text-xs text-green-100/90 font-medium">
-                  {userdata?.email || userdata?.mobile || "Welcome to MyGreenDelight Pure Farm Deliveries"}
+                  {userdata?.email || userdata?.mobile || "Welcome to SubziQuick Pure Farm Deliveries"}
                 </p>
                 <div className="flex items-center justify-center sm:justify-start gap-3 mt-2 text-[11px] text-green-200">
                   <span>📍 Bhopal Central Hub</span>

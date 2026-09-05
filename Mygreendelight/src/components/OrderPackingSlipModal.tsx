@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React from "react";
 import {
@@ -69,10 +69,10 @@ export default function OrderPackingSlipModal({
           {/* Brand Header */}
           <div className="text-center border-b-2 border-dashed border-gray-300 pb-3 mb-3">
             <h2 className="text-lg font-black tracking-tight text-gray-900">
-              MYGREENDELIGHT
+              SUBZIQUICK
             </h2>
             <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">
-              10-Min Farm Fresh Grocery Bhopal
+              10-15 Min Farm Fresh Grocery Bhopal
             </p>
             <div className="mt-2 bg-gray-100 py-1 px-3 rounded-lg inline-block text-xs font-black text-gray-900 border border-gray-200">
               BAG SLIP #{orderShortId}
@@ -164,7 +164,7 @@ export default function OrderPackingSlipModal({
 
           {/* Footer Notice */}
           <div className="text-center mt-3 text-[10px] text-gray-400 font-bold">
-            *** Thank you for choosing MyGreenDelight Freshness! ***
+            *** Thank you for choosing SubziQuick Freshness! ***
           </div>
         </div>
       </div>

@@ -71,7 +71,7 @@ export default function AboutPage() {
 
                   <div className="bg-gradient-to-r from-green-50 via-emerald-50/60 to-white border-l-4 border-[#0f8646] p-5 rounded-r-2xl mb-8 shadow-2xs">
                     <p className="text-gray-900 font-extrabold text-sm sm:text-base leading-snug">
-                      MyGreenDelight sirf ek grocery app nahi hai, <br />
+                      SubziQuick sirf ek grocery app nahi hai, <br />
                       yeh hamare parivaar ka sapna aur Bhopal ka bharosa hai.
                     </p>
                   </div>
@@ -100,7 +100,7 @@ export default function AboutPage() {
                 <div className="relative w-full max-w-md rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
                   <img
                     src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80"
-                    alt="MyGreenDelight Farm Story"
+                    alt="SubziQuick Farm Story"
                     className="w-full h-[380px] sm:h-[440px] object-cover hover:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
@@ -122,7 +122,7 @@ export default function AboutPage() {
                     "Papa ki mehnat, hamara sapna, aapka bharosa."
                   </p>
                   <span className="text-[10px] text-gray-400 font-bold mt-1 block">
-                    — MyGreenDelight Founder Family
+                    — SubziQuick Founder Family
                   </span>
                 </div>
               </div>
@@ -188,7 +188,7 @@ export default function AboutPage() {
               MILESTONES
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mt-3">
-              The Journey of MyGreenDelight
+              The Journey of SubziQuick
             </h2>
             <p className="text-xs sm:text-sm text-gray-500 mt-2">
               From a humble street cart to Bhopal’s most loved 10-minute fresh produce network
@@ -215,7 +215,7 @@ export default function AboutPage() {
                 year: "2024",
                 badge: "The Innovation",
                 icon: <TrendingUp size={22} className="text-[#0f8646]" />,
-                title: "MyGreenDelight Digital Store",
+                title: "SubziQuick Digital Store",
                 desc: "Launched our online platform and central store in Bagsewaniya (Amrai) to deliver pure fresh harvest directly to Bhopal doorsteps.",
               },
               {
@@ -262,7 +262,7 @@ export default function AboutPage() {
                 OUR VALUES
               </span>
               <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mt-3">
-                Why Bhopal Trusts MyGreenDelight
+                Why Bhopal Trusts SubziQuick
               </h2>
             </div>
 

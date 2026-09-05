@@ -30,7 +30,7 @@ export default function PrivacyPolicyPage() {
             Privacy Policy
           </h1>
           <p className="text-xs text-gray-500 mt-2">
-            Last Updated: August 2026 • MyGreenDelight Bhopal Farm Produce Pvt. Ltd.
+            Last Updated: August 2026 • SubziQuick Bhopal Farm Produce Pvt. Ltd.
           </p>
         </div>
 
@@ -42,7 +42,7 @@ export default function PrivacyPolicyPage() {
               <span>1. Information We Collect</span>
             </h2>
             <p>
-              When you use <strong>MyGreenDelight</strong> to order fresh farm vegetables, seasonal fruits, and groceries in Bhopal, we collect the necessary details to deliver your produce quickly and safely:
+              When you use <strong>SubziQuick</strong> to order fresh farm vegetables, seasonal fruits, and groceries in Bhopal, we collect the necessary details to deliver your produce quickly and safely:
             </p>
             <ul className="list-disc pl-5 space-y-1.5 text-xs text-gray-600">
               <li><strong>Contact Information:</strong> Full name, mobile phone number, and email address for order OTP and delivery notifications.</li>
@@ -73,7 +73,7 @@ export default function PrivacyPolicyPage() {
               <span>3. Payment & Security</span>
             </h2>
             <p>
-              All online payments are processed through PCI-DSS compliant, RBI-authorized gateways (such as <strong>Paytm Payments Bank / Razorpay</strong>) using 256-bit SSL encryption. MyGreenDelight does not store your credit card numbers, debit card PINs, or UPI credentials on our servers.
+              All online payments are processed through PCI-DSS compliant, RBI-authorized gateways (such as <strong>Paytm Payments Bank / Razorpay</strong>) using 256-bit SSL encryption. SubziQuick does not store your credit card numbers, debit card PINs, or UPI credentials on our servers.
             </p>
           </section>
 
@@ -86,7 +86,7 @@ export default function PrivacyPolicyPage() {
               If you have any questions regarding your data privacy, you can reach our Bhopal customer grievance desk:
             </p>
             <div className="bg-green-50/70 p-4 rounded-2xl border border-green-200 text-xs text-gray-800 space-y-1">
-              <p><strong>Email:</strong> support@mygreendelight.in / anuragsinghas098@gmail.com</p>
+              <p><strong>Email:</strong> support@subziquick.in / anuragsinghas098@gmail.com</p>
               <p><strong>Support Helpline:</strong> +91 99814 18565 / +91 93012 34567</p>
               <p><strong>Address:</strong> Amrai, Bagsewaniya, Bhopal, Madhya Pradesh - 462043</p>
             </div>

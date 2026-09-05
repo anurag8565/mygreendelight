@@ -14,6 +14,7 @@ import {
   FileText,
   ShieldCheck,
 } from "lucide-react";
+import Logo from "./Logo";
 
 interface OrderInvoiceModalProps {
   order: any;
@@ -92,22 +93,12 @@ export default function OrderInvoiceModal({
           {/* Company & Invoice Header */}
           <div className="flex justify-between items-start border-b-2 border-green-700/80 pb-6 mb-6">
             <div>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-xl bg-[#0f8646] text-white flex items-center justify-center font-black text-base">
-                  MGD
-                </div>
-                <h2 className="text-2xl font-black text-gray-900 tracking-tight">
-                  MyGreenDelight<span className="text-[#0f8646]">.</span>
-                </h2>
-              </div>
-              <p className="text-xs font-bold text-gray-500 mt-1">
-                Fresh Produce & Mandi Direct Delivery
-              </p>
-              <p className="text-[11px] text-gray-400">
+              <Logo showTagline={true} />
+              <p className="text-[11px] text-gray-400 mt-2">
                 Amrai, Bagsewaniya, Bhopal, MP - 462043
               </p>
               <p className="text-[11px] text-gray-400 font-mono">
-                GSTIN: 23AABCK8901M1Z5 • FSSAI: 11424850000123 • Daily 6:00 AM – 1:00 PM
+                GSTIN: 23AABCK8901M1Z5 • FSSAI: 11424850000123 • Daily 6:00 AM – 1:00 PM • support@subziquick.in
               </p>
             </div>
 
@@ -167,7 +158,7 @@ export default function OrderInvoiceModal({
                     {order.assigneddelliveryboy.mobile})
                   </span>
                 ) : (
-                  <span className="text-gray-400 italic">MyGreenDelight Express Fleet</span>
+                  <span className="text-gray-400 italic">SubziQuick Express Fleet</span>
                 )}
               </p>
               <p className="text-gray-700 mt-0.5">
@@ -271,7 +262,7 @@ export default function OrderInvoiceModal({
 
           {/* Footer Note */}
           <div className="text-center mt-8 pt-4 border-t border-gray-100 text-[10px] text-gray-400">
-            <p>Thank you for supporting local Madhya Pradesh farmers and choosing MyGreenDelight!</p>
+            <p>Thank you for supporting local Madhya Pradesh farmers and choosing SubziQuick!</p>
             <p className="font-mono mt-0.5">Computer Generated Invoice • No Physical Signature Required</p>
           </div>
         </div>

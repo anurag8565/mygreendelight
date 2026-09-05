@@ -87,7 +87,7 @@ export default function VipPassPage() {
             <div className="flex items-center gap-2 mb-3">
               <span className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-400 to-yellow-400 text-gray-950 font-black text-xs uppercase px-3.5 py-1 rounded-full shadow-md">
                 <Crown size={15} />
-                <span>MyGreenDelight Farm Club VIP</span>
+                <span>SubziQuick Farm Club VIP</span>
               </span>
               {isMember && (
                 <span className="bg-emerald-500/30 border border-emerald-400 text-emerald-200 text-xs font-black px-3 py-0.5 rounded-full">

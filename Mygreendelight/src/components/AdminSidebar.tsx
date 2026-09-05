@@ -25,6 +25,7 @@ import {
   Gift,
   LogOut,
 } from "lucide-react";
+import Logo from "./Logo";
 
 export default function AdminSidebar() {
   const pathname = usePathname();
@@ -130,12 +131,7 @@ export default function AdminSidebar() {
           >
             <Menu size={20} />
           </button>
-          <div className="leading-tight">
-            <span className="font-black text-sm block">MyGreenDelight</span>
-            <span className="text-[9px] text-green-300 font-bold uppercase tracking-widest">
-              Admin Center
-            </span>
-          </div>
+          <Logo variant="white" showTagline={false} />
         </div>
 
         <div className="flex items-center gap-2">
@@ -177,17 +173,8 @@ export default function AdminSidebar() {
             <Link
               href="/admin"
               onClick={() => setMobileOpen(false)}
-              className="flex items-center gap-2.5 font-black text-lg tracking-tight text-white"
             >
-              <div className="w-9 h-9 rounded-xl bg-green-500/20 border border-green-400/40 flex items-center justify-center text-green-300 shrink-0">
-                <Truck size={18} />
-              </div>
-              <div className="leading-tight">
-                <span className="block font-black text-sm sm:text-base">MyGreenDelight</span>
-                <span className="text-[9px] text-green-300 font-bold uppercase tracking-widest">
-                  Admin Center
-                </span>
-              </div>
+              <Logo variant="white" showTagline={false} />
             </Link>
 
             <button
