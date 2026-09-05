@@ -35,10 +35,28 @@ export const metadata: Metadata = {
     "fresh produce Bhopal",
     "SubziQuick Bhopal",
     "organic vegetables Bhopal",
+    "buy veggies Bagsewaniya",
+    "vegetable store MP Nagar",
+    "fruits Arera Colony",
+    "fresh sabzi Kolar Road",
   ],
   authors: [{ name: "SubziQuick Bhopal" }],
   creator: "SubziQuick",
   publisher: "SubziQuick Bhopal",
+  alternates: {
+    canonical: "https://subziquick.in",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   formatDetection: {
     email: true,
     address: true,
@@ -52,11 +70,20 @@ export const metadata: Metadata = {
     siteName: "SubziQuick",
     locale: "en_IN",
     type: "website",
+    images: [
+      {
+        url: "https://subziquick.in/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "SubziQuick Bhopal - Mandi Fresh Vegetables & Fruits",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "SubziQuick Bhopal | Mandi Fresh Vegetables & Fruits Online",
     description: "Daily Mandi Fresh Farm Produce delivered same-day to your doorstep in Bhopal.",
+    images: ["https://subziquick.in/og-image.png"],
   },
   manifest: "/manifest.json",
   verification: {
@@ -83,7 +110,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const jsonLd = {
+  const storeJsonLd = {
     "@context": "https://schema.org",
     "@type": "GroceryStore",
     "name": "SubziQuick Bhopal",
@@ -150,12 +177,28 @@ export default function RootLayout({
     ]
   };
 
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "SubziQuick",
+    "url": "https://subziquick.in",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://subziquick.in/shop?search={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  };
+
   return (
     <html lang="en" className="overflow-x-hidden">
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(storeJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
       <body className="w-full min-h-screen bg-linear-to-b from-green-50 to-white text-gray-900 overflow-x-hidden">
