@@ -515,7 +515,7 @@ export default function ManageOrder() {
           </div>
         )}
 
-        <div className="p-6 sm:p-8 space-y-6 flex-1">
+        <div className="p-3.5 sm:p-6 lg:p-8 space-y-6 flex-1">
           {/* Controls Bar: Filters & Search */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-4 rounded-3xl border border-gray-200/80 shadow-2xs">
             {/* Filter Tabs */}
@@ -1022,7 +1022,7 @@ export default function ManageOrder() {
           </div>
 
           {/* Footer Actions */}
-          <div className="p-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between gap-2">
+          <div className="p-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap">
             {previewProofOrder.paymentProofImage && (
               <a
                 href={previewProofOrder.paymentProofImage}
@@ -1034,7 +1034,7 @@ export default function ManageOrder() {
               </a>
             )}
 
-            <div className="flex items-center gap-2 ml-auto">
+            <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap ml-auto">
               {!previewProofOrder.ispaid ? (
                 <>
                   <button

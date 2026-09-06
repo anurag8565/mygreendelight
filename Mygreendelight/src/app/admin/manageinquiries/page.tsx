@@ -104,7 +104,7 @@ export default function ManageInquiriesPage() {
         </header>
 
         {/* Content Body */}
-        <div className="p-6 sm:p-8 space-y-6 flex-1">
+        <div className="p-3.5 sm:p-6 lg:p-8 space-y-6 flex-1">
           {/* Status Filters */}
           <div className="bg-white p-4 rounded-3xl border border-gray-200/80 shadow-2xs flex items-center gap-2 overflow-x-auto">
             {(["all", "unread", "read", "resolved"] as const).map((st) => {

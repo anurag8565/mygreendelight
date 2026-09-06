@@ -169,11 +169,11 @@ export default function ManageBanners() {
           </header>
 
           {/* Content Body */}
-          <div className="p-6 sm:p-8 space-y-8 flex-1">
+          <div className="p-3.5 sm:p-6 lg:p-8 space-y-6 flex-1 w-full">
             <div className="grid lg:grid-cols-12 gap-8 items-start">
               
               {/* Create Banner Form (5 Cols) */}
-              <div className="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-7 border border-gray-200/80 shadow-xs">
+              <div className="lg:col-span-5 bg-white rounded-3xl p-4 sm:p-7 border border-gray-200/80 shadow-xs">
                 <h2 className="text-base font-black text-gray-900 mb-1">
                   Upload New Promo Banner
                 </h2>

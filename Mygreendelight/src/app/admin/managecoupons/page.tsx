@@ -135,10 +135,10 @@ export default function ManageCoupons() {
               </p>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
               <button
                 onClick={fetchCoupons}
-                className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+                className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
               >
                 <RefreshCw size={14} />
                 <span>Refresh</span>
@@ -146,16 +146,16 @@ export default function ManageCoupons() {
 
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-xl text-xs font-black shadow-sm transition flex items-center gap-1.5 cursor-pointer"
+                className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-black shadow-sm transition flex items-center gap-1.5 cursor-pointer"
               >
                 <Plus size={16} />
-                <span>Create New Coupon</span>
+                <span>Create Coupon</span>
               </button>
             </div>
           </header>
 
           {/* Content Body */}
-          <div className="p-4 sm:p-8 space-y-6 flex-1">
+          <div className="p-3.5 sm:p-6 lg:p-8 space-y-6 flex-1">
             {loading ? (
               <div className="py-24 flex flex-col items-center justify-center">
                 <Loader2 size={36} className="animate-spin text-[#0f8646] mb-3" />

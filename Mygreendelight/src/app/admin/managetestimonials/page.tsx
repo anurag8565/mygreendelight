@@ -184,7 +184,7 @@ export default function ManageTestimonials() {
           </header>
 
           {/* Content Body */}
-          <div className="p-4 sm:p-8 space-y-6 flex-1">
+          <div className="p-3.5 sm:p-6 lg:p-8 space-y-6 flex-1">
             {loading ? (
               <div className="py-24 flex flex-col items-center justify-center">
                 <Loader2 size={36} className="animate-spin text-[#0f8646] mb-3" />

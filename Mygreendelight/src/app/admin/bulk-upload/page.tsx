@@ -363,13 +363,13 @@ export default function BulkUploadPage() {
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
             <button
               onClick={downloadSampleCSV}
-              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
             >
               <Download size={14} />
-              <span>Blank CSV Template</span>
+              <span>Blank Template</span>
             </button>
 
             <button
@@ -377,25 +377,25 @@ export default function BulkUploadPage() {
                 setWipeConfirmText("");
                 setShowWipeModal(true);
               }}
-              className="bg-red-50 hover:bg-red-100 border border-red-200 text-red-700 px-3.5 py-2 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
+              className="bg-red-50 hover:bg-red-100 border border-red-200 text-red-700 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
               title="Wipe Old Products Database"
             >
               <Trash2 size={14} />
-              <span>Reset & Wipe Produce DB</span>
+              <span>Reset Produce DB</span>
             </button>
 
             <Link
               href="/admin/viewgrocery"
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5"
+              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5"
             >
               <ArrowLeft size={14} />
-              <span>View Live Inventory</span>
+              <span>Live Inventory</span>
             </Link>
           </div>
         </header>
 
         {/* Content Body */}
-        <div className="p-6 sm:p-8 space-y-6 flex-1 max-w-6xl">
+        <div className="p-3.5 sm:p-6 lg:p-8 space-y-6 flex-1 max-w-6xl w-full">
           {/* Ready-Made Datasets Banner Cards */}
           <div className="grid md:grid-cols-2 gap-4">
             {/* HERO CARD: Ultimate Consolidated Master Dataset (471 Products) */}

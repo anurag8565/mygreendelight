@@ -192,7 +192,7 @@ export default function AddGrocery() {
         </header>
 
         {/* Form Body */}
-        <div className="p-6 sm:p-8 max-w-4xl space-y-6">
+        <div className="p-3.5 sm:p-6 lg:p-8 max-w-4xl space-y-6 w-full">
           {successMsg && (
             <div className="bg-emerald-50 border border-emerald-300 text-[#0f8646] px-5 py-4 rounded-2xl flex items-center gap-3 shadow-xs">
               <CheckCircle2 size={18} />
@@ -201,7 +201,7 @@ export default function AddGrocery() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="bg-white p-6 sm:p-8 rounded-3xl border border-gray-200/80 shadow-xs space-y-5 text-xs font-bold text-gray-600">
+            <div className="bg-white p-4 sm:p-8 rounded-3xl border border-gray-200/80 shadow-xs space-y-5 text-xs font-bold text-gray-600">
               <h2 className="text-base font-black text-gray-900 border-b border-gray-100 pb-3">
                 1. Basic Produce Information
               </h2>
@@ -295,7 +295,7 @@ export default function AddGrocery() {
               </div>
 
               {/* Selling Price, MRP Cut Price, Unit & Stock */}
-              <div className="grid sm:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
                 <div>
                   <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
                     Selling Price (₹) *
@@ -464,32 +464,32 @@ export default function AddGrocery() {
                 </div>
 
                 {variations.map((v, idx) => (
-                  <div key={idx} className="flex gap-2 items-center mb-2">
+                  <div key={idx} className="flex gap-2 items-center mb-2 flex-wrap sm:flex-nowrap">
                     <input
                       type="text"
                       placeholder="Size (e.g. 500g)"
                       value={v.weight}
                       onChange={(e) => updateVariation(idx, "weight", e.target.value)}
-                      className="flex-1 p-2 rounded-xl border border-gray-200 text-xs bg-white"
+                      className="flex-1 min-w-[120px] p-2 rounded-xl border border-gray-200 text-xs bg-white"
                     />
                     <input
                       type="number"
                       placeholder="Price (₹)"
                       value={v.price}
                       onChange={(e) => updateVariation(idx, "price", e.target.value)}
-                      className="w-24 p-2 rounded-xl border border-gray-200 text-xs bg-white"
+                      className="w-20 sm:w-24 p-2 rounded-xl border border-gray-200 text-xs bg-white"
                     />
                     <input
                       type="number"
                       placeholder="Stock"
                       value={v.stock}
                       onChange={(e) => updateVariation(idx, "stock", e.target.value)}
-                      className="w-24 p-2 rounded-xl border border-gray-200 text-xs bg-white"
+                      className="w-20 sm:w-24 p-2 rounded-xl border border-gray-200 text-xs bg-white"
                     />
                     <button
                       type="button"
                       onClick={() => removeVariation(idx)}
-                      className="p-1.5 text-red-500 hover:text-red-700"
+                      className="p-1.5 text-red-500 hover:text-red-700 ml-auto sm:ml-0 cursor-pointer"
                     >
                       <Trash2 size={14} />
                     </button>

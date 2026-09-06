@@ -593,81 +593,138 @@ export default function AdminDashboardPage() {
                     <p className="text-xs font-bold">No recent orders found</p>
                   </div>
                 ) : (
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse">
-                      <thead>
-                        <tr className="border-b border-gray-100 text-[11px] font-black uppercase text-gray-400">
-                          <th className="pb-3">Order ID</th>
-                          <th className="pb-3">Customer</th>
-                          <th className="pb-3">Items</th>
-                          <th className="pb-3">Status</th>
-                          <th className="pb-3">Payment</th>
-                          <th className="pb-3 text-right">Total</th>
-                          <th className="pb-3 text-right">Action</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-100 text-xs">
-                        {recentOrders.slice(0, 8).map((order: any, idx: number) => {
-                          const orderId = order._id || order.id || `ORD-${idx}`;
-                          const displayCode = typeof orderId === "string" ? orderId.slice(-6).toUpperCase() : String(orderId);
-                          const customerName = order.customer || order.address?.fullname || order.user?.name || "Customer";
-                          const totalAmt = order.totalamount ?? order.amount ?? 0;
-                          const paymentMode = order.paymentmethod || "COD";
-                          const itemsCount = order.itemsCount || order.items?.length || 1;
-                          const currentStatus = order.status || "pending";
+                  <>
+                    {/* Mobile Orders Card List (sm:hidden) */}
+                    <div className="block sm:hidden space-y-3">
+                      {recentOrders.slice(0, 6).map((order: any, idx: number) => {
+                        const orderId = order._id || order.id || `ORD-${idx}`;
+                        const displayCode = typeof orderId === "string" ? orderId.slice(-6).toUpperCase() : String(orderId);
+                        const customerName = order.customer || order.address?.fullname || order.user?.name || "Customer";
+                        const totalAmt = order.totalamount ?? order.amount ?? 0;
+                        const paymentMode = order.paymentmethod || "COD";
+                        const itemsCount = order.itemsCount || order.items?.length || 1;
+                        const currentStatus = order.status || "pending";
 
-                          return (
-                            <tr
-                              key={orderId || idx}
-                              className="hover:bg-gray-50/60 transition"
-                            >
-                              <td className="py-3.5 font-extrabold text-gray-900">
+                        return (
+                          <div
+                            key={orderId || idx}
+                            className="bg-gray-50/70 border border-gray-100 rounded-2xl p-3.5 flex flex-col gap-2"
+                          >
+                            <div className="flex items-center justify-between">
+                              <span className="font-extrabold text-xs text-gray-900">
                                 #{displayCode}
-                              </td>
-                              <td className="py-3.5">
-                                <span className="font-bold text-gray-900 block">
-                                  {customerName}
-                                </span>
-                                <span className="text-[10px] text-gray-400">
-                                  {order.address?.city || "Bhopal"}
-                                </span>
-                              </td>
-                              <td className="py-3.5 text-gray-600 font-medium">
-                                {itemsCount} Produce item(s)
-                              </td>
-                              <td className="py-3.5">
-                                <span
-                                  className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase ${
-                                    currentStatus === "delivered" || currentStatus === "completed"
-                                      ? "bg-green-100 text-green-800"
-                                      : currentStatus === "out of delivery"
-                                      ? "bg-blue-100 text-blue-800 animate-pulse"
-                                      : "bg-amber-100 text-amber-800"
-                                  }`}
-                                >
-                                  {currentStatus}
-                                </span>
-                              </td>
-                              <td className="py-3.5 uppercase font-bold text-gray-500">
-                                {paymentMode}
-                              </td>
-                              <td className="py-3.5 text-right font-black text-[#0f8646]">
-                                ₹{totalAmt}
-                              </td>
-                              <td className="py-3.5 text-right">
-                                <Link
-                                  href="/admin/manageorder"
-                                  className="bg-gray-100 hover:bg-[#0f8646] hover:text-white px-3 py-1.5 rounded-lg font-extrabold text-[11px] transition inline-block"
-                                >
-                                  Manage
-                                </Link>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
-                  </div>
+                              </span>
+                              <span
+                                className={`px-2 py-0.5 rounded-full text-[9px] font-black uppercase ${
+                                  currentStatus === "delivered" || currentStatus === "completed"
+                                    ? "bg-green-100 text-green-800"
+                                    : currentStatus === "out of delivery"
+                                    ? "bg-blue-100 text-blue-800 animate-pulse"
+                                    : "bg-amber-100 text-amber-800"
+                                }`}
+                              >
+                                {currentStatus}
+                              </span>
+                            </div>
+
+                            <div className="flex items-center justify-between text-[11px]">
+                              <div>
+                                <span className="font-bold text-gray-800 block">{customerName}</span>
+                                <span className="text-gray-400">{itemsCount} items • {paymentMode.toUpperCase()}</span>
+                              </div>
+                              <span className="font-black text-sm text-[#0f8646]">₹{totalAmt}</span>
+                            </div>
+
+                            <div className="pt-2 border-t border-gray-200/60 flex justify-end">
+                              <Link
+                                href="/admin/manageorder"
+                                className="bg-[#0f8646] text-white px-3 py-1 rounded-lg font-bold text-[10px]"
+                              >
+                                Manage Order →
+                              </Link>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Desktop Table (hidden sm:block) */}
+                    <div className="hidden sm:block overflow-x-auto">
+                      <table className="w-full text-left border-collapse">
+                        <thead>
+                          <tr className="border-b border-gray-100 text-[11px] font-black uppercase text-gray-400">
+                            <th className="pb-3">Order ID</th>
+                            <th className="pb-3">Customer</th>
+                            <th className="pb-3">Items</th>
+                            <th className="pb-3">Status</th>
+                            <th className="pb-3">Payment</th>
+                            <th className="pb-3 text-right">Total</th>
+                            <th className="pb-3 text-right">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-100 text-xs">
+                          {recentOrders.slice(0, 8).map((order: any, idx: number) => {
+                            const orderId = order._id || order.id || `ORD-${idx}`;
+                            const displayCode = typeof orderId === "string" ? orderId.slice(-6).toUpperCase() : String(orderId);
+                            const customerName = order.customer || order.address?.fullname || order.user?.name || "Customer";
+                            const totalAmt = order.totalamount ?? order.amount ?? 0;
+                            const paymentMode = order.paymentmethod || "COD";
+                            const itemsCount = order.itemsCount || order.items?.length || 1;
+                            const currentStatus = order.status || "pending";
+
+                            return (
+                              <tr
+                                key={orderId || idx}
+                                className="hover:bg-gray-50/60 transition"
+                              >
+                                <td className="py-3.5 font-extrabold text-gray-900">
+                                  #{displayCode}
+                                </td>
+                                <td className="py-3.5">
+                                  <span className="font-bold text-gray-900 block">
+                                    {customerName}
+                                  </span>
+                                  <span className="text-[10px] text-gray-400">
+                                    {order.address?.city || "Bhopal"}
+                                  </span>
+                                </td>
+                                <td className="py-3.5 text-gray-600 font-medium">
+                                  {itemsCount} Produce item(s)
+                                </td>
+                                <td className="py-3.5">
+                                  <span
+                                    className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase ${
+                                      currentStatus === "delivered" || currentStatus === "completed"
+                                        ? "bg-green-100 text-green-800"
+                                        : currentStatus === "out of delivery"
+                                        ? "bg-blue-100 text-blue-800 animate-pulse"
+                                        : "bg-amber-100 text-amber-800"
+                                    }`}
+                                  >
+                                    {currentStatus}
+                                  </span>
+                                </td>
+                                <td className="py-3.5 uppercase font-bold text-gray-500">
+                                  {paymentMode}
+                                </td>
+                                <td className="py-3.5 text-right font-black text-[#0f8646]">
+                                  ₹{totalAmt}
+                                </td>
+                                <td className="py-3.5 text-right">
+                                  <Link
+                                    href="/admin/manageorder"
+                                    className="bg-gray-100 hover:bg-[#0f8646] hover:text-white px-3 py-1.5 rounded-lg font-extrabold text-[11px] transition inline-block"
+                                  >
+                                    Manage
+                                  </Link>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                  </>
                 )}
               </div>
             </>
