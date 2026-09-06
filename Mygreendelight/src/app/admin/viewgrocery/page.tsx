@@ -451,10 +451,10 @@ export default function ViewGrocery() {
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
             <button
               onClick={fetchGroceries}
-              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
             >
               <RefreshCw size={14} />
               <span>Refresh</span>
@@ -462,10 +462,10 @@ export default function ViewGrocery() {
 
             <Link
               href="/admin/bulk-upload"
-              className="bg-green-50 hover:bg-green-100 border border-green-300 text-[#0f8646] px-3.5 py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5"
+              className="bg-green-50 hover:bg-green-100 border border-green-300 text-[#0f8646] px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5"
             >
               <FileSpreadsheet size={15} />
-              <span>Bulk CSV Upload</span>
+              <span>Bulk CSV</span>
             </Link>
 
             <button
@@ -474,16 +474,16 @@ export default function ViewGrocery() {
                 setWipeConfirmText("");
                 setShowWipeModal(true);
               }}
-              className="bg-red-50 hover:bg-red-100 border border-red-200 text-red-700 px-3.5 py-2 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
+              className="bg-red-50 hover:bg-red-100 border border-red-200 text-red-700 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
               title="Bulk Wipe & Clean Database"
             >
               <Trash2 size={14} />
-              <span>Bulk Clean / Reset</span>
+              <span>Reset</span>
             </button>
 
             <Link
               href="/admin/addgrocery"
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-xl text-xs font-black shadow-sm transition flex items-center gap-1.5"
+              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-black shadow-sm transition flex items-center gap-1.5"
             >
               <Plus size={16} />
               <span>Add Produce</span>
@@ -492,7 +492,7 @@ export default function ViewGrocery() {
         </header>
 
         {/* Content Body */}
-        <div className="p-6 sm:p-8 space-y-6 flex-1">
+        <div className="p-3.5 sm:p-6 lg:p-8 space-y-6 flex-1">
           {/* Mandi Procurement Alert Banner */}
           {lowStockCount > 0 && (
             <div className="bg-amber-50 border border-amber-200/90 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">

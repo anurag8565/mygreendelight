@@ -56,10 +56,11 @@ export default function ManageReviewsPage() {
   const fiveStarCount = reviews.filter((r) => r.rating === 5).length;
 
   return (
-    <div className="flex min-h-screen bg-gray-50/50">
+    <div className="bg-[#f8faf9] min-h-screen font-sans flex flex-col lg:flex-row w-full max-w-full overflow-x-hidden">
       <AdminSidebar />
 
-      <main className="flex-1 min-w-0 w-full p-4 sm:p-8 pt-18 sm:pt-20 lg:pt-8 max-w-6xl mx-auto overflow-x-hidden">
+      <div className="flex-1 min-w-0 pt-14 lg:pt-0 flex flex-col min-h-screen w-full max-w-full overflow-x-hidden">
+        <main className="flex-1 p-3.5 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
           <div>
@@ -225,6 +226,7 @@ export default function ManageReviewsPage() {
           </div>
         )}
       </main>
+      </div>
     </div>
   );
 }

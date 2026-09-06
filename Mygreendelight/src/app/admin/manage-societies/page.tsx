@@ -166,10 +166,11 @@ export default function ManageSocietiesPage() {
   const totalOrdersPooled = societies.reduce((acc, s) => acc + (s.currentOrders || 0), 0);
 
   return (
-    <div className="flex bg-gray-50 min-h-screen">
+    <div className="bg-[#f8faf9] min-h-screen font-sans flex flex-col lg:flex-row w-full max-w-full overflow-x-hidden">
       <AdminSidebar />
 
-      <main className="flex-1 p-4 sm:p-8 pt-20 lg:pt-8 max-w-7xl mx-auto w-full">
+      <div className="flex-1 min-w-0 pt-14 lg:pt-0 flex flex-col min-h-screen w-full max-w-full overflow-x-hidden">
+        <main className="flex-1 p-3.5 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
@@ -598,6 +599,7 @@ export default function ManageSocietiesPage() {
           </div>
         )}
       </main>
+      </div>
     </div>
   );
 }
