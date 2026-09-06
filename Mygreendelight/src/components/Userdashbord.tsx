@@ -20,7 +20,6 @@ import Banner from '@/model/banner.model'
 import Testimonial from '@/model/testimonial.model'
 import { auth } from '@/auth'
 import Order from '@/model/order'
-import BhopalSeoFaqSection from './BhopalSeoFaqSection'
 
 export default async function Userdashbord() {
   let session = null;
@@ -163,9 +162,6 @@ export default async function Userdashbord() {
 
       {/* 11. Tone 2: Farm to Fork Freshness Promise & Trust Guarantee (Soft Luxury Gray #f8f9fa) */}
       <FarmFreshPromise />
-
-      {/* 12. Local Bhopal SEO Dominance & Rich Snippets FAQ Section */}
-      <BhopalSeoFaqSection />
     </div>
   )
 }
