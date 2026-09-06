@@ -4,7 +4,6 @@ import TrustRibbon from './TrustRibbon'
 import Categoryslider from './Categoryslider'
 import FilteredProduceSection from './FilteredProduceSection'
 import FlashDeals from './FlashDeals'
-import FeaturedProduceSection from './FeaturedProduceSection'
 import CombosSection from './CombosSection'
 import DailyRewardWidget from './DailyRewardWidget'
 import Grocery from '@/model/groseri.model'
@@ -126,12 +125,7 @@ export default async function Userdashbord() {
         <FlashDeals products={plainFlash} />
       )}
 
-      {/* 5. Bhopal Top Bestsellers & Featured Picks */}
-      {plainFeatured && plainFeatured.length > 0 && (
-        <FeaturedProduceSection products={plainFeatured} />
-      )}
-
-      {/* 6. Tone 2: Save-More Value Combos & Multipacks (Soft Luxury Gray #f8f9fa) */}
+      {/* 5. Save-More Value Combos & Multipacks */}
       {plainCombos && plainCombos.length > 0 && (
         <CombosSection initialCombos={plainCombos} />
       )}

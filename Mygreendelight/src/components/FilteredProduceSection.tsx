@@ -34,11 +34,11 @@ export default function FilteredProduceSection({
   // Default to vegetables tab
   const [activeTab, setActiveTab] = useState<string>("vegetables");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [visibleCount, setVisibleCount] = useState<number>(24);
+  const [visibleCount, setVisibleCount] = useState<number>(8);
   const [sortBy, setSortBy] = useState<"default" | "price_asc" | "price_desc" | "rating">("default");
 
   useEffect(() => {
-    setVisibleCount(24);
+    setVisibleCount(8);
   }, [activeTab]);
 
   const { filteredList, tabs } = useMemo(() => {
@@ -304,22 +304,36 @@ export default function FilteredProduceSection({
           </motion.div>
         </AnimatePresence>
 
-        {/* Load More Button if more items available */}
+        {/* Load More / Explore Full Shop Button */}
         {filteredList.length > visibleCount && (
-          <div className="text-center mt-6 sm:mt-8">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-5 sm:mt-7">
             <button
               type="button"
-              onClick={() => setVisibleCount((prev) => prev + 24)}
-              className="bg-white hover:bg-emerald-50 active:scale-95 text-[#0c831f] border-2 border-emerald-500/30 hover:border-emerald-500 px-6 py-2.5 rounded-2xl font-black text-xs sm:text-sm shadow-xs transition inline-flex items-center gap-2 cursor-pointer group"
+              onClick={() => setVisibleCount((prev) => prev + 8)}
+              className="w-full sm:w-auto bg-white hover:bg-emerald-50 active:scale-95 text-[#0c831f] border-2 border-emerald-500/30 hover:border-emerald-500 px-6 py-2.5 rounded-2xl font-black text-xs sm:text-sm shadow-2xs transition inline-flex items-center justify-center gap-2 cursor-pointer group"
             >
               <span>
-                Load More {activeTabMeta.label} (+{filteredList.length - visibleCount} more items)
+                Show More {activeTabMeta.label} (+{Math.min(8, filteredList.length - visibleCount)} more)
               </span>
               <ChevronDown
                 size={16}
                 className="group-hover:translate-y-0.5 transition-transform stroke-[2.5]"
               />
             </button>
+
+            <Link
+              href={
+                activeTab === "vegetables"
+                  ? "/shop?category=Vegetables"
+                  : activeTab === "fruits"
+                  ? "/shop?category=Fruits"
+                  : "/shop?category=Exotics"
+              }
+              className="w-full sm:w-auto text-gray-600 hover:text-[#0c831f] font-bold text-xs sm:text-sm px-4 py-2 text-center transition flex items-center justify-center gap-1"
+            >
+              <span>Explore All {filteredList.length} {activeTabMeta.label} in Shop</span>
+              <ChevronRight size={14} className="stroke-[2.5]" />
+            </Link>
           </div>
         )}
       </div>
