@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
+import { useSession } from "next-auth/react";
 import type { RootState } from "@/redux/store";
 import {
   Home,
@@ -13,6 +14,7 @@ import {
   ShoppingCart,
   ArrowRight,
   Search,
+  ShieldCheck,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -20,6 +22,7 @@ export default function MobileBottomNav() {
   const pathname = usePathname();
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
+  const { data: session } = useSession();
   const { cartdata } = useSelector((state: RootState) => state.cart);
   const { items: wishlistItems } = useSelector((state: RootState) => state.wishlist);
   const { userdata } = useSelector((state: RootState) => state.user);
@@ -38,6 +41,10 @@ export default function MobileBottomNav() {
     return null;
   }
 
+  const activeUser: any = userdata || session?.user;
+  const isLoggedIn = !!(activeUser?.email);
+  const isAdmin = activeUser?.role === "admin";
+
   const cartTotal = cartdata.reduce(
     (total, item) => total + item.price * item.quantity,
     0
@@ -55,9 +62,10 @@ export default function MobileBottomNav() {
       badge: mounted && wishlistItems.length > 0 ? wishlistItems.length : null,
     },
     {
-      label: userdata?.role === "admin" ? "Admin" : userdata?.email ? "Account" : "Login",
-      href: userdata?.role === "admin" ? "/admin" : userdata?.email ? "/user/myorder" : "/login",
-      icon: User,
+      label: isAdmin ? "Admin" : isLoggedIn ? "Account" : "Login",
+      href: isAdmin ? "/admin" : isLoggedIn ? "/user" : "/login",
+      icon: isAdmin ? ShieldCheck : User,
+      isUserTab: true,
     },
   ];
 
@@ -124,13 +132,26 @@ export default function MobileBottomNav() {
                   isActive ? "text-[#0f8646]" : "text-gray-400 hover:text-gray-600"
                 }`}
               >
-                <div className="relative">
-                  <Icon
-                    size={22}
-                    className={`transition-transform ${
-                      isActive ? "scale-110 stroke-[2.5]" : "stroke-[1.8]"
-                    }`}
-                  />
+                <div className="relative flex items-center justify-center">
+                  {item.isUserTab && isLoggedIn && activeUser?.image ? (
+                    <img
+                      src={activeUser.image}
+                      alt="User"
+                      className={`w-5.5 h-5.5 rounded-full object-cover border transition-all ${
+                        isActive ? "border-[#0f8646] scale-110" : "border-gray-300"
+                      }`}
+                    />
+                  ) : (
+                    <Icon
+                      size={22}
+                      className={`transition-transform ${
+                        isActive ? "scale-110 stroke-[2.5]" : "stroke-[1.8]"
+                      }`}
+                    />
+                  )}
+                  {item.isUserTab && isLoggedIn && !activeUser?.image && (
+                    <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-[#0f8646] rounded-full ring-2 ring-white" />
+                  )}
                   {item.badge && (
                     <span className="absolute -top-1.5 -right-2.5 bg-red-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
                       {item.badge}

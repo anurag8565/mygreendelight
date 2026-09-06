@@ -6,38 +6,39 @@ import axios from 'axios'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import type { AppDispatch } from '@/redux/store'
+import { useSession } from 'next-auth/react'
 
 function useGetMe() {
   const dispatch = useDispatch<AppDispatch>()
+  const { data: session, status } = useSession()
 
   useEffect(() => {
-
-    console.log("USEGETME RUNNING")
+    if (status === "unauthenticated") {
+      dispatch(setUserdata(null))
+      return
+    }
 
     const getme = async () => {
       try {
-
         const result = await axios.get("/api/me")
 
-        console.log("API ME DATA", result.data)
-
-        if (typeof result.data === 'object' && result.data !== null) {
+        if (typeof result.data === 'object' && result.data !== null && result.data.email) {
           dispatch(setUserdata(result.data))
           if (result.data.wishlist) {
             dispatch(setWishlist(result.data.wishlist))
           }
-        } else {
-          dispatch(setUserdata(null))
+        } else if (session?.user?.email) {
+          dispatch(setUserdata(session.user as any))
         }
-
       } catch (error) {
-        console.log("GETME ERROR", error)
+        if (session?.user?.email) {
+          dispatch(setUserdata(session.user as any))
+        }
       }
     }
 
     getme()
-
-  }, [dispatch])
+  }, [dispatch, session, status])
 }
 
 export default useGetMe
