@@ -141,8 +141,18 @@ function OrderSuccessContent() {
                 <Receipt size={16} className="text-[#0f8646]" />
                 <span>Order ID: <span className="text-[#0f8646] font-mono">{formattedOrderId}</span></span>
               </div>
-              <span className="bg-white text-emerald-800 font-extrabold text-[10px] uppercase px-2.5 py-0.5 rounded-full border border-emerald-200">
-                {orderDetails?.paymentmethod === "cod" ? "Cash On Delivery" : "UPI Direct (Verified)"}
+              <span className={`font-extrabold text-[10px] uppercase px-2.5 py-0.5 rounded-full border ${
+                orderDetails?.paymentmethod === "cod" || searchParams.get("method") === "cod"
+                  ? "bg-gray-100 text-gray-800 border-gray-200"
+                  : orderDetails?.ispaid
+                  ? "bg-emerald-100 text-emerald-800 border-emerald-300"
+                  : "bg-amber-100 text-amber-900 border-amber-300"
+              }`}>
+                {orderDetails?.paymentmethod === "cod" || searchParams.get("method") === "cod"
+                  ? "Cash On Delivery"
+                  : orderDetails?.ispaid
+                  ? "✅ UPI Paid"
+                  : "🟠 UPI Verification Pending"}
               </span>
             </div>
 
@@ -157,6 +167,30 @@ function OrderSuccessContent() {
                 </span>
               </div>
             </div>
+
+            {/* UPI UTR Verification Banner & WhatsApp Receipt Share */}
+            {(orderDetails?.paymentmethod === "upi" || searchParams.get("method") === "upi") && (
+              <div className="mt-3 pt-3 border-t border-gray-200/80 space-y-2">
+                {orderDetails?.paymentId && (
+                  <div className="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg border border-gray-200 text-[11px]">
+                    <span className="text-gray-500 font-semibold">Submitted Ref / UTR:</span>
+                    <span className="font-mono font-bold text-purple-800">{orderDetails.paymentId}</span>
+                  </div>
+                )}
+                {!orderDetails?.ispaid && (
+                  <a
+                    href={`https://wa.me/919981418565?text=${encodeURIComponent(
+                      `Hi SubziQuick! I have placed Order ${formattedOrderId} of ₹${displayTotal} via UPI.\nPayment Ref/UTR: ${orderDetails?.paymentId || "N/A"}.\nPlease find my payment confirmation screenshot attached.`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white py-2 px-3 rounded-xl text-xs font-black flex items-center justify-center gap-1.5 shadow-2xs transition"
+                  >
+                    <span>📲 Send Payment Screenshot on WhatsApp</span>
+                  </a>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Quick Info Grid */}

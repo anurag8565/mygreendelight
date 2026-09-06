@@ -225,6 +225,14 @@ export default function Checkout() {
       return;
     }
 
+    if (paymentMethod === "upi") {
+      const cleanUtr = upiRefNumber.trim();
+      if (!cleanUtr || cleanUtr.length < 6) {
+        alert("⚠️ कृपया UPI पेमेंट करने के बाद 12-अंकों का UTR / Reference Number दर्ज करें, ताकि आपका पेमेंट वेरिफाई हो सके।\n\n(Please enter the 12-digit UPI UTR / Reference Number from your payment receipt before confirming order).");
+        return;
+      }
+    }
+
     setSubmitting(true);
     const payableAmount = finalPayableTotal;
 
@@ -240,6 +248,7 @@ export default function Checkout() {
       .join(", ");
 
     try {
+      const cleanUtr = upiRefNumber.trim();
       const orderRes = await axios.post("/api/user/order", {
         userid: activeUserId,
         items: cartdata.map((item) => ({
@@ -263,7 +272,7 @@ export default function Checkout() {
           longitude: position ? position[1] : currentArea.lng,
         },
         paymentmethod: paymentMethod, // "cod" | "upi"
-        paymentId: paymentMethod === "upi" ? (upiRefNumber.trim() ? `UTR_${upiRefNumber.trim()}` : `UPI_${Date.now()}`) : null,
+        paymentId: paymentMethod === "upi" ? `UTR_${cleanUtr}` : null,
         couponCode: couponCode || undefined,
         discount: discount || 0,
         walletDiscount: 0,
@@ -1016,18 +1025,28 @@ export default function Checkout() {
                         </div>
                       </div>
 
-                      {/* Optional UTR / Reference ID Field */}
-                      <div>
-                        <label className="block text-xs font-bold text-gray-700 mb-1">
-                          UPI UTR / 12-Digit Reference No. <span className="text-gray-400 font-normal">(Optional after paying)</span>
-                        </label>
+                      {/* 12-Digit UTR / Reference ID Field */}
+                      <div className="bg-amber-50/60 p-3.5 rounded-2xl border border-amber-200">
+                        <div className="flex items-center justify-between mb-1.5">
+                          <label className="text-xs font-black text-amber-950 flex items-center gap-1.5">
+                            <span>Step 2: Enter 12-Digit UPI UTR No.</span>
+                            <span className="text-[10px] font-bold text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded">
+                              Required
+                            </span>
+                          </label>
+                          <span className="text-[10px] font-bold text-gray-500">From GPay/PhonePe</span>
+                        </div>
                         <input
                           type="text"
-                          placeholder="e.g. 423987123456 (from your payment receipt)"
+                          maxLength={16}
+                          placeholder="e.g. 423987123456 (from your UPI receipt)"
                           value={upiRefNumber}
-                          onChange={(e) => setUpiRefNumber(e.target.value)}
-                          className="w-full bg-gray-50/70 border border-gray-200 rounded-xl py-2 px-3 text-xs font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] transition"
+                          onChange={(e) => setUpiRefNumber(e.target.value.replace(/[^a-zA-Z0-9]/g, ""))}
+                          className="w-full bg-white border border-amber-300 rounded-xl py-2.5 px-3 text-xs font-bold text-gray-900 outline-none focus:border-[#0f8646] focus:ring-1 focus:ring-[#0f8646] transition shadow-2xs placeholder:text-gray-400 placeholder:font-normal"
                         />
+                        <p className="text-[10px] text-amber-800/80 mt-1.5 font-medium leading-tight">
+                          💡 Pay on your UPI app ➔ Copy the 12-digit UTR/Ref No. ➔ Paste here & click Confirm below.
+                        </p>
                       </div>
                     </div>
                   )}
