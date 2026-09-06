@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Groceryitemcard from "@/components/Groceryitemcard";
 import {
   Loader2,
-  Filter,
   ChevronRight,
   LayoutGrid,
   List,
@@ -18,9 +17,10 @@ import {
   Check,
   Search,
   Truck,
-  Tag,
   Flame,
-  ShoppingBag,
+  Percent,
+  Layers,
+  ArrowUpDown,
 } from "lucide-react";
 import axios from "axios";
 import Nav from "@/components/Nav";
@@ -79,11 +79,11 @@ export default function ShopPage() {
     const fetchCats = async () => {
       try {
         const res = await axios.get("/api/admin/category");
-        if (res.data.success && res.data.categories) {
+        if (res.data?.success && Array.isArray(res.data.categories)) {
           setCategories(res.data.categories);
         }
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching categories:", error);
       }
     };
     fetchCats();
@@ -104,14 +104,14 @@ export default function ShopPage() {
         if (searchParam) url += `&search=${encodeURIComponent(searchParam)}`;
 
         const res = await axios.get(url);
-        if (res.data.success) {
+        if (res.data?.success) {
           setGroceries(res.data.groceries);
           if (res.data.groceries.length < 24) {
             setHasMore(false);
           }
         }
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching groceries:", error);
       } finally {
         setLoading(false);
       }
@@ -132,7 +132,7 @@ export default function ShopPage() {
       if (searchParam) url += `&search=${encodeURIComponent(searchParam)}`;
 
       const res = await axios.get(url);
-      if (res.data.success) {
+      if (res.data?.success) {
         if (res.data.groceries.length === 0) {
           setHasMore(false);
         } else {
@@ -159,11 +159,10 @@ export default function ShopPage() {
     setIsMobileFilterOpen(false);
   };
 
-  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const val = e.target.value;
+  const handleSortChange = (newSort: string) => {
     let newUrl = "/shop?";
     if (categoryParam) newUrl += `category=${encodeURIComponent(categoryParam)}&`;
-    if (val) newUrl += `sort=${val}&`;
+    if (newSort) newUrl += `sort=${newSort}&`;
     if (searchParam) newUrl += `search=${encodeURIComponent(searchParam)}&`;
     router.push(newUrl);
   };
@@ -175,21 +174,24 @@ export default function ShopPage() {
     setUnder50Only(false);
     setBigDiscountOnly(false);
     router.push("/shop");
+    setIsMobileFilterOpen(false);
   };
 
   // Client-side filtering
-  const filteredGroceries = groceries.filter((item) => {
-    if (item.price > priceRange) return false;
-    if (selectedRating && (item.rating || 0) < selectedRating) return false;
-    if (inStockOnly && item.stock <= 0) return false;
-    if (under50Only && item.price > 50) return false;
-    if (bigDiscountOnly) {
-      const mrp = item.mrp || Math.round(item.price * 1.25);
-      const discount = Math.round(((mrp - item.price) / mrp) * 100);
-      if (discount < 20) return false;
-    }
-    return true;
-  });
+  const filteredGroceries = useMemo(() => {
+    return groceries.filter((item) => {
+      if (item.price > priceRange) return false;
+      if (selectedRating && (item.rating || 0) < selectedRating) return false;
+      if (inStockOnly && item.stock <= 0) return false;
+      if (under50Only && item.price > 50) return false;
+      if (bigDiscountOnly) {
+        const mrp = item.mrp || Math.round(item.price * 1.25);
+        const discount = Math.round(((mrp - item.price) / mrp) * 100);
+        if (discount < 20) return false;
+      }
+      return true;
+    });
+  }, [groceries, priceRange, selectedRating, inStockOnly, under50Only, bigDiscountOnly]);
 
   const activeFilterCount =
     (categoryParam ? 1 : 0) +
@@ -208,76 +210,91 @@ export default function ShopPage() {
   };
 
   return (
-    <div className="bg-[#fcfdfc] min-h-screen flex flex-col justify-between font-sans">
+    <div className="bg-[#f8faf9] min-h-screen flex flex-col justify-between font-sans">
       <Nav user={(userdata as any) || { role: "user" }} />
 
-      <main className="flex-1 max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-4 sm:py-6 pb-36 sm:pb-16 w-full">
+      <main className="flex-1 max-w-7xl mx-auto px-3 sm:px-6 md:px-8 py-3 sm:py-6 pb-28 sm:pb-16 w-full">
         
-        {/* Breadcrumb Navigation */}
-        <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-2.5">
-          <Link href="/" className="hover:text-[#0f8646] transition font-bold">
+        {/* 1. Clean Breadcrumb Navigation */}
+        <div className="flex items-center gap-1.5 text-[11px] sm:text-xs text-gray-500 mb-2">
+          <Link href="/" className="hover:text-[#0c831f] transition font-semibold">
             Home
           </Link>
-          <ChevronRight size={12} />
-          <span className="text-[#0f8646] font-black">Shop Produce</span>
+          <ChevronRight size={11} className="text-gray-400" />
+          <Link href="/shop" className="hover:text-[#0c831f] transition font-semibold">
+            Mandi Store
+          </Link>
           {categoryParam && (
             <>
-              <ChevronRight size={12} />
-              <span className="text-gray-900 font-bold">{categoryParam}</span>
+              <ChevronRight size={11} className="text-gray-400" />
+              <span className="text-emerald-800 font-bold capitalize">{categoryParam}</span>
             </>
           )}
           {searchParam && (
             <>
-              <ChevronRight size={12} />
+              <ChevronRight size={11} className="text-gray-400" />
               <span className="text-gray-900 font-bold">&ldquo;{searchParam}&rdquo;</span>
             </>
           )}
         </div>
 
-        {/* Top Header Row with Active Title & Mobile Filter Trigger */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+        {/* 2. Top Banner & Page Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-3 bg-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-gray-100 shadow-xs">
           <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-xl sm:text-3xl font-black text-gray-900 tracking-tight">
+            <div className="flex items-center gap-2 flex-wrap">
+              <h1 className="text-lg sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
                 {searchParam
-                  ? `Results for "${searchParam}"`
+                  ? `Search: "${searchParam}"`
                   : categoryParam
                   ? categoryParam
-                  : "All Fresh Groceries"}
+                  : "All Mandi Fresh Produce"}
               </h1>
-              <span className="text-[10px] font-black uppercase text-[#0f8646] bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
-                Mandi Fresh • Same Day
+              <span className="text-[10px] font-black uppercase text-[#0c831f] bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-full">
+                ⚡ Same Day Dispatch
               </span>
             </div>
             <p className="text-[11px] sm:text-xs text-gray-500 font-medium mt-0.5">
-              Daily Karond Mandi fresh vegetables, fruits & staples delivered same-day in Bhopal
+              Direct from Bhopal & Sehore contract farms • 100% Sorted & Ozone-Washed
             </p>
           </div>
 
-          <button
-            type="button"
-            onClick={() => setIsMobileFilterOpen(true)}
-            className="lg:hidden flex items-center justify-center gap-1.5 bg-white border border-gray-200/90 px-3.5 py-2 rounded-2xl text-xs font-black text-gray-800 shadow-2xs hover:border-[#0f8646] shrink-0 cursor-pointer self-start sm:self-auto"
-          >
-            <SlidersHorizontal size={14} className="text-[#0f8646]" />
-            <span>More Filters ({activeFilterCount})</span>
-          </button>
+          <div className="flex items-center gap-2 self-start sm:self-auto">
+            {activeFilterCount > 0 && (
+              <button
+                type="button"
+                onClick={resetAllFilters}
+                className="flex items-center gap-1 text-[11px] font-bold text-rose-600 bg-rose-50 border border-rose-200/80 px-3 py-1.5 rounded-xl hover:bg-rose-100 transition"
+              >
+                <RotateCcw size={11} />
+                <span>Reset ({activeFilterCount})</span>
+              </button>
+            )}
+
+            <button
+              type="button"
+              onClick={() => setIsMobileFilterOpen(true)}
+              className="lg:hidden flex items-center gap-1.5 bg-gray-900 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold shadow-xs cursor-pointer active:scale-95 transition"
+            >
+              <SlidersHorizontal size={13} />
+              <span>Filters {activeFilterCount > 0 ? `(${activeFilterCount})` : ""}</span>
+            </button>
+          </div>
         </div>
 
-        {/* 🌟 1. Real Visual Category Tabs (Scrollable Ribbon with Real Images) */}
-        <div className="mb-3">
-          <div className="flex items-center gap-2.5 overflow-x-auto no-scrollbar pb-2 pt-1 scroll-smooth">
-            {/* "All Items" Tab */}
+        {/* 3. Visual Category Carousel Ribbon (Mobile & Desktop App-Style) */}
+        <div className="mb-3.5">
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-none py-1 -mx-3 px-3 sm:mx-0 sm:px-0">
+            {/* "All Produce" Tab */}
             <button
               type="button"
               onClick={() => handleCategoryClick("all")}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-2xl shrink-0 transition-all font-black text-xs cursor-pointer shadow-2xs border ${
+              className={`flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-2xl shrink-0 transition-all font-black text-xs cursor-pointer shadow-2xs border ${
                 !categoryParam
-                  ? "bg-[#0f8646] text-white border-[#0f8646] shadow-sm scale-102"
-                  : "bg-white text-gray-700 border-gray-200/90 hover:border-emerald-300 hover:bg-emerald-50/50"
+                  ? "bg-[#0c831f] text-white border-[#0c831f] shadow-xs scale-100 ring-2 ring-emerald-600/30"
+                  : "bg-white text-gray-700 border-gray-200 hover:border-emerald-300 hover:bg-emerald-50/50"
               }`}
             >
-              <span className="w-6 h-6 rounded-xl overflow-hidden bg-white/20 flex items-center justify-center shrink-0 border border-white/20">
+              <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-lg overflow-hidden bg-white/20 flex items-center justify-center shrink-0 border border-white/20">
                 <img
                   src="/categories/vegetables.jpg"
                   alt="All"
@@ -297,13 +314,13 @@ export default function ShopPage() {
                   type="button"
                   key={cat._id}
                   onClick={() => handleCategoryClick(cat.name)}
-                  className={`flex items-center gap-2 px-3.5 py-2 rounded-2xl shrink-0 transition-all font-black text-xs cursor-pointer shadow-2xs border ${
+                  className={`flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-2xl shrink-0 transition-all font-black text-xs cursor-pointer shadow-2xs border ${
                     isActive
-                      ? "bg-[#0f8646] text-white border-[#0f8646] shadow-sm scale-102"
-                      : "bg-white text-gray-700 border-gray-200/90 hover:border-emerald-300 hover:bg-emerald-50/50"
+                      ? "bg-[#0c831f] text-white border-[#0c831f] shadow-xs scale-100 ring-2 ring-emerald-600/30"
+                      : "bg-white text-gray-700 border-gray-200 hover:border-emerald-300 hover:bg-emerald-50/50"
                   }`}
                 >
-                  <span className="w-6 h-6 rounded-xl overflow-hidden bg-gray-100 flex items-center justify-center shrink-0 border border-black/5">
+                  <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center shrink-0 border border-black/5">
                     <img
                       src={catImg}
                       alt={cat.name}
@@ -320,14 +337,90 @@ export default function ShopPage() {
           </div>
         </div>
 
-        {/* Main Content Layout */}
-        <div className="flex flex-col lg:flex-row gap-6">
+        {/* 4. Quick 1-Tap Filter Chips on Mobile & Desktop */}
+        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none pb-2.5 -mx-3 px-3 sm:mx-0 sm:px-0 select-none">
+          {/* Under ₹50 Quick Filter */}
+          <button
+            type="button"
+            onClick={() => setUnder50Only(!under50Only)}
+            className={`px-3 py-1 rounded-full text-[11px] font-bold transition-all flex items-center gap-1 shrink-0 border cursor-pointer ${
+              under50Only
+                ? "bg-emerald-600 text-white border-emerald-600 shadow-2xs"
+                : "bg-white text-gray-700 border-gray-200 hover:border-gray-300"
+            }`}
+          >
+            <Zap size={11} className={under50Only ? "fill-white" : "text-amber-500"} />
+            <span>Under ₹50</span>
+            {under50Only && <Check size={11} className="stroke-[3]" />}
+          </button>
+
+          {/* 20%+ OFF Steal Deals */}
+          <button
+            type="button"
+            onClick={() => setBigDiscountOnly(!bigDiscountOnly)}
+            className={`px-3 py-1 rounded-full text-[11px] font-bold transition-all flex items-center gap-1 shrink-0 border cursor-pointer ${
+              bigDiscountOnly
+                ? "bg-rose-600 text-white border-rose-600 shadow-2xs"
+                : "bg-white text-gray-700 border-gray-200 hover:border-gray-300"
+            }`}
+          >
+            <Flame size={11} className={bigDiscountOnly ? "fill-white" : "text-rose-500"} />
+            <span>20%+ OFF</span>
+            {bigDiscountOnly && <Check size={11} className="stroke-[3]" />}
+          </button>
+
+          {/* 4+ Star Rated */}
+          <button
+            type="button"
+            onClick={() => setSelectedRating(selectedRating === 4 ? null : 4)}
+            className={`px-3 py-1 rounded-full text-[11px] font-bold transition-all flex items-center gap-1 shrink-0 border cursor-pointer ${
+              selectedRating === 4
+                ? "bg-amber-600 text-white border-amber-600 shadow-2xs"
+                : "bg-white text-gray-700 border-gray-200 hover:border-gray-300"
+            }`}
+          >
+            <Star size={11} className={selectedRating === 4 ? "fill-white" : "fill-amber-400 text-amber-400"} />
+            <span>Top Rated (4★+)</span>
+            {selectedRating === 4 && <Check size={11} className="stroke-[3]" />}
+          </button>
+
+          {/* In Stock Only */}
+          <button
+            type="button"
+            onClick={() => setInStockOnly(!inStockOnly)}
+            className={`px-3 py-1 rounded-full text-[11px] font-bold transition-all flex items-center gap-1 shrink-0 border cursor-pointer ${
+              inStockOnly
+                ? "bg-teal-600 text-white border-teal-600 shadow-2xs"
+                : "bg-white text-gray-700 border-gray-200 hover:border-gray-300"
+            }`}
+          >
+            <span>In Stock Only</span>
+            {inStockOnly && <Check size={11} className="stroke-[3]" />}
+          </button>
+
+          {/* Sort Pill Dropdown for Mobile */}
+          <div className="ml-auto shrink-0 flex items-center gap-1 bg-white border border-gray-200 rounded-full px-2.5 py-1 shadow-2xs">
+            <ArrowUpDown size={11} className="text-gray-500" />
+            <select
+              value={sortParam || "newest"}
+              onChange={(e) => handleSortChange(e.target.value)}
+              className="text-[11px] font-bold text-gray-800 bg-transparent outline-none cursor-pointer pr-1"
+            >
+              <option value="newest">Newest</option>
+              <option value="price_asc">Price: Low to High</option>
+              <option value="price_desc">Price: High to Low</option>
+            </select>
+          </div>
+        </div>
+
+        {/* 5. Main Content Layout */}
+        <div className="flex flex-col lg:flex-row gap-5">
           
           {/* Desktop Left Sidebar Filters */}
           <aside className="hidden lg:flex flex-col w-64 shrink-0 gap-4">
             
             {/* Categories Filter Box */}
-            <div className="bg-white rounded-3xl shadow-2xs border border-gray-200/90 p-5">
+            <div className="bg-white rounded-3xl shadow-2xs border border-gray-100 p-4">
               <h3 className="font-black text-gray-900 mb-3 text-xs uppercase tracking-wider flex items-center gap-1.5">
                 <span className="w-4 h-4 rounded-full overflow-hidden border border-black/10 inline-block shrink-0">
                   <img src="/categories/vegetables.jpg" alt="Produce" className="w-full h-full object-cover" />
@@ -340,7 +433,7 @@ export default function ShopPage() {
                   onClick={() => handleCategoryClick("all")}
                   className={`text-left text-xs font-black p-2.5 rounded-xl flex justify-between items-center transition cursor-pointer ${
                     !categoryParam
-                      ? "bg-emerald-50 text-[#0f8646] border border-emerald-200"
+                      ? "bg-emerald-50 text-[#0c831f] border border-emerald-200"
                       : "text-gray-700 hover:bg-gray-50"
                   }`}
                 >
@@ -360,7 +453,7 @@ export default function ShopPage() {
                     onClick={() => handleCategoryClick(cat.name)}
                     className={`text-left text-xs font-black p-2.5 rounded-xl flex justify-between items-center transition cursor-pointer ${
                       categoryParam === cat.name
-                        ? "bg-emerald-50 text-[#0f8646] border border-emerald-200"
+                        ? "bg-emerald-50 text-[#0c831f] border border-emerald-200"
                         : "text-gray-700 hover:bg-gray-50"
                     }`}
                   >
@@ -384,27 +477,27 @@ export default function ShopPage() {
             </div>
 
             {/* Price & Rating Box */}
-            <div className="bg-white rounded-3xl shadow-2xs border border-gray-200/90 p-5">
-              <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
+            <div className="bg-white rounded-3xl shadow-2xs border border-gray-100 p-4">
+              <div className="flex items-center justify-between border-b border-gray-100 pb-2.5 mb-3">
                 <h3 className="font-black text-gray-900 text-xs uppercase tracking-wider">
-                  Refine By
+                  Filter by Price
                 </h3>
-                {activeFilterCount > 0 && (
+                {priceRange < 1500 && (
                   <button
                     type="button"
-                    onClick={resetAllFilters}
-                    className="text-[11px] font-black text-red-600 hover:underline flex items-center gap-0.5 cursor-pointer"
+                    onClick={() => setPriceRange(1500)}
+                    className="text-[10px] font-bold text-red-600 hover:underline cursor-pointer"
                   >
-                    <RotateCcw size={10} /> Reset
+                    Reset
                   </button>
                 )}
               </div>
 
               {/* Price Range Slider */}
-              <div className="mb-5">
-                <div className="flex justify-between items-center mb-1.5">
-                  <span className="text-xs font-bold text-gray-700">Max Price:</span>
-                  <span className="text-xs font-black text-[#0f8646]">₹{priceRange}</span>
+              <div className="mb-4">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-xs font-bold text-gray-600">Max Budget:</span>
+                  <span className="text-xs font-black text-[#0c831f]">₹{priceRange}</span>
                 </div>
                 <input
                   type="range"
@@ -413,37 +506,12 @@ export default function ShopPage() {
                   step="20"
                   value={priceRange}
                   onChange={(e) => setPriceRange(Number(e.target.value))}
-                  className="w-full accent-[#0f8646] cursor-pointer"
+                  className="w-full accent-[#0c831f] cursor-pointer"
                 />
                 <div className="flex justify-between text-[10px] text-gray-400 font-bold mt-1">
                   <span>₹30</span>
                   <span>₹1500+</span>
                 </div>
-              </div>
-
-              {/* Rating Filter */}
-              <div>
-                <span className="text-xs font-bold text-gray-700 block mb-2">Customer Rating</span>
-                {[4, 3].map((star) => (
-                  <button
-                    type="button"
-                    key={star}
-                    onClick={() => setSelectedRating(selectedRating === star ? null : star)}
-                    className={`w-full flex items-center justify-between p-2 rounded-xl text-xs mb-1.5 transition font-bold cursor-pointer ${
-                      selectedRating === star
-                        ? "bg-amber-50 text-amber-900 border border-amber-200"
-                        : "text-gray-600 hover:bg-gray-50"
-                    }`}
-                  >
-                    <span className="flex items-center gap-1">
-                      {[...Array(star)].map((_, i) => (
-                        <Star key={i} size={11} className="fill-amber-400 text-amber-400" />
-                      ))}
-                      <span>& above</span>
-                    </span>
-                    {selectedRating === star && <Check size={13} className="stroke-[3]" />}
-                  </button>
-                ))}
               </div>
             </div>
 
@@ -452,72 +520,38 @@ export default function ShopPage() {
           {/* Right Product Grid Section */}
           <section className="flex-1 flex flex-col min-w-0">
             
-            {/* Express Delivery Banner */}
-            <div className="w-full bg-gradient-to-r from-[#032412] via-[#073b1d] to-[#0f8646] text-white rounded-3xl p-4 sm:p-5 mb-5 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-md relative overflow-hidden">
-              <div className="absolute right-0 top-0 w-60 h-60 bg-white/10 rounded-full blur-3xl pointer-events-none" />
-
-              <div className="flex items-center gap-3 relative z-10 text-center sm:text-left">
-                <div className="w-11 h-11 rounded-2xl bg-white/20 flex items-center justify-center shrink-0 shadow-inner border border-white/20">
-                  <Truck size={22} className="text-yellow-300" />
-                </div>
-                <div>
-                  <h3 className="font-black text-sm sm:text-base text-white">
-                    🌿 Daily Mandi Fresh Produce • Same-Day Delivery in Bhopal
-                  </h3>
-                  <p className="text-[11px] sm:text-xs text-green-100 font-medium mt-0.5">
-                    100% Ozone-Washed sunrise harvest produce straight to your doorstep
-                  </p>
-                </div>
-              </div>
-
-              <span className="relative z-10 bg-white text-[#0f8646] text-xs font-black px-4 py-2 rounded-xl shrink-0 shadow-xs uppercase tracking-wider">
-                FREE Delivery &gt; ₹199
-              </span>
-            </div>
-
-            {/* Results Count & Sorting Toolbar */}
-            <div className="flex flex-row justify-between items-center bg-white border border-gray-200/90 rounded-2xl px-3.5 py-2.5 mb-5 gap-3 shadow-2xs">
-              <p className="text-xs sm:text-sm text-gray-700 font-bold truncate">
-                Showing <span className="font-black text-gray-900">{filteredGroceries.length}</span> items
+            {/* Results Count & View Mode Header */}
+            <div className="flex flex-row justify-between items-center bg-white border border-gray-100 rounded-2xl px-3 sm:px-4 py-2 mb-3 gap-2 shadow-2xs">
+              <p className="text-xs sm:text-sm text-gray-600 font-medium truncate">
+                Showing <span className="font-black text-gray-900">{filteredGroceries.length}</span> fresh items
               </p>
 
-              <div className="flex items-center gap-2.5 shrink-0">
-                {/* Sort Dropdown */}
-                <select
-                  value={sortParam || "newest"}
-                  onChange={handleSortChange}
-                  className="border border-gray-200 rounded-xl px-2.5 py-1.5 text-xs font-black outline-none focus:border-[#0f8646] bg-gray-50 text-gray-800 cursor-pointer shadow-2xs"
-                >
-                  <option value="newest">🌿 Newest Harvest</option>
-                  <option value="price_asc">💰 Price: Low to High</option>
-                  <option value="price_desc">💎 Price: High to Low</option>
-                </select>
-
+              <div className="flex items-center gap-2 shrink-0">
                 {/* Grid / List View Toggle */}
-                <div className="flex items-center bg-gray-100 p-1 rounded-xl">
+                <div className="flex items-center bg-gray-100 p-0.5 rounded-lg">
                   <button
                     type="button"
                     onClick={() => setViewMode("grid")}
-                    className={`p-1.5 rounded-lg transition cursor-pointer ${
+                    className={`p-1 rounded-md transition cursor-pointer ${
                       viewMode === "grid"
-                        ? "bg-white text-[#0f8646] shadow-2xs"
+                        ? "bg-white text-[#0c831f] shadow-2xs"
                         : "text-gray-500 hover:text-gray-800"
                     }`}
                     title="Grid View"
                   >
-                    <LayoutGrid size={15} />
+                    <LayoutGrid size={14} />
                   </button>
                   <button
                     type="button"
                     onClick={() => setViewMode("list")}
-                    className={`p-1.5 rounded-lg transition cursor-pointer ${
+                    className={`p-1 rounded-md transition cursor-pointer ${
                       viewMode === "list"
-                        ? "bg-white text-[#0f8646] shadow-2xs"
+                        ? "bg-white text-[#0c831f] shadow-2xs"
                         : "text-gray-500 hover:text-gray-800"
                     }`}
                     title="List View"
                   >
-                    <List size={15} />
+                    <List size={14} />
                   </button>
                 </div>
               </div>
@@ -525,25 +559,25 @@ export default function ShopPage() {
 
             {/* Product Grid Area */}
             {loading && groceries.length === 0 ? (
-              <div className="flex flex-col items-center justify-center py-24 bg-white rounded-3xl border border-gray-100 shadow-2xs">
-                <Loader2 size={36} className="animate-spin text-[#0f8646] mb-3" />
-                <p className="text-xs font-black text-gray-500">Loading fresh farm produce...</p>
+              <div className="flex flex-col items-center justify-center py-20 bg-white rounded-3xl border border-gray-100 shadow-2xs">
+                <Loader2 size={32} className="animate-spin text-[#0c831f] mb-2" />
+                <p className="text-xs font-bold text-gray-500">Loading fresh harvest...</p>
               </div>
             ) : filteredGroceries.length === 0 ? (
-              <div className="flex flex-col items-center justify-center py-16 px-4 bg-white rounded-3xl border border-gray-200/90 shadow-2xs text-center max-w-md mx-auto">
-                <div className="w-16 h-16 rounded-full bg-green-50 text-[#0f8646] flex items-center justify-center text-2xl mb-3 shadow-inner">
+              <div className="flex flex-col items-center justify-center py-14 px-4 bg-white rounded-3xl border border-gray-100 shadow-2xs text-center max-w-md mx-auto">
+                <div className="w-14 h-14 rounded-full bg-emerald-50 text-[#0c831f] flex items-center justify-center text-2xl mb-2.5">
                   🥬
                 </div>
-                <h3 className="text-base font-black text-gray-900 mb-1">
+                <h3 className="text-sm sm:text-base font-black text-gray-900 mb-1">
                   No matching fresh produce found
                 </h3>
-                <p className="text-xs text-gray-500 mb-4 font-medium">
-                  Try adjusting your filters or price range to discover other sunrise veggies.
+                <p className="text-xs text-gray-500 mb-3.5 font-medium">
+                  Try clearing some filter chips or searching another mandi category.
                 </p>
                 <button
                   type="button"
                   onClick={resetAllFilters}
-                  className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2.5 rounded-xl font-black text-xs shadow-md transition cursor-pointer"
+                  className="bg-[#0c831f] hover:bg-[#0a6c1a] text-white px-4 py-2 rounded-xl font-black text-xs shadow-xs transition cursor-pointer"
                 >
                   Clear All Filters
                 </button>
@@ -552,8 +586,8 @@ export default function ShopPage() {
               <div
                 className={
                   viewMode === "grid"
-                    ? "grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4"
-                    : "flex flex-col space-y-3"
+                    ? "grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4"
+                    : "flex flex-col space-y-2.5"
                 }
               >
                 {filteredGroceries.map((item) => (
@@ -564,20 +598,20 @@ export default function ShopPage() {
 
             {/* Load More Button */}
             {hasMore && filteredGroceries.length > 0 && (
-              <div className="flex justify-center mt-8">
+              <div className="flex justify-center mt-6 mb-2">
                 <button
                   type="button"
                   disabled={loading}
                   onClick={loadMore}
-                  className="bg-white hover:bg-green-50 text-gray-900 hover:text-[#0f8646] border border-gray-200 hover:border-[#0f8646] font-black text-xs px-6 py-3 rounded-2xl shadow-2xs transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
+                  className="bg-white hover:bg-emerald-50 text-gray-900 hover:text-[#0c831f] border border-gray-200 hover:border-[#0c831f] font-black text-xs px-5 py-2.5 rounded-xl shadow-2xs transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
                 >
                   {loading ? (
                     <>
-                      <Loader2 size={14} className="animate-spin text-[#0f8646]" />
-                      <span>Harvesting more items...</span>
+                      <Loader2 size={13} className="animate-spin text-[#0c831f]" />
+                      <span>Loading more...</span>
                     </>
                   ) : (
-                    <span>Load More Fresh Produce</span>
+                    <span>Load More Produce</span>
                   )}
                 </button>
               </div>
@@ -589,24 +623,24 @@ export default function ShopPage() {
 
       </main>
 
-      {/* Mobile Filters Slide-over Modal */}
+      {/* Mobile Filters Slide-over Bottom Sheet */}
       <AnimatePresence>
         {isMobileFilterOpen && (
           <div
             onClick={() => setIsMobileFilterOpen(false)}
-            className="fixed inset-0 z-[1200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-xs cursor-pointer lg:hidden"
+            className="fixed inset-0 z-[1200] flex items-end justify-center bg-black/60 backdrop-blur-xs cursor-pointer lg:hidden"
           >
             <motion.div
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              transition={{ type: "spring", damping: 26, stiffness: 320 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white rounded-t-3xl sm:rounded-3xl p-5 w-full max-w-md max-h-[85vh] overflow-y-auto shadow-2xl cursor-default text-gray-900"
+              className="bg-white rounded-t-3xl p-4 sm:p-5 w-full max-w-lg max-h-[85vh] overflow-y-auto shadow-2xl cursor-default text-gray-900 pb-8"
             >
-              <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
+              <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-3.5">
                 <h3 className="text-base font-black text-gray-900 flex items-center gap-1.5">
-                  <SlidersHorizontal size={16} className="text-[#0f8646]" />
+                  <SlidersHorizontal size={15} className="text-[#0c831f]" />
                   <span>Refine Produce Filters</span>
                 </h3>
                 <button
@@ -614,14 +648,14 @@ export default function ShopPage() {
                   onClick={() => setIsMobileFilterOpen(false)}
                   className="p-1 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200"
                 >
-                  <X size={18} />
+                  <X size={16} />
                 </button>
               </div>
 
               {/* Categories */}
-              <div className="mb-5">
-                <span className="text-xs font-black uppercase text-gray-400 block mb-2">
-                  Categories
+              <div className="mb-4">
+                <span className="text-[11px] font-black uppercase text-gray-400 block mb-2">
+                  Produce Categories
                 </span>
                 <div className="grid grid-cols-2 gap-2">
                   <button
@@ -629,7 +663,7 @@ export default function ShopPage() {
                     onClick={() => handleCategoryClick("all")}
                     className={`p-2.5 rounded-xl text-xs font-black text-left flex items-center justify-between border ${
                       !categoryParam
-                        ? "bg-emerald-50 text-[#0f8646] border-emerald-300"
+                        ? "bg-emerald-50 text-[#0c831f] border-emerald-300"
                         : "bg-gray-50 border-gray-200 text-gray-700"
                     }`}
                   >
@@ -648,7 +682,7 @@ export default function ShopPage() {
                       onClick={() => handleCategoryClick(cat.name)}
                       className={`p-2.5 rounded-xl text-xs font-black text-left flex items-center justify-between border ${
                         categoryParam === cat.name
-                          ? "bg-emerald-50 text-[#0f8646] border-emerald-300"
+                          ? "bg-emerald-50 text-[#0c831f] border-emerald-300"
                           : "bg-gray-50 border-gray-200 text-gray-700"
                       }`}
                     >
@@ -671,11 +705,11 @@ export default function ShopPage() {
                 </div>
               </div>
 
-              {/* Max Price */}
-              <div className="mb-5">
-                <div className="flex justify-between items-center mb-1.5">
-                  <span className="text-xs font-black uppercase text-gray-400">Max Price</span>
-                  <span className="text-xs font-black text-[#0f8646]">₹{priceRange}</span>
+              {/* Max Budget Slider */}
+              <div className="mb-4">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-[11px] font-black uppercase text-gray-400">Max Budget</span>
+                  <span className="text-xs font-black text-[#0c831f]">₹{priceRange}</span>
                 </div>
                 <input
                   type="range"
@@ -684,7 +718,7 @@ export default function ShopPage() {
                   step="20"
                   value={priceRange}
                   onChange={(e) => setPriceRange(Number(e.target.value))}
-                  className="w-full accent-[#0f8646]"
+                  className="w-full accent-[#0c831f]"
                 />
               </div>
 
@@ -692,14 +726,14 @@ export default function ShopPage() {
                 <button
                   type="button"
                   onClick={resetAllFilters}
-                  className="flex-1 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 font-black text-xs rounded-xl transition"
+                  className="flex-1 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold text-xs rounded-xl transition"
                 >
                   Reset All
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsMobileFilterOpen(false)}
-                  className="flex-1 py-3 bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black text-xs rounded-xl shadow-md transition"
+                  className="flex-1 py-2.5 bg-[#0c831f] hover:bg-[#0a6c1a] text-white font-bold text-xs rounded-xl shadow-xs transition"
                 >
                   Apply Filters
                 </button>
@@ -713,3 +747,4 @@ export default function ShopPage() {
     </div>
   );
 }
+
