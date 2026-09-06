@@ -37,7 +37,7 @@ export async function GET(
         longitude: order.address?.longitude,
       },
       deliveryBoy: order.assigneddelliveryboy,
-      deliveryOtp: order.deliveryOtp,
+      deliveryOtpVerified: Boolean(order.deliveryOtp?.verified),
     });
 
   } catch (error) {

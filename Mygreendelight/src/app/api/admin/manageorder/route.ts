@@ -3,6 +3,7 @@ import Order from "@/model/order";
 import User from "@/model/user.model";
 import DeliveryAssignment from "@/model/Deliveryassigment.model";
 import Grocery from "@/model/groseri.model";
+import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -10,6 +11,14 @@ export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   try {
     await connectDb();
+
+    const session = await auth();
+    if (!session?.user || (session.user as any).role !== "admin") {
+      return NextResponse.json(
+        { success: false, message: "Unauthorized: Admin privileges required" },
+        { status: 401 }
+      );
+    }
 
     // Touch models so Mongoose registers them in memory
     const _models = [User.modelName, DeliveryAssignment.modelName, Grocery.modelName, Order.modelName];

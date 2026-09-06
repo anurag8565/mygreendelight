@@ -18,19 +18,31 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (role === "admin") {
-      const existingAdmin = await User.findOne({ role: "admin" });
-      if (existingAdmin && existingAdmin.email !== session.user.email) {
+    const currentUser = await User.findOne({ email: session.user.email });
+    if (!currentUser) {
+      return NextResponse.json(
+        { message: "User not found" },
+        { status: 404 }
+      );
+    }
+
+    // Only existing admins can change a user's role
+    const updateData: Record<string, any> = {};
+    if (mobile !== undefined) updateData.mobile = mobile;
+
+    if (role && role !== currentUser.role) {
+      if (currentUser.role !== "admin") {
         return NextResponse.json(
-          { message: "Admin role is restricted. An admin already exists for this store." },
+          { message: "Forbidden: Only an admin can modify account roles." },
           { status: 403 }
         );
       }
+      updateData.role = role;
     }
 
     const user = await User.findOneAndUpdate(
       { email: session.user.email },
-      { role: role || "user", mobile },
+      updateData,
       { new: true }
     );
 

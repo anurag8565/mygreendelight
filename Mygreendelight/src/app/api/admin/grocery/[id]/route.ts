@@ -1,5 +1,6 @@
 import connectDb from "@/lib/db";
 import Grocery from "@/model/groseri.model";
+import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 
@@ -45,6 +46,14 @@ export async function PUT(
 ) {
   try {
     await connectDb();
+
+    const session = await auth();
+    if (!session?.user || (session.user as any).role !== "admin") {
+      return NextResponse.json(
+        { success: false, message: "Unauthorized: Admin privileges required" },
+        { status: 401 }
+      );
+    }
 
     const { id } = await context.params;
     const body = await req.json();
@@ -100,6 +109,15 @@ export async function DELETE(
 ) {
   try {
     await connectDb();
+
+    const session = await auth();
+    if (!session?.user || (session.user as any).role !== "admin") {
+      return NextResponse.json(
+        { success: false, message: "Unauthorized: Admin privileges required" },
+        { status: 401 }
+      );
+    }
+
     const { id } = await context.params;
 
     const deleted = await Grocery.findByIdAndDelete(id);

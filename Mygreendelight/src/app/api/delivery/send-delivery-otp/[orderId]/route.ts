@@ -57,8 +57,7 @@ export async function POST(
 
     return NextResponse.json({
       success: true,
-      message: "OTP sent successfully",
-      otp, // return for testing/fallback
+      message: "Delivery OTP sent securely to customer email/SMS",
     });
   } catch (error: any) {
     console.error("SEND OTP ERROR:", error);

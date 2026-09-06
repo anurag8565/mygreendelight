@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
     const checksum = paytmParams.CHECKSUMHASH;
     delete paytmParams.CHECKSUMHASH;
 
-    let isChecksumValid = true;
+    let isChecksumValid = false;
     if (checksum && MERCHANT_KEY) {
       isChecksumValid = PaytmChecksum.verifySignature(
         paytmParams,
@@ -37,9 +37,9 @@ export async function POST(req: NextRequest) {
     const status = paytmParams.STATUS;
 
     // Check status with Paytm API for 100% verification
-    let isSuccess = status === "TXN_SUCCESS";
+    let isSuccess = status === "TXN_SUCCESS" && isChecksumValid;
 
-    if (isSuccess && orderId) {
+    if (isSuccess && orderId && txnAmount > 0) {
       const parts = orderId.split("_");
       const userId = parts[1];
 
@@ -47,6 +47,14 @@ export async function POST(req: NextRequest) {
         let wallet = await UserWallet.findOne({ user: userId });
         if (!wallet) {
           wallet = new UserWallet({ user: userId, balance: 0, totalCashback: 0, transactions: [] });
+        }
+
+        // Prevent transaction replay attacks
+        const existingTxn = wallet.transactions?.find((t: any) => t.orderId === orderId);
+        if (existingTxn) {
+          return NextResponse.redirect(`${process.env.NEXT_URL}/user/wallet?status=success&amount=${txnAmount}`, {
+            status: 303,
+          });
         }
 
         wallet.balance += txnAmount;

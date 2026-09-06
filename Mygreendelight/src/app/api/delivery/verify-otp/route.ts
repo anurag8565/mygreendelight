@@ -3,11 +3,20 @@ import Order from "@/model/order";
 import DeliveryAssignment from "@/model/Deliveryassigment.model";
 import User from "@/model/user.model";
 import UserWallet from "@/model/wallet.model";
+import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
     await connectDb();
+
+    const session = await auth();
+    if (!session?.user || ((session.user as any).role !== "deliveryboy" && (session.user as any).role !== "admin")) {
+      return NextResponse.json(
+        { message: "Unauthorized: Delivery driver or admin privileges required" },
+        { status: 401 }
+      );
+    }
 
     const { orderId, otp, bagsReturned } = await req.json();
 
@@ -58,8 +67,8 @@ export async function POST(req: Request) {
       );
     }
 
-    // Process Zero-Plastic Eco-Bag Return (₹10 per bag returned)
-    const returnedCount = Math.max(0, parseInt(bagsReturned) || 0);
+    // Process Zero-Plastic Eco-Bag Return (₹10 per bag returned, max 10)
+    const returnedCount = Math.max(0, Math.min(10, parseInt(bagsReturned) || 0));
     const bagCashback = returnedCount * 10;
 
     // Mark verified & delivered

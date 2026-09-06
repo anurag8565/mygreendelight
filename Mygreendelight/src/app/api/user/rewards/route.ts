@@ -187,13 +187,10 @@ export async function POST(req: NextRequest) {
       code,
       discountType: selected.discountType === "percent" ? "percentage" : "flat",
       discountValue: selected.discountValue,
-      minOrderAmount: selected.minOrderValue || 199,
-      maxDiscountAmount: selected.discountType === "percent" ? 100 : selected.discountValue,
+      minOrderValue: selected.minOrderValue || 199,
+      maxDiscount: selected.discountType === "percent" ? 100 : selected.discountValue,
       expiryDate: expiresAt,
-      usageLimit: 1,
-      usedCount: 0,
       isActive: true,
-      description: selected.description,
     }).catch((e) => console.log("Coupon create note:", e.message));
 
     // Save ScratchReward

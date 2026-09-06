@@ -141,8 +141,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 token.role = (user as any).role || "user";
             }
 
-            if (trigger === "update" && session?.role) {
-                token.role = session.role;
+            if (trigger === "update") {
+                if (token.email) {
+                    try {
+                        await connectDb();
+                        const dbUser = await User.findOne({ email: token.email }).select("role name");
+                        if (dbUser) {
+                            token.role = dbUser.role || "user";
+                            if (dbUser.name) token.name = dbUser.name;
+                        }
+                    } catch (_) {}
+                }
             }
 
             return token;

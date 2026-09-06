@@ -1,6 +1,7 @@
 import connectDb from "@/lib/db";
 import Category from "@/model/category.model";
 import Grocery from "@/model/groseri.model";
+import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 
@@ -38,6 +39,15 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     await connectDb();
+
+    const session = await auth();
+    if (!session?.user || (session.user as any).role !== "admin") {
+      return NextResponse.json(
+        { success: false, message: "Unauthorized: Admin privileges required" },
+        { status: 401 }
+      );
+    }
+
     const formdata = await req.formData();
     const name = formdata.get("name") as string;
     const file = formdata.get("image") as File | null;
@@ -99,6 +109,15 @@ export async function POST(req: NextRequest) {
 export async function DELETE(req: NextRequest) {
   try {
     await connectDb();
+
+    const session = await auth();
+    if (!session?.user || (session.user as any).role !== "admin") {
+      return NextResponse.json(
+        { success: false, message: "Unauthorized: Admin privileges required" },
+        { status: 401 }
+      );
+    }
+
     const url = new URL(req.url);
     const id = url.searchParams.get("id");
 

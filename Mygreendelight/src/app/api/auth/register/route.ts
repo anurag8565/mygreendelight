@@ -61,11 +61,21 @@ export async function POST(req: NextRequest) {
 
 
 
+        const safeUser = {
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            mobile: user.mobile,
+            role: user.role,
+            walletBalance: user.walletBalance,
+        };
+
         return NextResponse.json(
-            user, { status: 201 });
+            { success: true, message: "Account created successfully", user: safeUser },
+            { status: 201 }
+        );
 
     } catch (error: any) {
-
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }

@@ -1,11 +1,20 @@
 import connectDb from "@/lib/db";
 import Grocery from "@/model/groseri.model";
 import Category from "@/model/category.model";
+import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
     await connectDb();
+
+    const session = await auth();
+    if (!session?.user || (session.user as any).role !== "admin") {
+      return NextResponse.json(
+        { success: false, message: "Unauthorized: Admin privileges required" },
+        { status: 401 }
+      );
+    }
 
     const body = await req.json();
     const { products } = body;

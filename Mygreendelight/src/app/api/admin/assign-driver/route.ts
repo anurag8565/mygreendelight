@@ -2,11 +2,21 @@ import connectDb from "@/lib/db";
 import Order from "@/model/order";
 import DeliveryAssignment from "@/model/Deliveryassigment.model";
 import User from "@/model/user.model";
+import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
     await connectDb();
+
+    const session = await auth();
+    if (!session?.user || (session.user as any).role !== "admin") {
+      return NextResponse.json(
+        { success: false, message: "Unauthorized: Admin privileges required" },
+        { status: 401 }
+      );
+    }
+
     const { orderId, driverId } = await req.json();
 
     if (!orderId || !driverId) {

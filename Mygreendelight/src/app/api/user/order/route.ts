@@ -79,20 +79,52 @@ export async function POST(req: NextRequest) {
         address.city = "Bhopal";
         address.state = "Madhya Pradesh";
 
-        // Sanitize items: ensure invalid/custom ObjectIds don't crash Mongoose
-        const sanitizedItems = items.map((item: any) => {
-            const isValid = item.grocery && mongoose.Types.ObjectId.isValid(item.grocery);
-            return {
-                grocery: isValid ? item.grocery : undefined,
+        // Sanitize items & fetch real produce data from DB to prevent client price tampering
+        const GroceryModel = (await import("@/model/groseri.model")).default;
+        const sanitizedItems: any[] = [];
+        let verifiedSubtotal = 0;
+
+        for (const item of items) {
+            const isValidId = item.grocery && mongoose.Types.ObjectId.isValid(item.grocery);
+            let realPrice = Number(item.price) || 0;
+            let realName = item.name;
+            let realImage = item.image;
+            let realUnit = item.unit;
+
+            if (isValidId) {
+                const dbGrocery = await GroceryModel.findById(item.grocery);
+                if (dbGrocery) {
+                    realName = dbGrocery.name || item.name;
+                    realImage = dbGrocery.image || item.image;
+                    realUnit = dbGrocery.unit || item.unit;
+
+                    if (item.variationWeight && dbGrocery.variations && dbGrocery.variations.length > 0) {
+                        const matchedVar = dbGrocery.variations.find((v: any) => v.weight === item.variationWeight);
+                        if (matchedVar && matchedVar.price) {
+                            realPrice = Number(matchedVar.price);
+                        } else {
+                            realPrice = Number(dbGrocery.price);
+                        }
+                    } else {
+                        realPrice = Number(dbGrocery.price);
+                    }
+                }
+            }
+
+            const itemQty = Math.max(1, Math.min(100, Number(item.quantity) || 1));
+            verifiedSubtotal += realPrice * itemQty;
+
+            sanitizedItems.push({
+                grocery: isValidId ? item.grocery : undefined,
                 groceryId: item.grocery ? String(item.grocery) : undefined,
-                name: item.name,
-                price: Number(item.price) || 0,
-                unit: item.unit,
+                name: realName,
+                price: realPrice,
+                unit: realUnit,
                 variationWeight: item.variationWeight,
-                image: item.image,
-                quantity: Number(item.quantity) || 1,
-            };
-        });
+                image: realImage,
+                quantity: itemQty,
+            });
+        }
 
         // Check VIP Farm Club membership
         const isVip = Boolean(
@@ -101,17 +133,19 @@ export async function POST(req: NextRequest) {
             new Date(user.vipPass.endDate) > new Date()
         );
 
-        // Compute verified total to prevent 0 amount discrepancies
-        const subtotalCalc = sanitizedItems.reduce((sum: number, item: any) => sum + (item.price * item.quantity), 0);
-        const deliveryFeeCalc = isVip ? 0 : (subtotalCalc > 0 && subtotalCalc < 199 ? 30 : 0);
+        // Compute verified total to prevent price tampering
+        const deliveryFeeCalc = isVip ? 0 : (verifiedSubtotal > 0 && verifiedSubtotal < 199 ? 30 : 0);
         const discountCalc = Number(discount) || 0;
-        const walletDiscountCalc = Number(walletDiscount) || 0;
-        const computedPayableTotal = Math.max(0, subtotalCalc + deliveryFeeCalc - discountCalc - walletDiscountCalc);
-        const finalTotalToSave = (totalamount !== undefined && totalamount !== null && !isNaN(Number(totalamount)))
-            ? Number(totalamount)
-            : computedPayableTotal;
+        
+        let walletDiscountCalc = Math.max(0, Number(walletDiscount) || 0);
+        const currentWalletBal = Number(user.walletBalance) || 0;
+        if (walletDiscountCalc > currentWalletBal) {
+            walletDiscountCalc = currentWalletBal;
+        }
 
-        if (isVip && subtotalCalc > 0 && subtotalCalc < 199) {
+        const finalTotalToSave = Math.max(0, verifiedSubtotal + deliveryFeeCalc - discountCalc - walletDiscountCalc);
+
+        if (isVip && verifiedSubtotal > 0 && verifiedSubtotal < 199) {
             await User.findByIdAndUpdate(userid, { $inc: { "vipPass.totalSavings": 30 } });
         }
 
@@ -135,30 +169,33 @@ export async function POST(req: NextRequest) {
             ispaid: false,
         });
 
-        // 💰 Deduct GreenPoints Wallet if redeemed
-        if (walletDiscount && walletDiscount > 0) {
-            await User.findByIdAndUpdate(userid, {
-                $inc: { walletBalance: -walletDiscount },
-                $push: {
-                    walletHistory: {
-                        amount: walletDiscount,
-                        type: "debit",
-                        description: `Redeemed GreenPoints on Order #${neworder._id.toString().slice(-6).toUpperCase()}`,
-                        date: new Date(),
+        // 💰 Deduct GreenPoints Wallet atomically if redeemed
+        if (walletDiscountCalc > 0) {
+            await User.findOneAndUpdate(
+                { _id: userid, walletBalance: { $gte: walletDiscountCalc } },
+                {
+                    $inc: { walletBalance: -walletDiscountCalc },
+                    $push: {
+                        walletHistory: {
+                            amount: walletDiscountCalc,
+                            type: "debit",
+                            description: `Redeemed GreenPoints on Order #${neworder._id.toString().slice(-6).toUpperCase()}`,
+                            date: new Date(),
+                        },
                     },
-                },
-            });
+                }
+            );
 
             try {
                 const UserWallet = (await import("@/model/wallet.model")).default;
                 await UserWallet.findOneAndUpdate(
-                    { user: userid },
+                    { user: userid, balance: { $gte: walletDiscountCalc } },
                     {
-                        $inc: { balance: -walletDiscount },
+                        $inc: { balance: -walletDiscountCalc },
                         $push: {
                             transactions: {
                                 type: "debit",
-                                amount: walletDiscount,
+                                amount: walletDiscountCalc,
                                 description: `Redeemed on Order #${neworder._id.toString().slice(-6).toUpperCase()}`,
                                 orderId: neworder._id.toString(),
                                 createdAt: new Date(),
@@ -184,18 +221,17 @@ export async function POST(req: NextRequest) {
             }
         }
         
-        // 📉 Reduce stock safely
-        const Grocery = (await import("@/model/groseri.model")).default;
-        for (const item of items) {
+        // 📉 Reduce stock safely with non-negative protection
+        for (const item of sanitizedItems) {
             if (item.grocery && mongoose.Types.ObjectId.isValid(item.grocery)) {
                 if (item.variationWeight) {
-                    await Grocery.updateOne(
-                        { _id: item.grocery, "variations.weight": item.variationWeight },
+                    await GroceryModel.updateOne(
+                        { _id: item.grocery, "variations.weight": item.variationWeight, "variations.stock": { $gte: item.quantity } },
                         { $inc: { "variations.$.stock": -item.quantity } }
                     );
                 } else {
-                    await Grocery.updateOne(
-                        { _id: item.grocery },
+                    await GroceryModel.updateOne(
+                        { _id: item.grocery, stock: { $gte: item.quantity } },
                         { $inc: { stock: -item.quantity } }
                     );
                 }

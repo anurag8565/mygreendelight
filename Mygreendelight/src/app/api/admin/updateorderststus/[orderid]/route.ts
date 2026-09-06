@@ -3,6 +3,7 @@ import DeliveryAssignment from "@/model/Deliveryassigment.model";
 import Order from "@/model/order";
 import User from "@/model/user.model";
 import Grocery from "@/model/groseri.model";
+import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(
@@ -11,6 +12,14 @@ export async function POST(
 ) {
   try {
     await connectDb();
+
+    const session = await auth();
+    if (!session?.user || (session.user as any).role !== "admin") {
+      return NextResponse.json(
+        { success: false, message: "Unauthorized: Admin privileges required" },
+        { status: 401 }
+      );
+    }
 
     const { orderid } = await context.params;
     const body = await req.json();
