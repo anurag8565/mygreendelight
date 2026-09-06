@@ -118,18 +118,18 @@ export default async function Userdashbord() {
       {/* 2. Shop by Category Slider */}
       <Categoryslider categories={plainCategories} />
 
-      {/* 3. Tone 1: Live Flash Deals & Steal Discounts (Pure White) */}
+      {/* 3. Interactive Fresh Produce Section (3 Tabs: Vegetables, Fruits, Exotics + Grid/List Switcher) */}
+      <FilteredProduceSection groceries={plainNew} />
+
+      {/* 4. Live Flash Deals & Steal Discounts */}
       {plainFlash && plainFlash.length > 0 && (
         <FlashDeals products={plainFlash} />
       )}
 
-      {/* 4. Tone 2: Bhopal Top Bestsellers & Featured Picks (Soft Luxury Gray #f8f9fa) */}
+      {/* 5. Bhopal Top Bestsellers & Featured Picks */}
       {plainFeatured && plainFeatured.length > 0 && (
         <FeaturedProduceSection products={plainFeatured} />
       )}
-
-      {/* 5. Tone 1: Daily Fresh Farm Mandi (Pure White) */}
-      <FilteredProduceSection groceries={plainNew} />
 
       {/* 6. Tone 2: Save-More Value Combos & Multipacks (Soft Luxury Gray #f8f9fa) */}
       {plainCombos && plainCombos.length > 0 && (
