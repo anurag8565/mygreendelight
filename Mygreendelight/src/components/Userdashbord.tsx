@@ -15,8 +15,7 @@ import Groceryitemcard from './Groceryitemcard'
 import ProductCarousel from './ProductCarousel'
 import FarmFreshPromise from './FarmFreshPromise'
 import Testimonials from './Testimonials'
-import { RotateCcw, ChevronRight, Sparkles, Leaf, Apple } from 'lucide-react'
-import Link from 'next/link'
+import { RotateCcw } from 'lucide-react'
 
 import Banner from '@/model/banner.model'
 import Testimonial from '@/model/testimonial.model'
@@ -32,9 +31,6 @@ export default async function Userdashbord() {
   }
 
   let newGroceries: any[] = [];
-  let vegGroceries: any[] = [];
-  let fruitGroceries: any[] = [];
-  let exoticGroceries: any[] = [];
   let flashDeals: any[] = [];
   let featuredGroceries: any[] = [];
   let banners: any[] = [];
@@ -47,21 +43,6 @@ export default async function Userdashbord() {
     await connectDb();
 
     const newGroceriesPromise = Grocery.find({ status: { $ne: 'draft' } }).sort({ createdAt: -1 }).limit(30).lean();
-    const vegGroceriesPromise = Grocery.find({
-      status: { $ne: 'draft' },
-      category: { $regex: 'veg', $options: 'i' },
-    }).sort({ isFeatured: -1, createdAt: -1 }).limit(12).lean();
-
-    const fruitGroceriesPromise = Grocery.find({
-      status: { $ne: 'draft' },
-      category: { $regex: 'fruit', $options: 'i' },
-    }).sort({ isFeatured: -1, createdAt: -1 }).limit(12).lean();
-
-    const exoticGroceriesPromise = Grocery.find({
-      status: { $ne: 'draft' },
-      category: { $regex: 'exotic|hydroponic|salad', $options: 'i' },
-    }).sort({ isFeatured: -1, createdAt: -1 }).limit(12).lean();
-
     const flashDealsPromise = Grocery.find({ stock: { $gt: 0 }, status: { $ne: 'draft' } }).sort({ price: 1, rating: -1 }).limit(10).lean();
     const featuredGroceriesPromise = Grocery.find({
       status: { $ne: 'draft' },
@@ -103,9 +84,6 @@ export default async function Userdashbord() {
       testimonialsPromise.catch(() => []),
       orderAgainGroceriesPromise,
       comboBundlesPromise,
-      vegGroceriesPromise.catch(() => []),
-      fruitGroceriesPromise.catch(() => []),
-      exoticGroceriesPromise.catch(() => []),
     ]);
 
     newGroceries = results[0] || [];
@@ -116,17 +94,11 @@ export default async function Userdashbord() {
     testimonials = results[5] || [];
     orderAgain = results[6] || [];
     comboBundles = results[7] || [];
-    vegGroceries = results[8] || [];
-    fruitGroceries = results[9] || [];
-    exoticGroceries = results[10] || [];
   } catch (err) {
     console.error("Userdashbord data fetch error:", err);
   }
 
   const plainNew = JSON.parse(JSON.stringify(newGroceries || []));
-  const plainVeg = JSON.parse(JSON.stringify(vegGroceries || []));
-  const plainFruit = JSON.parse(JSON.stringify(fruitGroceries || []));
-  const plainExotic = JSON.parse(JSON.stringify(exoticGroceries || []));
   const plainFlash = JSON.parse(JSON.stringify(flashDeals || []));
   const plainFeatured = JSON.parse(JSON.stringify(featuredGroceries || []));
   const plainBanners = JSON.parse(JSON.stringify(banners || []));
@@ -143,160 +115,31 @@ export default async function Userdashbord() {
       {/* 1.5 Quick Commerce Trust & Speed Ribbon */}
       <TrustRibbon />
 
-      {/* 2. Shop by Category Produce Pillars */}
+      {/* 2. Shop by Category Slider */}
       <Categoryslider categories={plainCategories} />
 
-      {/* 3. Live Flash Deals & Steal Discounts */}
+      {/* 3. Tone 1: Live Flash Deals & Steal Discounts (Pure White) */}
       {plainFlash && plainFlash.length > 0 && (
         <FlashDeals products={plainFlash} />
       )}
 
-      {/* 4. Interactive Mandi Hub (With Carousel & Grid View Toggle) */}
-      <FilteredProduceSection groceries={plainNew} />
-
-      {/* 5. DEDICATED VEGETABLES SHOWCASE */}
-      {plainVeg && plainVeg.length > 0 && (
-        <div className="w-full py-5 sm:py-8 bg-[#f8f9fa] border-y border-gray-100 font-sans">
-          <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
-            <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xl">🥬</span>
-                  <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
-                    Fresh Bhopal Vegetables • ताज़ी सब्जियां
-                  </h2>
-                </div>
-                <p className="text-[11px] sm:text-xs text-gray-500 font-medium hidden sm:block mt-0.5">
-                  Harvested at 5:00 AM • 100% Ozone-Washed & Hand-Sorted
-                </p>
-              </div>
-
-              <Link
-                href="/shop?category=Vegetables"
-                className="text-[#0c831f] hover:text-[#096618] font-black text-xs sm:text-sm flex items-center gap-0.5 group transition shrink-0"
-              >
-                <span>View All Veggies</span>
-                <ChevronRight
-                  size={14}
-                  className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]"
-                />
-              </Link>
-            </div>
-
-            <ProductCarousel>
-              {plainVeg.map((item: any) => (
-                <div
-                  key={item._id}
-                  className="w-[155px] sm:w-[200px] md:w-[210px] snap-start shrink-0 flex flex-col h-[320px] sm:h-[340px]"
-                >
-                  <Groceryitemcard item={item} />
-                </div>
-              ))}
-            </ProductCarousel>
-          </div>
-        </div>
-      )}
-
-      {/* 6. DEDICATED FRUITS SHOWCASE */}
-      {plainFruit && plainFruit.length > 0 && (
-        <div className="w-full py-5 sm:py-8 bg-white border-b border-gray-100 font-sans">
-          <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
-            <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xl">🍎</span>
-                  <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
-                    Sweet & Juicy Fruits • मीठे व ताज़े फल
-                  </h2>
-                </div>
-                <p className="text-[11px] sm:text-xs text-gray-500 font-medium hidden sm:block mt-0.5">
-                  100% Naturally Ripened • Handpicked Daily for Pure Taste
-                </p>
-              </div>
-
-              <Link
-                href="/shop?category=Fruits"
-                className="text-[#0c831f] hover:text-[#096618] font-black text-xs sm:text-sm flex items-center gap-0.5 group transition shrink-0"
-              >
-                <span>View All Fruits</span>
-                <ChevronRight
-                  size={14}
-                  className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]"
-                />
-              </Link>
-            </div>
-
-            <ProductCarousel>
-              {plainFruit.map((item: any) => (
-                <div
-                  key={item._id}
-                  className="w-[155px] sm:w-[200px] md:w-[210px] snap-start shrink-0 flex flex-col h-[320px] sm:h-[340px]"
-                >
-                  <Groceryitemcard item={item} />
-                </div>
-              ))}
-            </ProductCarousel>
-          </div>
-        </div>
-      )}
-
-      {/* 7. DEDICATED EXOTICS & HYDROPONICS SHOWCASE */}
-      {plainExotic && plainExotic.length > 0 && (
-        <div className="w-full py-5 sm:py-8 bg-[#f8f9fa] border-y border-gray-100 font-sans">
-          <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
-            <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xl">🥑</span>
-                  <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
-                    Hydroponics & Exotics • विदेशी फल व सलाद
-                  </h2>
-                </div>
-                <p className="text-[11px] sm:text-xs text-gray-500 font-medium hidden sm:block mt-0.5">
-                  Pesticide-Free Hydroponic Greens, Avocados, Broccoli & Gourmet Herbs
-                </p>
-              </div>
-
-              <Link
-                href="/shop?category=Exotics"
-                className="text-[#0c831f] hover:text-[#096618] font-black text-xs sm:text-sm flex items-center gap-0.5 group transition shrink-0"
-              >
-                <span>View All Exotics</span>
-                <ChevronRight
-                  size={14}
-                  className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]"
-                />
-              </Link>
-            </div>
-
-            <ProductCarousel>
-              {plainExotic.map((item: any) => (
-                <div
-                  key={item._id}
-                  className="w-[155px] sm:w-[200px] md:w-[210px] snap-start shrink-0 flex flex-col h-[320px] sm:h-[340px]"
-                >
-                  <Groceryitemcard item={item} />
-                </div>
-              ))}
-            </ProductCarousel>
-          </div>
-        </div>
-      )}
-
-      {/* 8. Bhopal Top Bestsellers & Featured Picks */}
+      {/* 4. Tone 2: Bhopal Top Bestsellers & Featured Picks (Soft Luxury Gray #f8f9fa) */}
       {plainFeatured && plainFeatured.length > 0 && (
         <FeaturedProduceSection products={plainFeatured} />
       )}
 
-      {/* 9. Save-More Value Combos & Multipacks */}
+      {/* 5. Tone 1: Daily Fresh Farm Mandi (Pure White) */}
+      <FilteredProduceSection groceries={plainNew} />
+
+      {/* 6. Tone 2: Save-More Value Combos & Multipacks (Soft Luxury Gray #f8f9fa) */}
       {plainCombos && plainCombos.length > 0 && (
         <CombosSection initialCombos={plainCombos} />
       )}
 
-      {/* 10. Daily Lucky Scratch Card & Rewards */}
+      {/* 7. Tone 1: Daily Lucky Scratch Card & Rewards (Pure White) */}
       <DailyRewardWidget />
 
-      {/* 11. Order Again Carousel */}
+      {/* 9. Tone 2: Order Again Carousel (Soft Luxury Gray #f8f9fa) */}
       {plainOrderAgain && plainOrderAgain.length > 0 && (
         <div className="w-full py-5 sm:py-8 bg-[#f8f9fa] border-y border-gray-100 font-sans">
           <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
@@ -320,10 +163,10 @@ export default async function Userdashbord() {
         </div>
       )}
 
-      {/* 12. Customer Testimonials & Reviews */}
+      {/* 10. Tone 1: Customer Testimonials & Reviews (Pure White) */}
       <Testimonials initialTestimonials={plainTestimonials} />
 
-      {/* 13. Farm to Fork Freshness Promise & Trust Guarantee */}
+      {/* 11. Tone 2: Farm to Fork Freshness Promise & Trust Guarantee (Soft Luxury Gray #f8f9fa) */}
       <FarmFreshPromise />
     </div>
   )

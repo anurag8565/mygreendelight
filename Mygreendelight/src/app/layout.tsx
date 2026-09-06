@@ -7,7 +7,6 @@ import "leaflet/dist/leaflet.css";
 import SocketProvider from "@/components/SocketProvider";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import MobileBottomNav from "@/components/MobileBottomNav";
-import MobileStickyCartBar from "@/components/MobileStickyCartBar";
 import BroadcastBar from "@/components/BroadcastBar";
 
 export const viewport: Viewport = {
@@ -210,7 +209,6 @@ export default function RootLayout({
             <BroadcastBar />
             {children}
             <WhatsAppWidget />
-            <MobileStickyCartBar />
             <MobileBottomNav />
           </StoreProviders>
         </Provider>
