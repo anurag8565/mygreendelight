@@ -26,6 +26,8 @@ import {
   ChevronDown,
   ArrowLeft,
   CheckCircle2,
+  Timer,
+  ShoppingBasket,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -88,6 +90,11 @@ export default function ProductDetailsClient({
       (!item.cartItemId && item._id?.toString() === product._id?.toString())
   );
   const quantity = cartItem ? cartItem.quantity : 0;
+  const totalCartCount = cartdata.reduce((acc, curr) => acc + (curr.quantity || 1), 0);
+  const totalCartValue = cartdata.reduce(
+    (acc, curr) => acc + (curr.price || 0) * (curr.quantity || 1),
+    0
+  );
 
   const handleAddToCart = () => {
     if (currentStock <= 0) return;
@@ -142,7 +149,7 @@ export default function ProductDetailsClient({
 
   return (
     <div className="bg-[#f8faf9] min-h-screen font-sans">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 md:px-8 py-2.5 sm:py-5 pb-28 sm:pb-16">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 md:px-8 py-2.5 sm:py-5 pb-32 sm:pb-16">
         
         {/* Top Breadcrumb & Mobile Back Navigation */}
         <div className="flex items-center justify-between gap-2 mb-3">
@@ -150,7 +157,7 @@ export default function ProductDetailsClient({
             <button
               type="button"
               onClick={() => router.back()}
-              className="sm:hidden p-1.5 rounded-full bg-white border border-gray-200 text-gray-700 active:scale-90 mr-1 cursor-pointer"
+              className="sm:hidden p-1.5 rounded-full bg-white border border-gray-200 text-gray-700 active:scale-90 mr-1 cursor-pointer shadow-2xs"
               title="Go Back"
             >
               <ArrowLeft size={14} />
@@ -174,12 +181,12 @@ export default function ProductDetailsClient({
               </>
             )}
             <ChevronRight size={11} className="text-gray-400 shrink-0" />
-            <span className="text-gray-900 font-bold truncate max-w-[150px] sm:max-w-[250px]">
+            <span className="text-gray-900 font-bold truncate max-w-[140px] sm:max-w-[250px]">
               {product.name}
             </span>
           </nav>
 
-          {/* Top Quick Actions (Desktop & Mobile) */}
+          {/* Top Quick Actions (Wishlist & WhatsApp Share) */}
           <div className="flex items-center gap-1.5 shrink-0">
             <button
               type="button"
@@ -212,7 +219,7 @@ export default function ProductDetailsClient({
         </div>
 
         {/* Main Product Showcase Card */}
-        <div className="bg-white border border-gray-100 rounded-3xl p-3.5 sm:p-7 shadow-xs mb-5">
+        <div className="bg-white border border-gray-100 rounded-3xl p-3.5 sm:p-7 shadow-xs mb-4">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-10 items-start">
             
             {/* Left 5 Cols: Product Image Frame */}
@@ -287,7 +294,27 @@ export default function ProductDetailsClient({
                   </span>
                 </div>
                 <span className="text-xs font-semibold text-gray-500">
-                  Unit Pack: <strong className="text-gray-800">{currentUnit}</strong>
+                  Selected Pack: <strong className="text-gray-900">{currentUnit}</strong>
+                </span>
+              </div>
+
+              {/* Express Delivery Live Slot Banner */}
+              <div className="mb-3.5 bg-gradient-to-r from-emerald-50 via-teal-50/70 to-emerald-50 border border-emerald-200/70 rounded-2xl p-2.5 sm:p-3 flex items-center justify-between gap-2 shadow-2xs">
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-2xs">
+                    <Zap size={14} className="fill-white" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-black text-emerald-950 leading-tight">
+                      ⚡ 10-15 Min Express Delivery in Bhopal
+                    </p>
+                    <p className="text-[10px] text-emerald-700 font-medium">
+                      Harvested sunrise 5:00 AM • 100% Ozone Cleaned
+                    </p>
+                  </div>
+                </div>
+                <span className="hidden sm:inline-block text-[10px] font-bold bg-white text-emerald-800 px-2.5 py-1 rounded-lg border border-emerald-200">
+                  Live Mandi Stock
                 </span>
               </div>
 
@@ -313,7 +340,7 @@ export default function ProductDetailsClient({
 
               {/* Pack Sizes (Variations Chips) */}
               {hasVariations && (
-                <div className="mb-5">
+                <div className="mb-4">
                   <span className="text-[11px] sm:text-xs font-black uppercase text-gray-500 tracking-wider block mb-2">
                     Choose Pack Size:
                   </span>
@@ -407,7 +434,7 @@ export default function ProductDetailsClient({
         </div>
 
         {/* 4 Trust Feature Strip */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 mb-5">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 mb-4">
           <div className="bg-white border border-gray-100 rounded-2xl p-3 sm:p-3.5 flex items-center gap-2.5 shadow-2xs">
             <div className="w-8 h-8 rounded-xl bg-emerald-100 text-[#0c831f] flex items-center justify-center shrink-0">
               <ShieldCheck size={16} />
@@ -450,7 +477,7 @@ export default function ProductDetailsClient({
         </div>
 
         {/* Product Information Accordions */}
-        <div className="bg-white border border-gray-100 rounded-3xl p-4 sm:p-6 shadow-xs mb-5">
+        <div className="bg-white border border-gray-100 rounded-3xl p-4 sm:p-6 shadow-xs mb-4">
           <h3 className="text-sm sm:text-base font-black text-gray-900 mb-3 flex items-center gap-2">
             <Info size={16} className="text-[#0c831f]" />
             <span>Product Details & Freshness Guarantee</span>
@@ -529,7 +556,7 @@ export default function ProductDetailsClient({
         </div>
 
         {/* Customer Ratings & Reviews */}
-        <div className="bg-white border border-gray-100 rounded-3xl p-4 sm:p-6 shadow-xs mb-5">
+        <div className="bg-white border border-gray-100 rounded-3xl p-4 sm:p-6 shadow-xs mb-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-4">
             <div>
               <h3 className="text-sm sm:text-base font-black text-gray-900">
@@ -596,7 +623,7 @@ export default function ProductDetailsClient({
 
         {/* Related Products Carousel / Grid */}
         {relatedProducts.length > 0 && (
-          <div className="mb-5">
+          <div className="mb-4">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm sm:text-base font-black text-gray-900">
                 You May Also Need
@@ -620,61 +647,76 @@ export default function ProductDetailsClient({
 
       </div>
 
-      {/* 📱 Sticky Mobile Bottom Cart Bar (App-Style Quick Commerce) */}
-      <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-200/90 px-4 py-2.5 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] flex items-center justify-between gap-3">
-        <div className="flex flex-col">
-          <span className="text-[10px] text-gray-500 font-medium leading-none">
-            {currentUnit}
-          </span>
-          <div className="flex items-baseline gap-1 mt-0.5">
-            <span className="text-base font-black text-gray-950">
-              ₹{currentPrice}
+      {/* 📱 Sticky Mobile Bottom Cart Bar (App-Style Quick Commerce with Cart Preview) */}
+      <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-200 px-3.5 py-2.5 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] flex flex-col gap-1.5">
+        {/* Floating Mini Basket Strip if other items in cart */}
+        {totalCartCount > 0 && quantity === 0 && (
+          <div className="flex items-center justify-between bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-xl text-[11px] font-bold text-emerald-900">
+            <span className="flex items-center gap-1">
+              <ShoppingBasket size={13} className="text-[#0c831f]" />
+              <span>{totalCartCount} item(s) in Cart (₹{totalCartValue})</span>
             </span>
-            <span className="text-[10px] text-gray-400 line-through">
-              ₹{activeMRP}
-            </span>
+            <Link href="/user/cart" className="text-[#0c831f] font-black underline">
+              View Cart →
+            </Link>
           </div>
-        </div>
+        )}
 
-        <div className="flex-1 max-w-[190px]">
-          {quantity > 0 ? (
-            <div className="flex items-center bg-[#0c831f] text-white rounded-xl h-10 w-full overflow-hidden shadow-xs">
-              <button
-                type="button"
-                onClick={() => dispatch(decreaseQuantity(cartItemId))}
-                className="w-10 h-full flex items-center justify-center font-black text-base active:scale-90"
-              >
-                <Minus size={14} className="stroke-[3]" />
-              </button>
-              <span className="flex-1 text-center font-black text-xs text-white">
-                {quantity} in Cart
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex flex-col">
+            <span className="text-[10px] text-gray-500 font-medium leading-none">
+              {currentUnit}
+            </span>
+            <div className="flex items-baseline gap-1 mt-0.5">
+              <span className="text-base font-black text-gray-950">
+                ₹{currentPrice}
               </span>
+              <span className="text-[10px] text-gray-400 line-through">
+                ₹{activeMRP}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex-1 max-w-[200px]">
+            {quantity > 0 ? (
+              <div className="flex items-center bg-[#0c831f] text-white rounded-xl h-10 w-full overflow-hidden shadow-xs">
+                <button
+                  type="button"
+                  onClick={() => dispatch(decreaseQuantity(cartItemId))}
+                  className="w-10 h-full flex items-center justify-center font-black text-base active:scale-90"
+                >
+                  <Minus size={14} className="stroke-[3]" />
+                </button>
+                <span className="flex-1 text-center font-black text-xs text-white">
+                  {quantity} in Cart
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (quantity < currentStock) dispatch(increaseQuantity(cartItemId));
+                  }}
+                  disabled={quantity >= currentStock}
+                  className="w-10 h-full flex items-center justify-center font-black text-base active:scale-90 disabled:opacity-50"
+                >
+                  <Plus size={14} className="stroke-[3]" />
+                </button>
+              </div>
+            ) : (
               <button
                 type="button"
-                onClick={() => {
-                  if (quantity < currentStock) dispatch(increaseQuantity(cartItemId));
-                }}
-                disabled={quantity >= currentStock}
-                className="w-10 h-full flex items-center justify-center font-black text-base active:scale-90 disabled:opacity-50"
+                onClick={handleAddToCart}
+                disabled={currentStock <= 0}
+                className={`w-full h-10 rounded-xl font-bold text-xs shadow-xs transition flex items-center justify-center gap-1.5 active:scale-95 ${
+                  currentStock > 0
+                    ? "bg-[#0c831f] text-white"
+                    : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                }`}
               >
-                <Plus size={14} className="stroke-[3]" />
+                <ShoppingBag size={14} />
+                <span>{currentStock > 0 ? "Add to Cart" : "Out of Stock"}</span>
               </button>
-            </div>
-          ) : (
-            <button
-              type="button"
-              onClick={handleAddToCart}
-              disabled={currentStock <= 0}
-              className={`w-full h-10 rounded-xl font-bold text-xs shadow-xs transition flex items-center justify-center gap-1.5 active:scale-95 ${
-                currentStock > 0
-                  ? "bg-[#0c831f] text-white"
-                  : "bg-gray-200 text-gray-400 cursor-not-allowed"
-              }`}
-            >
-              <ShoppingBag size={14} />
-              <span>{currentStock > 0 ? "Add to Cart" : "Out of Stock"}</span>
-            </button>
-          )}
+            )}
+          </div>
         </div>
       </div>
 
@@ -690,4 +732,5 @@ export default function ProductDetailsClient({
     </div>
   );
 }
+
 
