@@ -14,25 +14,20 @@ import {
   User as UserIcon,
   Package,
   Wallet,
-  Crown,
   Heart,
   ShoppingCart,
   Phone,
   MessageCircle,
-  MapPin,
   ChevronRight,
   LogOut,
   Sparkles,
   ShieldCheck,
-  Salad,
   Gift,
   ArrowLeft,
-  Calendar,
-  Layers,
-  ArrowUpRight,
+  ShoppingBag,
   Tag,
+  Store,
 } from "lucide-react";
-import { motion } from "framer-motion";
 
 export default function UserProfileHub() {
   const router = useRouter();
@@ -45,7 +40,6 @@ export default function UserProfileHub() {
   const isLoggedIn = !!(activeUser?.email);
 
   const [walletBalance, setWalletBalance] = useState<number>(0);
-  const [vipStatus, setVipStatus] = useState<any>(null);
   const [activeOrdersCount, setActiveOrdersCount] = useState<number>(0);
   const [loading, setLoading] = useState(true);
 
@@ -67,15 +61,7 @@ export default function UserProfileHub() {
         }
       } catch (_) {}
 
-      // 2. Fetch VIP Pass
-      try {
-        const vipRes = await axios.get("/api/user/vip-pass");
-        if (vipRes.data?.success) {
-          setVipStatus(vipRes.data);
-        }
-      } catch (_) {}
-
-      // 3. Fetch Orders count
+      // 2. Fetch Orders count
       try {
         const ordersRes = await axios.get("/api/user/myorder");
         const list = Array.isArray(ordersRes.data)
@@ -89,8 +75,6 @@ export default function UserProfileHub() {
       setLoading(false);
     }
   };
-
-  const isVip = vipStatus?.isMember;
 
   if (status === "unauthenticated" && !isLoggedIn) {
     return (
@@ -141,7 +125,7 @@ export default function UserProfileHub() {
 
         {/* User Identity Banner */}
         <div className="bg-gradient-to-r from-[#032412] via-[#073b1d] to-[#0f8646] text-white rounded-3xl p-5 sm:p-7 shadow-md relative overflow-hidden mb-5">
-          <div className="absolute right-0 top-0 w-80 h-80 bg-amber-400/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute right-0 top-0 w-80 h-80 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 text-center sm:text-left">
             <div className="flex flex-col sm:flex-row items-center gap-4">
@@ -162,21 +146,20 @@ export default function UserProfileHub() {
               <div>
                 <div className="flex items-center justify-center sm:justify-start gap-2 mb-1 flex-wrap">
                   <h1 className="text-xl sm:text-2xl font-black text-white">
-                    {activeUser?.name || "SubziQuick Member"}
+                    {activeUser?.name || "SubziQuick Customer"}
                   </h1>
-                  {isVip && (
-                    <span className="bg-gradient-to-r from-amber-400 to-yellow-400 text-gray-950 font-black text-[10px] uppercase px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1">
-                      <Crown size={11} /> VIP Member
-                    </span>
-                  )}
-                  {activeUser?.role === "admin" && (
-                    <span className="bg-amber-400 text-gray-950 font-black text-[10px] uppercase px-2 py-0.5 rounded-full flex items-center gap-1">
+                  {activeUser?.role === "admin" ? (
+                    <span className="bg-amber-400 text-gray-950 font-black text-[10px] uppercase px-2.5 py-0.5 rounded-full flex items-center gap-1">
                       <ShieldCheck size={11} /> Admin
+                    </span>
+                  ) : (
+                    <span className="bg-emerald-900/70 text-emerald-200 font-bold text-[10px] uppercase px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                      <Sparkles size={10} className="text-emerald-300" /> Verified Member
                     </span>
                   )}
                 </div>
                 <p className="text-xs text-green-100/90 font-medium">
-                  {activeUser?.email || activeUser?.mobile || "SubziQuick Farm Fresh Deliveries"}
+                  {activeUser?.email || activeUser?.mobile || "SubziQuick Mandi Fresh Deliveries"}
                 </p>
                 <div className="flex items-center justify-center sm:justify-start gap-3 mt-2 text-[11px] text-green-200">
                   <span>📍 Bhopal Central Hub</span>
@@ -196,27 +179,27 @@ export default function UserProfileHub() {
           </div>
         </div>
 
-        {/* 4 Core Quick Tiles: Orders, Wallet, VIP, Wishlist */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
+        {/* 3 Core Quick Tiles: Orders, Wallet, Wishlist */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6">
           {/* Tile 1: My Orders */}
           <Link
             href="/user/myorder"
             className="bg-white rounded-2xl p-4 border border-emerald-200 shadow-2xs hover:shadow-md transition-all flex items-center justify-between group"
           >
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-[#0f8646] flex items-center justify-center font-black shrink-0 border border-emerald-100 group-hover:scale-105 transition-transform">
-                <Package size={22} />
+              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-[#0f8646] flex items-center justify-center font-black shrink-0 border border-emerald-100 group-hover:scale-105 transition-transform">
+                <Package size={24} />
               </div>
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block">
-                  My Orders
+                  My Orders & Tracking
                 </span>
-                <span className="text-base font-black text-gray-900">
+                <span className="text-lg font-black text-gray-900">
                   {activeOrdersCount} Placed
                 </span>
               </div>
             </div>
-            <ChevronRight size={16} className="text-gray-400 group-hover:text-[#0f8646]" />
+            <ChevronRight size={18} className="text-gray-400 group-hover:text-[#0f8646]" />
           </Link>
 
           {/* Tile 2: Farm Wallet */}
@@ -225,68 +208,47 @@ export default function UserProfileHub() {
             className="bg-white rounded-2xl p-4 border border-blue-200 shadow-2xs hover:shadow-md transition-all flex items-center justify-between group"
           >
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-black shrink-0 border border-blue-100 group-hover:scale-105 transition-transform">
-                <Wallet size={22} />
+              <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-black shrink-0 border border-blue-100 group-hover:scale-105 transition-transform">
+                <Wallet size={24} />
               </div>
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block">
-                  Farm Wallet
+                  Farm Wallet & Cashback
                 </span>
-                <span className="text-base font-black text-gray-900">
+                <span className="text-lg font-black text-gray-900">
                   ₹{walletBalance.toFixed(2)}
                 </span>
               </div>
             </div>
-            <ChevronRight size={16} className="text-gray-400 group-hover:text-blue-600" />
+            <ChevronRight size={18} className="text-gray-400 group-hover:text-blue-600" />
           </Link>
 
-          {/* Tile 3: VIP Membership */}
-          <Link
-            href="/user/vip-pass"
-            className="bg-white rounded-2xl p-4 border border-amber-200 shadow-2xs hover:shadow-md transition-all flex items-center justify-between group"
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center font-black shrink-0 border border-amber-100 group-hover:scale-105 transition-transform">
-                <Crown size={22} />
-              </div>
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block">
-                  VIP Pass
-                </span>
-                <span className="text-base font-black text-gray-900">
-                  {isVip ? "Active Member" : "Join for ₹49"}
-                </span>
-              </div>
-            </div>
-            <ChevronRight size={16} className="text-gray-400 group-hover:text-amber-700" />
-          </Link>
-
-          {/* Tile 4: Saved Wishlist */}
+          {/* Tile 3: Saved Wishlist */}
           <Link
             href="/wishlist"
             className="bg-white rounded-2xl p-4 border border-rose-200 shadow-2xs hover:shadow-md transition-all flex items-center justify-between group"
           >
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center font-black shrink-0 border border-rose-100 group-hover:scale-105 transition-transform">
-                <Heart size={22} />
+              <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center font-black shrink-0 border border-rose-100 group-hover:scale-105 transition-transform">
+                <Heart size={24} />
               </div>
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block">
-                  Wishlist
+                  Saved Produce Wishlist
                 </span>
-                <span className="text-base font-black text-gray-900">
+                <span className="text-lg font-black text-gray-900">
                   {wishlistItems.length} Saved
                 </span>
               </div>
             </div>
-            <ChevronRight size={16} className="text-gray-400 group-hover:text-rose-600" />
+            <ChevronRight size={18} className="text-gray-400 group-hover:text-rose-600" />
           </Link>
         </div>
 
         {/* Quick Links Menu Grid */}
         <div className="bg-white rounded-3xl p-5 sm:p-6 border border-gray-200 shadow-2xs mb-6">
           <h3 className="text-xs font-black text-gray-400 uppercase tracking-wider mb-4">
-            Farm Services & Subscriptions
+            Quick Actions & Produce Categories
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
@@ -312,26 +274,6 @@ export default function UserProfileHub() {
             </Link>
 
             <Link
-              href="/user/subscriptions"
-              className="flex items-center justify-between p-3.5 rounded-2xl border border-gray-100 bg-gray-50/70 hover:bg-green-50/60 hover:border-[#0f8646] transition group"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white text-emerald-700 flex items-center justify-center shadow-xs border border-gray-100">
-                  <Calendar size={20} />
-                </div>
-                <div>
-                  <h4 className="text-xs font-black text-gray-900 group-hover:text-[#0f8646] transition">
-                    Daily Morning Subscriptions
-                  </h4>
-                  <span className="text-[11px] text-gray-500 font-medium">
-                    Fresh 6 AM delivery
-                  </span>
-                </div>
-              </div>
-              <ChevronRight size={16} className="text-gray-400 group-hover:text-[#0f8646]" />
-            </Link>
-
-            <Link
               href="/user/cart"
               className="flex items-center justify-between p-3.5 rounded-2xl border border-gray-100 bg-gray-50/70 hover:bg-green-50/60 hover:border-[#0f8646] transition group"
             >
@@ -341,30 +283,10 @@ export default function UserProfileHub() {
                 </div>
                 <div>
                   <h4 className="text-xs font-black text-gray-900 group-hover:text-[#0f8646] transition">
-                    Active Cart
+                    Active Shopping Cart
                   </h4>
                   <span className="text-[11px] text-gray-500 font-medium">
                     Proceed to checkout
-                  </span>
-                </div>
-              </div>
-              <ChevronRight size={16} className="text-gray-400 group-hover:text-[#0f8646]" />
-            </Link>
-
-            <Link
-              href="/shop/custom-box"
-              className="flex items-center justify-between p-3.5 rounded-2xl border border-gray-100 bg-gray-50/70 hover:bg-green-50/60 hover:border-[#0f8646] transition group"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white text-teal-600 flex items-center justify-center shadow-xs border border-gray-100">
-                  <Salad size={20} />
-                </div>
-                <div>
-                  <h4 className="text-xs font-black text-gray-900 group-hover:text-[#0f8646] transition">
-                    Custom Salad Builder
-                  </h4>
-                  <span className="text-[11px] text-gray-500 font-medium">
-                    Craft fresh bowl
                   </span>
                 </div>
               </div>
@@ -384,11 +306,83 @@ export default function UserProfileHub() {
                     Offers & Scratch Cards
                   </h4>
                   <span className="text-[11px] text-amber-900/80 font-bold">
-                    Win flat ₹30–₹50 OFF daily
+                    Win flat discounts daily
                   </span>
                 </div>
               </div>
               <ChevronRight size={16} className="text-gray-400 group-hover:text-amber-700" />
+            </Link>
+
+            <Link
+              href="/shop?category=Vegetables"
+              className="flex items-center justify-between p-3.5 rounded-2xl border border-gray-100 bg-gray-50/70 hover:bg-emerald-50/60 hover:border-[#0f8646] transition group"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-white text-emerald-600 flex items-center justify-center shadow-xs border border-gray-100 overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=80&q=80"
+                    alt="Vegetables"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div>
+                  <h4 className="text-xs font-black text-gray-900 group-hover:text-[#0f8646] transition">
+                    Daily Fresh Vegetables
+                  </h4>
+                  <span className="text-[11px] text-gray-500 font-medium">
+                    ताज़ी सब्जियां
+                  </span>
+                </div>
+              </div>
+              <ChevronRight size={16} className="text-gray-400 group-hover:text-[#0f8646]" />
+            </Link>
+
+            <Link
+              href="/shop?category=Fruits"
+              className="flex items-center justify-between p-3.5 rounded-2xl border border-gray-100 bg-gray-50/70 hover:bg-amber-50/60 hover:border-amber-400 transition group"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-white text-amber-600 flex items-center justify-center shadow-xs border border-gray-100 overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=80&q=80"
+                    alt="Fruits"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div>
+                  <h4 className="text-xs font-black text-gray-900 group-hover:text-amber-800 transition">
+                    Seasonal Fresh Fruits
+                  </h4>
+                  <span className="text-[11px] text-gray-500 font-medium">
+                    ताज़े फल
+                  </span>
+                </div>
+              </div>
+              <ChevronRight size={16} className="text-gray-400 group-hover:text-amber-700" />
+            </Link>
+
+            <Link
+              href="/shop?category=Exotics"
+              className="flex items-center justify-between p-3.5 rounded-2xl border border-gray-100 bg-gray-50/70 hover:bg-purple-50/60 hover:border-purple-400 transition group"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-white text-purple-600 flex items-center justify-center shadow-xs border border-gray-100 overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1518843875459-f738682238a6?auto=format&fit=crop&w=80&q=80"
+                    alt="Exotics"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div>
+                  <h4 className="text-xs font-black text-gray-900 group-hover:text-purple-800 transition">
+                    Hydroponics & Exotics
+                  </h4>
+                  <span className="text-[11px] text-gray-500 font-medium">
+                    विदेशी व सलाद
+                  </span>
+                </div>
+              </div>
+              <ChevronRight size={16} className="text-gray-400 group-hover:text-purple-700" />
             </Link>
 
             {activeUser?.role === "admin" && (
