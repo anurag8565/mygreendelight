@@ -1,5 +1,6 @@
 import React from 'react'
 import Hero from './Hero'
+import TrustRibbon from './TrustRibbon'
 import Categoryslider from './Categoryslider'
 import FilteredProduceSection from './FilteredProduceSection'
 import FlashDeals from './FlashDeals'
@@ -108,10 +109,13 @@ export default async function Userdashbord() {
 
   return (
     <div className="bg-white w-full max-w-full overflow-x-clip font-sans">
-      {/* 1. Tone 1: Hero Banner (White Background) */}
+      {/* 1. Hero Banner */}
       <Hero banners={plainBanners} />
 
-      {/* 2. Tone 2: Shop by Category Slider (Soft Luxury Gray #f8f9fa) */}
+      {/* 1.5 Quick Commerce Trust & Speed Ribbon */}
+      <TrustRibbon />
+
+      {/* 2. Shop by Category Slider */}
       <Categoryslider categories={plainCategories} />
 
       {/* 3. Tone 1: Live Flash Deals & Steal Discounts (Pure White) */}
