@@ -1036,17 +1036,32 @@ export default function ManageOrder() {
 
             <div className="flex items-center gap-2 ml-auto">
               {!previewProofOrder.ispaid ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    togglePaymentStatus(previewProofOrder._id, false);
-                    setPreviewProofOrder((prev) => (prev ? { ...prev, ispaid: true } : null));
-                  }}
-                  className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 shadow-sm transition cursor-pointer"
-                >
-                  <Check size={14} strokeWidth={3} />
-                  <span>Verify & Mark as Paid</span>
-                </button>
+                <>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (confirm(`Are you sure you want to REJECT and Cancel Order #${previewProofOrder._id.slice(-6).toUpperCase()} due to fake/unreceived payment?`)) {
+                        updateStatus(previewProofOrder._id, "cancelled");
+                        setPreviewProofOrder(null);
+                      }
+                    }}
+                    className="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 px-3 py-2 rounded-xl text-xs font-black transition cursor-pointer"
+                  >
+                    <span>✕ Reject Fake Order</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      togglePaymentStatus(previewProofOrder._id, false);
+                      setPreviewProofOrder((prev) => (prev ? { ...prev, ispaid: true } : null));
+                    }}
+                    className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 shadow-sm transition cursor-pointer"
+                  >
+                    <Check size={14} strokeWidth={3} />
+                    <span>Verify & Mark as Paid</span>
+                  </button>
+                </>
               ) : (
                 <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-3 py-1.5 rounded-xl border border-emerald-300">
                   ✓ Verified & Paid

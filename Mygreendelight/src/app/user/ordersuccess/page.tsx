@@ -103,6 +103,10 @@ function OrderSuccessContent() {
   const displayTotal = orderDetails?.totalamount ?? (amountParam ? Number(amountParam) : 0);
   const formattedOrderId = orderId ? `#MGD-${orderId.slice(-6).toUpperCase()}` : "CONFIRMED";
 
+  const isUpiOrder = orderDetails?.paymentmethod === "upi" || searchParams.get("method") === "upi";
+  const isPaid = Boolean(orderDetails?.ispaid);
+  const isPendingUpi = isUpiOrder && !isPaid;
+
   return (
     <div className="bg-[#fbfcfb] min-h-screen flex flex-col justify-between font-sans">
       <Nav user={(userdata as any) || { role: "user" }} />
@@ -114,25 +118,50 @@ function OrderSuccessContent() {
           transition={{ type: "spring", duration: 0.5 }}
           className="bg-white rounded-3xl border border-gray-200/80 p-6 sm:p-12 shadow-sm w-full"
         >
-          {/* Animated Success Badge */}
-          <div className="relative w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-5">
-            <div className="absolute inset-0 bg-green-100 rounded-full animate-ping opacity-30" />
-            <div className="relative w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-tr from-[#0f8646] to-emerald-500 rounded-full flex items-center justify-center text-white shadow-xl shadow-green-700/20">
-              <CheckCircle2 size={44} className="stroke-[2.5]" />
-            </div>
-          </div>
+          {/* Animated Header Badge: Green Confirmed for COD/Paid, Amber Clock for UPI Pending */}
+          {isPendingUpi ? (
+            <>
+              <div className="relative w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-5">
+                <div className="absolute inset-0 bg-amber-100 rounded-full animate-ping opacity-40" />
+                <div className="relative w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-tr from-amber-500 to-yellow-500 rounded-full flex items-center justify-center text-white shadow-xl shadow-amber-600/20">
+                  <Clock size={44} className="stroke-[2.5]" />
+                </div>
+              </div>
 
-          <div className="inline-flex items-center gap-1.5 bg-green-50 border border-green-200 text-[#0f8646] text-xs font-black px-4 py-1 rounded-full uppercase tracking-wider mb-2">
-            <Sparkles size={14} /> ORDER CONFIRMED
-          </div>
+              <div className="inline-flex items-center gap-1.5 bg-amber-50 border border-amber-200 text-amber-900 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider mb-2">
+                <Clock size={14} className="animate-spin" /> PAYMENT VERIFICATION PENDING
+              </div>
 
-          <h1 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2">
-            Thank You for Your Order!
-          </h1>
+              <h1 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2">
+                Order Received • Verification in Progress
+              </h1>
 
-          <p className="text-xs sm:text-sm text-gray-500 max-w-md mx-auto mb-6 leading-relaxed">
-            Your farm-fresh harvest is packed and ready for express delivery to your doorstep.
-          </p>
+              <p className="text-xs sm:text-sm text-gray-500 max-w-md mx-auto mb-6 leading-relaxed">
+                Aapka ₹{displayTotal} ka order receive ho gaya hai. Hamari Bhopal store team aapka UPI Payment / UTR verify kar rahi hai. Verification complete hote hi order dispatch hoga.
+              </p>
+            </>
+          ) : (
+            <>
+              <div className="relative w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-5">
+                <div className="absolute inset-0 bg-green-100 rounded-full animate-ping opacity-30" />
+                <div className="relative w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-tr from-[#0f8646] to-emerald-500 rounded-full flex items-center justify-center text-white shadow-xl shadow-green-700/20">
+                  <CheckCircle2 size={44} className="stroke-[2.5]" />
+                </div>
+              </div>
+
+              <div className="inline-flex items-center gap-1.5 bg-green-50 border border-green-200 text-[#0f8646] text-xs font-black px-4 py-1 rounded-full uppercase tracking-wider mb-2">
+                <Sparkles size={14} /> ORDER CONFIRMED
+              </div>
+
+              <h1 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2">
+                Thank You for Your Order!
+              </h1>
+
+              <p className="text-xs sm:text-sm text-gray-500 max-w-md mx-auto mb-6 leading-relaxed">
+                Your farm-fresh harvest is packed and ready for express delivery to your doorstep.
+              </p>
+            </>
+          )}
 
           {/* Verified Order Receipt Box */}
           <div className="bg-gradient-to-r from-emerald-50/70 via-gray-50 to-green-50/70 rounded-2xl p-4 sm:p-5 border border-emerald-200/80 max-w-md mx-auto mb-6 text-left shadow-2xs">
