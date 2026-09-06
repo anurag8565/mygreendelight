@@ -27,6 +27,13 @@ import {
   Plus,
   Minus,
   Smartphone,
+  Gift,
+  Tag,
+  Package,
+  MessageCircle,
+  LayoutGrid,
+  Sparkles,
+  ShieldCheck,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useSelector, useDispatch } from "react-redux";
@@ -256,8 +263,16 @@ export default function Nav({ user }: { user?: iUser | null }) {
                   {activeUser.email}
                 </p>
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="text-[9.5px] font-black bg-emerald-900/60 text-emerald-200 px-2 py-0.5 rounded-md">
-                    {activeUser.role === "admin" ? "👑 Admin" : "🌿 Customer"}
+                  <span className="text-[9.5px] font-black bg-emerald-900/60 text-emerald-200 px-2 py-0.5 rounded-md flex items-center gap-1">
+                    {activeUser.role === "admin" ? (
+                      <>
+                        <ShieldCheck size={11} className="text-amber-400" /> Admin
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles size={11} className="text-emerald-300" /> Verified Member
+                      </>
+                    )}
                   </span>
                 </div>
               </div>
@@ -291,73 +306,102 @@ export default function Nav({ user }: { user?: iUser | null }) {
               <Link
                 href="/shop?category=Vegetables"
                 onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-emerald-50 hover:text-[#0c831f] transition"
+                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-emerald-50 hover:text-[#0c831f] transition group"
               >
-                <div className="flex items-center gap-2.5">
-                  <span className="text-base">🥬</span>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-xl overflow-hidden bg-emerald-50 border border-emerald-100/80 flex-shrink-0 shadow-xs">
+                    <img
+                      src="https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=120&q=80"
+                      alt="Vegetables"
+                      className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
+                    />
+                  </div>
                   <div className="flex flex-col">
                     <span className="font-bold text-xs">Fresh Vegetables</span>
                     <span className="text-[10px] text-gray-400 font-medium">ताज़ी सब्जियां</span>
                   </div>
                 </div>
-                <ArrowRight size={14} className="text-gray-300" />
+                <ArrowRight size={14} className="text-gray-300 group-hover:text-[#0c831f] group-hover:translate-x-0.5 transition" />
               </Link>
 
               <Link
                 href="/shop?category=Fruits"
                 onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-amber-50 hover:text-amber-800 transition"
+                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-amber-50 hover:text-amber-800 transition group"
               >
-                <div className="flex items-center gap-2.5">
-                  <span className="text-base">🍎</span>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-xl overflow-hidden bg-amber-50 border border-amber-100/80 flex-shrink-0 shadow-xs">
+                    <img
+                      src="https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=120&q=80"
+                      alt="Fruits"
+                      className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
+                    />
+                  </div>
                   <div className="flex flex-col">
                     <span className="font-bold text-xs">Seasonal Fruits</span>
                     <span className="text-[10px] text-gray-400 font-medium">ताज़े फल</span>
                   </div>
                 </div>
-                <ArrowRight size={14} className="text-gray-300" />
+                <ArrowRight size={14} className="text-gray-300 group-hover:text-amber-700 group-hover:translate-x-0.5 transition" />
               </Link>
 
               <Link
                 href="/shop?category=Exotics"
                 onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-purple-50 hover:text-purple-800 transition"
+                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-purple-50 hover:text-purple-800 transition group"
               >
-                <div className="flex items-center gap-2.5">
-                  <span className="text-base">🥑</span>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-xl overflow-hidden bg-purple-50 border border-purple-100/80 flex-shrink-0 shadow-xs">
+                    <img
+                      src="https://images.unsplash.com/photo-1518843875459-f738682238a6?auto=format&fit=crop&w=120&q=80"
+                      alt="Exotics"
+                      className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
+                    />
+                  </div>
                   <div className="flex flex-col">
                     <span className="font-bold text-xs">Hydroponics & Exotics</span>
                     <span className="text-[10px] text-gray-400 font-medium">विदेशी व सलाद</span>
                   </div>
                 </div>
-                <ArrowRight size={14} className="text-gray-300" />
+                <ArrowRight size={14} className="text-gray-300 group-hover:text-purple-700 group-hover:translate-x-0.5 transition" />
               </Link>
 
               <Link
                 href="/shop?category=Dairy%20%26%20Staples"
                 onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-blue-50 hover:text-blue-800 transition"
+                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-blue-50 hover:text-blue-800 transition group"
               >
-                <div className="flex items-center gap-2.5">
-                  <span className="text-base">🥛</span>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-xl overflow-hidden bg-blue-50 border border-blue-100/80 flex-shrink-0 shadow-xs">
+                    <img
+                      src="https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=120&q=80"
+                      alt="Dairy & Staples"
+                      className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
+                    />
+                  </div>
                   <div className="flex flex-col">
                     <span className="font-bold text-xs">Dairy & Staples</span>
                     <span className="text-[10px] text-gray-400 font-medium">दूध व राशन</span>
                   </div>
                 </div>
-                <ArrowRight size={14} className="text-gray-300" />
+                <ArrowRight size={14} className="text-gray-300 group-hover:text-blue-700 group-hover:translate-x-0.5 transition" />
               </Link>
 
               <Link
                 href="/shop"
                 onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-50/70 text-[#0c831f] hover:bg-emerald-100 transition font-black"
+                className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-50/70 text-[#0c831f] hover:bg-emerald-100/80 transition font-black group"
               >
-                <div className="flex items-center gap-2.5">
-                  <span className="text-base">🛍️</span>
-                  <span>View All Produce</span>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-xl bg-[#0c831f] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+                    <LayoutGrid size={15} />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-black text-xs">All Produce Catalog</span>
+                    <span className="text-[10px] text-emerald-600/80 font-medium">पूरी दुकान देखें</span>
+                  </div>
                 </div>
-                <ArrowRight size={14} className="text-[#0c831f]" />
+                <ArrowRight size={14} className="text-[#0c831f] group-hover:translate-x-0.5 transition" />
               </Link>
             </div>
           </div>
@@ -371,11 +415,13 @@ export default function Nav({ user }: { user?: iUser | null }) {
               <Link
                 href="/shop?category=Combos"
                 onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-gray-50 transition"
+                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-amber-50/60 transition group"
               >
-                <div className="flex items-center gap-2.5">
-                  <span className="text-base">🎁</span>
-                  <span>Value Combos</span>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center flex-shrink-0 shadow-xs">
+                    <Gift size={15} />
+                  </div>
+                  <span className="font-bold text-xs">Value Combos</span>
                 </div>
                 <span className="bg-amber-100 text-amber-800 text-[9.5px] font-black px-2 py-0.5 rounded-full">
                   Save More
@@ -385,11 +431,13 @@ export default function Nav({ user }: { user?: iUser | null }) {
               <Link
                 href="/offers"
                 onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-gray-50 transition"
+                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-rose-50/60 transition group"
               >
-                <div className="flex items-center gap-2.5">
-                  <span className="text-base">🏷️</span>
-                  <span>Offers & Coupons</span>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center flex-shrink-0 shadow-xs">
+                    <Tag size={15} />
+                  </div>
+                  <span className="font-bold text-xs">Offers & Coupons</span>
                 </div>
                 <span className="bg-rose-100 text-rose-700 text-[9.5px] font-black px-2 py-0.5 rounded-full">
                   Discounts
@@ -407,23 +455,27 @@ export default function Nav({ user }: { user?: iUser | null }) {
               <Link
                 href="/user/myorder"
                 onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-gray-50 transition"
+                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-sky-50/60 transition group"
               >
-                <div className="flex items-center gap-2.5">
-                  <span className="text-base">📦</span>
-                  <span>My Orders</span>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center flex-shrink-0 shadow-xs">
+                    <Package size={15} />
+                  </div>
+                  <span className="font-bold text-xs">My Orders</span>
                 </div>
-                <ArrowRight size={14} className="text-gray-300" />
+                <ArrowRight size={14} className="text-gray-300 group-hover:text-sky-700 group-hover:translate-x-0.5 transition" />
               </Link>
 
               <Link
                 href="/wishlist"
                 onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-gray-50 transition"
+                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-pink-50/60 transition group"
               >
-                <div className="flex items-center gap-2.5">
-                  <span className="text-base">❤️</span>
-                  <span>My Wishlist</span>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center flex-shrink-0 shadow-xs">
+                    <Heart size={15} />
+                  </div>
+                  <span className="font-bold text-xs">My Wishlist</span>
                 </div>
                 {wishlistItems.length > 0 && (
                   <span className="bg-[#0c831f] text-white text-[9.5px] px-2 py-0.2 rounded-full font-black">
@@ -435,13 +487,15 @@ export default function Nav({ user }: { user?: iUser | null }) {
               <Link
                 href="/contact"
                 onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-gray-50 transition"
+                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-emerald-50/60 transition group"
               >
-                <div className="flex items-center gap-2.5">
-                  <span className="text-base">💬</span>
-                  <span>Help & Support</span>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-100 text-[#0c831f] flex items-center justify-center flex-shrink-0 shadow-xs">
+                    <MessageCircle size={15} />
+                  </div>
+                  <span className="font-bold text-xs">Help & Support</span>
                 </div>
-                <ArrowRight size={14} className="text-gray-300" />
+                <ArrowRight size={14} className="text-gray-300 group-hover:text-[#0c831f] group-hover:translate-x-0.5 transition" />
               </Link>
             </div>
           </div>
@@ -449,19 +503,19 @@ export default function Nav({ user }: { user?: iUser | null }) {
           {/* Admin Shortcuts (If admin) */}
           {activeUser?.role === "admin" && (
             <div className="pt-2 border-t border-gray-100">
-              <span className="text-[10px] uppercase font-black tracking-wider text-amber-700 block px-2 mb-1.5">
-                👑 Admin Center
+              <span className="text-[10px] uppercase font-black tracking-wider text-amber-700 flex items-center gap-1 px-2 mb-1.5">
+                <ShieldCheck size={12} className="text-amber-600" /> Admin Center
               </span>
               <div className="space-y-1">
-                <Link href="/admin" onClick={() => setmenuopen(false)} className="flex items-center gap-2 p-2 rounded-xl text-gray-700 hover:bg-amber-50">
+                <Link href="/admin" onClick={() => setmenuopen(false)} className="flex items-center gap-2.5 p-2 rounded-xl text-gray-700 hover:bg-amber-50">
                   <PlusCircle size={15} className="text-[#0f8646]" />
                   <span>Dashboard Overview</span>
                 </Link>
-                <Link href="/admin/manageorder" onClick={() => setmenuopen(false)} className="flex items-center gap-2 p-2 rounded-xl text-gray-700 hover:bg-amber-50">
+                <Link href="/admin/manageorder" onClick={() => setmenuopen(false)} className="flex items-center gap-2.5 p-2 rounded-xl text-gray-700 hover:bg-amber-50">
                   <ClipboardCheck size={15} className="text-[#0f8646]" />
                   <span>Manage Orders</span>
                 </Link>
-                <Link href="/admin/viewgrocery" onClick={() => setmenuopen(false)} className="flex items-center gap-2 p-2 rounded-xl text-gray-700 hover:bg-amber-50">
+                <Link href="/admin/viewgrocery" onClick={() => setmenuopen(false)} className="flex items-center gap-2.5 p-2 rounded-xl text-gray-700 hover:bg-amber-50">
                   <Box size={15} className="text-[#0f8646]" />
                   <span>Inventory Stock</span>
                 </Link>
