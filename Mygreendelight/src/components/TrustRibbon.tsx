@@ -38,7 +38,7 @@ export default function TrustRibbon() {
           {highlights.map((h, i) => (
             <div
               key={i}
-              className={`flex items-center gap-2 px-3 py-2 rounded-2xl border ${h.bg} shadow-2xs shrink-0 select-none min-w-[135px] sm:min-w-0 sm:flex-1`}
+              className={`flex items-center gap-2 px-3 py-2 rounded-2xl border ${h.bg} shadow-2xs hover:shadow-xs hover:-translate-y-0.5 transition-all duration-200 shrink-0 select-none min-w-[135px] sm:min-w-0 sm:flex-1 cursor-default`}
             >
               <div className="w-7 h-7 rounded-xl bg-white flex items-center justify-center shrink-0 shadow-xs">
                 {h.icon}

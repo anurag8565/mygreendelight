@@ -171,40 +171,44 @@ export default function CategorySlider({
             return (
               <motion.div
                 key={item._id || item.name || idx}
-                whileTap={{ scale: 0.95 }}
-                whileHover={{ y: -4 }}
+                whileTap={{ scale: 0.96 }}
+                whileHover={{ y: -5 }}
+                transition={{ type: "spring", stiffness: 350, damping: 22 }}
                 onClick={() =>
                   router.push(`/shop?category=${encodeURIComponent(item.name)}`)
                 }
-                className={`group cursor-pointer rounded-2xl sm:rounded-3xl p-2 sm:p-4 md:p-5 ${config.bgGradient} border ${config.borderColor} shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between select-none relative overflow-hidden`}
+                className={`group cursor-pointer rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 md:p-5 ${config.bgGradient} border ${config.borderColor} shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.09)] transition-all duration-300 flex flex-col justify-between select-none relative overflow-hidden`}
               >
+                {/* Subtle Hover Shimmer Sweep */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/30 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
                 {/* Image Section */}
-                <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-white shadow-2xs">
+                <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-white shadow-2xs border border-white/80">
                   <img
                     src={imageSrc}
                     alt={config.title}
-                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 ease-out"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
                     onError={(e: any) => {
                       e.target.src = config.imgUrl || "/categories/vegetables.jpg";
                     }}
                   />
                   {/* Subtle Gradient Overlay on Hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
 
                 {/* Text Content */}
-                <div className="mt-2 sm:mt-3 text-center sm:text-left flex flex-col justify-between">
+                <div className="mt-2.5 sm:mt-3.5 text-center sm:text-left flex flex-col justify-between relative z-10">
                   <div className="flex items-center justify-center sm:justify-between gap-1">
                     <h3 className={`font-black text-xs sm:text-base md:text-lg ${config.textColor} leading-tight tracking-tight`}>
                       {config.title}
                     </h3>
-                    <div className="hidden sm:flex w-6 h-6 rounded-full bg-white/90 text-[#0c831f] items-center justify-center group-hover:bg-[#0c831f] group-hover:text-white transition-all shadow-2xs shrink-0">
+                    <div className="hidden sm:flex w-6 h-6 rounded-full bg-white/95 text-[#0c831f] items-center justify-center group-hover:bg-[#0c831f] group-hover:text-white transition-all duration-200 shadow-2xs shrink-0 group-hover:translate-x-1">
                       <ChevronRight size={13} className="stroke-[3]" />
                     </div>
                   </div>
 
                   {/* Mobile Tag / Desktop Subtitle */}
-                  <p className="text-[10px] text-gray-500 font-medium sm:hidden mt-0.5 truncate">
+                  <p className="text-[10px] text-gray-500 font-semibold sm:hidden mt-0.5 truncate">
                     {config.tag}
                   </p>
                   <p className="hidden sm:block text-xs text-gray-500 font-medium truncate mt-1">

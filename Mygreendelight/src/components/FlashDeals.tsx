@@ -96,16 +96,16 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
 
             {/* Real-time Reverse Countdown Badge */}
             {!isExpired && (
-              <div className="flex items-center gap-1.5 bg-rose-50 text-rose-600 border border-rose-200/80 px-2.5 py-0.5 rounded-full text-[11px] font-bold shadow-2xs">
+              <div className="flex items-center gap-1.5 bg-rose-50 text-rose-600 border border-rose-200/80 px-2.5 py-0.5 rounded-full text-[11px] font-bold shadow-2xs animate-pulse">
                 <Clock size={12} className="stroke-[2.5]" />
-                <span className="tabular-nums font-mono text-[11px]">
+                <span className="tabular-nums font-mono text-[11px] font-extrabold">
                   {timeLeft.hours}:{timeLeft.minutes}:{timeLeft.seconds} left
                 </span>
               </div>
             )}
 
             {badgeText && (
-              <span className="hidden md:inline-block bg-orange-50 text-orange-700 border border-orange-200/80 text-[10px] font-black uppercase px-2 py-0.5 rounded-md">
+              <span className="hidden md:inline-block bg-orange-50 text-orange-700 border border-orange-200/80 text-[10px] font-black uppercase px-2 py-0.5 rounded-md shadow-2xs">
                 {badgeText}
               </span>
             )}

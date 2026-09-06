@@ -200,19 +200,25 @@ export default function FilteredProduceSection({
           {tabs.map((tab) => {
             const isSelected = activeTab === tab.id;
             return (
-              <button
+              <motion.button
                 key={tab.id}
                 type="button"
+                whileTap={{ scale: 0.96 }}
+                whileHover={{ y: -3 }}
+                transition={{ type: "spring", stiffness: 350, damping: 22 }}
                 onClick={() => setActiveTab(tab.id)}
                 className={`group relative p-2 sm:p-3.5 rounded-2xl sm:rounded-3xl transition-all duration-300 flex flex-col sm:flex-row items-center gap-2 sm:gap-3.5 cursor-pointer border text-left overflow-hidden ${
                   isSelected
-                    ? "bg-white border-[#0c831f] shadow-[0_6px_20px_rgba(12,131,31,0.12)] ring-2 ring-[#0c831f]/20 scale-[1.01]"
-                    : "bg-white/80 hover:bg-white border-gray-200/80 hover:border-emerald-200 shadow-2xs hover:shadow-sm"
+                    ? "bg-white border-[#0c831f] shadow-[0_8px_24px_rgba(12,131,31,0.14)] ring-2 ring-[#0c831f]/25 scale-[1.01]"
+                    : "bg-white/90 hover:bg-white border-gray-200/80 hover:border-emerald-300 shadow-2xs hover:shadow-md"
                 }`}
               >
                 {/* Active Indicator Top Accent */}
                 {isSelected && (
-                  <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#0c831f] to-emerald-400" />
+                  <motion.div
+                    layoutId="activeTabAccent"
+                    className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#0c831f] via-emerald-400 to-green-500"
+                  />
                 )}
 
                 {/* Real Produce Photo Thumbnail */}
@@ -220,7 +226,7 @@ export default function FilteredProduceSection({
                   <img
                     src={tab.imgUrl}
                     alt={tab.label}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
+                    className="w-full h-full object-cover group-hover:scale-112 transition-transform duration-500 ease-out"
                     loading="lazy"
                   />
                   {isSelected && (
@@ -250,16 +256,16 @@ export default function FilteredProduceSection({
 
                   {/* Product Count Pill */}
                   <span
-                    className={`text-[9px] sm:text-[10.5px] px-2 py-0.5 rounded-full font-black mt-1 sm:mt-1.5 inline-block ${
+                    className={`text-[9px] sm:text-[10.5px] px-2 py-0.5 rounded-full font-black mt-1 sm:mt-1.5 inline-block transition-colors ${
                       isSelected
-                        ? "bg-emerald-100 text-[#0c831f]"
+                        ? "bg-emerald-100 text-[#0c831f] shadow-2xs"
                         : "bg-gray-100 text-gray-600 group-hover:bg-emerald-50 group-hover:text-emerald-700"
                     }`}
                   >
                     {tab.count} Fresh Items
                   </span>
                 </div>
-              </button>
+              </motion.button>
             );
           })}
         </div>
