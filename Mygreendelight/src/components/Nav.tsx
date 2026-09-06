@@ -367,27 +367,6 @@ export default function Nav({ user }: { user?: iUser | null }) {
               </Link>
 
               <Link
-                href="/shop?category=Dairy%20%26%20Staples"
-                onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-blue-50 hover:text-blue-800 transition group"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl overflow-hidden bg-blue-50 border border-blue-100/80 flex-shrink-0 shadow-xs">
-                    <img
-                      src="https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=120&q=80"
-                      alt="Dairy & Staples"
-                      className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="font-bold text-xs">Dairy & Staples</span>
-                    <span className="text-[10px] text-gray-400 font-medium">दूध व राशन</span>
-                  </div>
-                </div>
-                <ArrowRight size={14} className="text-gray-300 group-hover:text-blue-700 group-hover:translate-x-0.5 transition" />
-              </Link>
-
-              <Link
                 href="/shop"
                 onClick={() => setmenuopen(false)}
                 className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-50/70 text-[#0c831f] hover:bg-emerald-100/80 transition font-black group"

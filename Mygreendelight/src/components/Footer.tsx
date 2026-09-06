@@ -108,9 +108,6 @@ export default function Footer() {
                 <Link href="/shop?category=Exotics" className="hover:text-white transition flex items-center gap-1">
                   <span>🥑 Hydroponic Exotics</span>
                 </Link>
-                <Link href="/shop?category=Dairy%20%26%20Staples" className="hover:text-white transition flex items-center gap-1">
-                  <span>🥛 Dairy & Staples</span>
-                </Link>
                 <Link href="/shop" className="hover:text-white transition text-amber-300 font-bold flex items-center gap-1">
                   <span>🎁 Value Combos</span>
                 </Link>
