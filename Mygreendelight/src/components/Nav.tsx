@@ -64,6 +64,8 @@ export default function Nav({ user }: { user?: iUser | null }) {
   const [mounted, setMounted] = useState(false);
   const { cartdata } = useSelector((state: RootState) => state.cart);
   const { items: wishlistItems } = useSelector((state: RootState) => state.wishlist);
+  const { userdata } = useSelector((state: RootState) => state.user);
+  const activeUser = user || (userdata as any);
   const [search, setSearch] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
@@ -235,14 +237,14 @@ export default function Nav({ user }: { user?: iUser | null }) {
           {/* User Profile Mini Bar */}
           <div className="flex items-center gap-3 pt-1">
             <div className="w-10 h-10 rounded-2xl bg-white/20 border border-white/20 text-white flex items-center justify-center font-black text-sm shrink-0">
-              {user?.name ? user.name.charAt(0).toUpperCase() : <UserIcon size={18} />}
+              {activeUser?.name ? activeUser.name.charAt(0).toUpperCase() : <UserIcon size={18} />}
             </div>
             <div className="min-w-0 flex-1">
               <h4 className="font-black text-xs sm:text-sm text-white truncate">
-                {user?.name || "Welcome Guest"}
+                {activeUser?.name || "Welcome Guest"}
               </h4>
               <p className="text-[11px] text-green-100/80 truncate">
-                {user?.email || "Mandi fresh produce • Same-day delivery"}
+                {activeUser?.email || "Mandi fresh produce • Same-day delivery"}
               </p>
             </div>
           </div>
@@ -421,7 +423,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
           <div className="flex items-center gap-6">
             <Link href="/user/myorder" className="cursor-pointer hover:text-green-200">Track Order</Link>
             <Link href="/contact" className="cursor-pointer hover:text-green-200">Help & Support</Link>
-            {user?.role === "admin" && (
+            {activeUser?.role === "admin" && (
               <Link href="/admin" className="cursor-pointer font-bold text-yellow-300 hover:underline">Admin Center</Link>
             )}
           </div>
@@ -619,7 +621,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
               ref={dropdownRef}
               onClick={(e) => {
                 e.stopPropagation();
-                if (!user?.email) {
+                if (!activeUser?.email) {
                   router.push("/login");
                 } else {
                   setOpen((prev) => !prev);
@@ -627,10 +629,10 @@ export default function Nav({ user }: { user?: iUser | null }) {
               }}
             >
               <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 group-hover:bg-green-50 transition-colors shadow-2xs border border-gray-200/80">
-                {user?.image ? (
+                {activeUser?.image ? (
                   <img
-                    src={user.image}
-                    alt={user.name || "User"}
+                    src={activeUser.image}
+                    alt={activeUser.name || "User"}
                     className="w-full h-full rounded-full object-cover"
                   />
                 ) : (
@@ -639,12 +641,12 @@ export default function Nav({ user }: { user?: iUser | null }) {
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] font-extrabold text-[#0f8646]">
-                  {user?.email
-                    ? `Hi, ${user?.name ? user.name.split(" ")[0] : "Shopper"}`
+                  {activeUser?.email
+                    ? `Hi, ${activeUser?.name ? activeUser.name.split(" ")[0] : "Shopper"}`
                     : "Welcome"}
                 </span>
                 <div className="text-sm font-black text-gray-800 flex items-center gap-1 group-hover:text-[#0f8646] transition-colors">
-                  {user?.email ? "My Profile" : "Login / Signup"}{" "}
+                  {activeUser?.email ? "My Profile" : "Login / Signup"}{" "}
                   <ChevronDown
                     size={14}
                     className={`transition-transform duration-200 ${
@@ -668,19 +670,19 @@ export default function Nav({ user }: { user?: iUser | null }) {
                   >
                     <div className="p-4 border-b bg-emerald-50/60 flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full bg-emerald-100 text-[#0f8646] flex items-center justify-center font-black text-base shrink-0 border border-emerald-200">
-                        {user?.name ? user.name.charAt(0).toUpperCase() : "U"}
+                        {activeUser?.name ? activeUser.name.charAt(0).toUpperCase() : "U"}
                       </div>
                       <div className="min-w-0">
                         <p className="font-black text-xs text-gray-900 truncate">
-                          {user?.name || "Shopper"}
+                          {activeUser?.name || "Shopper"}
                         </p>
                         <p className="text-[11px] text-gray-500 truncate font-medium">
-                          {user?.email || "Bhopal Resident"}
+                          {activeUser?.email || "Bhopal Resident"}
                         </p>
                       </div>
                     </div>
 
-                    {user?.role === "admin" && (
+                    {activeUser?.role === "admin" && (
                       <Link
                         href="/admin"
                         onClick={() => setOpen(false)}

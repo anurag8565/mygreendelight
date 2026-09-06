@@ -166,7 +166,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     session: {
         strategy: "jwt",
-        maxAge: 10 * 24 * 60 * 60
+        maxAge: 30 * 24 * 60 * 60, // 30 Days persistent session
     },
-    secret: process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET || "quickbasket_super_secret_key_2026_random_string"
+    secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || FALLBACK_SECRET
 })
