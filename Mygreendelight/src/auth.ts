@@ -16,7 +16,7 @@ if (process.env.NEXT_PUBLIC_VERCEL_URL) {
     delete (process.env as any).NEXT_PUBLIC_VERCEL_URL;
 }
 
-const FALLBACK_SECRET = "quickbasket_super_secret_key_2026_subziquick_production_jwt";
+const FALLBACK_SECRET = "d108690244c20e0a1b3c13470ad17597e2dd0699c4bc0413cca77cfb429ddc7a";
 if (!process.env.AUTH_SECRET) {
     process.env.AUTH_SECRET = (process.env.NEXTAUTH_SECRET || "").trim() || FALLBACK_SECRET;
 }
