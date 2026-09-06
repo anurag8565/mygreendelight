@@ -186,13 +186,18 @@ export default function Groceryitemcard({
           </div>
 
           {/* PRICE ROW & SAVINGS */}
-          <div className="flex items-baseline gap-1.5 mt-1 h-[20px]">
+          <div className="flex items-center gap-1.5 mt-1 h-[20px] flex-wrap">
             <span className="text-sm sm:text-base font-black text-gray-950 group-hover:text-[#0c831f] transition-colors">
               ₹{displayPrice}
             </span>
             <span className="text-[11px] text-gray-400 line-through font-normal">
               ₹{activeMRP}
             </span>
+            {activeMRP > displayPrice && (
+              <span className="text-[9.5px] font-black text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-1.5 py-0.2 rounded-md ml-auto">
+                Save ₹{activeMRP - displayPrice}
+              </span>
+            )}
           </div>
         </div>
 

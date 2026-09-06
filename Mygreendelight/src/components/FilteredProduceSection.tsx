@@ -33,15 +33,17 @@ export default function FilteredProduceSection({
 }) {
   // Default to vegetables tab
   const [activeTab, setActiveTab] = useState<string>("vegetables");
+  const [subFilter, setSubFilter] = useState<string>("all");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [visibleCount, setVisibleCount] = useState<number>(8);
   const [sortBy, setSortBy] = useState<"default" | "price_asc" | "price_desc" | "rating">("default");
 
   useEffect(() => {
     setVisibleCount(8);
+    setSubFilter("all");
   }, [activeTab]);
 
-  const { filteredList, tabs } = useMemo(() => {
+  const { filteredList, tabs, subChips } = useMemo(() => {
     const list = Array.isArray(groceries) ? groceries : [];
 
     const vegItems = list.filter((g) =>
@@ -90,13 +92,129 @@ export default function FilteredProduceSection({
       },
     ];
 
-    let displayList = vegItems;
-    if (activeTab === "vegetables") displayList = vegItems.length > 0 ? vegItems : list;
-    else if (activeTab === "fruits") displayList = fruitItems;
-    else if (activeTab === "exotics") displayList = exoticItems;
+    let baseList = vegItems;
+    let chips: { id: string; label: string }[] = [];
+
+    if (activeTab === "vegetables") {
+      baseList = vegItems.length > 0 ? vegItems : list;
+      chips = [
+        { id: "all", label: "All Sabzi 🌿" },
+        { id: "daily", label: "Daily Essentials 🥔" },
+        { id: "leafy", label: "Leafy Greens 🥬" },
+        { id: "salad_root", label: "Salad & Roots 🥕" },
+      ];
+    } else if (activeTab === "fruits") {
+      baseList = fruitItems;
+      chips = [
+        { id: "all", label: "All Fruits 🍎" },
+        { id: "citrus", label: "Citrus & Vitamin C 🍊" },
+        { id: "melons", label: "Tropical & Melons 🍉" },
+      ];
+    } else if (activeTab === "exotics") {
+      baseList = exoticItems;
+      chips = [
+        { id: "all", label: "All Exotics 🥑" },
+        { id: "salad", label: "Hydroponic & Salads 🥗" },
+      ];
+    }
+
+    // Apply sub-filter
+    let subFiltered = baseList;
+    if (subFilter === "daily") {
+      subFiltered = baseList.filter((g) => {
+        const n = (g.name || "").toLowerCase();
+        return (
+          n.includes("potato") ||
+          n.includes("aloo") ||
+          n.includes("onion") ||
+          n.includes("pyaz") ||
+          n.includes("pyaaz") ||
+          n.includes("tomato") ||
+          n.includes("tamatar") ||
+          n.includes("ginger") ||
+          n.includes("adrak") ||
+          n.includes("garlic") ||
+          n.includes("lehsun") ||
+          n.includes("chilli") ||
+          n.includes("mirch")
+        );
+      });
+      if (subFiltered.length === 0) subFiltered = baseList;
+    } else if (subFilter === "leafy") {
+      subFiltered = baseList.filter((g) => {
+        const n = (g.name || "").toLowerCase();
+        return (
+          n.includes("palak") ||
+          n.includes("spinach") ||
+          n.includes("methi") ||
+          n.includes("coriander") ||
+          n.includes("dhaniya") ||
+          n.includes("mint") ||
+          n.includes("pudina") ||
+          n.includes("leaves") ||
+          n.includes("kale") ||
+          n.includes("lettuce")
+        );
+      });
+      if (subFiltered.length === 0) subFiltered = baseList;
+    } else if (subFilter === "salad_root") {
+      subFiltered = baseList.filter((g) => {
+        const n = (g.name || "").toLowerCase();
+        return (
+          n.includes("kheera") ||
+          n.includes("cucumber") ||
+          n.includes("gajar") ||
+          n.includes("carrot") ||
+          n.includes("mooli") ||
+          n.includes("radish") ||
+          n.includes("beetroot") ||
+          n.includes("capsicum") ||
+          n.includes("shimla")
+        );
+      });
+      if (subFiltered.length === 0) subFiltered = baseList;
+    } else if (subFilter === "citrus") {
+      subFiltered = baseList.filter((g) => {
+        const n = (g.name || "").toLowerCase();
+        return (
+          n.includes("orange") ||
+          n.includes("santra") ||
+          n.includes("lemon") ||
+          n.includes("nimbu") ||
+          n.includes("kinnow") ||
+          n.includes("mosambi")
+        );
+      });
+      if (subFiltered.length === 0) subFiltered = baseList;
+    } else if (subFilter === "melons") {
+      subFiltered = baseList.filter((g) => {
+        const n = (g.name || "").toLowerCase();
+        return (
+          n.includes("watermelon") ||
+          n.includes("tarbooj") ||
+          n.includes("melon") ||
+          n.includes("papaya") ||
+          n.includes("banana") ||
+          n.includes("kela")
+        );
+      });
+      if (subFiltered.length === 0) subFiltered = baseList;
+    } else if (subFilter === "salad") {
+      subFiltered = baseList.filter((g) => {
+        const n = (g.name || "").toLowerCase();
+        return (
+          n.includes("lettuce") ||
+          n.includes("salad") ||
+          n.includes("avocado") ||
+          n.includes("hydroponic") ||
+          n.includes("cherry")
+        );
+      });
+      if (subFiltered.length === 0) subFiltered = baseList;
+    }
 
     // Apply sorting
-    let sortedList = [...displayList];
+    let sortedList = [...subFiltered];
     if (sortBy === "price_asc") {
       sortedList.sort((a, b) => (Number(a.price) || 0) - (Number(b.price) || 0));
     } else if (sortBy === "price_desc") {
@@ -105,8 +223,8 @@ export default function FilteredProduceSection({
       sortedList.sort((a, b) => (Number(b.rating) || 0) - (Number(a.rating) || 0));
     }
 
-    return { filteredList: sortedList, tabs: tabList };
-  }, [groceries, activeTab, sortBy]);
+    return { filteredList: sortedList, tabs: tabList, subChips: chips };
+  }, [groceries, activeTab, subFilter, sortBy]);
 
   if (!groceries || groceries.length === 0) return null;
 
@@ -269,6 +387,30 @@ export default function FilteredProduceSection({
             );
           })}
         </div>
+
+        {/* 🌿 1-Tap Sub-Category Quick Filter Pills (Zepto / Blinkit Style) */}
+        {subChips && subChips.length > 0 && (
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1 mb-4 sm:mb-5 select-none -mx-1 px-1">
+            {subChips.map((chip) => {
+              const isActive = subFilter === chip.id;
+              return (
+                <motion.button
+                  key={chip.id}
+                  whileTap={{ scale: 0.92 }}
+                  type="button"
+                  onClick={() => setSubFilter(chip.id)}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer whitespace-nowrap shrink-0 border ${
+                    isActive
+                      ? "bg-[#0c831f] text-white border-[#0c831f] shadow-xs"
+                      : "bg-white text-gray-700 border-gray-200/90 hover:border-emerald-300 hover:bg-emerald-50/50"
+                  }`}
+                >
+                  {chip.label}
+                </motion.button>
+              );
+            })}
+          </div>
+        )}
 
         {/* Dynamic Products Display: Grid OR List View */}
         <AnimatePresence mode="wait">
