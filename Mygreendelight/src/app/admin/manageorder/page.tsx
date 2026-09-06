@@ -225,6 +225,30 @@ export default function ManageOrder() {
     }
   };
 
+  const togglePaymentStatus = async (orderid: string, currentIsPaid: boolean) => {
+    try {
+      const newPaid = !currentIsPaid;
+      await axios.post(`/api/admin/updateorderststus/${orderid}`, {
+        ispaid: newPaid,
+        paymentStatus: newPaid ? "completed" : "pending",
+      });
+
+      setOrders((prev) =>
+        prev.map((o) =>
+          o._id === orderid
+            ? { ...o, ispaid: newPaid, paymentStatus: newPaid ? "completed" : "pending" }
+            : o
+        )
+      );
+
+      setToastMsg(`✓ Order #${orderid.slice(-6).toUpperCase()} payment marked as ${newPaid ? "PAID" : "UNPAID"}`);
+      setTimeout(() => setToastMsg(null), 3000);
+    } catch (error) {
+      console.error("Payment status update error:", error);
+      alert("Failed to update payment status.");
+    }
+  };
+
   const assignDriver = async (orderId: string, driverId: string) => {
     if (!driverId) return;
     setAssigningId(orderId);
@@ -598,15 +622,32 @@ export default function ManageOrder() {
                             {currentStatus}
                           </span>
 
-                          <span
-                            className={`px-2 py-0.5 rounded-md text-[10px] font-bold ${
+                          <button
+                            type="button"
+                            onClick={() => togglePaymentStatus(order._id, !!order.ispaid)}
+                            className={`px-2.5 py-1 rounded-xl text-[10px] font-black cursor-pointer transition border flex items-center gap-1 shadow-2xs ${
                               order.ispaid
-                                ? "bg-emerald-50 text-emerald-700"
-                                : "bg-red-50 text-red-600"
+                                ? "bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100"
+                                : order.paymentmethod === "upi"
+                                ? "bg-amber-50 text-amber-900 border-amber-300 hover:bg-amber-100 animate-pulse"
+                                : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200"
                             }`}
+                            title="Click to toggle Paid / Unpaid status"
                           >
-                            {order.ispaid ? "Paid" : "Unpaid (COD)"}
-                          </span>
+                            <span>
+                              {order.ispaid
+                                ? `✅ Paid (${(order.paymentmethod || "online").toUpperCase()})`
+                                : order.paymentmethod === "upi"
+                                ? "🟠 UPI Unverified (Click to Verify)"
+                                : "🟡 Unpaid (COD)"}
+                            </span>
+                          </button>
+
+                          {order.paymentId && (
+                            <span className="text-[10px] font-mono bg-purple-50 text-purple-800 px-2 py-0.5 rounded-md border border-purple-200 font-bold" title="Payment Reference / UTR Number">
+                              {order.paymentId}
+                            </span>
+                          )}
                         </div>
 
                         <p className="text-xs text-gray-400 mt-1">

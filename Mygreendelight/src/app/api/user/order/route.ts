@@ -93,8 +93,8 @@ export async function POST(req: NextRequest) {
             deliveryInstructions: deliveryInstructions || "",
             deliverySlot: deliverySlot || "Instant Express (30-45 Mins)",
             paymentId: paymentId || null,
-            paymentStatus: paymentmethod === "upi" ? "completed" : null,
-            ispaid: paymentmethod === "upi" ? true : false,
+            paymentStatus: "pending",
+            ispaid: false,
         });
 
         // 💰 Deduct GreenPoints Wallet if redeemed

@@ -349,10 +349,14 @@ useEffect(() => {
             >
               <div className="flex items-center gap-1.5 mb-1 text-[11px] uppercase tracking-wider">
                 <CreditCard size={14} />
-                <span>{isPaid ? "Payment Verified" : "Cash Collection Required"}</span>
+                <span>{isPaid ? "Payment Verified" : orderObj.paymentmethod === "upi" ? "UPI Unverified" : "Cash Collection Required"}</span>
               </div>
               <p className="text-sm">
-                {isPaid ? "✅ Paid Online (₹0 to collect)" : `💵 Collect Cash: ₹${totalAmount}`}
+                {isPaid
+                  ? "✅ Paid Online (₹0 to collect)"
+                  : orderObj.paymentmethod === "upi"
+                  ? `⚠️ Verify UPI / QR or Collect: ₹${totalAmount}`
+                  : `💵 Collect Cash: ₹${totalAmount}`}
               </p>
             </div>
           </div>

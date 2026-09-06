@@ -13,7 +13,8 @@ export async function POST(
     await connectDb();
 
     const { orderid } = await context.params;
-    const { status } = await req.json();
+    const body = await req.json();
+    const { status, ispaid, paymentStatus } = body;
 
     const order = await Order.findById(orderid).populate("user");
 
@@ -27,26 +28,33 @@ export async function POST(
       );
     }
 
-    if (status === "cancelled" && order.status !== "cancelled") {
-      // Restore stock for each valid grocery item
-      for (const item of order.items) {
-        if (item.grocery) {
-          const weight = item.variationWeight || (item as any).variation?.weight;
-          if (weight) {
-            await Grocery.findOneAndUpdate(
-              { _id: item.grocery, "variations.weight": weight },
-              { $inc: { "variations.$.stock": item.quantity } }
-            );
-          } else {
-            await Grocery.findByIdAndUpdate(item.grocery, {
-              $inc: { stock: item.quantity },
-            });
+    if (typeof ispaid === "boolean") {
+      order.ispaid = ispaid;
+      order.paymentStatus = paymentStatus || (ispaid ? "completed" : "pending");
+    }
+
+    if (status && status !== order.status) {
+      if (status === "cancelled" && order.status !== "cancelled") {
+        // Restore stock for each valid grocery item
+        for (const item of order.items) {
+          if (item.grocery) {
+            const weight = item.variationWeight || (item as any).variation?.weight;
+            if (weight) {
+              await Grocery.findOneAndUpdate(
+                { _id: item.grocery, "variations.weight": weight },
+                { $inc: { "variations.$.stock": item.quantity } }
+              );
+            } else {
+              await Grocery.findByIdAndUpdate(item.grocery, {
+                $inc: { stock: item.quantity },
+              });
+            }
           }
         }
       }
-    }
 
-    order.status = status;
+      order.status = status;
+    }
 
     let avaliabeldeliveryboy: any[] = [];
 
