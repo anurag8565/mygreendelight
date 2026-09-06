@@ -4,18 +4,17 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
+import { useSession, signOut } from "next-auth/react";
 import type { RootState } from "@/redux/store";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import useGetMe from "@/hooks/useGetMe";
 import axios from "axios";
-import { signOut } from "next-auth/react";
 import {
-  User,
+  User as UserIcon,
   Package,
   Wallet,
   Crown,
-  Milk,
   Heart,
   ShoppingCart,
   Phone,
@@ -27,44 +26,63 @@ import {
   ShieldCheck,
   Salad,
   Gift,
-  BookOpen,
   ArrowLeft,
-  Loader2,
+  Calendar,
+  Layers,
+  ArrowUpRight,
+  Tag,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function UserProfileHub() {
   const router = useRouter();
   useGetMe();
+  const { data: session, status } = useSession();
   const { userdata } = useSelector((state: RootState) => state.user);
+  const { items: wishlistItems } = useSelector((state: RootState) => state.wishlist);
+
+  const activeUser: any = userdata || session?.user;
+  const isLoggedIn = !!(activeUser?.email);
+
   const [walletBalance, setWalletBalance] = useState<number>(0);
   const [vipStatus, setVipStatus] = useState<any>(null);
   const [activeOrdersCount, setActiveOrdersCount] = useState<number>(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchAccountData();
-  }, []);
+    if (isLoggedIn) {
+      fetchAccountData();
+    } else if (status === "unauthenticated") {
+      setLoading(false);
+    }
+  }, [isLoggedIn, status]);
 
   const fetchAccountData = async () => {
     try {
       // 1. Fetch Wallet
-      const walletRes = await axios.get("/api/user/wallet");
-      if (walletRes.data?.success) {
-        setWalletBalance(walletRes.data.balance || 0);
-      }
+      try {
+        const walletRes = await axios.get("/api/user/wallet");
+        if (walletRes.data?.success) {
+          setWalletBalance(walletRes.data.balance || 0);
+        }
+      } catch (_) {}
 
       // 2. Fetch VIP Pass
-      const vipRes = await axios.get("/api/user/vip-pass");
-      if (vipRes.data?.success) {
-        setVipStatus(vipRes.data);
-      }
+      try {
+        const vipRes = await axios.get("/api/user/vip-pass");
+        if (vipRes.data?.success) {
+          setVipStatus(vipRes.data);
+        }
+      } catch (_) {}
 
       // 3. Fetch Orders count
-      const ordersRes = await axios.get("/api/user/myorder");
-      if (ordersRes.data?.orders) {
-        setActiveOrdersCount(ordersRes.data.orders.length);
-      }
+      try {
+        const ordersRes = await axios.get("/api/user/myorder");
+        const list = Array.isArray(ordersRes.data)
+          ? ordersRes.data
+          : ordersRes.data?.orders || [];
+        setActiveOrdersCount(list.length);
+      } catch (_) {}
     } catch (e) {
       // Guest or error
     } finally {
@@ -74,9 +92,36 @@ export default function UserProfileHub() {
 
   const isVip = vipStatus?.isMember;
 
+  if (status === "unauthenticated" && !isLoggedIn) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
+        <Nav />
+        <main className="flex-1 max-w-lg w-full mx-auto px-4 py-16 flex flex-col items-center justify-center text-center">
+          <div className="w-20 h-20 rounded-3xl bg-emerald-100/70 text-[#0f8646] flex items-center justify-center mb-5 shadow-xs">
+            <UserIcon size={36} />
+          </div>
+          <h1 className="text-2xl font-black text-gray-900 mb-2">
+            Sign In to Your Account
+          </h1>
+          <p className="text-sm text-gray-500 mb-6">
+            Log in to view your orders, live tracking, wallet cashback & saved wishlist.
+          </p>
+          <Link
+            href="/login"
+            className="w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black py-3.5 px-6 rounded-2xl shadow-lg shadow-emerald-900/15 transition flex items-center justify-center gap-2"
+          >
+            <UserIcon size={18} />
+            <span>Login or Create Account</span>
+          </Link>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
-      <Nav user={userdata as any} />
+      <Nav user={activeUser} />
 
       <main className="flex-1 max-w-5xl w-full mx-auto px-3.5 sm:px-6 md:px-8 py-5 sm:py-8">
         
@@ -89,8 +134,8 @@ export default function UserProfileHub() {
             <ArrowLeft size={14} />
             <span>Back to Home</span>
           </Link>
-          <span className="text-xs font-black text-[#0f8646] uppercase tracking-wider bg-green-50 px-2.5 py-1 rounded-full border border-green-200">
-            Account Dashboard
+          <span className="text-xs font-black text-[#0f8646] uppercase tracking-wider bg-green-50 px-2.5 py-1 rounded-full border border-green-200 flex items-center gap-1">
+            <Sparkles size={12} /> Account Dashboard
           </span>
         </div>
 
@@ -100,33 +145,43 @@ export default function UserProfileHub() {
 
           <div className="relative z-10 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 text-center sm:text-left">
             <div className="flex flex-col sm:flex-row items-center gap-4">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/20 border-2 border-white/40 text-white flex items-center justify-center font-black text-2xl sm:text-3xl shadow-inner shrink-0">
-                {userdata?.name ? userdata.name.charAt(0).toUpperCase() : <User size={32} />}
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/20 border-2 border-white/40 text-white flex items-center justify-center font-black text-2xl sm:text-3xl shadow-inner shrink-0 overflow-hidden">
+                {activeUser?.image ? (
+                  <img
+                    src={activeUser.image}
+                    alt={activeUser.name || "User"}
+                    className="w-full h-full object-cover"
+                  />
+                ) : activeUser?.name ? (
+                  activeUser.name.charAt(0).toUpperCase()
+                ) : (
+                  <UserIcon size={32} />
+                )}
               </div>
 
               <div>
                 <div className="flex items-center justify-center sm:justify-start gap-2 mb-1 flex-wrap">
                   <h1 className="text-xl sm:text-2xl font-black text-white">
-                    {userdata?.name || "Bhopal Resident"}
+                    {activeUser?.name || "SubziQuick Member"}
                   </h1>
                   {isVip && (
                     <span className="bg-gradient-to-r from-amber-400 to-yellow-400 text-gray-950 font-black text-[10px] uppercase px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1">
                       <Crown size={11} /> VIP Member
                     </span>
                   )}
-                  {userdata?.role === "admin" && (
-                    <span className="bg-purple-500 text-white font-black text-[10px] uppercase px-2 py-0.5 rounded-full">
-                      Admin
+                  {activeUser?.role === "admin" && (
+                    <span className="bg-amber-400 text-gray-950 font-black text-[10px] uppercase px-2 py-0.5 rounded-full flex items-center gap-1">
+                      <ShieldCheck size={11} /> Admin
                     </span>
                   )}
                 </div>
                 <p className="text-xs text-green-100/90 font-medium">
-                  {userdata?.email || userdata?.mobile || "Welcome to SubziQuick Pure Farm Deliveries"}
+                  {activeUser?.email || activeUser?.mobile || "SubziQuick Farm Fresh Deliveries"}
                 </p>
                 <div className="flex items-center justify-center sm:justify-start gap-3 mt-2 text-[11px] text-green-200">
                   <span>📍 Bhopal Central Hub</span>
                   <span>•</span>
-                  <span>🌿 Same-Day Mandi Fresh</span>
+                  <span>🌿 Same-Day Harvest</span>
                 </div>
               </div>
             </div>
@@ -141,8 +196,8 @@ export default function UserProfileHub() {
           </div>
         </div>
 
-        {/* 2 Clean Account Navigation Tiles */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6">
+        {/* 4 Core Quick Tiles: Orders, Wallet, VIP, Wishlist */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
           {/* Tile 1: My Orders */}
           <Link
             href="/user/myorder"
@@ -154,21 +209,59 @@ export default function UserProfileHub() {
               </div>
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block">
-                  My Orders & Live Tracking
+                  My Orders
                 </span>
-                <span className="text-lg font-black text-gray-900">
-                  {activeOrdersCount} Orders Placed
+                <span className="text-base font-black text-gray-900">
+                  {activeOrdersCount} Placed
                 </span>
               </div>
             </div>
-            <div className="text-right">
-              <span className="text-xs font-black text-[#0f8646] flex items-center gap-0.5 justify-end">
-                View Orders <ChevronRight size={14} />
-              </span>
-            </div>
+            <ChevronRight size={16} className="text-gray-400 group-hover:text-[#0f8646]" />
           </Link>
 
-          {/* Tile 2: Saved Wishlist */}
+          {/* Tile 2: Farm Wallet */}
+          <Link
+            href="/user/wallet"
+            className="bg-white rounded-2xl p-4 border border-blue-200 shadow-2xs hover:shadow-md transition-all flex items-center justify-between group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-black shrink-0 border border-blue-100 group-hover:scale-105 transition-transform">
+                <Wallet size={22} />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block">
+                  Farm Wallet
+                </span>
+                <span className="text-base font-black text-gray-900">
+                  ₹{walletBalance.toFixed(2)}
+                </span>
+              </div>
+            </div>
+            <ChevronRight size={16} className="text-gray-400 group-hover:text-blue-600" />
+          </Link>
+
+          {/* Tile 3: VIP Membership */}
+          <Link
+            href="/user/vip-pass"
+            className="bg-white rounded-2xl p-4 border border-amber-200 shadow-2xs hover:shadow-md transition-all flex items-center justify-between group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center font-black shrink-0 border border-amber-100 group-hover:scale-105 transition-transform">
+                <Crown size={22} />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block">
+                  VIP Pass
+                </span>
+                <span className="text-base font-black text-gray-900">
+                  {isVip ? "Active Member" : "Join for ₹49"}
+                </span>
+              </div>
+            </div>
+            <ChevronRight size={16} className="text-gray-400 group-hover:text-amber-700" />
+          </Link>
+
+          {/* Tile 4: Saved Wishlist */}
           <Link
             href="/wishlist"
             className="bg-white rounded-2xl p-4 border border-rose-200 shadow-2xs hover:shadow-md transition-all flex items-center justify-between group"
@@ -179,25 +272,21 @@ export default function UserProfileHub() {
               </div>
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block">
-                  Saved Produce Wishlist
+                  Wishlist
                 </span>
-                <span className="text-lg font-black text-gray-900">
-                  Favorite Items
+                <span className="text-base font-black text-gray-900">
+                  {wishlistItems.length} Saved
                 </span>
               </div>
             </div>
-            <div className="text-right">
-              <span className="text-xs font-black text-rose-600 flex items-center gap-0.5 justify-end">
-                View Saved <ChevronRight size={14} />
-              </span>
-            </div>
+            <ChevronRight size={16} className="text-gray-400 group-hover:text-rose-600" />
           </Link>
         </div>
 
         {/* Quick Links Menu Grid */}
         <div className="bg-white rounded-3xl p-5 sm:p-6 border border-gray-200 shadow-2xs mb-6">
-          <h3 className="text-sm font-black text-gray-900 uppercase tracking-wider mb-4 text-emerald-800">
-            Account & Farm Services
+          <h3 className="text-xs font-black text-gray-400 uppercase tracking-wider mb-4">
+            Farm Services & Subscriptions
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
@@ -215,7 +304,7 @@ export default function UserProfileHub() {
                     My Orders & Tracking
                   </h4>
                   <span className="text-[11px] text-gray-500 font-medium">
-                    {activeOrdersCount} previous orders
+                    {activeOrdersCount} past orders
                   </span>
                 </div>
               </div>
@@ -223,19 +312,19 @@ export default function UserProfileHub() {
             </Link>
 
             <Link
-              href="/wishlist"
+              href="/user/subscriptions"
               className="flex items-center justify-between p-3.5 rounded-2xl border border-gray-100 bg-gray-50/70 hover:bg-green-50/60 hover:border-[#0f8646] transition group"
             >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white text-rose-600 flex items-center justify-center shadow-xs border border-gray-100">
-                  <Heart size={20} />
+                <div className="w-10 h-10 rounded-xl bg-white text-emerald-700 flex items-center justify-center shadow-xs border border-gray-100">
+                  <Calendar size={20} />
                 </div>
                 <div>
                   <h4 className="text-xs font-black text-gray-900 group-hover:text-[#0f8646] transition">
-                    Saved Wishlist
+                    Daily Morning Subscriptions
                   </h4>
                   <span className="text-[11px] text-gray-500 font-medium">
-                    Favorite produce & items
+                    Fresh 6 AM delivery
                   </span>
                 </div>
               </div>
@@ -301,6 +390,28 @@ export default function UserProfileHub() {
               </div>
               <ChevronRight size={16} className="text-gray-400 group-hover:text-amber-700" />
             </Link>
+
+            {activeUser?.role === "admin" && (
+              <Link
+                href="/admin"
+                className="flex items-center justify-between p-3.5 rounded-2xl border border-purple-200 bg-purple-50/70 hover:bg-purple-100/70 hover:border-purple-400 transition group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-white text-purple-700 flex items-center justify-center shadow-xs border border-purple-200">
+                    <ShieldCheck size={20} />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-black text-purple-900 transition">
+                      Admin Control Center
+                    </h4>
+                    <span className="text-[11px] text-purple-700 font-medium">
+                      Manage orders & products
+                    </span>
+                  </div>
+                </div>
+                <ChevronRight size={16} className="text-purple-400 group-hover:text-purple-700" />
+              </Link>
+            )}
 
           </div>
         </div>
