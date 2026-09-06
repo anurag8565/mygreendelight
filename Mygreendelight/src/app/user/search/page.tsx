@@ -39,11 +39,9 @@ const TRENDING_QUERIES = [
 ];
 
 const CATEGORY_IMAGES: Record<string, string> = {
-  vegetables: "/categories/vegetables.jpg",
-  fruits: "/categories/fruits.jpg",
-  exotics: "/categories/exotic.jpg",
-  "dairy & staples": "/categories/dairy.jpg",
-  "ready-to-cook & cut produce": "/categories/ready_to_cook.jpg",
+  vegetables: "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=600&q=80",
+  fruits: "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=600&q=80",
+  exotics: "https://images.unsplash.com/photo-1518843875459-f738682238a6?auto=format&fit=crop&w=600&q=80",
 };
 
 export default function SearchPage() {

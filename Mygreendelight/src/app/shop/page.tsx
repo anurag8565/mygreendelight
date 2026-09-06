@@ -32,16 +32,11 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 const CATEGORY_IMAGES: Record<string, string> = {
-  all: "/categories/vegetables.jpg",
-  vegetables: "/categories/vegetables.jpg",
-  fruits: "/categories/fruits.jpg",
-  "dairy & staples": "/categories/dairy.jpg",
-  "dairy & eggs": "/categories/dairy.jpg",
-  dairy: "/categories/dairy.jpg",
-  exotics: "/categories/exotic.jpg",
+  all: "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=600&q=80",
+  vegetables: "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=600&q=80",
+  fruits: "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=600&q=80",
+  exotics: "https://images.unsplash.com/photo-1518843875459-f738682238a6?auto=format&fit=crop&w=600&q=80",
   combos: "/combo_banner.jpg",
-  "salad mixes": "/categories/exotic.jpg",
-  "ready-to-cook & cut produce": "/categories/ready_to_cook.jpg",
 };
 
 export default function ShopPage() {

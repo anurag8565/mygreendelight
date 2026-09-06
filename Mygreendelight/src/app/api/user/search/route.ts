@@ -1,5 +1,6 @@
 import connectDb from "@/lib/db";
 import Grocery from "@/model/groseri.model";
+import Category from "@/model/category.model";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -17,15 +18,23 @@ export async function GET(req: Request) {
     }
 
     const cleanQuery = query.trim();
+    const activeCats = await Category.find({}).select("name").lean();
+    const activeCatNames = activeCats.map((c) => c.name);
 
-    const results = await Grocery.find({
+    const filter: any = {
       status: { $ne: "draft" },
       $or: [
         { name: { $regex: cleanQuery, $options: "i" } },
         { category: { $regex: cleanQuery, $options: "i" } },
         { description: { $regex: cleanQuery, $options: "i" } },
       ],
-    }).sort({ createdAt: -1 });
+    };
+
+    if (activeCatNames.length > 0) {
+      filter.category = { $in: activeCatNames };
+    }
+
+    const results = await Grocery.find(filter).sort({ createdAt: -1 });
 
     return NextResponse.json(results);
   } catch (error) {

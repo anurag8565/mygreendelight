@@ -1,5 +1,6 @@
 import connectDb from "@/lib/db";
 import Grocery from "@/model/groseri.model";
+import Category from "@/model/category.model";
 import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -23,6 +24,11 @@ export async function GET(req: NextRequest) {
     };
     if (category) {
       query.category = category;
+    } else {
+      const activeCats = await Category.find({}).select("name").lean();
+      if (activeCats.length > 0) {
+        query.category = { $in: activeCats.map((c) => c.name) };
+      }
     }
     if (featured === "true") {
       query.isFeatured = true;

@@ -1,5 +1,6 @@
 import connectDb from "@/lib/db";
 import Category from "@/model/category.model";
+import Grocery from "@/model/groseri.model";
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 
@@ -117,13 +118,20 @@ export async function DELETE(req: NextRequest) {
       );
     }
 
+    // Cascade delete/clean up any products associated with this deleted category
+    if (deleted.name) {
+      await Grocery.deleteMany({
+        category: { $regex: `^${deleted.name.trim()}$`, $options: "i" },
+      });
+    }
+
     try {
       revalidatePath("/", "layout");
       revalidatePath("/shop");
     } catch (_) {}
 
     return NextResponse.json(
-      { success: true, message: "Category deleted successfully" },
+      { success: true, message: "Category and associated products deleted successfully" },
       { status: 200 }
     );
   } catch (error: any) {
