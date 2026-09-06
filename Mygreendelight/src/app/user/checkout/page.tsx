@@ -25,6 +25,9 @@ import {
   AlertCircle,
   Lock,
   Loader2,
+  Upload,
+  Camera,
+  Image as ImageIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
@@ -94,6 +97,8 @@ export default function Checkout() {
   const [paymentMethod, setPaymentMethod] = useState<"cod" | "upi">("cod");
   const [upiRefNumber, setUpiRefNumber] = useState<string>("");
   const [copiedUpi, setCopiedUpi] = useState<boolean>(false);
+  const [paymentProofFile, setPaymentProofFile] = useState<File | null>(null);
+  const [paymentProofPreview, setPaymentProofPreview] = useState<string | null>(null);
   const [deliverySlot, setDeliverySlot] = useState<string>("Early Morning Slot (6:00 AM – 8:30 AM)");
   const [isSilentDelivery, setIsSilentDelivery] = useState<boolean>(false);
   const [deliveryInstructions, setDeliveryInstructions] = useState<string>("");
@@ -249,6 +254,22 @@ export default function Checkout() {
 
     try {
       const cleanUtr = upiRefNumber.trim();
+      let uploadedProofUrl: string | null = null;
+
+      // Upload payment proof if provided
+      if (paymentMethod === "upi" && paymentProofFile) {
+        try {
+          const formData = new FormData();
+          formData.append("file", paymentProofFile);
+          const uploadRes = await axios.post("/api/user/upload-payment-proof", formData);
+          if (uploadRes.data?.success) {
+            uploadedProofUrl = uploadRes.data.url;
+          }
+        } catch (upErr) {
+          console.warn("Proof upload error:", upErr);
+        }
+      }
+
       const orderRes = await axios.post("/api/user/order", {
         userid: activeUserId,
         items: cartdata.map((item) => ({
@@ -273,6 +294,7 @@ export default function Checkout() {
         },
         paymentmethod: paymentMethod, // "cod" | "upi"
         paymentId: paymentMethod === "upi" ? `UTR_${cleanUtr}` : null,
+        paymentProofImage: uploadedProofUrl,
         couponCode: couponCode || undefined,
         discount: discount || 0,
         walletDiscount: 0,
@@ -1045,8 +1067,78 @@ export default function Checkout() {
                           className="w-full bg-white border border-amber-300 rounded-xl py-2.5 px-3 text-xs font-bold text-gray-900 outline-none focus:border-[#0f8646] focus:ring-1 focus:ring-[#0f8646] transition shadow-2xs placeholder:text-gray-400 placeholder:font-normal"
                         />
                         <p className="text-[10px] text-amber-800/80 mt-1.5 font-medium leading-tight">
-                          💡 Pay on your UPI app ➔ Copy the 12-digit UTR/Ref No. ➔ Paste here & click Confirm below.
+                          💡 Pay on your UPI app ➔ Copy the 12-digit UTR/Ref No. ➔ Paste here & attach screenshot below.
                         </p>
+                      </div>
+
+                      {/* Step 3: Upload Payment Screenshot (Receipt Proof) */}
+                      <div className="bg-emerald-50/40 p-3.5 rounded-2xl border border-emerald-200">
+                        <div className="flex items-center justify-between mb-1.5">
+                          <label className="text-xs font-black text-emerald-950 flex items-center gap-1.5">
+                            <Camera size={14} className="text-[#0f8646]" />
+                            <span>Step 3: Attach Payment Screenshot</span>
+                            <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded">
+                              Recommended
+                            </span>
+                          </label>
+                          <span className="text-[10px] font-bold text-gray-400">JPG/PNG</span>
+                        </div>
+
+                        <div className="relative">
+                          {paymentProofPreview ? (
+                            <div className="flex items-center justify-between bg-white p-2 rounded-xl border border-emerald-300 shadow-2xs">
+                              <div className="flex items-center gap-2.5">
+                                <img
+                                  src={paymentProofPreview}
+                                  alt="Payment Screenshot Preview"
+                                  className="w-12 h-12 rounded-lg object-cover border border-gray-200 shadow-2xs"
+                                />
+                                <div>
+                                  <span className="text-xs font-bold text-emerald-800 block flex items-center gap-1">
+                                    <Check size={13} className="stroke-[3]" /> Screenshot Attached
+                                  </span>
+                                  <span className="text-[10px] text-gray-500">Ready for 1-second admin verification</span>
+                                </div>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setPaymentProofFile(null);
+                                  setPaymentProofPreview(null);
+                                }}
+                                className="text-xs font-bold text-rose-600 hover:text-rose-800 px-2 py-1 rounded-lg hover:bg-rose-50 transition cursor-pointer"
+                              >
+                                Remove
+                              </button>
+                            </div>
+                          ) : (
+                            <label className="flex flex-col items-center justify-center p-3 border-2 border-dashed border-emerald-300 hover:border-[#0f8646] bg-white rounded-xl cursor-pointer transition group">
+                              <div className="flex items-center gap-2 text-xs font-bold text-[#0f8646] group-hover:underline">
+                                <Upload size={15} />
+                                <span>Upload Payment Receipt / Screenshot</span>
+                              </div>
+                              <span className="text-[10px] text-gray-400 mt-0.5">
+                                Click or tap to browse photo from gallery
+                              </span>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                onChange={(e) => {
+                                  const file = e.target.files?.[0];
+                                  if (file) {
+                                    setPaymentProofFile(file);
+                                    const reader = new FileReader();
+                                    reader.onload = (ev) => {
+                                      setPaymentProofPreview(ev.target?.result as string);
+                                    };
+                                    reader.readAsDataURL(file);
+                                  }
+                                }}
+                              />
+                            </label>
+                          )}
+                        </div>
                       </div>
                     </div>
                   )}

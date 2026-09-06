@@ -11,14 +11,51 @@ export async function POST(req: NextRequest) {
         // ✅ read body once
         const body = await req.json();
         console.log(body);
-        const { userid, items, paymentmethod, totalamount, address, couponCode, discount, deliverySlot, walletDiscount, farmerTip, isSilentDelivery, deliveryInstructions, paymentId } = body;
+        const {
+            userid,
+            items,
+            paymentmethod,
+            totalamount,
+            address,
+            couponCode,
+            discount,
+            walletDiscount,
+            farmerTip,
+            isSilentDelivery,
+            deliveryInstructions,
+            deliverySlot,
+            paymentId,
+            paymentProofImage,
+        } = body;
 
         // ❌ validation
-        if (!userid || !items || !Array.isArray(items) || items.length === 0 || !paymentmethod || !address) {
+        if (!userid || !items || !Array.isArray(items) || items.length === 0 || !address) {
             return NextResponse.json(
                 { success: false, message: "Missing required order information or empty cart" },
                 { status: 400 }
             );
+        }
+
+        // 🛡️ Prevent Fake UPI: Duplicate UTR & Format Validation
+        if (paymentmethod === "upi") {
+            const cleanPaymentId = paymentId ? String(paymentId).trim() : "";
+            if (!cleanPaymentId || cleanPaymentId.length < 6) {
+                return NextResponse.json(
+                    { success: false, message: "A valid 12-digit UPI UTR / Reference Number is required for UPI orders." },
+                    { status: 400 }
+                );
+            }
+
+            const existingOrderWithUtr = await Order.findOne({ paymentId: cleanPaymentId });
+            if (existingOrderWithUtr) {
+                return NextResponse.json(
+                    { 
+                        success: false, 
+                        message: "⚠️ This UPI UTR / Reference Number has already been submitted for another order. Please check your payment receipt and enter your unique UTR." 
+                    },
+                    { status: 400 }
+                );
+            }
         }
 
         // ✅ check user exists
@@ -93,6 +130,7 @@ export async function POST(req: NextRequest) {
             deliveryInstructions: deliveryInstructions || "",
             deliverySlot: deliverySlot || "Instant Express (30-45 Mins)",
             paymentId: paymentId || null,
+            paymentProofImage: paymentProofImage || null,
             paymentStatus: "pending",
             ispaid: false,
         });

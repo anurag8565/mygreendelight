@@ -32,6 +32,10 @@ import {
   Download,
   FileSpreadsheet,
   Navigation,
+  Eye,
+  X,
+  ExternalLink,
+  ShieldCheck,
 } from "lucide-react";
 import { socket } from "@/lib/socket";
 import AdminSidebar from "@/components/AdminSidebar";
@@ -64,6 +68,8 @@ interface OrderType {
   totalamount: number;
   paymentmethod: string;
   paymentId?: string;
+  paymentProofImage?: string;
+  paymentStatus?: "pending" | "completed" | "failed" | null;
   status: string;
   ispaid: boolean;
   createdAt: string;
@@ -107,6 +113,7 @@ export default function ManageOrder() {
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const [selectedInvoiceOrder, setSelectedInvoiceOrder] = useState<any>(null);
   const [selectedPackingSlipOrder, setSelectedPackingSlipOrder] = useState<any>(null);
+  const [previewProofOrder, setPreviewProofOrder] = useState<OrderType | null>(null);
   const [soundEnabled, setSoundEnabled] = useState(true);
 
   useEffect(() => {
@@ -657,6 +664,17 @@ export default function ManageOrder() {
 
                       {/* Action Buttons: WhatsApp, Slip, Bill & Status */}
                       <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+                        {order.paymentProofImage && (
+                          <button
+                            onClick={() => setPreviewProofOrder(order)}
+                            className="bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-300 px-3 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 transition cursor-pointer shadow-2xs animate-pulse"
+                            title="View Customer's Uploaded UPI Payment Receipt / Screenshot"
+                          >
+                            <Eye size={13} className="text-purple-600" />
+                            <span>Receipt</span>
+                          </button>
+                        )}
+
                         <button
                           onClick={() => openWhatsApp(order)}
                           className="bg-emerald-50 hover:bg-emerald-100 text-[#0f8646] border border-emerald-300 px-3 py-1.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition cursor-pointer shadow-2xs"
@@ -948,6 +966,96 @@ export default function ManageOrder() {
         isOpen={!!selectedPackingSlipOrder}
         onClose={() => setSelectedPackingSlipOrder(null)}
       />
+    )}
+
+    {/* Customer Payment Proof Screenshot Modal */}
+    {previewProofOrder && (
+      <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-gray-100 flex flex-col max-h-[90vh]">
+          {/* Header */}
+          <div className="p-4 bg-gray-50 border-b border-gray-100 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-bold">
+                <ShieldCheck size={18} />
+              </div>
+              <div>
+                <h3 className="text-sm font-black text-gray-900">
+                  Customer Payment Receipt
+                </h3>
+                <p className="text-[11px] text-gray-500 font-medium">
+                  Order #{previewProofOrder._id.slice(-6).toUpperCase()} • ₹{previewProofOrder.totalamount}
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => setPreviewProofOrder(null)}
+              className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-700 flex items-center justify-center transition cursor-pointer"
+            >
+              <X size={16} />
+            </button>
+          </div>
+
+          {/* Details & Image Preview */}
+          <div className="p-4 overflow-y-auto space-y-3 flex-1">
+            <div className="grid grid-cols-2 gap-2 bg-gray-50 p-3 rounded-2xl border border-gray-100 text-xs">
+              <div>
+                <span className="text-gray-400 block text-[10px]">Customer:</span>
+                <span className="font-bold text-gray-800">{previewProofOrder.address?.fullname || previewProofOrder.user?.name}</span>
+              </div>
+              <div>
+                <span className="text-gray-400 block text-[10px]">Submitted UTR:</span>
+                <span className="font-mono font-bold text-purple-800">{previewProofOrder.paymentId || "N/A"}</span>
+              </div>
+            </div>
+
+            <div className="relative rounded-2xl overflow-hidden border border-gray-200 bg-black/5 flex items-center justify-center min-h-[260px]">
+              {previewProofOrder.paymentProofImage ? (
+                <img
+                  src={previewProofOrder.paymentProofImage}
+                  alt="Customer Payment Receipt"
+                  className="w-full max-h-[420px] object-contain rounded-xl"
+                />
+              ) : (
+                <span className="text-xs text-gray-400">No screenshot image attached</span>
+              )}
+            </div>
+          </div>
+
+          {/* Footer Actions */}
+          <div className="p-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between gap-2">
+            {previewProofOrder.paymentProofImage && (
+              <a
+                href={previewProofOrder.paymentProofImage}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-bold text-[#0f8646] hover:underline flex items-center gap-1"
+              >
+                <ExternalLink size={13} /> Open Full Size
+              </a>
+            )}
+
+            <div className="flex items-center gap-2 ml-auto">
+              {!previewProofOrder.ispaid ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    togglePaymentStatus(previewProofOrder._id, false);
+                    setPreviewProofOrder((prev) => (prev ? { ...prev, ispaid: true } : null));
+                  }}
+                  className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 shadow-sm transition cursor-pointer"
+                >
+                  <Check size={14} strokeWidth={3} />
+                  <span>Verify & Mark as Paid</span>
+                </button>
+              ) : (
+                <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-3 py-1.5 rounded-xl border border-emerald-300">
+                  ✓ Verified & Paid
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
     )}
   </div>
 );

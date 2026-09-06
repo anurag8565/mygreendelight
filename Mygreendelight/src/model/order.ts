@@ -45,6 +45,7 @@ export interface iorder {
     cancellationReason?: string
     deliverySlot?: string
     paymentId?: string
+    paymentProofImage?: string
     paymentStatus?: "pending" | "completed" | "failed" | null
     bagsReturned?: number
     bagReturnCashback?: number
@@ -177,6 +178,10 @@ const orderSchema = new mongoose.Schema<iorder>(
             default: "Instant Express (30-45 Mins)",
         },
         paymentId: {
+            type: String,
+            default: null,
+        },
+        paymentProofImage: {
             type: String,
             default: null,
         },
