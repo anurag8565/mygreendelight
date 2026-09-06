@@ -306,7 +306,7 @@ export default function ManageSEOPage() {
         </header>
 
         {/* Content Body */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 space-y-6 max-w-7xl mx-auto w-full">
+        <main className="flex-1 p-3.5 sm:p-6 lg:p-8 space-y-6 max-w-7xl mx-auto w-full">
           
           {/* Top Quick Stats Row */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -368,10 +368,10 @@ export default function ManageSEOPage() {
           </div>
 
           {/* Navigation Tabs */}
-          <div className="flex items-center gap-2 border-b border-gray-200 pb-2">
+          <div className="flex items-center gap-2 border-b border-gray-200 pb-2 overflow-x-auto scrollbar-none">
             <button
               onClick={() => setActiveTab("products")}
-              className={`px-4 py-2.5 rounded-2xl text-xs font-black transition cursor-pointer flex items-center gap-2 ${
+              className={`px-4 py-2.5 rounded-2xl text-xs font-black transition cursor-pointer flex items-center gap-2 shrink-0 whitespace-nowrap ${
                 activeTab === "products"
                   ? "bg-[#0f8646] text-white shadow-xs"
                   : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
@@ -383,7 +383,7 @@ export default function ManageSEOPage() {
 
             <button
               onClick={() => setActiveTab("global")}
-              className={`px-4 py-2.5 rounded-2xl text-xs font-black transition cursor-pointer flex items-center gap-2 ${
+              className={`px-4 py-2.5 rounded-2xl text-xs font-black transition cursor-pointer flex items-center gap-2 shrink-0 whitespace-nowrap ${
                 activeTab === "global"
                   ? "bg-[#0f8646] text-white shadow-xs"
                   : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
@@ -395,7 +395,7 @@ export default function ManageSEOPage() {
 
             <button
               onClick={() => setActiveTab("bulk")}
-              className={`px-4 py-2.5 rounded-2xl text-xs font-black transition cursor-pointer flex items-center gap-2 ${
+              className={`px-4 py-2.5 rounded-2xl text-xs font-black transition cursor-pointer flex items-center gap-2 shrink-0 whitespace-nowrap ${
                 activeTab === "bulk"
                   ? "bg-[#0f8646] text-white shadow-xs"
                   : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
@@ -430,7 +430,7 @@ export default function ManageSEOPage() {
                 </div>
 
                 {/* Produce List */}
-                <div className="max-h-[580px] overflow-y-auto space-y-2 pr-1">
+                <div className="max-h-[220px] sm:max-h-[580px] overflow-y-auto space-y-2 pr-1">
                   {filteredProducts.map((prod) => {
                     const isSelected = selectedProductId === prod._id;
                     const hasCustomSeo = Boolean(prod.metaTitle && prod.metaDescription);
