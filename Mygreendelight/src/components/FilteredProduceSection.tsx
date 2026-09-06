@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Groceryitemcard from "./Groceryitemcard";
 import Link from "next/link";
-import { ChevronRight, LayoutGrid, List, Sparkles, ArrowRight } from "lucide-react";
+import { ChevronRight, LayoutGrid, List, Sparkles, ChevronDown, ShoppingBag } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function FilteredProduceSection({
@@ -14,6 +14,11 @@ export default function FilteredProduceSection({
   // Default to vegetables tab
   const [activeTab, setActiveTab] = useState<string>("vegetables");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [visibleCount, setVisibleCount] = useState<number>(24);
+
+  useEffect(() => {
+    setVisibleCount(24);
+  }, [activeTab]);
 
   const { filteredList, tabs } = useMemo(() => {
     const list = Array.isArray(groceries) ? groceries : [];
@@ -49,6 +54,8 @@ export default function FilteredProduceSection({
 
   if (!groceries || groceries.length === 0) return null;
 
+  const currentVisibleItems = filteredList.slice(0, visibleCount);
+
   return (
     <section className="w-full py-5 sm:py-8 bg-white font-sans border-b border-gray-100/90">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
@@ -61,7 +68,7 @@ export default function FilteredProduceSection({
                 Daily Fresh Mandi Harvest
               </h2>
               <span className="bg-emerald-100 text-[#0c831f] text-xs font-black px-2.5 py-0.5 rounded-full">
-                {filteredList.length} Items
+                {filteredList.length} Items Available
               </span>
             </div>
             <p className="text-xs text-gray-500 font-medium mt-0.5">
@@ -192,20 +199,34 @@ export default function FilteredProduceSection({
             ) : viewMode === "grid" ? (
               /* Grid Mode: 2 Columns on Mobile / 3 on sm / 4 on md / 5 on lg */
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 sm:gap-4">
-                {filteredList.map((item: any) => (
+                {currentVisibleItems.map((item: any) => (
                   <Groceryitemcard key={item._id} item={item} />
                 ))}
               </div>
             ) : (
               /* List Mode: Full-width row cards (Shop style) */
               <div className="flex flex-col gap-2.5 sm:gap-3">
-                {filteredList.map((item: any) => (
+                {currentVisibleItems.map((item: any) => (
                   <Groceryitemcard key={item._id} item={item} isList={true} />
                 ))}
               </div>
             )}
           </motion.div>
         </AnimatePresence>
+
+        {/* Load More Button if more items available */}
+        {filteredList.length > visibleCount && (
+          <div className="text-center mt-6 sm:mt-8">
+            <button
+              type="button"
+              onClick={() => setVisibleCount((prev) => prev + 24)}
+              className="bg-emerald-50 hover:bg-emerald-100 active:scale-95 text-[#0c831f] border border-emerald-300/80 px-6 py-2.5 rounded-2xl font-black text-xs sm:text-sm shadow-xs transition inline-flex items-center gap-2 cursor-pointer"
+            >
+              <span>Load More {activeTab === "vegetables" ? "Vegetables" : activeTab === "fruits" ? "Fruits" : "Exotics"} (+{filteredList.length - visibleCount} more)</span>
+              <ChevronDown size={16} />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

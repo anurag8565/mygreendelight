@@ -42,7 +42,7 @@ export default async function Userdashbord() {
   try {
     await connectDb();
 
-    const newGroceriesPromise = Grocery.find({ status: { $ne: 'draft' } }).sort({ createdAt: -1 }).limit(80).lean();
+    const newGroceriesPromise = Grocery.find({ status: { $ne: 'draft' } }).sort({ isFeatured: -1, createdAt: -1 }).limit(300).lean();
     const flashDealsPromise = Grocery.find({ stock: { $gt: 0 }, status: { $ne: 'draft' } }).sort({ price: 1, rating: -1 }).limit(10).lean();
     const featuredGroceriesPromise = Grocery.find({
       status: { $ne: 'draft' },
