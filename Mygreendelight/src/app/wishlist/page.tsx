@@ -189,7 +189,7 @@ export default function WishlistPage() {
                 <span>All {items.length} saved items added to your cart! 🛒</span>
               </div>
               <Link
-                href="/cart"
+                href="/user/cart"
                 className="bg-white text-[#0c831f] px-3 py-1 rounded-xl text-xs font-black shadow-xs hover:bg-emerald-50 transition"
               >
                 Go to Cart →
@@ -337,7 +337,7 @@ export default function WishlistPage() {
             className="fixed bottom-3 left-3 right-3 md:hidden z-40"
           >
             <Link
-              href="/cart"
+              href="/user/cart"
               className="bg-[#0c831f] text-white rounded-2xl p-3 shadow-[0_8px_25px_rgba(12,131,31,0.35)] flex items-center justify-between font-sans border border-emerald-400/30"
             >
               <div className="flex items-center gap-2.5">
