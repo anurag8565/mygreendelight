@@ -3,10 +3,15 @@ import connectDb from "@/lib/db";
 import Order from "@/model/order";
 import User from "@/model/user.model";
 import Grocery from "@/model/groseri.model";
+import { auth } from "@/auth";
 
 export async function GET() {
     try {
         await connectDb();
+        const session = await auth();
+        if (session?.user?.role !== "admin") {
+            return NextResponse.json({ message: "Unauthorized: Admin access required" }, { status: 403 });
+        }
 
         const [
             totalOrders,

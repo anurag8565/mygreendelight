@@ -2,10 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDb from "@/lib/db";
 import Grocery from "@/model/groseri.model";
 import Order from "@/model/order";
+import { auth } from "@/auth";
 
 export async function GET(req: NextRequest) {
   try {
     await connectDb();
+    const session = await auth();
+    if (session?.user?.role !== "admin") {
+      return NextResponse.json({ success: false, message: "Unauthorized: Admin access required" }, { status: 403 });
+    }
 
     const groceries = await Grocery.find({}).sort({ name: 1 }).lean();
 

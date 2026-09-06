@@ -127,15 +127,60 @@ export async function POST(req: NextRequest) {
         }
 
         // Check VIP Farm Club membership
+        // Check VIP Farm Club membership
         const isVip = Boolean(
             user.vipPass?.isActive &&
             user.vipPass.endDate &&
             new Date(user.vipPass.endDate) > new Date()
         );
 
+        // Server-side Coupon & Reward Validation
+        let discountCalc = 0;
+        let validatedCouponCode: string | null = null;
+        let scratchRewardToUpdate: any = null;
+
+        if (couponCode && typeof couponCode === "string" && couponCode.trim()) {
+            const cleanCode = couponCode.trim().toUpperCase();
+            try {
+                const CouponModel = (await import("@/model/coupon.model")).default;
+                const dbCoupon = await CouponModel.findOne({ code: cleanCode, isActive: true });
+
+                if (dbCoupon && new Date(dbCoupon.expiryDate) >= new Date() && verifiedSubtotal >= (dbCoupon.minOrderValue || 0)) {
+                    validatedCouponCode = cleanCode;
+                    if (dbCoupon.discountType === "percentage") {
+                        let disc = Math.round((verifiedSubtotal * Number(dbCoupon.discountValue || 0)) / 100);
+                        if (dbCoupon.maxDiscount && disc > dbCoupon.maxDiscount) {
+                            disc = dbCoupon.maxDiscount;
+                        }
+                        discountCalc = disc;
+                    } else {
+                        discountCalc = Number(dbCoupon.discountValue || 0);
+                    }
+                } else {
+                    const RewardModel = (await import("@/model/reward.model")).default;
+                    const dbReward = await RewardModel.findOne({ couponCode: cleanCode, isUsed: false });
+                    if (dbReward && new Date(dbReward.expiresAt) >= new Date()) {
+                        const minReq = dbReward.minOrderAmount || dbReward.minOrderValue || 199;
+                        if (verifiedSubtotal >= minReq) {
+                            validatedCouponCode = cleanCode;
+                            let disc = dbReward.discountAmount || dbReward.discountValue || 20;
+                            if (dbReward.discountType === "percent") {
+                                disc = Math.round((verifiedSubtotal * disc) / 100);
+                            }
+                            discountCalc = disc;
+                            scratchRewardToUpdate = dbReward;
+                        }
+                    }
+                }
+            } catch (cErr) {
+                console.warn("Coupon validation error during order creation:", cErr);
+            }
+        }
+
+        discountCalc = Math.min(discountCalc, verifiedSubtotal);
+
         // Compute verified total to prevent price tampering
         const deliveryFeeCalc = isVip ? 0 : (verifiedSubtotal > 0 && verifiedSubtotal < 199 ? 30 : 0);
-        const discountCalc = Number(discount) || 0;
         
         let walletDiscountCalc = Math.max(0, Number(walletDiscount) || 0);
         const currentWalletBal = Number(user.walletBalance) || 0;
@@ -156,7 +201,7 @@ export async function POST(req: NextRequest) {
             paymentmethod,
             totalamount: finalTotalToSave,
             address,
-            couponCode: couponCode || null,
+            couponCode: validatedCouponCode,
             discount: discountCalc,
             walletDiscount: walletDiscountCalc,
             farmerTip: 0,
@@ -168,6 +213,17 @@ export async function POST(req: NextRequest) {
             paymentStatus: "pending",
             ispaid: false,
         });
+
+        // Mark single-use scratch reward as used
+        if (scratchRewardToUpdate) {
+            try {
+                scratchRewardToUpdate.isUsed = true;
+                scratchRewardToUpdate.usedInOrder = neworder._id;
+                await scratchRewardToUpdate.save();
+            } catch (rErr) {
+                console.warn("Error marking scratch reward as used:", rErr);
+            }
+        }
 
         // 💰 Deduct GreenPoints Wallet atomically if redeemed
         if (walletDiscountCalc > 0) {
