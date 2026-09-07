@@ -15,9 +15,16 @@ import {
   ShieldAlert,
   BarChart3,
   History,
-  AlertCircle,
   RotateCw,
   Send,
+  Sparkles,
+  ChevronRight,
+  ArrowRight,
+  AlertCircle,
+  Check,
+  Compass,
+  Radio,
+  ShoppingBag,
 } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
@@ -36,6 +43,7 @@ export default function Deliveryboy() {
   const [activeorder, setactiverder] = useState<any>(null)
   const [userlocation, setuserlocation] = useState<any>(null)
   const [loading, setLoading] = useState(true)
+  const [refreshing, setRefreshing] = useState(false)
   const [otp, setOtp] = useState('')
   const [verifyingOtp, setVerifyingOtp] = useState(false)
   const [sendingOtpEmail, setSendingOtpEmail] = useState(false)
@@ -54,11 +62,14 @@ export default function Deliveryboy() {
 
   const { userdata } = useSelector((state: RootState) => state.user)
 
-  // Listen for real-time socket events
+  // Socket notification for incoming broadcasts
   useEffect(() => {
     socket.on('new-assignment', (assignment) => {
       setAssignments((prev) => [assignment, ...prev])
-      alert('🔔 New delivery order assignment received!')
+      // Trigger notification vibration if available on mobile
+      if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+        navigator.vibrate([200, 100, 200])
+      }
     })
 
     return () => {
@@ -116,15 +127,23 @@ export default function Deliveryboy() {
     }
   }
 
+  const handleRefreshAll = async () => {
+    setRefreshing(true)
+    await Promise.all([
+      fetchAssignments(),
+      fetchDashboardData(),
+      fetchCurrentOrder(),
+    ])
+    setTimeout(() => setRefreshing(false), 400)
+  }
+
   useEffect(() => {
     if (userdata) {
-      fetchCurrentOrder()
-      fetchAssignments()
-      fetchDashboardData()
+      handleRefreshAll()
     }
   }, [userdata])
 
-  // GPS Live Tracking streaming for active trip
+  // Real-time GPS stream during active delivery trip
   useEffect(() => {
     if (!activeorder) return
     let watchId: number | null = null
@@ -143,7 +162,7 @@ export default function Deliveryboy() {
               .catch(() => {})
           }
         },
-        (err) => console.log('GPS watch error:', err),
+        (err) => console.log('GPS tracking notice:', err),
         { enableHighAccuracy: true, timeout: 15000, maximumAge: 5000 }
       )
     }
@@ -158,7 +177,6 @@ export default function Deliveryboy() {
   const handleAccept = async (id: string) => {
     try {
       const result = await axios.get(`/api/delivery/assigment/${id}/accepyaccigment`)
-      alert(result.data.message || 'Order accepted! Navigating to delivery trip...')
       setAssignments((prev) => prev.filter((a) => a._id !== id))
       fetchCurrentOrder()
     } catch (error: any) {
@@ -169,7 +187,6 @@ export default function Deliveryboy() {
   const handleReject = async (id: string) => {
     try {
       await axios.post('/api/delivery/reject', { id })
-      alert('Assignment Rejected')
       setAssignments((prev) => prev.filter((a) => a._id !== id))
     } catch (error) {
       console.log(error)
@@ -190,15 +207,14 @@ export default function Deliveryboy() {
         otp: cleanOtp,
         bagsReturned,
       })
-      alert(result.data.message || '✅ Delivery Verified & Completed Successfully!')
+      alert(result.data.message || '🎉 Delivery Handover Completed Successfully!')
       setactiverder(null)
       setuserlocation(null)
       setOtp('')
-      fetchDashboardData()
-      fetchAssignments()
-      fetchCurrentOrder()
+      setBagsReturned(0)
+      handleRefreshAll()
     } catch (error: any) {
-      alert(error?.response?.data?.message || 'Invalid OTP. Please ask the customer to confirm their 4-digit code.')
+      alert(error?.response?.data?.message || 'Invalid OTP. Please verify the 4 digits with the customer.')
     } finally {
       setVerifyingOtp(false)
     }
@@ -209,15 +225,17 @@ export default function Deliveryboy() {
     setSendingOtpEmail(true)
     try {
       const res = await axios.post(`/api/delivery/send-delivery-otp/${activeorder.order._id}`)
-      alert(res.data.message || "✅ 4-Digit OTP has been dispatched to the customer's registered email!")
+      alert(res.data.message || "✅ 4-Digit OTP has been dispatched to the customer's email!")
     } catch (error: any) {
-      alert(error?.response?.data?.message || 'Failed to dispatch OTP email.')
+      alert(error?.response?.data?.message || 'Failed to send OTP email.')
     } finally {
       setSendingOtpEmail(false)
     }
   }
 
-  // Active Delivery Trip View
+  // ==========================================
+  // VIEW 1: ACTIVE DELIVERY TRIP IN PROGRESS
+  // ==========================================
   if (activeorder && userlocation) {
     const orderObj = activeorder.order || {}
     const customerName = orderObj.address?.fullname || 'Customer'
@@ -229,7 +247,6 @@ export default function Deliveryboy() {
     const cleanMobile = customerMobile.replace(/\D/g, '').slice(-10)
     const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${userlocation.latitude},${userlocation.longitude}`
 
-    // Rider sends arrival message asking customer for their OTP (Rider does not see or know the OTP)
     const arrivalWhatsappMsg = encodeURIComponent(
       `*🌿 SubziQuick Farm Fresh Express Delivery*\n` +
       `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
@@ -237,43 +254,45 @@ export default function Deliveryboy() {
       `Main aapka *SubziQuick Delivery Partner* aapke doorstep par taaza grocery leke pahunch gaya hoon.\n\n` +
       `📦 *Order ID:* #${orderShortId}\n` +
       `📍 *Address:* ${customerAddress}\n` +
-      `💵 *Payment:* ${isPaid ? '✅ Paid Online (₹0 to pay)' : `💵 Collect Cash / UPI: ₹${totalAmount}`}\n\n` +
-      `👉 Kripya delivery lete waqt apna *4-digit verification OTP* share karein jo aapko Email / Tracking link par mila hai.\n\n` +
-      `Track Live: https://subziquick.in/track/${orderObj._id}\n` +
+      `💵 *Payment:* ${isPaid ? '✅ Paid Online (₹0 Collect)' : `💵 Collect Cash / UPI: ₹${totalAmount}`}\n\n` +
+      `👉 Kripya apna *4-digit delivery verification OTP* share karein taaki handover complete ho sake.\n\n` +
+      `Live Tracking: https://subziquick.in/track/${orderObj._id}\n` +
       `Dhanyawaad! 🌿`
     )
     const whatsappArrivalUrl = `https://wa.me/91${cleanMobile}?text=${arrivalWhatsappMsg}`
 
     return (
-      <div className="p-4 pt-24 sm:pt-28 min-h-screen bg-[#f8faf9] font-sans pb-20">
-        <div className="max-w-4xl mx-auto space-y-5">
-          {/* Active Trip Header Bar */}
-          <div className="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-emerald-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="min-h-screen bg-[#f8faf9] font-sans pb-24 pt-20 sm:pt-24 px-3 sm:px-6">
+        <div className="max-w-3xl mx-auto space-y-4">
+          
+          {/* Minimalist Top Status Header */}
+          <div className="bg-white rounded-3xl p-5 shadow-xs border border-emerald-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="bg-emerald-600 text-white font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-xs">
-                  🚀 Active Delivery Trip
+                <span className="inline-flex items-center gap-1.5 bg-emerald-600 text-white text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">
+                  <span className="w-2 h-2 rounded-full bg-emerald-200 animate-ping"></span>
+                  Trip In Progress
                 </span>
-                {gpsActive && (
-                  <span className="bg-blue-50 text-blue-700 border border-blue-200 text-[11px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1.5 animate-pulse">
-                    <span className="w-2 h-2 rounded-full bg-blue-600"></span>
-                    <span>Live GPS Streaming</span>
-                  </span>
-                )}
-                <span className="font-mono font-black text-sm text-gray-800 bg-gray-100 px-2 py-0.5 rounded-md">
+                <span className="font-mono font-black text-xs text-gray-700 bg-gray-100 px-2.5 py-1 rounded-full">
                   #{orderShortId}
                 </span>
+                {gpsActive && (
+                  <span className="text-[11px] font-bold text-blue-600 bg-blue-50 border border-blue-200/80 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                    <Radio size={11} className="animate-pulse" />
+                    <span>GPS Online</span>
+                  </span>
+                )}
               </div>
-              <h1 className="text-xl sm:text-2xl font-black text-gray-900 mt-2">
-                Delivering to {customerName}
-              </h1>
-              <p className="text-xs text-gray-500 mt-0.5 flex items-center gap-1.5">
-                <MapPin size={13} className="text-[#0f8646] shrink-0" />
+              <h2 className="text-xl sm:text-2xl font-black text-gray-900 mt-2 tracking-tight">
+                {customerName}
+              </h2>
+              <p className="text-xs text-gray-500 mt-0.5 flex items-start gap-1.5">
+                <MapPin size={13} className="text-[#0f8646] shrink-0 mt-0.5" />
                 <span>{customerAddress}</span>
               </p>
             </div>
 
-            {/* Payment Collection Status */}
+            {/* Payment Badge */}
             <div
               className={`p-3.5 rounded-2xl border text-xs font-black shrink-0 ${
                 isPaid
@@ -281,33 +300,30 @@ export default function Deliveryboy() {
                   : 'bg-amber-50 text-amber-900 border-amber-300'
               }`}
             >
-              <div className="flex items-center gap-1.5 mb-1 text-[11px] uppercase tracking-wider">
-                <CreditCard size={14} />
-                <span>{isPaid ? 'Payment Verified' : 'Cash / UPI Collection'}</span>
+              <div className="text-[10px] uppercase tracking-wider text-gray-500 font-bold mb-0.5">
+                {isPaid ? 'Payment Status' : 'Cash / UPI Collection'}
               </div>
-              <p className="text-sm">
-                {isPaid
-                  ? '✅ Paid Online (₹0 to collect)'
-                  : `💵 Collect: ₹${totalAmount}`}
-              </p>
+              <div className="text-sm font-black">
+                {isPaid ? '✅ Paid Online (₹0)' : `💵 Collect ₹${totalAmount}`}
+              </div>
             </div>
           </div>
 
-          {/* Silent Delivery Banner */}
+          {/* Silent Delivery Instruction Card */}
           {activeorder?.order?.isSilentDelivery && (
-            <div className="bg-amber-500 text-white p-4 rounded-2xl shadow-sm flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-black/20 flex items-center justify-center font-black shrink-0 text-xl">
+            <div className="bg-amber-500 text-white p-4 rounded-3xl shadow-sm flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-2xl bg-black/20 flex items-center justify-center font-black text-xl shrink-0">
                 🔕
               </div>
               <div>
-                <h4 className="font-black text-xs sm:text-sm uppercase tracking-wide">
-                  SILENT DOORSTEP DROP — DO NOT RING BELL!
+                <h4 className="font-black text-xs sm:text-sm uppercase tracking-wider">
+                  Silent Delivery — Please Do Not Ring Bell
                 </h4>
                 <p className="text-xs text-amber-100 mt-0.5">
-                  Customer requested quiet delivery. Place grocery bag neatly at the doorstep.
+                  Drop produce safely at the doorstep.
                   {activeorder.order.deliveryInstructions && (
-                    <span className="block font-bold mt-1 text-white">
-                      Instructions: "${activeorder.order.deliveryInstructions}"
+                    <span className="font-bold text-white block mt-0.5">
+                      Note: "{activeorder.order.deliveryInstructions}"
                     </span>
                   )}
                 </p>
@@ -315,42 +331,42 @@ export default function Deliveryboy() {
             </div>
           )}
 
-          {/* Quick Actions (GPS Navigation + WhatsApp + Direct Phone Call) */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {/* 1-Tap Thumb Action Bar */}
+          <div className="grid grid-cols-3 gap-2 sm:gap-3">
             <a
               href={mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white p-3.5 rounded-2xl font-black text-xs flex items-center justify-center gap-2 transition shadow-xs hover:shadow-md cursor-pointer"
+              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white p-3.5 rounded-2xl font-black text-xs flex flex-col sm:flex-row items-center justify-center gap-1.5 transition shadow-xs cursor-pointer text-center"
             >
-              <Navigation size={16} />
-              <span>Turn-by-Turn GPS Map</span>
+              <Compass size={18} />
+              <span>GPS Map</span>
             </a>
 
-            {customerMobile && (
+            {customerMobile ? (
               <a
                 href={whatsappArrivalUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#25D366] hover:bg-[#20bd5a] text-white p-3.5 rounded-2xl font-black text-xs flex items-center justify-center gap-2 transition shadow-xs hover:shadow-md cursor-pointer"
+                className="bg-[#25D366] hover:bg-[#20bd5a] text-white p-3.5 rounded-2xl font-black text-xs flex flex-col sm:flex-row items-center justify-center gap-1.5 transition shadow-xs cursor-pointer text-center"
               >
-                <MessageCircle size={16} />
-                <span>WhatsApp "I've Arrived"</span>
+                <MessageCircle size={18} />
+                <span>WhatsApp</span>
               </a>
-            )}
+            ) : null}
 
-            {customerMobile && (
+            {customerMobile ? (
               <a
                 href={`tel:${customerMobile}`}
-                className="bg-gray-900 hover:bg-black text-white p-3.5 rounded-2xl font-black text-xs flex items-center justify-center gap-2 transition shadow-xs hover:shadow-md cursor-pointer"
+                className="bg-gray-900 hover:bg-black text-white p-3.5 rounded-2xl font-black text-xs flex flex-col sm:flex-row items-center justify-center gap-1.5 transition shadow-xs cursor-pointer text-center"
               >
-                <Phone size={16} />
-                <span>Call Customer (${customerMobile})</span>
+                <Phone size={18} />
+                <span>Call</span>
               </a>
-            )}
+            ) : null}
           </div>
 
-          {/* Live Customer Location Map */}
+          {/* Interactive Live Map */}
           <div className="rounded-3xl border border-gray-200/80 shadow-xs overflow-hidden bg-white p-2">
             <Livemap
               customerLocation={{
@@ -361,28 +377,33 @@ export default function Deliveryboy() {
             />
           </div>
 
-          {/* Order Produce Breakdown & Doorstep OTP Verification */}
-          <div className="grid md:grid-cols-2 gap-5">
-            {/* Package Contents */}
+          {/* Produce Items & OTP Verification */}
+          <div className="grid md:grid-cols-2 gap-4">
+            {/* Produce Bag Items */}
             <div className="bg-white rounded-3xl p-5 border border-gray-200/80 shadow-xs space-y-3">
-              <h3 className="font-black text-sm text-gray-900 flex items-center gap-2">
-                <Package size={16} className="text-[#0f8646]" />
-                <span>Produce Package ({orderObj.items?.length || 0} items)</span>
-              </h3>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 font-black text-sm text-gray-900">
+                  <ShoppingBag size={16} className="text-[#0f8646]" />
+                  <span>Order Produce ({orderObj.items?.length || 0})</span>
+                </div>
+                <span className="font-mono font-black text-xs text-[#0f8646]">
+                  ₹{totalAmount}
+                </span>
+              </div>
 
-              <div className="divide-y divide-gray-100 max-h-52 overflow-y-auto pr-1">
+              <div className="divide-y divide-gray-100 max-h-48 overflow-y-auto pr-1">
                 {(orderObj.items || []).map((item: any, idx: number) => (
-                  <div key={idx} className="py-2.5 flex items-center justify-between text-xs">
+                  <div key={idx} className="py-2 flex items-center justify-between text-xs">
                     <div className="flex items-center gap-2.5">
                       {item.image && (
                         <img
                           src={item.image}
                           alt={item.name}
-                          className="w-9 h-9 rounded-lg object-contain bg-gray-50 border border-gray-100 p-0.5"
+                          className="w-8 h-8 rounded-lg object-contain bg-gray-50 border border-gray-100 p-0.5 shrink-0"
                         />
                       )}
                       <div>
-                        <p className="font-bold text-gray-900">{item.name}</p>
+                        <p className="font-bold text-gray-900 leading-tight">{item.name}</p>
                         <p className="text-[11px] text-gray-400">
                           {item.quantity} × {item.unit}
                         </p>
@@ -394,41 +415,31 @@ export default function Deliveryboy() {
                   </div>
                 ))}
               </div>
-
-              <div className="pt-2 border-t border-gray-100 flex justify-between font-black text-sm">
-                <span>Total Amount:</span>
-                <span className="text-[#0f8646]">₹{totalAmount}</span>
-              </div>
             </div>
 
-            {/* Zero-Knowledge Secure OTP Handover */}
-            <div className="bg-white rounded-3xl p-5 border border-gray-200/80 shadow-xs space-y-3 flex flex-col justify-between">
+            {/* Zero-Knowledge Doorstep OTP Card */}
+            <div className="bg-white rounded-3xl p-5 border border-gray-200/80 shadow-xs flex flex-col justify-between space-y-4">
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-black text-sm text-gray-900 flex items-center gap-2">
+                  <div className="flex items-center gap-2 font-black text-sm text-gray-900">
                     <ShieldAlert size={16} className="text-[#0f8646]" />
-                    <span>Doorstep OTP Verification</span>
-                  </h3>
-
+                    <span>Customer OTP</span>
+                  </div>
                   <button
                     onClick={handleResendOtpEmail}
                     disabled={sendingOtpEmail}
-                    className="text-[11px] font-extrabold bg-emerald-50 text-[#0f8646] hover:bg-[#0f8646] hover:text-white border border-emerald-300 px-2.5 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1 shadow-2xs"
+                    className="text-[11px] font-extrabold bg-emerald-50 text-[#0f8646] hover:bg-[#0f8646] hover:text-white border border-emerald-200 px-2.5 py-1 rounded-xl transition cursor-pointer flex items-center gap-1"
                   >
-                    <Send size={11} />
-                    <span>{sendingOtpEmail ? 'Sending...' : '📩 Resend Email OTP'}</span>
+                    <Send size={10} />
+                    <span>{sendingOtpEmail ? 'Sending...' : 'Email OTP'}</span>
                   </button>
                 </div>
 
-                <div className="bg-amber-50/70 border border-amber-200 rounded-xl p-3 mb-3 text-xs text-amber-900 leading-relaxed">
-                  <div className="flex items-center gap-1.5 font-bold mb-0.5 text-amber-950">
-                    <AlertCircle size={14} />
-                    <span>Customer Secret Code</span>
-                  </div>
-                  Ask the customer for the <strong>4-digit OTP</strong> shown on their tracking screen or registered email.
-                </div>
+                <p className="text-xs text-gray-500 mb-3 leading-relaxed">
+                  Ask customer for the <strong>4-digit code</strong> from their email or live tracking page.
+                </p>
 
-                {/* 4-Digit Verification Input */}
+                {/* OTP Input */}
                 <input
                   type="text"
                   maxLength={4}
@@ -438,54 +449,48 @@ export default function Deliveryboy() {
                   className="w-full text-center font-mono font-black text-2xl tracking-[0.4em] border-2 border-dashed border-gray-300 focus:border-[#0f8646] p-3 rounded-2xl outline-none bg-gray-50/50 transition mb-3 placeholder:tracking-normal placeholder:text-base placeholder:font-sans"
                 />
 
-                {/* ♻️ Zero-Plastic Eco-Bag Return Counter */}
-                <div className="bg-emerald-50/80 border border-emerald-200/90 rounded-2xl p-3 text-left mb-3">
-                  <div className="flex items-center justify-between gap-2 mb-1">
-                    <span className="font-extrabold text-xs text-emerald-900">
-                      ♻️ Eco-Bags Returned by Customer
-                    </span>
-                    <span className="text-[10px] font-black bg-emerald-200/80 text-emerald-900 px-2 py-0.5 rounded-full">
-                      ₹10 / Bag Reward
-                    </span>
+                {/* Eco-Bag Return Counter */}
+                <div className="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-3 flex items-center justify-between text-xs">
+                  <div>
+                    <span className="font-bold text-emerald-950 block">♻️ Eco-Bags Collected</span>
+                    <span className="text-[11px] text-emerald-700 font-semibold">+₹10 reward/bag</span>
                   </div>
-                  <div className="flex items-center justify-between bg-white p-2 rounded-xl border border-emerald-200">
-                    <span className="text-xs font-bold text-gray-700">Collected Count:</span>
-                    <div className="flex items-center gap-3">
-                      <button
-                        type="button"
-                        onClick={() => setBagsReturned((prev) => Math.max(0, prev - 1))}
-                        className="w-7 h-7 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-800 font-black text-sm flex items-center justify-center transition cursor-pointer"
-                      >
-                        -
-                      </button>
-                      <span className="font-mono font-black text-sm text-emerald-800 w-4 text-center">
-                        {bagsReturned}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => setBagsReturned((prev) => prev + 1)}
-                        className="w-7 h-7 rounded-lg bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black text-sm flex items-center justify-center transition cursor-pointer"
-                      >
-                        +
-                      </button>
-                    </div>
+                  <div className="flex items-center gap-2.5 bg-white px-2 py-1 rounded-xl border border-emerald-200">
+                    <button
+                      type="button"
+                      onClick={() => setBagsReturned((p) => Math.max(0, p - 1))}
+                      className="w-6 h-6 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-800 font-black text-xs flex items-center justify-center transition cursor-pointer"
+                    >
+                      -
+                    </button>
+                    <span className="font-mono font-black text-sm text-emerald-800 w-3 text-center">
+                      {bagsReturned}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setBagsReturned((p) => p + 1)}
+                      className="w-6 h-6 rounded-lg bg-[#0f8646] text-white font-black text-xs flex items-center justify-center transition cursor-pointer"
+                    >
+                      +
+                    </button>
                   </div>
                 </div>
               </div>
 
+              {/* Complete Delivery Action */}
               <button
                 onClick={handleVerifyOtp}
                 disabled={verifyingOtp}
-                className="w-full bg-[#0f8646] hover:bg-[#0c6a38] disabled:bg-gray-400 text-white font-black py-3.5 rounded-2xl shadow-sm hover:shadow-md transition text-sm flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full bg-[#0f8646] hover:bg-[#0c6a38] disabled:bg-gray-400 text-white font-black py-3.5 rounded-2xl shadow-sm hover:shadow-md transition text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer"
               >
-                <CheckCircle2 size={18} />
-                <span>{verifyingOtp ? 'Verifying OTP...' : 'Verify OTP & Mark Delivered'}</span>
+                <CheckCircle2 size={16} />
+                <span>{verifyingOtp ? 'Verifying...' : 'Verify OTP & Mark Delivered'}</span>
               </button>
             </div>
           </div>
         </div>
 
-        {/* In-Trip Live Chat */}
+        {/* Floating Chat Button */}
         {activeorder?.order?._id && userdata && (
           <ChatButton
             orderId={activeorder.order._id}
@@ -497,57 +502,59 @@ export default function Deliveryboy() {
     )
   }
 
-  // Delivery Partner Standby Portal (Tabs: Requests | Earnings | History)
+  // ==========================================
+  // VIEW 2: DELIVERY PARTNER STANDBY DASHBOARD
+  // ==========================================
   return (
-    <div className="min-h-screen bg-[#f8faf9] p-4 sm:p-8 pt-24 sm:pt-28 font-sans">
-      <div className="max-w-5xl mx-auto space-y-6">
-        {/* Top Header Card */}
-        <div className="bg-white rounded-3xl p-6 shadow-xs border border-gray-200/80 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#0f8646] to-emerald-400 text-white flex items-center justify-center shadow-md shrink-0">
-              <Truck size={28} />
+    <div className="min-h-screen bg-[#f8faf9] font-sans pb-24 pt-20 sm:pt-24 px-3 sm:px-6">
+      <div className="max-w-4xl mx-auto space-y-5">
+        
+        {/* Sleek Header & Duty Online Pill */}
+        <div className="bg-white rounded-3xl p-5 sm:p-6 shadow-xs border border-gray-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#0f8646] to-emerald-400 text-white flex items-center justify-center shadow-md shadow-emerald-700/10 shrink-0">
+              <Truck size={24} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-                <span className="text-xs font-black uppercase text-emerald-700 tracking-wider">
-                  Partner Duty Online
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                <span className="text-[11px] font-black uppercase text-emerald-700 tracking-wider">
+                  Partner Duty Active
                 </span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-black text-gray-900 mt-0.5">
-                Rider Delivery Portal
+              <h1 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight">
+                {userdata?.name ? `Namaste, ${userdata.name}!` : 'Rider Dashboard'}
               </h1>
-              <p className="text-xs text-gray-500 font-medium">
-                SubziQuick 10-15 Min Express Dispatch Hub • Bhopal
+              <p className="text-xs text-gray-400 font-medium">
+                Bhopal Express 10-15 Min Hub
               </p>
             </div>
           </div>
 
-          <button
-            onClick={() => {
-              fetchAssignments()
-              fetchDashboardData()
-              fetchCurrentOrder()
-            }}
-            className="flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold px-4 py-2.5 rounded-2xl text-xs transition cursor-pointer self-start md:self-auto"
-          >
-            <RotateCw size={14} />
-            <span>Refresh Feed</span>
-          </button>
+          <div className="flex items-center gap-2 self-start sm:self-auto">
+            <button
+              onClick={handleRefreshAll}
+              disabled={refreshing}
+              className="flex items-center gap-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold px-3.5 py-2 rounded-2xl text-xs transition cursor-pointer"
+            >
+              <RotateCw size={13} className={refreshing ? 'animate-spin' : ''} />
+              <span>{refreshing ? 'Refreshing...' : 'Refresh'}</span>
+            </button>
+          </div>
         </div>
 
-        {/* Tab Navigation */}
-        <div className="flex items-center gap-2 p-1.5 bg-gray-200/60 rounded-2xl border border-gray-200 overflow-x-auto">
+        {/* Minimalist Segmented Tab Switcher */}
+        <div className="flex items-center gap-1.5 p-1.5 bg-gray-200/70 rounded-2xl border border-gray-200 backdrop-blur-xs">
           <button
             onClick={() => setActiveTab('requests')}
-            className={`flex-1 min-w-[130px] flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-black text-xs transition cursor-pointer ${
+            className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl font-black text-xs transition cursor-pointer ${
               activeTab === 'requests'
-                ? 'bg-white text-gray-900 shadow-xs border border-gray-200'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'bg-white text-gray-900 shadow-xs border border-gray-200/80'
+                : 'text-gray-500 hover:text-gray-900'
             }`}
           >
-            <Truck size={16} className={activeTab === 'requests' ? 'text-[#0f8646]' : ''} />
-            <span>Live Requests</span>
+            <Truck size={14} className={activeTab === 'requests' ? 'text-[#0f8646]' : ''} />
+            <span>Requests</span>
             {assignments.length > 0 && (
               <span className="bg-emerald-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full animate-bounce">
                 {assignments.length}
@@ -557,103 +564,104 @@ export default function Deliveryboy() {
 
           <button
             onClick={() => setActiveTab('earnings')}
-            className={`flex-1 min-w-[130px] flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-black text-xs transition cursor-pointer ${
+            className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl font-black text-xs transition cursor-pointer ${
               activeTab === 'earnings'
-                ? 'bg-white text-gray-900 shadow-xs border border-gray-200'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'bg-white text-gray-900 shadow-xs border border-gray-200/80'
+                : 'text-gray-500 hover:text-gray-900'
             }`}
           >
-            <BarChart3 size={16} className={activeTab === 'earnings' ? 'text-[#0f8646]' : ''} />
-            <span>Earnings & Stats</span>
+            <BarChart3 size={14} className={activeTab === 'earnings' ? 'text-[#0f8646]' : ''} />
+            <span>Earnings</span>
           </button>
 
           <button
             onClick={() => setActiveTab('history')}
-            className={`flex-1 min-w-[130px] flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-black text-xs transition cursor-pointer ${
+            className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl font-black text-xs transition cursor-pointer ${
               activeTab === 'history'
-                ? 'bg-white text-gray-900 shadow-xs border border-gray-200'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'bg-white text-gray-900 shadow-xs border border-gray-200/80'
+                : 'text-gray-500 hover:text-gray-900'
             }`}
           >
-            <History size={16} className={activeTab === 'history' ? 'text-[#0f8646]' : ''} />
-            <span>Delivery History</span>
+            <History size={14} className={activeTab === 'history' ? 'text-[#0f8646]' : ''} />
+            <span>History</span>
           </button>
         </div>
 
-        {/* Tab Content: Live Requests */}
+        {/* TAB 1: LIVE REQUESTS */}
         {activeTab === 'requests' && (
-          <div>
+          <div className="space-y-4">
             {assignments.length === 0 ? (
-              <div className="bg-white rounded-3xl p-12 text-center border border-gray-200/80 shadow-xs space-y-4">
-                <div className="w-16 h-16 rounded-full bg-emerald-50 text-[#0f8646] flex items-center justify-center mx-auto">
-                  <Package size={32} />
+              <div className="bg-white rounded-3xl p-10 text-center border border-gray-200/80 shadow-xs space-y-3">
+                <div className="w-14 h-14 rounded-2xl bg-emerald-50 text-[#0f8646] flex items-center justify-center mx-auto">
+                  <Package size={26} />
                 </div>
                 <div>
-                  <h3 className="text-lg font-black text-gray-900">No Pending Requests Right Now</h3>
-                  <p className="text-xs text-gray-500 max-w-md mx-auto mt-1">
-                    You are online! New order broadcast notifications in Bhopal will instantly appear here.
+                  <h3 className="text-base font-black text-gray-900">Waiting for New Requests</h3>
+                  <p className="text-xs text-gray-400 max-w-sm mx-auto mt-1">
+                    Your duty is online. New broadcast orders near your location will alert here.
                   </p>
                 </div>
               </div>
             ) : (
-              <div className="grid md:grid-cols-2 gap-5">
+              <div className="grid sm:grid-cols-2 gap-4">
                 {assignments.map((a) => {
                   const order = a.order || {}
+                  const shortId = String(order._id || '').slice(-6).toUpperCase()
+
                   return (
                     <div
                       key={a._id}
-                      className="bg-white rounded-3xl shadow-xs border border-gray-200/80 overflow-hidden hover:border-[#0f8646] transition"
+                      className="bg-white rounded-3xl shadow-xs border-2 border-emerald-500/20 hover:border-emerald-500 overflow-hidden transition duration-200 flex flex-col justify-between"
                     >
-                      <div className="bg-[#0f8646] text-white p-4 flex justify-between items-center">
-                        <div className="flex items-center gap-2">
-                          <Package size={16} />
-                          <span className="font-black text-sm">New Delivery Request</span>
+                      <div className="p-5 space-y-3.5">
+                        <div className="flex items-center justify-between">
+                          <span className="font-mono font-black text-xs text-[#0f8646] bg-emerald-50 px-2.5 py-1 rounded-lg">
+                            #{shortId}
+                          </span>
+                          <span className="text-[10px] font-black uppercase text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
+                            Express Dispatch
+                          </span>
                         </div>
-                        <span className="bg-white/20 text-white font-mono text-xs px-2.5 py-0.5 rounded-full font-black">
-                          #{String(order._id || '').slice(-6).toUpperCase()}
-                        </span>
-                      </div>
 
-                      <div className="p-5 space-y-4">
                         <div>
                           <h4 className="font-black text-base text-gray-900">
                             {order?.address?.fullname || 'Customer'}
                           </h4>
                           <p className="text-xs text-gray-500 mt-1 flex items-start gap-1.5">
-                            <MapPin size={14} className="text-red-500 shrink-0 mt-0.5" />
+                            <MapPin size={13} className="text-red-500 shrink-0 mt-0.5" />
                             <span>{order?.address?.fulladress || 'Bhopal Address'}</span>
                           </p>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-3 pt-2 border-t border-gray-100">
-                          <div className="bg-gray-50 p-3 rounded-2xl">
-                            <p className="text-[11px] text-gray-400 font-bold uppercase">Items</p>
-                            <p className="font-black text-sm text-gray-900 mt-0.5">
-                              {order?.items?.length || 0} produce items
-                            </p>
+                        <div className="grid grid-cols-2 gap-2 pt-2 border-t border-gray-100">
+                          <div className="bg-gray-50 p-2.5 rounded-2xl">
+                            <span className="text-[10px] uppercase font-bold text-gray-400 block">Items</span>
+                            <span className="font-black text-xs text-gray-900">
+                              {order?.items?.length || 0} produce
+                            </span>
                           </div>
-                          <div className="bg-emerald-50 p-3 rounded-2xl">
-                            <p className="text-[11px] text-emerald-700 font-bold uppercase">Amount</p>
-                            <p className="font-black text-sm text-[#0f8646] mt-0.5">
+                          <div className="bg-emerald-50 p-2.5 rounded-2xl">
+                            <span className="text-[10px] uppercase font-bold text-emerald-700 block">Bill</span>
+                            <span className="font-black text-xs text-[#0f8646]">
                               ₹{order?.totalamount || 0}
-                            </p>
+                            </span>
                           </div>
                         </div>
+                      </div>
 
-                        <div className="flex gap-3 pt-2">
-                          <button
-                            onClick={() => handleAccept(a._id)}
-                            className="flex-1 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3 rounded-2xl font-black text-xs transition cursor-pointer shadow-xs"
-                          >
-                            Accept & Start Trip
-                          </button>
-                          <button
-                            onClick={() => handleReject(a._id)}
-                            className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-3 rounded-2xl font-black text-xs transition cursor-pointer"
-                          >
-                            Pass
-                          </button>
-                        </div>
+                      <div className="p-3 bg-gray-50/80 border-t border-gray-100 flex gap-2">
+                        <button
+                          onClick={() => handleAccept(a._id)}
+                          className="flex-1 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3 rounded-2xl font-black text-xs transition cursor-pointer shadow-xs"
+                        >
+                          Accept Trip
+                        </button>
+                        <button
+                          onClick={() => handleReject(a._id)}
+                          className="bg-white hover:bg-gray-100 text-gray-700 px-4 py-3 rounded-2xl font-black text-xs transition cursor-pointer border border-gray-200"
+                        >
+                          Pass
+                        </button>
                       </div>
                     </div>
                   )
@@ -663,9 +671,9 @@ export default function Deliveryboy() {
           </div>
         )}
 
-        {/* Tab Content: Earnings & Stats */}
+        {/* TAB 2: EARNINGS & STATS */}
         {activeTab === 'earnings' && (
-          <div className="space-y-6">
+          <div className="space-y-4">
             <DeliveryDashboardStats
               totalDeliveries={dashboardStats.totalDeliveries}
               totalEarnings={dashboardStats.totalEarnings}
@@ -673,14 +681,14 @@ export default function Deliveryboy() {
               earningPerDelivery={dashboardStats.earningPerDelivery}
             />
 
-            <div className="grid lg:grid-cols-2 gap-6">
+            <div className="grid lg:grid-cols-2 gap-4">
               <EarningsChart data={earningsData} />
               <DeliveriesChart data={deliveriesData} />
             </div>
           </div>
         )}
 
-        {/* Tab Content: Delivery History */}
+        {/* TAB 3: DELIVERY HISTORY */}
         {activeTab === 'history' && (
           <div>
             <RecentDeliveries deliveries={recentDeliveries} />
