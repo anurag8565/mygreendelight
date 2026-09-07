@@ -481,25 +481,27 @@ useEffect(() => {
                     <span>Doorstep OTP Verification</span>
                   </h3>
 
-                  <button
-                    onClick={async () => {
-                      try {
-                        const res = await axios.post(
-                          `/api/delivery/send-delivery-otp/${activeorder.order._id}`
-                        );
-                        alert(res.data.message || "OTP sent to customer!");
-                      } catch (error: any) {
-                        alert(error?.response?.data?.message || "Failed to send OTP");
-                      }
-                    }}
-                    className="text-xs font-bold text-[#0f8646] hover:underline cursor-pointer"
-                  >
-                    📩 Send / Resend OTP
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={async () => {
+                        try {
+                          const res = await axios.post(
+                            `/api/delivery/send-delivery-otp/${activeorder.order._id}`
+                          );
+                          alert(res.data.message || "OTP sent to customer's email!");
+                        } catch (error: any) {
+                          alert(error?.response?.data?.message || "Failed to send OTP");
+                        }
+                      }}
+                      className="text-xs font-black bg-emerald-50 text-[#0f8646] hover:bg-[#0f8646] hover:text-white border border-emerald-300 px-3 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1 shadow-2xs"
+                    >
+                      <span>📩 Send Email OTP</span>
+                    </button>
+                  </div>
                 </div>
 
                 <p className="text-xs text-gray-500 mb-3">
-                  Ask the customer for the 4-digit OTP sent to their mobile phone to verify handover.
+                  Ask customer for the 4-digit OTP sent to their email <strong>({activeorder.order.user?.email || "registered email"})</strong> to complete delivery handover.
                 </p>
 
                 <input
