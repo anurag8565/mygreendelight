@@ -61,6 +61,7 @@ export default function TrackOrderPage() {
   const [cancelReason, setCancelReason] = useState("Ordered by mistake");
   const [cancelling, setCancelling] = useState(false);
   const [selectedReviewProduct, setSelectedReviewProduct] = useState<any>(null);
+  const [copiedOtp, setCopiedOtp] = useState(false);
 
   const fetchTracking = async () => {
     try {
@@ -375,15 +376,49 @@ export default function TrackOrderPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-2.5 shrink-0">
-              <div className="bg-white text-[#0f8646] px-5 py-2.5 rounded-2xl shadow-md border-2 border-emerald-400 text-center shrink-0">
-                <span className="text-[9px] font-black uppercase tracking-widest text-gray-400 block">
-                  DELIVERY OTP
-                </span>
-                <span className="font-mono text-2xl sm:text-3xl font-black tracking-widest text-emerald-950">
+            <div className="flex items-center gap-2 shrink-0 flex-wrap justify-center sm:justify-end">
+              {/* Main OTP Pill */}
+              <div
+                onClick={() => {
+                  if (order.deliveryOtp?.code) {
+                    navigator.clipboard.writeText(order.deliveryOtp.code);
+                    setCopiedOtp(true);
+                    setTimeout(() => setCopiedOtp(false), 2500);
+                  }
+                }}
+                className="bg-white text-[#0f8646] px-4 py-2 rounded-2xl shadow-md border-2 border-emerald-400 text-center cursor-pointer hover:bg-emerald-50/50 transition group"
+                title="Click to copy OTP"
+              >
+                <div className="flex items-center justify-center gap-1.5 mb-0.5">
+                  <span className="text-[8.5px] font-black uppercase tracking-widest text-gray-400">
+                    DELIVERY OTP
+                  </span>
+                  <span className="text-[9px] font-bold text-emerald-700 bg-emerald-100/80 px-1.5 py-0.2 rounded-md">
+                    {copiedOtp ? "✓ Copied!" : "Click to Copy"}
+                  </span>
+                </div>
+                <span className="font-mono text-2xl sm:text-3xl font-black tracking-widest text-emerald-950 block">
                   {order.deliveryOtp.code}
                 </span>
               </div>
+
+              {/* 1-Click WhatsApp OTP to Rider */}
+              {deliveryBoy?.mobile && (
+                <a
+                  href={`https://wa.me/91${deliveryBoy.mobile.replace(/\D/g, "").slice(-10)}?text=${encodeURIComponent(
+                    `*🌿 SubziQuick Delivery OTP*\n\nHi ${deliveryBoy.name}, my 4-digit Delivery OTP is: *${order.deliveryOtp.code}* for Order #SZQ-${String(params.id).slice(-6).toUpperCase()}.`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-white text-[10.5px] font-black px-3 py-3 rounded-2xl border border-emerald-500 transition cursor-pointer flex flex-col items-center justify-center gap-0.5 shadow-2xs"
+                  title="Send OTP to Rider on WhatsApp"
+                >
+                  <MessageCircle size={14} />
+                  <span>WhatsApp</span>
+                </a>
+              )}
+
+              {/* Resend Email OTP */}
               <button
                 onClick={async () => {
                   try {
@@ -393,7 +428,7 @@ export default function TrackOrderPage() {
                     alert(e.response?.data?.message || "Failed to resend OTP");
                   }
                 }}
-                className="bg-emerald-800/80 hover:bg-emerald-700 active:scale-95 text-white text-[11px] font-black px-3 py-3 rounded-2xl border border-emerald-600/80 transition cursor-pointer flex flex-col items-center justify-center gap-0.5 shadow-2xs"
+                className="bg-emerald-800/90 hover:bg-emerald-700 active:scale-95 text-white text-[10.5px] font-black px-3 py-3 rounded-2xl border border-emerald-600/80 transition cursor-pointer flex flex-col items-center justify-center gap-0.5 shadow-2xs"
                 title="Resend OTP to Email / SMS"
               >
                 <span>📩</span>

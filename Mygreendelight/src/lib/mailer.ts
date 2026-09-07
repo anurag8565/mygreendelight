@@ -1,29 +1,44 @@
 import nodemailer from "nodemailer";
 
+const EMAIL_USER = process.env.EMAIL_USER || "anuragsinghas183@gmail.com";
+const EMAIL_PASS = process.env.EMAIL_PASS || "";
+
 const transporter = nodemailer.createTransport({
   service: "gmail",
+  pool: true,
+  maxConnections: 5,
+  maxMessages: 100,
+  connectionTimeout: 10000,
+  greetingTimeout: 10000,
+  socketTimeout: 15000,
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: EMAIL_USER,
+    pass: EMAIL_PASS,
   },
 });
-
 
 export async function sendMail(
   to: string,
   subject: string,
   html: string
 ) {
-  console.log("Sending email to:", to);
+  if (!to || !to.includes("@")) {
+    console.warn("Invalid email recipient skipped:", to);
+    return null;
+  }
 
-  const info = await transporter.sendMail({
-    from: process.env.EMAIL_USER,
-    to,
-    subject,
-    html,
-  });
+  try {
+    const info = await transporter.sendMail({
+      from: `"SubziQuick Bhopal" <${EMAIL_USER}>`,
+      to,
+      subject,
+      html,
+    });
 
-  console.log("Message sent:", info.messageId);
-
-  return info;
+    console.log("✓ Email sent to:", to, "ID:", info.messageId);
+    return info;
+  } catch (error: any) {
+    console.error("❌ SendMail Error for", to, ":", error?.message || error);
+    return null;
+  }
 }

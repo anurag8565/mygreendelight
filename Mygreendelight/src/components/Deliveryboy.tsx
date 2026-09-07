@@ -304,11 +304,32 @@ useEffect(() => {
     const isPaid = orderObj.ispaid;
     const totalAmount = orderObj.totalamount || 0;
 
+    const deliveryOtp = orderObj.deliveryOtp?.code;
+    const cleanMobile = customerMobile.replace(/\D/g, "").slice(-10);
     const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${userlocation.latitude},${userlocation.longitude}`;
+    
     const whatsappMsg = encodeURIComponent(
-      `Hello ${customerName}, I am your SubziQuick Delivery Partner on the way to your address (${customerAddress}) with your farm-fresh produce order #${orderShortId}. Total: ₹${totalAmount} (${isPaid ? "Paid Online" : "Cash on Delivery"}).`
+      `*🌿 SubziQuick Farm Fresh Express Delivery*\n` +
+      `━━━━━━━━━━━━━━━━━━━\n` +
+      `Namaste *${customerName}*! 🙏\n\n` +
+      `Main aapka *SubziQuick Delivery Partner* aapke address par taaza sabziyan leke pahunch raha hoon.\n\n` +
+      `📦 *Order ID:* #${orderShortId}\n` +
+      `📍 *Address:* ${customerAddress}\n` +
+      `💵 *Bill:* ₹${totalAmount} (${isPaid ? "✅ Paid Online (₹0 Collect)" : "💵 Collect Cash / UPI: ₹" + totalAmount})\n` +
+      (deliveryOtp ? `🔑 *Doorstep Verification OTP:* *${deliveryOtp}*\n\n` : `\n`) +
+      `👉 Live Tracking: https://subziquick.in/track/${orderObj._id}\n\n` +
+      `Delivery lete waqt kripya ye 4-digit OTP share karein. Dhanyawaad! 🌿`
     );
-    const whatsappUrl = `https://wa.me/91${customerMobile.replace(/\D/g, "")}?text=${whatsappMsg}`;
+    const whatsappUrl = `https://wa.me/91${cleanMobile}?text=${whatsappMsg}`;
+
+    const otpDirectMsg = encodeURIComponent(
+      `*🌿 SubziQuick Doorstep Delivery OTP*\n` +
+      `━━━━━━━━━━━━━━━━━━━\n` +
+      `Hi *${customerName}*, aapka Doorstep Verification OTP hai:\n\n` +
+      `🔑 *${deliveryOtp || "----"}*\n\n` +
+      `Kripya delivery partner ko ye 4-digit code share karein. Order #${orderShortId} (₹${totalAmount})`
+    );
+    const whatsappOtpUrl = `https://wa.me/91${cleanMobile}?text=${otpDirectMsg}`;
 
     return (
       <div className="p-4 pt-24 sm:pt-28 min-h-screen bg-[#f8faf9] font-sans pb-16">
@@ -481,7 +502,19 @@ useEffect(() => {
                     <span>Doorstep OTP Verification</span>
                   </h3>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    {customerMobile && (
+                      <a
+                        href={whatsappOtpUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs font-black bg-emerald-500 hover:bg-emerald-600 text-white px-2.5 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1 shadow-2xs"
+                        title="WhatsApp OTP directly to customer"
+                      >
+                        <MessageCircle size={13} />
+                        <span>WhatsApp OTP</span>
+                      </a>
+                    )}
                     <button
                       onClick={async () => {
                         try {
@@ -493,9 +526,9 @@ useEffect(() => {
                           alert(error?.response?.data?.message || "Failed to send OTP");
                         }
                       }}
-                      className="text-xs font-black bg-emerald-50 text-[#0f8646] hover:bg-[#0f8646] hover:text-white border border-emerald-300 px-3 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1 shadow-2xs"
+                      className="text-xs font-black bg-emerald-50 text-[#0f8646] hover:bg-[#0f8646] hover:text-white border border-emerald-300 px-2.5 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1 shadow-2xs"
                     >
-                      <span>📩 Send Email OTP</span>
+                      <span>📩 Email OTP</span>
                     </button>
                   </div>
                 </div>
