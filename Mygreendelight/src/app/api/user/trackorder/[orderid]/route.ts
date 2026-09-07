@@ -15,7 +15,8 @@ export async function GET(
       .populate(
         "assigneddelliveryboy",
         "name mobile location"
-      );
+      )
+      .lean();
 
     if (!order) {
       return NextResponse.json(
@@ -28,28 +29,31 @@ export async function GET(
       );
     }
 
-    // 🔑 Self-Healing: Guarantee 4-Digit Delivery OTP exists for all ongoing orders
-    if (order.status !== "delivered" && order.status !== "cancelled" && !order.deliveryOtp?.code) {
-      const otp = Math.floor(1000 + Math.random() * 9000).toString();
-      order.deliveryOtp = {
-        code: otp,
-        expiresAt: new Date(Date.now() + 48 * 60 * 60 * 1000),
-        verified: false,
-        attempts: 0,
+    const orderObj: any = { ...order };
+
+    // 🔒 Real Email OTP Security: Do NOT expose raw OTP code on public tracking URL
+    const hasOtp = Boolean(orderObj.deliveryOtp?.code);
+    const isOtpVerified = Boolean(orderObj.deliveryOtp?.verified);
+
+    if (orderObj.deliveryOtp) {
+      orderObj.deliveryOtp = {
+        verified: isOtpVerified,
+        expiresAt: orderObj.deliveryOtp.expiresAt,
+        hasOtp,
       };
-      await order.save();
     }
 
     return NextResponse.json({
       success: true,
-      order,
-      status: order.status,
+      order: orderObj,
+      status: orderObj.status,
       customerLocation: {
-        latitude: order.address?.latitude,
-        longitude: order.address?.longitude,
+        latitude: orderObj.address?.latitude,
+        longitude: orderObj.address?.longitude,
       },
-      deliveryBoy: order.assigneddelliveryboy,
-      deliveryOtpVerified: Boolean(order.deliveryOtp?.verified),
+      deliveryBoy: orderObj.assigneddelliveryboy,
+      deliveryOtpVerified: isOtpVerified,
+      hasOtp,
     });
 
   } catch (error) {

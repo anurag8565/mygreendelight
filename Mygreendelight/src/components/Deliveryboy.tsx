@@ -706,26 +706,28 @@ export default function Deliveryboy({ initialUser }: Props) {
                 </div>
               </div>
 
-              {/* Zero-Knowledge Doorstep 4-Box PIN Card */}
+              {/* On-Demand Real Email OTP Verification Card */}
               <div className="bg-emerald-50/50 rounded-2xl p-4 border border-emerald-200/80 space-y-3 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-1.5">
                     <div className="flex items-center gap-1.5 font-black text-xs text-gray-900">
                       <ShieldAlert size={15} className="text-[#0f8646]" />
-                      <span>Customer Doorstep OTP</span>
+                      <span>Doorstep Email Verification</span>
                     </div>
-                    <button
-                      onClick={handleResendOtpEmail}
-                      disabled={sendingOtpEmail}
-                      className="text-[10px] font-extrabold bg-white text-[#0f8646] hover:bg-[#0f8646] hover:text-white border border-emerald-300 px-2 py-0.5 rounded-lg transition cursor-pointer flex items-center gap-1 shadow-2xs"
-                    >
-                      <Send size={9} />
-                      <span>{sendingOtpEmail ? 'Sending...' : 'Email OTP'}</span>
-                    </button>
                   </div>
 
+                  {/* 1-Tap Trigger to Send OTP to Customer's Real Email */}
+                  <button
+                    onClick={handleResendOtpEmail}
+                    disabled={sendingOtpEmail}
+                    className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-400 text-white font-black py-2 px-3 rounded-xl text-xs transition cursor-pointer flex items-center justify-center gap-1.5 shadow-2xs mb-2.5"
+                  >
+                    <Send size={12} />
+                    <span>{sendingOtpEmail ? 'Dispatching Email...' : '📩 Send OTP to Customer Email'}</span>
+                  </button>
+
                   <p className="text-[11px] text-gray-500 mb-2 leading-tight">
-                    Ask customer for the 4-digit PIN on their screen:
+                    Ask customer for the 4-digit code sent to their email inbox:
                   </p>
 
                   {/* 4 Discrete PIN Input Boxes */}
