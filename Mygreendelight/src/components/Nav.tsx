@@ -81,16 +81,6 @@ export default function Nav({ user }: { user?: iUser | null }) {
   const searchRef = useRef<HTMLDivElement>(null);
   const mobileSearchRef = useRef<HTMLDivElement>(null);
 
-  const popularKeywords = [
-    { label: "Taaza Palak", query: "Palak", emoji: "🥬" },
-    { label: "Desi Tomato", query: "Tomato", emoji: "🍅" },
-    { label: "Fresh Potato", query: "Potato", emoji: "🥔" },
-    { label: "Shimla Apple", query: "Apple", emoji: "🍎" },
-    { label: "Fresh Paneer", query: "Paneer", emoji: "🥛" },
-    { label: "Exotic Salad", query: "Salad", emoji: "🥑" },
-    { label: "Green Coriander", query: "Coriander", emoji: "🌿" },
-  ];
-
   useEffect(() => {
     setMounted(true);
     dispatch(hydrateCart());
@@ -163,13 +153,21 @@ export default function Nav({ user }: { user?: iUser | null }) {
   const [location, setLocation] = useState("Bhopal, Madhya Pradesh");
   const [isDetectingLocation, setIsDetectingLocation] = useState(false);
   const [navCategories, setNavCategories] = useState<any[]>([]);
+  const [trendingItems, setTrendingItems] = useState<any[]>([]);
   const locationRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Fetch categories for the Nav dropdown
+    // Fetch live categories from database
     axios.get("/api/admin/category").then(res => {
       if (res.data.success) {
         setNavCategories(res.data.categories);
+      }
+    }).catch(console.error);
+
+    // Fetch live trending produce directly from MongoDB
+    axios.get("/api/user/search?trending=true").then(res => {
+      if (Array.isArray(res.data)) {
+        setTrendingItems(res.data);
       }
     }).catch(console.error);
   }, []);
@@ -634,60 +632,147 @@ export default function Nav({ user }: { user?: iUser | null }) {
                 </button>
               </form>
 
-              {/* 1. Quick Trending Searches (When focused and input is empty) */}
+              {/* 1. Real Trending Searches (When focused and input is empty) */}
               <AnimatePresence>
                 {isSearchFocused && !search.trim() && (
                   <motion.div
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 8 }}
-                    className="absolute top-full left-0 w-full mt-2 bg-white rounded-2xl shadow-[0_15px_45px_-10px_rgba(0,0,0,0.18)] border border-gray-100 p-4 z-50 font-sans"
+                    className="absolute top-full left-0 w-full mt-2 bg-white rounded-2xl shadow-[0_15px_45px_-10px_rgba(0,0,0,0.18)] border border-gray-100 p-4 z-50 font-sans max-h-[420px] overflow-y-auto"
                   >
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs font-black uppercase text-gray-500 tracking-wider flex items-center gap-1.5">
-                        <Sparkles size={13} className="text-amber-500" />
-                        Trending Searches in Bhopal
-                      </span>
-                      <span className="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80">
-                        ⚡ 10-15 Min Express
-                      </span>
-                    </div>
-
-                    {/* Micro-Chips */}
-                    <div className="flex flex-wrap gap-2">
-                      {popularKeywords.map((k) => (
-                        <button
-                          key={k.query}
-                          type="button"
-                          onClick={() => {
-                            setSearch(k.query);
-                            router.push(`/user/search?query=${encodeURIComponent(k.query)}`);
-                            setIsSearchFocused(false);
-                          }}
-                          className="bg-gray-50 hover:bg-emerald-50 text-gray-800 hover:text-[#0c831f] border border-gray-200/80 hover:border-emerald-300 px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-2xs"
-                        >
-                          <span>{k.emoji}</span>
-                          <span>{k.label}</span>
-                        </button>
-                      ))}
-                    </div>
-
-                    {/* Categories Quick Link Strip */}
+                    {/* Real Category Pills */}
                     {navCategories && navCategories.length > 0 && (
-                      <div className="mt-3.5 pt-3 border-t border-gray-100 flex items-center gap-2 overflow-x-auto scrollbar-none">
-                        <span className="text-[10px] uppercase font-black text-gray-400 shrink-0">
-                          Explore:
+                      <div className="mb-3.5">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-[11px] font-black uppercase text-gray-500 tracking-wider flex items-center gap-1.5">
+                            <Sparkles size={12} className="text-amber-500" />
+                            Explore Real Categories
+                          </span>
+                          <span className="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80">
+                            ⚡ 10-15 Min Delivery
+                          </span>
+                        </div>
+
+                        <div className="flex flex-wrap gap-1.5">
+                          {navCategories.map((c: any) => (
+                            <button
+                              key={c._id || c.name}
+                              type="button"
+                              onClick={() => {
+                                setSearch(c.name);
+                                router.push(`/user/search?query=${encodeURIComponent(c.name)}`);
+                                setIsSearchFocused(false);
+                              }}
+                              className="bg-gray-50 hover:bg-emerald-50 text-gray-800 hover:text-[#0c831f] border border-gray-200/80 hover:border-emerald-300 px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-2xs"
+                            >
+                              <span>🌿</span>
+                              <span>{c.name}</span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Real Live Trending Products from MongoDB */}
+                    {trendingItems && trendingItems.length > 0 && (
+                      <div className="pt-3 border-t border-gray-100">
+                        <span className="text-[11px] font-black uppercase text-gray-400 tracking-wider block mb-2">
+                          🔥 Trending In Stock Today
                         </span>
-                        {navCategories.slice(0, 5).map((c: any) => (
-                          <Link
-                            key={c._id || c.name}
-                            href={`/shop?category=${encodeURIComponent(c.name)}`}
-                            onClick={() => setIsSearchFocused(false)}
-                            className="text-[11px] font-bold text-gray-600 hover:text-[#0c831f] hover:underline shrink-0 bg-gray-50 px-2 py-0.5 rounded-md"
-                          >
-                            {c.name}
-                          </Link>
-                        ))}
+
+                        <div className="space-y-1.5">
+                          {trendingItems.slice(0, 5).map((item: any) => {
+                            const cartItem = cartdata.find(
+                              (c) => c._id === item._id || c.cartItemId === item._id
+                            );
+                            return (
+                              <div
+                                key={item._id}
+                                onClick={() => {
+                                  setSearch("");
+                                  setIsSearchFocused(false);
+                                  router.push(`/product/${item._id}`);
+                                }}
+                                className="flex items-center justify-between gap-3 p-2 rounded-xl hover:bg-emerald-50/50 cursor-pointer border border-transparent hover:border-emerald-100 transition group"
+                              >
+                                <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                                  <img
+                                    src={item.image}
+                                    alt={item.name}
+                                    className="w-10 h-10 rounded-xl object-contain border border-gray-100 p-1 bg-white shrink-0"
+                                  />
+                                  <div className="min-w-0 flex-1">
+                                    <p className="text-xs font-bold text-gray-900 group-hover:text-[#0c831f] truncate">
+                                      {item.name}
+                                    </p>
+                                    <div className="flex items-center gap-2 text-[11px]">
+                                      <span className="text-gray-400 font-medium">
+                                        {item.unit || item.category}
+                                      </span>
+                                      <span className="font-black text-[#0c831f]">
+                                        ₹{item.price}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {!cartItem ? (
+                                  <button
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      dispatch(
+                                        addToCart({
+                                          ...item,
+                                          price: item.price,
+                                          unit: item.unit || "unit",
+                                          cartItemId: item._id,
+                                          quantity: 1,
+                                        })
+                                      );
+                                    }}
+                                    className="bg-emerald-50 hover:bg-[#0c831f] text-[#0c831f] hover:text-white border border-emerald-300 px-3 py-1 rounded-xl text-xs font-black transition flex items-center gap-1 shadow-2xs shrink-0 cursor-pointer"
+                                  >
+                                    <Plus size={12} className="stroke-[3]" />
+                                    <span>ADD</span>
+                                  </button>
+                                ) : (
+                                  <div
+                                    onClick={(e) => e.stopPropagation()}
+                                    className="flex items-center bg-white border border-[#0c831f] rounded-xl overflow-hidden h-6.5 shadow-2xs shrink-0"
+                                  >
+                                    <button
+                                      type="button"
+                                      className="w-5.5 h-full flex items-center justify-center bg-green-50 text-[#0c831f] hover:bg-[#0c831f] hover:text-white transition font-black text-xs cursor-pointer"
+                                      onClick={() =>
+                                        dispatch(
+                                          decreaseQuantity(cartItem.cartItemId || item._id)
+                                        )
+                                      }
+                                    >
+                                      <Minus size={10} className="stroke-[3]" />
+                                    </button>
+                                    <span className="px-2 text-center font-black text-xs text-gray-900">
+                                      {cartItem.quantity}
+                                    </span>
+                                    <button
+                                      type="button"
+                                      className="w-5.5 h-full flex items-center justify-center bg-green-50 text-[#0c831f] hover:bg-[#0c831f] hover:text-white transition font-black text-xs cursor-pointer"
+                                      onClick={() =>
+                                        dispatch(
+                                          increaseQuantity(cartItem.cartItemId || item._id)
+                                        )
+                                      }
+                                    >
+                                      <Plus size={10} className="stroke-[3]" />
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
                     )}
                   </motion.div>
@@ -1019,60 +1104,147 @@ export default function Nav({ user }: { user?: iUser | null }) {
             </button>
           </form>
 
-          {/* 1. Mobile Trending Searches Dropdown (When focused and input is empty) */}
+          {/* 1. Real Mobile Trending Searches Dropdown (When focused and input is empty) */}
           <AnimatePresence>
             {isMobileSearchFocused && !search.trim() && (
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 8 }}
-                className="absolute top-[3.2rem] left-3.5 right-3.5 bg-white rounded-2xl shadow-[0_15px_45px_-10px_rgba(0,0,0,0.2)] border border-gray-100 p-3.5 z-50 font-sans"
+                className="absolute top-[3.2rem] left-3.5 right-3.5 bg-white rounded-2xl shadow-[0_15px_45px_-10px_rgba(0,0,0,0.2)] border border-gray-100 p-3.5 z-50 font-sans max-h-[380px] overflow-y-auto"
               >
-                <div className="flex items-center justify-between mb-2.5">
-                  <span className="text-[11px] font-black uppercase text-gray-500 tracking-wider flex items-center gap-1.5">
-                    <Sparkles size={12} className="text-amber-500" />
-                    Trending in Bhopal
-                  </span>
-                  <span className="text-[9.5px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80">
-                    ⚡ 10-15 Min
-                  </span>
-                </div>
-
-                {/* Mobile Micro-Chips */}
-                <div className="flex flex-wrap gap-1.5">
-                  {popularKeywords.map((k) => (
-                    <button
-                      key={k.query}
-                      type="button"
-                      onClick={() => {
-                        setSearch(k.query);
-                        router.push(`/user/search?query=${encodeURIComponent(k.query)}`);
-                        setIsMobileSearchFocused(false);
-                      }}
-                      className="bg-gray-50 hover:bg-emerald-50 text-gray-800 hover:text-[#0c831f] border border-gray-200/80 hover:border-emerald-300 px-2.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-2xs"
-                    >
-                      <span>{k.emoji}</span>
-                      <span>{k.label}</span>
-                    </button>
-                  ))}
-                </div>
-
-                {/* Categories Quick Link Strip */}
+                {/* Real Category Pills */}
                 {navCategories && navCategories.length > 0 && (
-                  <div className="mt-3 pt-2.5 border-t border-gray-100 flex items-center gap-1.5 overflow-x-auto scrollbar-none">
-                    <span className="text-[9.5px] uppercase font-black text-gray-400 shrink-0">
-                      Explore:
+                  <div className="mb-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[11px] font-black uppercase text-gray-500 tracking-wider flex items-center gap-1.5">
+                        <Sparkles size={12} className="text-amber-500" />
+                        Explore Categories
+                      </span>
+                      <span className="text-[9.5px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80">
+                        ⚡ 10-15 Min
+                      </span>
+                    </div>
+
+                    <div className="flex flex-wrap gap-1.5">
+                      {navCategories.map((c: any) => (
+                        <button
+                          key={c._id || c.name}
+                          type="button"
+                          onClick={() => {
+                            setSearch(c.name);
+                            router.push(`/user/search?query=${encodeURIComponent(c.name)}`);
+                            setIsMobileSearchFocused(false);
+                          }}
+                          className="bg-gray-50 hover:bg-emerald-50 text-gray-800 hover:text-[#0c831f] border border-gray-200/80 hover:border-emerald-300 px-2.5 py-1 rounded-xl text-[11px] font-bold transition flex items-center gap-1 cursor-pointer active:scale-95 shadow-2xs"
+                        >
+                          <span>🌿</span>
+                          <span>{c.name}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Real Trending Products from Database */}
+                {trendingItems && trendingItems.length > 0 && (
+                  <div className="pt-2.5 border-t border-gray-100">
+                    <span className="text-[10px] font-black uppercase text-gray-400 tracking-wider block mb-2">
+                      🔥 Trending Produce in Bhopal
                     </span>
-                    {navCategories.slice(0, 4).map((c: any) => (
-                      <Link
-                        key={c._id || c.name}
-                        href={`/shop?category=${encodeURIComponent(c.name)}`}
-                        onClick={() => setIsMobileSearchFocused(false)}
-                        className="text-[10.5px] font-bold text-gray-600 hover:text-[#0c831f] hover:underline shrink-0 bg-gray-50 px-2 py-0.5 rounded-md"
-                      >
-                        {c.name}
-                      </Link>
-                    ))}
+
+                    <div className="space-y-1.5">
+                      {trendingItems.slice(0, 4).map((item: any) => {
+                        const cartItem = cartdata.find(
+                          (c) => c._id === item._id || c.cartItemId === item._id
+                        );
+                        return (
+                          <div
+                            key={item._id}
+                            onClick={() => {
+                              setSearch("");
+                              setIsMobileSearchFocused(false);
+                              router.push(`/product/${item._id}`);
+                            }}
+                            className="flex items-center justify-between gap-2.5 p-1.5 rounded-xl hover:bg-emerald-50/50 cursor-pointer border border-transparent hover:border-emerald-100 transition group"
+                          >
+                            <div className="flex items-center gap-2 min-w-0 flex-1">
+                              <img
+                                src={item.image}
+                                alt={item.name}
+                                className="w-8.5 h-8.5 rounded-lg object-contain border border-gray-100 p-0.5 bg-white shrink-0"
+                              />
+                              <div className="min-w-0 flex-1">
+                                <p className="text-[11.5px] font-bold text-gray-900 group-hover:text-[#0c831f] truncate">
+                                  {item.name}
+                                </p>
+                                <div className="flex items-center gap-1.5 text-[10px]">
+                                  <span className="text-gray-400 font-medium">
+                                    {item.unit || item.category}
+                                  </span>
+                                  <span className="font-black text-[#0c831f]">
+                                    ₹{item.price}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+
+                            {!cartItem ? (
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  dispatch(
+                                    addToCart({
+                                      ...item,
+                                      price: item.price,
+                                      unit: item.unit || "unit",
+                                      cartItemId: item._id,
+                                      quantity: 1,
+                                    })
+                                  );
+                                }}
+                                className="bg-emerald-50 hover:bg-[#0c831f] text-[#0c831f] hover:text-white border border-emerald-300 px-2.5 py-1 rounded-lg text-[10px] font-black transition flex items-center gap-1 shadow-2xs shrink-0 cursor-pointer"
+                              >
+                                <Plus size={11} className="stroke-[3]" />
+                                <span>ADD</span>
+                              </button>
+                            ) : (
+                              <div
+                                onClick={(e) => e.stopPropagation()}
+                                className="flex items-center bg-white border border-[#0c831f] rounded-lg overflow-hidden h-6 shadow-2xs shrink-0"
+                              >
+                                <button
+                                  type="button"
+                                  className="w-5 h-full flex items-center justify-center bg-green-50 text-[#0c831f] hover:bg-[#0c831f] hover:text-white transition font-black text-[10px] cursor-pointer"
+                                  onClick={() =>
+                                    dispatch(
+                                      decreaseQuantity(cartItem.cartItemId || item._id)
+                                    )
+                                  }
+                                >
+                                  <Minus size={9} className="stroke-[3]" />
+                                </button>
+                                <span className="px-1.5 text-center font-black text-[10px] text-gray-900">
+                                  {cartItem.quantity}
+                                </span>
+                                <button
+                                  type="button"
+                                  className="w-5 h-full flex items-center justify-center bg-green-50 text-[#0c831f] hover:bg-[#0c831f] hover:text-white transition font-black text-[10px] cursor-pointer"
+                                  onClick={() =>
+                                    dispatch(
+                                      increaseQuantity(cartItem.cartItemId || item._id)
+                                    )
+                                  }
+                                >
+                                  <Plus size={9} className="stroke-[3]" />
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 )}
               </motion.div>

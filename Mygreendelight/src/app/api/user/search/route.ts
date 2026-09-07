@@ -12,14 +12,35 @@ export async function GET(req: Request) {
 
     const { searchParams } = new URL(req.url);
     const query = searchParams.get("query");
+    const trending = searchParams.get("trending");
+
+    // Fetch active categories to filter valid store catalog items
+    const activeCats = await Category.find({}).select("name").lean();
+    const activeCatNames = activeCats.map((c) => c.name);
+
+    // If requesting trending items, return top real products from DB
+    if (trending === "true" || (!query && trending !== null)) {
+      const trendingFilter: any = {
+        status: { $ne: "draft" },
+      };
+      if (activeCatNames.length > 0) {
+        trendingFilter.category = { $in: activeCatNames };
+      }
+
+      const trendingProducts = await Grocery.find(trendingFilter)
+        .sort({ isFeatured: -1, createdAt: -1 })
+        .limit(8)
+        .select("_id name category price image unit")
+        .lean();
+
+      return NextResponse.json(trendingProducts);
+    }
 
     if (!query || query.trim() === "") {
       return NextResponse.json([]);
     }
 
     const cleanQuery = query.trim();
-    const activeCats = await Category.find({}).select("name").lean();
-    const activeCatNames = activeCats.map((c) => c.name);
 
     const filter: any = {
       status: { $ne: "draft" },
