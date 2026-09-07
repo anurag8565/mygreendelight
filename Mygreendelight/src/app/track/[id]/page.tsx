@@ -429,13 +429,16 @@ export default function TrackOrderPage() {
                     key={idx}
                     className="flex items-center gap-3.5 p-3 rounded-2xl bg-gray-50/70 border border-gray-100"
                   >
-                    {item.image && (
+                    <div className="w-12 h-12 rounded-xl bg-white border border-gray-100 p-1 flex items-center justify-center shrink-0">
                       <img
-                        src={item.image}
+                        src={item.image || "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=300&q=80"}
                         alt={item.name}
-                        className="w-12 h-12 object-cover rounded-xl bg-white border border-gray-100"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=300&q=80";
+                        }}
+                        className="w-full h-full object-contain"
                       />
-                    )}
+                    </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="font-bold text-gray-900 text-xs sm:text-sm truncate">{item.name}</h4>
                       <p className="text-[11px] text-gray-500">

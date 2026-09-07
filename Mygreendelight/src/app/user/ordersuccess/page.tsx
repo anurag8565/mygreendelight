@@ -263,33 +263,37 @@ function OrderSuccessContent() {
                     <span className="text-[10px] text-emerald-700 font-bold">100% Farm Fresh</span>
                   </div>
 
-                  <div className="space-y-1.5 max-h-36 overflow-y-auto pr-1">
+                  <div className="space-y-1.5 max-h-48 overflow-y-auto pr-1">
                     {orderDetails.items.map((item: any, idx: number) => (
                       <div
                         key={idx}
-                        className="flex items-center justify-between text-xs py-1"
+                        className="flex items-center justify-between text-xs py-1.5 border-b border-gray-50 last:border-0"
                       >
-                        <div className="flex items-center gap-2 min-w-0">
-                          {item.image && (
-                            <div className="relative w-7 h-7 rounded-lg overflow-hidden bg-gray-50 border border-gray-100 shrink-0">
-                              <Image
-                                src={item.image}
-                                alt={item.name}
-                                fill
-                                className="object-cover"
-                              />
-                            </div>
-                          )}
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <div className="w-9 h-9 rounded-xl overflow-hidden bg-emerald-50/60 border border-gray-100 shrink-0 flex items-center justify-center p-1">
+                            <img
+                              src={
+                                item.image ||
+                                "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=300&q=80"
+                              }
+                              alt={item.name}
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).src =
+                                  "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=300&q=80";
+                              }}
+                              className="w-full h-full object-contain"
+                            />
+                          </div>
                           <div className="min-w-0">
-                            <p className="font-bold text-gray-900 truncate text-[11.5px]">
+                            <p className="font-extrabold text-gray-900 truncate text-[12px]">
                               {item.name}
                             </p>
-                            <p className="text-[10px] text-gray-400">
-                              {item.quantity} × {item.variationWeight || item.unit || "unit"}
+                            <p className="text-[10.5px] text-gray-400 font-medium">
+                              Qty: {item.quantity} × {item.variationWeight || item.unit || "unit"}
                             </p>
                           </div>
                         </div>
-                        <span className="font-black text-gray-800 text-xs shrink-0 ml-2">
+                        <span className="font-black text-gray-900 text-xs shrink-0 ml-2">
                           ₹{item.price * (item.quantity || 1)}
                         </span>
                       </div>

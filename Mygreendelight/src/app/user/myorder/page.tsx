@@ -298,6 +298,10 @@ export default function MyOrder() {
                           <img
                             src={item.image}
                             alt={item.name}
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src =
+                                "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=300&q=80";
+                            }}
                             className="w-full h-full object-contain"
                           />
                         ) : (
