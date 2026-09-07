@@ -32,6 +32,12 @@ import {
   MessageSquare,
   User,
   X,
+  Power,
+  Zap,
+  HelpCircle,
+  IndianRupee,
+  Activity,
+  Headphones,
 } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
@@ -80,7 +86,7 @@ function playDispatchChime() {
 
 export default function Deliveryboy({ initialUser }: Props) {
   const [assignments, setAssignments] = useState<any[]>([])
-  const [activeTab, setActiveTab] = useState<'requests' | 'active' | 'earnings' | 'history'>('requests')
+  const [activeTab, setActiveTab] = useState<'requests' | 'earnings' | 'history'>('requests')
   const [activeorder, setactiverder] = useState<any>(null)
   const [userlocation, setuserlocation] = useState<any>(null)
   const [loading, setLoading] = useState(true)
@@ -91,6 +97,10 @@ export default function Deliveryboy({ initialUser }: Props) {
   const [gpsActive, setGpsActive] = useState(false)
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [activeTripExpanded, setActiveTripExpanded] = useState(true)
+
+  // Real Database-backed Online/Offline Duty State
+  const [isOnline, setIsOnline] = useState<boolean>(true)
+  const [togglingDuty, setTogglingDuty] = useState(false)
 
   // 4-Digit PIN Box Inputs
   const [pin, setPin] = useState(['', '', '', ''])
@@ -122,9 +132,39 @@ export default function Deliveryboy({ initialUser }: Props) {
   const { userdata } = useSelector((state: RootState) => state.user)
   const currentUser = initialUser || userdata
 
+  // Fetch initial online duty state from backend
+  const fetchDutyState = async () => {
+    try {
+      const res = await axios.get('/api/delivery/toggle-duty')
+      if (res.data?.success && typeof res.data.isonline === 'boolean') {
+        setIsOnline(res.data.isonline)
+      }
+    } catch (_) {}
+  }
+
+  // Toggle Duty Online/Offline
+  const handleToggleDuty = async () => {
+    setTogglingDuty(true)
+    try {
+      const res = await axios.post('/api/delivery/toggle-duty', { isonline: !isOnline })
+      if (res.data?.success) {
+        setIsOnline(res.data.isonline)
+        showToast(res.data.message, res.data.isonline ? 'success' : 'info')
+        if (res.data.isonline) {
+          handleRefreshAll()
+        }
+      }
+    } catch (err: any) {
+      showToast('Failed to update duty state', 'error')
+    } finally {
+      setTogglingDuty(false)
+    }
+  }
+
   // Socket listener for real-time delivery dispatches
   useEffect(() => {
     socket.on('new-assignment', (assignment) => {
+      if (!isOnline) return // Ignore if driver is in rest mode
       setAssignments((prev) => [assignment, ...prev])
       playDispatchChime()
       showToast('🔔 New express delivery request received!', 'info')
@@ -136,7 +176,7 @@ export default function Deliveryboy({ initialUser }: Props) {
     return () => {
       socket.off('new-assignment')
     }
-  }, [])
+  }, [isOnline])
 
   const fetchDashboardData = async () => {
     try {
@@ -189,6 +229,7 @@ export default function Deliveryboy({ initialUser }: Props) {
     setRefreshing(true)
     try {
       await Promise.all([
+        fetchDutyState(),
         fetchAssignments(),
         fetchDashboardData(),
         fetchCurrentOrder(),
@@ -203,9 +244,9 @@ export default function Deliveryboy({ initialUser }: Props) {
     handleRefreshAll()
   }, [handleRefreshAll])
 
-  // Real-time GPS stream during active delivery trip
+  // Real-time GPS stream during active delivery trip (only if driver is online)
   useEffect(() => {
-    if (!activeorder) return
+    if (!activeorder || !isOnline) return
     let watchId: number | null = null
     let lastUpdate = 0
 
@@ -232,7 +273,7 @@ export default function Deliveryboy({ initialUser }: Props) {
         navigator.geolocation.clearWatch(watchId)
       }
     }
-  }, [activeorder])
+  }, [activeorder, isOnline])
 
   const handleAccept = async (id: string) => {
     try {
@@ -240,7 +281,7 @@ export default function Deliveryboy({ initialUser }: Props) {
       showToast(result.data?.message || 'Trip accepted! Starting live navigation...', 'success')
       setAssignments((prev) => prev.filter((a) => a._id !== id))
       await fetchCurrentOrder()
-      setActiveTab('active')
+      setActiveTab('requests')
     } catch (error: any) {
       showToast(error?.response?.data?.message || 'Failed to accept assignment', 'error')
     }
@@ -333,7 +374,7 @@ export default function Deliveryboy({ initialUser }: Props) {
   const renderToast = () => {
     if (!toast) return null
     return (
-      <div className="fixed top-16 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-md animate-in fade-in slide-in-from-top-3 duration-200">
+      <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-md animate-in fade-in slide-in-from-top-3 duration-200">
         <div
           className={`p-3.5 rounded-2xl shadow-xl border flex items-center gap-2.5 text-xs font-black backdrop-blur-md ${
             toast.type === 'success'
@@ -355,59 +396,111 @@ export default function Deliveryboy({ initialUser }: Props) {
     )
   }
 
-  // Header
-  const renderRiderHeader = () => (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200/80 px-4 py-3 shadow-2xs">
-      <div className="max-w-4xl mx-auto flex items-center justify-between gap-3">
-        {/* Brand & Duty Badge */}
-        <div className="flex items-center gap-2.5">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#0f8646] to-emerald-400 text-white flex items-center justify-center font-black shadow-sm shrink-0">
-            <Truck size={20} />
-          </div>
-          <div>
-            <div className="flex items-center gap-1.5">
-              <span className="font-black text-sm text-gray-900 leading-tight">SubziQuick Partner</span>
-              <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-800 text-[10px] font-black px-2 py-0.5 rounded-full">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
-                Duty Online
-              </span>
+  // ==========================================
+  // REAL PRODUCTION HEADER & SHIFT COCKPIT
+  // ==========================================
+  const renderProductionHeader = () => (
+    <div className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200/80 shadow-2xs">
+      <div className="max-w-4xl mx-auto px-4 py-3">
+        {/* Row 1: Brand, Duty Toggle Switch & Action Buttons */}
+        <div className="flex items-center justify-between gap-3">
+          
+          {/* Driver Avatar & Name */}
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-[#0f8646] to-emerald-400 text-white flex items-center justify-center font-black text-lg shadow-sm shrink-0">
+                {currentUser?.name ? currentUser.name.charAt(0).toUpperCase() : <Truck size={22} />}
+              </div>
+              <span
+                className={`absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full border-2 border-white ${
+                  isOnline ? 'bg-emerald-500 animate-pulse' : 'bg-gray-400'
+                }`}
+              />
             </div>
-            <p className="text-[11px] text-gray-500 font-semibold truncate max-w-[160px] sm:max-w-xs">
-              {currentUser?.name || 'Rider Hub'} • Bhopal Express
-            </p>
+
+            <div>
+              <div className="flex items-center gap-1.5">
+                <span className="font-black text-sm text-gray-900 leading-tight">
+                  {currentUser?.name || 'Rider'}
+                </span>
+                <span className="text-[10px] font-black uppercase text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded-md">
+                  Partner
+                </span>
+              </div>
+              <p className="text-[11px] text-gray-500 font-semibold flex items-center gap-1 mt-0.5">
+                <MapPin size={11} className="text-[#0f8646]" />
+                <span>Bhopal Central Hub</span>
+              </p>
+            </div>
+          </div>
+
+          {/* Real Interactive Duty Online/Offline Switcher */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleToggleDuty}
+              disabled={togglingDuty}
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-2xl font-black text-xs transition cursor-pointer shadow-xs border ${
+                isOnline
+                  ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100'
+                  : 'bg-gray-100 text-gray-600 border-gray-300 hover:bg-gray-200'
+              }`}
+              title="Toggle Duty Status"
+            >
+              <Power size={14} className={isOnline ? 'text-emerald-600' : 'text-gray-400'} />
+              <span>{isOnline ? 'Duty Online' : 'Duty Offline'}</span>
+              <div
+                className={`w-2 h-2 rounded-full ${
+                  isOnline ? 'bg-emerald-600 animate-ping' : 'bg-gray-400'
+                }`}
+              />
+            </button>
+
+            {/* Refresh Button */}
+            <button
+              onClick={handleRefreshAll}
+              disabled={refreshing}
+              className="w-9 h-9 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center transition cursor-pointer"
+              title="Refresh Dashboard"
+            >
+              <RotateCw size={15} className={refreshing ? 'animate-spin text-[#0f8646]' : ''} />
+            </button>
+
+            {/* Logout */}
+            <button
+              onClick={() => signOut({ callbackUrl: '/login' })}
+              className="w-9 h-9 rounded-xl bg-gray-100 hover:bg-red-50 hover:text-red-700 text-gray-600 flex items-center justify-center transition cursor-pointer"
+              title="Sign Out"
+            >
+              <LogOut size={15} />
+            </button>
           </div>
         </div>
 
-        {/* Quick Actions */}
-        <div className="flex items-center gap-2">
-          <button
-            onClick={handleRefreshAll}
-            disabled={refreshing}
-            className="w-9 h-9 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center transition cursor-pointer"
-            title="Refresh Feed"
-          >
-            <RotateCw size={15} className={refreshing ? 'animate-spin text-[#0f8646]' : ''} />
-          </button>
+        {/* Row 2: Live Shift Quick Metric Pills */}
+        <div className="grid grid-cols-3 gap-2 mt-3 pt-2.5 border-t border-gray-100">
+          <div className="bg-emerald-50/70 p-2 rounded-xl text-center border border-emerald-100">
+            <span className="text-[10px] font-extrabold uppercase text-emerald-800 block">Today's Payout</span>
+            <span className="font-black text-xs sm:text-sm text-[#0f8646]">
+              ₹{dashboardStats.todayEarnings}
+            </span>
+          </div>
 
-          <Link
-            href="/user"
-            className="inline-flex items-center gap-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold px-3 py-2 rounded-xl transition"
-            title="Account Hub"
-          >
-            <User size={13} />
-            <span className="hidden sm:inline">Account</span>
-          </Link>
+          <div className="bg-blue-50/70 p-2 rounded-xl text-center border border-blue-100">
+            <span className="text-[10px] font-extrabold uppercase text-blue-800 block">Trips Done</span>
+            <span className="font-black text-xs sm:text-sm text-blue-800">
+              {Math.round(dashboardStats.todayEarnings / 100)} Orders
+            </span>
+          </div>
 
-          <button
-            onClick={() => signOut({ callbackUrl: '/login' })}
-            className="w-9 h-9 rounded-xl bg-gray-100 hover:bg-red-50 hover:text-red-700 text-gray-600 flex items-center justify-center transition cursor-pointer"
-            title="Sign Out"
-          >
-            <LogOut size={15} />
-          </button>
+          <div className="bg-gray-50 p-2 rounded-xl text-center border border-gray-200">
+            <span className="text-[10px] font-extrabold uppercase text-gray-500 block">Base Rate</span>
+            <span className="font-black text-xs sm:text-sm text-gray-800">
+              ₹100<span className="text-[10px] font-normal text-gray-400">/trip</span>
+            </span>
+          </div>
         </div>
       </div>
-    </header>
+    </div>
   )
 
   // Render Active Trip Cockpit Section
@@ -704,11 +797,39 @@ export default function Deliveryboy({ initialUser }: Props) {
 
   return (
     <div className="min-h-screen bg-[#f8faf9] flex flex-col font-sans">
-      {renderRiderHeader()}
+      {renderProductionHeader()}
       {renderToast()}
 
       <main className="flex-1 max-w-4xl w-full mx-auto p-3.5 sm:p-6 space-y-4 pb-24">
         
+        {/* If Rider is Offline (Rest Mode Banner) */}
+        {!isOnline && (
+          <div className="bg-gradient-to-r from-gray-900 to-zinc-800 text-white rounded-3xl p-6 shadow-md border border-gray-700 space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-gray-300">
+                  <Power size={16} />
+                </div>
+                <h3 className="font-black text-base text-white">Duty Offline (Rest Mode)</h3>
+              </div>
+              <span className="text-[10px] font-black uppercase tracking-wider bg-white/10 text-gray-300 px-2.5 py-1 rounded-full">
+                Not Receiving Orders
+              </span>
+            </div>
+            <p className="text-xs text-gray-300 leading-relaxed">
+              You are currently on break. You will not receive any new express grocery dispatch notifications in Bhopal.
+            </p>
+            <button
+              onClick={handleToggleDuty}
+              disabled={togglingDuty}
+              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2.5 rounded-xl font-black text-xs transition cursor-pointer flex items-center gap-2 shadow-xs"
+            >
+              <Zap size={14} />
+              <span>Slide to Go Online</span>
+            </button>
+          </div>
+        )}
+
         {/* Segmented Tab Controls */}
         <div className="flex items-center gap-1.5 p-1.5 bg-gray-200/70 rounded-2xl border border-gray-200 backdrop-blur-xs">
           <button
@@ -786,9 +907,13 @@ export default function Deliveryboy({ initialUser }: Props) {
                     <Package size={26} />
                   </div>
                   <div>
-                    <h3 className="text-base font-black text-gray-900">No New Requests Pending</h3>
+                    <h3 className="text-base font-black text-gray-900">
+                      {isOnline ? 'No New Requests Pending' : 'You are currently offline'}
+                    </h3>
                     <p className="text-xs text-gray-400 max-w-sm mx-auto mt-1">
-                      Your duty is online. New broadcast orders in Bhopal will appear here automatically.
+                      {isOnline
+                        ? 'Your duty is online. New broadcast orders in Bhopal will appear here automatically.'
+                        : 'Switch your duty toggle above to Online to start receiving incoming orders.'}
                     </p>
                   </div>
                 </div>
