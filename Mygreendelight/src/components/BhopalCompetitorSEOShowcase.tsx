@@ -44,18 +44,26 @@ export default function BhopalCompetitorSEOShowcase() {
   ];
 
   const popularSearches = [
+    { label: "🥬 Online Vegetable Delivery Bhopal", query: "vegetable" },
+    { label: "🍎 Buy Fresh Fruits Online", query: "fruit" },
+    { label: "💵 Cash On Delivery Sabzi", query: "sabzi" },
+    { label: "📈 Today Vegetable Rate Bhopal", query: "rate" },
     { label: "🥑 Fresh Hass Avocado", query: "avocado" },
     { label: "🥦 Crisp Green Broccoli", query: "broccoli" },
     { label: "🍄 Fresh Button Mushrooms", query: "mushroom" },
-    { label: "🥬 Hydroponic Lettuce", query: "lettuce" },
-    { label: "🍅 Desi Organic Tomato", query: "tamatar" },
-    { label: "🥔 Pahadi Premium Aloo", query: "aloo" },
-    { label: "🧅 Nashik Red Onion", query: "pyaz" },
-    { label: "🌿 Fresh Methi & Palak", query: "palak" },
+    { label: "🥬 Hydroponic Romaine Lettuce", query: "lettuce" },
+    { label: "🍅 Desi Organic Tomato (Tamatar)", query: "tamatar" },
+    { label: "🥔 Pahadi Premium Aloo (5kg)", query: "aloo" },
+    { label: "🧅 Nashik Red Onion (Pyaz)", query: "pyaz" },
+    { label: "🌿 Organic Spinach (Palak)", query: "palak" },
     { label: "🐉 Fresh Dragon Fruit", query: "dragon fruit" },
-    { label: "🫐 Blueberries & Berries", query: "blueberry" },
+    { label: "🫐 Fresh Blueberries", query: "blueberry" },
     { label: "🫑 Red & Yellow Bell Peppers", query: "capsicum" },
+    { label: "🥒 Fresh Green Zucchini", query: "zucchini" },
     { label: "🥗 Daily Salad Diet Box", query: "salad" },
+    { label: "🧺 Weekly Family Veg Combo", query: "combo" },
+    { label: "🧼 100% Ozone Washed Clean Veggies", query: "clean" },
+    { label: "🚜 Direct Kisan Farm Fresh", query: "fresh" },
   ];
 
   // Industry Standard Categories (No Competitor Brand Names)
@@ -141,8 +149,16 @@ export default function BhopalCompetitorSEOShowcase() {
       a: "Unlike warehouse-based grocery apps that store produce in cold dark stores for 3–5 days, SubziQuick procures directly from local Bhopal farming clusters every morning at 5:00 AM. Every batch is ozone-cleaned, graded, and delivered the same morning to your kitchen.",
     },
     {
+      q: "Bhopal me online sabzi order kaise karein?",
+      a: "SubziQuick par online sabzi order karna behad aasan hai: subziquick.in open karein ya App download karein. Apni pasand ki taaza sabziyan, aaloo, pyaz, tamatar aur seasonal fruits cart me add karein aur Cash on Delivery (COD) ya instant UPI se checkout karein. Delivery boy 15–45 minute me express delivery aapke ghar pahunchata hai.",
+    },
+    {
       q: "What makes SubziQuick's pricing more affordable for daily family cooking?",
-      a: "By sourcing directly from local farmers and eliminating multi-tier middlemen and expensive app commissions, we deliver fresh vegetables and fruits at true wholesale farm rates with zero surge pricing.",
+      a: "By sourcing directly from local farmers and eliminating multi-tier middlemen and expensive app commissions, we deliver fresh vegetables and fruits at true wholesale farm rates with zero surge pricing and zero platform fees.",
+    },
+    {
+      q: "Aaj Bhopal me tamatar, pyaz aur aaloo ka wholesale farm rate kya hai?",
+      a: "SubziQuick par roz subah 5:00 AM kisan harvest bhav live update hota hai. Daily mandi wholesale comparison rates hamare homepage live ticker par available rehte hain, jisse aapko sabse saste aur best quality sabziyan milti hain.",
     },
     {
       q: "What is SubziQuick's 100% Ozone Bubble Washing and Quality Guarantee?",
@@ -150,11 +166,15 @@ export default function BhopalCompetitorSEOShowcase() {
     },
     {
       q: "Which areas in Bhopal do you deliver fresh vegetables and fruits to?",
-      a: "SubziQuick delivers across all major Bhopal localities including Arera Colony (E1-E8), MP Nagar, Kolar Road, Bittan Market, Gulmohar, Shahpura, Bawadiya Kalan, Katara Hills, Hoshangabad Road, Ayodhya Bypass, Indrapuri, BHEL, Awadhpuri, TT Nagar, Chuna Bhatti, Nehru Nagar, Trilanga, and Salaiya.",
+      a: "SubziQuick delivers across all major Bhopal localities including Arera Colony (E1-E8), MP Nagar (Zone 1 & 2), Kolar Road, Bittan Market (E4), Gulmohar, Shahpura, Bawadiya Kalan, Katara Hills, Hoshangabad Road, Ayodhya Bypass, Indrapuri, BHEL, Awadhpuri, TT Nagar, Chuna Bhatti, Nehru Nagar, Trilanga, and Salaiya.",
     },
     {
       q: "Are exotic vegetables like Avocado, Broccoli, and Hydroponic Lettuce available in Bhopal?",
       a: "Yes! SubziQuick has Bhopal's largest online exotic catalog including Hass Avocados, Green & Purple Broccoli, Hydroponic Romaine/Iceberg Lettuce, Zucchini, Button Mushrooms, Cherry Tomatoes, Italian Basil, Celery, Bok Choy, Blueberries, and Dragon Fruit at wholesale direct farm prices.",
+    },
+    {
+      q: "Does SubziQuick charge any platform fee or delivery charges?",
+      a: "No! SubziQuick offers zero platform fee, zero handling fee, and free delivery on orders matching eligible coupon thresholds with no hidden cart markups.",
     },
   ];
 

@@ -179,17 +179,75 @@ export default function Footer() {
 
         </div>
 
-        {/* Bhopal Express Delivery Zones */}
+        {/* Bhopal Top Search Keywords & Localities SEO Cloud */}
         <div className="border-t border-green-900/60 mt-6 pt-4 pb-2 text-xs text-green-200/80">
-          <div className="flex items-center gap-1.5 mb-1.5">
+          <div className="flex items-center gap-1.5 mb-2">
             <Truck size={14} className="text-emerald-300" />
             <h4 className="font-bold text-emerald-300 text-xs tracking-wide uppercase">
-              10-15 Min Express Delivery Across Bhopal:
+              10-15 Min Express Delivery Localities in Bhopal:
             </h4>
           </div>
-          <p className="leading-relaxed text-[11px] text-green-100/70">
-            Bagsewaniya • MP Nagar • Arera Colony • Kolar Road • Gulmohar Colony • Shahpura • Hoshangabad Road • Saket Nagar • BHEL • Chunabhatti • TT Nagar • Misrod • Awadhpuri • Katara Hills • Ayodhya Bypass • Indrapuri • Trilanga • Bawadiya Kalan.
-          </p>
+          <div className="flex flex-wrap gap-x-2 gap-y-1 text-[11px] text-green-100/80">
+            <Link href="/shop?locality=arera+colony" className="hover:text-amber-300 transition">Arera Colony E1-E8</Link>
+            <span>•</span>
+            <Link href="/shop?locality=mp+nagar" className="hover:text-amber-300 transition">MP Nagar Zone 1 & 2</Link>
+            <span>•</span>
+            <Link href="/shop?locality=kolar" className="hover:text-amber-300 transition">Kolar Road</Link>
+            <span>•</span>
+            <Link href="/shop?locality=bagsewaniya" className="hover:text-amber-300 transition">Bagsewaniya & Amrai</Link>
+            <span>•</span>
+            <Link href="/shop?locality=bawadiya+kalan" className="hover:text-amber-300 transition">Bawadiya Kalan</Link>
+            <span>•</span>
+            <Link href="/shop?locality=gulmohar" className="hover:text-amber-300 transition">Gulmohar Colony</Link>
+            <span>•</span>
+            <Link href="/shop?locality=shahpura" className="hover:text-amber-300 transition">Shahpura Sector A-C</Link>
+            <span>•</span>
+            <Link href="/shop?locality=katara+hills" className="hover:text-amber-300 transition">Katara Hills</Link>
+            <span>•</span>
+            <Link href="/shop?locality=hoshangabad+road" className="hover:text-amber-300 transition">Hoshangabad Road</Link>
+            <span>•</span>
+            <Link href="/shop?locality=bittan+market" className="hover:text-amber-300 transition">Bittan Market E4</Link>
+            <span>•</span>
+            <Link href="/shop?locality=saket+nagar" className="hover:text-amber-300 transition">Saket Nagar AIIMS</Link>
+            <span>•</span>
+            <Link href="/shop?locality=ayodhya+bypass" className="hover:text-amber-300 transition">Ayodhya Bypass</Link>
+            <span>•</span>
+            <Link href="/shop?locality=indrapuri" className="hover:text-amber-300 transition">Indrapuri & BHEL</Link>
+            <span>•</span>
+            <Link href="/shop?locality=chunabhatti" className="hover:text-amber-300 transition">Chunabhatti</Link>
+            <span>•</span>
+            <Link href="/shop?locality=tt+nagar" className="hover:text-amber-300 transition">TT Nagar New Market</Link>
+            <span>•</span>
+            <Link href="/shop?locality=misrod" className="hover:text-amber-300 transition">Misrod</Link>
+            <span>•</span>
+            <Link href="/shop?locality=awadhpuri" className="hover:text-amber-300 transition">Awadhpuri</Link>
+            <span>•</span>
+            <Link href="/shop?locality=trilanga" className="hover:text-amber-300 transition">Trilanga & Rohit Nagar</Link>
+          </div>
+
+          <div className="flex items-center gap-1.5 mt-3 mb-1.5">
+            <Zap size={13} className="text-amber-300" />
+            <span className="font-bold text-amber-300 text-[11px] uppercase tracking-wide">
+              Top Trending Searches:
+            </span>
+          </div>
+          <div className="flex flex-wrap gap-x-2 gap-y-1 text-[10.5px] text-green-100/70">
+            <Link href="/shop" className="hover:text-white transition">online vegetable delivery in bhopal</Link>
+            <span>•</span>
+            <Link href="/shop?category=Fruits" className="hover:text-white transition">buy fresh fruits online bhopal</Link>
+            <span>•</span>
+            <Link href="/user/checkout" className="hover:text-white transition">fresh sabzi cash on delivery</Link>
+            <span>•</span>
+            <Link href="/shop" className="hover:text-white transition">today vegetable rate in bhopal</Link>
+            <span>•</span>
+            <Link href="/shop?category=Exotics" className="hover:text-white transition">buy avocado & broccoli bhopal</Link>
+            <span>•</span>
+            <Link href="/offers" className="hover:text-white transition">free vegetable delivery app bhopal</Link>
+            <span>•</span>
+            <Link href="/about" className="hover:text-white transition">pesticide free 100% ozone washed vegetables</Link>
+            <span>•</span>
+            <Link href="/shop" className="hover:text-white transition">zero platform fee grocery delivery</Link>
+          </div>
         </div>
 
         {/* Bottom Legal & Payment Badges */}

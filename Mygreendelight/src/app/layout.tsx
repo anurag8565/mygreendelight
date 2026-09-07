@@ -25,26 +25,61 @@ export const metadata: Metadata = {
     template: "%s | SubziQuick Bhopal - Online Vegetable Delivery",
   },
   description:
-    "Order farm-fresh vegetables, seasonal fruits, and exotic produce online in Bhopal at wholesale direct farm rates. 100% ozone-washed, pesticide-safe with same-day express home delivery across all Bhopal localities.",
+    "Order farm-fresh vegetables, seasonal fruits & groceries online in Bhopal at wholesale direct farm rates. 100% ozone-washed, pesticide-free with same-day express home delivery (15-45 mins) across all Bhopal localities. Cash on delivery & zero platform fee.",
   keywords: [
-    "online vegetable delivery Bhopal",
-    "fresh sabzi home delivery Bhopal",
-    "fresh organic fruits Bhopal",
-    "same day vegetable delivery Bhopal",
-    "Bhopal online sabzi store",
-    "exotic vegetables Bhopal",
-    "avocado delivery Bhopal",
-    "broccoli mushroom bell pepper Bhopal",
-    "hydroponic greens Bhopal",
-    "best online sabzi app Bhopal",
-    "fresh produce Bhopal",
+    // Category 1: High Volume Commercial & Money Keywords
+    "online vegetable delivery in bhopal",
+    "buy fresh fruits online bhopal",
+    "fresh sabzi online cash on delivery bhopal",
+    "today vegetable rate in bhopal",
+    "same day fresh vegetable delivery bhopal",
+    "online sabzi delivery app bhopal free delivery",
+    "fresh farm vegetables home delivery bhopal",
+    "no minimum order vegetable delivery bhopal",
+    "free vegetable delivery in bhopal",
+    "cheap fresh vegetable delivery online bhopal",
+
+    // Category 2: Hyperlocal Bhopal Locality Keywords
+    "vegetable delivery in arera colony bhopal",
+    "fresh fruit delivery kolar road bhopal",
+    "online sabzi delivery mp nagar bhopal",
+    "organic vegetables bawadiya kalan bhopal",
+    "vegetable home delivery katara hills bhopal",
+    "fresh vegetables delivery shahpura bhopal",
+    "fresh farm produce bittan market e4 bhopal",
+    "fresh fruits and sabzi ayodhya bypass bhopal",
+    "online vegetable delivery indrapuri bhel bhopal",
+    "doorstep vegetable delivery hoshangabad road",
+    "fresh veggies gulmohar bhopal",
+    "vegetables delivery chunabhatti bhopal",
+    "fresh fruits saket nagar bhopal",
+    "sabzi delivery bagsewaniya bhopal",
+
+    // Category 3 & 4: Exotic & Daily Produce Keywords
+    "buy hass avocado in bhopal online",
+    "fresh green broccoli price in bhopal",
+    "fresh button mushroom 200g online bhopal",
+    "hydroponic romaine iceberg lettuce bhopal",
+    "fresh desi tomato tamatar online delivery bhopal",
+    "pahadi aaloo potato 5kg bag online bhopal",
+    "nashik red onion pyaz wholesale price bhopal",
+    "fresh organic spinach palak online bhopal",
+    "fresh green peas matar buy online bhopal",
+    "chopped ready to cook vegetable pack bhopal",
+    "weekly vegetable family combo basket 10kg bhopal",
+
+    // Category 5: Trust, Health & Voice Search Keywords
+    "pesticide free vegetables in bhopal",
+    "100 percent ozone washed clean vegetables bhopal",
+    "direct kisan wholesale price online sabzi bhopal",
+    "sunrise 5am harvest fresh farm produce bhopal",
+    "instant fresh sabzi delivery near me",
+    "bhopal me online sabzi order kaise karein",
+    "aaj bhopal me tamatar pyaz ka rate",
+    "chemical free sabzi kahan milegi bhopal me",
+    "zero platform fee vegetable delivery app bhopal",
+    "best vegetable delivery service in bhopal 2026",
     "SubziQuick Bhopal",
-    "organic vegetables Bhopal",
-    "buy veggies Bagsewaniya",
-    "vegetable store MP Nagar",
-    "fruits Arera Colony",
-    "fresh sabzi Kolar Road",
-    "exotics Bawadiya Kalan Bhopal",
   ],
   authors: [{ name: "SubziQuick Bhopal" }],
   creator: "SubziQuick",
@@ -209,6 +244,14 @@ export default function RootLayout({
       },
       {
         "@type": "Question",
+        "name": "Bhopal me online sabzi order kaise karein?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Bhopal me online sabzi order karne ke liye SubziQuick website (subziquick.in) par jayein ya Android/iOS app open karein. Apni pasand ki taaza sabziyan aur phal cart me add karein aur Cash on Delivery (COD) ya UPI se checkout karein. 15-45 minute me delivery aapke ghar pahunch jayegi."
+        }
+      },
+      {
+        "@type": "Question",
         "name": "Where can I buy exotic vegetables like Avocado, Broccoli, and Hydroponic Lettuce in Bhopal?",
         "acceptedAnswer": {
           "@type": "Answer",
@@ -217,18 +260,26 @@ export default function RootLayout({
       },
       {
         "@type": "Question",
-        "name": "What are the delivery slots for online vegetable orders in Bhopal?",
+        "name": "Aaj Bhopal me tamatar aur pyaz ka rate kya chal raha hai?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "SubziQuick offers 4 daily delivery slots: Early Sunrise (6:00 AM - 8:30 AM), Morning Fresh (8:30 AM - 11:00 AM), Midday (11:00 AM - 1:00 PM), and Evening (4:00 PM - 7:30 PM) across all 20+ Bhopal localities."
+          "text": "SubziQuick par roz subah 5 baje direct kisan farm harvest rates update hote hain. Tamatar, Pyaz aur Aaloo ke live dynamic rates dekhne ke liye subziquick.in par live price ticker check karein jahan wholesale farm bhav par sabzi milti hai."
         }
       },
       {
         "@type": "Question",
-        "name": "Are SubziQuick vegetables pesticide-free and clean?",
+        "name": "Are SubziQuick vegetables pesticide-free and ozone cleaned?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes, every batch of leafy vegetables, fruits, and salad items is ozone-bubble washed to remove 99.4% of surface pesticides, bacteria, and grime before dispatch."
+          "text": "Yes, every batch of leafy vegetables, fruits, and salad items is ozone-bubble washed to remove 99.4% of surface chemical pesticides, bacteria, and grime before dispatch, ensuring pure and healthy food."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is there any platform fee or surge charge on SubziQuick in Bhopal?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No, SubziQuick operates with Zero Platform Fee, Zero Surge Charges, and No Minimum Order limit on fresh vegetable and fruit delivery across Bhopal."
         }
       }
     ]

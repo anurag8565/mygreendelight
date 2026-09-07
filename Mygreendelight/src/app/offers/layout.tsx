@@ -5,10 +5,14 @@ export const metadata: Metadata = {
   description:
     "Save big on daily fresh vegetables, fruits, and exotic produce with exclusive SubziQuick Bhopal discount coupons, scratch rewards, and Direct Farm Price Drop Offers.",
   keywords: [
-    "vegetable offers Bhopal",
-    "sabzi discount coupon Bhopal",
-    "Fresh vegetable discount Bhopal",
-    "online grocery deals Bhopal",
+    "free vegetable delivery in bhopal",
+    "cheap fresh vegetable delivery online bhopal",
+    "no minimum order vegetable delivery bhopal",
+    "zero platform fee vegetable delivery app bhopal",
+    "online sabzi delivery app bhopal free delivery",
+    "sabzi discount coupon bhopal",
+    "vegetable offers bhopal",
+    "fresh vegetable discount bhopal",
     "SubziQuick promo code",
   ],
   alternates: {

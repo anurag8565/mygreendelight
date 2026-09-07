@@ -39,7 +39,7 @@ const GlobalSEOSchema = new mongoose.Schema<IGlobalSEO>(
     primaryKeywords: {
       type: String,
       default:
-        "vegetable delivery bhopal, fresh vegetables bhopal, buy vegetables online bhopal, farm fresh vegetables bhopal, subziquick, fruit delivery bhopal, organic veggies bagsewaniya",
+        "online vegetable delivery in bhopal, buy fresh fruits online bhopal, fresh sabzi online cash on delivery bhopal, today vegetable rate in bhopal, same day fresh vegetable delivery bhopal, online sabzi delivery app bhopal free delivery, fresh farm vegetables home delivery bhopal, no minimum order vegetable delivery bhopal, free vegetable delivery in bhopal, cheap fresh vegetable delivery online bhopal, vegetable delivery in arera colony bhopal, fresh fruit delivery kolar road bhopal, online sabzi delivery mp nagar bhopal, organic vegetables bawadiya kalan bhopal, vegetable home delivery katara hills bhopal, pesticide free vegetables in bhopal, 100 percent ozone washed clean vegetables bhopal, direct kisan wholesale price online sabzi bhopal, zero platform fee vegetable delivery app bhopal",
     },
     bhopalDeliveryAreas: {
       type: [String],
@@ -62,7 +62,9 @@ const GlobalSEOSchema = new mongoose.Schema<IGlobalSEO>(
         "Chuna Bhatti",
         "Nehru Nagar",
         "TT Nagar",
-        "Bagsewaniya",
+        "Salaiya",
+        "Rohit Nagar",
+        "Saket Nagar",
       ],
     },
     canonicalBase: {
