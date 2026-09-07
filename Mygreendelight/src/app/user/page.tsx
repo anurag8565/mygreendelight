@@ -23,6 +23,7 @@ import {
   ShieldCheck,
   Gift,
   ArrowLeft,
+  Truck,
   ShoppingBag,
   Tag,
   Store,
@@ -394,6 +395,28 @@ export default function UserProfileHub() {
                   </div>
                 </div>
                 <ChevronRight size={16} className="text-purple-400 group-hover:text-purple-700" />
+              </Link>
+            )}
+
+            {activeUser?.role === "deliveryboy" && (
+              <Link
+                href="/deliveryboy"
+                className="flex items-center justify-between p-3.5 rounded-2xl border border-emerald-300 bg-emerald-50/80 hover:bg-emerald-100/80 hover:border-[#0f8646] transition group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#0f8646] text-white flex items-center justify-center shadow-xs">
+                    <Truck size={20} />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-black text-emerald-950 transition">
+                      Delivery Partner Hub
+                    </h4>
+                    <span className="text-[11px] text-[#0f8646] font-medium">
+                      Live dispatch & assigned orders
+                    </span>
+                  </div>
+                </div>
+                <ChevronRight size={16} className="text-[#0f8646]" />
               </Link>
             )}
 

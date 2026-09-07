@@ -817,6 +817,19 @@ export default function Nav({ user }: { user?: iUser | null }) {
                       </Link>
                     )}
 
+                    {activeUser?.role === "deliveryboy" && (
+                      <Link
+                        href="/deliveryboy"
+                        onClick={() => setOpen(false)}
+                        className="block px-4 py-2.5 text-xs font-black bg-emerald-700 text-white hover:bg-emerald-800 transition flex items-center justify-between border-b"
+                      >
+                        <span>🛵 Delivery Partner Hub</span>
+                        <span className="bg-emerald-200 text-emerald-950 text-[9px] px-1.5 py-0.5 rounded font-black">
+                          RIDER
+                        </span>
+                      </Link>
+                    )}
+
                     <Link
                       href="/user"
                       onClick={() => setOpen(false)}
