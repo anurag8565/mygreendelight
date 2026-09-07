@@ -3,6 +3,12 @@ import connectDb from "@/lib/db";
 import Groseri from "@/model/groseri.model";
 import Category from "@/model/category.model";
 
+function safeDate(d: any): Date {
+  if (!d) return new Date();
+  const parsed = new Date(d);
+  return isNaN(parsed.getTime()) ? new Date() : parsed;
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://subziquick.in";
 
@@ -73,7 +79,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const categories = await Category.find({}, { name: 1, updatedAt: 1 }).lean();
     categoryRoutes = categories.map((cat: any) => ({
       url: `${baseUrl}/shop?category=${encodeURIComponent(cat.name)}`,
-      lastModified: cat.updatedAt ? new Date(cat.updatedAt) : new Date(),
+      lastModified: safeDate(cat.updatedAt),
       changeFrequency: "daily" as const,
       priority: 0.85,
     }));
@@ -82,7 +88,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const products = await Groseri.find({ status: { $ne: "draft" } }, { _id: 1, slug: 1, updatedAt: 1 }).lean().limit(1500);
     productRoutes = products.map((item: any) => ({
       url: `${baseUrl}/product/${item.slug || item._id}`,
-      lastModified: item.updatedAt ? new Date(item.updatedAt) : new Date(),
+      lastModified: safeDate(item.updatedAt),
       changeFrequency: "daily" as const,
       priority: 0.9,
     }));
