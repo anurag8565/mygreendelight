@@ -25,6 +25,7 @@ import {
   MapPin,
   Sparkles,
   Save,
+  Percent,
 } from "lucide-react";
 import AdminSidebar from "@/components/AdminSidebar";
 
