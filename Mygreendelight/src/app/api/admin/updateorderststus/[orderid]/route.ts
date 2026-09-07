@@ -109,9 +109,20 @@ export async function POST(
         status: "broadcasted",
       });
 
-      const populatedAssignment = await DeliveryAssignment.findById(
+      const populatedAssignmentRaw = await DeliveryAssignment.findById(
         deliveryassignment._id
-      ).populate("order");
+      ).populate("order").lean();
+
+      // 🔒 Zero-Knowledge Security: Strip secret OTP from socket payload
+      const populatedAssignment = populatedAssignmentRaw ? { ...populatedAssignmentRaw } : null;
+      if (populatedAssignment && (populatedAssignment.order as any)?.deliveryOtp) {
+        (populatedAssignment.order as any).deliveryOtp = {
+          expiresAt: (populatedAssignment.order as any).deliveryOtp.expiresAt,
+          verified: (populatedAssignment.order as any).deliveryOtp.verified,
+          attempts: (populatedAssignment.order as any).deliveryOtp.attempts,
+          code: undefined,
+        };
+      }
 
       // Broadcast to socket server safely
       const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:5000";
