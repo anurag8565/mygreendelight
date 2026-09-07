@@ -62,7 +62,7 @@ const GlobalSEOSchema = new mongoose.Schema<IGlobalSEO>(
         "Chuna Bhatti",
         "Nehru Nagar",
         "TT Nagar",
-        "Karond",
+        "Bagsewaniya",
       ],
     },
     canonicalBase: {

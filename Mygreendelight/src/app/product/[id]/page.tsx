@@ -134,7 +134,7 @@ export default async function ProductPage(props: { params: Promise<{ id: string 
     description:
       product.metaDescription ||
       product.description ||
-      `Fresh ${product.name} delivered same-day in Bhopal at Karond Direct Farm rates on SubziQuick.`,
+      `Fresh ${product.name} delivered same-day in Bhopal at direct Kisan farm wholesale rates on SubziQuick.`,
     sku: `SQ-${String(product._id).slice(-6).toUpperCase()}`,
     brand: {
       "@type": "Brand",

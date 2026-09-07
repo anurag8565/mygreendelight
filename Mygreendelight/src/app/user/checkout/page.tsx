@@ -66,7 +66,7 @@ const BHOPAL_AREAS = [
   { name: "Shivaji Nagar / 6 No. Stop / Char Imli", pincode: "462016", lat: 23.228, lng: 77.421 },
   { name: "Katara Hills / Bagmugaliya", pincode: "462043", lat: 23.178, lng: 77.485 },
   { name: "Koh-e-Fiza / VIP Road / Lalghati", pincode: "462001", lat: 23.275, lng: 77.382 },
-  { name: "Karond / Berasia Road / DIG Bungalow", pincode: "462038", lat: 23.292, lng: 77.405 },
+  { name: "Berasia Road / DIG Bungalow / Navbahar", pincode: "462038", lat: 23.292, lng: 77.405 },
   { name: "Neelbad / Ratibad / Bhadbhada", pincode: "462044", lat: 23.188, lng: 77.345 },
 ];
 
