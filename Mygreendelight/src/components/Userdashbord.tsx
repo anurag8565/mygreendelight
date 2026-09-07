@@ -114,10 +114,7 @@ export default async function Userdashbord() {
       {/* 1.5 Quick Commerce Trust & Speed Ribbon */}
       <TrustRibbon />
 
-      {/* 2. Shop by Category Slider */}
-      <Categoryslider categories={plainCategories} />
-
-      {/* 3. Interactive Fresh Produce Section (3 Tabs: Vegetables, Fruits, Exotics + Grid/List Switcher) */}
+      {/* 2. Interactive Fresh Produce Section (3 Tabs: Vegetables, Fruits, Exotics + Grid/List Switcher) */}
       <FilteredProduceSection groceries={plainNew} />
 
       {/* 4. Live Flash Deals & Steal Discounts */}
