@@ -188,26 +188,26 @@ export default function AdminDashboardPage() {
                 )}
 
                 {/* Metric Cards Grid - Fully Clickable */}
-                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
                 {/* Total Revenue */}
                 <Link
                   href="/admin/manageorder"
-                  className="bg-white rounded-3xl p-6 border border-gray-200/80 shadow-2xs hover:shadow-md hover:border-green-300 hover:scale-[1.02] transition-all flex flex-col justify-between cursor-pointer group"
+                  className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 lg:p-6 border border-gray-200/80 shadow-2xs hover:shadow-md hover:border-green-300 hover:scale-[1.02] transition-all flex flex-col justify-between cursor-pointer group"
                 >
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs font-extrabold uppercase text-gray-400 tracking-wider group-hover:text-[#0f8646] transition">
+                  <div className="flex items-center justify-between mb-2 sm:mb-4">
+                    <span className="text-[10px] sm:text-xs font-extrabold uppercase text-gray-400 tracking-wider group-hover:text-[#0f8646] transition">
                       Total Sales
                     </span>
-                    <div className="w-10 h-10 rounded-2xl bg-green-50 text-[#0f8646] flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <TrendingUp size={20} />
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-green-50 text-[#0f8646] flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
+                      <TrendingUp size={16} className="sm:w-5 sm:h-5" />
                     </div>
                   </div>
                   <div>
-                    <span className="text-3xl font-black text-gray-900 block">
+                    <span className="text-xl sm:text-2xl lg:text-3xl font-black text-gray-900 block truncate">
                       ₹{summary?.totalSales || 0}
                     </span>
-                    <span className="text-[11px] text-green-700 font-bold mt-1 block">
-                      ✓ View completed orders →
+                    <span className="text-[10px] sm:text-[11px] text-green-700 font-bold mt-1 block truncate">
+                      ✓ Completed orders →
                     </span>
                   </div>
                 </Link>
@@ -215,22 +215,22 @@ export default function AdminDashboardPage() {
                 {/* Total Orders */}
                 <Link
                   href="/admin/manageorder"
-                  className="bg-white rounded-3xl p-6 border border-gray-200/80 shadow-2xs hover:shadow-md hover:border-blue-300 hover:scale-[1.02] transition-all flex flex-col justify-between cursor-pointer group"
+                  className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 lg:p-6 border border-gray-200/80 shadow-2xs hover:shadow-md hover:border-blue-300 hover:scale-[1.02] transition-all flex flex-col justify-between cursor-pointer group"
                 >
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs font-extrabold uppercase text-gray-400 tracking-wider group-hover:text-blue-600 transition">
+                  <div className="flex items-center justify-between mb-2 sm:mb-4">
+                    <span className="text-[10px] sm:text-xs font-extrabold uppercase text-gray-400 tracking-wider group-hover:text-blue-600 transition">
                       Total Orders
                     </span>
-                    <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <ShoppingBag size={20} />
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
+                      <ShoppingBag size={16} className="sm:w-5 sm:h-5" />
                     </div>
                   </div>
                   <div>
-                    <span className="text-3xl font-black text-gray-900 block">
+                    <span className="text-xl sm:text-2xl lg:text-3xl font-black text-gray-900 block truncate">
                       {summary?.totalOrders || 0}
                     </span>
-                    <span className="text-[11px] text-blue-600 font-bold mt-1 block">
-                      Manage all orders →
+                    <span className="text-[10px] sm:text-[11px] text-blue-600 font-bold mt-1 block truncate">
+                      Manage orders →
                     </span>
                   </div>
                 </Link>
@@ -238,22 +238,22 @@ export default function AdminDashboardPage() {
                 {/* Active Customers */}
                 <Link
                   href="/admin/manageinquiries"
-                  className="bg-white rounded-3xl p-6 border border-gray-200/80 shadow-2xs hover:shadow-md hover:border-purple-300 hover:scale-[1.02] transition-all flex flex-col justify-between cursor-pointer group"
+                  className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 lg:p-6 border border-gray-200/80 shadow-2xs hover:shadow-md hover:border-purple-300 hover:scale-[1.02] transition-all flex flex-col justify-between cursor-pointer group"
                 >
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs font-extrabold uppercase text-gray-400 tracking-wider group-hover:text-purple-600 transition">
-                      Registered Customers
+                  <div className="flex items-center justify-between mb-2 sm:mb-4">
+                    <span className="text-[10px] sm:text-xs font-extrabold uppercase text-gray-400 tracking-wider group-hover:text-purple-600 transition">
+                      Customers
                     </span>
-                    <div className="w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <Users size={20} />
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
+                      <Users size={16} className="sm:w-5 sm:h-5" />
                     </div>
                   </div>
                   <div>
-                    <span className="text-3xl font-black text-gray-900 block">
+                    <span className="text-xl sm:text-2xl lg:text-3xl font-black text-gray-900 block truncate">
                       {summary?.totalCustomers || 0}
                     </span>
-                    <span className="text-[11px] text-purple-600 font-bold mt-1 block">
-                      View support & inquiries →
+                    <span className="text-[10px] sm:text-[11px] text-purple-600 font-bold mt-1 block truncate">
+                      Support inquiries →
                     </span>
                   </div>
                 </Link>
@@ -261,22 +261,22 @@ export default function AdminDashboardPage() {
                 {/* Delivery Fleet */}
                 <Link
                   href="/admin/manage-fleet"
-                  className="bg-white rounded-3xl p-6 border border-gray-200/80 shadow-2xs hover:shadow-md hover:border-amber-300 hover:scale-[1.02] transition-all flex flex-col justify-between cursor-pointer group"
+                  className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 lg:p-6 border border-gray-200/80 shadow-2xs hover:shadow-md hover:border-amber-300 hover:scale-[1.02] transition-all flex flex-col justify-between cursor-pointer group"
                 >
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs font-extrabold uppercase text-gray-400 tracking-wider group-hover:text-amber-600 transition">
-                      Delivery Fleet
+                  <div className="flex items-center justify-between mb-2 sm:mb-4">
+                    <span className="text-[10px] sm:text-xs font-extrabold uppercase text-gray-400 tracking-wider group-hover:text-amber-600 transition">
+                      Fleet Riders
                     </span>
-                    <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <Truck size={20} />
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
+                      <Truck size={16} className="sm:w-5 sm:h-5" />
                     </div>
                   </div>
                   <div>
-                    <span className="text-3xl font-black text-gray-900 block">
+                    <span className="text-xl sm:text-2xl lg:text-3xl font-black text-gray-900 block truncate">
                       {summary?.totalDeliveryBoys || 0}
                     </span>
-                    <span className="text-[11px] text-amber-600 font-bold mt-1 block">
-                      Manage fleet & drivers →
+                    <span className="text-[10px] sm:text-[11px] text-amber-600 font-bold mt-1 block truncate">
+                      Fleet dispatch →
                     </span>
                   </div>
                 </Link>
@@ -511,68 +511,80 @@ export default function AdminDashboardPage() {
               </div>
 
               {/* Quick Actions Bar */}
-              <div className="bg-white rounded-3xl border border-gray-200/80 p-6 shadow-xs">
-                <h3 className="font-extrabold text-sm text-gray-900 mb-4 uppercase tracking-wider">
+              <div className="bg-white rounded-2xl sm:rounded-3xl border border-gray-200/80 p-4 sm:p-6 shadow-xs">
+                <h3 className="font-extrabold text-xs sm:text-sm text-gray-900 mb-3 sm:mb-4 uppercase tracking-wider">
                   Quick Management Shortcuts
                 </h3>
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-4">
                   <Link
                     href="/admin/manageorder"
-                    className="p-4 rounded-2xl bg-gray-50/80 hover:bg-green-50 border border-gray-100 hover:border-green-200 transition text-center flex flex-col items-center gap-2 group"
+                    className="p-3 sm:p-4 rounded-2xl bg-gray-50/80 hover:bg-green-50 border border-gray-100 hover:border-green-200 transition text-center flex flex-col items-center gap-1.5 sm:gap-2 group"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-white text-[#0f8646] flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
-                      <ShoppingBag size={20} />
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white text-[#0f8646] flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
+                      <ShoppingBag size={18} />
                     </div>
-                    <span className="font-bold text-xs text-gray-900">
-                      Manage Orders
+                    <span className="font-bold text-[11px] sm:text-xs text-gray-900 truncate w-full">
+                      Live Orders
+                    </span>
+                  </Link>
+
+                  <Link
+                    href="/admin/manage-fleet"
+                    className="p-3 sm:p-4 rounded-2xl bg-amber-50/70 hover:bg-amber-100/80 border border-amber-200 transition text-center flex flex-col items-center gap-1.5 sm:gap-2 group"
+                  >
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
+                      <Truck size={18} />
+                    </div>
+                    <span className="font-bold text-[11px] sm:text-xs text-amber-950 truncate w-full">
+                      Fleet Riders
                     </span>
                   </Link>
 
                   <Link
                     href="/admin/manage-delivery-fee"
-                    className="p-4 rounded-2xl bg-emerald-50/70 hover:bg-emerald-100/80 border border-emerald-200 transition text-center flex flex-col items-center gap-2 group"
+                    className="p-3 sm:p-4 rounded-2xl bg-emerald-50/70 hover:bg-emerald-100/80 border border-emerald-200 transition text-center flex flex-col items-center gap-1.5 sm:gap-2 group"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-[#0f8646] text-white flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
-                      <Truck size={20} />
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#0f8646] text-white flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
+                      <Percent size={18} />
                     </div>
-                    <span className="font-bold text-xs text-emerald-950">
-                      Delivery Fee & Rules
+                    <span className="font-bold text-[11px] sm:text-xs text-emerald-950 truncate w-full">
+                      Delivery Fee
                     </span>
                   </Link>
 
                   <Link
                     href="/admin/viewgrocery"
-                    className="p-4 rounded-2xl bg-gray-50/80 hover:bg-green-50 border border-gray-100 hover:border-green-200 transition text-center flex flex-col items-center gap-2 group"
+                    className="p-3 sm:p-4 rounded-2xl bg-gray-50/80 hover:bg-green-50 border border-gray-100 hover:border-green-200 transition text-center flex flex-col items-center gap-1.5 sm:gap-2 group"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-white text-[#0f8646] flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
-                      <Package size={20} />
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white text-[#0f8646] flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
+                      <Package size={18} />
                     </div>
-                    <span className="font-bold text-xs text-gray-900">
+                    <span className="font-bold text-[11px] sm:text-xs text-gray-900 truncate w-full">
                       All Inventory
                     </span>
                   </Link>
 
                   <Link
                     href="/admin/managecoupons"
-                    className="p-4 rounded-2xl bg-gray-50/80 hover:bg-green-50 border border-gray-100 hover:border-green-200 transition text-center flex flex-col items-center gap-2 group"
+                    className="p-3 sm:p-4 rounded-2xl bg-gray-50/80 hover:bg-green-50 border border-gray-100 hover:border-green-200 transition text-center flex flex-col items-center gap-1.5 sm:gap-2 group"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-white text-[#0f8646] flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
-                      <Tag size={20} />
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white text-[#0f8646] flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
+                      <Tag size={18} />
                     </div>
-                    <span className="font-bold text-xs text-gray-900">
-                      Coupons & Deals
+                    <span className="font-bold text-[11px] sm:text-xs text-gray-900 truncate w-full">
+                      Coupons
                     </span>
                   </Link>
 
                   <Link
                     href="/admin/manageinquiries"
-                    className="p-4 rounded-2xl bg-gray-50/80 hover:bg-green-50 border border-gray-100 hover:border-green-200 transition text-center flex flex-col items-center gap-2 group"
+                    className="p-3 sm:p-4 rounded-2xl bg-gray-50/80 hover:bg-green-50 border border-gray-100 hover:border-green-200 transition text-center flex flex-col items-center gap-1.5 sm:gap-2 group"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-white text-[#0f8646] flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
-                      <MessageSquare size={20} />
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white text-[#0f8646] flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
+                      <MessageSquare size={18} />
                     </div>
-                    <span className="font-bold text-xs text-gray-900">
-                      Support Inquiries
+                    <span className="font-bold text-[11px] sm:text-xs text-gray-900 truncate w-full">
+                      Support
                     </span>
                   </Link>
                 </div>

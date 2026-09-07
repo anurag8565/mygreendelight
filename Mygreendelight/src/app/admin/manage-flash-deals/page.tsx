@@ -145,7 +145,7 @@ export default function ManageFlashDeals() {
   };
 
   return (
-    <div className="bg-[#f8faf9] min-h-screen font-sans">
+    <div className="bg-[#f8faf9] min-h-screen font-sans flex flex-col lg:flex-row w-full max-w-full overflow-x-hidden">
       <AdminSidebar />
 
       <div className="flex-1 min-w-0 pt-14 lg:pt-0 flex flex-col min-h-screen w-full max-w-full overflow-x-hidden">
