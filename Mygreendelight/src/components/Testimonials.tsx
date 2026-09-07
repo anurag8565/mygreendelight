@@ -166,7 +166,7 @@ export default function Testimonials({
   };
 
   return (
-    <div className="w-full bg-[#fbfdfc] py-6 sm:py-12 border-t border-gray-100 font-sans">
+    <div className="w-full bg-[#fbfdfc] py-5 sm:py-8 border-t border-gray-100 font-sans">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         
         {/* Section Header */}
