@@ -291,7 +291,7 @@ export default function UserProfileHub() {
                     </span>
                   ) : (
                     <span className="bg-emerald-50 text-[#0f8646] border border-emerald-200 font-black text-[10px] uppercase px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-2xs">
-                      <Crown size={11} className="text-amber-500 fill-amber-400" /> Green VIP Member
+                      <Sparkles size={11} /> Verified Customer
                     </span>
                   )}
                 </div>
