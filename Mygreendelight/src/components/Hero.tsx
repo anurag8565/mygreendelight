@@ -18,22 +18,24 @@ export default function Hero({ banners = [] }: HeroProps) {
       subtitle: "100% Ozone-Washed, Handpicked Vegetables & Fruits Delivered Fresh.",
       btnText: "Order Fresh Produce",
       link: "/shop?category=Vegetables",
-      image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1600&q=85",
+      image: "/hero_fresh_farm.jpg",
       bgGradient: "from-[#052e16]/95 via-[#064e3b]/85 to-transparent/30",
       accentColor: "#10b981",
       offerPill: "FLAT ₹50 OFF • CODE: FRESH50",
+      floatingStat: "🌱 5:00 AM Fresh Harvest",
     },
     {
       _id: "s2",
-      badge: "🏷️ Daily Mandi Fair Rates • Zero Middlemen",
-      title: "Pure Farm-Gate Prices, Maximum Freshness",
-      subtitle: "Daily transparent mandi rates. Cleaned, sorted and safely packed for your family.",
-      btnText: "Explore Kisan Rates",
-      link: "/shop",
-      image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=1600&q=85",
+      badge: "🍎 Juicy Orchards • 100% Naturally Sweet",
+      title: "Handpicked Premium Seasonal Fruits",
+      subtitle: "Crisp Apples, Sweet Mangoes, Pomegranates & Farm Fresh Citrus.",
+      btnText: "Explore Fresh Fruits",
+      link: "/shop?category=Fruits",
+      image: "/hero_fruits_orchard.jpg",
       bgGradient: "from-[#451a03]/95 via-[#7c2d12]/85 to-transparent/30",
       accentColor: "#f59e0b",
-      offerPill: "SAVE UP TO 35% ON VEGGIES",
+      offerPill: "SWEET & JUICY GUARANTEE",
+      floatingStat: "🍎 100% Wax & Carbide Free",
     },
     {
       _id: "s3",
@@ -42,10 +44,11 @@ export default function Hero({ banners = [] }: HeroProps) {
       subtitle: "Fresh raw morning batch delivered chilled to your doorstep before 7:00 AM.",
       btnText: "Shop Pure Dairy",
       link: "/shop?category=Dairy%20%26%20Staples",
-      image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=1600&q=85",
+      image: "/hero_dairy_pure.jpg",
       bgGradient: "from-[#0c4a6e]/95 via-[#0369a1]/85 to-transparent/30",
       accentColor: "#38bdf8",
       offerPill: "100% LAB TESTED PURITY",
+      floatingStat: "🥛 Vedic Hand-Churned",
     },
     {
       _id: "s4",
@@ -54,10 +57,11 @@ export default function Hero({ banners = [] }: HeroProps) {
       subtitle: "Fresh Iceberg, Cherry Tomatoes, Avocados, Herbs & European salad mixes.",
       btnText: "Explore Exotics",
       link: "/shop?category=Exotics",
-      image: "https://images.unsplash.com/photo-1584270354949-c26b0d5b4a0c?auto=format&fit=crop&w=1600&q=85",
+      image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1600&q=85",
       bgGradient: "from-[#134e4a]/95 via-[#115e59]/85 to-transparent/30",
       accentColor: "#2dd4bf",
       offerPill: "PESTICIDE FREE CERTIFIED",
+      floatingStat: "🥑 Gourmet Fresh Daily",
     },
   ];
 
@@ -192,6 +196,37 @@ export default function Hero({ banners = [] }: HeroProps) {
                   >
                     <span>View All 150+ Items</span>
                   </Link>
+                </div>
+              </div>
+
+              {/* Right Floating Glassmorphic Quality Badge (Desktop & Tablet) */}
+              <div className="hidden md:flex flex-col gap-2.5 absolute right-8 top-1/2 -translate-y-1/2 z-20 pointer-events-none">
+                <div className="bg-black/35 backdrop-blur-md border border-white/20 text-white px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center font-bold">
+                    <ShieldCheck size={18} />
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-emerald-200/80 uppercase font-black tracking-wider block">
+                      SubziQuick Certified
+                    </span>
+                    <span className="text-xs font-black text-white">
+                      {slide.floatingStat || "100% Ozone Washed & Fresh"}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="bg-black/35 backdrop-blur-md border border-white/20 text-white px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold">
+                    <Clock size={18} />
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-amber-200/80 uppercase font-black tracking-wider block">
+                      Bhopal Express
+                    </span>
+                    <span className="text-xs font-black text-white">
+                      10-15 Min Doorstep Delivery
+                    </span>
+                  </div>
                 </div>
               </div>
             </motion.div>
