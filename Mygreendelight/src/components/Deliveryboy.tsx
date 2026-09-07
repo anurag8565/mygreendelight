@@ -38,6 +38,7 @@ import {
   IndianRupee,
   Activity,
   Headphones,
+  Check,
 } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
@@ -85,10 +86,12 @@ function playDispatchChime() {
 }
 
 export default function Deliveryboy({ initialUser }: Props) {
+  // Multi-Trip and Available Requests State
+  const [activeAssignments, setActiveAssignments] = useState<any[]>([])
+  const [selectedAssignmentId, setSelectedAssignmentId] = useState<string | null>(null)
   const [assignments, setAssignments] = useState<any[]>([])
   const [activeTab, setActiveTab] = useState<'requests' | 'earnings' | 'history'>('requests')
-  const [activeorder, setactiverder] = useState<any>(null)
-  const [userlocation, setuserlocation] = useState<any>(null)
+  
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
   const [verifyingOtp, setVerifyingOtp] = useState(false)
@@ -132,6 +135,14 @@ export default function Deliveryboy({ initialUser }: Props) {
   const { userdata } = useSelector((state: RootState) => state.user)
   const currentUser = initialUser || userdata
 
+  // Computed current active order for delivery
+  const currentActiveAssignment = 
+    activeAssignments.find((a) => String(a._id) === String(selectedAssignmentId) || String(a.order?._id) === String(selectedAssignmentId)) ||
+    activeAssignments[0] ||
+    null
+
+  const activeOrderObj = currentActiveAssignment?.order || null
+
   // Fetch initial online duty state from backend
   const fetchDutyState = async () => {
     try {
@@ -160,92 +171,6 @@ export default function Deliveryboy({ initialUser }: Props) {
       setTogglingDuty(false)
     }
   }
-
-  // Socket listener for real-time delivery dispatches & direct assignments
-  useEffect(() => {
-    const handleNewAssignment = (data: any) => {
-      if (!isOnline) return;
-      playDispatchChime();
-      showToast('🔔 New express delivery request received!', 'info');
-      if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
-        navigator.vibrate([200, 100, 200]);
-      }
-      fetchAssignments();
-      fetchCurrentOrder();
-    };
-
-    const handleOrderAssigned = (data: any) => {
-      if (!isOnline) return;
-      playDispatchChime();
-      showToast('🚚 New Delivery Trip Assigned by Dispatcher!', 'success');
-      if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
-        navigator.vibrate([300, 150, 300]);
-      }
-      fetchCurrentOrder();
-      fetchAssignments();
-    };
-
-    socket.on('new-assignment', handleNewAssignment);
-    socket.on('send-assignment', handleOrderAssigned);
-    socket.on('order-assigned', handleOrderAssigned);
-    socket.on('order-updated', () => {
-      fetchCurrentOrder();
-      fetchAssignments();
-    });
-
-    return () => {
-      socket.off('new-assignment', handleNewAssignment);
-      socket.off('send-assignment', handleOrderAssigned);
-      socket.off('order-assigned', handleOrderAssigned);
-      socket.off('order-updated');
-    };
-  }, [isOnline]);
-
-  // ⚡ Smart Background Auto-Sync (Every 5 seconds while driver is Online)
-  useEffect(() => {
-    if (!isOnline) return;
-
-    const syncInterval = setInterval(async () => {
-      try {
-        const [assignRes, currRes] = await Promise.all([
-          axios.get('/api/delivery/getassigments').catch(() => null),
-          axios.get('/api/delivery/currentorder').catch(() => null),
-        ]);
-
-        if (assignRes?.data?.assignments) {
-          setAssignments(assignRes.data.assignments);
-        }
-
-        if (currRes?.data) {
-          if (currRes.data.active && currRes.data.assigment) {
-            setactiverder((prev: any) => {
-              if (!prev) {
-                // Newly assigned order detected!
-                playDispatchChime();
-                showToast('🚚 New Delivery Trip Assigned by Dispatcher!', 'success');
-                if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
-                  navigator.vibrate([200, 100, 200]);
-                }
-              }
-              return currRes.data.assigment;
-            });
-
-            if (currRes.data.assigment.order?.address?.latitude) {
-              setuserlocation({
-                latitude: currRes.data.assigment.order.address.latitude,
-                longitude: currRes.data.assigment.order.address.longitude,
-              });
-            }
-          } else {
-            setactiverder(null);
-            setuserlocation(null);
-          }
-        }
-      } catch (_) {}
-    }, 5000);
-
-    return () => clearInterval(syncInterval);
-  }, [isOnline]);
 
   const fetchDashboardData = async () => {
     try {
@@ -277,17 +202,16 @@ export default function Deliveryboy({ initialUser }: Props) {
   const fetchCurrentOrder = async () => {
     try {
       const result = await axios.get('/api/delivery/currentorder')
-      if (result.data?.active && result.data?.assigment) {
-        setactiverder(result.data.assigment)
-        if (result.data.assigment.order?.address?.latitude) {
-          setuserlocation({
-            latitude: result.data.assigment.order.address.latitude,
-            longitude: result.data.assigment.order.address.longitude,
-          })
-        }
+      if (result.data?.active && Array.isArray(result.data.activeAssignments)) {
+        const list = result.data.activeAssignments
+        setActiveAssignments(list)
+        setSelectedAssignmentId((prev) => {
+          const exists = list.some((a: any) => String(a._id) === String(prev) || String(a.order?._id) === String(prev))
+          return exists ? prev : (list[0]?._id || null)
+        })
       } else {
-        setactiverder(null)
-        setuserlocation(null)
+        setActiveAssignments([])
+        setSelectedAssignmentId(null)
       }
     } catch (error) {
       console.log('Fetch current order error:', error)
@@ -313,9 +237,93 @@ export default function Deliveryboy({ initialUser }: Props) {
     handleRefreshAll()
   }, [handleRefreshAll])
 
+  // Socket listener for real-time delivery dispatches & direct assignments
+  useEffect(() => {
+    const handleNewAssignment = (data: any) => {
+      if (!isOnline) return
+      playDispatchChime()
+      showToast('🔔 New express delivery request received!', 'info')
+      if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+        navigator.vibrate([200, 100, 200])
+      }
+      fetchAssignments()
+      fetchCurrentOrder()
+    }
+
+    const handleOrderAssigned = (data: any) => {
+      if (!isOnline) return
+      playDispatchChime()
+      showToast('🚚 New Delivery Trip Assigned by Dispatcher!', 'success')
+      if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+        navigator.vibrate([300, 150, 300])
+      }
+      fetchCurrentOrder()
+      fetchAssignments()
+    }
+
+    socket.on('new-assignment', handleNewAssignment)
+    socket.on('send-assignment', handleOrderAssigned)
+    socket.on('order-assigned', handleOrderAssigned)
+    socket.on('order-updated', () => {
+      fetchCurrentOrder()
+      fetchAssignments()
+    })
+
+    return () => {
+      socket.off('new-assignment', handleNewAssignment)
+      socket.off('send-assignment', handleOrderAssigned)
+      socket.off('order-assigned', handleOrderAssigned)
+      socket.off('order-updated')
+    }
+  }, [isOnline])
+
+  // ⚡ Smart Background Auto-Sync (Every 5 seconds while driver is Online)
+  useEffect(() => {
+    if (!isOnline) return
+
+    const syncInterval = setInterval(async () => {
+      try {
+        const [assignRes, currRes] = await Promise.all([
+          axios.get('/api/delivery/getassigments').catch(() => null),
+          axios.get('/api/delivery/currentorder').catch(() => null),
+        ])
+
+        if (assignRes?.data?.assignments) {
+          setAssignments(assignRes.data.assignments)
+        }
+
+        if (currRes?.data) {
+          if (currRes.data.active && Array.isArray(currRes.data.activeAssignments)) {
+            const list = currRes.data.activeAssignments
+            setActiveAssignments((prevList) => {
+              if (list.length > prevList.length) {
+                // Newly assigned order detected!
+                playDispatchChime()
+                showToast(`🚚 ${list.length - prevList.length} New Delivery Trip(s) Assigned!`, 'success')
+                if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+                  navigator.vibrate([200, 100, 200])
+                }
+              }
+              return list
+            })
+            setSelectedAssignmentId((prev) => {
+              const exists = list.some((a: any) => String(a._id) === String(prev) || String(a.order?._id) === String(prev))
+              return exists ? prev : (list[0]?._id || null)
+            })
+          } else {
+            setActiveAssignments([])
+            setSelectedAssignmentId(null)
+          }
+        }
+      } catch (_) {}
+    }, 5000)
+
+    return () => clearInterval(syncInterval);
+  }, [isOnline])
+
   // Real-time GPS stream during active delivery trip (only if driver is online)
   useEffect(() => {
-    if (!activeorder || !isOnline) return
+    if (!activeOrderObj || !isOnline) return
     let watchId: number | null = null
     let lastUpdate = 0
 
@@ -327,13 +335,21 @@ export default function Deliveryboy({ initialUser }: Props) {
           const now = Date.now()
           if (now - lastUpdate > 8000) {
             lastUpdate = now
+            socket.emit('update-location', {
+              orderId: activeOrderObj._id,
+              latitude,
+              longitude,
+            })
             axios
-              .post('/api/delivery/updatelocation', { latitude, longitude })
+              .post('/api/delivery/updatelocation', {
+                latitude,
+                longitude,
+              })
               .catch(() => {})
           }
         },
-        (err) => console.log('GPS tracking notice:', err),
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 5000 }
+        () => setGpsActive(false),
+        { enableHighAccuracy: true, maximumAge: 10000, timeout: 5000 }
       )
     }
 
@@ -342,33 +358,11 @@ export default function Deliveryboy({ initialUser }: Props) {
         navigator.geolocation.clearWatch(watchId)
       }
     }
-  }, [activeorder, isOnline])
+  }, [activeOrderObj, isOnline])
 
-  const handleAccept = async (id: string) => {
-    try {
-      const result = await axios.get(`/api/delivery/assigment/${id}/accepyaccigment`)
-      showToast(result.data?.message || 'Trip accepted! Starting live navigation...', 'success')
-      setAssignments((prev) => prev.filter((a) => a._id !== id))
-      await fetchCurrentOrder()
-      setActiveTab('requests')
-    } catch (error: any) {
-      showToast(error?.response?.data?.message || 'Failed to accept assignment', 'error')
-    }
-  }
-
-  const handleReject = async (id: string) => {
-    try {
-      await axios.post('/api/delivery/reject', { id })
-      showToast('Assignment passed', 'info')
-      setAssignments((prev) => prev.filter((a) => a._id !== id))
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  // Handle PIN input box typing and auto-advancement
+  // Handle PIN Box Input
   const handlePinChange = (index: number, val: string) => {
-    const digit = val.replace(/\D/g, '').slice(-1)
+    const digit = val.replace(/[^0-9]/g, '').slice(-1)
     const newPin = [...pin]
     newPin[index] = digit
     setPin(newPin)
@@ -384,68 +378,115 @@ export default function Deliveryboy({ initialUser }: Props) {
     }
   }
 
-  const handlePinPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+  const handlePinPaste = (e: React.ClipboardEvent) => {
     e.preventDefault()
-    const pastedData = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 4)
-    if (!pastedData) return
-
+    const pasted = e.clipboardData.getData('text').replace(/[^0-9]/g, '').slice(0, 4)
+    if (!pasted) return
     const newPin = ['', '', '', '']
-    for (let i = 0; i < pastedData.length; i++) {
-      newPin[i] = pastedData[i]
-    }
+    pasted.split('').forEach((ch, idx) => {
+      if (idx < 4) newPin[idx] = ch
+    })
     setPin(newPin)
-    const focusIndex = Math.min(3, pastedData.length)
-    pinRefs[focusIndex].current?.focus()
+    const focusIdx = Math.min(pasted.length, 3)
+    pinRefs[focusIdx].current?.focus()
   }
 
+  // 1-Tap Trigger to Send OTP to Customer Email
+  const handleResendOtpEmail = async () => {
+    if (!activeOrderObj?._id) return
+    setSendingOtpEmail(true)
+    try {
+      const res = await axios.post(`/api/delivery/send-delivery-otp/${activeOrderObj._id}`)
+      if (res.data?.success) {
+        showToast(res.data.message || 'OTP sent to customer email!', 'success')
+      } else {
+        showToast(res.data?.message || 'Failed to dispatch email OTP', 'error')
+      }
+    } catch (err: any) {
+      showToast(err?.response?.data?.message || 'Failed to send OTP to email', 'error')
+    } finally {
+      setSendingOtpEmail(false)
+    }
+  }
+
+  // Verify OTP and complete delivery
   const handleVerifyOtp = async () => {
-    const cleanOtp = pin.join('').trim()
-    if (!cleanOtp || cleanOtp.length < 4) {
-      showToast('Please enter the full 4-digit OTP provided by the customer.', 'error')
+    const fullPin = pin.join('')
+    if (fullPin.length !== 4) {
+      showToast('Please enter all 4 digits of the OTP', 'error')
+      return
+    }
+
+    if (!activeOrderObj?._id) {
+      showToast('No active order selected', 'error')
       return
     }
 
     setVerifyingOtp(true)
     try {
       const result = await axios.post('/api/delivery/verify-otp', {
-        orderId: activeorder.order._id,
-        otp: cleanOtp,
-        bagsReturned,
+        orderId: activeOrderObj._id,
+        otp: fullPin,
+        bagsReturned: bagsReturned || 0,
       })
-      showToast(result.data?.message || '🎉 Delivery Handover Completed Successfully!', 'success')
-      setactiverder(null)
-      setuserlocation(null)
-      setPin(['', '', '', ''])
-      setBagsReturned(0)
-      setActiveTab('requests')
-      handleRefreshAll()
+
+      if (result.data?.success) {
+        showToast(
+          result.data.message || '🎉 Delivery verified and marked completed!',
+          'success'
+        )
+        setPin(['', '', '', ''])
+        setBagsReturned(0)
+
+        // Optimistically remove from active list
+        setActiveAssignments((prev) =>
+          prev.filter(
+            (a) =>
+              String(a._id) !== String(currentActiveAssignment?._id) &&
+              String(a.order?._id) !== String(activeOrderObj._id)
+          )
+        )
+
+        // Refresh all data
+        handleRefreshAll()
+      } else {
+        showToast(result.data?.message || 'Invalid OTP code. Please retry.', 'error')
+      }
     } catch (error: any) {
-      showToast(error?.response?.data?.message || 'Invalid OTP. Please verify the 4 digits with the customer.', 'error')
+      showToast(error.response?.data?.message || 'OTP verification failed. Retry.', 'error')
     } finally {
       setVerifyingOtp(false)
     }
   }
 
-  const handleResendOtpEmail = async () => {
-    if (!activeorder?.order?._id) return
-    setSendingOtpEmail(true)
+  const handleAccept = async (id: string) => {
     try {
-      const res = await axios.post(`/api/delivery/send-delivery-otp/${activeorder.order._id}`)
-      showToast(res.data?.message || "✅ 4-Digit OTP has been dispatched to the customer's email!", 'success')
+      const result = await axios.get(`/api/delivery/assigment/${id}/accepyaccigment`)
+      if (result.data?.success) {
+        showToast('✓ Express Delivery Accepted! Added to active deliveries.', 'success')
+        playDispatchChime()
+        handleRefreshAll()
+      } else {
+        showToast(result.data?.message || 'Could not accept assignment', 'error')
+      }
     } catch (error: any) {
-      showToast(error?.response?.data?.message || 'Failed to send OTP email.', 'error')
-    } finally {
-      setSendingOtpEmail(false)
+      showToast(error?.response?.data?.message || 'Error accepting assignment', 'error')
     }
   }
 
-  // Floating Toast
+  const handleReject = async (id: string) => {
+    // Dismiss from local UI state
+    setAssignments((prev) => prev.filter((a) => a._id !== id))
+    showToast('Delivery request passed', 'info')
+  }
+
+  // Toast Notification Renderer
   const renderToast = () => {
     if (!toast) return null
     return (
-      <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-md animate-in fade-in slide-in-from-top-3 duration-200">
+      <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-md animate-in fade-in slide-in-from-top-4 duration-200">
         <div
-          className={`p-3.5 rounded-2xl shadow-xl border flex items-center gap-2.5 text-xs font-black backdrop-blur-md ${
+          className={`p-3.5 rounded-2xl border shadow-xl flex items-center gap-3 text-xs font-bold ${
             toast.type === 'success'
               ? 'bg-emerald-900/95 text-white border-emerald-500'
               : toast.type === 'error'
@@ -465,9 +506,7 @@ export default function Deliveryboy({ initialUser }: Props) {
     )
   }
 
-  // ==========================================
-  // REAL PRODUCTION HEADER & SHIFT COCKPIT
-  // ==========================================
+  // Production Header & Cockpit
   const renderProductionHeader = () => (
     <div className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200/80 shadow-2xs">
       <div className="max-w-4xl mx-auto px-4 py-3">
@@ -547,45 +586,59 @@ export default function Deliveryboy({ initialUser }: Props) {
 
         {/* Row 2: Live Shift Quick Metric Pills */}
         <div className="grid grid-cols-3 gap-2 mt-3 pt-2.5 border-t border-gray-100">
-          <div className="bg-emerald-50/70 p-2 rounded-xl text-center border border-emerald-100">
-            <span className="text-[10px] font-extrabold uppercase text-emerald-800 block">Today's Payout</span>
-            <span className="font-black text-xs sm:text-sm text-[#0f8646]">
-              ₹{dashboardStats.todayEarnings}
-            </span>
+          <div className="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-2.5 flex items-center gap-2">
+            <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
+              <IndianRupee size={15} />
+            </div>
+            <div>
+              <span className="text-[10px] uppercase font-bold text-gray-500 block leading-tight">Today's Payout</span>
+              <span className="text-xs font-black text-gray-900">
+                ₹{dashboardStats.todayEarnings || dashboardStats.totalDeliveries * 100}
+              </span>
+            </div>
           </div>
 
-          <div className="bg-blue-50/70 p-2 rounded-xl text-center border border-blue-100">
-            <span className="text-[10px] font-extrabold uppercase text-blue-800 block">Trips Done</span>
-            <span className="font-black text-xs sm:text-sm text-blue-800">
-              {Math.round(dashboardStats.todayEarnings / 100)} Orders
-            </span>
+          <div className="bg-blue-50/70 border border-blue-200/80 rounded-2xl p-2.5 flex items-center gap-2">
+            <div className="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0">
+              <CheckCircle2 size={15} />
+            </div>
+            <div>
+              <span className="text-[10px] uppercase font-bold text-gray-500 block leading-tight">Trips Done</span>
+              <span className="text-xs font-black text-gray-900">{dashboardStats.totalDeliveries || 0} Drop(s)</span>
+            </div>
           </div>
 
-          <div className="bg-gray-50 p-2 rounded-xl text-center border border-gray-200">
-            <span className="text-[10px] font-extrabold uppercase text-gray-500 block">Base Rate</span>
-            <span className="font-black text-xs sm:text-sm text-gray-800">
-              ₹100<span className="text-[10px] font-normal text-gray-400">/trip</span>
-            </span>
+          <div className="bg-purple-50/70 border border-purple-200/80 rounded-2xl p-2.5 flex items-center gap-2">
+            <div className="w-8 h-8 rounded-xl bg-purple-600 text-white flex items-center justify-center shrink-0">
+              <Zap size={15} />
+            </div>
+            <div>
+              <span className="text-[10px] uppercase font-bold text-gray-500 block leading-tight">Base Rate</span>
+              <span className="text-xs font-black text-gray-900">₹100 / Trip</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   )
 
-  // Render Active Trip Cockpit Section
+  // RENDER SELECTED ACTIVE TRIP ACTION COCKPIT
   const renderActiveTripCard = () => {
-    if (!activeorder) return null
-    const orderObj = activeorder.order || {}
-    const customerName = orderObj.address?.fullname || 'Customer'
-    const customerMobile = orderObj.address?.mobile || ''
-    const customerAddress = orderObj.address?.fulladress || 'Bhopal Delivery Location'
-    const orderShortId = String(orderObj._id || '').slice(-6).toUpperCase()
-    const isPaid = orderObj.ispaid
-    const totalAmount = orderObj.totalamount || 0
-    const cleanMobile = customerMobile.replace(/\D/g, '').slice(-10)
-    const userLat = userlocation?.latitude || orderObj.address?.latitude || 23.259933
-    const userLng = userlocation?.longitude || orderObj.address?.longitude || 77.412613
-    const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${userLat},${userLng}&travelmode=driving`
+    if (!activeOrderObj) return null
+
+    const orderShortId = String(activeOrderObj._id || '').slice(-6).toUpperCase()
+    const customerName = activeOrderObj.address?.fullname || activeOrderObj.user?.name || 'Customer'
+    const customerMobile = activeOrderObj.address?.mobile || activeOrderObj.user?.mobile || ''
+    const customerAddress = activeOrderObj.address?.fulladress || 'Bhopal Address'
+    const totalAmount = activeOrderObj.totalamount || 0
+    const isPaid = !!activeOrderObj.ispaid
+    const cleanMobile = String(customerMobile).replace(/[^0-9]/g, '').slice(-10)
+
+    const custLat = activeOrderObj.address?.latitude
+    const custLng = activeOrderObj.address?.longitude
+    const mapsUrl = custLat && custLng
+      ? `https://www.google.com/maps/dir/?api=1&destination=${custLat},${custLng}`
+      : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(customerAddress + ', Bhopal')}`
 
     const arrivalWhatsappMsg = encodeURIComponent(
       `*🌿 SubziQuick Farm Fresh Express Delivery*\n` +
@@ -596,7 +649,7 @@ export default function Deliveryboy({ initialUser }: Props) {
       `📍 *Address:* ${customerAddress}\n` +
       `💵 *Payment:* ${isPaid ? '✅ Paid Online (₹0 to pay)' : `💵 Collect Cash / UPI: ₹${totalAmount}`}\n\n` +
       `👉 Kripya delivery lete waqt apna *4-digit verification OTP* share karein taaki order handover complete ho sake.\n\n` +
-      `Live Tracking: https://subziquick.in/track/${orderObj._id}\n` +
+      `Live Tracking: https://subziquick.in/track/${activeOrderObj._id}\n` +
       `Dhanyawaad! 🌿`
     )
     const whatsappArrivalUrl = `https://wa.me/91${cleanMobile}?text=${arrivalWhatsappMsg}`
@@ -608,7 +661,7 @@ export default function Deliveryboy({ initialUser }: Props) {
           <div className="flex items-center gap-2">
             <span className="inline-flex items-center gap-1.5 bg-emerald-600 text-white text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">
               <span className="w-2 h-2 rounded-full bg-emerald-200 animate-ping"></span>
-              Active Trip In Progress
+              Active Trip (Selected)
             </span>
             <span className="font-mono font-black text-xs text-gray-800 bg-gray-100 px-2.5 py-1 rounded-lg">
               #{orderShortId}
@@ -662,7 +715,7 @@ export default function Deliveryboy({ initialUser }: Props) {
         {activeTripExpanded && (
           <div className="space-y-4 pt-2 border-t border-gray-100">
             {/* Silent Delivery Alert */}
-            {activeorder?.order?.isSilentDelivery && (
+            {activeOrderObj.isSilentDelivery && (
               <div className="bg-amber-500 text-white p-3.5 rounded-2xl shadow-sm flex items-center gap-3">
                 <div className="w-8 h-8 rounded-xl bg-black/20 flex items-center justify-center font-black text-lg shrink-0">
                   🔕
@@ -670,9 +723,9 @@ export default function Deliveryboy({ initialUser }: Props) {
                 <div className="text-xs">
                   <span className="font-black block uppercase">Silent Delivery — Do Not Ring Bell</span>
                   <span className="text-amber-100">Drop produce safely at the doorstep.</span>
-                  {activeorder.order.deliveryInstructions && (
+                  {activeOrderObj.deliveryInstructions && (
                     <span className="block font-bold text-white mt-0.5">
-                      Note: "{activeorder.order.deliveryInstructions}"
+                      Note: "{activeOrderObj.deliveryInstructions}"
                     </span>
                   )}
                 </div>
@@ -723,12 +776,12 @@ export default function Deliveryboy({ initialUser }: Props) {
             </div>
 
             {/* Live Map */}
-            {userlocation && (
+            {custLat && custLng && (
               <div className="rounded-2xl border border-gray-200 shadow-xs overflow-hidden bg-white p-2">
                 <Livemap
                   customerLocation={{
-                    latitude: userlocation.latitude,
-                    longitude: userlocation.longitude,
+                    latitude: custLat,
+                    longitude: custLng,
                   }}
                   isDeliveryBoy={true}
                 />
@@ -742,7 +795,7 @@ export default function Deliveryboy({ initialUser }: Props) {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1.5 font-black text-xs text-gray-900">
                     <ShoppingBag size={15} className="text-[#0f8646]" />
-                    <span>Produce Items ({orderObj.items?.length || 0})</span>
+                    <span>Produce Items ({activeOrderObj.items?.length || 0})</span>
                   </div>
                   <span className="font-mono font-black text-xs text-[#0f8646]">
                     ₹{totalAmount}
@@ -750,7 +803,7 @@ export default function Deliveryboy({ initialUser }: Props) {
                 </div>
 
                 <div className="divide-y divide-gray-200/60 max-h-44 overflow-y-auto pr-1">
-                  {(orderObj.items || []).map((item: any, idx: number) => (
+                  {(activeOrderObj.items || []).map((item: any, idx: number) => (
                     <div key={idx} className="py-1.5 flex items-center justify-between text-xs">
                       <div className="flex items-center gap-2">
                         {item.image && (
@@ -913,9 +966,9 @@ export default function Deliveryboy({ initialUser }: Props) {
           >
             <Truck size={14} className={activeTab === 'requests' ? 'text-[#0f8646]' : ''} />
             <span>Requests & Trips</span>
-            {assignments.length > 0 && (
+            {(activeAssignments.length > 0 || assignments.length > 0) && (
               <span className="bg-emerald-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full animate-bounce">
-                {assignments.length}
+                {activeAssignments.length + assignments.length}
               </span>
             )}
           </button>
@@ -955,14 +1008,89 @@ export default function Deliveryboy({ initialUser }: Props) {
 
         {/* TAB 1: REQUESTS & ACTIVE TRIPS */}
         {!loading && activeTab === 'requests' && (
-          <div className="space-y-4">
+          <div className="space-y-6">
             
-            {/* 1. Active Trip (If any active trip exists) */}
-            {activeorder && renderActiveTripCard()}
+            {/* SECTION 1: MY ACTIVE DELIVERIES (IF ANY ASSIGNED ORDERS EXIST) */}
+            {activeAssignments.length > 0 && (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between px-1">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></div>
+                    <h3 className="font-black text-sm text-gray-900">
+                      My Assigned Deliveries ({activeAssignments.length})
+                    </h3>
+                  </div>
+                  <span className="text-[11px] font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full">
+                    Choose Order to Deliver
+                  </span>
+                </div>
 
-            {/* 2. Available Incoming Requests */}
-            <div>
-              <div className="flex items-center justify-between mb-3 px-1">
+                {/* Multi-Order Selector Cards (If more than 1 order assigned) */}
+                {activeAssignments.length > 1 && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {activeAssignments.map((a) => {
+                      const ord = a.order || {}
+                      const isSelected =
+                        String(a._id) === String(selectedAssignmentId) ||
+                        String(ord._id) === String(selectedAssignmentId)
+                      const shortId = String(ord._id || '').slice(-6).toUpperCase()
+
+                      return (
+                        <div
+                          key={a._id}
+                          onClick={() => setSelectedAssignmentId(a._id)}
+                          className={`p-3.5 rounded-2xl border-2 transition cursor-pointer flex items-center justify-between gap-3 ${
+                            isSelected
+                              ? 'bg-emerald-50/90 border-emerald-600 shadow-xs'
+                              : 'bg-white border-gray-200 hover:border-emerald-300'
+                          }`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <div
+                              className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
+                                isSelected ? 'bg-emerald-600 text-white' : 'bg-gray-100 text-gray-700'
+                              }`}
+                            >
+                              #{shortId}
+                            </div>
+                            <div>
+                              <span className="font-black text-xs text-gray-900 block leading-tight">
+                                {ord.address?.fullname || ord.user?.name || 'Customer'}
+                              </span>
+                              <span className="text-[11px] text-gray-500 line-clamp-1">
+                                {ord.address?.fulladress || 'Bhopal'}
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="text-right shrink-0">
+                            <span className="font-black text-xs text-gray-900 block">
+                              ₹{ord.totalamount || 0}
+                            </span>
+                            <span
+                              className={`text-[9.5px] font-black uppercase px-2 py-0.5 rounded-md ${
+                                isSelected
+                                  ? 'bg-emerald-600 text-white'
+                                  : 'bg-gray-100 text-gray-600 hover:bg-emerald-100 hover:text-emerald-800'
+                              }`}
+                            >
+                              {isSelected ? '🎯 Active Now' : 'Select'}
+                            </span>
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
+
+                {/* Active Selected Order Action Cockpit */}
+                {renderActiveTripCard()}
+              </div>
+            )}
+
+            {/* SECTION 2: AVAILABLE EXPRESS DISPATCH REQUESTS (UNASSIGNED) */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between px-1">
                 <h3 className="font-black text-sm text-gray-900 flex items-center gap-2">
                   <Package size={16} className="text-[#0f8646]" />
                   <span>Available Delivery Requests</span>
@@ -973,17 +1101,17 @@ export default function Deliveryboy({ initialUser }: Props) {
               </div>
 
               {assignments.length === 0 ? (
-                <div className="bg-white rounded-3xl p-10 text-center border border-gray-200/80 shadow-xs space-y-3">
-                  <div className="w-14 h-14 rounded-2xl bg-emerald-50 text-[#0f8646] flex items-center justify-center mx-auto">
-                    <Package size={26} />
+                <div className="bg-white rounded-3xl p-8 text-center border border-gray-200/80 shadow-xs space-y-2.5">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-[#0f8646] flex items-center justify-center mx-auto">
+                    <Package size={22} />
                   </div>
                   <div>
-                    <h3 className="text-base font-black text-gray-900">
-                      {isOnline ? 'No New Requests Pending' : 'You are currently offline'}
+                    <h3 className="text-sm font-black text-gray-900">
+                      {isOnline ? 'No Unassigned Requests' : 'You are currently offline'}
                     </h3>
-                    <p className="text-xs text-gray-400 max-w-sm mx-auto mt-1">
+                    <p className="text-[11px] text-gray-400 max-w-sm mx-auto mt-0.5">
                       {isOnline
-                        ? 'Your duty is online. New broadcast orders in Bhopal will appear here automatically.'
+                        ? 'All live orders in Bhopal are currently dispatched or assigned. New express requests will appear here automatically.'
                         : 'Switch your duty toggle above to Online to start receiving incoming orders.'}
                     </p>
                   </div>
@@ -1038,9 +1166,10 @@ export default function Deliveryboy({ initialUser }: Props) {
                         <div className="p-3 bg-gray-50/80 border-t border-gray-100 flex gap-2">
                           <button
                             onClick={() => handleAccept(a._id)}
-                            className="flex-1 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3 rounded-2xl font-black text-xs transition cursor-pointer shadow-xs"
+                            className="flex-1 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3 rounded-2xl font-black text-xs transition cursor-pointer shadow-xs flex items-center justify-center gap-1.5"
                           >
-                            Accept & Start Trip
+                            <Check size={14} />
+                            <span>Accept & Deliver</span>
                           </button>
                           <button
                             onClick={() => handleReject(a._id)}
@@ -1055,10 +1184,11 @@ export default function Deliveryboy({ initialUser }: Props) {
                 </div>
               )}
             </div>
+
           </div>
         )}
 
-        {/* TAB 2: EARNINGS & STATS */}
+        {/* TAB 2: EARNINGS & PERFORMANCE STATS */}
         {!loading && activeTab === 'earnings' && (
           <div className="space-y-4">
             <DeliveryDashboardStats
@@ -1067,28 +1197,26 @@ export default function Deliveryboy({ initialUser }: Props) {
               todayEarnings={dashboardStats.todayEarnings}
               earningPerDelivery={dashboardStats.earningPerDelivery}
             />
-
-            <div className="grid lg:grid-cols-2 gap-4">
-              <EarningsChart data={earningsData} />
-              <DeliveriesChart data={deliveriesData} />
-            </div>
+            <EarningsChart data={earningsData} />
+            <DeliveriesChart data={deliveriesData} />
           </div>
         )}
 
-        {/* TAB 3: DELIVERY HISTORY */}
+        {/* TAB 3: TRIP HISTORY */}
         {!loading && activeTab === 'history' && (
-          <div>
+          <div className="space-y-4">
             <RecentDeliveries deliveries={recentDeliveries} />
           </div>
         )}
+
       </main>
 
-      {/* Modal In-App Chat */}
-      {isChatOpen && activeorder?.order?._id && currentUser?._id && (
+      {/* Floating In-App Chat Modal with Customer */}
+      {isChatOpen && activeOrderObj && (
         <ChatBox
-          orderId={activeorder.order._id}
-          userId={currentUser._id}
-          deliveryBoyId={currentUser._id}
+          orderId={activeOrderObj._id}
+          currentUserId={currentUser?._id || ''}
+          otherUserName={activeOrderObj.address?.fullname || activeOrderObj.user?.name || 'Customer'}
           onClose={() => setIsChatOpen(false)}
         />
       )}

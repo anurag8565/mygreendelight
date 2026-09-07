@@ -59,12 +59,13 @@ export async function GET() {
         {
           order: uo._id,
           status: "broadcasted",
+          assignedto: null,
         },
         { upsert: true }
       );
     }
 
-    // Fetch broadcasted assignments
+    // Fetch broadcasted assignments that are unassigned
     const filter: any = {
       status: "broadcasted",
       assignedto: null,
@@ -86,19 +87,58 @@ export async function GET() {
       .sort({ createdAt: -1 })
       .lean();
 
-    // Filter out assignments whose order was deleted or already delivered
-    const validAssignments = (assignments || []).filter(
-      (a: any) => a.order && a.order.status !== "delivered" && a.order.status !== "cancelled"
-    );
+    // Clean up & Filter: ONLY orders that are genuinely unassigned and out of delivery/pending
+    const validAssignments: any[] = [];
+
+    for (const a of assignments) {
+      const ord = a.order as any;
+      if (!ord || !ord._id) {
+        // Stale assignment with deleted order
+        await DeliveryAssignment.findByIdAndDelete(a._id);
+        continue;
+      }
+
+      if (ord.status === "delivered" || ord.status === "cancelled") {
+        // Mark completed
+        await DeliveryAssignment.findByIdAndUpdate(a._id, {
+          status: ord.status === "delivered" ? "completed" : "broadcasted",
+          assignedto: null,
+        });
+        continue;
+      }
+
+      if (ord.assigneddelliveryboy && String(ord.assigneddelliveryboy) !== String(user._id)) {
+        // Already assigned to someone else
+        await DeliveryAssignment.findByIdAndUpdate(a._id, {
+          status: "assigned",
+          assignedto: ord.assigneddelliveryboy,
+        });
+        continue;
+      }
+
+      if (ord.assigneddelliveryboy && String(ord.assigneddelliveryboy) === String(user._id)) {
+        // Already assigned to THIS driver -> should not be in available requests
+        await DeliveryAssignment.findByIdAndUpdate(a._id, {
+          status: "assigned",
+          assignedto: user._id,
+        });
+        continue;
+      }
+
+      validAssignments.push(a);
+    }
 
     const sanitizedAssignments = validAssignments.map((a: any) => {
       const aObj = { ...a };
       if (aObj.order && aObj.order.deliveryOtp) {
-        aObj.order.deliveryOtp = {
-          expiresAt: aObj.order.deliveryOtp.expiresAt,
-          verified: aObj.order.deliveryOtp.verified,
-          attempts: aObj.order.deliveryOtp.attempts,
-          code: undefined, // 🔒 Strip secret OTP
+        aObj.order = {
+          ...aObj.order,
+          deliveryOtp: {
+            expiresAt: aObj.order.deliveryOtp.expiresAt,
+            verified: aObj.order.deliveryOtp.verified,
+            attempts: aObj.order.deliveryOtp.attempts,
+            code: undefined, // 🔒 Strip secret OTP
+          },
         };
       }
       return aObj;

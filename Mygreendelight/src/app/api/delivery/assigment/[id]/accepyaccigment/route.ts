@@ -58,22 +58,6 @@ export async function GET(
       );
     }
 
-    const alreadyAssigned = await DeliveryAssignment.findOne({
-      assignedto: deliveryboyid,
-      status: "assigned",
-    });
-
-    if (alreadyAssigned) {
-      return NextResponse.json(
-        {
-          message: "You already have an active order in progress",
-        },
-        {
-          status: 400,
-        }
-      );
-    }
-
     // Accept assignment
     assigment.assignedto = deliveryboyid;
     assigment.status = "assigned";
@@ -121,20 +105,17 @@ export async function GET(
     await DeliveryAssignment.updateMany(
       {
         _id: { $ne: assigment._id },
-        broadcastedto: deliveryboyid,
-        status: "broadcasted",
+        order: assigment.order,
       },
       {
-        $pull: {
-          broadcastedto: deliveryboyid,
-        },
+        $set: { status: "assigned", assignedto: deliveryboyid }
       }
     );
 
     return NextResponse.json(
       {
         success: true,
-        message: "Order accepted successfully! Trip started.",
+        message: "Order accepted successfully! Added to your active trips.",
       },
       {
         status: 200,
