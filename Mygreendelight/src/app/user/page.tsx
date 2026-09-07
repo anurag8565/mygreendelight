@@ -25,7 +25,6 @@ import {
   ArrowLeft,
   Truck,
   ShoppingBag,
-  Wallet,
   MapPin,
   Leaf,
   RefreshCw,
@@ -45,7 +44,6 @@ export default function UserProfileHub() {
   const isLoggedIn = !!activeUser?.email;
 
   const [orders, setOrders] = useState<any[]>([]);
-  const [walletBalance, setWalletBalance] = useState<number>(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -60,35 +58,11 @@ export default function UserProfileHub() {
     setLoading(true);
     try {
       // 1. Fetch Orders
-      const ordersPromise = axios
-        .get(`/api/user/myorder?_t=${Date.now()}`, {
-          headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
-        })
-        .then((res) => {
-          const list = Array.isArray(res.data) ? res.data : res.data?.orders || [];
-          setOrders(list);
-        })
-        .catch(() => {});
-
-      // 2. Fetch Real Wallet Balance
-      const walletPromise = axios
-        .get(`/api/user/wallet?_t=${Date.now()}`, {
-          headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
-        })
-        .then((res) => {
-          if (res.data?.success && typeof res.data.balance === "number") {
-            setWalletBalance(res.data.balance);
-          } else if (typeof activeUser?.walletBalance === "number") {
-            setWalletBalance(activeUser.walletBalance);
-          } else {
-            setWalletBalance(0);
-          }
-        })
-        .catch(() => {
-          setWalletBalance(typeof activeUser?.walletBalance === "number" ? activeUser.walletBalance : 0);
-        });
-
-      await Promise.allSettled([ordersPromise, walletPromise]);
+      const res = await axios.get(`/api/user/myorder?_t=${Date.now()}`, {
+        headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+      });
+      const list = Array.isArray(res.data) ? res.data : res.data?.orders || [];
+      setOrders(list);
     } catch (e) {
       // Guest or network error
     } finally {
@@ -223,10 +197,6 @@ export default function UserProfileHub() {
                 <div className="flex items-center justify-center sm:justify-start gap-2.5 mt-2.5 text-[11px] text-gray-600 font-semibold flex-wrap">
                   <span className="flex items-center gap-1 text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-lg border border-emerald-200/80">
                     <MapPin size={12} className="text-[#0f8646]" /> Bhopal, Madhya Pradesh
-                  </span>
-                  <span className="text-gray-300">•</span>
-                  <span className="flex items-center gap-1 text-emerald-800 bg-emerald-50/70 px-2.5 py-0.5 rounded-lg border border-emerald-200/60 font-black">
-                    <Wallet size={12} className="text-[#0f8646]" /> Wallet: ₹{walletBalance}
                   </span>
                 </div>
               </div>
