@@ -20,75 +20,67 @@ export default function Logo({
 
   const Content = (
     <div className={`flex items-center gap-2.5 select-none group ${className}`}>
-      {/* 🌿 Sleek Minimalist Emblem (Organic Leaf + Express Basket Fusion) */}
+      {/* ⚡ Iconic 'S' Leaf-Speed Monogram Badge */}
       <div
-        className={`relative flex items-center justify-center shrink-0 transition-all duration-300 group-hover:scale-105 group-hover:rotate-1 ${
+        className={`relative flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-105 ${
           isCompact ? "w-8 h-8 rounded-xl" : "w-10 h-10 sm:w-11 sm:h-11 rounded-2xl"
         } ${
           isInvoice
             ? "bg-gray-900 text-white shadow-xs"
             : isWhite
-            ? "bg-white/15 text-white border border-white/25 backdrop-blur-md shadow-inner"
-            : "bg-gradient-to-br from-[#0e9f4f] via-[#0c831f] to-[#065026] text-white shadow-md shadow-emerald-950/20 border border-emerald-400/30"
+            ? "bg-white/20 text-white border border-white/30 backdrop-blur-md shadow-inner"
+            : "bg-gradient-to-br from-[#10b981] via-[#0c831f] to-[#064e28] text-white shadow-md shadow-emerald-950/20 border border-emerald-300/40"
         }`}
       >
         <svg
-          viewBox="0 0 40 40"
+          viewBox="0 0 36 36"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           className={isCompact ? "w-5 h-5" : "w-6 h-6 sm:w-6.5 sm:h-6.5"}
         >
-          {/* Subtle Glow Defs */}
           <defs>
-            <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <linearGradient id="sqSunGrad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#fef08a" />
-              <stop offset="100%" stopColor="#86efac" />
+              <stop offset="100%" stopColor="#facc15" />
             </linearGradient>
-            <linearGradient id="basketGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
-              <stop offset="100%" stopColor="#e2e8f0" stopOpacity="0.85" />
+            <linearGradient id="sqLeafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#ffffff" />
+              <stop offset="100%" stopColor="#d1fae5" />
             </linearGradient>
           </defs>
 
-          {/* Minimalist Basket Silhouette */}
+          {/* Organic Curved Upper Leaf (Forms top loop of 'S') */}
           <path
-            d="M8 15.5C8 14.12 9.12 13 10.5 13H29.5C30.88 13 32 14.12 32 15.5L30 28C29.6 30.2 27.7 32 25.5 32H14.5C12.3 32 10.4 30.2 10 28L8 15.5Z"
-            fill={isInvoice ? "#ffffff" : isWhite ? "#ffffff" : "url(#basketGrad)"}
-            fillOpacity={isInvoice ? "1" : "0.95"}
-          />
-
-          {/* Elegant Curved Handle */}
-          <path
-            d="M14 13V9.5C14 6.46 16.46 4 19.5 4H20.5C23.54 4 26 6.46 26 9.5V13"
-            stroke={isWhite ? "#ffffff" : isInvoice ? "#ffffff" : "#fef08a"}
-            strokeWidth="2.8"
+            d="M8 12C8 7.58 11.58 4 16 4H21C25.42 4 29 7.58 29 12C29 15.5 26.8 18.5 23.5 19.5L13.5 20.5"
+            stroke={isInvoice ? "#ffffff" : isWhite ? "#ffffff" : "url(#sqLeafGrad)"}
+            strokeWidth="3.2"
             strokeLinecap="round"
           />
 
-          {/* Organic Sprout Leaf Accent */}
+          {/* Organic Curved Lower Basket / Leaf (Forms bottom loop of 'S') */}
           <path
-            d="M20 16.5C20 16.5 23.5 17 25 20.5C22.5 22 19 21 19 21C19 21 18 23.5 15.5 24C15 21.5 17 18.5 20 16.5Z"
-            fill={isInvoice ? "#111827" : isWhite ? "#86efac" : "url(#leafGrad)"}
+            d="M28 24C28 28.42 24.42 32 20 32H15C10.58 32 7 28.42 7 24C7 20.5 9.2 17.5 12.5 16.5L22.5 15.5"
+            stroke={isInvoice ? "#ffffff" : isWhite ? "#ffffff" : "url(#sqLeafGrad)"}
+            strokeWidth="3.2"
+            strokeLinecap="round"
           />
 
-          {/* ⚡ Dynamic Speed Arc Lines */}
+          {/* Central Energetic Gold Lightning Flash */}
           <path
-            d="M4.5 19.5H7M3 24H6.5"
-            stroke={isWhite ? "#86efac" : isInvoice ? "#ffffff" : "#fef08a"}
-            strokeWidth="2.2"
-            strokeLinecap="round"
+            d="M19.5 8L13 19H19L16.5 28L25 16H18.5L21.5 8H19.5Z"
+            fill={isInvoice ? "#ffffff" : isWhite ? "#fef08a" : "url(#sqSunGrad)"}
           />
         </svg>
 
-        {/* ⚡ Express Sunlight Glow Badge */}
+        {/* Live Express Pulse Dot */}
         {!isInvoice && (
-          <span className="absolute -top-1 -right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 bg-gradient-to-tr from-amber-400 to-yellow-300 text-gray-950 rounded-full flex items-center justify-center text-[8px] sm:text-[9px] font-black shadow-xs border border-white/80 animate-pulse">
+          <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-yellow-400 text-gray-950 rounded-full flex items-center justify-center text-[7.5px] font-black shadow-xs border border-white">
             ⚡
           </span>
         )}
       </div>
 
-      {/* 🏷️ SubziQuick Modern Minimalist Typography */}
+      {/* 🏷️ SubziQuick Modern Minimalist Wordmark */}
       <div className="flex flex-col leading-none">
         <div className="flex items-center tracking-tight">
           <span
@@ -112,23 +104,23 @@ export default function Logo({
             Quick
           </span>
           <span
-            className={`font-black text-[10px] sm:text-[11px] px-1 py-0.5 ml-1 rounded-md tracking-wider uppercase ${
+            className={`font-black text-[9.5px] sm:text-[10.5px] px-1 py-0.5 ml-1 rounded-md tracking-wider uppercase ${
               isWhite
-                ? "bg-white/20 text-emerald-100"
-                : "bg-emerald-100/90 text-[#075225]"
+                ? "bg-white/20 text-emerald-100 border border-white/20"
+                : "bg-emerald-100 text-[#075225] border border-emerald-200"
             }`}
           >
             .in
           </span>
         </div>
 
-        {/* Subtle Minimalist Tagline */}
+        {/* Minimalist Micro Tagline */}
         {showTagline && !isCompact && (
           <div className="flex items-center gap-1 mt-0.5">
             <span
-              className={`text-[8.5px] sm:text-[9px] font-extrabold tracking-wider uppercase ${
+              className={`text-[8.5px] sm:text-[9px] font-black tracking-wider uppercase ${
                 isWhite
-                  ? "text-emerald-200/90"
+                  ? "text-emerald-200"
                   : isInvoice
                   ? "text-gray-400"
                   : "text-[#0c831f]"
@@ -138,15 +130,15 @@ export default function Logo({
             </span>
             <span className={`text-[7px] ${isWhite ? "text-emerald-300" : "text-emerald-400"}`}>•</span>
             <span
-              className={`text-[8.5px] sm:text-[9px] font-extrabold tracking-wider uppercase ${
+              className={`text-[8.5px] sm:text-[9px] font-bold tracking-wider uppercase ${
                 isWhite
-                  ? "text-emerald-200/90"
+                  ? "text-emerald-100/80"
                   : isInvoice
                   ? "text-gray-400"
                   : "text-gray-500"
               }`}
             >
-              Bhopal
+              Express Bhopal
             </span>
           </div>
         )}
@@ -164,4 +156,3 @@ export default function Logo({
 
   return Content;
 }
-
