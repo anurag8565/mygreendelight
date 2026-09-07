@@ -10,5 +10,5 @@ while ((match = regex.exec(content)) !== null) {
   hrefs.add(match[1]);
 }
 
-console.log("All Unique Links found on evegetablebazaar.in:");
+console.log("All Unique Links found on subziquick_clean.in:");
 console.log(Array.from(hrefs).filter(h => !h.startsWith('#') && !h.endsWith('.css') && !h.endsWith('.js') && !h.endsWith('.png')));

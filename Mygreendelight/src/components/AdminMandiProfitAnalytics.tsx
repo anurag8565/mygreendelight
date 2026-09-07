@@ -45,7 +45,7 @@ export default function AdminMandiProfitAnalytics() {
     return (
       <div className="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-xs mt-8 text-center">
         <div className="w-8 h-8 border-3 border-[#0f8646] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-        <p className="text-xs text-gray-500 font-bold">Calculating Mandi Costs & Net Margins...</p>
+        <p className="text-xs text-gray-500 font-bold">Calculating Kisan Procurement Costs & Net Margins...</p>
       </div>
     );
   }
@@ -80,7 +80,7 @@ export default function AdminMandiProfitAnalytics() {
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight">
-                Smart Mandi Margin & Profit Analytics
+                Smart Farm Sourcing Margin & Profit Analytics
               </h2>
               <span className="bg-emerald-700 text-white text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full">
                 Live Farm Margins
@@ -110,7 +110,7 @@ export default function AdminMandiProfitAnalytics() {
 
         <div className="bg-amber-50/70 border border-amber-200/80 rounded-2xl p-4 sm:p-5">
           <span className="text-[11px] font-extrabold uppercase text-amber-800 tracking-wider block mb-1">
-            Mandi Cost (Kisan Payout)
+            Kisan Cost (Procurement Payout)
           </span>
           <h3 className="text-2xl sm:text-3xl font-black text-gray-900">
             ₹{summary.totalCostEst?.toLocaleString("en-IN") || 0}

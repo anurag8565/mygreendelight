@@ -493,7 +493,7 @@ export default function ViewGrocery() {
 
         {/* Content Body */}
         <div className="p-3.5 sm:p-6 lg:p-8 space-y-6 flex-1">
-          {/* Mandi Procurement Alert Banner */}
+          {/* Farm Harvest Procurement Alert Banner */}
           {lowStockCount > 0 && (
             <div className="bg-amber-50 border border-amber-200/90 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
               <div className="flex items-center gap-3">
@@ -502,10 +502,10 @@ export default function ViewGrocery() {
                 </div>
                 <div>
                   <span className="text-[10px] font-black text-amber-800 uppercase tracking-wider block">
-                    Mandi Procurement & Restock Alert
+                    Farm Fresh Restock Alert
                   </span>
                   <span className="text-xs font-black text-amber-950">
-                    {lowStockCount} produce item(s) are running low in stock (&lt; 10 units). Prioritize in tomorrow&apos;s Mandi procurement batch.
+                    {lowStockCount} produce item(s) are running low in stock (&lt; 10 units). Prioritize in tomorrow&apos;s farm harvest batch.
                   </span>
                 </div>
               </div>
@@ -836,7 +836,7 @@ export default function ViewGrocery() {
                       <th className="py-3.5 px-3 text-center">Status</th>
                       <th className="py-3.5 px-4">Category</th>
                       <th className="py-3.5 px-4">Selling Price</th>
-                      <th className="py-3.5 px-4">Mandi Cost & Margin</th>
+                      <th className="py-3.5 px-4">Wholesale Cost & Margin</th>
                       <th className="py-3.5 px-4">Stock Status</th>
                       <th className="py-3.5 px-4">Variations</th>
                       <th className="py-3.5 px-5 text-right">Actions</th>
@@ -987,7 +987,7 @@ export default function ViewGrocery() {
                                 <button
                                   onClick={() => quickRestock(item, 25)}
                                   className="bg-emerald-50 hover:bg-emerald-100 text-[#0f8646] border border-emerald-300 px-2 py-0.5 rounded-md text-[10px] font-black transition cursor-pointer flex items-center gap-1"
-                                  title="Add +25 Mandi Fresh Units"
+                                  title="Add +25 Fresh Farm Units"
                                 >
                                   <Plus size={10} />
                                   <span>+25 Restock</span>

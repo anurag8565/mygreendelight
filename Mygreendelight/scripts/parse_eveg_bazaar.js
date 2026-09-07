@@ -48,6 +48,6 @@ stepFiles.forEach(({ path: fpath, cat }) => {
   }
 });
 
-console.log(`Found ${evegProducts.length} raw product blocks in EVegetableBazaar`);
+console.log(`Found ${evegProducts.length} raw product blocks in subziquick_clean`);
 console.log("Sample 5 items:", evegProducts.slice(0, 5));
 fs.writeFileSync('scripts/eveg_parsed_raw.json', JSON.stringify(evegProducts, null, 2));

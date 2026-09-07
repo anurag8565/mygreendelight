@@ -63,7 +63,7 @@ export async function POST(req: Request) {
           name: "Pooja Malhotra",
           location: "Bawadiya Kalan, Bhopal",
           rating: 5,
-          comment: "Direct farmer rates without mandi middleman markup. 100% clean, ozone-sorted, and no chemical smell in coriander or tomatoes.",
+          comment: "Direct farmer rates without unfair middleman markup. 100% clean, ozone-sorted, and no chemical smell in coriander or tomatoes.",
           tag: "Verified Resident",
           status: "approved",
         },

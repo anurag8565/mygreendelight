@@ -60,7 +60,7 @@ async function mergeCatalog() {
     }
 
     if (matchedDoc) {
-      // Update image if EVegetableBazaar image is high-res cdn2.clevup.in
+      // Update image if subziquick_clean image is high-res cdn2.clevup.in
       const updates = {};
       if (eveg.image && eveg.image.includes('cdn2.clevup.in')) {
         updates.image = eveg.image;

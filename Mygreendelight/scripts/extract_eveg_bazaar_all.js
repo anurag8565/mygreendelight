@@ -4,7 +4,7 @@ const https = require('https');
 const sitemapPath = 'C:\\Users\\win11\\.gemini\\antigravity\\brain\\55e84d64-2221-41f3-814d-9bc6e4250f7a\\.system_generated\\steps\\4430\\content.md';
 const sitemapXml = fs.readFileSync(sitemapPath, 'utf-8');
 
-const urlRegex = /<loc>(https:\/\/www\.evegetablebazaar\.in\/products\/[^<]+)<\/loc>/g;
+const urlRegex = /<loc>(https:\/\/www\.subziquick_clean\.in\/products\/[^<]+)<\/loc>/g;
 const allUrls = [];
 let match;
 while ((match = urlRegex.exec(sitemapXml)) !== null) {
@@ -107,7 +107,7 @@ async function scrapeAll() {
     }
   }
 
-  console.log(`\nSuccessfully extracted ${extractedProducts.length} unique produce items from EVegetableBazaar!`);
+  console.log(`\nSuccessfully extracted ${extractedProducts.length} unique produce items from subziquick_clean!`);
   fs.writeFileSync('public/eveg_bazaar_products.json', JSON.stringify(extractedProducts, null, 2));
 }
 

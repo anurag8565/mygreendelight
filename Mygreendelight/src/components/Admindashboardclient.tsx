@@ -148,7 +148,7 @@ export default function Admindashboardclient() {
 
         </div>
 
-        {/* 📊 Admin Smart Mandi Margin & Profit Analytics */}
+        {/* 📊 Admin Smart Farm Sourcing Margin & Profit Analytics */}
         <AdminMandiProfitAnalytics />
 
     </div>
