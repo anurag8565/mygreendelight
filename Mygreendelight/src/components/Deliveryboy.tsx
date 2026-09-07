@@ -1,7 +1,7 @@
 'use client'
 
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import {
   MapPin,
   Phone,
@@ -21,10 +21,10 @@ import {
   ChevronRight,
   ArrowRight,
   AlertCircle,
-  Check,
   Compass,
   Radio,
   ShoppingBag,
+  Loader2,
 } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
@@ -37,7 +37,11 @@ import RecentDeliveries from './RecentDeliveries'
 import DeliveryDashboardStats from './DeliveryDashboardStats'
 import { socket } from '@/lib/socket'
 
-export default function Deliveryboy() {
+interface Props {
+  initialUser?: any;
+}
+
+export default function Deliveryboy({ initialUser }: Props) {
   const [assignments, setAssignments] = useState<any[]>([])
   const [activeTab, setActiveTab] = useState<'requests' | 'earnings' | 'history'>('requests')
   const [activeorder, setactiverder] = useState<any>(null)
@@ -61,12 +65,12 @@ export default function Deliveryboy() {
   })
 
   const { userdata } = useSelector((state: RootState) => state.user)
+  const currentUser = initialUser || userdata
 
   // Socket notification for incoming broadcasts
   useEffect(() => {
     socket.on('new-assignment', (assignment) => {
       setAssignments((prev) => [assignment, ...prev])
-      // Trigger notification vibration if available on mobile
       if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
         navigator.vibrate([200, 100, 200])
       }
@@ -98,7 +102,7 @@ export default function Deliveryboy() {
   const fetchAssignments = async () => {
     try {
       const result = await axios.get('/api/delivery/getassigments')
-      setAssignments(result.data.assignments || [])
+      setAssignments(result.data?.assignments || [])
     } catch (error) {
       console.log('Fetch assignments error:', error)
     }
@@ -106,9 +110,8 @@ export default function Deliveryboy() {
 
   const fetchCurrentOrder = async () => {
     try {
-      setLoading(true)
       const result = await axios.get('/api/delivery/currentorder')
-      if (result.data.active && result.data.assigment) {
+      if (result.data?.active && result.data?.assigment) {
         setactiverder(result.data.assigment)
         if (result.data.assigment.order?.address?.latitude) {
           setuserlocation({
@@ -122,26 +125,27 @@ export default function Deliveryboy() {
       }
     } catch (error) {
       console.log('Fetch current order error:', error)
+    }
+  }
+
+  const handleRefreshAll = useCallback(async () => {
+    setRefreshing(true)
+    try {
+      await Promise.all([
+        fetchAssignments(),
+        fetchDashboardData(),
+        fetchCurrentOrder(),
+      ])
     } finally {
       setLoading(false)
+      setRefreshing(false)
     }
-  }
+  }, [])
 
-  const handleRefreshAll = async () => {
-    setRefreshing(true)
-    await Promise.all([
-      fetchAssignments(),
-      fetchDashboardData(),
-      fetchCurrentOrder(),
-    ])
-    setTimeout(() => setRefreshing(false), 400)
-  }
-
+  // Always fetch on component mount!
   useEffect(() => {
-    if (userdata) {
-      handleRefreshAll()
-    }
-  }, [userdata])
+    handleRefreshAll()
+  }, [handleRefreshAll])
 
   // Real-time GPS stream during active delivery trip
   useEffect(() => {
@@ -207,7 +211,7 @@ export default function Deliveryboy() {
         otp: cleanOtp,
         bagsReturned,
       })
-      alert(result.data.message || '🎉 Delivery Handover Completed Successfully!')
+      alert(result.data?.message || '🎉 Delivery Handover Completed Successfully!')
       setactiverder(null)
       setuserlocation(null)
       setOtp('')
@@ -225,7 +229,7 @@ export default function Deliveryboy() {
     setSendingOtpEmail(true)
     try {
       const res = await axios.post(`/api/delivery/send-delivery-otp/${activeorder.order._id}`)
-      alert(res.data.message || "✅ 4-Digit OTP has been dispatched to the customer's email!")
+      alert(res.data?.message || "✅ 4-Digit OTP has been dispatched to the customer's email!")
     } catch (error: any) {
       alert(error?.response?.data?.message || 'Failed to send OTP email.')
     } finally {
@@ -262,10 +266,10 @@ export default function Deliveryboy() {
     const whatsappArrivalUrl = `https://wa.me/91${cleanMobile}?text=${arrivalWhatsappMsg}`
 
     return (
-      <div className="min-h-screen bg-[#f8faf9] font-sans pb-24 pt-20 sm:pt-24 px-3 sm:px-6">
+      <div className="font-sans pb-24 px-3 sm:px-6">
         <div className="max-w-3xl mx-auto space-y-4">
           
-          {/* Minimalist Top Status Header */}
+          {/* Top Status Header */}
           <div className="bg-white rounded-3xl p-5 shadow-xs border border-emerald-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 flex-wrap">
@@ -491,11 +495,11 @@ export default function Deliveryboy() {
         </div>
 
         {/* Floating Chat Button */}
-        {activeorder?.order?._id && userdata && (
+        {activeorder?.order?._id && currentUser?._id && (
           <ChatButton
             orderId={activeorder.order._id}
-            userId={userdata._id}
-            deliveryBoyId={userdata._id}
+            userId={currentUser._id}
+            deliveryBoyId={currentUser._id}
           />
         )}
       </div>
@@ -506,7 +510,7 @@ export default function Deliveryboy() {
   // VIEW 2: DELIVERY PARTNER STANDBY DASHBOARD
   // ==========================================
   return (
-    <div className="min-h-screen bg-[#f8faf9] font-sans pb-24 pt-20 sm:pt-24 px-3 sm:px-6">
+    <div className="font-sans pb-24 px-3 sm:px-6">
       <div className="max-w-4xl mx-auto space-y-5">
         
         {/* Sleek Header & Duty Online Pill */}
@@ -523,7 +527,7 @@ export default function Deliveryboy() {
                 </span>
               </div>
               <h1 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight">
-                {userdata?.name ? `Namaste, ${userdata.name}!` : 'Rider Dashboard'}
+                {currentUser?.name ? `Namaste, ${currentUser.name}!` : 'Rider Dashboard'}
               </h1>
               <p className="text-xs text-gray-400 font-medium">
                 Bhopal Express 10-15 Min Hub
@@ -587,8 +591,16 @@ export default function Deliveryboy() {
           </button>
         </div>
 
+        {/* Loading Spinner during initial fetch */}
+        {loading && (
+          <div className="bg-white rounded-3xl p-8 text-center border border-gray-200/80 shadow-xs">
+            <Loader2 size={28} className="animate-spin text-[#0f8646] mx-auto mb-2" />
+            <p className="text-xs text-gray-500 font-bold">Connecting to Bhopal dispatch server...</p>
+          </div>
+        )}
+
         {/* TAB 1: LIVE REQUESTS */}
-        {activeTab === 'requests' && (
+        {!loading && activeTab === 'requests' && (
           <div className="space-y-4">
             {assignments.length === 0 ? (
               <div className="bg-white rounded-3xl p-10 text-center border border-gray-200/80 shadow-xs space-y-3">
@@ -598,7 +610,7 @@ export default function Deliveryboy() {
                 <div>
                   <h3 className="text-base font-black text-gray-900">Waiting for New Requests</h3>
                   <p className="text-xs text-gray-400 max-w-sm mx-auto mt-1">
-                    Your duty is online. New broadcast orders near your location will alert here.
+                    Your duty is online. New broadcast orders near your location in Bhopal will alert here.
                   </p>
                 </div>
               </div>
@@ -672,7 +684,7 @@ export default function Deliveryboy() {
         )}
 
         {/* TAB 2: EARNINGS & STATS */}
-        {activeTab === 'earnings' && (
+        {!loading && activeTab === 'earnings' && (
           <div className="space-y-4">
             <DeliveryDashboardStats
               totalDeliveries={dashboardStats.totalDeliveries}
@@ -689,7 +701,7 @@ export default function Deliveryboy() {
         )}
 
         {/* TAB 3: DELIVERY HISTORY */}
-        {activeTab === 'history' && (
+        {!loading && activeTab === 'history' && (
           <div>
             <RecentDeliveries deliveries={recentDeliveries} />
           </div>

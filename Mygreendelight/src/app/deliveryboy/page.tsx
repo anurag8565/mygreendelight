@@ -33,10 +33,10 @@ export default async function DeliveryBoyPage() {
   const plainUser = JSON.parse(JSON.stringify(user));
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-between">
+    <div className="min-h-screen bg-[#f8faf9] flex flex-col justify-between">
       <Nav user={plainUser} />
-      <main className="flex-1 pb-16">
-        <Deliveryboydashbord />
+      <main className="flex-1 pb-16 pt-20">
+        <Deliveryboydashbord initialUser={plainUser} />
       </main>
       <Footer />
     </div>

@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import connectDb from "@/lib/db";
 import Order from "@/model/order";
+import User from "@/model/user.model";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -8,29 +9,31 @@ export async function GET() {
     await connectDb();
 
     const session = await auth();
+    const query = session?.user?.id ? { _id: session.user.id } : { email: session?.user?.email };
+    const user = session ? await User.findOne(query) : null;
 
-    const deliveryBoyId = session?.user?.id;
-
-    const orders = await Order.find({
-      assigneddelliveryboy: deliveryBoyId,
+    const orderFilter: any = {
       status: "delivered",
-    })
-      .sort({
-        updatedAt: -1,
-      })
-      .limit(5);
+    };
+
+    if (user && user.role === "deliveryboy") {
+      orderFilter.assigneddelliveryboy = user._id;
+    }
+
+    const orders = await Order.find(orderFilter)
+      .sort({ updatedAt: -1 })
+      .limit(10);
 
     const formatted = orders.map((order: any) => ({
       _id: order._id,
-      createdAt: order.updatedAt,
+      createdAt: order.updatedAt || order.createdAt,
       totalamount: order.totalamount,
       status: order.status,
     }));
 
     return NextResponse.json(formatted);
   } catch (error) {
-    return NextResponse.json([], {
-      status: 500,
-    });
+    console.error("Recent Deliveries Error:", error);
+    return NextResponse.json([], { status: 200 });
   }
 }

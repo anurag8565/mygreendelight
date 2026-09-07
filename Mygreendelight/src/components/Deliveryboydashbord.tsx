@@ -1,14 +1,14 @@
+'use client'
+
 import React from 'react'
 import Deliveryboy from './Deliveryboy'
 
-
-
-function Deliveryboydashbord() {
-  return (
-    <>
-    <Deliveryboy/>
-    </>
-  )
+interface Props {
+  initialUser?: any;
 }
 
-export default Deliveryboydashbord
+export default function Deliveryboydashbord({ initialUser }: Props) {
+  return (
+    <Deliveryboy initialUser={initialUser} />
+  )
+}

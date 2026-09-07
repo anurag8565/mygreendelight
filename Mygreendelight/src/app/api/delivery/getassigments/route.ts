@@ -10,7 +10,7 @@ export async function GET() {
     
     const session = await auth();
 
-    if (!session?.user?.email) {
+    if (!session?.user?.email && !session?.user?.id) {
       return NextResponse.json(
         {
           success: false,
@@ -20,9 +20,11 @@ export async function GET() {
       );
     }
 
-    const user = await User.findOne({
-      email: session.user.email,
-    });
+    const query = session.user.id 
+      ? { _id: session.user.id } 
+      : { email: session.user.email };
+
+    const user = await User.findOne(query);
 
     if (!user) {
       return NextResponse.json(
@@ -34,7 +36,7 @@ export async function GET() {
       );
     }
 
-    if (user.role !== "deliveryboy") {
+    if (user.role !== "deliveryboy" && user.role !== "admin") {
       return NextResponse.json(
         {
           success: false,
@@ -44,18 +46,33 @@ export async function GET() {
       );
     }
 
-    const assignments =
-      await DeliveryAssignment.find({
-        broadcastedto: user._id,
-        assignedto: null,
-        status: "broadcasted",
-      })
-    const sanitizedAssignments = assignments.map((a: any) => {
-      const aObj = a.toObject ? a.toObject() : { ...a };
+    // If deliveryboy, fetch broadcasted to them or unassigned broadcasted; if admin, fetch all broadcasted
+    const filter: any = {
+      status: "broadcasted",
+      assignedto: null,
+    };
+
+    if (user.role === "deliveryboy") {
+      filter.$or = [
+        { broadcastedto: user._id },
+        { broadcastedto: { $exists: false } },
+        { broadcastedto: { $size: 0 } },
+      ];
+    }
+
+    const assignments = await DeliveryAssignment.find(filter)
+      .populate("order")
+      .sort({ createdAt: -1 })
+      .lean();
+
+    const sanitizedAssignments = (assignments || []).map((a: any) => {
+      const aObj = { ...a };
       if (aObj.order && aObj.order.deliveryOtp) {
         aObj.order.deliveryOtp = {
           expiresAt: aObj.order.deliveryOtp.expiresAt,
           verified: aObj.order.deliveryOtp.verified,
+          attempts: aObj.order.deliveryOtp.attempts,
+          code: undefined, // 🔒 Strip secret OTP
         };
       }
       return aObj;
@@ -66,7 +83,7 @@ export async function GET() {
       assignments: sanitizedAssignments,
     });
   } catch (error) {
-    console.log("GET ASSIGNMENTS ERROR:", error);
+    console.error("GET ASSIGNMENTS ERROR:", error);
 
     return NextResponse.json(
       {
