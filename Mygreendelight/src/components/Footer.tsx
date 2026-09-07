@@ -11,6 +11,7 @@ import {
   Mail,
   Zap,
   ChevronRight,
+  Instagram,
 } from "lucide-react";
 import Logo from "./Logo";
 
@@ -60,6 +61,16 @@ export default function Footer() {
 
             {/* Official Social Media Channels */}
             <div className="flex items-center gap-2.5 pt-1">
+              <a
+                href="https://www.instagram.com/subziquick"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] flex items-center justify-center text-white shadow-xs hover:scale-108 transition-all"
+                title="Follow on Instagram @subziquick"
+              >
+                <Instagram size={16} />
+              </a>
+
               <a
                 href="https://wa.me/919981418565?text=Hello%20SubziQuick%20Support,%20I%20need%20help%20with%20my%20order."
                 target="_blank"

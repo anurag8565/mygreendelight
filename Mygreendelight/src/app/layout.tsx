@@ -214,6 +214,7 @@ export default function RootLayout({
     "currenciesAccepted": "INR",
     "servesCuisine": "Fresh Vegetables, Seasonal Fruits, Fresh Produce, Dairy, Groceries",
     "sameAs": [
+      "https://www.instagram.com/subziquick",
       "https://wa.me/919981418565"
     ]
   };

@@ -26,6 +26,7 @@ import {
   ArrowRight,
   Sparkles,
   Headphones,
+  Instagram,
 } from "lucide-react";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -408,6 +409,29 @@ export default function ContactPage() {
                       </p>
                       <p className="text-[11px] text-gray-400 mt-0.5 font-medium">
                         Instant chat replies from our team
+                      </p>
+                    </div>
+                  </a>
+
+                  {/* Instagram Channel */}
+                  <a
+                    href="https://www.instagram.com/subziquick"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start gap-4 p-4 rounded-2xl hover:bg-pink-50/70 transition-colors border border-gray-100 group"
+                  >
+                    <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform shadow-xs">
+                      <Instagram size={20} />
+                    </div>
+                    <div>
+                      <h4 className="font-extrabold text-gray-900 text-sm">
+                        Instagram Community
+                      </h4>
+                      <p className="text-xs font-black text-pink-600 mt-0.5">
+                        @subziquick
+                      </p>
+                      <p className="text-[11px] text-gray-400 mt-0.5 font-medium">
+                        Daily fresh stock reels, recipes & offers
                       </p>
                     </div>
                   </a>
