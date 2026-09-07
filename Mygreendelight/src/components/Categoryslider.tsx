@@ -6,7 +6,7 @@ import Link from "next/link";
 import { ChevronRight, Sparkles, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 
-// Clean, high-converting minimalist category metadata
+// Clean, high-converting minimalist category metadata for the 3 store categories
 const CATEGORY_MAP: Record<
   string,
   {
@@ -62,22 +62,9 @@ const CATEGORY_MAP: Record<
     accentColor: "#a855f7",
     pillBg: "bg-purple-100/90 text-purple-800 border-purple-200/80",
   },
-  "dairy & staples": {
-    title: "Dairy & Staples",
-    subtitle: "A2 Milk & Pure Ghee",
-    itemCount: "Daily Fresh",
-    tag: "100% Pure",
-    imgUrl: "/categories/dairy_4k.jpg",
-    bgGradient: "bg-gradient-to-b from-blue-50/80 via-white to-sky-50/40",
-    borderColor: "border-blue-100 group-hover:border-blue-300",
-    hoverGlow: "hover:shadow-[0_14px_30px_rgba(56,189,248,0.14)]",
-    textColor: "text-blue-950",
-    accentColor: "#0284c7",
-    pillBg: "bg-blue-100/90 text-blue-800 border-blue-200/80",
-  },
 };
 
-const PRIORITY = ["vegetables", "fruits", "exotics", "dairy & staples"];
+const PRIORITY = ["vegetables", "fruits", "exotics"];
 
 export default function CategorySlider({
   categories = [],

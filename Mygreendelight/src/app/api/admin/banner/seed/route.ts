@@ -33,20 +33,6 @@ export const OFFICIAL_DEFAULT_BANNERS = [
     order: 2,
   },
   {
-    title: "Desi Gir Cow A2 Milk & Vedic Bilona Ghee",
-    subtitle: "Fresh raw morning batch delivered chilled to your doorstep before 7:00 AM.",
-    btnText: "Shop Pure Dairy",
-    link: "/shop?category=Dairy%20%26%20Staples",
-    image: "/banners/dairy_clean_4k.jpg",
-    badge: "🥛 100% Pure Organic Dairy & Ghee",
-    offerPill: "100% LAB TESTED PURITY",
-    floatingStat: "🥛 Vedic Hand-Churned",
-    bgGradient: "from-[#0c4a6e]/95 via-[#0369a1]/85 to-transparent/30",
-    accentColor: "#38bdf8",
-    isActive: true,
-    order: 3,
-  },
-  {
     title: "Crisp Hydroponic Greens & Exotic Salads",
     subtitle: "Fresh Iceberg, Cherry Tomatoes, Avocados, Herbs & European salad mixes.",
     btnText: "Explore Exotics",
@@ -58,7 +44,7 @@ export const OFFICIAL_DEFAULT_BANNERS = [
     bgGradient: "from-[#134e4a]/95 via-[#115e59]/85 to-transparent/30",
     accentColor: "#2dd4bf",
     isActive: true,
-    order: 4,
+    order: 3,
   },
 ];
 
