@@ -27,3 +27,29 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* 🛡️ Content & Media Download Protection */
+img, svg, video, canvas {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+}
+
+/* Allow text input selection while preventing accidental dragging */
+input, textarea, [contenteditable="true"] {
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important;
+}
+
+/* 🖨️ Disable Print Screen / Save as PDF */
+@media print {
+  html, body {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}

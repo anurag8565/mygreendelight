@@ -8,6 +8,7 @@ import SocketProvider from "@/components/SocketProvider";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import MobileBottomNav from "@/components/MobileBottomNav";
 import BroadcastBar from "@/components/BroadcastBar";
+import ContentProtection from "@/components/ContentProtection";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -303,6 +304,7 @@ export default function RootLayout({
         />
       </head>
       <body className="w-full min-h-screen bg-linear-to-b from-green-50 to-white text-gray-900 overflow-x-hidden">
+        <ContentProtection />
         <Provider>
           <StoreProviders>
             <Inituser />
