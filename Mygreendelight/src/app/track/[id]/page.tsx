@@ -23,6 +23,7 @@ import {
   Coins,
   X,
   AlertCircle,
+  ShieldAlert,
   Loader2,
   Star,
 } from "lucide-react";
@@ -218,6 +219,37 @@ export default function TrackOrderPage() {
             </div>
           </div>
         </div>
+
+        {/* 🔐 Live Customer Delivery OTP Card */}
+        {status !== "delivered" && status !== "completed" && status !== "cancelled" && order?.deliveryOtp?.code && (
+          <div className="bg-gradient-to-r from-emerald-900 to-green-800 text-white rounded-3xl p-5 sm:p-6 mb-6 shadow-lg border border-emerald-700/50 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-4 text-center sm:text-left">
+              <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center shrink-0 border border-white/20">
+                <ShieldAlert size={24} className="text-emerald-300" />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase bg-emerald-700/80 text-emerald-200 px-2.5 py-0.5 rounded-full tracking-wider">
+                  Doorstep Verification OTP
+                </span>
+                <h3 className="text-base sm:text-lg font-black text-white mt-1">
+                  Share with delivery driver upon arrival
+                </h3>
+                <p className="text-xs text-emerald-200/90 font-medium">
+                  Inspect your farm-fresh items first before sharing this OTP with the driver.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white text-[#0f8646] px-6 py-3 rounded-2xl shadow-md border-2 border-emerald-400 text-center shrink-0">
+              <span className="text-[10px] font-black uppercase tracking-widest text-gray-500 block">
+                Your Delivery OTP
+              </span>
+              <span className="font-mono text-3xl sm:text-4xl font-black tracking-widest">
+                {order.deliveryOtp.code}
+              </span>
+            </div>
+          </div>
+        )}
 
         {/* Order Completed Message */}
         {(status === "delivered" || status === "completed") && (
