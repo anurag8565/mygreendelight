@@ -3,68 +3,48 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ChevronRight, ArrowRight, Sparkles } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 
-// Luxury, high-converting category metadata
+// Clean, high-converting category metadata
 const CATEGORY_MAP: Record<
   string,
   {
     title: string;
     subtitle: string;
-    itemCount: string;
-    badge: string;
-    btnLabel: string;
+    tag: string;
     imgUrl: string;
-    haloColor: string;
-    cardBg: string;
-    borderHover: string;
-    hoverShadow: string;
-    badgeClass: string;
-    btnHoverBg: string;
+    bgGradient: string;
+    borderColor: string;
+    textColor: string;
   }
 > = {
   vegetables: {
-    title: "Fresh Vegetables",
-    subtitle: "Ozone-Washed & Chemical Free",
-    itemCount: "92+ Items",
-    badge: "🌱 5:00 AM Harvest",
-    btnLabel: "Shop Vegetables",
+    title: "Vegetables",
+    subtitle: "Farm Fresh Daily Harvest",
+    tag: "Daily Fresh",
     imgUrl: "/categories/vegetables_4k.jpg",
-    haloColor: "bg-emerald-400/25",
-    cardBg: "from-emerald-50/60 via-white to-emerald-50/20",
-    borderHover: "group-hover:border-emerald-400",
-    hoverShadow: "hover:shadow-[0_18px_38px_rgba(16,185,129,0.16)]",
-    badgeClass: "bg-emerald-100/90 text-emerald-800 border-emerald-200/90",
-    btnHoverBg: "group-hover:bg-[#0f8646] group-hover:text-white group-hover:border-[#0f8646]",
+    bgGradient: "bg-gradient-to-b from-emerald-50/90 to-green-50/40",
+    borderColor: "border-emerald-200/80",
+    textColor: "text-emerald-950",
   },
   fruits: {
-    title: "Seasonal Fruits",
-    subtitle: "Crisp, Juicy & Naturally Sweet",
-    itemCount: "129+ Items",
-    badge: "🍎 Wax & Carbide Free",
-    btnLabel: "Shop Fruits",
+    title: "Fruits",
+    subtitle: "Juicy & Naturally Sweet",
+    tag: "Sweet & Juicy",
     imgUrl: "/categories/fruits_4k.jpg",
-    haloColor: "bg-amber-400/25",
-    cardBg: "from-amber-50/60 via-white to-orange-50/20",
-    borderHover: "group-hover:border-amber-400",
-    hoverShadow: "hover:shadow-[0_18px_38px_rgba(245,158,11,0.16)]",
-    badgeClass: "bg-amber-100/90 text-amber-800 border-amber-200/90",
-    btnHoverBg: "group-hover:bg-[#d97706] group-hover:text-white group-hover:border-[#d97706]",
+    bgGradient: "bg-gradient-to-b from-amber-50/90 to-orange-50/40",
+    borderColor: "border-amber-200/80",
+    textColor: "text-amber-950",
   },
   exotics: {
-    title: "Exotics & Greens",
-    subtitle: "Hydroponic European Salads",
-    itemCount: "55+ Items",
-    badge: "🥑 Pesticide-Free",
-    btnLabel: "Shop Exotics",
+    title: "Exotics",
+    subtitle: "Hydroponic & Gourmet Greens",
+    tag: "Gourmet Fresh",
     imgUrl: "/categories/exotics_4k.jpg",
-    haloColor: "bg-purple-400/25",
-    cardBg: "from-purple-50/60 via-white to-fuchsia-50/20",
-    borderHover: "group-hover:border-purple-400",
-    hoverShadow: "hover:shadow-[0_18px_38px_rgba(168,85,247,0.16)]",
-    badgeClass: "bg-purple-100/90 text-purple-800 border-purple-200/90",
-    btnHoverBg: "group-hover:bg-[#9333ea] group-hover:text-white group-hover:border-[#9333ea]",
+    bgGradient: "bg-gradient-to-b from-purple-50/90 to-fuchsia-50/40",
+    borderColor: "border-purple-200/80",
+    textColor: "text-purple-950",
   },
 };
 
@@ -117,26 +97,21 @@ export default function CategorySlider({
   }
 
   return (
-    <section className="w-full py-4 sm:py-7 bg-white font-sans">
+    <section className="w-full py-4 sm:py-7 bg-white font-sans border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
-        
-        {/* Minimalist Header */}
-        <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-6">
-          <div>
-            <h2 className="text-lg sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight flex items-center gap-2">
+        {/* Header Row */}
+        <div className="flex items-center justify-between gap-2 mb-3 sm:mb-5">
+          <div className="flex items-center gap-2">
+            <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight flex items-center gap-1.5">
               <span>Shop by Category</span>
-              <span className="w-2 h-2 rounded-full bg-[#0f8646] animate-pulse" />
             </h2>
-            <p className="text-[11px] sm:text-xs text-gray-500 font-medium mt-0.5">
-              Handpicked 100% farm-fresh produce sourced daily for Bhopal households
-            </p>
           </div>
 
           <Link
             href="/shop"
-            className="text-[#0f8646] hover:text-[#0c6a38] font-black text-xs sm:text-sm flex items-center gap-1 group transition shrink-0 bg-emerald-50 hover:bg-emerald-100 px-3.5 py-1.5 rounded-full border border-emerald-200/80 shadow-2xs"
+            className="text-[#0c831f] hover:text-[#096618] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition shrink-0"
           >
-            <span>See All 300+</span>
+            <span>See All</span>
             <ChevronRight
               size={14}
               className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]"
@@ -145,24 +120,19 @@ export default function CategorySlider({
         </div>
 
         {/* 
-          Ultra Eye-Catching Minimalist Luxury Cards (3 Equal Grid Columns)
+          Clean Minimalist 3-Column Touch & Desktop Cards
         */}
-        <div className="grid grid-cols-3 max-w-5xl md:mx-auto gap-2.5 sm:gap-5 md:gap-7">
+        <div className="grid grid-cols-3 max-w-5xl md:mx-auto gap-2.5 sm:gap-4 md:gap-6">
           {activeCategories.map((item, idx) => {
             const rawKey = (item.name || "").toLowerCase().trim();
             const config = CATEGORY_MAP[rawKey] || {
               title: item.name,
-              subtitle: "Fresh Daily Harvest",
-              itemCount: "90+ Items",
-              badge: "🌿 Daily Harvest",
-              btnLabel: "Explore",
+              subtitle: "Fresh Harvested Produce",
+              tag: "Farm Fresh",
               imgUrl: item.image || "/categories/vegetables_4k.jpg",
-              haloColor: "bg-emerald-400/20",
-              cardBg: "from-emerald-50/60 via-white to-emerald-50/20",
-              borderHover: "group-hover:border-emerald-400",
-              hoverShadow: "hover:shadow-[0_18px_38px_rgba(16,185,129,0.16)]",
-              badgeClass: "bg-emerald-100/90 text-emerald-800 border-emerald-200",
-              btnHoverBg: "group-hover:bg-[#0f8646] group-hover:text-white",
+              bgGradient: "bg-gradient-to-b from-gray-50 to-slate-50",
+              borderColor: "border-gray-200",
+              textColor: "text-gray-900",
             };
 
             const imageSrc =
@@ -174,79 +144,53 @@ export default function CategorySlider({
               <motion.div
                 key={item._id || item.name || idx}
                 whileTap={{ scale: 0.96 }}
-                whileHover={{ y: -8 }}
+                whileHover={{ y: -5 }}
                 transition={{ type: "spring", stiffness: 350, damping: 22 }}
                 onClick={() =>
                   router.push(`/shop?category=${encodeURIComponent(item.name)}`)
                 }
-                className={`group cursor-pointer rounded-2xl sm:rounded-3xl p-3 sm:p-5 md:p-6 bg-gradient-to-b ${config.cardBg} border border-gray-200/80 ${config.borderHover} shadow-[0_4px_16px_rgba(0,0,0,0.03)] ${config.hoverShadow} transition-all duration-500 flex flex-col justify-between select-none relative overflow-hidden`}
+                className={`group cursor-pointer rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 md:p-5 ${config.bgGradient} border ${config.borderColor} shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.09)] transition-all duration-300 flex flex-col justify-between select-none relative overflow-hidden`}
               >
-                {/* Background Ambient Color Halo Glow */}
-                <div
-                  className={`absolute -top-10 -right-10 w-36 h-36 ${config.haloColor} rounded-full blur-3xl pointer-events-none transition-transform duration-700 group-hover:scale-150`}
-                />
+                {/* Subtle Hover Shimmer */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/30 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-                {/* Top Badge & Count Row */}
-                <div className="flex items-center justify-between gap-1 mb-2.5 sm:mb-4 relative z-10">
-                  <span
-                    className={`text-[9px] sm:text-[11px] font-black px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full border shadow-2xs ${config.badgeClass} truncate`}
-                  >
-                    {config.badge}
-                  </span>
-
-                  <span className="hidden sm:inline-block text-[11px] font-black text-gray-500 font-mono bg-white/90 border border-gray-200 px-2 py-0.5 rounded-full shadow-2xs">
-                    {config.itemCount}
-                  </span>
-                </div>
-
-                {/* 4K Produce Floating Image Container */}
-                <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-white/90 shadow-sm border border-white/95 my-1 sm:my-2">
+                {/* 4K Image Container */}
+                <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-white shadow-2xs border border-white/80">
                   <img
                     src={imageSrc}
                     alt={config.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700 ease-out"
+                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 ease-out"
                     onError={(e: any) => {
                       e.target.src = config.imgUrl || "/categories/vegetables_4k.jpg";
                     }}
                   />
-
-                  {/* Glassmorphic Reflection Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-black/20 via-transparent to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  {/* Subtle Gradient Overlay on Hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
 
-                {/* Bottom Title & Action Button */}
-                <div className="mt-2.5 sm:mt-4 text-center sm:text-left relative z-10 flex flex-col justify-between">
-                  <div>
-                    <h3 className="font-black text-xs sm:text-lg md:text-xl text-gray-900 leading-tight tracking-tight group-hover:text-emerald-900 transition-colors">
+                {/* Text Content */}
+                <div className="mt-2.5 sm:mt-3.5 text-center sm:text-left flex flex-col justify-between relative z-10">
+                  <div className="flex items-center justify-center sm:justify-between gap-1">
+                    <h3 className={`font-black text-xs sm:text-base md:text-lg ${config.textColor} leading-tight tracking-tight`}>
                       {config.title}
                     </h3>
-
-                    <p className="hidden sm:block text-xs text-gray-500 font-medium mt-1 truncate">
-                      {config.subtitle}
-                    </p>
-                  </div>
-
-                  {/* Sleek Minimalist CTA Pill (Desktop) */}
-                  <div className="hidden sm:flex items-center justify-between mt-3 pt-2.5 border-t border-gray-100">
-                    <span className="text-xs font-black text-gray-800 group-hover:text-[#0f8646] transition-colors">
-                      {config.btnLabel}
-                    </span>
-                    <div className="w-6 h-6 rounded-full bg-white text-gray-400 group-hover:text-[#0f8646] group-hover:bg-emerald-50 border border-gray-200 flex items-center justify-center transition-all duration-300 shadow-2xs group-hover:translate-x-1">
-                      <ArrowRight size={13} className="stroke-[2.5]" />
+                    <div className="hidden sm:flex w-6 h-6 rounded-full bg-white/95 text-[#0c831f] items-center justify-center group-hover:bg-[#0c831f] group-hover:text-white transition-all duration-200 shadow-2xs shrink-0 group-hover:translate-x-1">
+                      <ChevronRight size={13} className="stroke-[3]" />
                     </div>
                   </div>
 
-                  {/* Mobile Minimal Count Label */}
-                  <span className="sm:hidden text-[10px] text-gray-500 font-bold block mt-0.5">
-                    {config.itemCount}
-                  </span>
+                  {/* Mobile Tag / Desktop Subtitle */}
+                  <p className="text-[10px] text-gray-500 font-semibold sm:hidden mt-0.5 truncate">
+                    {config.tag}
+                  </p>
+                  <p className="hidden sm:block text-xs text-gray-500 font-medium truncate mt-1">
+                    {config.subtitle}
+                  </p>
                 </div>
               </motion.div>
             );
           })}
         </div>
-
       </div>
     </section>
   );
