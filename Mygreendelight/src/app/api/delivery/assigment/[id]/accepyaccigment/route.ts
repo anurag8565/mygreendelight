@@ -77,15 +77,31 @@ export async function GET(
       );
     }
 
+    // 🔑 Auto-generate 4-Digit Delivery OTP if not already generated
+    const otp = order.deliveryOtp?.code || Math.floor(1000 + Math.random() * 9000).toString();
+    order.deliveryOtp = {
+      code: otp,
+      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      verified: false,
+      attempts: 0,
+    };
+
     order.assigneddelliveryboy = deliveryboyid;
-
-    // ⭐ THIS WAS MISSING
     order.assigment = assigment._id;
-
-    // Optional but recommended
     order.status = "out of delivery";
 
     await order.save();
+
+    // 🔔 Dispatch OTP to Customer via Email & SMS
+    try {
+      const populatedOrder = await Order.findById(order._id)
+        .populate("user", "name email mobile")
+        .populate("assigneddelliveryboy", "name mobile");
+      const { sendDeliveryOtpNotification } = await import("@/lib/orderNotifications");
+      await sendDeliveryOtpNotification(populatedOrder || order);
+    } catch (notifErr) {
+      console.warn("Delivery OTP notification dispatch note on accept:", notifErr);
+    }
 
     // Remove other broadcasts
     await DeliveryAssignment.updateMany(

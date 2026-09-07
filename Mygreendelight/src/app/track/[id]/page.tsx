@@ -375,13 +375,30 @@ export default function TrackOrderPage() {
               </div>
             </div>
 
-            <div className="bg-white text-[#0f8646] px-5 py-2.5 rounded-2xl shadow-md border-2 border-emerald-400 text-center shrink-0">
-              <span className="text-[9px] font-black uppercase tracking-widest text-gray-400 block">
-                DELIVERY OTP
-              </span>
-              <span className="font-mono text-2xl sm:text-3xl font-black tracking-widest text-emerald-950">
-                {order.deliveryOtp.code}
-              </span>
+            <div className="flex items-center gap-2.5 shrink-0">
+              <div className="bg-white text-[#0f8646] px-5 py-2.5 rounded-2xl shadow-md border-2 border-emerald-400 text-center shrink-0">
+                <span className="text-[9px] font-black uppercase tracking-widest text-gray-400 block">
+                  DELIVERY OTP
+                </span>
+                <span className="font-mono text-2xl sm:text-3xl font-black tracking-widest text-emerald-950">
+                  {order.deliveryOtp.code}
+                </span>
+              </div>
+              <button
+                onClick={async () => {
+                  try {
+                    const res = await axios.post(`/api/delivery/send-delivery-otp/${params.id}`);
+                    alert(res.data.message || "OTP sent to your email & phone!");
+                  } catch (e: any) {
+                    alert(e.response?.data?.message || "Failed to resend OTP");
+                  }
+                }}
+                className="bg-emerald-800/80 hover:bg-emerald-700 active:scale-95 text-white text-[11px] font-black px-3 py-3 rounded-2xl border border-emerald-600/80 transition cursor-pointer flex flex-col items-center justify-center gap-0.5 shadow-2xs"
+                title="Resend OTP to Email / SMS"
+              >
+                <span>📩</span>
+                <span>Resend</span>
+              </button>
             </div>
           </motion.div>
         )}

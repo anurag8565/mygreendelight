@@ -45,6 +45,15 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // 🔑 Auto-generate 4-Digit Delivery OTP if not already generated
+    const otp = order.deliveryOtp?.code || Math.floor(1000 + Math.random() * 9000).toString();
+    order.deliveryOtp = {
+      code: otp,
+      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      verified: false,
+      attempts: 0,
+    };
+
     // Assign to driver and update status
     order.assigneddelliveryboy = driver._id;
     order.status = "out of delivery";
@@ -77,9 +86,18 @@ export async function POST(req: NextRequest) {
       .populate("user", "name email mobile")
       .populate("assigneddelliveryboy", "name mobile");
 
+    // 🔔 Dispatch OTP to Customer via Email & SMS
+    try {
+      const { sendDeliveryOtpNotification } = await import("@/lib/orderNotifications");
+      await sendDeliveryOtpNotification(populatedOrder, driver);
+    } catch (notifErr) {
+      console.warn("Delivery OTP notification dispatch note:", notifErr);
+    }
+
     return NextResponse.json({
       success: true,
-      message: `Successfully assigned order to ${driver.name}`,
+      message: `Successfully assigned order to ${driver.name}. Delivery OTP (${otp}) dispatched to customer.`,
+      otp,
       order: populatedOrder
     });
   } catch (error: any) {

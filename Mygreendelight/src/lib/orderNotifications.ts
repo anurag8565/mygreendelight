@@ -236,3 +236,71 @@ export async function sendOrderNotifications(payload: OrderNotificationPayload) 
     }
   }
 }
+
+/**
+ * Dispatches Delivery OTP to Customer via Email and SMS
+ */
+export async function sendDeliveryOtpNotification(order: any, driver?: any) {
+  const otp = order.deliveryOtp?.code;
+  if (!otp) return;
+
+  const customerEmail = order.user?.email || order.address?.email;
+  const customerPhone = order.address?.mobile || order.user?.mobile;
+  const customerName = order.address?.fullname || order.user?.name || "Customer";
+  const orderShortId = String(order._id).slice(-6).toUpperCase();
+  const driverName = driver?.name || order.assigneddelliveryboy?.name || "SubziQuick Fleet Partner";
+
+  // 1. 📧 Send OTP Email
+  if (customerEmail && customerEmail.includes("@")) {
+    try {
+      await sendMail(
+        customerEmail,
+        `SubziQuick Delivery OTP: ${otp} (Order #${orderShortId})`,
+        `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 480px; margin: 0 auto; padding: 24px; border: 1px solid #d1fae5; border-radius: 20px; background: #ffffff;">
+          <div style="text-align: center; margin-bottom: 20px;">
+            <span style="background: #ecfdf5; color: #065f46; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 20px; text-transform: uppercase;">SubziQuick Bhopal Express Delivery</span>
+            <h2 style="color: #0f8646; margin: 12px 0 4px 0; font-size: 22px;">Doorstep Verification OTP</h2>
+            <p style="color: #6b7280; font-size: 13px; margin: 0;">Hi ${customerName}, your delivery partner (${driverName}) is out for delivery with your fresh harvest.</p>
+          </div>
+
+          <div style="background: #0f8646; border-radius: 16px; text-align: center; padding: 20px; margin: 20px 0; color: #ffffff;">
+            <p style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 6px 0; opacity: 0.85;">Share this 4-Digit OTP with Rider</p>
+            <h1 style="color: #ffffff; letter-spacing: 10px; margin: 0; font-size: 38px; font-family: monospace; font-weight: 900;">${otp}</h1>
+          </div>
+
+          <p style="color: #4b5563; font-size: 12px; text-align: center; line-height: 1.5; margin-bottom: 8px;">
+            <strong>Note:</strong> Share this OTP only after verifying and inspecting your fresh produce.
+          </p>
+          <p style="color: #9ca3af; font-size: 11px; text-align: center; margin: 0;">SubziQuick Helpline: +91 9981418565 • subziquick.in</p>
+        </div>
+        `
+      );
+      console.log(`✓ Delivery OTP ${otp} emailed to ${customerEmail}`);
+    } catch (mailErr) {
+      console.warn("Mail OTP dispatch warning:", mailErr);
+    }
+  }
+
+  // 2. 📱 Send OTP SMS
+  if (process.env.FAST2SMS_API_KEY && customerPhone) {
+    try {
+      const cleanPhone = customerPhone.toString().replace(/[^0-9]/g, "").slice(-10);
+      await fetch("https://www.fast2sms.com/dev/bulkV2", {
+        method: "POST",
+        headers: {
+          authorization: process.env.FAST2SMS_API_KEY,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          route: "otp",
+          variables_values: otp,
+          numbers: cleanPhone,
+        }),
+      });
+      console.log(`✓ Delivery OTP ${otp} SMS sent to ${cleanPhone}`);
+    } catch (smsErr) {
+      console.warn("Fast2SMS OTP dispatch warning:", smsErr);
+    }
+  }
+}
