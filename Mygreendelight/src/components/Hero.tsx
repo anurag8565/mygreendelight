@@ -114,26 +114,8 @@ export default function Hero({ banners = [] }: HeroProps) {
   };
 
   return (
-    <section className="w-full bg-gradient-to-b from-emerald-50/50 via-white to-white pt-2 sm:pt-3 pb-2 sm:pb-3 font-sans">
+    <section className="w-full bg-gradient-to-b from-emerald-50/50 via-white to-white pt-2 sm:pt-4 pb-2 sm:pb-3 font-sans">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
-        
-        {/* Top Floating Live Ticker */}
-        <div className="flex items-center justify-between gap-2 mb-2 px-1 text-[11px] sm:text-xs">
-          <div className="flex items-center gap-1.5 font-extrabold text-emerald-900 bg-emerald-100/70 border border-emerald-200/80 px-2.5 py-1 rounded-full">
-            <span className="w-2 h-2 rounded-full bg-[#0f8646] animate-ping shrink-0" />
-            <span className="truncate">⚡ Delivering Live across Bhopal in 10-15 mins</span>
-          </div>
-
-          <Link
-            href="/offers"
-            className="hidden sm:flex items-center gap-1 font-black text-[#0f8646] hover:text-[#0c6a38] bg-white border border-emerald-200 px-3 py-1 rounded-full shadow-2xs hover:shadow-xs transition"
-          >
-            <Tag size={12} className="text-amber-500 fill-amber-500" />
-            <span>Use Code <strong>FRESH50</strong> for ₹50 OFF</span>
-            <ChevronRight size={13} />
-          </Link>
-        </div>
-
         {/* Main Luxury Hero Banner Card */}
         <div
           onTouchStart={handleTouchStart}
