@@ -33,7 +33,7 @@ export default function DeliveryRadarStrip() {
               Arera Colony • Kolar Road • MP Nagar • Bairagarh
             </span>
             <span className="text-green-100 md:hidden">
-              Across all Bhopal Hubs
+              Across all Bhopal Localities
             </span>
           </div>
         </div>
@@ -44,7 +44,7 @@ export default function DeliveryRadarStrip() {
           className="inline-flex items-center gap-1 text-green-200 hover:text-white font-bold transition text-xs shrink-0 bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full backdrop-blur-xs"
         >
           <MapPin size={12} />
-          <span>View Bhopal Hubs</span>
+          <span>View SubziQuick Store</span>
           <ChevronRight size={12} />
         </Link>
 

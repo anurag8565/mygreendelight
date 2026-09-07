@@ -375,7 +375,7 @@ export default function TrackOrderPage() {
                   Assigning Delivery Partner...
                 </h3>
                 <p className="text-xs sm:text-sm text-gray-500 mt-1 leading-relaxed">
-                  Our store team is currently picking and packing your fresh items. A delivery partner from our nearest hub will be assigned shortly!
+                  Our store team is currently picking and packing your fresh items. A delivery partner from SubziQuick Store will be assigned shortly!
                 </p>
               </div>
             </div>

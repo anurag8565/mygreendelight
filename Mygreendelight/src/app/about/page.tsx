@@ -216,7 +216,7 @@ export default function AboutPage() {
                 badge: "Digital Platform",
                 icon: <TrendingUp size={22} className="text-[#0f8646]" />,
                 title: "SubziQuick Online Launch",
-                desc: "Scaled into a full digital web platform (subziquick.in) with central store hub in Bagsewaniya, offering 1-click ordering and direct zero-fee payments.",
+                desc: "Scaled into a full digital web platform (subziquick.in) with our SubziQuick Store in Amrai, Bagsewaniya, offering 1-click ordering and direct zero-fee payments.",
               },
               {
                 year: "Present",

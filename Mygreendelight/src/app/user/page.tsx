@@ -162,7 +162,7 @@ export default function UserProfileHub() {
                   {activeUser?.email || activeUser?.mobile || "SubziQuick Farm Fresh Deliveries"}
                 </p>
                 <div className="flex items-center justify-center sm:justify-start gap-3 mt-2 text-[11px] text-green-200">
-                  <span>📍 Bhopal Central Hub</span>
+                  <span>📍 SubziQuick Store (Amrai, Bagsewaniya)</span>
                   <span>•</span>
                   <span>🌿 Same-Day Harvest</span>
                 </div>

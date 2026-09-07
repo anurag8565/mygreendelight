@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact SubziQuick Bhopal | Customer Helpline & Central Hub Address",
+  title: "Contact SubziQuick Bhopal | Customer Helpline & Store Address",
   description:
-    "Get in touch with SubziQuick Bhopal customer care. Call or WhatsApp +91-9981418565 for quick order support, society bulk orders, or visit our central delivery hub at Bagsewaniya, Bhopal.",
+    "Get in touch with SubziQuick Bhopal customer care. Call or WhatsApp +91-9981418565 for quick order support, society bulk orders, or visit SubziQuick Store at Amrai, Bagsewaniya, Bhopal.",
   keywords: [
     "SubziQuick Bhopal customer care",
     "SubziQuick phone number Bhopal",

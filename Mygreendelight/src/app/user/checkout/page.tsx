@@ -52,7 +52,7 @@ const CheckoutMap = dynamic(() => import("@/components/CheckoutMap"), {
 });
 
 const BHOPAL_AREAS = [
-  { name: "Bagsewaniya / Amrai (Store Hub)", pincode: "462043", lat: 23.1985, lng: 77.4475 },
+  { name: "Bagsewaniya / Amrai (SubziQuick Store)", pincode: "462043", lat: 23.1985, lng: 77.4475 },
   { name: "MP Nagar (Zone 1 & 2)", pincode: "462011", lat: 23.2332, lng: 77.4343 },
   { name: "Arera Colony (E1-E8 / 10 No. Market)", pincode: "462016", lat: 23.2167, lng: 77.4267 },
   { name: "Kolar Road / Sarvdharm / Chuna Bhatti", pincode: "462042", lat: 23.175, lng: 77.418 },
@@ -185,7 +185,7 @@ export default function Checkout() {
           });
           setSelectedAreaIndex(nearestIdx);
           setInsideBhopalSuccess(
-            `✅ Location Verified: Closest Bhopal delivery hub pinpointed as "${BHOPAL_AREAS[nearestIdx].name}" (PIN: ${BHOPAL_AREAS[nearestIdx].pincode}).`
+            `✅ Location Verified: Closest delivery location pinpointed as "${BHOPAL_AREAS[nearestIdx].name}" (PIN: ${BHOPAL_AREAS[nearestIdx].pincode}).`
           );
           setOutsideBhopalNotice(null);
         }
@@ -459,7 +459,7 @@ export default function Checkout() {
                 </span>
               </div>
               <p className="text-xs text-emerald-100/90 font-medium">
-                Freshly packed & dispatched from Bagsewaniya (Amrai Store Hub, Bhopal)
+                Freshly packed & dispatched from SubziQuick Store (Amrai, Bagsewaniya, Bhopal)
               </p>
             </div>
           </div>
@@ -756,7 +756,7 @@ export default function Checkout() {
                     id: "Early Morning Slot (6:00 AM – 8:30 AM)",
                     title: "Early Morning Harvest",
                     time: "6:00 AM – 8:30 AM",
-                    desc: "Direct farm harvest dispatch from Amrai Hub for breakfast",
+                    desc: "Direct farm harvest dispatch from SubziQuick Store for breakfast",
                     icon: Sun,
                     badge: "Best Freshness",
                     badgeColor: "bg-emerald-100 text-emerald-800",

@@ -158,7 +158,7 @@ export default function ContactPage() {
               {/* Header Texts */}
               <div className="md:col-span-7">
                 <span className="inline-flex items-center gap-1.5 text-xs font-black text-[#0f8646] uppercase tracking-wider bg-green-100/80 px-3.5 py-1 rounded-full mb-4">
-                  <Headphones size={14} /> 24/7 CUSTOMER CARE & BHOPAL HUBS
+                  <Headphones size={14} /> 24/7 CUSTOMER CARE & SUBZIQUICK STORE
                 </span>
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 leading-tight mb-4">
                   We Are Always Here <br />

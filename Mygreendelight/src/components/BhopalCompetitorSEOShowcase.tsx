@@ -31,7 +31,7 @@ export default function BhopalCompetitorSEOShowcase() {
     { name: "Bittan Market & E-4", query: "bittan market", tag: "Farm Fresh" },
     { name: "Gulmohar & Shahpura", query: "shahpura", tag: "Popular" },
     { name: "Bawadiya Kalan & Trilanga", query: "bawadiya kalan", tag: "Fast Delivery" },
-    { name: "Katara Hills & Bagsewaniya", query: "katara hills", tag: "Central Hub" },
+    { name: "Katara Hills & Bagsewaniya", query: "katara hills", tag: "SubziQuick Store" },
     { name: "Hoshangabad Road & Misrod", query: "hoshangabad road", tag: "Sunrise Slot" },
     { name: "Ayodhya Bypass & Minal", query: "ayodhya bypass", tag: "Daily Morning" },
     { name: "Indrapuri & BHEL", query: "indrapuri", tag: "Bulk Savings" },
@@ -319,13 +319,13 @@ export default function BhopalCompetitorSEOShowcase() {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
               <div>
                 <span className="bg-white/20 text-white text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                  📍 Hyperlocal Delivery Hubs
+                  📍 Hyperlocal Delivery Areas
                 </span>
                 <h3 className="text-xl sm:text-3xl font-black tracking-tight mt-2 text-white">
                   Fast Doorstep Produce Delivery in Bhopal
                 </h3>
                 <p className="text-xs sm:text-sm text-green-100/90 mt-1 max-w-xl">
-                  Dispatched from our Bagsewaniya Central Hub with temperature-safe packing for crisp, fresh delivery.
+                  Dispatched from SubziQuick Store (Amrai, Bagsewaniya) with temperature-safe packing for crisp, fresh delivery.
                 </p>
               </div>
               <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/20 text-xs font-bold shrink-0">

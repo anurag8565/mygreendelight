@@ -51,7 +51,7 @@ export default function LocationModal({
   }, []);
 
   const POPULAR_BHOPAL_AREAS = [
-    { name: "Bagsewaniya (Amrai)", tag: "Store Hub" },
+    { name: "Bagsewaniya (Amrai)", tag: "SubziQuick Store" },
     { name: "MP Nagar Zone 1 & 2", tag: "Express" },
     { name: "Arera Colony (10 No.)", tag: "Express" },
     { name: "Kolar Road / Sarvdharm", tag: "Express" },

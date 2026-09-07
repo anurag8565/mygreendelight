@@ -217,7 +217,7 @@ export default function OrderPackingSlipModal({
               <span className="font-black text-gray-900">
                 {order.assigneddelliveryboy?.name
                   ? `${order.assigneddelliveryboy.name} (${order.assigneddelliveryboy.mobile || "Assigned"})`
-                  : "SubziQuick Hub Express Rider"}
+                  : "SubziQuick Express Rider"}
               </span>
             </div>
 
