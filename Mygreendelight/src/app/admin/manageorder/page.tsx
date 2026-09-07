@@ -85,6 +85,10 @@ interface OrderType {
   };
   assigment?: any;
   items: OrderItem[];
+  deliveryOtp?: {
+    code: string | null;
+    verified: boolean;
+  };
   address: {
     fullname: string;
     mobile: string;
@@ -367,20 +371,37 @@ export default function ManageOrder() {
     const name = order.address?.fullname || order.user?.name || "Customer";
     const shortId = String(order._id).slice(-6).toUpperCase();
     const currentStatus = (statuses[order._id] || order.status || "pending").toLowerCase();
+    const deliveryOtp = order.deliveryOtp?.code;
+    const isPaid = order.ispaid;
+    const itemsCount = order.items?.length || 0;
 
-    let msg = `Hi ${name}! 🌿 Your SubziQuick Order #${shortId} (₹${order.totalamount}) status update: `;
+    let msg = `*🌿 SubziQuick Farm Fresh Bhopal*\n` +
+      `━━━━━━━━━━━━━━━━━━━\n` +
+      `Namaste *${name}*! 🙏\n\n` +
+      `Aapke Order *#${shortId}* ka status update: `;
+
     if (currentStatus === "pending") {
-      msg += `Your order is confirmed & our farm team in Bhopal is carefully packing your fresh groceries! 🥦🍅`;
+      msg += `*CONFIRMED & PACKING* 🥦🍅\nHumari Bhopal farm team aapki taaza sabziyan pack kar rahi hai.`;
     } else if (currentStatus === "out of delivery") {
-      const rider = order.assigneddelliveryboy?.name ? `with rider ${order.assigneddelliveryboy.name}` : "";
-      msg += `Your order is OUT FOR DELIVERY ${rider}! Our delivery fleet is on the way to your address. 🛵💨`;
+      const rider = order.assigneddelliveryboy?.name ? `with rider *${order.assigneddelliveryboy.name}*` : "";
+      msg += `*OUT FOR DELIVERY* 🛵💨 ${rider}\nHumara delivery partner aapke address par nikal chuka hai.`;
     } else if (currentStatus === "delivered" || currentStatus === "completed") {
-      msg += `Your order has been DELIVERED successfully. Enjoy your fresh harvest! ⭐`;
+      msg += `*DELIVERED* 🎉\nAapka taaza harvest deliver ho gaya hai. Freshness enjoy karein! ⭐`;
     } else if (currentStatus === "cancelled") {
-      msg += `Your order was cancelled. Please contact support if you need any assistance.`;
+      msg += `*CANCELLED*\nAapka order cancel kar diya gaya hai.`;
     } else {
-      msg += `Status: ${currentStatus.toUpperCase()}`;
+      msg += `*${currentStatus.toUpperCase()}*`;
     }
+
+    msg += `\n\n📦 *Total Items:* ${itemsCount} items\n` +
+      `💵 *Bill Amount:* ₹${order.totalamount} (${isPaid ? "✅ Paid Online" : "💵 Cash / UPI on Delivery"})\n`;
+
+    if (deliveryOtp && currentStatus !== "delivered" && currentStatus !== "cancelled") {
+      msg += `🔑 *Doorstep Verification OTP:* *${deliveryOtp}*\n(Delivery lete waqt rider ko ye OTP share karein)\n`;
+    }
+
+    msg += `\n👉 Live Tracking: https://subziquick.in/track/${order._id}\n\n` +
+      `SubziQuick Helpline: +91 9981418565 • Bhopal (MP)`;
 
     const waUrl = `https://wa.me/${formattedMobile}?text=${encodeURIComponent(msg)}`;
     window.open(waUrl, "_blank");
@@ -666,7 +687,14 @@ export default function ManageOrder() {
 
                           {order.paymentId && (
                             <span className="text-[10px] font-mono bg-purple-50 text-purple-800 px-2 py-0.5 rounded-md border border-purple-200 font-bold" title="Payment Reference / UTR Number">
-                              {order.paymentId}
+                              Ref: {order.paymentId}
+                            </span>
+                          )}
+
+                          {order.deliveryOtp?.code && (
+                            <span className="text-[10.5px] font-mono bg-emerald-950 text-emerald-300 font-black px-2.5 py-0.5 rounded-md border border-emerald-700 shadow-2xs flex items-center gap-1" title="Doorstep Verification OTP">
+                              <span>🔑 OTP:</span>
+                              <span className="text-white tracking-wider">{order.deliveryOtp.code}</span>
                             </span>
                           )}
                         </div>
