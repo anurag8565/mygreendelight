@@ -28,15 +28,8 @@ export async function POST(req: NextRequest) {
             name,
             email,
             password: hashedpassword,
-            walletBalance: 50,
-            walletHistory: [
-                {
-                    amount: 50,
-                    type: "credit",
-                    description: "🎉 Welcome Farm Gift Bonus",
-                    date: new Date(),
-                },
-            ],
+            walletBalance: 0,
+            walletHistory: [],
         });
         await user.save();
 
@@ -44,16 +37,9 @@ export async function POST(req: NextRequest) {
             const UserWallet = (await import("@/model/wallet.model")).default;
             await UserWallet.create({
                 user: user._id,
-                balance: 50,
-                totalCashback: 50,
-                transactions: [
-                    {
-                        type: "credit",
-                        amount: 50,
-                        description: "🎉 Welcome Farm Gift Bonus",
-                        createdAt: new Date(),
-                    },
-                ],
+                balance: 0,
+                totalCashback: 0,
+                transactions: [],
             });
         } catch (wErr) {
             console.warn("Wallet create note:", wErr);

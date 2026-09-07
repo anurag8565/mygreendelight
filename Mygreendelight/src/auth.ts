@@ -90,31 +90,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                             image: user.image,
                             password: "",
                             role: "user",
-                            walletBalance: 50,
-                            walletHistory: [
-                                {
-                                    amount: 50,
-                                    type: "credit",
-                                    description: "🎉 Welcome Farm Gift Bonus",
-                                    date: new Date(),
-                                },
-                            ],
+                            walletBalance: 0,
+                            walletHistory: [],
                         });
 
                         try {
                             const UserWallet = (await import("./model/wallet.model")).default;
                             await UserWallet.create({
                                 user: existingUser._id,
-                                balance: 50,
-                                totalCashback: 50,
-                                transactions: [
-                                    {
-                                        type: "credit",
-                                        amount: 50,
-                                        description: "🎉 Welcome Farm Gift Bonus",
-                                        createdAt: new Date(),
-                                    },
-                                ],
+                                balance: 0,
+                                totalCashback: 0,
+                                transactions: [],
                             });
                         } catch (wErr) {
                             console.warn("Wallet create error on Google signin:", wErr);
