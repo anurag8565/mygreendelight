@@ -229,6 +229,9 @@ export async function POST(req: NextRequest) {
 
         const finalTotalToSave = Math.max(0, verifiedSubtotal + deliveryFeeCalc - discountCalc - walletDiscountCalc);
 
+        // 🔑 Generate 4-digit Doorstep Delivery Verification OTP
+        const autoDeliveryOtp = Math.floor(1000 + Math.random() * 9000).toString();
+
         // ✅ create order
         const neworder = await Order.create({
             user: userid,
@@ -247,6 +250,12 @@ export async function POST(req: NextRequest) {
             paymentProofImage: paymentProofImage || null,
             paymentStatus: "pending",
             ispaid: false,
+            deliveryOtp: {
+                code: autoDeliveryOtp,
+                expiresAt: new Date(Date.now() + 48 * 60 * 60 * 1000),
+                verified: false,
+                attempts: 0,
+            },
         });
 
         // Mark single-use scratch reward as used

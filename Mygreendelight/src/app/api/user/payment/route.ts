@@ -128,6 +128,9 @@ export async function POST(req: NextRequest) {
     const walletDiscountCalc = Number(walletDiscount) || 0;
     const finalTotalToSave = Math.max(0, subtotalCalc + deliveryFeeCalc - discountCalc - walletDiscountCalc);
 
+    // 🔑 Generate 4-digit Doorstep Delivery Verification OTP
+    const autoDeliveryOtp = Math.floor(1000 + Math.random() * 9000).toString();
+
     // ✅ create order (ispaid = false initially)
     const neworder = await Order.create({
       user: userid,
@@ -140,6 +143,12 @@ export async function POST(req: NextRequest) {
       walletDiscount: walletDiscountCalc,
       deliverySlot: deliverySlot || "Instant Express (30-45 Mins)",
       ispaid: false,
+      deliveryOtp: {
+        code: autoDeliveryOtp,
+        expiresAt: new Date(Date.now() + 48 * 60 * 60 * 1000),
+        verified: false,
+        attempts: 0,
+      },
     });
 
     // 💰 Deduct GreenPoints Wallet if redeemed

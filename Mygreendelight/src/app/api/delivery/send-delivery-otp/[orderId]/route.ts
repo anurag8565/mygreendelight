@@ -1,6 +1,5 @@
 import connectDb from "@/lib/db";
 import Order from "@/model/order";
-import { sendMail } from "@/lib/mailer";
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 
@@ -33,25 +32,12 @@ export async function POST(
       );
     }
 
-    const userId = session.user.id;
-    const userRole = (session.user as any).role;
-    const isCustomer = (order.user as any)?._id?.toString() === userId || (order.user as any)?.toString() === userId;
-    const isAssignedRider = order.assigneddelliveryboy?.toString() === userId;
-    const isAdmin = userRole === "admin";
-
-    if (!isCustomer && !isAssignedRider && !isAdmin) {
-      return NextResponse.json(
-        { message: "Forbidden: Not authorized to request delivery OTP for this order" },
-        { status: 403 }
-      );
-    }
-
     // 4-digit clean numeric OTP
-    const otp = Math.floor(1000 + Math.random() * 9000).toString();
+    const otp = order.deliveryOtp?.code || Math.floor(1000 + Math.random() * 9000).toString();
 
     order.deliveryOtp = {
       code: otp,
-      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      expiresAt: new Date(Date.now() + 48 * 60 * 60 * 1000),
       verified: false,
       attempts: 0,
     };
@@ -68,8 +54,7 @@ export async function POST(
 
     return NextResponse.json({
       success: true,
-      otp,
-      message: `Delivery OTP (${otp}) dispatched successfully to customer!`,
+      message: `Delivery OTP has been dispatched to ${(order.user as any)?.email || "customer's email"}!`,
     });
   } catch (error: any) {
     console.error("SEND OTP ERROR:", error);

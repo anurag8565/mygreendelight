@@ -28,12 +28,12 @@ export async function GET(
       );
     }
 
-    // 🔑 If order is out for delivery or rider is assigned, guarantee OTP exists
-    if ((order.status === "out of delivery" || order.assigneddelliveryboy) && !order.deliveryOtp?.code) {
+    // 🔑 Self-Healing: Guarantee 4-Digit Delivery OTP exists for all ongoing orders
+    if (order.status !== "delivered" && order.status !== "cancelled" && !order.deliveryOtp?.code) {
       const otp = Math.floor(1000 + Math.random() * 9000).toString();
       order.deliveryOtp = {
         code: otp,
-        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+        expiresAt: new Date(Date.now() + 48 * 60 * 60 * 1000),
         verified: false,
         attempts: 0,
       };
