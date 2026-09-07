@@ -25,12 +25,17 @@ import {
   Radio,
   ShoppingBag,
   Loader2,
+  LogOut,
+  Store,
+  MessageSquare,
 } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
+import { signOut } from 'next-auth/react'
+import Link from 'next/link'
 import dynamic from 'next/dynamic'
 const Livemap = dynamic(() => import('./Livemap'), { ssr: false })
-import ChatButton from './ChatButton'
+import ChatBox from './ChatBox'
 import EarningsChart from './EarningsChart'
 import DeliveriesChart from './DeliveriesChart'
 import RecentDeliveries from './RecentDeliveries'
@@ -53,6 +58,7 @@ export default function Deliveryboy({ initialUser }: Props) {
   const [sendingOtpEmail, setSendingOtpEmail] = useState(false)
   const [bagsReturned, setBagsReturned] = useState<number>(0)
   const [gpsActive, setGpsActive] = useState(false)
+  const [isChatOpen, setIsChatOpen] = useState(false)
 
   const [earningsData, setEarningsData] = useState([])
   const [deliveriesData, setDeliveriesData] = useState([])
@@ -67,7 +73,7 @@ export default function Deliveryboy({ initialUser }: Props) {
   const { userdata } = useSelector((state: RootState) => state.user)
   const currentUser = initialUser || userdata
 
-  // Socket notification for incoming broadcasts
+  // Socket listener for real-time delivery dispatches
   useEffect(() => {
     socket.on('new-assignment', (assignment) => {
       setAssignments((prev) => [assignment, ...prev])
@@ -142,7 +148,6 @@ export default function Deliveryboy({ initialUser }: Props) {
     }
   }, [])
 
-  // Always fetch on component mount!
   useEffect(() => {
     handleRefreshAll()
   }, [handleRefreshAll])
@@ -237,6 +242,60 @@ export default function Deliveryboy({ initialUser }: Props) {
     }
   }
 
+  // Common Header for Delivery Partner App Shell
+  const renderRiderHeader = () => (
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200/80 px-4 py-3 shadow-2xs">
+      <div className="max-w-4xl mx-auto flex items-center justify-between gap-3">
+        {/* Brand & Duty Badge */}
+        <div className="flex items-center gap-2.5">
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#0f8646] to-emerald-400 text-white flex items-center justify-center font-black shadow-sm shrink-0">
+            <Truck size={20} />
+          </div>
+          <div>
+            <div className="flex items-center gap-1.5">
+              <span className="font-black text-sm text-gray-900 leading-tight">SubziQuick Partner</span>
+              <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-800 text-[10px] font-black px-2 py-0.5 rounded-full">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+                Online
+              </span>
+            </div>
+            <p className="text-[11px] text-gray-500 font-semibold truncate max-w-[160px] sm:max-w-xs">
+              {currentUser?.name || 'Rider Hub'} • Bhopal
+            </p>
+          </div>
+        </div>
+
+        {/* Quick Nav / Actions */}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleRefreshAll}
+            disabled={refreshing}
+            className="w-9 h-9 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center transition cursor-pointer"
+            title="Refresh Feed"
+          >
+            <RotateCw size={15} className={refreshing ? 'animate-spin text-[#0f8646]' : ''} />
+          </button>
+
+          <Link
+            href="/user"
+            className="inline-flex items-center gap-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold px-3 py-2 rounded-xl transition"
+            title="My Profile"
+          >
+            <span>Account</span>
+          </Link>
+
+          <button
+            onClick={() => signOut({ callbackUrl: '/login' })}
+            className="w-9 h-9 rounded-xl bg-gray-100 hover:bg-red-50 hover:text-red-700 text-gray-600 flex items-center justify-center transition cursor-pointer"
+            title="Sign Out"
+          >
+            <LogOut size={15} />
+          </button>
+        </div>
+      </div>
+    </header>
+  )
+
   // ==========================================
   // VIEW 1: ACTIVE DELIVERY TRIP IN PROGRESS
   // ==========================================
@@ -266,49 +325,55 @@ export default function Deliveryboy({ initialUser }: Props) {
     const whatsappArrivalUrl = `https://wa.me/91${cleanMobile}?text=${arrivalWhatsappMsg}`
 
     return (
-      <div className="font-sans pb-24 px-3 sm:px-6">
-        <div className="max-w-3xl mx-auto space-y-4">
+      <div className="min-h-screen bg-[#f8faf9] flex flex-col font-sans">
+        {renderRiderHeader()}
+
+        <main className="flex-1 max-w-3xl w-full mx-auto p-4 sm:p-6 space-y-4 pb-20">
           
-          {/* Top Status Header */}
-          <div className="bg-white rounded-3xl p-5 shadow-xs border border-emerald-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-2 flex-wrap">
+          {/* Active Trip Header Card */}
+          <div className="bg-white rounded-3xl p-5 shadow-xs border border-emerald-100 space-y-3">
+            <div className="flex items-center justify-between gap-2 flex-wrap">
+              <div className="flex items-center gap-2">
                 <span className="inline-flex items-center gap-1.5 bg-emerald-600 text-white text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">
                   <span className="w-2 h-2 rounded-full bg-emerald-200 animate-ping"></span>
                   Trip In Progress
                 </span>
-                <span className="font-mono font-black text-xs text-gray-700 bg-gray-100 px-2.5 py-1 rounded-full">
+                <span className="font-mono font-black text-xs text-gray-800 bg-gray-100 px-2.5 py-1 rounded-lg">
                   #{orderShortId}
                 </span>
-                {gpsActive && (
-                  <span className="text-[11px] font-bold text-blue-600 bg-blue-50 border border-blue-200/80 px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                    <Radio size={11} className="animate-pulse" />
-                    <span>GPS Online</span>
-                  </span>
-                )}
               </div>
-              <h2 className="text-xl sm:text-2xl font-black text-gray-900 mt-2 tracking-tight">
+
+              {gpsActive && (
+                <span className="text-[11px] font-bold text-blue-600 bg-blue-50 border border-blue-200/80 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                  <Radio size={11} className="animate-pulse" />
+                  <span>GPS Streaming</span>
+                </span>
+              )}
+            </div>
+
+            <div>
+              <h2 className="text-2xl font-black text-gray-900 tracking-tight">
                 {customerName}
               </h2>
-              <p className="text-xs text-gray-500 mt-0.5 flex items-start gap-1.5">
-                <MapPin size={13} className="text-[#0f8646] shrink-0 mt-0.5" />
+              <p className="text-xs text-gray-500 mt-1 flex items-start gap-1.5 leading-relaxed">
+                <MapPin size={14} className="text-[#0f8646] shrink-0 mt-0.5" />
                 <span>{customerAddress}</span>
               </p>
             </div>
 
             {/* Payment Badge */}
             <div
-              className={`p-3.5 rounded-2xl border text-xs font-black shrink-0 ${
+              className={`p-3.5 rounded-2xl border text-xs font-black ${
                 isPaid
                   ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
                   : 'bg-amber-50 text-amber-900 border-amber-300'
               }`}
             >
               <div className="text-[10px] uppercase tracking-wider text-gray-500 font-bold mb-0.5">
-                {isPaid ? 'Payment Status' : 'Cash / UPI Collection'}
+                {isPaid ? 'Payment Status' : 'Cash / UPI Collection Required'}
               </div>
-              <div className="text-sm font-black">
-                {isPaid ? '✅ Paid Online (₹0)' : `💵 Collect ₹${totalAmount}`}
+              <div className="text-base font-black">
+                {isPaid ? '✅ Paid Online (₹0 to collect)' : `💵 Collect Cash: ₹${totalAmount}`}
               </div>
             </div>
           </div>
@@ -335,13 +400,13 @@ export default function Deliveryboy({ initialUser }: Props) {
             </div>
           )}
 
-          {/* 1-Tap Thumb Action Bar */}
-          <div className="grid grid-cols-3 gap-2 sm:gap-3">
+          {/* 4 Clean Thumb Actions Grid (NO Overlapping floating buttons) */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
             <a
               href={mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white p-3.5 rounded-2xl font-black text-xs flex flex-col sm:flex-row items-center justify-center gap-1.5 transition shadow-xs cursor-pointer text-center"
+              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white p-3 rounded-2xl font-black text-xs flex flex-col items-center justify-center gap-1 transition shadow-2xs cursor-pointer text-center"
             >
               <Compass size={18} />
               <span>GPS Map</span>
@@ -352,7 +417,7 @@ export default function Deliveryboy({ initialUser }: Props) {
                 href={whatsappArrivalUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#25D366] hover:bg-[#20bd5a] text-white p-3.5 rounded-2xl font-black text-xs flex flex-col sm:flex-row items-center justify-center gap-1.5 transition shadow-xs cursor-pointer text-center"
+                className="bg-[#25D366] hover:bg-[#20bd5a] text-white p-3 rounded-2xl font-black text-xs flex flex-col items-center justify-center gap-1 transition shadow-2xs cursor-pointer text-center"
               >
                 <MessageCircle size={18} />
                 <span>WhatsApp</span>
@@ -362,16 +427,24 @@ export default function Deliveryboy({ initialUser }: Props) {
             {customerMobile ? (
               <a
                 href={`tel:${customerMobile}`}
-                className="bg-gray-900 hover:bg-black text-white p-3.5 rounded-2xl font-black text-xs flex flex-col sm:flex-row items-center justify-center gap-1.5 transition shadow-xs cursor-pointer text-center"
+                className="bg-gray-900 hover:bg-black text-white p-3 rounded-2xl font-black text-xs flex flex-col items-center justify-center gap-1 transition shadow-2xs cursor-pointer text-center"
               >
                 <Phone size={18} />
-                <span>Call</span>
+                <span>Call Customer</span>
               </a>
             ) : null}
+
+            <button
+              onClick={() => setIsChatOpen(true)}
+              className="bg-emerald-100 hover:bg-emerald-200 text-[#0f8646] p-3 rounded-2xl font-black text-xs flex flex-col items-center justify-center gap-1 transition shadow-2xs cursor-pointer text-center border border-emerald-300"
+            >
+              <MessageSquare size={18} />
+              <span>In-App Chat</span>
+            </button>
           </div>
 
-          {/* Interactive Live Map */}
-          <div className="rounded-3xl border border-gray-200/80 shadow-xs overflow-hidden bg-white p-2">
+          {/* Compact Live Map */}
+          <div className="rounded-3xl border border-gray-200/80 shadow-xs overflow-hidden bg-white p-3">
             <Livemap
               customerLocation={{
                 latitude: userlocation.latitude,
@@ -381,14 +454,14 @@ export default function Deliveryboy({ initialUser }: Props) {
             />
           </div>
 
-          {/* Produce Items & OTP Verification */}
+          {/* Produce Bag & Doorstep OTP Verification */}
           <div className="grid md:grid-cols-2 gap-4">
             {/* Produce Bag Items */}
             <div className="bg-white rounded-3xl p-5 border border-gray-200/80 shadow-xs space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 font-black text-sm text-gray-900">
                   <ShoppingBag size={16} className="text-[#0f8646]" />
-                  <span>Order Produce ({orderObj.items?.length || 0})</span>
+                  <span>Order Items ({orderObj.items?.length || 0})</span>
                 </div>
                 <span className="font-mono font-black text-xs text-[#0f8646]">
                   ₹{totalAmount}
@@ -492,14 +565,15 @@ export default function Deliveryboy({ initialUser }: Props) {
               </button>
             </div>
           </div>
-        </div>
+        </main>
 
-        {/* Floating Chat Button */}
-        {activeorder?.order?._id && currentUser?._id && (
-          <ChatButton
+        {/* Modal In-App Chat */}
+        {isChatOpen && activeorder?.order?._id && currentUser?._id && (
+          <ChatBox
             orderId={activeorder.order._id}
             userId={currentUser._id}
             deliveryBoyId={currentUser._id}
+            onClose={() => setIsChatOpen(false)}
           />
         )}
       </div>
@@ -510,43 +584,11 @@ export default function Deliveryboy({ initialUser }: Props) {
   // VIEW 2: DELIVERY PARTNER STANDBY DASHBOARD
   // ==========================================
   return (
-    <div className="font-sans pb-24 px-3 sm:px-6">
-      <div className="max-w-4xl mx-auto space-y-5">
+    <div className="min-h-screen bg-[#f8faf9] flex flex-col font-sans">
+      {renderRiderHeader()}
+
+      <main className="flex-1 max-w-4xl w-full mx-auto p-4 sm:p-6 space-y-4 pb-20">
         
-        {/* Sleek Header & Duty Online Pill */}
-        <div className="bg-white rounded-3xl p-5 sm:p-6 shadow-xs border border-gray-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#0f8646] to-emerald-400 text-white flex items-center justify-center shadow-md shadow-emerald-700/10 shrink-0">
-              <Truck size={24} />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                <span className="text-[11px] font-black uppercase text-emerald-700 tracking-wider">
-                  Partner Duty Active
-                </span>
-              </div>
-              <h1 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight">
-                {currentUser?.name ? `Namaste, ${currentUser.name}!` : 'Rider Dashboard'}
-              </h1>
-              <p className="text-xs text-gray-400 font-medium">
-                Bhopal Express 10-15 Min Hub
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 self-start sm:self-auto">
-            <button
-              onClick={handleRefreshAll}
-              disabled={refreshing}
-              className="flex items-center gap-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold px-3.5 py-2 rounded-2xl text-xs transition cursor-pointer"
-            >
-              <RotateCw size={13} className={refreshing ? 'animate-spin' : ''} />
-              <span>{refreshing ? 'Refreshing...' : 'Refresh'}</span>
-            </button>
-          </div>
-        </div>
-
         {/* Minimalist Segmented Tab Switcher */}
         <div className="flex items-center gap-1.5 p-1.5 bg-gray-200/70 rounded-2xl border border-gray-200 backdrop-blur-xs">
           <button
@@ -595,7 +637,7 @@ export default function Deliveryboy({ initialUser }: Props) {
         {loading && (
           <div className="bg-white rounded-3xl p-8 text-center border border-gray-200/80 shadow-xs">
             <Loader2 size={28} className="animate-spin text-[#0f8646] mx-auto mb-2" />
-            <p className="text-xs text-gray-500 font-bold">Connecting to Bhopal dispatch server...</p>
+            <p className="text-xs text-gray-500 font-bold">Connecting to dispatch server...</p>
           </div>
         )}
 
@@ -608,9 +650,9 @@ export default function Deliveryboy({ initialUser }: Props) {
                   <Package size={26} />
                 </div>
                 <div>
-                  <h3 className="text-base font-black text-gray-900">Waiting for New Requests</h3>
+                  <h3 className="text-base font-black text-gray-900">No Pending Requests</h3>
                   <p className="text-xs text-gray-400 max-w-sm mx-auto mt-1">
-                    Your duty is online. New broadcast orders near your location in Bhopal will alert here.
+                    Your duty is online. New orders dispatched near your location in Bhopal will appear here.
                   </p>
                 </div>
               </div>
@@ -706,7 +748,7 @@ export default function Deliveryboy({ initialUser }: Props) {
             <RecentDeliveries deliveries={recentDeliveries} />
           </div>
         )}
-      </div>
+      </main>
     </div>
   )
 }

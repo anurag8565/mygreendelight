@@ -2,8 +2,6 @@ import { auth } from '@/auth';
 import connectDb from '@/lib/db';
 import User from '@/model/user.model';
 import Deliveryboydashbord from '@/components/Deliveryboydashbord';
-import Nav from '@/components/Nav';
-import Footer from '@/components/Footer';
 import { redirect } from 'next/navigation';
 import { Metadata } from 'next';
 
@@ -33,12 +31,8 @@ export default async function DeliveryBoyPage() {
   const plainUser = JSON.parse(JSON.stringify(user));
 
   return (
-    <div className="min-h-screen bg-[#f8faf9] flex flex-col justify-between">
-      <Nav user={plainUser} />
-      <main className="flex-1 pb-16 pt-20">
-        <Deliveryboydashbord initialUser={plainUser} />
-      </main>
-      <Footer />
+    <div className="min-h-screen bg-[#f8faf9] text-gray-900 font-sans">
+      <Deliveryboydashbord initialUser={plainUser} />
     </div>
   );
 }

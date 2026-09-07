@@ -214,6 +214,38 @@ export default function UserProfileHub() {
           </div>
         </motion.div>
 
+        {/* 🚀 Delivery Partner Quick-Launch Banner (If Rider) */}
+        {(activeUser?.role === "deliveryboy" || activeUser?.role === "admin") && (
+          <Link
+            href="/deliveryboy"
+            className="relative overflow-hidden bg-gradient-to-r from-emerald-600 via-emerald-700 to-green-800 text-white rounded-3xl p-5 sm:p-6 shadow-lg shadow-emerald-900/10 border border-emerald-500/30 flex items-center justify-between group hover:scale-[1.01] transition-transform duration-200"
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-13 h-13 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center font-black text-white shrink-0 shadow-sm">
+                <Truck size={26} />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="bg-emerald-300/30 text-emerald-100 font-black text-[10px] px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                    ● Duty Online Hub
+                  </span>
+                  <span className="text-xs text-emerald-200 font-semibold">10-15 Min Express</span>
+                </div>
+                <h3 className="text-lg sm:text-xl font-black text-white mt-1">
+                  Open Delivery Partner Portal
+                </h3>
+                <p className="text-xs text-emerald-100/80 font-medium">
+                  View active delivery trips, OTP verification & earnings dashboard
+                </p>
+              </div>
+            </div>
+
+            <div className="w-10 h-10 rounded-2xl bg-white text-emerald-800 flex items-center justify-center font-black shrink-0 group-hover:translate-x-1 transition-transform shadow-md">
+              <ChevronRight size={20} />
+            </div>
+          </Link>
+        )}
+
         {/* 2. Three 100% Real Metric Quick-Action Tiles */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           
