@@ -47,7 +47,7 @@ export default async function Userdashbord() {
       status: { $ne: 'draft' },
       isFeatured: true,
     }).sort({ createdAt: -1 }).limit(16).lean();
-    const bannersPromise = Banner.find({}).sort({ createdAt: -1 }).limit(5).lean();
+    const bannersPromise = Banner.find({ isActive: { $ne: false } }).sort({ order: 1, createdAt: -1 }).lean();
     const categoriesPromise = Category.find({}).sort({ createdAt: -1 }).lean();
     const testimonialsPromise = Testimonial.find({ status: 'approved' }).sort({ createdAt: -1 }).lean();
 

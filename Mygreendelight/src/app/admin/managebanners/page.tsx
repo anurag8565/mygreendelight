@@ -14,12 +14,19 @@ import {
   X,
   Check,
   Sparkles,
+  ShieldCheck,
+  Eye,
+  Power,
+  RotateCcw,
+  Tag,
+  ArrowRight,
 } from "lucide-react";
 import AdminSidebar from "@/components/AdminSidebar";
 
 export default function ManageBanners() {
   const [banners, setBanners] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [seeding, setSeeding] = useState(false);
   const [adding, setAdding] = useState(false);
   const [editing, setEditing] = useState(false);
   const [imagePreview, setImagePreview] = useState("");
@@ -28,16 +35,25 @@ export default function ManageBanners() {
   const [formData, setFormData] = useState({
     title: "",
     subtitle: "",
-    btnText: "Shop Fresh Produce",
+    badge: "🌿 Sunrise Farm Harvest • 10-15 Min Express",
+    offerPill: "FLAT ₹50 OFF • CODE: FRESH50",
+    floatingStat: "🌱 5:00 AM Fresh Harvest",
+    btnText: "Order Fresh Produce",
     link: "/shop",
     image: null as File | null,
+    imageUrl: "",
   });
 
   const [editForm, setEditForm] = useState({
     title: "",
     subtitle: "",
+    badge: "",
+    offerPill: "",
+    floatingStat: "",
     btnText: "",
     link: "",
+    image: "",
+    isActive: true,
   });
 
   const fetchBanners = async () => {
@@ -58,40 +74,88 @@ export default function ManageBanners() {
     fetchBanners();
   }, []);
 
+  const handleSeedDefaults = async () => {
+    if (
+      !confirm(
+        "Are you sure you want to load/reset the 4 official 8K luxury farm banners into the database? This will update your storefront hero carousel."
+      )
+    ) {
+      return;
+    }
+
+    try {
+      setSeeding(true);
+      const res = await axios.post("/api/admin/banner/seed", { overwrite: true });
+      if (res.data.success) {
+        alert("✨ Successfully loaded 4 Official 8K Luxury Banners into Admin & Storefront!");
+        fetchBanners();
+      }
+    } catch (error: any) {
+      alert(error.response?.data?.message || "Failed to load default banners");
+    } finally {
+      setSeeding(false);
+    }
+  };
+
+  const handleToggleActive = async (banner: any) => {
+    try {
+      const updatedStatus = !banner.isActive;
+      await axios.put(`/api/admin/banner/${banner._id}`, { isActive: updatedStatus });
+      setBanners((prev) =>
+        prev.map((b) => (b._id === banner._id ? { ...b, isActive: updatedStatus } : b))
+      );
+    } catch (error) {
+      alert("Failed to toggle banner status");
+    }
+  };
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setFormData({ ...formData, image: file });
+    setFormData({ ...formData, image: file, imageUrl: "" });
     setImagePreview(URL.createObjectURL(file));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.image) return alert("Please select an image for banner");
+    if (!formData.image && !formData.imageUrl) {
+      return alert("Please select an image or provide an image path for the banner");
+    }
 
     try {
       setAdding(true);
       const data = new FormData();
       data.append("title", formData.title);
       data.append("subtitle", formData.subtitle);
+      data.append("badge", formData.badge);
+      data.append("offerPill", formData.offerPill);
+      data.append("floatingStat", formData.floatingStat);
       data.append("btnText", formData.btnText);
       data.append("link", formData.link);
-      data.append("image", formData.image);
+      if (formData.image) {
+        data.append("image", formData.image);
+      } else if (formData.imageUrl) {
+        data.append("imageUrl", formData.imageUrl);
+      }
 
       const result = await axios.post("/api/admin/banner", data);
-      alert(result.data.message || "Banner created!");
+      alert(result.data.message || "Banner created successfully!");
       setFormData({
         title: "",
         subtitle: "",
-        btnText: "Shop Fresh Produce",
+        badge: "🌿 Sunrise Farm Harvest • 10-15 Min Express",
+        offerPill: "FLAT ₹50 OFF • CODE: FRESH50",
+        floatingStat: "🌱 5:00 AM Fresh Harvest",
+        btnText: "Order Fresh Produce",
         link: "/shop",
         image: null,
+        imageUrl: "",
       });
       setImagePreview("");
       fetchBanners();
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      alert("Failed to add banner");
+      alert(error.response?.data?.message || "Failed to add banner");
     } finally {
       setAdding(false);
     }
@@ -102,8 +166,13 @@ export default function ManageBanners() {
     setEditForm({
       title: banner.title || "",
       subtitle: banner.subtitle || "",
+      badge: banner.badge || "🌿 Sunrise Farm Harvest • 10-15 Min Express",
+      offerPill: banner.offerPill || "",
+      floatingStat: banner.floatingStat || "🌱 100% Farm Fresh",
       btnText: banner.btnText || "Shop Now",
       link: banner.link || "/shop",
+      image: banner.image || "",
+      isActive: banner.isActive !== false,
     });
     setEditing(true);
   };
@@ -149,20 +218,40 @@ export default function ManageBanners() {
           {/* Top Header */}
           <header className="bg-white border-b border-gray-200/80 px-4 sm:px-6 py-3.5 sm:py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sticky top-0 z-30 shadow-2xs">
             <div>
-              <h1 className="text-xl sm:text-2xl font-black text-gray-900">
-                Hero & Promo Banners Manager
-              </h1>
+              <div className="flex items-center gap-2">
+                <h1 className="text-xl sm:text-2xl font-black text-gray-900">
+                  Hero & Promo Banners Manager
+                </h1>
+                <span className="bg-emerald-100 text-emerald-800 text-[11px] font-black px-2.5 py-0.5 rounded-full">
+                  {banners.length} Active Banners
+                </span>
+              </div>
               <p className="text-xs text-gray-500 mt-0.5">
-                Customize live storefront promo cards, titles, discounts & links
+                Manage and customize the homepage hero showcase slider directly in real-time
               </p>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5 flex-wrap">
+              <button
+                onClick={handleSeedDefaults}
+                disabled={seeding}
+                className="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300/80 px-3.5 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-2xs disabled:opacity-50"
+                title="Restore 4 official high-res 8K farm banners into database"
+              >
+                {seeding ? (
+                  <Loader2 size={14} className="animate-spin text-[#0f8646]" />
+                ) : (
+                  <Sparkles size={14} className="text-emerald-600 fill-emerald-600" />
+                )}
+                <span>Reset 4 Official 8K Banners</span>
+              </button>
+
               <button
                 onClick={fetchBanners}
-                className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+                disabled={loading}
+                className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
-                <RefreshCw size={14} />
+                <RefreshCw size={14} className={loading ? "animate-spin" : ""} />
                 <span>Refresh</span>
               </button>
             </div>
@@ -174,11 +263,16 @@ export default function ManageBanners() {
               
               {/* Create Banner Form (5 Cols) */}
               <div className="lg:col-span-5 bg-white rounded-3xl p-4 sm:p-7 border border-gray-200/80 shadow-xs">
-                <h2 className="text-base font-black text-gray-900 mb-1">
-                  Upload New Promo Banner
-                </h2>
+                <div className="flex items-center justify-between mb-1">
+                  <h2 className="text-base font-black text-gray-900">
+                    Add New Promo Banner
+                  </h2>
+                  <span className="text-[10px] font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded-md">
+                    Storefront Hero
+                  </span>
+                </div>
                 <p className="text-xs text-gray-400 mb-5">
-                  Add high quality banner with custom headline and action link
+                  Upload an 8K/HD image with customizable tagline, badge, and CTA link
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-4 text-xs font-bold">
@@ -189,7 +283,7 @@ export default function ManageBanners() {
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Sunrise Farm Fresh Produce"
+                      placeholder="e.g. Direct From Local Bhopal & Sehore Farms"
                       value={formData.title}
                       onChange={(e) =>
                         setFormData({ ...formData, title: e.target.value })
@@ -200,12 +294,12 @@ export default function ManageBanners() {
 
                   <div>
                     <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
-                      Subtitle / Tagline *
+                      Subtitle / Description *
                     </label>
-                    <input
-                      type="text"
+                    <textarea
+                      rows={2}
                       required
-                      placeholder="e.g. 100% Pesticide-Free Bhopal & Sehore Farms"
+                      placeholder="e.g. 100% Ozone-Washed, Handpicked Vegetables & Fruits Delivered Fresh."
                       value={formData.subtitle}
                       onChange={(e) =>
                         setFormData({ ...formData, subtitle: e.target.value })
@@ -214,7 +308,39 @@ export default function ManageBanners() {
                     />
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
+                        Top Micro Badge
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.badge}
+                        placeholder="e.g. 🌿 Sunrise Farm Harvest"
+                        onChange={(e) =>
+                          setFormData({ ...formData, badge: e.target.value })
+                        }
+                        className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium text-xs"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
+                        Offer Pill (Yellow)
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.offerPill}
+                        placeholder="e.g. FLAT ₹50 OFF"
+                        onChange={(e) =>
+                          setFormData({ ...formData, offerPill: e.target.value })
+                        }
+                        className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium text-xs"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
                         Button Text
@@ -231,7 +357,7 @@ export default function ManageBanners() {
 
                     <div>
                       <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
-                        Button Link
+                        Button Target Link
                       </label>
                       <input
                         type="text"
@@ -246,13 +372,28 @@ export default function ManageBanners() {
 
                   <div>
                     <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
-                      Banner Image *
+                      Floating Trust Badge
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.floatingStat}
+                      placeholder="e.g. 🌱 5:00 AM Fresh Harvest"
+                      onChange={(e) =>
+                        setFormData({ ...formData, floatingStat: e.target.value })
+                      }
+                      className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium text-xs"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
+                      Banner Image (Upload File or Enter Local Path) *
                     </label>
                     <div className="flex items-center gap-4 p-3.5 rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50/50">
                       <div className="w-20 h-14 rounded-xl bg-white border border-gray-200 flex items-center justify-center overflow-hidden shrink-0">
-                        {imagePreview ? (
+                        {imagePreview || formData.imageUrl ? (
                           <img
-                            src={imagePreview}
+                            src={imagePreview || formData.imageUrl}
                             alt="Preview"
                             className="w-full h-full object-cover"
                           />
@@ -260,20 +401,29 @@ export default function ManageBanners() {
                           <ImageIcon size={20} className="text-gray-300" />
                         )}
                       </div>
-                      <div>
+                      <div className="flex-1 space-y-1.5">
+                        <div>
+                          <input
+                            type="file"
+                            id="banner-img"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                            className="hidden"
+                          />
+                          <label
+                            htmlFor="banner-img"
+                            className="inline-block bg-white border border-gray-200 text-gray-800 hover:border-[#0f8646] px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer shadow-2xs"
+                          >
+                            Choose File
+                          </label>
+                        </div>
                         <input
-                          type="file"
-                          id="banner-img"
-                          accept="image/*"
-                          onChange={handleImageChange}
-                          className="hidden"
+                          type="text"
+                          placeholder="Or path: /hero_fresh_farm.jpg"
+                          value={formData.imageUrl}
+                          onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value, image: null })}
+                          className="w-full p-1.5 rounded-lg border border-gray-200 text-[11px] font-normal"
                         />
-                        <label
-                          htmlFor="banner-img"
-                          className="inline-block bg-white border border-gray-200 text-gray-800 hover:border-[#0f8646] px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer shadow-2xs"
-                        >
-                          Choose File
-                        </label>
                       </div>
                     </div>
                   </div>
@@ -286,7 +436,7 @@ export default function ManageBanners() {
                     {adding ? (
                       <>
                         <Loader2 size={16} className="animate-spin" />
-                        <span>Uploading Banner...</span>
+                        <span>Publishing Banner...</span>
                       </>
                     ) : (
                       <>
@@ -300,11 +450,16 @@ export default function ManageBanners() {
 
               {/* Banners List (7 Cols) */}
               <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-7 border border-gray-200/80 shadow-xs">
-                <h2 className="text-base font-black text-gray-900 mb-1">
-                  Active Store Banners ({banners.length})
-                </h2>
+                <div className="flex items-center justify-between mb-1">
+                  <h2 className="text-base font-black text-gray-900">
+                    Active Live Banners ({banners.length})
+                  </h2>
+                  <span className="text-xs text-gray-400 font-bold">
+                    Order of appearance on homepage
+                  </span>
+                </div>
                 <p className="text-xs text-gray-400 mb-5">
-                  Live promotional banners displayed on the home page
+                  These banners rotate automatically on the home page hero carousel
                 </p>
 
                 {loading ? (
@@ -313,50 +468,96 @@ export default function ManageBanners() {
                     <p className="text-xs font-bold text-gray-400">Loading banners...</p>
                   </div>
                 ) : banners.length === 0 ? (
-                  <div className="bg-gray-50 rounded-2xl p-8 text-center border border-gray-200 text-xs text-gray-500">
-                    No custom banners uploaded. Store is displaying default authentic banners.
+                  <div className="bg-gray-50 rounded-2xl p-8 text-center border border-gray-200 text-xs text-gray-500 space-y-3">
+                    <p>No banners found in database.</p>
+                    <button
+                      onClick={handleSeedDefaults}
+                      className="bg-[#0f8646] text-white px-4 py-2 rounded-xl font-bold text-xs shadow-sm hover:bg-[#0c6a38] transition cursor-pointer"
+                    >
+                      ✨ Load 4 Official 8K Banners Now
+                    </button>
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    {banners.map((b) => (
+                    {banners.map((b, idx) => (
                       <div
                         key={b._id}
-                        className="relative rounded-2xl overflow-hidden border border-gray-200 group shadow-2xs bg-gray-950"
+                        className={`relative rounded-2xl overflow-hidden border ${
+                          b.isActive !== false ? "border-gray-200" : "border-red-200 opacity-60"
+                        } group shadow-xs bg-gray-950`}
                       >
                         <img
                           src={b.image}
                           alt={b.title}
-                          className="w-full h-36 object-cover opacity-80"
+                          className="w-full h-44 object-cover opacity-85"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 flex flex-col justify-end text-white">
-                          <h4 className="font-black text-sm leading-tight text-white">
-                            {b.title}
-                          </h4>
-                          <p className="text-xs text-emerald-300 mt-0.5 font-bold">
-                            {b.subtitle}
-                          </p>
-                          <div className="flex items-center gap-2 mt-2">
-                            <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded-md font-mono">
-                              Btn: {b.btnText || "Shop Now"} ➔ {b.link || "/shop"}
-                            </span>
-                          </div>
-                        </div>
+                        
+                        {/* Gradient Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent/40 p-4 sm:p-5 flex flex-col justify-between text-white">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-1.5 flex-wrap">
+                              <span className="bg-white/20 backdrop-blur-md text-[10px] font-black px-2.5 py-0.5 rounded-full border border-white/30">
+                                {b.badge || "🌿 Farm Fresh"}
+                              </span>
+                              {b.offerPill && (
+                                <span className="bg-amber-400 text-gray-950 text-[10px] font-black px-2 py-0.5 rounded-full">
+                                  {b.offerPill}
+                                </span>
+                              )}
+                            </div>
 
-                        <div className="absolute top-3 right-3 flex items-center gap-1.5">
-                          <button
-                            onClick={() => handleOpenEdit(b)}
-                            className="p-2 rounded-xl bg-white/95 text-gray-800 hover:bg-[#0f8646] hover:text-white transition shadow-sm cursor-pointer"
-                            title="Edit Banner Text"
-                          >
-                            <Edit2 size={13} />
-                          </button>
-                          <button
-                            onClick={() => handleDelete(b._id)}
-                            className="p-2 rounded-xl bg-white/95 text-red-600 hover:bg-red-600 hover:text-white transition shadow-sm cursor-pointer"
-                            title="Delete Banner"
-                          >
-                            <Trash2 size={13} />
-                          </button>
+                            <div className="flex items-center gap-1.5">
+                              <span className="bg-black/60 text-[10px] font-bold px-2 py-0.5 rounded-md">
+                                #{idx + 1}
+                              </span>
+                              <button
+                                onClick={() => handleToggleActive(b)}
+                                className={`p-1.5 rounded-lg text-[10px] font-black transition cursor-pointer flex items-center gap-1 ${
+                                  b.isActive !== false
+                                    ? "bg-emerald-500/80 text-white"
+                                    : "bg-gray-700 text-gray-300"
+                                }`}
+                                title="Toggle Active/Inactive"
+                              >
+                                <Power size={11} />
+                                <span>{b.isActive !== false ? "LIVE" : "HIDDEN"}</span>
+                              </button>
+                            </div>
+                          </div>
+
+                          <div>
+                            <h4 className="font-black text-sm sm:text-base leading-snug text-white line-clamp-1">
+                              {b.title}
+                            </h4>
+                            <p className="text-xs text-emerald-300 mt-0.5 font-medium line-clamp-1">
+                              {b.subtitle}
+                            </p>
+                            
+                            <div className="flex items-center justify-between mt-3">
+                              <span className="text-[10.5px] bg-white/15 px-2.5 py-1 rounded-lg font-mono text-emerald-200">
+                                CTA: {b.btnText || "Shop Now"} ➔ {b.link || "/shop"}
+                              </span>
+
+                              <div className="flex items-center gap-1.5">
+                                <button
+                                  onClick={() => handleOpenEdit(b)}
+                                  className="p-1.5 sm:px-2.5 sm:py-1 rounded-lg bg-white/95 text-gray-900 hover:bg-[#0f8646] hover:text-white transition shadow-sm cursor-pointer text-xs font-bold flex items-center gap-1"
+                                  title="Edit Banner"
+                                >
+                                  <Edit2 size={12} />
+                                  <span className="hidden sm:inline">Edit</span>
+                                </button>
+                                <button
+                                  onClick={() => handleDelete(b._id)}
+                                  className="p-1.5 sm:px-2.5 sm:py-1 rounded-lg bg-white/95 text-red-600 hover:bg-red-600 hover:text-white transition shadow-sm cursor-pointer text-xs font-bold flex items-center gap-1"
+                                  title="Delete Banner"
+                                >
+                                  <Trash2 size={12} />
+                                  <span className="hidden sm:inline">Delete</span>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     ))}
@@ -377,7 +578,7 @@ export default function ManageBanners() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="cursor-default bg-white rounded-3xl p-6 sm:p-7 max-w-md w-full shadow-2xl border border-gray-100 relative"
+            className="cursor-default bg-white rounded-3xl p-6 sm:p-7 max-w-lg w-full shadow-2xl border border-gray-100 relative max-h-[90vh] overflow-y-auto"
           >
             <button
               onClick={() => setEditing(false)}
@@ -387,10 +588,10 @@ export default function ManageBanners() {
             </button>
 
             <h3 className="text-base font-black text-gray-900 mb-1">
-              Edit Store Banner Text
+              Edit Store Banner
             </h3>
             <p className="text-xs text-gray-400 mb-5">
-              Update headline, tagline and link without re-uploading image
+              Update headline, subtitle, badge tag, CTA button and image path
             </p>
 
             <form onSubmit={handleSaveEdit} className="space-y-3.5 text-xs font-bold">
@@ -407,13 +608,34 @@ export default function ManageBanners() {
 
               <div>
                 <label className="block text-gray-700 uppercase mb-1">Subtitle / Tagline</label>
-                <input
-                  type="text"
+                <textarea
+                  rows={2}
                   required
                   value={editForm.subtitle}
                   onChange={(e) => setEditForm({ ...editForm, subtitle: e.target.value })}
                   className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0f8646] font-medium"
                 />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-gray-700 uppercase mb-1">Micro Badge</label>
+                  <input
+                    type="text"
+                    value={editForm.badge}
+                    onChange={(e) => setEditForm({ ...editForm, badge: e.target.value })}
+                    className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0f8646] font-medium"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 uppercase mb-1">Offer Pill</label>
+                  <input
+                    type="text"
+                    value={editForm.offerPill}
+                    onChange={(e) => setEditForm({ ...editForm, offerPill: e.target.value })}
+                    className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0f8646] font-medium"
+                  />
+                </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
@@ -435,6 +657,27 @@ export default function ManageBanners() {
                     className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0f8646] font-medium"
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="block text-gray-700 uppercase mb-1">Image URL / Path</label>
+                <input
+                  type="text"
+                  required
+                  value={editForm.image}
+                  onChange={(e) => setEditForm({ ...editForm, image: e.target.value })}
+                  className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0f8646] font-medium"
+                />
+              </div>
+
+              <div>
+                <label className="block text-gray-700 uppercase mb-1">Floating Trust Stat</label>
+                <input
+                  type="text"
+                  value={editForm.floatingStat}
+                  onChange={(e) => setEditForm({ ...editForm, floatingStat: e.target.value })}
+                  className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0f8646] font-medium"
+                />
               </div>
 
               <div className="flex items-center gap-2 pt-2">

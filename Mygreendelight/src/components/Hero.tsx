@@ -65,23 +65,22 @@ export default function Hero({ banners = [] }: HeroProps) {
     },
   ];
 
-  // Prioritize high-res curated default slides, appending any valid DB custom banners
+  // Render active DB banners configured in Admin Panel, with defaultSlides fallback
   const activeSlides = React.useMemo(() => {
     if (!banners || banners.length === 0) return defaultSlides;
-    const formattedDbBanners = banners.map((b: any, idx: number) => ({
+    return banners.map((b: any, idx: number) => ({
       _id: b._id || `db-${idx}`,
-      badge: b.badge || "⚡ Special Offer • Express Delivery",
+      badge: b.badge || "🌿 Sunrise Farm Harvest • Express",
       title: b.title,
-      subtitle: b.subtitle || "Premium farm produce delivered to your doorstep.",
+      subtitle: b.subtitle || "100% Ozone-Washed & Fresh produce delivered to your doorstep.",
       btnText: b.btnText || "Shop Now",
       link: b.link || "/shop",
-      image: b.image,
+      image: b.image || "/hero_fresh_farm.jpg",
       bgGradient: b.bgGradient || "from-[#052e16]/95 via-[#064e3b]/85 to-transparent/30",
       accentColor: b.accentColor || "#10b981",
-      offerPill: b.offerPill || "LIMITED TIME DEAL",
-      floatingStat: b.floatingStat || "🌿 100% Farm Fresh",
+      offerPill: b.offerPill || "",
+      floatingStat: b.floatingStat || "🌱 100% Farm Fresh",
     }));
-    return [...defaultSlides, ...formattedDbBanners];
   }, [banners]);
 
   const [currentSlide, setCurrentSlide] = useState(0);

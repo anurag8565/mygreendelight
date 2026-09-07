@@ -17,7 +17,20 @@ export async function PUT(
 
     const { id } = await context.params;
     const body = await req.json();
-    const { title, subtitle, btnText, link, image } = body;
+    const {
+      title,
+      subtitle,
+      btnText,
+      link,
+      image,
+      badge,
+      offerPill,
+      floatingStat,
+      bgGradient,
+      accentColor,
+      isActive,
+      order,
+    } = body;
 
     const updatedBanner = await Banner.findByIdAndUpdate(
       id,
@@ -27,6 +40,13 @@ export async function PUT(
         ...(btnText !== undefined && { btnText }),
         ...(link !== undefined && { link }),
         ...(image !== undefined && { image }),
+        ...(badge !== undefined && { badge }),
+        ...(offerPill !== undefined && { offerPill }),
+        ...(floatingStat !== undefined && { floatingStat }),
+        ...(bgGradient !== undefined && { bgGradient }),
+        ...(accentColor !== undefined && { accentColor }),
+        ...(isActive !== undefined && { isActive }),
+        ...(order !== undefined && { order }),
       },
       { new: true }
     );
