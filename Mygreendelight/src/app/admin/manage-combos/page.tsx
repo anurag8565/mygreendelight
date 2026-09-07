@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import AdminSidebar from "@/components/AdminSidebar";
-import { Percent, Plus, Edit2, X, CheckCircle2, AlertCircle, Trash2 } from "lucide-react";
+import { Percent, Plus, Edit2, X, CheckCircle2, AlertCircle, Trash2, RefreshCw } from "lucide-react";
 import axios from "axios";
 
 export default function ManageCombosPage() {
@@ -27,8 +27,11 @@ export default function ManageCombosPage() {
   }, []);
 
   const fetchCombos = async () => {
+    setLoading(true);
     try {
-      const res = await axios.get("/api/combos");
+      const res = await axios.get(`/api/combos?_t=${Date.now()}`, {
+        headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+      });
       if (res.data.success) {
         setCombos(res.data.combos || []);
       }
@@ -107,26 +110,38 @@ export default function ManageCombosPage() {
             </p>
           </div>
 
-          <button
-            onClick={() => {
-              setEditingId(null);
-              setForm({
-                title: "",
-                subtitle: "",
-                badge: "Save 20%",
-                originalPrice: 150,
-                comboPrice: 120,
-                discountPercentage: 20,
-                image: "https://images.unsplash.com/photo-1590779033100-9f60a05a013d?auto=format&fit=crop&w=400&q=80",
-                isActive: true,
-              });
-              setIsModalOpen(true);
-            }}
-            className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-md transition cursor-pointer"
-          >
-            <Plus size={16} />
-            <span>Add Combo Bundle</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={fetchCombos}
+              disabled={loading}
+              className="bg-white hover:bg-gray-50 text-gray-700 border border-gray-200/90 px-3.5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-xs transition cursor-pointer disabled:opacity-50"
+              title="Refresh combos"
+            >
+              <RefreshCw size={15} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+              <span>Refresh</span>
+            </button>
+
+            <button
+              onClick={() => {
+                setEditingId(null);
+                setForm({
+                  title: "",
+                  subtitle: "",
+                  badge: "Save 20%",
+                  originalPrice: 150,
+                  comboPrice: 120,
+                  discountPercentage: 20,
+                  image: "https://images.unsplash.com/photo-1590779033100-9f60a05a013d?auto=format&fit=crop&w=400&q=80",
+                  isActive: true,
+                });
+                setIsModalOpen(true);
+              }}
+              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-md transition cursor-pointer"
+            >
+              <Plus size={16} />
+              <span>Add Combo Bundle</span>
+            </button>
+          </div>
         </div>
 
         {msg && (

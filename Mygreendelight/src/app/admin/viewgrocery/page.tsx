@@ -174,12 +174,19 @@ export default function ViewGrocery() {
     }
   };
 
+  const [refreshing, setRefreshing] = useState(false);
+
   const fetchGroceries = async () => {
     setLoading(true);
+    setRefreshing(true);
     try {
       const [gRes, cRes] = await Promise.all([
-        axios.get("/api/admin/getgroceries"),
-        axios.get("/api/admin/category"),
+        axios.get(`/api/admin/getgroceries?_t=${Date.now()}`, {
+          headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+        }),
+        axios.get(`/api/admin/category?_t=${Date.now()}`, {
+          headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+        }),
       ]);
       setGroceries(gRes.data || []);
       setFilteredGroceries(gRes.data || []);
@@ -190,6 +197,7 @@ export default function ViewGrocery() {
       console.error("Error fetching groceries:", error);
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   };
 
@@ -454,9 +462,13 @@ export default function ViewGrocery() {
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
             <button
               onClick={fetchGroceries}
-              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+              disabled={refreshing}
+              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
             >
-              <RefreshCw size={14} />
+              <RefreshCw
+                size={14}
+                className={refreshing ? "animate-spin text-[#0f8646]" : ""}
+              />
               <span>Refresh</span>
             </button>
 

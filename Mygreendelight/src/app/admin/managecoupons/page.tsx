@@ -43,7 +43,9 @@ export default function ManageCoupons() {
   const fetchCoupons = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("/api/admin/coupons");
+      const res = await axios.get(`/api/admin/coupons?_t=${Date.now()}`, {
+        headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+      });
       if (res.data.success) setCoupons(res.data.coupons || []);
     } catch (error) {
       console.error(error);
@@ -138,9 +140,10 @@ export default function ManageCoupons() {
             <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
               <button
                 onClick={fetchCoupons}
-                className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+                disabled={loading}
+                className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
-                <RefreshCw size={14} />
+                <RefreshCw size={14} className={loading ? "animate-spin text-[#0f8646]" : ""} />
                 <span>Refresh</span>
               </button>
 

@@ -76,8 +76,12 @@ export default function AdminDashboardPage() {
   const fetchDashboardData = async () => {
     try {
       const [summaryRes, ordersRes] = await Promise.all([
-        axios.get("/api/admin/dashboard/summary"),
-        axios.get("/api/admin/dashboard/recent-orders"),
+        axios.get(`/api/admin/dashboard/summary?_t=${Date.now()}`, {
+          headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+        }),
+        axios.get(`/api/admin/dashboard/recent-orders?_t=${Date.now()}`, {
+          headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+        }),
       ]);
       setSummary(summaryRes.data);
       setRecentOrders(ordersRes.data || []);

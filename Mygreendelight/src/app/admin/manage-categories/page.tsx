@@ -30,7 +30,9 @@ export default function ManageCategories() {
   const fetchCategories = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("/api/admin/category");
+      const res = await axios.get(`/api/admin/category?_t=${Date.now()}`, {
+        headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+      });
       if (res.data.success) {
         setCategories(res.data.categories || []);
       }
@@ -116,9 +118,10 @@ export default function ManageCategories() {
           <div className="flex items-center gap-3">
             <button
               onClick={fetchCategories}
-              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+              disabled={loading}
+              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
             >
-              <RefreshCw size={14} />
+              <RefreshCw size={14} className={loading ? "animate-spin text-[#0f8646]" : ""} />
               <span>Refresh</span>
             </button>
           </div>

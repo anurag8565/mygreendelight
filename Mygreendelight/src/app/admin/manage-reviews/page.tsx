@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import AdminSidebar from "@/components/AdminSidebar";
-import { Star, Trash2, CheckCircle2, AlertCircle, Loader2, Sparkles, Filter } from "lucide-react";
+import { Star, Trash2, CheckCircle2, AlertCircle, Loader2, Sparkles, Filter, RefreshCw } from "lucide-react";
 import axios from "axios";
 
 export default function ManageReviewsPage() {
@@ -16,8 +16,11 @@ export default function ManageReviewsPage() {
   }, []);
 
   const fetchReviews = async () => {
+    setLoading(true);
     try {
-      const res = await axios.get("/api/admin/reviews");
+      const res = await axios.get(`/api/admin/reviews?_t=${Date.now()}`, {
+        headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+      });
       if (res.data.success) {
         setReviews(res.data.reviews || []);
       }
@@ -76,6 +79,16 @@ export default function ManageReviewsPage() {
               Inspect real verified customer ratings, feedbacks, and moderate reviews across all groceries.
             </p>
           </div>
+
+          <button
+            onClick={fetchReviews}
+            disabled={loading}
+            className="bg-white hover:bg-gray-50 text-gray-700 border border-gray-200/90 px-3.5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-xs transition cursor-pointer disabled:opacity-50"
+            title="Refresh reviews"
+          >
+            <RefreshCw size={15} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+            <span>Refresh</span>
+          </button>
         </div>
 
         {/* Stats Row */}

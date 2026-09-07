@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import AdminSidebar from "@/components/AdminSidebar";
-import { Radio, CloudRain, AlertTriangle, Sparkles, Info, CheckCircle2, Save, Power, ArrowRight } from "lucide-react";
+import { Radio, CloudRain, AlertTriangle, Sparkles, Info, CheckCircle2, Save, Power, ArrowRight, RefreshCw } from "lucide-react";
 import axios from "axios";
 
 export default function ManageBroadcastPage() {
@@ -22,8 +22,11 @@ export default function ManageBroadcastPage() {
   }, []);
 
   const fetchBroadcast = async () => {
+    setLoading(true);
     try {
-      const res = await axios.get("/api/broadcast");
+      const res = await axios.get(`/api/broadcast?_t=${Date.now()}`, {
+        headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+      });
       if (res.data.success && res.data.broadcast) {
         setForm({
           message: res.data.broadcast.message || "",
@@ -90,7 +93,7 @@ export default function ManageBroadcastPage() {
       <div className="flex-1 min-w-0 pt-14 lg:pt-0 flex flex-col min-h-screen w-full max-w-full overflow-x-hidden">
         <main className="flex-1 p-3.5 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-indigo-600 text-white flex items-center justify-center shadow-md">
               <Radio size={22} className="animate-pulse" />
@@ -104,6 +107,16 @@ export default function ManageBroadcastPage() {
               </p>
             </div>
           </div>
+
+          <button
+            onClick={fetchBroadcast}
+            disabled={loading}
+            className="bg-white hover:bg-gray-50 text-gray-700 border border-gray-200/90 px-3.5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-xs transition cursor-pointer disabled:opacity-50"
+            title="Refresh broadcast"
+          >
+            <RefreshCw size={15} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+            <span>Refresh</span>
+          </button>
         </div>
 
         {msg && (

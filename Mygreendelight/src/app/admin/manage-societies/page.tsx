@@ -16,6 +16,7 @@ import {
   Percent,
   Sparkles,
   ShoppingBag,
+  RefreshCw,
 } from "lucide-react";
 import axios from "axios";
 
@@ -45,7 +46,9 @@ export default function ManageSocietiesPage() {
   const fetchSocieties = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("/api/admin/societies");
+      const res = await axios.get(`/api/admin/societies?_t=${Date.now()}`, {
+        headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+      });
       if (res.data.success) {
         setSocieties(res.data.societies || []);
       }
@@ -189,14 +192,27 @@ export default function ManageSocietiesPage() {
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={handleOpenAdd}
-            className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-3 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition cursor-pointer"
-          >
-            <Plus size={18} />
-            <span>Add Bhopal Society</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={fetchSocieties}
+              disabled={loading}
+              className="bg-white hover:bg-gray-50 text-gray-700 border border-gray-200/90 px-4 py-3 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition cursor-pointer disabled:opacity-50"
+              title="Refresh societies"
+            >
+              <RefreshCw size={15} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+              <span>Refresh</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleOpenAdd}
+              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-3 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition cursor-pointer"
+            >
+              <Plus size={18} />
+              <span>Add Bhopal Society</span>
+            </button>
+          </div>
         </div>
 
         {/* Status Alerts */}

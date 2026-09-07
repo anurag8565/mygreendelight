@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import AdminSidebar from "@/components/AdminSidebar";
-import { Bell, Users, Send, CheckCircle2, AlertCircle, Sparkles } from "lucide-react";
+import { Bell, Users, Send, CheckCircle2, AlertCircle, Sparkles, RefreshCw } from "lucide-react";
 import axios from "axios";
 
 export default function ManageStockAlertsPage() {
@@ -15,8 +15,11 @@ export default function ManageStockAlertsPage() {
   }, []);
 
   const fetchAlerts = async () => {
+    setLoading(true);
     try {
-      const res = await axios.get("/api/admin/stock-alerts");
+      const res = await axios.get(`/api/admin/stock-alerts?_t=${Date.now()}`, {
+        headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+      });
       if (res.data.success) {
         setAlerts(res.data.alerts || []);
       }
@@ -55,18 +58,30 @@ export default function ManageStockAlertsPage() {
 
       <div className="flex-1 min-w-0 pt-14 lg:pt-0 flex flex-col min-h-screen w-full max-w-full overflow-x-hidden">
         <main className="flex-1 p-3.5 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-6">
-        <div className="flex items-center gap-2 mb-6">
-          <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-black">
-            <Bell size={20} />
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <div className="flex items-center gap-2">
+            <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-black">
+              <Bell size={20} />
+            </div>
+            <div>
+              <h1 className="text-xl sm:text-2xl font-black text-gray-900">
+                Harvest Restock & Back-in-Stock Alerts Manager
+              </h1>
+              <p className="text-xs text-gray-500 mt-0.5">
+                Customers waiting for out-of-stock farm produce to be harvested & restocked
+              </p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-xl sm:text-2xl font-black text-gray-900">
-              Harvest Restock & Back-in-Stock Alerts Manager
-            </h1>
-            <p className="text-xs text-gray-500 mt-0.5">
-              Customers waiting for out-of-stock farm produce to be harvested & restocked
-            </p>
-          </div>
+
+          <button
+            onClick={fetchAlerts}
+            disabled={loading}
+            className="bg-white hover:bg-gray-50 text-gray-700 border border-gray-200/90 px-3.5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-xs transition cursor-pointer disabled:opacity-50"
+            title="Refresh stock alerts"
+          >
+            <RefreshCw size={15} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+            <span>Refresh</span>
+          </button>
         </div>
 
         {msg && (

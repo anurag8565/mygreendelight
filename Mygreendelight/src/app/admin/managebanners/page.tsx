@@ -59,7 +59,9 @@ export default function ManageBanners() {
   const fetchBanners = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("/api/admin/banner");
+      const res = await axios.get(`/api/admin/banner?_t=${Date.now()}`, {
+        headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+      });
       if (res.data.success) {
         setBanners(res.data.banners || []);
       }

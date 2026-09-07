@@ -36,7 +36,9 @@ export default function ManageTestimonials() {
   const fetchTestimonials = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("/api/admin/testimonials");
+      const res = await axios.get(`/api/admin/testimonials?_t=${Date.now()}`, {
+        headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+      });
       if (res.data.success) {
         setTestimonials(res.data.testimonials || []);
       }
@@ -153,6 +155,16 @@ export default function ManageTestimonials() {
             </div>
 
             <div className="flex items-center gap-2 flex-wrap">
+              <button
+                onClick={fetchTestimonials}
+                disabled={loading}
+                className="bg-white hover:bg-gray-50 text-gray-700 border border-gray-200/90 px-3 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                title="Refresh testimonials"
+              >
+                <RefreshCw size={13} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+                <span>Refresh</span>
+              </button>
+
               <button
                 onClick={handleCleanDummy}
                 disabled={actionLoading}

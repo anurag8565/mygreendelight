@@ -79,7 +79,9 @@ export default function ManageSEOPage() {
   const fetchSeoData = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("/api/admin/seo");
+      const res = await axios.get(`/api/admin/seo?_t=${Date.now()}`, {
+        headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+      });
       if (res.data.success) {
         setGlobalSeo(res.data.globalSeo || globalSeo);
         const prods = res.data.products || [];
@@ -284,6 +286,17 @@ export default function ManageSEOPage() {
           </div>
 
           <div className="flex items-center gap-2 flex-wrap">
+            <button
+              type="button"
+              onClick={fetchSeoData}
+              disabled={loading}
+              className="bg-white hover:bg-gray-50 border border-gray-200/90 text-gray-700 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-2xs disabled:opacity-50"
+              title="Refresh SEO data"
+            >
+              <RefreshCw size={13} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+              <span>Refresh</span>
+            </button>
+
             <button
               type="button"
               onClick={() => handleRunBulkOptimize(false)}

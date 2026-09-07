@@ -37,7 +37,9 @@ export default function ManageFlashDeals() {
   const fetchSettings = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("/api/admin/flash-deal");
+      const res = await axios.get(`/api/admin/flash-deal?_t=${Date.now()}`, {
+        headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+      });
       if (res.data.success && res.data.setting) {
         const s = res.data.setting;
         // Format ISO date to local input datetime-local string (YYYY-MM-DDTHH:MM)

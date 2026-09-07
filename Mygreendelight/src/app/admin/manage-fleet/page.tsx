@@ -52,7 +52,9 @@ export default function ManageFleetPage() {
   const fetchFleet = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("/api/admin/fleet");
+      const res = await axios.get(`/api/admin/fleet?_t=${Date.now()}`, {
+        headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+      });
       if (res.data.success) {
         setRiders(res.data.riders || []);
       }

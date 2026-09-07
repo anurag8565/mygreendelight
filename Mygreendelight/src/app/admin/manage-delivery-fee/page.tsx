@@ -38,7 +38,9 @@ export default function ManageDeliveryFee() {
     setLoading(true);
     setMsg(null);
     try {
-      const res = await axios.get("/api/admin/settings");
+      const res = await axios.get(`/api/admin/settings?_t=${Date.now()}`, {
+        headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+      });
       if (res.data.success && res.data.setting) {
         const s = res.data.setting;
         setForm({

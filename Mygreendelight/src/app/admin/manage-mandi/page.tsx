@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import AdminSidebar from "@/components/AdminSidebar";
-import { TrendingDown, Plus, Trash2, Edit2, Save, X, CheckCircle2, AlertCircle } from "lucide-react";
+import { TrendingDown, Plus, Trash2, Edit2, Save, X, CheckCircle2, AlertCircle, RefreshCw } from "lucide-react";
 import axios from "axios";
 
 export default function ManageMandiPage() {
@@ -25,8 +25,11 @@ export default function ManageMandiPage() {
   }, []);
 
   const fetchRates = async () => {
+    setLoading(true);
     try {
-      const res = await axios.get("/api/mandi");
+      const res = await axios.get(`/api/mandi?_t=${Date.now()}`, {
+        headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+      });
       if (res.data.success) {
         setRates(res.data.rates || []);
       }
@@ -104,17 +107,29 @@ export default function ManageMandiPage() {
             </p>
           </div>
 
-          <button
-            onClick={() => {
-              setEditingId(null);
-              setForm({ itemName: "", currentRate: 20, unit: "1 kg", priceChange: "down", percentageChange: 20, isActive: true });
-              setIsModalOpen(true);
-            }}
-            className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-md transition-all cursor-pointer"
-          >
-            <Plus size={16} />
-            <span>Add Farm Rate Item</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={fetchRates}
+              disabled={loading}
+              className="bg-white hover:bg-gray-50 text-gray-700 border border-gray-200/90 px-3.5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-xs transition cursor-pointer disabled:opacity-50"
+              title="Refresh mandi rates"
+            >
+              <RefreshCw size={15} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+              <span>Refresh</span>
+            </button>
+
+            <button
+              onClick={() => {
+                setEditingId(null);
+                setForm({ itemName: "", currentRate: 20, unit: "1 kg", priceChange: "down", percentageChange: 20, isActive: true });
+                setIsModalOpen(true);
+              }}
+              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-md transition-all cursor-pointer"
+            >
+              <Plus size={16} />
+              <span>Add Farm Rate Item</span>
+            </button>
+          </div>
         </div>
 
         {msg && (

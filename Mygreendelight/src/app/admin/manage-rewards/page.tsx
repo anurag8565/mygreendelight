@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import AdminSidebar from "@/components/AdminSidebar";
-import { Gift, Trophy, Plus, Trash2, Save, Sparkles, CheckCircle2, AlertCircle } from "lucide-react";
+import { Gift, Trophy, Plus, Trash2, Save, Sparkles, CheckCircle2, AlertCircle, RefreshCw } from "lucide-react";
 import axios from "axios";
 
 export default function ManageRewardsPage() {
@@ -18,8 +18,11 @@ export default function ManageRewardsPage() {
   }, []);
 
   const fetchRewardsData = async () => {
+    setLoading(true);
     try {
-      const res = await axios.get("/api/admin/rewards");
+      const res = await axios.get(`/api/admin/rewards?_t=${Date.now()}`, {
+        headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+      });
       if (res.data.success) {
         setConfig(res.data.config);
         setRecentClaims(res.data.recentClaims || []);
@@ -97,14 +100,26 @@ export default function ManageRewardsPage() {
             </p>
           </div>
 
-          <button
-            onClick={handleSave}
-            disabled={saving}
-            className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-md transition-all cursor-pointer disabled:opacity-50"
-          >
-            <Save size={16} />
-            <span>{saving ? "Saving..." : "Save Settings"}</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={fetchRewardsData}
+              disabled={loading}
+              className="bg-white hover:bg-gray-50 text-gray-700 border border-gray-200/90 px-3.5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-xs transition cursor-pointer disabled:opacity-50"
+              title="Refresh rewards"
+            >
+              <RefreshCw size={15} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+              <span>Refresh</span>
+            </button>
+
+            <button
+              onClick={handleSave}
+              disabled={saving}
+              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-md transition-all cursor-pointer disabled:opacity-50"
+            >
+              <Save size={16} />
+              <span>{saving ? "Saving..." : "Save Settings"}</span>
+            </button>
+          </div>
         </div>
 
         {msg && (

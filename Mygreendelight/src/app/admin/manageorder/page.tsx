@@ -129,9 +129,14 @@ export default function ManageOrder() {
     }
   };
 
-  const fetchOrders = async () => {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const fetchOrders = async (showToast = false) => {
     try {
-      const result = await axios.get("/api/admin/manageorder");
+      setRefreshing(true);
+      const result = await axios.get(`/api/admin/manageorder?_t=${Date.now()}`, {
+        headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+      });
       if (result.data) {
         const list = Array.isArray(result.data) ? result.data : result.data.orders || [];
         setOrders(list);
@@ -145,10 +150,15 @@ export default function ManageOrder() {
         });
         setStatuses(initialStatuses);
       }
+      if (showToast) {
+        setToastMsg("Orders list refreshed!");
+        setTimeout(() => setToastMsg(null), 2500);
+      }
     } catch (error) {
       console.error("Error fetching admin orders:", error);
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   };
 
@@ -498,10 +508,14 @@ export default function ManageOrder() {
             </button>
 
             <button
-              onClick={fetchOrders}
-              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+              onClick={() => fetchOrders(true)}
+              disabled={refreshing}
+              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
             >
-              <RefreshCw size={14} />
+              <RefreshCw
+                size={14}
+                className={refreshing ? "animate-spin text-[#0f8646]" : ""}
+              />
               <span>Refresh</span>
             </button>
           </div>
