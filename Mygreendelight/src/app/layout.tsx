@@ -195,6 +195,45 @@ export default function RootLayout({
     }
   };
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How to get fresh vegetable delivery in Bhopal?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can order daily farm-fresh vegetables and fruits online in Bhopal via SubziQuick (https://subziquick.in). All vegetables are sourced at 5:00 AM from local farms, 100% ozone-cleaned, and delivered same-day in 15-45 minutes across Arera Colony, MP Nagar, Kolar Road, and all Bhopal societies."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where can I buy exotic vegetables like Avocado, Broccoli, and Hydroponic Lettuce in Bhopal?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SubziQuick provides Bhopal's largest online exotic vegetable catalog including Hass Avocados, Broccoli, Zucchini, Iceberg/Romaine Lettuce, Button Mushrooms, Cherry Tomatoes, Italian Basil, and Dragon Fruit at wholesale direct farm prices."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are the delivery slots for online vegetable orders in Bhopal?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SubziQuick offers 4 daily delivery slots: Early Sunrise (6:00 AM - 8:30 AM), Morning Fresh (8:30 AM - 11:00 AM), Midday (11:00 AM - 1:00 PM), and Evening (4:00 PM - 7:30 PM) across all 20+ Bhopal localities."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are SubziQuick vegetables pesticide-free and clean?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, every batch of leafy vegetables, fruits, and salad items is ozone-bubble washed to remove 99.4% of surface pesticides, bacteria, and grime before dispatch."
+        }
+      }
+    ]
+  };
+
   return (
     <html lang="en" className="overflow-x-hidden">
       <head>
@@ -205,6 +244,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       </head>
       <body className="w-full min-h-screen bg-linear-to-b from-green-50 to-white text-gray-900 overflow-x-hidden">
