@@ -1,7 +1,7 @@
 'use client'
 
 import axios from 'axios'
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useRef } from 'react'
 import {
   MapPin,
   Phone,
@@ -28,6 +28,11 @@ import {
   LogOut,
   Store,
   MessageSquare,
+  Volume2,
+  Check,
+  X,
+  User,
+  ExternalLink,
 } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
@@ -46,6 +51,34 @@ interface Props {
   initialUser?: any;
 }
 
+// 🔔 Web Audio API Synthesizer Chime (Zero external audio asset dependencies)
+function playDispatchChime() {
+  try {
+    if (typeof window === 'undefined') return
+    const AudioContext = window.AudioContext || (window as any).webkitAudioContext
+    if (!AudioContext) return
+    const ctx = new AudioContext()
+
+    const now = ctx.currentTime
+    const osc = ctx.createOscillator()
+    const gain = ctx.createGain()
+
+    osc.type = 'sine'
+    osc.frequency.setValueAtTime(587.33, now) // D5
+    osc.frequency.setValueAtTime(880, now + 0.12) // A5
+    osc.frequency.setValueAtTime(1174.66, now + 0.24) // D6
+
+    gain.gain.setValueAtTime(0.3, now)
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6)
+
+    osc.connect(gain)
+    gain.connect(ctx.destination)
+
+    osc.start(now)
+    osc.stop(now + 0.6)
+  } catch (_) {}
+}
+
 export default function Deliveryboy({ initialUser }: Props) {
   const [assignments, setAssignments] = useState<any[]>([])
   const [activeTab, setActiveTab] = useState<'requests' | 'earnings' | 'history'>('requests')
@@ -53,12 +86,28 @@ export default function Deliveryboy({ initialUser }: Props) {
   const [userlocation, setuserlocation] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
-  const [otp, setOtp] = useState('')
   const [verifyingOtp, setVerifyingOtp] = useState(false)
   const [sendingOtpEmail, setSendingOtpEmail] = useState(false)
   const [bagsReturned, setBagsReturned] = useState<number>(0)
   const [gpsActive, setGpsActive] = useState(false)
   const [isChatOpen, setIsChatOpen] = useState(false)
+
+  // 4-Digit PIN Box Inputs
+  const [pin, setPin] = useState(['', '', '', ''])
+  const pinRefs = [
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+  ]
+
+  // Native Toast Notifications
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null)
+
+  const showToast = (message: string, type: 'success' | 'error' | 'info' = 'info') => {
+    setToast({ message, type })
+    setTimeout(() => setToast(null), 4000)
+  }
 
   const [earningsData, setEarningsData] = useState([])
   const [deliveriesData, setDeliveriesData] = useState([])
@@ -77,6 +126,8 @@ export default function Deliveryboy({ initialUser }: Props) {
   useEffect(() => {
     socket.on('new-assignment', (assignment) => {
       setAssignments((prev) => [assignment, ...prev])
+      playDispatchChime()
+      showToast('🔔 New express delivery request received!', 'info')
       if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
         navigator.vibrate([200, 100, 200])
       }
@@ -186,26 +237,60 @@ export default function Deliveryboy({ initialUser }: Props) {
   const handleAccept = async (id: string) => {
     try {
       const result = await axios.get(`/api/delivery/assigment/${id}/accepyaccigment`)
+      showToast(result.data?.message || 'Trip accepted! Starting live navigation...', 'success')
       setAssignments((prev) => prev.filter((a) => a._id !== id))
       fetchCurrentOrder()
     } catch (error: any) {
-      alert(error?.response?.data?.message || 'Failed to accept assignment')
+      showToast(error?.response?.data?.message || 'Failed to accept assignment', 'error')
     }
   }
 
   const handleReject = async (id: string) => {
     try {
       await axios.post('/api/delivery/reject', { id })
+      showToast('Assignment passed', 'info')
       setAssignments((prev) => prev.filter((a) => a._id !== id))
     } catch (error) {
       console.log(error)
     }
   }
 
+  // Handle PIN input box typing and auto-advancement
+  const handlePinChange = (index: number, val: string) => {
+    const digit = val.replace(/\D/g, '').slice(-1)
+    const newPin = [...pin]
+    newPin[index] = digit
+    setPin(newPin)
+
+    if (digit && index < 3) {
+      pinRefs[index + 1].current?.focus()
+    }
+  }
+
+  const handlePinKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Backspace' && !pin[index] && index > 0) {
+      pinRefs[index - 1].current?.focus()
+    }
+  }
+
+  const handlePinPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    const pastedData = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 4)
+    if (!pastedData) return
+
+    const newPin = ['', '', '', '']
+    for (let i = 0; i < pastedData.length; i++) {
+      newPin[i] = pastedData[i]
+    }
+    setPin(newPin)
+    const focusIndex = Math.min(3, pastedData.length)
+    pinRefs[focusIndex].current?.focus()
+  }
+
   const handleVerifyOtp = async () => {
-    const cleanOtp = otp.trim()
+    const cleanOtp = pin.join('').trim()
     if (!cleanOtp || cleanOtp.length < 4) {
-      alert('Please enter the 4-digit verification OTP provided by the customer.')
+      showToast('Please enter the full 4-digit OTP provided by the customer.', 'error')
       return
     }
 
@@ -216,14 +301,14 @@ export default function Deliveryboy({ initialUser }: Props) {
         otp: cleanOtp,
         bagsReturned,
       })
-      alert(result.data?.message || '🎉 Delivery Handover Completed Successfully!')
+      showToast(result.data?.message || '🎉 Delivery Handover Completed Successfully!', 'success')
       setactiverder(null)
       setuserlocation(null)
-      setOtp('')
+      setPin(['', '', '', ''])
       setBagsReturned(0)
       handleRefreshAll()
     } catch (error: any) {
-      alert(error?.response?.data?.message || 'Invalid OTP. Please verify the 4 digits with the customer.')
+      showToast(error?.response?.data?.message || 'Invalid OTP. Please verify the 4 digits with the customer.', 'error')
     } finally {
       setVerifyingOtp(false)
     }
@@ -234,15 +319,15 @@ export default function Deliveryboy({ initialUser }: Props) {
     setSendingOtpEmail(true)
     try {
       const res = await axios.post(`/api/delivery/send-delivery-otp/${activeorder.order._id}`)
-      alert(res.data?.message || "✅ 4-Digit OTP has been dispatched to the customer's email!")
+      showToast(res.data?.message || "✅ 4-Digit OTP has been dispatched to the customer's email!", 'success')
     } catch (error: any) {
-      alert(error?.response?.data?.message || 'Failed to send OTP email.')
+      showToast(error?.response?.data?.message || 'Failed to send OTP email.', 'error')
     } finally {
       setSendingOtpEmail(false)
     }
   }
 
-  // Common Header for Delivery Partner App Shell
+  // Dedicated Header
   const renderRiderHeader = () => (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200/80 px-4 py-3 shadow-2xs">
       <div className="max-w-4xl mx-auto flex items-center justify-between gap-3">
@@ -256,16 +341,16 @@ export default function Deliveryboy({ initialUser }: Props) {
               <span className="font-black text-sm text-gray-900 leading-tight">SubziQuick Partner</span>
               <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-800 text-[10px] font-black px-2 py-0.5 rounded-full">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
-                Online
+                Duty Online
               </span>
             </div>
             <p className="text-[11px] text-gray-500 font-semibold truncate max-w-[160px] sm:max-w-xs">
-              {currentUser?.name || 'Rider Hub'} • Bhopal
+              {currentUser?.name || 'Rider Hub'} • Bhopal Express Hub
             </p>
           </div>
         </div>
 
-        {/* Quick Nav / Actions */}
+        {/* Quick Actions */}
         <div className="flex items-center gap-2">
           <button
             onClick={handleRefreshAll}
@@ -279,9 +364,10 @@ export default function Deliveryboy({ initialUser }: Props) {
           <Link
             href="/user"
             className="inline-flex items-center gap-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold px-3 py-2 rounded-xl transition"
-            title="My Profile"
+            title="Account Hub"
           >
-            <span>Account</span>
+            <User size={13} />
+            <span className="hidden sm:inline">Account</span>
           </Link>
 
           <button
@@ -296,6 +382,32 @@ export default function Deliveryboy({ initialUser }: Props) {
     </header>
   )
 
+  // Floating Native Toast
+  const renderToast = () => {
+    if (!toast) return null
+    return (
+      <div className="fixed top-16 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-md animate-in fade-in slide-in-from-top-3 duration-200">
+        <div
+          className={`p-3.5 rounded-2xl shadow-xl border flex items-center gap-2.5 text-xs font-black backdrop-blur-md ${
+            toast.type === 'success'
+              ? 'bg-emerald-900/95 text-white border-emerald-500'
+              : toast.type === 'error'
+              ? 'bg-red-900/95 text-white border-red-500'
+              : 'bg-gray-900/95 text-white border-gray-700'
+          }`}
+        >
+          {toast.type === 'success' && <CheckCircle2 size={16} className="text-emerald-400 shrink-0" />}
+          {toast.type === 'error' && <AlertCircle size={16} className="text-red-400 shrink-0" />}
+          {toast.type === 'info' && <Sparkles size={16} className="text-yellow-400 shrink-0" />}
+          <span className="flex-1">{toast.message}</span>
+          <button onClick={() => setToast(null)} className="text-white/60 hover:text-white">
+            <X size={14} />
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   // ==========================================
   // VIEW 1: ACTIVE DELIVERY TRIP IN PROGRESS
   // ==========================================
@@ -308,7 +420,7 @@ export default function Deliveryboy({ initialUser }: Props) {
     const isPaid = orderObj.ispaid
     const totalAmount = orderObj.totalamount || 0
     const cleanMobile = customerMobile.replace(/\D/g, '').slice(-10)
-    const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${userlocation.latitude},${userlocation.longitude}`
+    const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${userlocation.latitude},${userlocation.longitude}&travelmode=driving`
 
     const arrivalWhatsappMsg = encodeURIComponent(
       `*🌿 SubziQuick Farm Fresh Express Delivery*\n` +
@@ -317,8 +429,8 @@ export default function Deliveryboy({ initialUser }: Props) {
       `Main aapka *SubziQuick Delivery Partner* aapke doorstep par taaza grocery leke pahunch gaya hoon.\n\n` +
       `📦 *Order ID:* #${orderShortId}\n` +
       `📍 *Address:* ${customerAddress}\n` +
-      `💵 *Payment:* ${isPaid ? '✅ Paid Online (₹0 Collect)' : `💵 Collect Cash / UPI: ₹${totalAmount}`}\n\n` +
-      `👉 Kripya apna *4-digit delivery verification OTP* share karein taaki handover complete ho sake.\n\n` +
+      `💵 *Payment:* ${isPaid ? '✅ Paid Online (₹0 to pay)' : `💵 Collect Cash / UPI: ₹${totalAmount}`}\n\n` +
+      `👉 Kripya delivery lete waqt apna *4-digit verification OTP* share karein taaki order handover complete ho sake.\n\n` +
       `Live Tracking: https://subziquick.in/track/${orderObj._id}\n` +
       `Dhanyawaad! 🌿`
     )
@@ -327,8 +439,9 @@ export default function Deliveryboy({ initialUser }: Props) {
     return (
       <div className="min-h-screen bg-[#f8faf9] flex flex-col font-sans">
         {renderRiderHeader()}
+        {renderToast()}
 
-        <main className="flex-1 max-w-3xl w-full mx-auto p-4 sm:p-6 space-y-4 pb-20">
+        <main className="flex-1 max-w-3xl w-full mx-auto p-3.5 sm:p-6 space-y-4 pb-24">
           
           {/* Active Trip Header Card */}
           <div className="bg-white rounded-3xl p-5 shadow-xs border border-emerald-100 space-y-3">
@@ -400,16 +513,16 @@ export default function Deliveryboy({ initialUser }: Props) {
             </div>
           )}
 
-          {/* 4 Clean Thumb Actions Grid (NO Overlapping floating buttons) */}
+          {/* 4 Clean Thumb Actions Grid (Zero collisions) */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
             <a
               href={mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white p-3 rounded-2xl font-black text-xs flex flex-col items-center justify-center gap-1 transition shadow-2xs cursor-pointer text-center"
+              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white p-3.5 rounded-2xl font-black text-xs flex flex-col items-center justify-center gap-1.5 transition shadow-2xs cursor-pointer text-center"
             >
-              <Compass size={18} />
-              <span>GPS Map</span>
+              <Compass size={20} />
+              <span>Turn-by-Turn GPS</span>
             </a>
 
             {customerMobile ? (
@@ -417,28 +530,28 @@ export default function Deliveryboy({ initialUser }: Props) {
                 href={whatsappArrivalUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#25D366] hover:bg-[#20bd5a] text-white p-3 rounded-2xl font-black text-xs flex flex-col items-center justify-center gap-1 transition shadow-2xs cursor-pointer text-center"
+                className="bg-[#25D366] hover:bg-[#20bd5a] text-white p-3.5 rounded-2xl font-black text-xs flex flex-col items-center justify-center gap-1.5 transition shadow-2xs cursor-pointer text-center"
               >
-                <MessageCircle size={18} />
-                <span>WhatsApp</span>
+                <MessageCircle size={20} />
+                <span>WhatsApp Notice</span>
               </a>
             ) : null}
 
             {customerMobile ? (
               <a
                 href={`tel:${customerMobile}`}
-                className="bg-gray-900 hover:bg-black text-white p-3 rounded-2xl font-black text-xs flex flex-col items-center justify-center gap-1 transition shadow-2xs cursor-pointer text-center"
+                className="bg-gray-900 hover:bg-black text-white p-3.5 rounded-2xl font-black text-xs flex flex-col items-center justify-center gap-1.5 transition shadow-2xs cursor-pointer text-center"
               >
-                <Phone size={18} />
+                <Phone size={20} />
                 <span>Call Customer</span>
               </a>
             ) : null}
 
             <button
               onClick={() => setIsChatOpen(true)}
-              className="bg-emerald-100 hover:bg-emerald-200 text-[#0f8646] p-3 rounded-2xl font-black text-xs flex flex-col items-center justify-center gap-1 transition shadow-2xs cursor-pointer text-center border border-emerald-300"
+              className="bg-emerald-100 hover:bg-emerald-200 text-[#0f8646] p-3.5 rounded-2xl font-black text-xs flex flex-col items-center justify-center gap-1.5 transition shadow-2xs cursor-pointer text-center border border-emerald-300"
             >
-              <MessageSquare size={18} />
+              <MessageSquare size={20} />
               <span>In-App Chat</span>
             </button>
           </div>
@@ -454,7 +567,7 @@ export default function Deliveryboy({ initialUser }: Props) {
             />
           </div>
 
-          {/* Produce Bag & Doorstep OTP Verification */}
+          {/* Produce Items & OTP Verification */}
           <div className="grid md:grid-cols-2 gap-4">
             {/* Produce Bag Items */}
             <div className="bg-white rounded-3xl p-5 border border-gray-200/80 shadow-xs space-y-3">
@@ -494,13 +607,13 @@ export default function Deliveryboy({ initialUser }: Props) {
               </div>
             </div>
 
-            {/* Zero-Knowledge Doorstep OTP Card */}
+            {/* Zero-Knowledge Doorstep 4-Box PIN Card */}
             <div className="bg-white rounded-3xl p-5 border border-gray-200/80 shadow-xs flex flex-col justify-between space-y-4">
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2 font-black text-sm text-gray-900">
                     <ShieldAlert size={16} className="text-[#0f8646]" />
-                    <span>Customer OTP</span>
+                    <span>Customer 4-Digit OTP</span>
                   </div>
                   <button
                     onClick={handleResendOtpEmail}
@@ -513,18 +626,30 @@ export default function Deliveryboy({ initialUser }: Props) {
                 </div>
 
                 <p className="text-xs text-gray-500 mb-3 leading-relaxed">
-                  Ask customer for the <strong>4-digit code</strong> from their email or live tracking page.
+                  Ask customer for the 4-digit PIN on their screen or email:
                 </p>
 
-                {/* OTP Input */}
-                <input
-                  type="text"
-                  maxLength={4}
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
-                  placeholder="• • • •"
-                  className="w-full text-center font-mono font-black text-2xl tracking-[0.4em] border-2 border-dashed border-gray-300 focus:border-[#0f8646] p-3 rounded-2xl outline-none bg-gray-50/50 transition mb-3 placeholder:tracking-normal placeholder:text-base placeholder:font-sans"
-                />
+                {/* 4 Discrete PIN Input Boxes */}
+                <div className="flex items-center justify-center gap-3 mb-3">
+                  {pin.map((digit, idx) => (
+                    <input
+                      key={idx}
+                      ref={pinRefs[idx]}
+                      type="text"
+                      inputMode="numeric"
+                      maxLength={1}
+                      value={digit}
+                      onChange={(e) => handlePinChange(idx, e.target.value)}
+                      onKeyDown={(e) => handlePinKeyDown(idx, e)}
+                      onPaste={idx === 0 ? handlePinPaste : undefined}
+                      className={`w-12 h-14 text-center font-mono font-black text-2xl rounded-2xl border-2 outline-none transition bg-gray-50/70 ${
+                        digit
+                          ? 'border-[#0f8646] bg-emerald-50/40 text-gray-900'
+                          : 'border-gray-200 focus:border-[#0f8646]'
+                      }`}
+                    />
+                  ))}
+                </div>
 
                 {/* Eco-Bag Return Counter */}
                 <div className="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-3 flex items-center justify-between text-xs">
@@ -586,8 +711,9 @@ export default function Deliveryboy({ initialUser }: Props) {
   return (
     <div className="min-h-screen bg-[#f8faf9] flex flex-col font-sans">
       {renderRiderHeader()}
+      {renderToast()}
 
-      <main className="flex-1 max-w-4xl w-full mx-auto p-4 sm:p-6 space-y-4 pb-20">
+      <main className="flex-1 max-w-4xl w-full mx-auto p-3.5 sm:p-6 space-y-4 pb-24">
         
         {/* Minimalist Segmented Tab Switcher */}
         <div className="flex items-center gap-1.5 p-1.5 bg-gray-200/70 rounded-2xl border border-gray-200 backdrop-blur-xs">
@@ -633,7 +759,7 @@ export default function Deliveryboy({ initialUser }: Props) {
           </button>
         </div>
 
-        {/* Loading Spinner during initial fetch */}
+        {/* Loading Spinner */}
         {loading && (
           <div className="bg-white rounded-3xl p-8 text-center border border-gray-200/80 shadow-xs">
             <Loader2 size={28} className="animate-spin text-[#0f8646] mx-auto mb-2" />
