@@ -621,21 +621,21 @@ export default function BulkUploadPage() {
               </div>
             </div>
 
-            {/* Card 4: Wholesale Mandi Master Dataset (25 Products) */}
+            {/* Card 4: Wholesale Farm Master Dataset (25 Products) */}
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-6 shadow-xs border border-blue-200/90 flex flex-col justify-between md:col-span-2">
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <span className="bg-blue-600 text-white text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-2xs flex items-center gap-1.5">
                     <Sparkles size={12} />
-                    <span>WholesaleMandi.com Catalog</span>
+                    <span>Wholesale Farm Direct Catalog</span>
                   </span>
                   <span className="text-xs text-blue-900 font-bold">25 Fruits, Mangoes & Exotics</span>
                 </div>
                 <h3 className="text-lg font-black text-gray-900 mb-1">
-                  Wholesale Mandi (wholesalemandi.com) Direct Sourced Dataset
+                  Wholesale Farm Direct Sourced Dataset
                 </h3>
                 <p className="text-xs text-gray-600 leading-relaxed mb-5">
-                  Bulk mandi rates for Mangoes (Imam Pasand, Banganapalli, Senthura), Bananas (Yelakki, Red, Nendram), Dragon Fruit, Blueberry, Thai Guava with bulk tier pack sizes (1kg, 2kg, 5kg).
+                  Bulk farm rates for Mangoes (Imam Pasand, Banganapalli, Senthura), Bananas (Yelakki, Red, Nendram), Dragon Fruit, Blueberry, Thai Guava with bulk tier pack sizes (1kg, 2kg, 5kg).
                 </p>
               </div>
 
@@ -667,7 +667,7 @@ export default function BulkUploadPage() {
                       setResultMsg(null);
                       scrollToPreview();
                     } catch (e) {
-                      alert("Failed to load Wholesale Mandi dataset");
+                      alert("Failed to load Wholesale dataset");
                     }
                   }}
                   className="bg-blue-200 hover:bg-blue-300 text-blue-950 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
@@ -678,21 +678,21 @@ export default function BulkUploadPage() {
               </div>
             </div>
 
-            {/* Card 5: Ram Bhaji Bhopal Master Dataset (39 Products) */}
+            {/* Card 5: Regional Produce Master Dataset (39 Products) */}
             <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl p-6 shadow-xs border border-green-200/90 flex flex-col justify-between md:col-span-2">
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <span className="bg-[#0f8646] text-white text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-2xs flex items-center gap-1.5">
                     <Sparkles size={12} />
-                    <span>RamBhaji.com Bhopal Catalog</span>
+                    <span>Regional Produce Catalog</span>
                   </span>
-                  <span className="text-xs text-green-900 font-bold">39 Bhopal Mandi Produce Items</span>
+                  <span className="text-xs text-green-900 font-bold">39 Farm Fresh Produce Items</span>
                 </div>
                 <h3 className="text-lg font-black text-gray-900 mb-1">
-                  Ram Bhaji Bhopal (rambhaji.com) Local Mandi Dataset
+                  Bhopal Regional Produce Dataset
                 </h3>
                 <p className="text-xs text-gray-600 leading-relaxed mb-5">
-                  Extracted directly from Bhopal online store Rambhaji with dual English & Hindi produce names (Beetroot चुकंदर, Bharta Brinjal बैगन, Bitter Gourd करेला, Bottle Gourd लौकी, Broccoli ब्रोकोली), authentic rates, and 250g–5kg pack sizes.
+                  Extracted with dual English & Hindi produce names (Beetroot चुकंदर, Bharta Brinjal बैगन, Bitter Gourd करेला, Bottle Gourd लौकी, Broccoli ब्रोकोली), authentic rates, and 250g–5kg pack sizes.
                 </p>
               </div>
 
@@ -724,7 +724,7 @@ export default function BulkUploadPage() {
                       setResultMsg(null);
                       scrollToPreview();
                     } catch (e) {
-                      alert("Failed to load Ram Bhaji dataset");
+                      alert("Failed to load regional produce dataset");
                     }
                   }}
                   className="bg-green-100 hover:bg-green-200 text-green-950 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
@@ -735,21 +735,21 @@ export default function BulkUploadPage() {
               </div>
             </div>
 
-            {/* Card 6: VegSwift Bhopal Master Dataset (116 Products) */}
+            {/* Card 6: Farm Fresh Master Dataset (116 Products) */}
             <div className="bg-gradient-to-br from-teal-50 to-emerald-50 rounded-3xl p-6 shadow-xs border border-teal-200/90 flex flex-col justify-between md:col-span-2">
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <span className="bg-teal-600 text-white text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-2xs flex items-center gap-1.5">
                     <Sparkles size={12} />
-                    <span>VegSwift.in Bhopal Catalog</span>
+                    <span>Farm Fresh Daily Catalog</span>
                   </span>
-                  <span className="text-xs text-teal-900 font-bold">116 Bhopal Produce & Dairy Items</span>
+                  <span className="text-xs text-teal-900 font-bold">116 Produce & Dairy Items</span>
                 </div>
                 <h3 className="text-lg font-black text-gray-900 mb-1">
-                  VegSwift Bhopal (vegswift.in) Complete Sourced Dataset
+                  Bhopal Daily Farm Harvest Dataset
                 </h3>
                 <p className="text-xs text-gray-600 leading-relaxed mb-5">
-                  116 items extracted directly from Bhopal VegSwift platform with dual English/Hindi names (Pahadi Aalu, Nashik Pyaz, Garlic Lahsun, Mooli, Gajar, Arbi, Peanut, Desi Tomato), real mandi rates, and pack sizes (250g, 500g, 1kg, 2kg).
+                  116 items featuring dual English/Hindi names (Pahadi Aalu, Nashik Pyaz, Garlic Lahsun, Mooli, Gajar, Arbi, Peanut, Desi Tomato), real farm wholesale rates, and pack sizes (250g, 500g, 1kg, 2kg).
                 </p>
               </div>
 
