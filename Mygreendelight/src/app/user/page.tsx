@@ -183,9 +183,6 @@ export default function UserProfileHub() {
     (o) => o.status === "pending" || o.status === "out of delivery"
   );
 
-  const totalSpent = orders.reduce((sum, o) => sum + (o.totalamount || 0), 0);
-  const totalSavings = Math.round(totalSpent * 0.15) + 120; // Estimated 15% mandi wholesale savings + welcome bonus
-
   if (status === "unauthenticated" && !isLoggedIn) {
     return (
       <div className="min-h-screen bg-[#f7faf8] flex flex-col font-sans text-gray-900">
@@ -327,42 +324,7 @@ export default function UserProfileHub() {
           </div>
         </motion.div>
 
-        {/* 2. VIP Gold & Emerald Membership Card */}
-        <div className="bg-gradient-to-br from-[#042413] via-[#094121] to-[#0f8646] text-white rounded-3xl p-5 sm:p-6 shadow-md relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-300/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-amber-400/10 rounded-full blur-2xl pointer-events-none" />
-
-          <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="space-y-1 text-center sm:text-left">
-              <div className="flex items-center justify-center sm:justify-start gap-2">
-                <span className="bg-amber-400 text-gray-950 font-black text-[9.5px] uppercase px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-xs">
-                  <Star size={11} className="fill-gray-950" /> VIP Farm Pass
-                </span>
-                <span className="text-xs text-emerald-200 font-bold">
-                  Bhopal Exclusive Member
-                </span>
-              </div>
-
-              <h3 className="text-lg sm:text-xl font-black tracking-tight text-white">
-                You have saved approx ₹{totalSavings} with Farm-Direct Pricing!
-              </h3>
-              <p className="text-xs text-emerald-100/80 max-w-md">
-                Enjoy 15-45 mins express morning delivery, zero platform markups & extra 5% society group perks.
-              </p>
-            </div>
-
-            <Link
-              href="/offers"
-              className="bg-white hover:bg-amber-50 text-gray-950 font-black text-xs px-4 py-3 rounded-2xl shadow-md transition flex items-center justify-center gap-2 shrink-0 cursor-pointer"
-            >
-              <Sparkles size={14} className="text-amber-600" />
-              <span>View VIP Perks</span>
-              <ChevronRight size={14} />
-            </Link>
-          </div>
-        </div>
-
-        {/* 3. Three Metric Quick-Action Tiles */}
+        {/* 2. Three Metric Quick-Action Tiles */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           
           {/* Tile 1: Wallet Balance */}
