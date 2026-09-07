@@ -18,18 +18,15 @@ export async function GET(req: NextRequest) {
 
     let wallet = await UserWallet.findOne({ user: session.user.id });
     if (!wallet) {
+      // Check user model first for existing balance
+      const existingUser = await User.findById(session.user.id);
+      const initialBalance = existingUser?.walletBalance || 0;
+
       wallet = await UserWallet.create({
         user: session.user.id,
-        balance: 50,
-        totalCashback: 50,
-        transactions: [
-          {
-            type: "credit",
-            amount: 50,
-            description: "🎉 Welcome Farm Gift Bonus",
-            createdAt: new Date(),
-          },
-        ],
+        balance: initialBalance,
+        totalCashback: 0,
+        transactions: [],
       });
     }
 

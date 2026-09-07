@@ -2,12 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { useSession, signOut } from "next-auth/react";
 import type { RootState } from "@/redux/store";
-import { addToCart } from "@/redux/CartSlice";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import useGetMe from "@/hooks/useGetMe";
@@ -23,29 +21,16 @@ import {
   LogOut,
   Sparkles,
   ShieldCheck,
-  Gift,
+  Tag,
   ArrowLeft,
   Truck,
   ShoppingBag,
-  Tag,
   Wallet,
   MapPin,
   Leaf,
-  Clock,
-  CheckCircle2,
-  Users,
-  Compass,
-  Zap,
-  Star,
-  Plus,
-  Check,
-  Bell,
   RefreshCw,
-  Award,
-  Crown,
-  Share2,
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 export default function UserProfileHub() {
   const router = useRouter();
@@ -60,12 +45,8 @@ export default function UserProfileHub() {
   const isLoggedIn = !!activeUser?.email;
 
   const [orders, setOrders] = useState<any[]>([]);
-  const [walletBalance, setWalletBalance] = useState<number>(50);
+  const [walletBalance, setWalletBalance] = useState<number>(0);
   const [loading, setLoading] = useState(true);
-
-  // Preference Toggles
-  const [silentDelivery, setSilentDelivery] = useState(false);
-  const [returnBagCashback, setReturnBagCashback] = useState(true);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -89,21 +70,27 @@ export default function UserProfileHub() {
         })
         .catch(() => {});
 
-      // 2. Fetch Wallet Balance
+      // 2. Fetch Real Wallet Balance
       const walletPromise = axios
         .get(`/api/user/wallet?_t=${Date.now()}`, {
           headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
         })
         .then((res) => {
-          if (res.data?.success) {
-            setWalletBalance(res.data.balance || 50);
+          if (res.data?.success && typeof res.data.balance === "number") {
+            setWalletBalance(res.data.balance);
+          } else if (typeof activeUser?.walletBalance === "number") {
+            setWalletBalance(activeUser.walletBalance);
+          } else {
+            setWalletBalance(0);
           }
         })
-        .catch(() => {});
+        .catch(() => {
+          setWalletBalance(typeof activeUser?.walletBalance === "number" ? activeUser.walletBalance : 0);
+        });
 
       await Promise.allSettled([ordersPromise, walletPromise]);
     } catch (e) {
-      // Guest or error
+      // Guest or network error
     } finally {
       setLoading(false);
     }
@@ -113,6 +100,8 @@ export default function UserProfileHub() {
   const activeOrder = orders.find(
     (o) => o.status === "pending" || o.status === "out of delivery"
   );
+
+  const totalCartCount = (cartdata || []).reduce((acc: number, item: any) => acc + (item.quantity || 1), 0);
 
   if (status === "unauthenticated" && !isLoggedIn) {
     return (
@@ -126,7 +115,7 @@ export default function UserProfileHub() {
             Welcome to SubziQuick
           </h1>
           <p className="text-xs sm:text-sm text-gray-500 mb-8 max-w-xs leading-relaxed">
-            Sign in to track live orders, access your farm wallet, unlock scratch rewards & save favorites.
+            Sign in to track live orders, view past deliveries, manage cart and favorite fresh harvest.
           </p>
           <Link
             href="/login"
@@ -181,13 +170,13 @@ export default function UserProfileHub() {
           transition={{ duration: 0.3 }}
           className="relative bg-white rounded-3xl border border-gray-200/80 p-5 sm:p-7 shadow-[0_4px_24px_rgba(0,0,0,0.03)] overflow-hidden"
         >
-          {/* Subtle Ambient Emerald Glow in Background */}
+          {/* Subtle Ambient Emerald Glow */}
           <div className="absolute top-0 right-0 w-72 h-72 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-5 text-center sm:text-left">
             <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-5">
               
-              {/* Avatar Box with Golden / Emerald Ring */}
+              {/* Avatar Box */}
               <div className="relative w-18 h-18 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-tr from-[#0f8646] to-emerald-400 text-white flex items-center justify-center font-black text-2xl sm:text-3xl shadow-md shrink-0 overflow-hidden border-2 border-white ring-2 ring-emerald-500/20">
                 {activeUser?.image ? (
                   <img
@@ -236,8 +225,8 @@ export default function UserProfileHub() {
                     <MapPin size={12} className="text-[#0f8646]" /> Bhopal, Madhya Pradesh
                   </span>
                   <span className="text-gray-300">•</span>
-                  <span className="flex items-center gap-1 text-gray-600 bg-gray-50 px-2 py-0.5 rounded-lg border border-gray-100">
-                    <Leaf size={12} className="text-[#0f8646]" /> Same-Day Harvest
+                  <span className="flex items-center gap-1 text-emerald-800 bg-emerald-50/70 px-2.5 py-0.5 rounded-lg border border-emerald-200/60 font-black">
+                    <Wallet size={12} className="text-[#0f8646]" /> Wallet: ₹{walletBalance}
                   </span>
                 </div>
               </div>
@@ -255,31 +244,10 @@ export default function UserProfileHub() {
           </div>
         </motion.div>
 
-        {/* 2. Three Metric Quick-Action Tiles */}
+        {/* 2. Three 100% Real Metric Quick-Action Tiles */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           
-          {/* Tile 1: Wallet Balance */}
-          <Link
-            href="/user/cart"
-            className="bg-white rounded-2xl p-4 sm:p-4.5 border border-gray-200/80 shadow-2xs hover:border-emerald-400 hover:shadow-xs transition-all flex items-center justify-between group"
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-xl bg-emerald-50 text-[#0f8646] flex items-center justify-center font-black shrink-0 border border-emerald-100 group-hover:scale-105 transition-transform">
-                <Wallet size={22} />
-              </div>
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block">
-                  Farm Cash & Wallet
-                </span>
-                <span className="text-base sm:text-lg font-black text-gray-900">
-                  ₹{walletBalance}
-                </span>
-              </div>
-            </div>
-            <ChevronRight size={16} className="text-gray-400 group-hover:text-[#0f8646] transition-transform group-hover:translate-x-0.5" />
-          </Link>
-
-          {/* Tile 2: My Orders */}
+          {/* Tile 1: My Orders */}
           <Link
             href="/user/myorder"
             className="bg-white rounded-2xl p-4 sm:p-4.5 border border-gray-200/80 shadow-2xs hover:border-emerald-400 hover:shadow-xs transition-all flex items-center justify-between group"
@@ -290,7 +258,7 @@ export default function UserProfileHub() {
               </div>
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block">
-                  Orders & Tracking
+                  Orders Placed
                 </span>
                 <span className="text-base sm:text-lg font-black text-gray-900">
                   {orders.length} {orders.length === 1 ? "Order" : "Orders"}
@@ -300,7 +268,7 @@ export default function UserProfileHub() {
             <ChevronRight size={16} className="text-gray-400 group-hover:text-blue-600 transition-transform group-hover:translate-x-0.5" />
           </Link>
 
-          {/* Tile 3: Wishlist */}
+          {/* Tile 2: Wishlist */}
           <Link
             href="/wishlist"
             className="bg-white rounded-2xl p-4 sm:p-4.5 border border-gray-200/80 shadow-2xs hover:border-emerald-400 hover:shadow-xs transition-all flex items-center justify-between group"
@@ -311,7 +279,7 @@ export default function UserProfileHub() {
               </div>
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block">
-                  Saved Produce
+                  Saved Favorites
                 </span>
                 <span className="text-base sm:text-lg font-black text-gray-900">
                   {wishlistItems.length} {wishlistItems.length === 1 ? "Item" : "Items"}
@@ -320,9 +288,30 @@ export default function UserProfileHub() {
             </div>
             <ChevronRight size={16} className="text-gray-400 group-hover:text-rose-600 transition-transform group-hover:translate-x-0.5" />
           </Link>
+
+          {/* Tile 3: Active Cart Basket */}
+          <Link
+            href="/user/cart"
+            className="bg-white rounded-2xl p-4 sm:p-4.5 border border-gray-200/80 shadow-2xs hover:border-emerald-400 hover:shadow-xs transition-all flex items-center justify-between group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-xl bg-emerald-50 text-[#0f8646] flex items-center justify-center font-black shrink-0 border border-emerald-100 group-hover:scale-105 transition-transform">
+                <ShoppingCart size={22} />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block">
+                  Cart Items
+                </span>
+                <span className="text-base sm:text-lg font-black text-gray-900">
+                  {totalCartCount} {totalCartCount === 1 ? "Item" : "Items"}
+                </span>
+              </div>
+            </div>
+            <ChevronRight size={16} className="text-gray-400 group-hover:text-[#0f8646] transition-transform group-hover:translate-x-0.5" />
+          </Link>
         </div>
 
-        {/* 4. Live Active Order Snip Banner (If user has pending/out of delivery order) */}
+        {/* 3. Live Active Order Banner (Only if order is pending or out for delivery) */}
         {activeOrder && (
           <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
@@ -358,64 +347,7 @@ export default function UserProfileHub() {
           </motion.div>
         )}
 
-        {/* 5. Smart Delivery & Doorstep Preferences */}
-        <div className="bg-white rounded-3xl p-4 sm:p-6 border border-gray-200/80 shadow-2xs">
-          <h2 className="text-[11px] font-black uppercase tracking-wider text-gray-400 mb-3.5 px-1 flex items-center gap-1.5">
-            <Bell size={14} className="text-[#0f8646]" /> Doorstep & Delivery Preferences
-          </h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            
-            {/* Preference 1: Silent Delivery */}
-            <div
-              onClick={() => setSilentDelivery(!silentDelivery)}
-              className={`p-3.5 rounded-2xl border transition cursor-pointer flex items-center justify-between ${
-                silentDelivery
-                  ? "bg-emerald-50/70 border-emerald-300 text-emerald-950"
-                  : "bg-gray-50/70 border-gray-100 text-gray-900 hover:border-gray-200"
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${silentDelivery ? "bg-emerald-600 text-white" : "bg-white text-gray-500 border border-gray-200"}`}>
-                  <Bell size={16} />
-                </div>
-                <div>
-                  <h4 className="text-xs font-black">Silent Doorstep Drop</h4>
-                  <p className="text-[10.5px] text-gray-500">Do not ring bell (leave at door)</p>
-                </div>
-              </div>
-              <div className={`w-5 h-5 rounded-full border flex items-center justify-center text-[10px] font-black ${silentDelivery ? "bg-[#0f8646] border-[#0f8646] text-white" : "border-gray-300 bg-white text-transparent"}`}>
-                ✓
-              </div>
-            </div>
-
-            {/* Preference 2: Return Cloth Bag */}
-            <div
-              onClick={() => setReturnBagCashback(!returnBagCashback)}
-              className={`p-3.5 rounded-2xl border transition cursor-pointer flex items-center justify-between ${
-                returnBagCashback
-                  ? "bg-emerald-50/70 border-emerald-300 text-emerald-950"
-                  : "bg-gray-50/70 border-gray-100 text-gray-900 hover:border-gray-200"
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${returnBagCashback ? "bg-emerald-600 text-white" : "bg-white text-gray-500 border border-gray-200"}`}>
-                  <Leaf size={16} />
-                </div>
-                <div>
-                  <h4 className="text-xs font-black">Cloth Bag Return Bonus</h4>
-                  <p className="text-[10.5px] text-gray-500">Return clean bag for +₹10 wallet cash</p>
-                </div>
-              </div>
-              <div className={`w-5 h-5 rounded-full border flex items-center justify-center text-[10px] font-black ${returnBagCashback ? "bg-[#0f8646] border-[#0f8646] text-white" : "border-gray-300 bg-white text-transparent"}`}>
-                ✓
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        {/* 7. Organized Minimal Navigation Grid */}
+        {/* 4. Organized Minimal Navigation Grid */}
         <div className="space-y-4">
           
           {/* Section: Orders & Cart */}
@@ -435,10 +367,10 @@ export default function UserProfileHub() {
                   </div>
                   <div className="min-w-0">
                     <h3 className="text-xs font-black text-gray-900 group-hover:text-[#0f8646] transition truncate">
-                      My Orders & Invoice
+                      My Orders & Invoices
                     </h3>
                     <p className="text-[10.5px] text-gray-500 truncate">
-                      Track delivery, reorder basket & download receipt
+                      Track delivery, reorder basket & download receipts
                     </p>
                   </div>
                 </div>
@@ -458,7 +390,7 @@ export default function UserProfileHub() {
                       Active Basket
                     </h3>
                     <p className="text-[10.5px] text-gray-500 truncate">
-                      {cartdata?.length || 0} produce items in cart
+                      {totalCartCount} fresh produce items in cart
                     </p>
                   </div>
                 </div>
@@ -467,51 +399,31 @@ export default function UserProfileHub() {
             </div>
           </div>
 
-          {/* Section: Rewards & Savings */}
+          {/* Section: Offers & Discounts */}
           <div className="bg-white rounded-3xl p-4 sm:p-6 border border-gray-200/80 shadow-2xs">
             <h2 className="text-[11px] font-black uppercase tracking-wider text-gray-400 mb-3 px-1 flex items-center gap-1.5">
-              <Gift size={14} className="text-amber-600" /> Exclusive Savings & Community
+              <Tag size={14} className="text-amber-600" /> Coupons & Deals
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div className="grid grid-cols-1 gap-2.5">
               <Link
                 href="/offers"
                 className="flex items-center justify-between p-3.5 rounded-2xl bg-amber-50/40 hover:bg-amber-50 border border-amber-200/80 hover:border-amber-300 transition group"
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <div className="w-9 h-9 rounded-xl bg-white text-amber-600 flex items-center justify-center border border-amber-200 shadow-2xs shrink-0">
-                    <Sparkles size={18} />
+                    <Tag size={18} />
                   </div>
                   <div className="min-w-0">
                     <h3 className="text-xs font-black text-gray-900 group-hover:text-amber-800 transition truncate">
-                      Daily Scratch Rewards & Coupons
+                      Available Coupons & Seasonal Offers
                     </h3>
                     <p className="text-[10.5px] text-amber-900/80 truncate">
-                      Unlock scratch card cashbacks & discount codes
+                      View active promo codes for Bhopal delivery
                     </p>
                   </div>
                 </div>
                 <ChevronRight size={16} className="text-gray-400 group-hover:text-amber-700 shrink-0" />
-              </Link>
-
-              <Link
-                href="/shop"
-                className="flex items-center justify-between p-3.5 rounded-2xl bg-emerald-50/40 hover:bg-emerald-50 border border-emerald-200/80 hover:border-emerald-300 transition group"
-              >
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-9 h-9 rounded-xl bg-white text-[#0f8646] flex items-center justify-center border border-emerald-200 shadow-2xs shrink-0">
-                    <Users size={18} />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="text-xs font-black text-gray-900 group-hover:text-[#0f8646] transition truncate">
-                      Bhopal Society Order Pools
-                    </h3>
-                    <p className="text-[10.5px] text-emerald-800 truncate">
-                      Order together with colony neighbors & save extra 5%
-                    </p>
-                  </div>
-                </div>
-                <ChevronRight size={16} className="text-gray-400 group-hover:text-[#0f8646] shrink-0" />
               </Link>
             </div>
           </div>
@@ -519,7 +431,7 @@ export default function UserProfileHub() {
           {/* Section: Shop Fresh Produce Categories */}
           <div className="bg-white rounded-3xl p-4 sm:p-6 border border-gray-200/80 shadow-2xs">
             <h2 className="text-[11px] font-black uppercase tracking-wider text-gray-400 mb-3 px-1 flex items-center gap-1.5">
-              <Compass size={14} className="text-purple-600" /> Explore 3 Fresh Categories
+              <Leaf size={14} className="text-[#0f8646]" /> Shop Fresh Produce Categories
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
@@ -663,7 +575,7 @@ export default function UserProfileHub() {
           )}
         </div>
 
-        {/* 8. Minimal 24/7 Bhopal Concierge Support Card */}
+        {/* 5. Minimal 24/7 Bhopal Support Card */}
         <div className="bg-white rounded-3xl p-5 sm:p-6 border border-gray-200/80 shadow-2xs flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3.5 text-center sm:text-left">
             <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-[#0f8646] flex items-center justify-center font-black shadow-2xs shrink-0 border border-emerald-100">
@@ -671,7 +583,7 @@ export default function UserProfileHub() {
             </div>
             <div>
               <h4 className="text-sm font-black text-gray-900">
-                SubziQuick Bhopal Support Desk
+                SubziQuick Bhopal Helpdesk
               </h4>
               <p className="text-xs text-gray-500 font-medium">
                 Live Help & Dispatch Status: <strong className="text-gray-900">+91 9981418565</strong>
