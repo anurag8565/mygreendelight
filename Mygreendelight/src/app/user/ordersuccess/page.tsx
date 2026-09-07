@@ -2,6 +2,7 @@
 
 import React, { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import {
   CheckCircle2,
@@ -12,13 +13,16 @@ import {
   ShieldCheck,
   Clock,
   Gift,
-  PartyPopper,
   Receipt,
   Users,
   Copy,
   Check,
   Share2,
   MessageCircle,
+  MapPin,
+  Leaf,
+  ChevronRight,
+  Package,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Nav from "@/components/Nav";
@@ -69,7 +73,7 @@ function OrderSuccessContent() {
               _id: claim._id,
               couponCode: claim.couponCode,
               discountAmount: claim.discountValue || 30,
-              minOrderAmount: claim.minOrderValue || 199,
+              minOrderValue: claim.minOrderValue || 199,
               isScratched: claim.isScratched || false,
             };
             setReward(rewardObj);
@@ -102,274 +106,336 @@ function OrderSuccessContent() {
   }, [dispatch, orderId]);
 
   const displayTotal = orderDetails?.totalamount ?? (amountParam ? Number(amountParam) : 0);
-  const formattedOrderId = orderId ? `#MGD-${orderId.slice(-6).toUpperCase()}` : "CONFIRMED";
+  const formattedOrderId = orderId ? `#SZQ-${orderId.slice(-6).toUpperCase()}` : "#SZQ-ORDER";
 
   const isUpiOrder = orderDetails?.paymentmethod === "upi" || searchParams.get("method") === "upi";
   const isPaid = Boolean(orderDetails?.ispaid);
   const isPendingUpi = isUpiOrder && !isPaid;
 
+  const handleCopyOrderId = () => {
+    if (orderId) {
+      navigator.clipboard.writeText(formattedOrderId);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  const customerName =
+    orderDetails?.address?.fullname ||
+    orderDetails?.customer ||
+    userdata?.name ||
+    "Valued Customer";
+
+  const customerMobile =
+    orderDetails?.address?.mobile || userdata?.mobile || "N/A";
+
+  const customerAddress =
+    orderDetails?.address?.fulladress ||
+    (orderDetails?.address?.locality ? `${orderDetails.address.locality}, Bhopal` : "Bhopal, MP");
+
+  const deliverySlot = orderDetails?.deliverySlot || "Morning Farm Harvest (Same Day)";
+  const paymentMethodText =
+    orderDetails?.paymentmethod === "cod" || searchParams.get("method") === "cod"
+      ? "Cash on Delivery"
+      : isPaid
+      ? "UPI / Online Paid"
+      : "UPI (Verification Pending)";
+
   return (
-    <div className="bg-[#fbfcfb] min-h-screen flex flex-col justify-between font-sans">
+    <div className="bg-[#f7faf8] min-h-screen flex flex-col justify-between font-sans text-gray-900">
       <Nav user={(userdata as any) || { role: "user" }} />
 
-      <main className="max-w-3xl mx-auto px-4 py-10 pb-32 sm:pb-16 w-full flex-1 flex flex-col items-center justify-center text-center">
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: "spring", duration: 0.5 }}
-          className="bg-white rounded-3xl border border-gray-200/80 p-6 sm:p-12 shadow-sm w-full"
-        >
-          {/* Animated Header Badge: Green Confirmed for COD/Paid, Amber Clock for UPI Pending */}
-          {isPendingUpi ? (
-            <>
-              <div className="relative w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-5">
-                <div className="absolute inset-0 bg-amber-100 rounded-full animate-ping opacity-40" />
-                <div className="relative w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-tr from-amber-500 to-yellow-500 rounded-full flex items-center justify-center text-white shadow-xl shadow-amber-600/20">
-                  <Clock size={44} className="stroke-[2.5]" />
+      <main className="max-w-xl mx-auto px-4 py-8 sm:py-12 pb-28 sm:pb-20 w-full flex-1 flex flex-col items-center">
+        
+        {/* Soft Radial Ambient Glow */}
+        <div className="relative w-full">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 bg-emerald-400/15 rounded-full blur-3xl pointer-events-none" />
+
+          <motion.div
+            initial={{ scale: 0.94, opacity: 0, y: 10 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            className="relative bg-white rounded-[2rem] border border-gray-200/70 p-6 sm:p-9 shadow-[0_8px_30px_rgb(0,0,0,0.04)] w-full text-center"
+          >
+            {/* Top Animated Check Icon */}
+            {isPendingUpi ? (
+              <div className="relative w-20 h-20 mx-auto mb-4">
+                <div className="absolute inset-0 bg-amber-200 rounded-full animate-ping opacity-30" />
+                <div className="relative w-20 h-20 bg-gradient-to-tr from-amber-500 to-amber-400 rounded-full flex items-center justify-center text-white shadow-lg shadow-amber-500/25">
+                  <Clock size={38} className="stroke-[2.5]" />
                 </div>
               </div>
-
-              <div className="inline-flex items-center gap-1.5 bg-amber-50 border border-amber-200 text-amber-900 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider mb-2">
-                <Clock size={14} className="animate-spin" /> PAYMENT VERIFICATION PENDING
-              </div>
-
-              <h1 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2">
-                Order Received • Verification in Progress
-              </h1>
-
-              <p className="text-xs sm:text-sm text-gray-500 max-w-md mx-auto mb-6 leading-relaxed">
-                Aapka ₹{displayTotal} ka order receive ho gaya hai. Hamari Bhopal store team aapka UPI Payment / UTR verify kar rahi hai. Verification complete hote hi order dispatch hoga.
-              </p>
-            </>
-          ) : (
-            <>
-              <div className="relative w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-5">
-                <div className="absolute inset-0 bg-green-100 rounded-full animate-ping opacity-30" />
-                <div className="relative w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-tr from-[#0f8646] to-emerald-500 rounded-full flex items-center justify-center text-white shadow-xl shadow-green-700/20">
-                  <CheckCircle2 size={44} className="stroke-[2.5]" />
+            ) : (
+              <div className="relative w-20 h-20 mx-auto mb-4">
+                <div className="absolute inset-0 bg-emerald-300 rounded-full animate-ping opacity-30" />
+                <div className="relative w-20 h-20 bg-gradient-to-tr from-[#0f8646] to-emerald-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-emerald-700/25">
+                  <CheckCircle2 size={40} className="stroke-[2.5]" />
                 </div>
               </div>
+            )}
 
-              <div className="inline-flex items-center gap-1.5 bg-green-50 border border-green-200 text-[#0f8646] text-xs font-black px-4 py-1 rounded-full uppercase tracking-wider mb-2">
-                <Sparkles size={14} /> ORDER CONFIRMED
-              </div>
-
-              <h1 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2">
-                Thank You for Your Order!
-              </h1>
-
-              <p className="text-xs sm:text-sm text-gray-500 max-w-md mx-auto mb-6 leading-relaxed">
-                Your farm-fresh harvest is packed and ready for express delivery to your doorstep.
-              </p>
-            </>
-          )}
-
-          {/* Verified Order Receipt Box */}
-          <div className="bg-gradient-to-r from-emerald-50/70 via-gray-50 to-green-50/70 rounded-2xl p-4 sm:p-5 border border-emerald-200/80 max-w-md mx-auto mb-6 text-left shadow-2xs">
-            <div className="flex items-center justify-between pb-3 border-b border-gray-200/80 mb-3 text-xs">
-              <div className="flex items-center gap-1.5 font-black text-gray-800">
-                <Receipt size={16} className="text-[#0f8646]" />
-                <span>Order ID: <span className="text-[#0f8646] font-mono">{formattedOrderId}</span></span>
-              </div>
-              <span className={`font-extrabold text-[10px] uppercase px-2.5 py-0.5 rounded-full border ${
-                orderDetails?.paymentmethod === "cod" || searchParams.get("method") === "cod"
-                  ? "bg-gray-100 text-gray-800 border-gray-200"
-                  : orderDetails?.ispaid
-                  ? "bg-emerald-100 text-emerald-800 border-emerald-300"
-                  : "bg-amber-100 text-amber-900 border-amber-300"
-              }`}>
-                {orderDetails?.paymentmethod === "cod" || searchParams.get("method") === "cod"
-                  ? "Cash On Delivery"
-                  : orderDetails?.ispaid
-                  ? "✅ UPI Paid"
-                  : "🟠 UPI Verification Pending"}
-              </span>
+            {/* Status Pill */}
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black tracking-wider uppercase mb-2.5 bg-emerald-50 text-[#0f8646] border border-emerald-200/80">
+              <Sparkles size={12} />
+              <span>{isPendingUpi ? "Payment Under Review" : "Order Confirmed"}</span>
             </div>
 
-            <div className="flex items-baseline justify-between">
-              <div>
-                <span className="text-[11px] font-bold text-gray-500 block">Total Order Payable</span>
-                <span className="text-[10px] text-emerald-700 font-medium">Bhopal Farm Fresh Produce</span>
-              </div>
-              <div className="text-right">
-                <span className="text-2xl sm:text-3xl font-black text-[#0f8646]">
-                  ₹{displayTotal}
-                </span>
-              </div>
-            </div>
+            {/* Main Headline */}
+            <h1 className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight mb-2">
+              {isPendingUpi ? "Order Placed Successfully!" : "Thank You for Your Order!"}
+            </h1>
 
-            {/* Direct WhatsApp Order Receipt to Store (+91 9981418565) */}
-            <div className="mt-3.5 pt-3 border-t border-gray-200/80 space-y-2">
-              {orderDetails?.paymentId && (
-                <div className="flex items-center justify-between bg-white px-3 py-1.5 rounded-xl border border-gray-200 text-[11px]">
-                  <span className="text-gray-500 font-semibold">Submitted Ref / UTR:</span>
-                  <span className="font-mono font-bold text-purple-800">{orderDetails.paymentId}</span>
-                </div>
-              )}
-              
-              <a
-                href={`https://wa.me/919981418565?text=${encodeURIComponent(
-                  `*🔔 NAYA ORDER PLACED - SubziQuick*\n` +
-                  `━━━━━━━━━━━━━━━━━━━\n` +
-                  `🛒 *Order ID:* #${(orderId || "").slice(-6).toUpperCase()}\n` +
-                  `👤 *Customer:* ${orderDetails?.customer || orderDetails?.address?.fullname || userdata?.name || "Customer"} (${orderDetails?.address?.mobile || userdata?.mobile || "N/A"})\n` +
-                  `📍 *Address:* ${orderDetails?.address?.fulladress || "Bhopal"}\n` +
-                  `💵 *Total Bill:* ₹${displayTotal} (${orderDetails?.paymentmethod?.toUpperCase() || "COD"})\n` +
-                  `⏰ *Slot:* ${orderDetails?.deliverySlot || "Morning Express"}\n` +
-                  `━━━━━━━━━━━━━━━━━━━\n` +
-                  `Please confirm dispatch & delivery timing! 🙏`
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white py-2.5 px-4 rounded-xl text-xs font-black flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition cursor-pointer"
-              >
-                <MessageCircle size={16} />
-                <span>📲 Send Order Details to Store on WhatsApp</span>
-              </a>
-            </div>
-          </div>
-
-          {/* Quick Info Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-lg mx-auto mb-6 text-left">
-            <div className="bg-gray-50/80 border border-gray-100 rounded-2xl p-3.5">
-              <div className="flex items-center gap-2 text-[#0f8646] mb-1">
-                <Clock size={16} />
-                <span className="font-extrabold text-xs text-gray-900">Same-Day Slot</span>
-              </div>
-              <p className="text-[10px] text-gray-500">Fresh Farm Dispatch</p>
-            </div>
-
-            <div className="bg-gray-50/80 border border-gray-100 rounded-2xl p-3.5">
-              <div className="flex items-center gap-2 text-[#0f8646] mb-1">
-                <ShieldCheck size={16} />
-                <span className="font-extrabold text-xs text-gray-900">100% Organic</span>
-              </div>
-              <p className="text-[10px] text-gray-500">Farm Verified</p>
-            </div>
-
-            <div className="bg-gray-50/80 border border-gray-100 rounded-2xl p-3.5">
-              <div className="flex items-center gap-2 text-[#0f8646] mb-1">
-                <Truck size={16} />
-                <span className="font-extrabold text-xs text-gray-900">Live GPS</span>
-              </div>
-              <p className="text-[10px] text-gray-500">Rider Navigation</p>
-            </div>
-          </div>
-
-          {/* Scratch Card Prize Banner */}
-          {reward && (
-            <div className="max-w-md mx-auto mb-6 bg-gradient-to-r from-amber-100 via-yellow-50 to-emerald-100 border-2 border-dashed border-amber-300 rounded-3xl p-4 sm:p-5 text-left flex items-center justify-between gap-3 shadow-md relative overflow-hidden">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center font-black shadow-md shrink-0 animate-bounce">
-                  <Gift size={24} />
-                </div>
-                <div>
-                  <span className="text-[10px] font-black uppercase tracking-wider text-amber-800 block">
-                    Cashback Reward Unlocked
-                  </span>
-                  <h4 className="font-black text-sm text-gray-900 leading-tight">
-                    {reward.isScratched
-                      ? `You won FLAT ₹${reward.discountAmount} OFF!`
-                      : "Scratch to Reveal Your Cashback!"}
-                  </h4>
-                  <p className="text-[11px] text-gray-500">
-                    {reward.isScratched
-                      ? `Code: ${reward.couponCode}`
-                      : "Tap to scratch & win next order discount"}
-                  </p>
-                </div>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => setShowRewardModal(true)}
-                className="px-4 py-2.5 bg-[#0f8646] hover:bg-[#0c6a38] text-white rounded-xl text-xs font-black shadow-md transition cursor-pointer shrink-0"
-              >
-                {reward.isScratched ? "View Code" : "Scratch 🎁"}
-              </button>
-            </div>
-          )}
-
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto">
-            <Link
-              href={orderId ? `/track/${orderId}` : "/user/myorder"}
-              className="w-full sm:w-auto flex-1 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3.5 px-6 rounded-2xl font-black text-xs sm:text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <Truck size={16} />
-              <span>Track Live Delivery</span>
-            </Link>
-
-            <Link
-              href="/shop"
-              className="w-full sm:w-auto flex-1 bg-white border border-gray-300 hover:border-green-500 text-gray-700 hover:text-[#0f8646] py-3.5 px-6 rounded-2xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <ShoppingBag size={16} />
-              <span>Continue Shopping</span>
-            </Link>
-          </div>
-
-          {/* Viral Society / Friends WhatsApp Share Card */}
-          <div className="max-w-md mx-auto mt-6 bg-gradient-to-br from-emerald-600 via-[#0f8646] to-green-800 text-white rounded-3xl p-5 text-left shadow-lg relative overflow-hidden">
-            <div className="flex items-center gap-3 mb-2.5">
-              <div className="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-white shrink-0 shadow-inner">
-                <Users size={20} />
-              </div>
-              <div>
-                <span className="bg-yellow-400 text-gray-950 font-black text-[9px] uppercase px-2 py-0.5 rounded-full inline-block mb-0.5">
-                  🎁 Society Group Perk
-                </span>
-                <h3 className="text-sm font-black leading-snug">
-                  Share with your Society WhatsApp Group!
-                </h3>
-              </div>
-            </div>
-            <p className="text-xs text-emerald-100 leading-relaxed mb-3.5">
-              Apne colony / society group me share karein taaki sabhi ko farm-fresh sabzi & fruits direct wholesale rates par milein.
+            <p className="text-xs sm:text-sm text-gray-500 max-w-sm mx-auto mb-6 leading-relaxed">
+              {isPendingUpi
+                ? "Aapka order receive ho gaya hai. Bhopal store team payment verify karke dispatch karegi."
+                : "Your farm-fresh harvest is being handpicked & packed for express delivery."}
             </p>
 
-            <div className="flex items-center gap-2">
-              <a
-                href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
-                  `🌿 Hey neighbors! I just ordered farm-fresh vegetables & fruits from SubziQuick Bhopal. Super fresh produce directly delivered at Farm Wholesale rates! Order yours here: ${typeof window !== "undefined" ? window.location.origin : "https://subziquick.in"}`
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 bg-white hover:bg-emerald-50 text-[#0f8646] py-2.5 px-3.5 rounded-xl font-black text-xs shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer"
-              >
-                <span className="text-sm">📲</span>
-                <span>Share on WhatsApp</span>
-              </a>
-
-              <button
-                type="button"
-                onClick={() => {
-                  const text = `🌿 Hey neighbors! I just ordered farm-fresh vegetables & fruits from SubziQuick Bhopal. Super fresh produce at Farm Wholesale rates! Order now: ${window.location.origin}`;
-                  navigator.clipboard.writeText(text);
-                  setCopied(true);
-                  setTimeout(() => setCopied(false), 2000);
-                }}
-                className="bg-emerald-900/60 hover:bg-emerald-900 border border-white/20 text-white px-3 py-2.5 rounded-xl font-black text-xs transition flex items-center justify-center gap-1.5 cursor-pointer"
-              >
-                {copied ? <Check size={14} className="text-yellow-300" /> : <Copy size={14} />}
-                <span>{copied ? "Copied!" : "Copy"}</span>
-              </button>
+            {/* Minimalist 3-Step Timeline */}
+            <div className="bg-gray-50/80 rounded-2xl p-3 sm:p-3.5 mb-6 border border-gray-100">
+              <div className="flex items-center justify-between text-[11px] font-bold">
+                <div className="flex items-center gap-1.5 text-[#0f8646]">
+                  <span className="w-5 h-5 rounded-full bg-emerald-100 text-[#0f8646] flex items-center justify-center text-[10px] font-black">
+                    ✓
+                  </span>
+                  <span>Placed</span>
+                </div>
+                <div className="h-[2px] flex-1 bg-emerald-200 mx-2" />
+                <div className="flex items-center gap-1.5 text-gray-700">
+                  <span className="w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-black animate-pulse">
+                    2
+                  </span>
+                  <span>Packing</span>
+                </div>
+                <div className="h-[2px] flex-1 bg-gray-200 mx-2" />
+                <div className="flex items-center gap-1.5 text-gray-400">
+                  <span className="w-5 h-5 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center text-[10px] font-black">
+                    3
+                  </span>
+                  <span>Delivery</span>
+                </div>
+              </div>
             </div>
-          </div>
 
-          {/* WhatsApp Direct Updates Button */}
-          <div className="max-w-md mx-auto mt-4 pt-4 border-t border-gray-100">
+            {/* Premium Minimal Receipt Card */}
+            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-gray-200/90 text-left mb-6 shadow-2xs space-y-4">
+              {/* Header: ID + Method */}
+              <div className="flex items-center justify-between gap-2 pb-3.5 border-b border-gray-100">
+                <div className="flex items-center gap-2">
+                  <Receipt size={16} className="text-[#0f8646]" />
+                  <span className="text-xs font-black text-gray-900 font-mono tracking-wide">
+                    {formattedOrderId}
+                  </span>
+                  <button
+                    onClick={handleCopyOrderId}
+                    className="text-gray-400 hover:text-gray-700 transition cursor-pointer p-0.5"
+                    title="Copy Order ID"
+                  >
+                    {copied ? (
+                      <Check size={13} className="text-emerald-600" />
+                    ) : (
+                      <Copy size={13} />
+                    )}
+                  </button>
+                </div>
+
+                <span
+                  className={`text-[10px] font-black uppercase px-2.5 py-1 rounded-full border ${
+                    orderDetails?.paymentmethod === "cod" || searchParams.get("method") === "cod"
+                      ? "bg-gray-50 text-gray-700 border-gray-200"
+                      : isPaid
+                      ? "bg-emerald-50 text-[#0f8646] border-emerald-200"
+                      : "bg-amber-50 text-amber-800 border-amber-200"
+                  }`}
+                >
+                  {paymentMethodText}
+                </span>
+              </div>
+
+              {/* Items preview if available */}
+              {orderDetails?.items && orderDetails.items.length > 0 && (
+                <div className="space-y-2 pb-3.5 border-b border-gray-100">
+                  <div className="flex items-center justify-between text-[11px] font-bold text-gray-500">
+                    <span className="flex items-center gap-1.5">
+                      <Package size={13} className="text-gray-400" />
+                      Harvest Basket ({orderDetails.items.length} {orderDetails.items.length === 1 ? "Item" : "Items"})
+                    </span>
+                    <span className="text-[10px] text-emerald-700 font-bold">100% Farm Fresh</span>
+                  </div>
+
+                  <div className="space-y-1.5 max-h-36 overflow-y-auto pr-1">
+                    {orderDetails.items.map((item: any, idx: number) => (
+                      <div
+                        key={idx}
+                        className="flex items-center justify-between text-xs py-1"
+                      >
+                        <div className="flex items-center gap-2 min-w-0">
+                          {item.image && (
+                            <div className="relative w-7 h-7 rounded-lg overflow-hidden bg-gray-50 border border-gray-100 shrink-0">
+                              <Image
+                                src={item.image}
+                                alt={item.name}
+                                fill
+                                className="object-cover"
+                              />
+                            </div>
+                          )}
+                          <div className="min-w-0">
+                            <p className="font-bold text-gray-900 truncate text-[11.5px]">
+                              {item.name}
+                            </p>
+                            <p className="text-[10px] text-gray-400">
+                              {item.quantity} × {item.variationWeight || item.unit || "unit"}
+                            </p>
+                          </div>
+                        </div>
+                        <span className="font-black text-gray-800 text-xs shrink-0 ml-2">
+                          ₹{item.price * (item.quantity || 1)}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Delivery Info */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-0.5">
+                <div className="flex items-start gap-2">
+                  <MapPin size={15} className="text-[#0f8646] shrink-0 mt-0.5" />
+                  <div className="min-w-0">
+                    <span className="text-[10px] font-bold text-gray-400 uppercase block">
+                      Deliver To
+                    </span>
+                    <p className="font-extrabold text-gray-900 text-xs truncate">
+                      {customerName}
+                    </p>
+                    <p className="text-[11px] text-gray-500 line-clamp-1">
+                      {customerAddress}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-2">
+                  <Clock size={15} className="text-amber-600 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="text-[10px] font-bold text-gray-400 uppercase block">
+                      Delivery Slot
+                    </span>
+                    <p className="font-extrabold text-gray-900 text-xs">
+                      {deliverySlot}
+                    </p>
+                    <p className="text-[11px] text-emerald-700 font-semibold">
+                      ⚡ Express 15-45 Mins
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Total Payable Row */}
+              <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
+                <div>
+                  <span className="text-[11px] font-bold text-gray-400 uppercase block">
+                    Total Amount
+                  </span>
+                  <span className="text-[10.5px] text-emerald-700 font-bold">
+                    Taxes & Packaging Included
+                  </span>
+                </div>
+                <div className="text-right">
+                  <span className="text-2xl sm:text-3xl font-black text-[#0f8646]">
+                    ₹{displayTotal}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Single Clean WhatsApp Confirmation / Receipt Action */}
             <a
-              href={`https://wa.me/919981418565?text=Hello%20SubziQuick!%20I%20just%20placed%20order%20${formattedOrderId}.%20Please%20send%20me%20live%20delivery%20updates%20on%20WhatsApp.`}
+              href={`https://wa.me/919981418565?text=${encodeURIComponent(
+                `*🔔 NAYA ORDER PLACED - SubziQuick*\n` +
+                `━━━━━━━━━━━━━━━━━━━\n` +
+                `🛒 *Order ID:* #${(orderId || "").slice(-6).toUpperCase()}\n` +
+                `👤 *Customer:* ${customerName} (${customerMobile})\n` +
+                `📍 *Address:* ${customerAddress}\n` +
+                `💵 *Total Bill:* ₹${displayTotal} (${orderDetails?.paymentmethod?.toUpperCase() || "COD"})\n` +
+                `⏰ *Slot:* ${deliverySlot}\n` +
+                `━━━━━━━━━━━━━━━━━━━\n` +
+                `Please confirm dispatch & delivery timing! 🙏`
+              )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full bg-[#25D366] hover:bg-[#1ebe5b] text-white py-3 px-5 rounded-2xl font-black text-xs shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white py-3 px-4 rounded-2xl text-xs font-black flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition cursor-pointer mb-5"
             >
-              <span className="text-base">💬</span>
-              <span>Get Order Updates on WhatsApp</span>
+              <MessageCircle size={17} />
+              <span>Send Order Confirmation to Store on WhatsApp</span>
             </a>
-          </div>
-        </motion.div>
+
+            {/* Scratch Card Prize Banner (If available) */}
+            {reward && (
+              <div className="mb-6 bg-gradient-to-r from-amber-50 via-yellow-50/80 to-emerald-50 border border-amber-200/80 rounded-2xl p-3.5 sm:p-4 text-left flex items-center justify-between gap-3 shadow-2xs">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center font-black shadow-sm shrink-0">
+                    <Gift size={20} />
+                  </div>
+                  <div className="min-w-0">
+                    <span className="text-[9.5px] font-black uppercase tracking-wider text-amber-800 block">
+                      Cashback Unlocked
+                    </span>
+                    <h4 className="font-black text-xs sm:text-sm text-gray-900 truncate">
+                      {reward.isScratched
+                        ? `You won FLAT ₹${reward.discountAmount} OFF!`
+                        : "Scratch to Win Cash Discount!"}
+                    </h4>
+                    <p className="text-[10.5px] text-gray-500 truncate">
+                      {reward.isScratched
+                        ? `Coupon: ${reward.couponCode}`
+                        : "Tap to scratch & unlock reward"}
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setShowRewardModal(true)}
+                  className="px-3.5 py-2 bg-[#0f8646] hover:bg-[#0c6a38] text-white rounded-xl text-xs font-black shadow-xs transition cursor-pointer shrink-0"
+                >
+                  {reward.isScratched ? "View" : "Scratch 🎁"}
+                </button>
+              </div>
+            )}
+
+            {/* Primary & Secondary Action CTAs */}
+            <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full">
+              <Link
+                href={orderId ? `/track/${orderId}` : "/user/myorder"}
+                className="w-full sm:flex-1 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3.5 px-5 rounded-2xl font-black text-xs sm:text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <Truck size={16} />
+                <span>Track Live Delivery</span>
+                <ArrowRight size={14} />
+              </Link>
+
+              <Link
+                href="/shop"
+                className="w-full sm:flex-1 bg-white border border-gray-200 hover:border-[#0f8646] text-gray-700 hover:text-[#0f8646] py-3.5 px-5 rounded-2xl font-black text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-2xs"
+              >
+                <ShoppingBag size={16} />
+                <span>Continue Shopping</span>
+              </Link>
+            </div>
+
+            {/* Minimal SubziQuick Guarantee Tagline */}
+            <div className="mt-6 pt-5 border-t border-gray-100 flex items-center justify-center gap-4 text-[11px] text-gray-400 font-bold">
+              <span className="flex items-center gap-1">
+                <ShieldCheck size={13} className="text-[#0f8646]" /> 100% Quality Guarantee
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1">
+                <Leaf size={13} className="text-[#0f8646]" /> Farm Direct Bhopal
+              </span>
+            </div>
+          </motion.div>
+        </div>
       </main>
 
       {/* Digital Scratch Card Modal */}
@@ -393,7 +459,7 @@ export default function OrderSuccess() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="min-h-screen flex items-center justify-center bg-[#f7faf8]">
           <div className="w-10 h-10 border-4 border-[#0f8646] border-t-transparent rounded-full animate-spin" />
         </div>
       }
