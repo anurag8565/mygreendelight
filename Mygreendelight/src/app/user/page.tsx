@@ -47,54 +47,6 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const QUICK_STAPLES = [
-  {
-    _id: "staple_1",
-    name: "Fresh Desi Tamatar (टमाटर)",
-    price: 35,
-    unit: "1 kg",
-    image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=400&q=80",
-    category: "Vegetables",
-    stock: 50,
-  },
-  {
-    _id: "staple_2",
-    name: "Farm Fresh Palak (पालक)",
-    price: 25,
-    unit: "250 g",
-    image: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=400&q=80",
-    category: "Vegetables",
-    stock: 40,
-  },
-  {
-    _id: "staple_3",
-    name: "Fresh Green Chilli (हरी मिर्च)",
-    price: 15,
-    unit: "100 g",
-    image: "https://images.unsplash.com/photo-1588252303782-cb80119abd6d?auto=format&fit=crop&w=400&q=80",
-    category: "Vegetables",
-    stock: 50,
-  },
-  {
-    _id: "staple_4",
-    name: "Fresh Red Onion (प्याज)",
-    price: 30,
-    unit: "1 kg",
-    image: "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?auto=format&fit=crop&w=400&q=80",
-    category: "Vegetables",
-    stock: 60,
-  },
-  {
-    _id: "staple_5",
-    name: "Fresh Ratnagiri Alphonso",
-    price: 499,
-    unit: "1 Dozen (12 pcs)",
-    image: "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=400&q=80",
-    category: "Fruits",
-    stock: 25,
-  },
-];
-
 export default function UserProfileHub() {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -114,7 +66,6 @@ export default function UserProfileHub() {
   // Preference Toggles
   const [silentDelivery, setSilentDelivery] = useState(false);
   const [returnBagCashback, setReturnBagCashback] = useState(true);
-  const [addedStapleId, setAddedStapleId] = useState<string | null>(null);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -156,26 +107,6 @@ export default function UserProfileHub() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleAddStaple = (item: any) => {
-    dispatch(
-      addToCart({
-        _id: item._id as any,
-        cartItemId: `${item._id}_default`,
-        name: item.name,
-        price: item.price,
-        unit: item.unit,
-        image: item.image,
-        quantity: 1,
-        stock: item.stock || 50,
-        category: item.category,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      })
-    );
-    setAddedStapleId(item._id);
-    setTimeout(() => setAddedStapleId(null), 1800);
   };
 
   // Find most recent active order if any (pending or out of delivery)
@@ -427,79 +358,7 @@ export default function UserProfileHub() {
           </motion.div>
         )}
 
-        {/* 5. Quick 1-Tap Re-Order Essentials Carousel */}
-        <div className="bg-white rounded-3xl p-4 sm:p-6 border border-gray-200/80 shadow-2xs">
-          <div className="flex items-center justify-between mb-3.5">
-            <div>
-              <h2 className="text-xs font-black uppercase tracking-wider text-gray-900 flex items-center gap-1.5">
-                <Zap size={14} className="text-amber-500 fill-amber-400" />
-                <span>1-Tap Daily Farm Reorder</span>
-              </h2>
-              <p className="text-[11px] text-gray-500 font-medium">
-                Frequently needed staples direct from morning harvest
-              </p>
-            </div>
-
-            <Link
-              href="/shop"
-              className="text-[11px] font-black text-[#0f8646] hover:underline flex items-center gap-0.5"
-            >
-              <span>View All</span>
-              <ChevronRight size={12} />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
-            {QUICK_STAPLES.map((staple) => (
-              <div
-                key={staple._id}
-                className="bg-gray-50/70 border border-gray-100 rounded-2xl p-2.5 flex flex-col justify-between hover:border-emerald-300 transition group"
-              >
-                <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-white mb-2 p-1.5 flex items-center justify-center border border-gray-100">
-                  <img
-                    src={staple.image}
-                    alt={staple.name}
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform"
-                  />
-                </div>
-
-                <div className="min-w-0 mb-2">
-                  <h4 className="font-extrabold text-[11px] text-gray-900 truncate" title={staple.name}>
-                    {staple.name}
-                  </h4>
-                  <div className="flex items-baseline justify-between mt-0.5">
-                    <span className="text-xs font-black text-[#0f8646]">₹{staple.price}</span>
-                    <span className="text-[10px] text-gray-400 font-medium">{staple.unit}</span>
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => handleAddStaple(staple)}
-                  className={`w-full py-1.5 rounded-xl text-[11px] font-black transition flex items-center justify-center gap-1 cursor-pointer ${
-                    addedStapleId === staple._id
-                      ? "bg-emerald-600 text-white"
-                      : "bg-white hover:bg-emerald-50 text-[#0f8646] border border-emerald-300 shadow-2xs"
-                  }`}
-                >
-                  {addedStapleId === staple._id ? (
-                    <>
-                      <Check size={12} />
-                      <span>Added!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Plus size={12} />
-                      <span>Add</span>
-                    </>
-                  )}
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* 6. Smart Delivery & Doorstep Preferences */}
+        {/* 5. Smart Delivery & Doorstep Preferences */}
         <div className="bg-white rounded-3xl p-4 sm:p-6 border border-gray-200/80 shadow-2xs">
           <h2 className="text-[11px] font-black uppercase tracking-wider text-gray-400 mb-3.5 px-1 flex items-center gap-1.5">
             <Bell size={14} className="text-[#0f8646]" /> Doorstep & Delivery Preferences
