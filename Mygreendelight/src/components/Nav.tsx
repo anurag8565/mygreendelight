@@ -75,9 +75,21 @@ export default function Nav({ user }: { user?: iUser | null }) {
   const { userdata } = useSelector((state: RootState) => state.user);
   const activeUser = user || (userdata as any);
   const [search, setSearch] = useState("");
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [isMobileSearchFocused, setIsMobileSearchFocused] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
   const mobileSearchRef = useRef<HTMLDivElement>(null);
+
+  const popularKeywords = [
+    { label: "Taaza Palak", query: "Palak", emoji: "🥬" },
+    { label: "Desi Tomato", query: "Tomato", emoji: "🍅" },
+    { label: "Fresh Potato", query: "Potato", emoji: "🥔" },
+    { label: "Shimla Apple", query: "Apple", emoji: "🍎" },
+    { label: "Fresh Paneer", query: "Paneer", emoji: "🥛" },
+    { label: "Exotic Salad", query: "Salad", emoji: "🥑" },
+    { label: "Green Coriander", query: "Coriander", emoji: "🌿" },
+  ];
 
   useEffect(() => {
     setMounted(true);
@@ -121,6 +133,8 @@ export default function Nav({ user }: { user?: iUser | null }) {
       const isOutsideMobile = mobileSearchRef.current && !mobileSearchRef.current.contains(event.target as Node);
       if (isOutsideDesktop && isOutsideMobile) {
         setSearchResults([]);
+        setIsSearchFocused(false);
+        setIsMobileSearchFocused(false);
       }
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setOpen(false);
@@ -598,7 +612,9 @@ export default function Nav({ user }: { user?: iUser | null }) {
                   type="text"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  onFocus={() => { if(search.trim() && searchResults.length===0) setSearch(search+" ") }}
+                  onFocus={() => {
+                    setIsSearchFocused(true);
+                  }}
                   placeholder="Search for fresh vegetables, fruits, groceries..."
                   className="w-full h-full bg-transparent outline-none px-4 text-sm text-gray-700"
                 />
@@ -618,7 +634,67 @@ export default function Nav({ user }: { user?: iUser | null }) {
                 </button>
               </form>
 
-              {/* Suggestions Dropdown */}
+              {/* 1. Quick Trending Searches (When focused and input is empty) */}
+              <AnimatePresence>
+                {isSearchFocused && !search.trim() && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 8 }}
+                    className="absolute top-full left-0 w-full mt-2 bg-white rounded-2xl shadow-[0_15px_45px_-10px_rgba(0,0,0,0.18)] border border-gray-100 p-4 z-50 font-sans"
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-xs font-black uppercase text-gray-500 tracking-wider flex items-center gap-1.5">
+                        <Sparkles size={13} className="text-amber-500" />
+                        Trending Searches in Bhopal
+                      </span>
+                      <span className="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80">
+                        ⚡ 10-15 Min Express
+                      </span>
+                    </div>
+
+                    {/* Micro-Chips */}
+                    <div className="flex flex-wrap gap-2">
+                      {popularKeywords.map((k) => (
+                        <button
+                          key={k.query}
+                          type="button"
+                          onClick={() => {
+                            setSearch(k.query);
+                            router.push(`/user/search?query=${encodeURIComponent(k.query)}`);
+                            setIsSearchFocused(false);
+                          }}
+                          className="bg-gray-50 hover:bg-emerald-50 text-gray-800 hover:text-[#0c831f] border border-gray-200/80 hover:border-emerald-300 px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-2xs"
+                        >
+                          <span>{k.emoji}</span>
+                          <span>{k.label}</span>
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Categories Quick Link Strip */}
+                    {navCategories && navCategories.length > 0 && (
+                      <div className="mt-3.5 pt-3 border-t border-gray-100 flex items-center gap-2 overflow-x-auto scrollbar-none">
+                        <span className="text-[10px] uppercase font-black text-gray-400 shrink-0">
+                          Explore:
+                        </span>
+                        {navCategories.slice(0, 5).map((c: any) => (
+                          <Link
+                            key={c._id || c.name}
+                            href={`/shop?category=${encodeURIComponent(c.name)}`}
+                            onClick={() => setIsSearchFocused(false)}
+                            className="text-[11px] font-bold text-gray-600 hover:text-[#0c831f] hover:underline shrink-0 bg-gray-50 px-2 py-0.5 rounded-md"
+                          >
+                            {c.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* 2. Live Search Results Suggestions Dropdown */}
               <AnimatePresence>
                 {search.trim() && (searchResults.length > 0 || isSearching) && (
                   <motion.div
@@ -925,7 +1001,9 @@ export default function Nav({ user }: { user?: iUser | null }) {
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              onFocus={() => { if(search.trim() && searchResults.length===0) setSearch(search+" ") }}
+              onFocus={() => {
+                setIsMobileSearchFocused(true);
+              }}
               placeholder="Search 'tomato', 'milk', 'mango'..."
               className="flex-1 bg-transparent outline-none text-xs sm:text-sm text-gray-800 placeholder-gray-400"
             />
@@ -941,7 +1019,67 @@ export default function Nav({ user }: { user?: iUser | null }) {
             </button>
           </form>
 
-          {/* Mobile Suggestions Dropdown */}
+          {/* 1. Mobile Trending Searches Dropdown (When focused and input is empty) */}
+          <AnimatePresence>
+            {isMobileSearchFocused && !search.trim() && (
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 8 }}
+                className="absolute top-[3.2rem] left-3.5 right-3.5 bg-white rounded-2xl shadow-[0_15px_45px_-10px_rgba(0,0,0,0.2)] border border-gray-100 p-3.5 z-50 font-sans"
+              >
+                <div className="flex items-center justify-between mb-2.5">
+                  <span className="text-[11px] font-black uppercase text-gray-500 tracking-wider flex items-center gap-1.5">
+                    <Sparkles size={12} className="text-amber-500" />
+                    Trending in Bhopal
+                  </span>
+                  <span className="text-[9.5px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80">
+                    ⚡ 10-15 Min
+                  </span>
+                </div>
+
+                {/* Mobile Micro-Chips */}
+                <div className="flex flex-wrap gap-1.5">
+                  {popularKeywords.map((k) => (
+                    <button
+                      key={k.query}
+                      type="button"
+                      onClick={() => {
+                        setSearch(k.query);
+                        router.push(`/user/search?query=${encodeURIComponent(k.query)}`);
+                        setIsMobileSearchFocused(false);
+                      }}
+                      className="bg-gray-50 hover:bg-emerald-50 text-gray-800 hover:text-[#0c831f] border border-gray-200/80 hover:border-emerald-300 px-2.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-2xs"
+                    >
+                      <span>{k.emoji}</span>
+                      <span>{k.label}</span>
+                    </button>
+                  ))}
+                </div>
+
+                {/* Categories Quick Link Strip */}
+                {navCategories && navCategories.length > 0 && (
+                  <div className="mt-3 pt-2.5 border-t border-gray-100 flex items-center gap-1.5 overflow-x-auto scrollbar-none">
+                    <span className="text-[9.5px] uppercase font-black text-gray-400 shrink-0">
+                      Explore:
+                    </span>
+                    {navCategories.slice(0, 4).map((c: any) => (
+                      <Link
+                        key={c._id || c.name}
+                        href={`/shop?category=${encodeURIComponent(c.name)}`}
+                        onClick={() => setIsMobileSearchFocused(false)}
+                        className="text-[10.5px] font-bold text-gray-600 hover:text-[#0c831f] hover:underline shrink-0 bg-gray-50 px-2 py-0.5 rounded-md"
+                      >
+                        {c.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* 2. Mobile Suggestions Dropdown */}
           <AnimatePresence>
             {search.trim() && (searchResults.length > 0 || isSearching) && (
               <motion.div
