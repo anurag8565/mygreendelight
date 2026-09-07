@@ -94,7 +94,7 @@ async function scrapeAll() {
         category,
         image,
         description: description || `Freshly harvested ${title} sourced directly from local Bhopal farms.`,
-        sourcing: "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+        sourcing: "Direct from Bhopal Direct Kisan Farm & local organic growers (Raisen / Sehore / Hoshangabad)",
         storage: "Keep refrigerated or in a cool ventilated place. Wash before use.",
         variations: [
           { weight: "250g", price: Math.max(10, Math.round(price * 0.28)), stock: 40 },

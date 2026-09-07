@@ -70,7 +70,7 @@ export default function BulkUploadPage() {
       "name,category,price,unit,stock,image,description,sourcing,storage,variations\n" +
       "\"Fresh Desi Tomato (Tamatar)\",\"Vegetables\",35,\"1 kg\",100,\"https://images.unsplash.com/photo-1546470427-e26264be0b11?auto=format&fit=crop&w=600&q=80\",\"Rich juicy red tomatoes for daily cooking\",\"Raisen Local Farm\",\"Store at room temp\",\"[{\\\"weight\\\":\\\"250g\\\",\\\"price\\\":10,\\\"stock\\\":40},{\\\"weight\\\":\\\"500g\\\",\\\"price\\\":18,\\\"stock\\\":50},{\\\"weight\\\":\\\"1 kg\\\",\\\"price\\\":35,\\\"stock\\\":60}]\"\n" +
       "\"Organic Spinach (Palak)\",\"Vegetables\",25,\"1 kg\",80,\"https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=600&q=80\",\"Crisp iron-rich fresh green spinach\",\"Sehore Organic Valley\",\"Keep refrigerated\",\"[{\\\"weight\\\":\\\"250g\\\",\\\"price\\\":10,\\\"stock\\\":40},{\\\"weight\\\":\\\"500g\\\",\\\"price\\\":15,\\\"stock\\\":50},{\\\"weight\\\":\\\"1 kg\\\",\\\"price\\\":25,\\\"stock\\\":60}]\"\n" +
-      "\"Daily Potato (Aloo)\",\"Vegetables\",30,\"1 kg\",200,\"https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=600&q=80\",\"Everyday essential fresh potatoes\",\"Bhopal Krishi Mandi\",\"Store in dark cool space\",\"[{\\\"weight\\\":\\\"500g\\\",\\\"price\\\":16,\\\"stock\\\":50},{\\\"weight\\\":\\\"1 kg\\\",\\\"price\\\":30,\\\"stock\\\":100},{\\\"weight\\\":\\\"2 kg\\\",\\\"price\\\":58,\\\"stock\\\":50}]\"";
+      "\"Daily Potato (Aloo)\",\"Vegetables\",30,\"1 kg\",200,\"https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=600&q=80\",\"Everyday essential fresh potatoes\",\"Bhopal Kisan Farm Direct\",\"Store in dark cool space\",\"[{\\\"weight\\\":\\\"500g\\\",\\\"price\\\":16,\\\"stock\\\":50},{\\\"weight\\\":\\\"1 kg\\\",\\\"price\\\":30,\\\"stock\\\":100},{\\\"weight\\\":\\\"2 kg\\\",\\\"price\\\":58,\\\"stock\\\":50}]\"";
 
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
@@ -359,7 +359,7 @@ export default function BulkUploadPage() {
               <span>Bulk Produce Import & CSV Center</span>
             </h1>
             <p className="text-xs text-gray-500 mt-0.5">
-              Download live Bhopal mandi datasets or upload custom CSV/JSON produce batches
+              Download live Bhopal farm-fresh datasets or upload custom CSV/JSON produce batches
             </p>
           </div>
 
@@ -415,7 +415,7 @@ export default function BulkUploadPage() {
                   Unified Master Produce & Grocery Catalog (471 Products)
                 </h3>
                 <p className="text-xs sm:text-sm text-emerald-50/90 leading-relaxed mb-6 max-w-4xl">
-                  Consolidated & deduplicated from all regional Bhopal mandis and contract farms. 100% filtered: all cold drinks, water bottles, soda, and cooked non-veg items have been removed. All 3rd-party store names are sanitized. Features Vegetables (217), Fruits (107), Dairy & Staples (78), Exotics (59), Ready-to-Cook (10) with multi-tier pack variations (250g, 500g, 1kg, 2kg, 5kg), realistic pricing & HD images.
+                  Consolidated & deduplicated from regional Bhopal kisan hubs and contract farms. 100% filtered: all cold drinks, water bottles, soda, and cooked non-veg items have been removed. All 3rd-party store names are sanitized. Features Vegetables (217), Fruits (107), Dairy & Staples (78), Exotics (59), Ready-to-Cook (10) with multi-tier pack variations (250g, 500g, 1kg, 2kg, 5kg), realistic pricing & HD images.
                 </p>
               </div>
 
@@ -470,17 +470,17 @@ export default function BulkUploadPage() {
                   <span className="text-xs text-emerald-200 font-bold">115 Produce Items</span>
                 </div>
                 <h3 className="text-lg font-black text-white mb-1">
-                  Complete Bhopal Mandi + Farm Harvest CSV
+                  Complete Bhopal Farm Harvest Catalog (115 Products)
                 </h3>
                 <p className="text-xs text-emerald-100/80 leading-relaxed mb-5">
-                  Includes 115 farm items (Vegetables, Fruits, Exotics, Dairy) with HD photos, pack sizes (250g–2kg) and verified Bhopal mandi pricing.
+                  Includes 115 farm items (Vegetables, Fruits, Exotics, Dairy) with HD photos, pack sizes (250g–2kg) and direct farm-level pricing.
                 </p>
               </div>
 
               <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-emerald-800/60">
                 <a
                   href="/combined_bhopal_products.csv"
-                  download="bhopal_mandi_master_115_products.csv"
+                  download="bhopal_farm_master_115_products.csv"
                   className="bg-emerald-500 hover:bg-emerald-400 text-gray-950 px-4 py-2.5 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <Download size={14} />
@@ -507,28 +507,28 @@ export default function BulkUploadPage() {
               </div>
             </div>
 
-            {/* Card 2: MVF Pune Master Extracted Dataset (52 Products) */}
+            {/* Card 2: Farm Produce Master Dataset (52 Products) */}
             <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-3xl p-6 shadow-xs border border-emerald-200/90 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <span className="bg-emerald-600 text-white text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-2xs flex items-center gap-1.5">
                     <Sparkles size={12} />
-                    <span>MVFPune.com Extracted</span>
+                    <span>Farm Produce Catalog</span>
                   </span>
                   <span className="text-xs text-emerald-800 font-bold">52 Products + Variations</span>
                 </div>
                 <h3 className="text-lg font-black text-gray-900 mb-1">
-                  Maha Veggie Farm (MVF Pune) Master Dataset
+                  Daily Farm Produce Master Dataset
                 </h3>
                 <p className="text-xs text-gray-600 leading-relaxed mb-5">
-                  Extracted directly from mvfpune.com with all pack size variations (250g–2kg), HD farm images, pricing, and category breakdowns.
+                  Complete dataset with all pack size variations (250g–2kg), HD farm images, pricing, and category breakdowns.
                 </p>
               </div>
 
               <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-emerald-200/60">
                 <a
-                  href="/mvfpune_products_master.xlsx"
-                  download="mvfpune_products_master.xlsx"
+                  href="/wholesale_fresh_products_master.xlsx"
+                  download="wholesale_fresh_products_master.xlsx"
                   className="bg-emerald-700 hover:bg-emerald-800 text-white px-3.5 py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <Download size={14} />
@@ -536,8 +536,8 @@ export default function BulkUploadPage() {
                 </a>
 
                 <a
-                  href="/mvfpune_products_master.csv"
-                  download="mvfpune_products_master.csv"
+                  href="/wholesale_fresh_products_master.csv"
+                  download="wholesale_fresh_products_master.csv"
                   className="bg-white hover:bg-emerald-50 border border-emerald-300 text-emerald-800 px-3.5 py-2 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <FileSpreadsheet size={14} />
@@ -547,13 +547,13 @@ export default function BulkUploadPage() {
                 <button
                   onClick={async () => {
                     try {
-                      const res = await fetch("/mvfpune_products_master.json");
+                      const res = await fetch("/wholesale_fresh_products_master.json");
                       const data = await res.json();
                       setParsedProducts(data);
                       setResultMsg(null);
                       scrollToPreview();
                     } catch (e) {
-                      alert("Failed to load MVF Pune dataset");
+                      alert("Failed to load wholesale produce dataset");
                     }
                   }}
                   className="bg-emerald-100 hover:bg-emerald-200 text-emerald-900 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
@@ -564,18 +564,18 @@ export default function BulkUploadPage() {
               </div>
             </div>
 
-            {/* Card 3: FPS Store Extracted Master Dataset (167 Products) */}
+            {/* Card 3: Daily Essentials Master Dataset (167 Products) */}
             <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-3xl p-6 shadow-xs border border-amber-200/90 flex flex-col justify-between md:col-span-2">
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <span className="bg-amber-600 text-white text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-2xs flex items-center gap-1.5">
                     <Sparkles size={12} />
-                    <span>FPSStore.in Master Catalog</span>
+                    <span>Daily Essentials Master Catalog</span>
                   </span>
                   <span className="text-xs text-amber-900 font-bold">167 Products + Multi-Pack Sizes</span>
                 </div>
                 <h3 className="text-lg font-black text-gray-900 mb-1">
-                  FPS Store (fpsstore.in) Complete Sourced Dataset
+                  Daily Fresh Produce & Essentials Dataset
                 </h3>
                 <p className="text-xs text-gray-600 leading-relaxed mb-5">
                   Full 167 organic & exotic products (Custard Apple, Berries, Hydroponic Greens, Avocado, Mushroom, Exotics) extracted with 1000x1000 HD images, weight variations (250g, 500g, 1kg, 2kg) and real pricing.
@@ -584,8 +584,8 @@ export default function BulkUploadPage() {
 
               <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-amber-200/60">
                 <a
-                  href="/fpsstore_products_master.xlsx"
-                  download="fpsstore_products_master.xlsx"
+                  href="/daily_essentials_products_master.xlsx"
+                  download="daily_essentials_products_master.xlsx"
                   className="bg-amber-700 hover:bg-amber-800 text-white px-3.5 py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <Download size={14} />
@@ -593,8 +593,8 @@ export default function BulkUploadPage() {
                 </a>
 
                 <a
-                  href="/fpsstore_products_master.csv"
-                  download="fpsstore_products_master.csv"
+                  href="/daily_essentials_products_master.csv"
+                  download="daily_essentials_products_master.csv"
                   className="bg-white hover:bg-amber-50 border border-amber-300 text-amber-900 px-3.5 py-2 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <FileSpreadsheet size={14} />
@@ -604,13 +604,13 @@ export default function BulkUploadPage() {
                 <button
                   onClick={async () => {
                     try {
-                      const res = await fetch("/fpsstore_products_master.json");
+                      const res = await fetch("/daily_essentials_products_master.json");
                       const data = await res.json();
                       setParsedProducts(data);
                       setResultMsg(null);
                       scrollToPreview();
                     } catch (e) {
-                      alert("Failed to load FPS Store dataset");
+                      alert("Failed to load daily essentials dataset");
                     }
                   }}
                   className="bg-amber-200 hover:bg-amber-300 text-amber-950 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
@@ -641,8 +641,8 @@ export default function BulkUploadPage() {
 
               <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-blue-200/60">
                 <a
-                  href="/wholesalemandi_products_master.xlsx"
-                  download="wholesalemandi_products_master.xlsx"
+                  href="/bulk_procure_products_master.xlsx"
+                  download="bulk_procure_products_master.xlsx"
                   className="bg-blue-700 hover:bg-blue-800 text-white px-3.5 py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <Download size={14} />
@@ -650,8 +650,8 @@ export default function BulkUploadPage() {
                 </a>
 
                 <a
-                  href="/wholesalemandi_products_master.csv"
-                  download="wholesalemandi_products_master.csv"
+                  href="/bulk_procure_products_master.csv"
+                  download="bulk_procure_products_master.csv"
                   className="bg-white hover:bg-blue-50 border border-blue-300 text-blue-900 px-3.5 py-2 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <FileSpreadsheet size={14} />
@@ -661,7 +661,7 @@ export default function BulkUploadPage() {
                 <button
                   onClick={async () => {
                     try {
-                      const res = await fetch("/wholesalemandi_products_master.json");
+                      const res = await fetch("/bulk_procure_products_master.json");
                       const data = await res.json();
                       setParsedProducts(data);
                       setResultMsg(null);
@@ -698,8 +698,8 @@ export default function BulkUploadPage() {
 
               <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-green-200/60">
                 <a
-                  href="/rambhaji_products_master.xlsx"
-                  download="rambhaji_products_master.xlsx"
+                  href="/cut_veggies_products_master.xlsx"
+                  download="cut_veggies_products_master.xlsx"
                   className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-3.5 py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <Download size={14} />
@@ -707,8 +707,8 @@ export default function BulkUploadPage() {
                 </a>
 
                 <a
-                  href="/rambhaji_products_master.csv"
-                  download="rambhaji_products_master.csv"
+                  href="/cut_veggies_products_master.csv"
+                  download="cut_veggies_products_master.csv"
                   className="bg-white hover:bg-green-50 border border-green-300 text-green-900 px-3.5 py-2 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <FileSpreadsheet size={14} />
@@ -718,7 +718,7 @@ export default function BulkUploadPage() {
                 <button
                   onClick={async () => {
                     try {
-                      const res = await fetch("/rambhaji_products_master.json");
+                      const res = await fetch("/cut_veggies_products_master.json");
                       const data = await res.json();
                       setParsedProducts(data);
                       setResultMsg(null);
@@ -755,8 +755,8 @@ export default function BulkUploadPage() {
 
               <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-teal-200/60">
                 <a
-                  href="/vegswift_products_master.xlsx"
-                  download="vegswift_products_master.xlsx"
+                  href="/express_produce_products_master.xlsx"
+                  download="express_produce_products_master.xlsx"
                   className="bg-teal-700 hover:bg-teal-800 text-white px-3.5 py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <Download size={14} />
@@ -764,8 +764,8 @@ export default function BulkUploadPage() {
                 </a>
 
                 <a
-                  href="/vegswift_products_master.csv"
-                  download="vegswift_products_master.csv"
+                  href="/express_produce_products_master.csv"
+                  download="express_produce_products_master.csv"
                   className="bg-white hover:bg-teal-50 border border-teal-300 text-teal-900 px-3.5 py-2 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <FileSpreadsheet size={14} />
@@ -775,13 +775,13 @@ export default function BulkUploadPage() {
                 <button
                   onClick={async () => {
                     try {
-                      const res = await fetch("/vegswift_products_master.json");
+                      const res = await fetch("/express_produce_products_master.json");
                       const data = await res.json();
                       setParsedProducts(data);
                       setResultMsg(null);
                       scrollToPreview();
                     } catch (e) {
-                      alert("Failed to load VegSwift dataset");
+                      alert("Failed to load express produce dataset");
                     }
                   }}
                   className="bg-teal-200 hover:bg-teal-300 text-teal-950 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
@@ -792,28 +792,28 @@ export default function BulkUploadPage() {
               </div>
             </div>
 
-            {/* Card 7: KisaanRiksha Master Sourced Dataset (124 Products) */}
+            {/* Card 7: Ready-To-Cook Cut Produce Dataset (124 Products) */}
             <div className="bg-gradient-to-br from-lime-50 to-emerald-50 rounded-3xl p-6 shadow-xs border border-lime-200/90 flex flex-col justify-between md:col-span-2">
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <span className="bg-lime-700 text-white text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-2xs flex items-center gap-1.5">
                     <Sparkles size={12} />
-                    <span>KisaanRiksha.com Catalog</span>
+                    <span>Ready-To-Cook Catalog</span>
                   </span>
                   <span className="text-xs text-lime-900 font-bold">124 Products + Cut Veggies</span>
                 </div>
                 <h3 className="text-lg font-black text-gray-900 mb-1">
-                  Kisaan Riksha (kisaanriksha.com) Farm to Doorstep Dataset
+                  Farm Fresh Ready-to-Cook & Chopped Produce Dataset
                 </h3>
                 <p className="text-xs text-gray-600 leading-relaxed mb-5">
-                  Extracted 124 farm fresh & ready-to-cook chopped produce (Chopped Bhindi, Peeled Lauki, Cleaned Cauliflower Florets, Cut Carrot-Beans Mix, Mixed Veggie Packs) with pack size variations (250g, 500g, 1kg) and HD photos.
+                  124 farm fresh & ready-to-cook chopped produce (Chopped Bhindi, Peeled Lauki, Cleaned Cauliflower Florets, Cut Carrot-Beans Mix, Mixed Veggie Packs) with pack size variations (250g, 500g, 1kg) and HD photos.
                 </p>
               </div>
 
               <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-lime-200/60">
                 <a
-                  href="/kisaanriksha_products_master.xlsx"
-                  download="kisaanriksha_products_master.xlsx"
+                  href="/farm_direct_products_master.xlsx"
+                  download="farm_direct_products_master.xlsx"
                   className="bg-lime-800 hover:bg-lime-900 text-white px-3.5 py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <Download size={14} />
@@ -821,8 +821,8 @@ export default function BulkUploadPage() {
                 </a>
 
                 <a
-                  href="/kisaanriksha_products_master.csv"
-                  download="kisaanriksha_products_master.csv"
+                  href="/farm_direct_products_master.csv"
+                  download="farm_direct_products_master.csv"
                   className="bg-white hover:bg-lime-50 border border-lime-300 text-lime-900 px-3.5 py-2 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <FileSpreadsheet size={14} />
@@ -832,13 +832,13 @@ export default function BulkUploadPage() {
                 <button
                   onClick={async () => {
                     try {
-                      const res = await fetch("/kisaanriksha_products_master.json");
+                      const res = await fetch("/farm_direct_products_master.json");
                       const data = await res.json();
                       setParsedProducts(data);
                       setResultMsg(null);
                       scrollToPreview();
                     } catch (e) {
-                      alert("Failed to load KisaanRiksha dataset");
+                      alert("Failed to load Ready-To-Cook dataset");
                     }
                   }}
                   className="bg-lime-200 hover:bg-lime-300 text-lime-950 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
@@ -849,18 +849,18 @@ export default function BulkUploadPage() {
               </div>
             </div>
 
-            {/* Card 8: Beybey Farms Bhopal Master Dataset (67 Products) */}
+            {/* Card 8: Organic Ozone-Washed Farm Dataset (67 Products) */}
             <div className="bg-gradient-to-br from-yellow-50 to-amber-50 rounded-3xl p-6 shadow-xs border border-amber-200/90 flex flex-col justify-between md:col-span-2">
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <span className="bg-amber-600 text-white text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-2xs flex items-center gap-1.5">
                     <Sparkles size={12} />
-                    <span>BeyBeyFarms.com Bhopal Catalog</span>
+                    <span>Organic Harvest Catalog</span>
                   </span>
                   <span className="text-xs text-amber-900 font-bold">67 Bhopal Farm Harvest Items</span>
                 </div>
                 <h3 className="text-lg font-black text-gray-900 mb-1">
-                  Beybey Farms Bhopal (beybeyfarms.com) Pesticide-Free Dataset
+                  Bhopal Organic & Ozone-Washed Produce Dataset
                 </h3>
                 <p className="text-xs text-gray-600 leading-relaxed mb-5">
                   67 organic, ozone-washed Bhopal farm items (Oyster Mushrooms, Farm Palak, Desi Tamatar, Bhopal Veggies, Ghee & Dairy) with pack size variations (100g, 250g, 500g, 1kg) and HD photos.
@@ -869,8 +869,8 @@ export default function BulkUploadPage() {
 
               <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-amber-200/60">
                 <a
-                  href="/beybeyfarms_products_master.xlsx"
-                  download="beybeyfarms_products_master.xlsx"
+                  href="/organic_harvest_products_master.xlsx"
+                  download="organic_harvest_products_master.xlsx"
                   className="bg-amber-800 hover:bg-amber-900 text-white px-3.5 py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <Download size={14} />
@@ -878,8 +878,8 @@ export default function BulkUploadPage() {
                 </a>
 
                 <a
-                  href="/beybeyfarms_products_master.csv"
-                  download="beybeyfarms_products_master.csv"
+                  href="/organic_harvest_products_master.csv"
+                  download="organic_harvest_products_master.csv"
                   className="bg-white hover:bg-amber-50 border border-amber-300 text-amber-900 px-3.5 py-2 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <FileSpreadsheet size={14} />
@@ -889,13 +889,13 @@ export default function BulkUploadPage() {
                 <button
                   onClick={async () => {
                     try {
-                      const res = await fetch("/beybeyfarms_products_master.json");
+                      const res = await fetch("/organic_harvest_products_master.json");
                       const data = await res.json();
                       setParsedProducts(data);
                       setResultMsg(null);
                       scrollToPreview();
                     } catch (e) {
-                      alert("Failed to load Beybey Farms dataset");
+                      alert("Failed to load Organic dataset");
                     }
                   }}
                   className="bg-amber-200 hover:bg-amber-300 text-amber-950 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"

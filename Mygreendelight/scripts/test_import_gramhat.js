@@ -7,7 +7,7 @@ async function run() {
   await mongoose.connect(uri);
   console.log("Connected to MongoDB!");
 
-  const rawJson = fs.readFileSync('public/gramhat_products.json', 'utf-8');
+  const rawJson = fs.readFileSync('public/kisan_network_products.json', 'utf-8');
   const products = JSON.parse(rawJson);
   console.log("Total items to test:", products.length);
 
@@ -50,7 +50,7 @@ async function run() {
         category: item.category?.trim() || "Vegetables",
         image: item.image?.trim() || "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
         description: item.description?.trim() || "Farm fresh produce.",
-        sourcing: item.sourcing?.trim() || "Local Bhopal Mandi",
+        sourcing: item.sourcing?.trim() || "Local Bhopal Farm Direct",
         storage: item.storage?.trim() || "Keep refrigerated.",
         variations: variations,
       });

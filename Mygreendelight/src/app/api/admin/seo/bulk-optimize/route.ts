@@ -39,16 +39,16 @@ export async function POST(req: NextRequest) {
         const rawName = prod.name || "Fresh Produce";
         const cleanName = rawName.split("/")[0].trim();
         const hindiName = rawName.includes("/") ? rawName.split("/")[1].trim() : "";
-        const priceStr = prod.price ? `₹${prod.price}/${prod.unit || "kg"}` : "Best Mandi Rate";
+        const priceStr = prod.price ? `₹${prod.price}/${prod.unit || "kg"}` : "Best Farm Rate";
         const cat = prod.category || "Vegetables";
 
         // Auto-craft High-Ranking Title (Max 60 chars)
-        const metaTitle = `${rawName} (${priceStr}) | Mandi Fresh Bhopal - SubziQuick`.slice(0, 70);
+        const metaTitle = `${rawName} (${priceStr}) | Farm Fresh Bhopal - SubziQuick`.slice(0, 70);
 
         // Auto-craft High-Ranking Meta Description (120-160 chars)
         const metaDescription = `Buy farm-fresh ${cleanName}${
           hindiName ? ` (${hindiName})` : ""
-        } online in Bhopal at wholesale Karond Mandi rates. 100% ozone-washed, pesticide-safe. Same-day delivery across Bhopal on SubziQuick.`.slice(0, 160);
+        } online in Bhopal at direct farm wholesale rates. 100% ozone-washed, pesticide-safe. Same-day delivery across Bhopal on SubziQuick.`.slice(0, 160);
 
         // Auto-craft Local Bhopal Keywords
         const metaKeywords = [
@@ -57,8 +57,8 @@ export async function POST(req: NextRequest) {
           `${cleanName.toLowerCase()} price bhopal`,
           `${cleanName.toLowerCase()} delivery bhopal`,
           `buy ${cleanName.toLowerCase()} online bhopal`,
-          `karond mandi ${cleanName.toLowerCase()}`,
-          `fresh ${cat.toLowerCase()} bhopal`,
+          `fresh ${cleanName.toLowerCase()} bhopal`,
+          `farm fresh ${cat.toLowerCase()} bhopal`,
           "subziquick bhopal",
         ]
           .filter(Boolean)

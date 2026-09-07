@@ -91,7 +91,7 @@ async function mergeCatalog() {
         category: category,
         image: eveg.image || "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
         description: eveg.description || `100% fresh ${eveg.name} delivered directly in Bhopal.`,
-        sourcing: "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+        sourcing: "Direct from Bhopal Direct Kisan Farm & local organic growers (Raisen / Sehore / Hoshangabad)",
         storage: "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly before use.",
         variations: variations,
         reviews: [],

@@ -76,7 +76,7 @@ async function deepFullAudit() {
   }
 
   // 3. Inspect public sample templates & metadata
-  const publicFiles = ['public/combined_bhopal_products.csv', 'public/gramhat_products.csv'];
+  const publicFiles = ['public/combined_bhopal_products.csv', 'public/kisan_network_products.csv'];
   for (const pf of publicFiles) {
     const fullPf = path.join(projectRoot, pf);
     if (fs.existsSync(fullPf)) {

@@ -1,8 +1,8 @@
 {
   "id": "/",
-  "name": "SubziQuick - Mandi Fresh Vegetables & Groceries Bhopal",
+  "name": "SubziQuick - Farm Fresh Vegetables & Groceries Bhopal",
   "short_name": "SubziQuick",
-  "description": "Daily Karond Mandi fresh vegetables, fruits, and daily essentials with same-day home delivery across Bhopal.",
+  "description": "Daily farm-fresh vegetables, organic fruits, and daily essentials with same-day doorstep delivery across Bhopal.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

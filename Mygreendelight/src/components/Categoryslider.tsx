@@ -146,7 +146,7 @@ export default function CategorySlider({
         </div>
 
         {/* 
-          MOBILE UI: Clean 3-Column Touch Cards (Zepto/Blinkit Style)
+          MOBILE UI: Clean 3-Column Touch Cards (SubziQuick Express Style)
           DESKTOP UI: Wide interactive 3-column banner cards
         */}
         <div className="grid grid-cols-3 md:grid-cols-3 max-w-5xl md:mx-auto gap-2.5 sm:gap-4 md:gap-6">

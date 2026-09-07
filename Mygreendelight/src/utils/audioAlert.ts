@@ -1,5 +1,5 @@
-﻿/**
- * Real-time Audio Alert Generator (Swiggy / Zomato style)
+/**
+ * Real-time Audio Alert Generator (SubziQuick Order Chime)
  * Uses native Web Audio API with zero external file dependencies
  */
 
@@ -42,7 +42,7 @@ class AudioAlertManager {
   }
 
   /**
-   * Loud Zomato/Swiggy style double chime: Ding-Dong!
+   * High-clarity double chime: Ding-Dong!
    */
   public playNewOrderAlert() {
     if (this.getIsMuted()) return;

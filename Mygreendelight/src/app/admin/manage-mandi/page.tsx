@@ -96,11 +96,11 @@ export default function ManageMandiPage() {
                 <TrendingDown size={20} />
               </div>
               <h1 className="text-xl sm:text-2xl font-black text-gray-900">
-                Bhopal Mandi Live Rates & Price Drops
+                Live Daily Farm Rates & Price Drops
               </h1>
             </div>
             <p className="text-xs text-gray-500 mt-1">
-              Update today's mandi vegetable rates & price drop badges shown on the homepage ticker.
+              Update today's farm-direct vegetable rates & price drop badges shown on the homepage ticker.
             </p>
           </div>
 
@@ -113,7 +113,7 @@ export default function ManageMandiPage() {
             className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-md transition-all cursor-pointer"
           >
             <Plus size={16} />
-            <span>Add Mandi Item</span>
+            <span>Add Farm Rate Item</span>
           </button>
         </div>
 
@@ -279,7 +279,7 @@ export default function ManageMandiPage() {
                     className="w-4 h-4 accent-[#0f8646]"
                   />
                   <label htmlFor="activeToggle" className="text-xs font-bold text-gray-700 cursor-pointer">
-                    Show on Homepage Mandi Ticker
+                    Show on Homepage Farm Rates Ticker
                   </label>
                 </div>
 

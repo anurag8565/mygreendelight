@@ -124,14 +124,14 @@ files.forEach(({ path: filePath, category }) => {
       stock: 80,
       image: imageUrl,
       description: `100% farm-fresh ${rawName} sourced daily from trusted local Bhopal & MP farmers. Graded for premium quality, crisp texture, and natural freshness.`,
-      sourcing: "Direct from Bhopal Krishi Mandi & local organic growers (Raisen / Sehore / Hoshangabad)",
+      sourcing: "Direct from Bhopal Direct Kisan Farm & local organic growers (Raisen / Sehore / Hoshangabad)",
       storage: "Keep in a cool, well-ventilated space or refrigerate. Wash thoroughly with clean water before use.",
       variations: variations
     });
   }
 });
 
-console.log(`Extracted total ${allExtractedProducts.length} unique products from Gramhat.in`);
+console.log(`Extracted total ${allExtractedProducts.length} unique products from kisan_network.in`);
 
 // Write CSV
 const csvHeaders = ["name", "category", "price", "unit", "stock", "image", "description", "sourcing", "storage", "variations"];
@@ -152,8 +152,8 @@ const csvRows = allExtractedProducts.map(p => {
 
 const csvFull = [csvHeaders.join(','), ...csvRows].join('\n');
 
-const outCsvPath = path.join(__dirname, '..', 'public', 'gramhat_products.csv');
-const outJsonPath = path.join(__dirname, '..', 'public', 'gramhat_products.json');
+const outCsvPath = path.join(__dirname, '..', 'public', 'kisan_network_products.csv');
+const outJsonPath = path.join(__dirname, '..', 'public', 'kisan_network_products.json');
 
 fs.writeFileSync(outCsvPath, csvFull, 'utf-8');
 fs.writeFileSync(outJsonPath, JSON.stringify(allExtractedProducts, null, 2), 'utf-8');

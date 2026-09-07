@@ -275,7 +275,7 @@ async function fixAllPricingAndVariations() {
         { weight: "500g", price: 20, stock: 60 },
         { weight: "1 kg", price: 38, stock: 80 },
         { weight: "2 kg", price: 74, stock: 50 },
-        { weight: "5 kg (Bhopal Mandi Pack)", price: 180, stock: 30 }
+        { weight: "5 kg (Bhopal Farm Direct Pack)", price: 180, stock: 30 }
       ];
     } else if (name.includes('tomato') || name.includes('tamatar')) {
       category = "Vegetables";

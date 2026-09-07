@@ -201,7 +201,7 @@ export default function Groceryitemcard({
           </div>
         </div>
 
-        {/* 3. BOTTOM BUTTON (Zepto / Blinkit Style ADD vs Counter) */}
+        {/* 3. BOTTOM BUTTON (SubziQuick 1-Click ADD vs Counter) */}
         <div className="mt-auto pt-2">
           {displayStock <= 0 ? (
             <button
