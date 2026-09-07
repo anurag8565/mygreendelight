@@ -185,14 +185,14 @@ export default async function ProductPage(props: { params: Promise<{ id: string 
       {
         "@type": "ListItem",
         position: 2,
-        name: product.category || "Produce",
-        item: "https://subziquick.in/shop",
+        name: product.category || "Fresh Produce",
+        item: `https://subziquick.in/shop?category=${encodeURIComponent(product.category || "Vegetables")}`,
       },
       {
         "@type": "ListItem",
         position: 3,
         name: product.name,
-        item: `https://subziquick.in/product/${product._id}`,
+        item: product.canonicalUrl || `https://subziquick.in/product/${product.slug || product._id}`,
       },
     ],
   };
