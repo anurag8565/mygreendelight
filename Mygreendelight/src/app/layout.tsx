@@ -21,11 +21,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://subziquick.in"),
   title: {
-    default: "SubziQuick Bhopal | Mandi Fresh Daily Vegetables & Fruits Same Day Delivery",
-    template: "%s | SubziQuick Bhopal",
+    default: "Online Vegetable & Fruit Delivery in Bhopal | Farm Fresh Mandi Produce - SubziQuick",
+    template: "%s | SubziQuick Bhopal - Online Vegetable Delivery",
   },
   description:
-    "Order farm-fresh vegetables, seasonal fruits & groceries online in Bhopal at wholesale Mandi rates. 100% ozone-washed, pesticide-safe produce with same-day home delivery across Bhopal.",
+    "Order farm-fresh vegetables, seasonal fruits, and exotic produce online in Bhopal at wholesale Karond Mandi rates. 100% ozone-washed, pesticide-safe with same-day express home delivery across all Bhopal localities.",
   keywords: [
     "online vegetable delivery Bhopal",
     "fresh sabzi home delivery Bhopal",
