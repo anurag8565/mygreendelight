@@ -36,7 +36,24 @@ function Login() {
       if (res?.error) {
         setErrorMessage("Invalid email or password. Please try again.");
       } else {
-        window.location.href = "/";
+        // Fetch current user profile to determine role-based redirect
+        try {
+          const checkRes = await fetch("/api/me");
+          if (checkRes.ok) {
+            const meData = await checkRes.json();
+            if (meData?.role === "admin") {
+              window.location.href = "/admin";
+              return;
+            } else if (meData?.role === "deliveryboy") {
+              window.location.href = "/deliveryboy";
+              return;
+            }
+          }
+        } catch (_) {}
+
+        const params = new URLSearchParams(window.location.search);
+        const callbackUrl = params.get("callbackUrl");
+        window.location.href = callbackUrl || "/";
       }
     } catch (error: any) {
       console.log(error);

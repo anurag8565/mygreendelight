@@ -16,9 +16,17 @@ export async function GET() {
       );
     }
 
-    const user = await User.findOne({
-      email: session.user.email,
-    }).populate("wishlist").select("-password");
+    let user = null;
+    if (session.user.id) {
+      user = await User.findById(session.user.id).populate("wishlist").select("-password");
+    }
+
+    if (!user && session.user.email) {
+      const cleanEmail = session.user.email.trim().toLowerCase();
+      user = await User.findOne({
+        email: { $regex: new RegExp(`^${cleanEmail}$`, "i") },
+      }).populate("wishlist").select("-password");
+    }
 
     if (!user) {
       return NextResponse.json(

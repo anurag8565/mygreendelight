@@ -77,15 +77,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             if (account?.provider === "google") {
                 try {
                     await connectDb();
+                    const cleanEmail = (user.email || "").trim().toLowerCase();
 
                     let existingUser = await User.findOne({
-                        email: user.email,
+                        email: { $regex: new RegExp(`^${cleanEmail}$`, "i") }
                     });
 
                     if (!existingUser) {
                         existingUser = await User.create({
                             name: user.name || "Customer",
-                            email: user.email,
+                            email: cleanEmail,
                             image: user.image,
                             password: "",
                             role: "user",
@@ -132,37 +133,38 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return true;
         },
 
-        async jwt({ token, user, trigger, session }) {
-
+        async jwt({ token, user, trigger }) {
             if (user) {
                 token.id = user.id || token.sub;
                 token.name = user.name;
-                token.email = user.email;
+                token.email = (user.email || "").trim().toLowerCase();
                 token.role = (user as any).role || "user";
             }
 
-            if (trigger === "update") {
-                if (token.email) {
-                    try {
-                        await connectDb();
-                        const dbUser = await User.findOne({ email: token.email }).select("role name");
-                        if (dbUser) {
-                            token.role = dbUser.role || "user";
-                            if (dbUser.name) token.name = dbUser.name;
-                        }
-                    } catch (_) {}
-                }
+            // Always ensure token has latest role from DB
+            if (token.email) {
+                try {
+                    await connectDb();
+                    const cleanEmail = (token.email as string).trim().toLowerCase();
+                    const dbUser = await User.findOne({
+                        email: { $regex: new RegExp(`^${cleanEmail}$`, "i") }
+                    }).select("role name");
+                    if (dbUser) {
+                        token.role = dbUser.role || "user";
+                        if (dbUser.name) token.name = dbUser.name;
+                        token.id = dbUser._id.toString();
+                    }
+                } catch (_) {}
             }
 
             return token;
         },
 
         async session({ session, token }) {
-
             if (session.user) {
                 session.user.id = (token.id || token.sub) as string;
                 session.user.name = token.name as string;
-                session.user.email = token.email as string;
+                session.user.email = (token.email as string || "").toLowerCase();
                 session.user.role = (token.role as string) || "user";
             }
 
