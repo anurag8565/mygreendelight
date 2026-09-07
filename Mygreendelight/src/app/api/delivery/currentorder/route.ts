@@ -55,6 +55,16 @@ export async function GET() {
       );
     }
 
+    // 🔒 Security: Hide secret OTP code from delivery rider
+    if (order && order.deliveryOtp) {
+      order.deliveryOtp = {
+        expiresAt: order.deliveryOtp.expiresAt,
+        verified: order.deliveryOtp.verified,
+        attempts: order.deliveryOtp.attempts,
+        code: undefined, // Stripped for security
+      };
+    }
+
     return NextResponse.json(
       {
         active: true,

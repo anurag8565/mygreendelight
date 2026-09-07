@@ -50,12 +50,20 @@ export async function GET() {
         assignedto: null,
         status: "broadcasted",
       })
-        .populate("order")
-        .sort({ createdAt: -1 });
+    const sanitizedAssignments = assignments.map((a: any) => {
+      const aObj = a.toObject ? a.toObject() : { ...a };
+      if (aObj.order && aObj.order.deliveryOtp) {
+        aObj.order.deliveryOtp = {
+          expiresAt: aObj.order.deliveryOtp.expiresAt,
+          verified: aObj.order.deliveryOtp.verified,
+        };
+      }
+      return aObj;
+    });
 
     return NextResponse.json({
       success: true,
-      assignments,
+      assignments: sanitizedAssignments,
     });
   } catch (error) {
     console.log("GET ASSIGNMENTS ERROR:", error);
