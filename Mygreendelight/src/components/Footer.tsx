@@ -28,7 +28,7 @@ export default function Footer() {
             </div>
 
             <p className="text-xs sm:text-sm text-green-100/90 mb-4 leading-relaxed font-medium max-w-md">
-              Bhopal’s dedicated Mandi fresh farm-to-table produce store. 100% ozone-washed, chemical-free vegetables, seasonal fruits, and daily essentials with same-day home delivery.
+              Bhopal’s dedicated farm fresh farm-to-table produce store. 100% ozone-washed, chemical-free vegetables, seasonal fruits, and daily essentials with same-day home delivery.
             </p>
 
             {/* Store Address & Hours Box */}
@@ -133,7 +133,7 @@ export default function Footer() {
                   Help & Support
                 </Link>
                 <Link href="/about" className="hover:text-white transition">
-                  Our Mandi Story
+                  Our Farm Fresh Story
                 </Link>
               </div>
             </div>

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Online Fresh Vegetables, Fruits & Exotics Delivery in Bhopal | Mandi Rates - SubziQuick",
+  title: "Online Fresh Vegetables, Fruits & Exotics Delivery in Bhopal | Direct Farm Rates - SubziQuick",
   description:
-    "Buy daily farm-fresh vegetables, seasonal fruits, and exotic salad produce (Broccoli, Avocado, Bell Peppers, Mushrooms, Hydroponic Greens) online in Bhopal at wholesale Karond Mandi rates. 100% ozone-washed, pesticide-safe with same-day home delivery across Bhopal.",
+    "Buy daily farm-fresh vegetables, seasonal fruits, and exotic salad produce (Broccoli, Avocado, Bell Peppers, Mushrooms, Hydroponic Greens) online in Bhopal at wholesale direct farm rates. 100% ozone-washed, pesticide-safe with same-day home delivery across Bhopal.",
   keywords: [
     "online vegetable delivery Bhopal",
     "fresh vegetables online Bhopal",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     "mushrooms online Bhopal",
     "bell peppers Bhopal",
     "hydroponic greens Bhopal",
-    "Karond Mandi online vegetables Bhopal",
+    "online fresh vegetables Bhopal",
     "same day vegetable delivery Arera Colony",
     "vegetable delivery Kolar Road",
     "fresh sabzi MP Nagar",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Buy Fresh Vegetables, Fruits & Exotics in Bhopal | SubziQuick",
     description:
-      "270+ farm-fresh vegetables, seasonal fruits, and exotic greens delivered same-day in Bhopal at wholesale Mandi rates. 100% ozone-washed.",
+      "270+ farm-fresh vegetables, seasonal fruits, and exotic greens delivered same-day in Bhopal at direct farm wholesale rates. 100% ozone-washed.",
     url: "https://subziquick.in/shop",
     siteName: "SubziQuick Bhopal",
     images: [
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Fresh Vegetables, Fruits & Exotics Online in Bhopal | SubziQuick",
-    description: "Daily Karond Mandi fresh harvest delivered to your doorstep in Bhopal.",
+    description: "Daily farm fresh harvest delivered to your doorstep in Bhopal.",
     images: ["https://subziquick.in/hero_basket.jpg"],
   },
 };

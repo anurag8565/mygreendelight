@@ -24,7 +24,7 @@ export default function PromoBanners({ banners = [] }: { banners?: any[] }) {
   };
 
   const b2 = {
-    title: sanitizeText(rawB2?.title, "Same-Day Mandi Fresh Delivery"),
+    title: sanitizeText(rawB2?.title, "Same-Day Farm Fresh Delivery"),
     subtitle: sanitizeText(rawB2?.subtitle, "Freshly Harvested To Your Doorstep"),
     image: rawB2?.image || "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=800&q=85",
     btnText: sanitizeText(rawB2?.btnText, "Order Fresh Now"),
@@ -65,7 +65,7 @@ export default function PromoBanners({ banners = [] }: { banners?: any[] }) {
           </div>
         </div>
 
-        {/* Banner 2: Same-Day Mandi Fresh Delivery Guarantee */}
+        {/* Banner 2: Same-Day Farm Fresh Delivery Guarantee */}
         <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-amber-50 via-orange-50 to-amber-100/80 min-h-[200px] sm:min-h-[220px] flex items-center justify-between shadow-md hover:shadow-lg transition-all border border-amber-200/80 group p-5 sm:p-8">
           <div className="relative z-10 flex flex-col items-start max-w-xs">
             <span className="inline-flex items-center gap-1 bg-amber-200/80 text-amber-900 text-[10px] sm:text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider mb-2.5 border border-amber-300">

@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About SubziQuick Bhopal | Karond Mandi Sourcing & Farm Fresh Story",
+  title: "About SubziQuick Bhopal | Direct Farm Sourcing & Pure Fresh Story",
   description:
-    "Learn how SubziQuick connects Bhopal families with direct 5:00 AM Karond Mandi harvest, 100% ozone-washed vegetables, and eco-friendly EV doorstep delivery across Bhopal.",
+    "Learn how SubziQuick connects Bhopal families with direct 5:00 AM Sunrise Farm Harvest, 100% ozone-washed vegetables, and eco-friendly EV doorstep delivery across Bhopal.",
   keywords: [
     "about SubziQuick Bhopal",
-    "Karond Mandi vegetable sourcing",
+    "direct farm vegetable sourcing",
     "farm fresh produce Bhopal story",
     "ozone washed vegetables Bhopal",
   ],
@@ -14,8 +14,8 @@ export const metadata: Metadata = {
     canonical: "https://subziquick.in/about",
   },
   openGraph: {
-    title: "About SubziQuick Bhopal - Mandi Freshness Sourcing",
-    description: "Direct Kisan connections & Karond Mandi farm produce delivered across Bhopal.",
+    title: "About SubziQuick Bhopal - Farm Fresh Sourcing",
+    description: "Direct Kisan connections & pure farm fresh produce delivered across Bhopal.",
     url: "https://subziquick.in/about",
     siteName: "SubziQuick Bhopal",
     type: "website",
@@ -27,7 +27,7 @@ export default function AboutLayout({ children }: { children: React.ReactNode })
     "@context": "https://schema.org",
     "@type": "AboutPage",
     "name": "About SubziQuick Bhopal",
-    "description": "SubziQuick is Bhopal's leading farm-to-table fresh vegetable and fruit delivery network sourced directly from Karond Mandi.",
+    "description": "SubziQuick is Bhopal's leading farm-to-table fresh vegetable and fruit delivery network sourced directly from local organic contract farms.",
     "url": "https://subziquick.in/about",
     "mainEntity": {
       "@type": "GroceryStore",

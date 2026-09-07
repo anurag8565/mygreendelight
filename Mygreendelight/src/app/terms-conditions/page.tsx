@@ -48,10 +48,10 @@ export default function TermsConditionsPage() {
           <section className="space-y-3">
             <h2 className="text-lg font-black text-gray-900 flex items-center gap-2">
               <Truck size={18} className="text-[#0f8646]" />
-              <span>2. Delivery & Mandi Pricing</span>
+              <span>2. Delivery & Fair Pricing</span>
             </h2>
             <ul className="list-disc pl-5 space-y-1.5 text-xs text-gray-600">
-              <li><strong>Fresh Mandi Pricing:</strong> All vegetable and fruit rates are updated daily based on Bhopal Krishi Upaj Mandi arrivals and quality grading.</li>
+              <li><strong>Farm Fresh Pricing:</strong> All vegetable and fruit rates are updated daily based on daily farm harvest arrivals and quality grading.</li>
               <li><strong>Weight & Natural Variations:</strong> Natural produce may experience slight weight variances (within ±3%) during sorting, cleaning, and transit.</li>
               <li><strong>Delivery Slots:</strong> Orders placed under Instant Express are dispatched within 15-45 minutes. Scheduled morning/evening batch slots are delivered within their allocated time window.</li>
             </ul>

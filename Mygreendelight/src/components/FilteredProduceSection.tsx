@@ -64,7 +64,7 @@ export default function FilteredProduceSection({
         hindi: "ताज़ी सब्जियां",
         imgUrl: "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=300&q=80",
         count: vegItems.length,
-        badge: "Daily Mandi Fresh",
+        badge: "Daily Farm Fresh",
         themeColor: "from-emerald-600 to-green-700",
         activeBorder: "border-[#0c831f]",
       },
@@ -125,7 +125,7 @@ export default function FilteredProduceSection({
                 🌿
               </span>
               <h2 className="text-lg sm:text-2xl font-black text-gray-900 tracking-tight">
-                Daily Fresh Mandi Harvest
+                Daily Fresh Farm Harvest
               </h2>
               <span className="bg-emerald-50 text-[#0c831f] border border-emerald-200/90 text-[11px] font-black px-2.5 py-0.5 rounded-full hidden xs:inline-flex items-center gap-1">
                 <CheckCircle2 size={12} className="text-[#0c831f]" />
@@ -133,7 +133,7 @@ export default function FilteredProduceSection({
               </span>
             </div>
             <p className="text-xs text-gray-500 font-medium mt-1">
-              100% Ozone-Washed • Direct 5:00 AM Kisan Mandi Batch • 10-15 Min Bhopal Delivery
+              100% Ozone-Washed • Direct 5:00 AM Sunrise Kisan Batch • 10-15 Min Bhopal Delivery
             </p>
           </div>
 

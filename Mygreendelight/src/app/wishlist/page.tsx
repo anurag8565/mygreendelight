@@ -167,7 +167,7 @@ export default function WishlistPage() {
           </div>
           <div className="flex items-center justify-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs font-bold text-emerald-900 border-x border-emerald-200/60 px-1">
             <Leaf size={14} className="text-emerald-600 shrink-0" />
-            <span className="truncate">5:00 AM Fresh Mandi</span>
+            <span className="truncate">5:00 AM Sunrise Fresh</span>
           </div>
           <div className="flex items-center justify-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs font-bold text-emerald-900">
             <RotateCcw size={14} className="text-teal-600 shrink-0" />
@@ -287,7 +287,7 @@ export default function WishlistPage() {
                 className="bg-[#0c831f] hover:bg-[#096718] active:scale-95 text-white px-7 py-3 rounded-2xl font-black text-xs sm:text-sm shadow-md transition inline-flex items-center gap-2"
               >
                 <ShoppingBag size={16} />
-                <span>Explore Fresh Mandi Harvest</span>
+                <span>Explore Fresh Farm Harvest</span>
               </Link>
             </div>
           </div>
@@ -305,7 +305,7 @@ export default function WishlistPage() {
                   </h3>
                 </div>
                 <p className="text-xs text-gray-500 mt-0.5">
-                  Harvested fresh today from local Mandis
+                  Harvested fresh today from contract farms
                 </p>
               </div>
 

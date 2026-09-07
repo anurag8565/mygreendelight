@@ -217,7 +217,7 @@ export default function ShopPage() {
           </Link>
           <ChevronRight size={11} className="text-gray-400" />
           <Link href="/shop" className="hover:text-[#0c831f] transition font-semibold">
-            Mandi Store
+            Fresh Produce
           </Link>
           {categoryParam && (
             <>
@@ -242,7 +242,7 @@ export default function ShopPage() {
                   ? `Search: "${searchParam}"`
                   : categoryParam
                   ? categoryParam
-                  : "All Mandi Fresh Produce"}
+                  : "All Farm Fresh Produce"}
               </h1>
               <span className="text-[10px] font-black uppercase text-[#0c831f] bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-full">
                 ⚡ Same Day Dispatch
@@ -567,7 +567,7 @@ export default function ShopPage() {
                   No matching fresh produce found
                 </h3>
                 <p className="text-xs text-gray-500 mb-3.5 font-medium">
-                  Try clearing some filter chips or searching another mandi category.
+                  Try clearing some filter chips or searching another produce category.
                 </p>
                 <button
                   type="button"

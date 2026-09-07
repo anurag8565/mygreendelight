@@ -188,7 +188,7 @@ function OrderSuccessContent() {
             <div className="flex items-baseline justify-between">
               <div>
                 <span className="text-[11px] font-bold text-gray-500 block">Total Order Payable</span>
-                <span className="text-[10px] text-emerald-700 font-medium">Bhopal Mandi Fresh Produce</span>
+                <span className="text-[10px] text-emerald-700 font-medium">Bhopal Farm Fresh Produce</span>
               </div>
               <div className="text-right">
                 <span className="text-2xl sm:text-3xl font-black text-[#0f8646]">
@@ -229,7 +229,7 @@ function OrderSuccessContent() {
                 <Clock size={16} />
                 <span className="font-extrabold text-xs text-gray-900">Same-Day Slot</span>
               </div>
-              <p className="text-[10px] text-gray-500">Fresh Mandi Dispatch</p>
+              <p className="text-[10px] text-gray-500">Fresh Farm Dispatch</p>
             </div>
 
             <div className="bg-gray-50/80 border border-gray-100 rounded-2xl p-3.5">
@@ -318,13 +318,13 @@ function OrderSuccessContent() {
               </div>
             </div>
             <p className="text-xs text-emerald-100 leading-relaxed mb-3.5">
-              Apne colony / society group me share karein taaki sabhi ko farm-fresh sabzi & fruits mandi rates par milein.
+              Apne colony / society group me share karein taaki sabhi ko farm-fresh sabzi & fruits direct wholesale rates par milein.
             </p>
 
             <div className="flex items-center gap-2">
               <a
                 href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
-                  `🌿 Hey neighbors! I just ordered farm-fresh vegetables & fruits from SubziQuick Bhopal. Super fresh produce directly delivered at Mandi rates! Order yours here: ${typeof window !== "undefined" ? window.location.origin : "https://subziquick.in"}`
+                  `🌿 Hey neighbors! I just ordered farm-fresh vegetables & fruits from SubziQuick Bhopal. Super fresh produce directly delivered at Farm Wholesale rates! Order yours here: ${typeof window !== "undefined" ? window.location.origin : "https://subziquick.in"}`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -337,7 +337,7 @@ function OrderSuccessContent() {
               <button
                 type="button"
                 onClick={() => {
-                  const text = `🌿 Hey neighbors! I just ordered farm-fresh vegetables & fruits from SubziQuick Bhopal. Super fresh produce at Mandi rates! Order now: ${window.location.origin}`;
+                  const text = `🌿 Hey neighbors! I just ordered farm-fresh vegetables & fruits from SubziQuick Bhopal. Super fresh produce at Farm Wholesale rates! Order now: ${window.location.origin}`;
                   navigator.clipboard.writeText(text);
                   setCopied(true);
                   setTimeout(() => setCopied(false), 2000);

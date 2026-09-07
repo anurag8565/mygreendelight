@@ -42,7 +42,7 @@ const DEFAULT_BHOPAL_REVIEWS = [
     location: "Bawadiya Kalan, Bhopal",
     rating: 5,
     comment:
-      "Direct farmer rates without mandi middleman markup. 100% clean, ozone-sorted, and no chemical smell in coriander or tomatoes.",
+      "Direct farmer rates without middlemen markup. 100% clean, ozone-sorted, and no chemical smell in coriander or tomatoes.",
     tag: "Verified Resident",
   },
   {
@@ -386,7 +386,7 @@ export default function Testimonials({
                     <textarea
                       required
                       rows={3}
-                      placeholder="e.g. Taaza sabzi direct Mandi se aayi, same-day delivery aur packing bahut clean thi!"
+                      placeholder="e.g. Taaza sabzi direct farm se aayi, same-day delivery aur packing bahut clean thi!"
                       value={reviewForm.comment}
                       onChange={(e) =>
                         setReviewForm({ ...reviewForm, comment: e.target.value })

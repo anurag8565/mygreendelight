@@ -746,7 +746,7 @@ export default function Checkout() {
                   </div>
                 </div>
                 <span className="text-[10px] font-black uppercase text-[#0f8646] bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-                  Mandi Fresh
+                  Farm Fresh
                 </span>
               </div>
 
@@ -763,7 +763,7 @@ export default function Checkout() {
                   },
                   {
                     id: "Morning Fresh Slot (8:30 AM – 11:00 AM)",
-                    title: "Morning Mandi Batch",
+                    title: "Morning Farm Fresh Batch",
                     time: "8:30 AM – 11:00 AM",
                     desc: "Crisp sorted veggies & fruits for lunch preparation",
                     icon: Zap,

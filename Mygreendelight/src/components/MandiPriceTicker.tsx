@@ -31,7 +31,7 @@ export default function MandiPriceTicker({ initialRates = [] }: { initialRates?:
         {/* Left Badge */}
         <div className="flex items-center gap-1.5 shrink-0 bg-white border border-gray-200 text-gray-800 px-2.5 py-1 rounded-full font-bold text-[10.5px]">
           <TrendingDown size={13} className="text-[#0c831f]" />
-          <span>Live Mandi Rates</span>
+          <span>Daily Wholesale Rates</span>
         </div>
 
         {/* Scrolling Ticker Items */}
@@ -62,7 +62,7 @@ export default function MandiPriceTicker({ initialRates = [] }: { initialRates?:
           href="/shop"
           className="hidden md:flex items-center gap-1 text-[11px] font-bold text-[#0c831f] hover:text-[#096618] shrink-0"
         >
-          <span>Shop Mandi</span>
+          <span>Shop Fresh</span>
           <ArrowRight size={12} />
         </Link>
       </div>

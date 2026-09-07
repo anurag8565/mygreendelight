@@ -224,7 +224,7 @@ export default function LocationModal({
                     Delivery Address & Location
                   </h2>
                   <p className="text-[11px] text-gray-500 font-medium">
-                    Same-Day Mandi Fresh Delivery across Bhopal
+                    Same-Day Farm Fresh Delivery across Bhopal
                   </p>
                 </div>
               </div>

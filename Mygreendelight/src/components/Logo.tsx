@@ -121,7 +121,7 @@ export default function Logo({
                 : "text-[#0f8646]"
             }`}
           >
-            Mandi Fresh • Same Day Delivery
+            Farm Fresh • Same Day Delivery
           </span>
         )}
       </div>

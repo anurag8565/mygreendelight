@@ -29,7 +29,7 @@ export async function generateMetadata(props: {
       const defaultTitle = `${product.name} ${unitText} - ${priceText} | SubziQuick Bhopal`;
       const defaultDesc =
         product.description ||
-        `Order farm fresh ${product.name} online in Bhopal at Mandi rates on SubziQuick. 100% ozone-washed & pesticide-safe with same-day home delivery across Bhopal.`;
+        `Order farm fresh ${product.name} online in Bhopal at Direct Farm rates on SubziQuick. 100% ozone-washed & pesticide-safe with same-day home delivery across Bhopal.`;
 
       const title = product.metaTitle || defaultTitle;
       const description = product.metaDescription || defaultDesc;
@@ -38,7 +38,7 @@ export async function generateMetadata(props: {
       return {
         title,
         description,
-        keywords: product.metaKeywords || `${product.name}, fresh vegetables bhopal, mandi rate bhopal`,
+        keywords: product.metaKeywords || `${product.name}, fresh vegetables bhopal, fresh vegetables rate bhopal`,
         alternates: {
           canonical: productUrl,
         },
@@ -68,8 +68,8 @@ export async function generateMetadata(props: {
   } catch (error) {}
 
   return {
-    title: "Mandi Fresh Farm Produce | SubziQuick Bhopal",
-    description: "Daily Karond Mandi fresh vegetables, fruits & staples with same-day home delivery in Bhopal on SubziQuick.",
+    title: "Farm Fresh Produce Online | SubziQuick Bhopal",
+    description: "Daily farm fresh vegetables, fruits & staples with same-day home delivery in Bhopal on SubziQuick.",
   };
 }
 
@@ -134,7 +134,7 @@ export default async function ProductPage(props: { params: Promise<{ id: string 
     description:
       product.metaDescription ||
       product.description ||
-      `Fresh ${product.name} delivered same-day in Bhopal at Karond Mandi rates on SubziQuick.`,
+      `Fresh ${product.name} delivered same-day in Bhopal at Karond Direct Farm rates on SubziQuick.`,
     sku: `SQ-${String(product._id).slice(-6).toUpperCase()}`,
     brand: {
       "@type": "Brand",

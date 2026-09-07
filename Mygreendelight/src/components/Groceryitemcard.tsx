@@ -111,10 +111,10 @@ export default function Groceryitemcard({
           )}
         </div>
 
-        {/* Fresh Mandi Produce Tag */}
+        {/* Fresh Farm Produce Tag */}
         <span className="absolute bottom-1.5 left-2 bg-white/95 backdrop-blur-xs text-emerald-800 text-[8.5px] font-black px-1.5 py-0.5 rounded-md shadow-2xs flex items-center gap-0.5 border border-emerald-200/60 group-hover:border-emerald-400 group-hover:text-[#0c831f] transition-colors">
           <span className="text-[9px]">🌿</span>
-          <span>MANDI FRESH</span>
+          <span>FARM FRESH</span>
         </span>
 
         {/* Wishlist Button */}

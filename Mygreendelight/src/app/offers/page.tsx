@@ -70,7 +70,7 @@ export default function OffersPage() {
               Discount Coupons & Daily Rewards
             </h1>
             <p className="text-xs sm:text-sm text-green-100/90 leading-relaxed">
-              Unlock exclusive Bhopal mandi discounts, copy coupon codes with 1-tap, and apply them at checkout for instant price drops!
+              Unlock exclusive Bhopal farm-fresh discounts, copy coupon codes with 1-tap, and apply them at checkout for instant price drops!
             </p>
           </div>
         </div>

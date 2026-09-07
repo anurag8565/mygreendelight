@@ -249,10 +249,10 @@ export default function ProductDetailsClient({
                   )}
                 </div>
 
-                {/* Mandi Fresh Tag */}
+                {/* Farm Fresh Tag */}
                 <span className="absolute bottom-2.5 left-2.5 bg-white/95 backdrop-blur-xs text-emerald-900 text-[9px] sm:text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-2xs flex items-center gap-1 border border-emerald-200/80">
                   <span>🌿</span>
-                  <span>Karond Mandi • Same-Day</span>
+                  <span>Farm Fresh • Same-Day</span>
                 </span>
 
                 {/* Out of Stock Overlay */}
@@ -314,7 +314,7 @@ export default function ProductDetailsClient({
                   </div>
                 </div>
                 <span className="hidden sm:inline-block text-[10px] font-bold bg-white text-emerald-800 px-2.5 py-1 rounded-lg border border-emerald-200">
-                  Live Mandi Stock
+                  Live Farm Stock
                 </span>
               </div>
 

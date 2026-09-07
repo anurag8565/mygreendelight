@@ -14,7 +14,7 @@ export default function TrustRibbon() {
     {
       icon: <Sparkles size={15} className="text-emerald-600 fill-emerald-600" />,
       title: "5:00 AM Harvested",
-      subtitle: "Direct Kisan Mandi",
+      subtitle: "Direct Kisan Farm Sourced",
       bg: "bg-emerald-50/70 border-emerald-200/60 text-emerald-950",
     },
     {

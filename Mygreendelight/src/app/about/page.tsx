@@ -62,17 +62,17 @@ export default function AboutPage() {
 
                   <div className="text-gray-600 text-sm sm:text-base leading-relaxed space-y-3 mb-8">
                     <p>
-                      Hamari shuruaat hui Bhopal ki Karond Mandi ke trusted bulk traders aur kisanon ke sath direct aur mazboot rishte bana kar — taaki har vegetable aur fruit ki best quality aur genuine wholesale rate mil sake.
+                      Hamari shuruaat hui Bhopal aur aas-paas ke trusted contract kisanon ke sath direct aur mazboot rishte bana kar — taaki har vegetable aur fruit ki best quality aur genuine wholesale rate mil sake.
                     </p>
                     <p>
-                      2025 me humne Bhopal ki housing societies aur colonies me <strong>Eco-Friendly EV Auto (Electric Auto)</strong> ke zariye taaza sabzi direct doorstep par pahunchana shuru kiya. Logon ka zabardast pyaar aur bharosa dekhkar humne socha — <em>&quot;Kyun na poore Bhopal ko online platform ke zariye same-day taaza Mandi produce ghar baithe deliver karein?&quot;</em>
+                      2025 me humne Bhopal ki housing societies aur colonies me <strong>Eco-Friendly EV Auto (Electric Auto)</strong> ke zariye taaza sabzi direct doorstep par pahunchana shuru kiya. Logon ka zabardast pyaar aur bharosa dekhkar humne socha — <em>&quot;Kyun na poore Bhopal ko online platform ke zariye same-day taaza farm produce ghar baithe deliver karein?&quot;</em>
                     </p>
                   </div>
 
                   <div className="bg-gradient-to-r from-green-50 via-emerald-50/60 to-white border-l-4 border-[#0f8646] p-5 rounded-r-2xl mb-8 shadow-2xs">
                     <p className="text-gray-900 font-extrabold text-sm sm:text-base leading-snug">
                       SubziQuick sirf ek grocery app nahi hai, <br />
-                      yeh Mandi ki taazgi, EV eco-delivery aur Bhopal ka vishwaas hai.
+                      yeh khet ki taazgi, EV eco-delivery aur Bhopal ka vishwaas hai.
                     </p>
                   </div>
 
@@ -119,7 +119,7 @@ export default function AboutPage() {
                 <div className="absolute -bottom-6 sm:-bottom-8 -left-2 sm:-left-6 bg-white/95 backdrop-blur-md rounded-3xl shadow-xl p-5 max-w-[240px] border border-green-100 text-left">
                   <Quote size={20} className="text-[#0f8646] mb-1" />
                   <p className="text-xs font-black text-gray-900 leading-snug">
-                    &quot;Mandi ki taazgi, EV auto ka bharosa, Bhopal ki apni SubziQuick.&quot;
+                    &quot;Khet ki taazgi, EV auto ka bharosa, Bhopal ki apni SubziQuick.&quot;
                   </p>
                   <span className="text-[10px] text-gray-400 font-bold mt-1 block">
                     — SubziQuick Team
@@ -191,18 +191,18 @@ export default function AboutPage() {
               The Journey of SubziQuick
             </h2>
             <p className="text-xs sm:text-sm text-gray-500 mt-2">
-              From Karond Mandi bulk partnerships and EV Auto deliveries to Bhopal&apos;s most loved online fresh produce network
+              From direct farm farmer partnerships and EV Auto deliveries to Bhopal&apos;s most loved online fresh produce network
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
-                year: "Mandi Roots",
+                year: "Farm Roots",
                 badge: "Bulk Network",
                 icon: <Store size={22} className="text-[#0f8646]" />,
-                title: "Karond Mandi Bulk Relations",
-                desc: "Built trusted relationships with wholesale Mandi traders and bulk farmers, securing direct access to top-grade daily harvests at true wholesale rates.",
+                title: "Direct Kisan & Farm Relations",
+                desc: "Built trusted relationships with local farming clusters and progressive growers, securing direct access to top-grade daily harvests at true wholesale farm rates.",
               },
               {
                 year: "2025",
@@ -222,7 +222,7 @@ export default function AboutPage() {
                 year: "Present",
                 badge: "Express Service",
                 icon: <Sparkles size={22} className="text-[#0f8646]" />,
-                title: "Same-Day Bhopal Mandi Runs",
+                title: "Same-Day Sunrise Farm Harvest Runs",
                 desc: "Serving 19+ localities with 100% ozone-washed produce, morning & express slots (6 AM – 10 PM), and zero-compromise quality guarantee.",
               },
             ].map((step, idx) => (
@@ -275,7 +275,7 @@ export default function AboutPage() {
                   </div>
                   <h3 className="text-xl font-black text-gray-900 mb-3">Our Mission</h3>
                   <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
-                    To make healthy, clean, chemical-free farm produce accessible to every Bhopal kitchen with guaranteed same-day delivery at honest Mandi rates.
+                    To make healthy, clean, chemical-free farm produce accessible to every Bhopal kitchen with guaranteed same-day delivery at honest farm rates.
                   </p>
                 </div>
                 <div className="mt-6 pt-4 border-t border-gray-100 flex items-center gap-2 text-xs font-bold text-[#0f8646]">

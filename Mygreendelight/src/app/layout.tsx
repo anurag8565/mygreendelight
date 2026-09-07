@@ -21,15 +21,15 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://subziquick.in"),
   title: {
-    default: "Online Vegetable & Fruit Delivery in Bhopal | Farm Fresh Mandi Produce - SubziQuick",
+    default: "Online Vegetable & Fruit Delivery in Bhopal | Farm Fresh Produce - SubziQuick",
     template: "%s | SubziQuick Bhopal - Online Vegetable Delivery",
   },
   description:
-    "Order farm-fresh vegetables, seasonal fruits, and exotic produce online in Bhopal at wholesale Karond Mandi rates. 100% ozone-washed, pesticide-safe with same-day express home delivery across all Bhopal localities.",
+    "Order farm-fresh vegetables, seasonal fruits, and exotic produce online in Bhopal at wholesale direct farm rates. 100% ozone-washed, pesticide-safe with same-day express home delivery across all Bhopal localities.",
   keywords: [
     "online vegetable delivery Bhopal",
     "fresh sabzi home delivery Bhopal",
-    "Karond Mandi online fruits Bhopal",
+    "fresh organic fruits Bhopal",
     "same day vegetable delivery Bhopal",
     "Bhopal online sabzi store",
     "exotic vegetables Bhopal",
@@ -69,9 +69,9 @@ export const metadata: Metadata = {
     telephone: true,
   },
   openGraph: {
-    title: "SubziQuick Bhopal | Mandi Fresh Daily Vegetables & Fruits Same Day Delivery",
+    title: "SubziQuick Bhopal | Farm Fresh Daily Vegetables & Fruits Same Day Delivery",
     description:
-      "Order farm-fresh vegetables, seasonal fruits & groceries online in Bhopal at wholesale Mandi rates. 100% ozone-washed with same-day home delivery.",
+      "Order farm-fresh vegetables, seasonal fruits & groceries online in Bhopal at wholesale farm rates. 100% ozone-washed with same-day home delivery.",
     url: "https://subziquick.in",
     siteName: "SubziQuick",
     locale: "en_IN",
@@ -81,14 +81,14 @@ export const metadata: Metadata = {
         url: "https://subziquick.in/og-image.png",
         width: 1200,
         height: 630,
-        alt: "SubziQuick Bhopal - Mandi Fresh Vegetables & Fruits",
+        alt: "SubziQuick Bhopal - Farm Fresh Vegetables & Fruits",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "SubziQuick Bhopal | Mandi Fresh Vegetables & Fruits Online",
-    description: "Daily Mandi Fresh Farm Produce delivered same-day to your doorstep in Bhopal.",
+    title: "SubziQuick Bhopal | Farm Fresh Vegetables & Fruits Online",
+    description: "Daily Farm Fresh Produce delivered same-day to your doorstep in Bhopal.",
     images: ["https://subziquick.in/og-image.png"],
   },
   manifest: "/manifest.json",
@@ -177,7 +177,7 @@ export default function RootLayout({
     ],
     "paymentAccepted": "Cash, UPI, Credit Card, Debit Card, Net Banking",
     "currenciesAccepted": "INR",
-    "servesCuisine": "Fresh Vegetables, Seasonal Fruits, Mandi Produce, Dairy, Groceries",
+    "servesCuisine": "Fresh Vegetables, Seasonal Fruits, Fresh Produce, Dairy, Groceries",
     "sameAs": [
       "https://wa.me/919981418565"
     ]

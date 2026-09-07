@@ -59,11 +59,11 @@ export default function ManageSEOPage() {
   // Global SEO Form State
   const [globalSeo, setGlobalSeo] = useState({
     siteName: "SubziQuick Bhopal",
-    defaultTitle: "SubziQuick Bhopal | Mandi Fresh Daily Vegetables & Fruits Online Delivery",
+    defaultTitle: "Online Vegetable & Fruit Delivery in Bhopal | Farm Fresh Produce - SubziQuick",
     defaultDescription:
-      "Order farm-fresh vegetables, seasonal fruits & groceries online in Bhopal at wholesale Mandi rates. 100% ozone-washed, pesticide-safe with same-day doorstep delivery across Bhopal.",
+      "Order farm-fresh vegetables, seasonal fruits & groceries online in Bhopal at wholesale farm rates. 100% ozone-washed, pesticide-safe with same-day doorstep delivery across Bhopal.",
     primaryKeywords:
-      "vegetable delivery bhopal, fresh vegetables bhopal, buy vegetables online bhopal, karond mandi bhopal, subziquick",
+      "vegetable delivery bhopal, fresh vegetables bhopal, buy vegetables online bhopal, farm fresh produce bhopal, subziquick",
     canonicalBase: "https://subziquick.in",
     googleSiteVerification: "",
     googleAnalyticsId: "",
@@ -112,7 +112,7 @@ export default function ManageSEOPage() {
       metaTitle: prod.metaTitle || `${prod.name} (₹${prod.price}/${prod.unit || "kg"}) | SubziQuick Bhopal`,
       metaDescription:
         prod.metaDescription ||
-        `Order farm fresh ${prod.name} online in Bhopal at Karond Mandi rates. 100% ozone-washed with same-day home delivery across Bhopal.`,
+        `Order farm fresh ${prod.name} online in Bhopal at wholesale farm rates. 100% ozone-washed with same-day home delivery across Bhopal.`,
       metaKeywords: prod.metaKeywords || `${prod.name.toLowerCase()}, ${prod.name.toLowerCase()} delivery bhopal, fresh vegetables bhopal`,
       focusKeyword: prod.focusKeyword || `${prod.name.toLowerCase()} bhopal`,
       canonicalUrl: prod.canonicalUrl || `https://subziquick.in/product/${prod._id}`,
@@ -124,13 +124,13 @@ export default function ManageSEOPage() {
     const rawName = productForm.name || "Fresh Produce";
     const cleanName = rawName.split("/")[0].trim();
     const hindiName = rawName.includes("/") ? rawName.split("/")[1].trim() : "";
-    const priceStr = productForm.price ? `₹${productForm.price}/${productForm.unit || "kg"}` : "Mandi Rate";
+    const priceStr = productForm.price ? `₹${productForm.price}/${productForm.unit || "kg"}` : "Farm Rate";
     const cat = productForm.category || "Vegetables";
 
-    const smartTitle = `${rawName} (${priceStr}) | Mandi Fresh Bhopal - SubziQuick`;
+    const smartTitle = `${rawName} (${priceStr}) | Farm Fresh Bhopal - SubziQuick`;
     const smartDesc = `Buy farm-fresh ${cleanName}${
       hindiName ? ` (${hindiName})` : ""
-    } online in Bhopal at wholesale Karond Mandi rates. 100% ozone-washed, pesticide-safe. Same-day delivery across Bhopal on SubziQuick.`;
+    } online in Bhopal at direct farm wholesale rates. 100% ozone-washed, pesticide-safe. Same-day delivery across Bhopal on SubziQuick.`;
     
     const smartKeywords = [
       cleanName.toLowerCase(),
@@ -138,7 +138,7 @@ export default function ManageSEOPage() {
       `${cleanName.toLowerCase()} price bhopal`,
       `${cleanName.toLowerCase()} delivery bhopal`,
       `buy ${cleanName.toLowerCase()} online bhopal`,
-      `karond mandi ${cleanName.toLowerCase()}`,
+      `fresh ${cleanName.toLowerCase()} bhopal`,
       `fresh ${cat.toLowerCase()} bhopal`,
       "subziquick bhopal",
     ]
@@ -574,7 +574,7 @@ export default function ManageSEOPage() {
                     {/* Meta Description Snippet */}
                     <p className="text-[11.5px] sm:text-xs md:text-[13px] text-gray-600 leading-relaxed line-clamp-3 sm:line-clamp-2 break-words">
                       {productForm.metaDescription ||
-                        `Order farm-fresh ${productForm.name} online in Bhopal at wholesale Karond Mandi rates. 100% ozone-washed, pesticide-safe with same-day doorstep delivery.`}
+                        `Order farm-fresh ${productForm.name} online in Bhopal at direct farm wholesale rates. 100% ozone-washed, pesticide-safe with same-day doorstep delivery.`}
                     </p>
                   </div>
 
@@ -679,7 +679,7 @@ export default function ManageSEOPage() {
                       rows={3}
                       value={productForm.metaDescription}
                       onChange={(e) => setProductForm({ ...productForm, metaDescription: e.target.value })}
-                      placeholder="Describe the produce, Bhopal delivery time, and Karond Mandi freshness guarantee..."
+                      placeholder="Describe the produce, Bhopal delivery time, and Farm Fresh direct harvest guarantee..."
                       className="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:border-[#0f8646] focus:bg-white resize-none"
                     />
                   </div>
@@ -703,7 +703,7 @@ export default function ManageSEOPage() {
                         type="text"
                         value={productForm.metaKeywords}
                         onChange={(e) => setProductForm({ ...productForm, metaKeywords: e.target.value })}
-                        placeholder="e.g. tomato price bhopal, karond mandi, sabzi"
+                        placeholder="e.g. tomato price bhopal, fresh vegetable delivery bhopal, sabzi"
                         className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:border-[#0f8646] focus:bg-white"
                       />
                     </div>
@@ -867,8 +867,8 @@ export default function ManageSEOPage() {
                 <ul className="space-y-1.5 list-disc pl-4 text-gray-700 text-[11px] sm:text-xs">
                   <li>Creates clean SEO slugs (e.g., <code className="bg-white px-1 rounded border">fresh-tomato-vegetables-bhopal</code>).</li>
                   <li>Adds bilingual Hindi & English names for maximum Google search reach.</li>
-                  <li>Injects Karond Mandi, pesticide-safe, and Bhopal localities into SERP descriptions.</li>
-                  <li>Generates high-intent long-tail keywords (e.g., <em>&quot;potato delivery bhopal&quot;</em>, <em>&quot;onion mandi rate bhopal&quot;</em>).</li>
+                  <li>Injects Farm Fresh, pesticide-safe, and Bhopal localities into SERP descriptions.</li>
+                  <li>Generates high-intent long-tail keywords (e.g., <em>&quot;potato delivery bhopal&quot;</em>, <em>&quot;fresh onion price bhopal&quot;</em>).</li>
                 </ul>
               </div>
 

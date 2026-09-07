@@ -31,7 +31,7 @@ const TRENDING_QUERIES = [
   { name: "Tomato", icon: "🍅", tag: "Daily Need" },
   { name: "Palak", icon: "🥬", tag: "Farm Harvest" },
   { name: "Potato", icon: "🥔", tag: "Daily Need" },
-  { name: "Onion", icon: "🧅", tag: "Mandi Fresh" },
+  { name: "Onion", icon: "🧅", tag: "Farm Fresh" },
   { name: "Apple", icon: "🍎", tag: "Sweet & Fresh" },
   { name: "A2 Milk", icon: "🥛", tag: "Morning 7 AM" },
   { name: "Coriander", icon: "🌿", tag: "Fresh Greens" },
@@ -246,7 +246,7 @@ export default function SearchPage() {
           </Link>
           <ChevronRight size={11} className="text-gray-400" />
           <Link href="/shop" className="hover:text-[#0c831f] transition font-semibold">
-            Mandi Store
+            Fresh Store
           </Link>
           <ChevronRight size={11} className="text-gray-400" />
           <span className="text-[#0c831f] font-bold">Live Search</span>
@@ -310,7 +310,7 @@ export default function SearchPage() {
           </form>
         </div>
 
-        {/* 2. IF QUERY IS EMPTY: Show Recent, Trending, Category Aisles & Popular Mandi Produce */}
+        {/* 2. IF QUERY IS EMPTY: Show Recent, Trending, Category Aisles & Popular Farm Produce */}
         {!query && (
           <div className="space-y-4">
             
@@ -414,7 +414,7 @@ export default function SearchPage() {
                   <div className="flex items-center gap-1.5">
                     <span className="text-sm">⚡</span>
                     <h2 className="text-xs sm:text-sm font-black text-gray-900 tracking-tight">
-                      Today&apos;s Mandi Harvest
+                      Today&apos;s Farm Harvest
                     </h2>
                   </div>
                   <Link

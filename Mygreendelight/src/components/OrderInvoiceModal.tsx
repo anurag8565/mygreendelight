@@ -191,7 +191,7 @@ export default function OrderInvoiceModal({
                 <p className="text-gray-700 mt-1">
                   <strong>Slot:</strong>{" "}
                   <span className="text-[#0f8646] font-bold">
-                    {order.deliverySlot || "Instant Mandi Fresh Express"}
+                    {order.deliverySlot || "Instant Farm Fresh Express"}
                   </span>
                 </p>
                 <p className="text-gray-700">
@@ -279,10 +279,10 @@ export default function OrderInvoiceModal({
               <div className="bg-emerald-50/60 rounded-2xl p-4 border border-emerald-200/90 text-xs">
                 <div className="flex items-center gap-1.5 font-black text-[#0f8646] uppercase text-[10px] tracking-wider mb-1">
                   <ShieldCheck size={14} />
-                  <span>100% KAROND MANDI FRESHNESS GUARANTEE</span>
+                  <span>100% FARM FRESH HARVEST GUARANTEE</span>
                 </div>
                 <p className="text-gray-600 text-[11px] leading-relaxed">
-                  All vegetables & fruits are handpicked daily from Karond Mandi & sorted under strict quality checks. 
+                  All vegetables & fruits are handpicked daily at sunrise directly from local farms & sorted under strict quality checks. 
                   If you are unsatisfied with any produce, instant replacement or refund is available via WhatsApp helpline.
                 </p>
               </div>

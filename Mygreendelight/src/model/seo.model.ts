@@ -25,7 +25,7 @@ const GlobalSEOSchema = new mongoose.Schema<IGlobalSEO>(
     },
     defaultTitle: {
       type: String,
-      default: "SubziQuick Bhopal | Mandi Fresh Daily Vegetables & Fruits Online Delivery",
+      default: "Online Vegetable & Fruit Delivery in Bhopal | Farm Fresh Produce - SubziQuick",
     },
     titleTemplate: {
       type: String,
@@ -34,12 +34,12 @@ const GlobalSEOSchema = new mongoose.Schema<IGlobalSEO>(
     defaultDescription: {
       type: String,
       default:
-        "Order farm-fresh vegetables, seasonal fruits & groceries online in Bhopal at wholesale Mandi rates. 100% ozone-washed, pesticide-safe with same-day doorstep delivery across Bhopal.",
+        "Order farm-fresh vegetables, seasonal fruits & groceries online in Bhopal at direct farm wholesale rates. 100% ozone-washed, pesticide-safe with same-day doorstep delivery across Bhopal.",
     },
     primaryKeywords: {
       type: String,
       default:
-        "vegetable delivery bhopal, fresh vegetables bhopal, buy vegetables online bhopal, karond mandi bhopal, subziquick, fruit delivery bhopal, organic veggies bagsewaniya",
+        "vegetable delivery bhopal, fresh vegetables bhopal, buy vegetables online bhopal, farm fresh vegetables bhopal, subziquick, fruit delivery bhopal, organic veggies bagsewaniya",
     },
     bhopalDeliveryAreas: {
       type: [String],

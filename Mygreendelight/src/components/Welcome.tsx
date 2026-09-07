@@ -13,8 +13,8 @@ function Welcome({nextstep}:proptype) {
                 <h1 className='text-4xl font-black text-[#0f8646] tracking-tight'>SUBZIQUICK</h1>
             </motion.div>
             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.5 }} className='mt-4 text-base text-gray-600 max-w-md font-medium'>
-                SubziQuick: Bhopal&apos;s trusted Mandi fresh produce & grocery store.
-                Same-day doorstep delivery at fair Mandi prices.
+                SubziQuick: Bhopal&apos;s trusted farm fresh produce & grocery store.
+                Same-day doorstep delivery at fair farm wholesale prices.
             </motion.p>
             <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5, duration: 0.6 }} className='mt-10 flex items-center gap-10 justify-center'>
                 <Bike className='text-orange-600 w-24 h-24 md:h-32 md:w-32' />

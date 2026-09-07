@@ -33,7 +33,7 @@ export default function MorningHarvestNotifier() {
       if (result === "granted") {
         setSubscribed(true);
         new Notification("🌿 SubziQuick Harvest Alert Activated!", {
-          body: "You'll receive daily 6:30 AM farm-fresh Mandi harvest updates and priority delivery slots.",
+          body: "You'll receive daily 6:30 AM farm-fresh sunrise harvest updates and priority delivery slots.",
           icon: "/hero_basket.jpg",
         });
       }
@@ -55,7 +55,7 @@ export default function MorningHarvestNotifier() {
 
           <div className="min-w-0 flex-1 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
             <span className="bg-white/20 text-yellow-100 text-[10px] font-black uppercase px-2 py-0.5 rounded-full w-fit shrink-0 backdrop-blur-xs">
-              🌅 6:30 AM Sunrise Mandi
+              🌅 6:30 AM Sunrise Harvest
             </span>
             <p className="font-extrabold text-[11px] sm:text-xs truncate sm:whitespace-normal">
               Today&apos;s direct farm palak, methi & A2 milk harvest dispatch is live in Bhopal!

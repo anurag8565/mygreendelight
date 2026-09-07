@@ -106,7 +106,7 @@ export default function OrderPackingSlipModal({
               </h2>
             </div>
             <p className="text-[9px] text-gray-500 font-bold uppercase tracking-widest">
-              Bhopal Mandi Fresh • Dispatch Center
+              Bhopal Farm Fresh • Dispatch Center
             </p>
             
             <div className="mt-2.5 flex items-center justify-center gap-2 flex-wrap">
@@ -245,7 +245,7 @@ export default function OrderPackingSlipModal({
           </div>
 
           <div className="text-center mt-3 text-[9px] text-gray-400 font-bold uppercase tracking-wider">
-            *** SubziQuick Mandi Fresh Produce • Same Day Bhopal Delivery ***
+            *** SubziQuick Farm Fresh Produce • Same Day Bhopal Delivery ***
           </div>
         </div>
       </div>

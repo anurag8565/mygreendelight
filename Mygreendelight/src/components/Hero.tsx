@@ -13,7 +13,7 @@ export default function Hero({ banners = [] }: HeroProps) {
   const defaultSlides = [
     {
       _id: "s1",
-      badge: "🌿 Mandi Fresh • Same Day Delivery",
+      badge: "🌿 Farm Fresh • Same Day Delivery",
       title: "Sunrise Harvested Farm Vegetables & Fruits",
       subtitle: "100% Ozone-Washed • Direct from Local Bhopal & Sehore Farms",
       btnText: "Shop Fresh Produce",
@@ -23,10 +23,10 @@ export default function Hero({ banners = [] }: HeroProps) {
     },
     {
       _id: "s2",
-      badge: "🏷️ Bhopal Mandi Fair Rates",
-      title: "Direct Kisan Mandi Rates — Zero Middlemen",
-      subtitle: "Daily Live Mandi Rate Updates • Transparent Fair Prices For Bhopal",
-      btnText: "Explore Mandi Harvest",
+      badge: "🏷️ Direct Farm Fair Rates",
+      title: "Direct Kisan Farm Rates — Zero Middlemen",
+      subtitle: "Daily Fresh Farm Rate Updates • Transparent Fair Prices For Bhopal",
+      btnText: "Explore Farm Harvest",
       link: "/shop",
       image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=1600&q=85",
       bgGradient: "from-amber-950/95 via-orange-950/80 to-transparent/20",
@@ -120,7 +120,7 @@ export default function Hero({ banners = [] }: HeroProps) {
                 {/* Micro Badge */}
                 <div className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md text-white text-[9.5px] sm:text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider mb-2 sm:mb-3 border border-white/30 shadow-xs">
                   <Sparkles size={12} className="text-yellow-300 fill-yellow-300 animate-pulse" />
-                  <span>{slide.badge || "🌿 Mandi Fresh • Same Day Delivery"}</span>
+                  <span>{slide.badge || "🌿 Farm Fresh • Same Day Delivery"}</span>
                 </div>
 
                 {/* Title */}
