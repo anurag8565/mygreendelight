@@ -92,14 +92,6 @@ export default function Hero({ banners = [] }: HeroProps) {
     setTouchStart(null);
   };
 
-  const quickPills = [
-    { label: "Daily Veggies", icon: "🥬", href: "/shop?category=Vegetables", color: "hover:bg-emerald-50 hover:border-emerald-300" },
-    { label: "Fresh Fruits", icon: "🍎", href: "/shop?category=Fruits", color: "hover:bg-amber-50 hover:border-amber-300" },
-    { label: "Exotic Salads", icon: "🥑", href: "/shop?category=Exotics", color: "hover:bg-purple-50 hover:border-purple-300" },
-    { label: "Pure Dairy", icon: "🥛", href: "/shop?category=Dairy%20%26%20Staples", color: "hover:bg-blue-50 hover:border-blue-300" },
-    { label: "Value Combos", icon: "🎁", href: "/shop?category=combos", color: "hover:bg-rose-50 hover:border-rose-300" },
-  ];
-
   return (
     <section className="w-full bg-gradient-to-b from-emerald-50/50 via-white to-white pt-2 sm:pt-3 pb-2 sm:pb-3 font-sans">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
@@ -243,20 +235,6 @@ export default function Hero({ banners = [] }: HeroProps) {
               </div>
             </>
           )}
-        </div>
-
-        {/* Quick Category Pills Bar (Eye-Catching & Ultra User-Friendly) */}
-        <div className="mt-2.5 sm:mt-3.5 flex items-center gap-2 overflow-x-auto scrollbar-none py-1 -mx-3.5 px-3.5 sm:mx-0 sm:px-0">
-          {quickPills.map((pill, idx) => (
-            <Link
-              key={idx}
-              href={pill.href}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-white border border-gray-200/90 shadow-2xs hover:shadow-xs transition-all duration-200 shrink-0 text-xs font-black text-gray-800 ${pill.color} active:scale-95`}
-            >
-              <span className="text-base">{pill.icon}</span>
-              <span className="whitespace-nowrap">{pill.label}</span>
-            </Link>
-          ))}
         </div>
 
       </div>
