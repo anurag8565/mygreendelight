@@ -1,6 +1,7 @@
 import connectDb from "@/lib/db";
 import Order from "@/model/order";
 import User from "@/model/user.model";
+import Setting from "@/model/setting.model";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -126,14 +127,6 @@ export async function POST(req: NextRequest) {
             });
         }
 
-        // Check VIP Farm Club membership
-        // Check VIP Farm Club membership
-        const isVip = Boolean(
-            user.vipPass?.isActive &&
-            user.vipPass.endDate &&
-            new Date(user.vipPass.endDate) > new Date()
-        );
-
         // Server-side Coupon & Reward Validation
         let discountCalc = 0;
         let validatedCouponCode: string | null = null;
@@ -179,8 +172,25 @@ export async function POST(req: NextRequest) {
 
         discountCalc = Math.min(discountCalc, verifiedSubtotal);
 
-        // Compute verified total to prevent price tampering
-        const deliveryFeeCalc = isVip ? 0 : (verifiedSubtotal > 0 && verifiedSubtotal < 199 ? 30 : 0);
+        // Fetch dynamic delivery fee settings from Database
+        let deliveryFeeCalc = 0;
+        try {
+            const storeSetting = await Setting.findOne({ key: "store_delivery_settings" }).lean();
+            const baseFee = storeSetting?.deliveryFee ?? 30;
+            const threshold = storeSetting?.freeDeliveryThreshold ?? 199;
+            const isFreePromo = Boolean(storeSetting?.isFreeDeliveryActive);
+
+            if (verifiedSubtotal > 0) {
+                if (isFreePromo || baseFee === 0 || verifiedSubtotal >= threshold) {
+                    deliveryFeeCalc = 0;
+                } else {
+                    deliveryFeeCalc = baseFee;
+                }
+            }
+        } catch (setErr) {
+            console.warn("Failed to fetch dynamic delivery fee, using default:", setErr);
+            deliveryFeeCalc = verifiedSubtotal > 0 && verifiedSubtotal < 199 ? 30 : 0;
+        }
         
         let walletDiscountCalc = Math.max(0, Number(walletDiscount) || 0);
         const currentWalletBal = Number(user.walletBalance) || 0;
@@ -189,10 +199,6 @@ export async function POST(req: NextRequest) {
         }
 
         const finalTotalToSave = Math.max(0, verifiedSubtotal + deliveryFeeCalc - discountCalc - walletDiscountCalc);
-
-        if (isVip && verifiedSubtotal > 0 && verifiedSubtotal < 199) {
-            await User.findByIdAndUpdate(userid, { $inc: { "vipPass.totalSavings": 30 } });
-        }
 
         // ✅ create order
         const neworder = await Order.create({

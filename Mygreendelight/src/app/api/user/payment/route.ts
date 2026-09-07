@@ -1,6 +1,7 @@
 import connectDb from "@/lib/db";
 import Order from "@/model/order";
 import User from "@/model/user.model";
+import Setting from "@/model/setting.model";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 import PaytmChecksum from "paytmchecksum";
@@ -70,26 +71,35 @@ export async function POST(req: NextRequest) {
       };
     });
 
-    // Check VIP Farm Club membership
-    const isVip = Boolean(
-      user.vipPass?.isActive &&
-      user.vipPass.endDate &&
-      new Date(user.vipPass.endDate) > new Date()
-    );
-
-    // Compute verified total
+    // Compute verified subtotal
     const subtotalCalc = sanitizedItems.reduce((sum: number, item: any) => sum + (item.price * item.quantity), 0);
-    const deliveryFeeCalc = isVip ? 0 : (subtotalCalc > 0 && subtotalCalc < 199 ? 30 : 0);
+
+    // Fetch dynamic delivery fee settings from Database
+    let deliveryFeeCalc = 0;
+    try {
+      const storeSetting = await Setting.findOne({ key: "store_delivery_settings" }).lean();
+      const baseFee = storeSetting?.deliveryFee ?? 30;
+      const threshold = storeSetting?.freeDeliveryThreshold ?? 199;
+      const isFreePromo = Boolean(storeSetting?.isFreeDeliveryActive);
+
+      if (subtotalCalc > 0) {
+        if (isFreePromo || baseFee === 0 || subtotalCalc >= threshold) {
+          deliveryFeeCalc = 0;
+        } else {
+          deliveryFeeCalc = baseFee;
+        }
+      }
+    } catch (setErr) {
+      console.warn("Failed to fetch dynamic delivery fee in payment, using default:", setErr);
+      deliveryFeeCalc = subtotalCalc > 0 && subtotalCalc < 199 ? 30 : 0;
+    }
+
     const discountCalc = Number(discount) || 0;
     const walletDiscountCalc = Number(walletDiscount) || 0;
     const computedPayableTotal = Math.max(0, subtotalCalc + deliveryFeeCalc - discountCalc - walletDiscountCalc);
     const finalTotalToSave = (totalamount !== undefined && totalamount !== null && !isNaN(Number(totalamount)))
       ? Number(totalamount)
       : computedPayableTotal;
-
-    if (isVip && subtotalCalc > 0 && subtotalCalc < 199) {
-      await User.findByIdAndUpdate(userid, { $inc: { "vipPass.totalSavings": 30 } });
-    }
 
     // ✅ create order (ispaid = false initially)
     const neworder = await Order.create({

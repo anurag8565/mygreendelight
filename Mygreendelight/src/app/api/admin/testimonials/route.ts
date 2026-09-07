@@ -55,8 +55,8 @@ export async function POST(req: Request) {
           name: "Rajesh K. Verma",
           location: "Kolar Road, Bhopal",
           rating: 5,
-          comment: "Ordered the Farm Club VIP Pass. Got free delivery and the 6:30 AM morning priority slot is a blessing for morning breakfast & pooja!",
-          tag: "VIP Farm Club Member",
+          comment: "Early morning delivery is super fast! Got fresh vegetables right at 6:30 AM before breakfast & pooja. 100% crunchy and fresh.",
+          tag: "Verified Bhopal Resident",
           status: "approved",
         },
         {

@@ -88,11 +88,51 @@ export default function Checkout() {
     }
   }, [status, userdata, router]);
 
+  const [deliverySettings, setDeliverySettings] = useState<{
+    deliveryFee: number;
+    freeDeliveryThreshold: number;
+    isFreeDeliveryActive: boolean;
+    minOrderAmount: number;
+    expressDeliveryMins: string;
+    deliveryNotice?: string;
+  }>({
+    deliveryFee: 30,
+    freeDeliveryThreshold: 199,
+    isFreeDeliveryActive: false,
+    minOrderAmount: 0,
+    expressDeliveryMins: "15-45 Mins",
+    deliveryNotice: "",
+  });
+
+  useEffect(() => {
+    axios
+      .get("/api/settings")
+      .then((res) => {
+        if (res.data?.success) {
+          setDeliverySettings({
+            deliveryFee: res.data.deliveryFee ?? 30,
+            freeDeliveryThreshold: res.data.freeDeliveryThreshold ?? 199,
+            isFreeDeliveryActive: Boolean(res.data.isFreeDeliveryActive),
+            minOrderAmount: res.data.minOrderAmount ?? 0,
+            expressDeliveryMins: res.data.expressDeliveryMins || "15-45 Mins",
+            deliveryNotice: res.data.deliveryNotice || "",
+          });
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   const subtotal = useSelector(selectSubtotal);
-  const deliveryFee = useSelector(selectDeliveryFee);
   const total = useSelector(selectTotal);
   const discount = useSelector(selectDiscount);
   const couponCode = useSelector(selectCouponCode);
+
+  const isFreeDelivery =
+    deliverySettings.isFreeDeliveryActive ||
+    deliverySettings.deliveryFee === 0 ||
+    subtotal >= deliverySettings.freeDeliveryThreshold;
+  const deliveryFee =
+    subtotal === 0 ? 0 : isFreeDelivery ? 0 : deliverySettings.deliveryFee;
 
   const [paymentMethod, setPaymentMethod] = useState<"cod" | "upi">("cod");
   const [upiRefNumber, setUpiRefNumber] = useState<string>("");

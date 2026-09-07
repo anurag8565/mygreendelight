@@ -515,7 +515,7 @@ export default function AdminDashboardPage() {
                 <h3 className="font-extrabold text-sm text-gray-900 mb-4 uppercase tracking-wider">
                   Quick Management Shortcuts
                 </h3>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4">
                   <Link
                     href="/admin/manageorder"
                     className="p-4 rounded-2xl bg-gray-50/80 hover:bg-green-50 border border-gray-100 hover:border-green-200 transition text-center flex flex-col items-center gap-2 group"
@@ -525,6 +525,18 @@ export default function AdminDashboardPage() {
                     </div>
                     <span className="font-bold text-xs text-gray-900">
                       Manage Orders
+                    </span>
+                  </Link>
+
+                  <Link
+                    href="/admin/manage-delivery-fee"
+                    className="p-4 rounded-2xl bg-emerald-50/70 hover:bg-emerald-100/80 border border-emerald-200 transition text-center flex flex-col items-center gap-2 group"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-[#0f8646] text-white flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
+                      <Truck size={20} />
+                    </div>
+                    <span className="font-bold text-xs text-emerald-950">
+                      Delivery Fee & Rules
                     </span>
                   </Link>
 

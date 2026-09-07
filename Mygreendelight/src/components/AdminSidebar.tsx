@@ -62,6 +62,11 @@ export default function AdminSidebar() {
           href: "/admin/manage-categories",
           icon: <FolderTree size={17} />,
         },
+        {
+          name: "Delivery Fee & Rules",
+          href: "/admin/manage-delivery-fee",
+          icon: <Truck size={17} />,
+        },
       ],
     },
     {

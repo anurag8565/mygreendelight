@@ -48,6 +48,19 @@ export default function CartPage() {
   const [couponLoading, setCouponLoading] = useState(false);
   const [couponError, setCouponError] = useState("");
   const [addOnProducts, setAddOnProducts] = useState<any[]>([]);
+  const [deliverySettings, setDeliverySettings] = useState<{
+    deliveryFee: number;
+    freeDeliveryThreshold: number;
+    isFreeDeliveryActive: boolean;
+    minOrderAmount: number;
+    deliveryNotice?: string;
+  }>({
+    deliveryFee: 30,
+    freeDeliveryThreshold: 199,
+    isFreeDeliveryActive: false,
+    minOrderAmount: 0,
+    deliveryNotice: "",
+  });
 
   React.useEffect(() => {
     dispatch(hydrateCart());
@@ -56,6 +69,21 @@ export default function CartPage() {
       .then((res) => {
         if (res.data?.success && res.data.groceries) {
           setAddOnProducts(res.data.groceries);
+        }
+      })
+      .catch(() => {});
+
+    axios
+      .get("/api/settings")
+      .then((res) => {
+        if (res.data?.success) {
+          setDeliverySettings({
+            deliveryFee: res.data.deliveryFee ?? 30,
+            freeDeliveryThreshold: res.data.freeDeliveryThreshold ?? 199,
+            isFreeDeliveryActive: Boolean(res.data.isFreeDeliveryActive),
+            minOrderAmount: res.data.minOrderAmount ?? 0,
+            deliveryNotice: res.data.deliveryNotice || "",
+          });
         }
       })
       .catch(() => {});
@@ -70,10 +98,16 @@ export default function CartPage() {
     0
   );
 
-  const freeDeliveryThreshold = 199;
-  const isFreeDelivery = subtotal >= freeDeliveryThreshold;
-  const deliveryFee = subtotal === 0 ? 0 : isFreeDelivery ? 0 : 30;
-  const remainingForFreeDelivery = Math.max(0, freeDeliveryThreshold - subtotal);
+  const freeDeliveryThreshold = deliverySettings.freeDeliveryThreshold || 199;
+  const isFreeDelivery =
+    deliverySettings.isFreeDeliveryActive ||
+    deliverySettings.deliveryFee === 0 ||
+    subtotal >= freeDeliveryThreshold;
+  const deliveryFee =
+    subtotal === 0 ? 0 : isFreeDelivery ? 0 : deliverySettings.deliveryFee;
+  const remainingForFreeDelivery = isFreeDelivery
+    ? 0
+    : Math.max(0, freeDeliveryThreshold - subtotal);
 
   const total = Math.max(0, subtotal + deliveryFee - discountAmount);
 
