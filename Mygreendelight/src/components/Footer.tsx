@@ -16,8 +16,6 @@ import {
   ChevronDown,
   Leaf,
   Sparkles,
-  Award,
-  RefreshCw,
 } from "lucide-react";
 import Logo from "./Logo";
 
@@ -28,29 +26,6 @@ export default function Footer() {
   const toggleSection = (section: string) => {
     setOpenSection(openSection === section ? null : section);
   };
-
-  const trustPillars = [
-    {
-      icon: <Zap className="w-4.5 h-4.5 text-amber-400 shrink-0" />,
-      title: "10-15 Min Express",
-      subtitle: "Bhopal's fastest farm dispatch",
-    },
-    {
-      icon: <Leaf className="w-4.5 h-4.5 text-emerald-400 shrink-0" />,
-      title: "100% Ozone Washed",
-      subtitle: "Zero chemical & pesticide free",
-    },
-    {
-      icon: <Award className="w-4.5 h-4.5 text-blue-400 shrink-0" />,
-      title: "Mandi Direct Rates",
-      subtitle: "Transparent honest daily price",
-    },
-    {
-      icon: <RefreshCw className="w-4.5 h-4.5 text-purple-400 shrink-0" />,
-      title: "1-Tap Easy Refund",
-      subtitle: "No questions asked promise",
-    },
-  ];
 
   const socialChannels = [
     {
@@ -133,33 +108,7 @@ export default function Footer() {
   return (
     <footer className="bg-[#042010] text-white font-sans border-t border-emerald-950/80 pb-32 sm:pb-24 md:pb-14 w-full max-w-full overflow-hidden selection:bg-emerald-500 selection:text-white">
       
-      {/* 1. Top Trust Pillars Bento Strip */}
-      <div className="border-b border-white/8 bg-white/[0.02]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-5 sm:py-6">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-            {trustPillars.map((item, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-3 p-2.5 sm:p-3 rounded-2xl bg-white/[0.03] border border-white/6 hover:bg-white/[0.06] transition"
-              >
-                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0 shadow-inner">
-                  {item.icon}
-                </div>
-                <div className="min-w-0">
-                  <h4 className="text-xs sm:text-sm font-black text-white truncate">
-                    {item.title}
-                  </h4>
-                  <p className="text-[10px] sm:text-xs text-emerald-200/70 truncate">
-                    {item.subtitle}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* 2. Main Footer Body */}
+      {/* Main Footer Body */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pt-8 sm:pt-12 pb-4">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           
