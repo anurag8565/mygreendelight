@@ -260,7 +260,7 @@ export default function AdminDashboardPage() {
 
                 {/* Delivery Fleet */}
                 <Link
-                  href="/admin/manageorder"
+                  href="/admin/manage-fleet"
                   className="bg-white rounded-3xl p-6 border border-gray-200/80 shadow-2xs hover:shadow-md hover:border-amber-300 hover:scale-[1.02] transition-all flex flex-col justify-between cursor-pointer group"
                 >
                   <div className="flex items-center justify-between mb-4">
@@ -276,7 +276,7 @@ export default function AdminDashboardPage() {
                       {summary?.totalDeliveryBoys || 0}
                     </span>
                     <span className="text-[11px] text-amber-600 font-bold mt-1 block">
-                      View active fleet dispatch →
+                      Manage fleet & drivers →
                     </span>
                   </div>
                 </Link>

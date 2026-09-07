@@ -63,9 +63,14 @@ export default function AdminSidebar() {
           icon: <FolderTree size={17} />,
         },
         {
+          name: "Delivery Fleet & Drivers",
+          href: "/admin/manage-fleet",
+          icon: <Truck size={17} />,
+        },
+        {
           name: "Delivery Fee & Rules",
           href: "/admin/manage-delivery-fee",
-          icon: <Truck size={17} />,
+          icon: <Percent size={17} />,
         },
       ],
     },
