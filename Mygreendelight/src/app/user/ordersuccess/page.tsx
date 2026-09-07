@@ -18,6 +18,7 @@ import {
   Copy,
   Check,
   Share2,
+  MessageCircle,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Nav from "@/components/Nav";
@@ -197,29 +198,35 @@ function OrderSuccessContent() {
               </div>
             </div>
 
-            {/* UPI UTR Verification Banner & WhatsApp Receipt Share */}
-            {(orderDetails?.paymentmethod === "upi" || searchParams.get("method") === "upi") && (
-              <div className="mt-3 pt-3 border-t border-gray-200/80 space-y-2">
-                {orderDetails?.paymentId && (
-                  <div className="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg border border-gray-200 text-[11px]">
-                    <span className="text-gray-500 font-semibold">Submitted Ref / UTR:</span>
-                    <span className="font-mono font-bold text-purple-800">{orderDetails.paymentId}</span>
-                  </div>
-                )}
-                {!orderDetails?.ispaid && (
-                  <a
-                    href={`https://wa.me/919981418565?text=${encodeURIComponent(
-                      `Hi SubziQuick! I have placed Order ${formattedOrderId} of ₹${displayTotal} via UPI.\nPayment Ref/UTR: ${orderDetails?.paymentId || "N/A"}.\nPlease find my payment confirmation screenshot attached.`
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white py-2 px-3 rounded-xl text-xs font-black flex items-center justify-center gap-1.5 shadow-2xs transition"
-                  >
-                    <span>📲 Send Payment Screenshot on WhatsApp</span>
-                  </a>
-                )}
-              </div>
-            )}
+            {/* Direct WhatsApp Order Receipt to Store (+91 9981418565) */}
+            <div className="mt-3.5 pt-3 border-t border-gray-200/80 space-y-2">
+              {orderDetails?.paymentId && (
+                <div className="flex items-center justify-between bg-white px-3 py-1.5 rounded-xl border border-gray-200 text-[11px]">
+                  <span className="text-gray-500 font-semibold">Submitted Ref / UTR:</span>
+                  <span className="font-mono font-bold text-purple-800">{orderDetails.paymentId}</span>
+                </div>
+              )}
+              
+              <a
+                href={`https://wa.me/919981418565?text=${encodeURIComponent(
+                  `*🔔 NAYA ORDER PLACED - SubziQuick*\n` +
+                  `━━━━━━━━━━━━━━━━━━━\n` +
+                  `🛒 *Order ID:* #${(orderId || "").slice(-6).toUpperCase()}\n` +
+                  `👤 *Customer:* ${orderDetails?.customer || orderDetails?.address?.fullname || userdata?.name || "Customer"} (${orderDetails?.address?.mobile || userdata?.mobile || "N/A"})\n` +
+                  `📍 *Address:* ${orderDetails?.address?.fulladress || "Bhopal"}\n` +
+                  `💵 *Total Bill:* ₹${displayTotal} (${orderDetails?.paymentmethod?.toUpperCase() || "COD"})\n` +
+                  `⏰ *Slot:* ${orderDetails?.deliverySlot || "Morning Express"}\n` +
+                  `━━━━━━━━━━━━━━━━━━━\n` +
+                  `Please confirm dispatch & delivery timing! 🙏`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white py-2.5 px-4 rounded-xl text-xs font-black flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition cursor-pointer"
+              >
+                <MessageCircle size={16} />
+                <span>📲 Send Order Details to Store on WhatsApp</span>
+              </a>
+            </div>
           </div>
 
           {/* Quick Info Grid */}
