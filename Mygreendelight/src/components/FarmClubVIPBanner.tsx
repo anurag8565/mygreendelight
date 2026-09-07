@@ -49,7 +49,7 @@ export default function FarmClubVIPBanner() {
       setMsg({ type: "error", text: errorMsg });
       if (error.response?.data?.needsRecharge) {
         setTimeout(() => {
-          router.push("/user/wallet");
+          router.push("/offers");
         }, 2500);
       }
     } finally {
@@ -233,10 +233,10 @@ export default function FarmClubVIPBanner() {
                 </button>
 
                 <Link
-                  href="/user/wallet"
+                  href="/offers"
                   className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2 rounded-xl text-xs text-center transition"
                 >
-                  Recharge Wallet / Add Money
+                  View Member Offers & Deals
                 </Link>
               </div>
             </div>

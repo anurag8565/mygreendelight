@@ -13,7 +13,6 @@ import axios from "axios";
 import {
   User as UserIcon,
   Package,
-  Wallet,
   Heart,
   ShoppingCart,
   Phone,
@@ -39,7 +38,6 @@ export default function UserProfileHub() {
   const activeUser: any = userdata || session?.user;
   const isLoggedIn = !!(activeUser?.email);
 
-  const [walletBalance, setWalletBalance] = useState<number>(0);
   const [activeOrdersCount, setActiveOrdersCount] = useState<number>(0);
   const [loading, setLoading] = useState(true);
 
@@ -53,15 +51,7 @@ export default function UserProfileHub() {
 
   const fetchAccountData = async () => {
     try {
-      // 1. Fetch Wallet
-      try {
-        const walletRes = await axios.get("/api/user/wallet");
-        if (walletRes.data?.success) {
-          setWalletBalance(walletRes.data.balance || 0);
-        }
-      } catch (_) {}
-
-      // 2. Fetch Orders count
+      // Fetch Orders count
       try {
         const ordersRes = await axios.get("/api/user/myorder");
         const list = Array.isArray(ordersRes.data)
@@ -88,7 +78,7 @@ export default function UserProfileHub() {
             Sign In to Your Account
           </h1>
           <p className="text-sm text-gray-500 mb-6">
-            Log in to view your orders, live tracking, wallet cashback & saved wishlist.
+            Log in to view your orders, live tracking, exclusive offers & saved wishlist.
           </p>
           <Link
             href="/login"
@@ -179,7 +169,7 @@ export default function UserProfileHub() {
           </div>
         </div>
 
-        {/* 3 Core Quick Tiles: Orders, Wallet, Wishlist */}
+        {/* 3 Core Quick Tiles: Orders, Offers, Wishlist */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6">
           {/* Tile 1: My Orders */}
           <Link
@@ -202,25 +192,25 @@ export default function UserProfileHub() {
             <ChevronRight size={18} className="text-gray-400 group-hover:text-[#0f8646]" />
           </Link>
 
-          {/* Tile 2: Farm Wallet */}
+          {/* Tile 2: Offers & Scratch Rewards */}
           <Link
-            href="/user/wallet"
-            className="bg-white rounded-2xl p-4 border border-blue-200 shadow-2xs hover:shadow-md transition-all flex items-center justify-between group"
+            href="/offers"
+            className="bg-white rounded-2xl p-4 border border-amber-200 shadow-2xs hover:shadow-md transition-all flex items-center justify-between group"
           >
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-black shrink-0 border border-blue-100 group-hover:scale-105 transition-transform">
-                <Wallet size={24} />
+              <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center font-black shrink-0 border border-amber-100 group-hover:scale-105 transition-transform">
+                <Sparkles size={24} />
               </div>
               <div>
-                <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block">
-                  Farm Wallet & Cashback
+                <span className="text-[10px] font-black uppercase tracking-wider text-amber-700/80 block">
+                  Offers & Coupons
                 </span>
-                <span className="text-lg font-black text-gray-900">
-                  ₹{walletBalance.toFixed(2)}
+                <span className="text-lg font-black text-amber-900">
+                  Save & Win
                 </span>
               </div>
             </div>
-            <ChevronRight size={18} className="text-gray-400 group-hover:text-blue-600" />
+            <ChevronRight size={18} className="text-gray-400 group-hover:text-amber-600" />
           </Link>
 
           {/* Tile 3: Saved Wishlist */}

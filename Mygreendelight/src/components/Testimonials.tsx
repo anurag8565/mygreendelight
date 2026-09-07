@@ -51,7 +51,7 @@ const DEFAULT_BHOPAL_REVIEWS = [
     location: "MP Nagar Zone 2, Bhopal",
     rating: 5,
     comment:
-      "Zero plastic mission is commendable! Returned 3 eco-bags to the delivery rider and got ₹30 instant cashback credited to my wallet.",
+      "Zero plastic mission is commendable! Returned 3 eco-bags to the delivery rider and got ₹30 instant cashback discount on my order.",
     tag: "Eco-Bag Hero",
   },
   {

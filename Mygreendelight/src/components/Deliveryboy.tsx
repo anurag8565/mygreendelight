@@ -518,11 +518,11 @@ useEffect(() => {
                       <span>♻️ Eco-Bags Collected From Customer</span>
                     </span>
                     <span className="text-[10px] font-black bg-emerald-200/80 text-emerald-900 px-2 py-0.5 rounded-full">
-                      ₹10 Cashback / Bag
+                      ₹10 Reward / Bag
                     </span>
                   </div>
                   <p className="text-[11px] text-emerald-700 leading-tight mb-2.5">
-                    Did customer return old SubziQuick eco-bags? ₹10 per bag will be auto-credited to their GreenPoints Wallet!
+                    Did customer return old SubziQuick eco-bags? ₹10 per bag will be recorded as eco-reward credit!
                   </p>
                   <div className="flex items-center justify-between bg-white p-2 rounded-xl border border-emerald-200">
                     <span className="text-xs font-bold text-gray-700">Total Bags Handed Over:</span>
@@ -548,7 +548,7 @@ useEffect(() => {
                   </div>
                   {bagsReturned > 0 && (
                     <div className="text-[11px] font-extrabold text-[#0f8646] mt-2 flex items-center gap-1">
-                      <span>🎉 ₹{bagsReturned * 10} will be auto-credited to customer wallet!</span>
+                      <span>🎉 ₹{bagsReturned * 10} recorded as eco-bag customer reward!</span>
                     </div>
                   )}
                 </div>
