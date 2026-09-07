@@ -16,18 +16,12 @@ import {
   Zap,
   Leaf,
   RotateCcw,
-  Sparkles,
-  Layers,
-  Compass,
-  Check,
-  Package,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import useGetMe from "@/hooks/useGetMe";
-import { clearWishlist } from "@/redux/WishlistSlice";
+import { clearWishlist, hydrateWishlist } from "@/redux/WishlistSlice";
 import { addMultipleToCart } from "@/redux/CartSlice";
-import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function WishlistPage() {
@@ -40,41 +34,15 @@ export default function WishlistPage() {
   const { cartdata } = useSelector((state: RootState) => state.cart);
 
   const [mounted, setMounted] = useState(false);
-  const [recommendedItems, setRecommendedItems] = useState<any[]>([]);
-  const [loadingRecs, setLoadingRecs] = useState(false);
   const [addedAllSuccess, setAddedAllSuccess] = useState(false);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
   useEffect(() => {
     setMounted(true);
-  }, []);
-
-  // Fetch trending groceries for recommendations
-  useEffect(() => {
-    const fetchRecommendations = async () => {
-      try {
-        setLoadingRecs(true);
-        const res = await axios.get(`/api/groceries?limit=10&_t=${Date.now()}`);
-        if (res.data?.groceries) {
-          setRecommendedItems(res.data.groceries);
-        }
-      } catch (err) {
-        console.error("Failed to load recommendations", err);
-      } finally {
-        setLoadingRecs(false);
-      }
-    };
-    fetchRecommendations();
-  }, []);
+    dispatch(hydrateWishlist());
+  }, [dispatch]);
 
   if (!mounted) return null;
-
-  // Filter items by category if selected
-  const filteredItems = items.filter((item) => {
-    if (selectedCategory === "All") return true;
-    return (item.category || "").toLowerCase() === selectedCategory.toLowerCase();
-  });
 
   // Calculate wishlist estimated value
   const totalEstimated = items.reduce(
@@ -91,12 +59,6 @@ export default function WishlistPage() {
     (acc, item) => acc + (item.price || 0) * (item.quantity || 1),
     0
   );
-
-  // Categories available in user's saved items
-  const categoriesInWishlist = [
-    "All",
-    ...Array.from(new Set(items.map((i) => i.category || "Vegetables"))),
-  ];
 
   // Add all wishlist items to cart
   const handleAddAllToCart = () => {
@@ -172,15 +134,15 @@ export default function WishlistPage() {
         <div className="grid grid-cols-3 gap-2 bg-white border border-gray-200/80 rounded-2xl p-3 text-center shadow-2xs">
           <div className="flex items-center justify-center gap-1.5 text-[11px] sm:text-xs font-bold text-gray-700">
             <Zap size={14} className="text-amber-500 fill-amber-400 shrink-0" />
-            <span className="truncate">15-45 Min Bhopal Express</span>
+            <span className="truncate">15-45 Min Express</span>
           </div>
           <div className="flex items-center justify-center gap-1.5 text-[11px] sm:text-xs font-bold text-gray-700 border-x border-gray-100 px-1">
             <Leaf size={14} className="text-[#0f8646] shrink-0" />
-            <span className="truncate">Same-Day Farm Harvest</span>
+            <span className="truncate">Same-Day Harvest</span>
           </div>
           <div className="flex items-center justify-center gap-1.5 text-[11px] sm:text-xs font-bold text-gray-700">
             <RotateCcw size={14} className="text-blue-600 shrink-0" />
-            <span className="truncate">100% Quality Replacement</span>
+            <span className="truncate">100% Replacement</span>
           </div>
         </div>
 
@@ -215,7 +177,7 @@ export default function WishlistPage() {
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <h2 className="text-lg sm:text-xl font-black text-gray-900 tracking-tight">
-                    Saved Harvest Essentials
+                    Saved Fresh Produce
                   </h2>
                   <span className="text-xs bg-emerald-50 text-[#0f8646] border border-emerald-200 px-2.5 py-0.5 rounded-full font-black">
                     {items.length} Items
@@ -267,28 +229,9 @@ export default function WishlistPage() {
               </div>
             </div>
 
-            {/* Category Filter Pills (if multiple categories present) */}
-            {categoriesInWishlist.length > 2 && (
-              <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-                {categoriesInWishlist.map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => setSelectedCategory(cat)}
-                    className={`px-4 py-2 rounded-2xl text-xs font-black transition whitespace-nowrap cursor-pointer ${
-                      selectedCategory === cat
-                        ? "bg-[#0f8646] text-white shadow-xs"
-                        : "bg-white text-gray-700 border border-gray-200/80 hover:border-emerald-300"
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {/* Wishlist Items Grid */}
+            {/* Wishlist Items Grid - Real user items only */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
-              {filteredItems.map((item) => (
+              {items.map((item) => (
                 <Groceryitemcard key={item._id} item={item as any} />
               ))}
             </div>
@@ -312,70 +255,13 @@ export default function WishlistPage() {
                 Tap the heart icon on any vegetable or fruit to save your favorites for 1-tap reordering!
               </p>
               
-              <div className="space-y-2.5">
-                <Link
-                  href="/shop"
-                  className="w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3.5 px-6 rounded-2xl font-black text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  <ShoppingBag size={16} />
-                  <span>Explore Fresh Farm Harvest</span>
-                </Link>
-
-                {/* 3 Quick Category Pills */}
-                <div className="grid grid-cols-3 gap-2 pt-2">
-                  <Link
-                    href="/shop?category=Vegetables"
-                    className="p-2 rounded-xl bg-gray-50 hover:bg-emerald-50 border border-gray-200/70 text-[11px] font-black text-gray-800 transition"
-                  >
-                    🥬 Vegetables
-                  </Link>
-                  <Link
-                    href="/shop?category=Fruits"
-                    className="p-2 rounded-xl bg-gray-50 hover:bg-amber-50 border border-gray-200/70 text-[11px] font-black text-gray-800 transition"
-                  >
-                    🍎 Fruits
-                  </Link>
-                  <Link
-                    href="/shop?category=Exotics"
-                    className="p-2 rounded-xl bg-gray-50 hover:bg-purple-50 border border-gray-200/70 text-[11px] font-black text-gray-800 transition"
-                  >
-                    🥑 Exotics
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Recommended Trending Produce Section */}
-        {recommendedItems.length > 0 && (
-          <div className="mt-12 pt-8 border-t border-gray-200/80">
-            <div className="flex items-center justify-between mb-5">
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="text-base">🔥</span>
-                  <h3 className="text-base sm:text-xl font-black text-gray-900 tracking-tight">
-                    Trending Daily Farm Harvest
-                  </h3>
-                </div>
-                <p className="text-xs text-gray-500 font-medium mt-0.5">
-                  Handpicked & packed fresh today from contract Bhopal farms
-                </p>
-              </div>
-
               <Link
                 href="/shop"
-                className="text-xs font-black text-[#0f8646] hover:underline flex items-center gap-1"
+                className="w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3.5 px-6 rounded-2xl font-black text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2 cursor-pointer"
               >
-                <span>View All Shop</span>
-                <ChevronRight size={14} />
+                <ShoppingBag size={16} />
+                <span>Explore Fresh Farm Harvest</span>
               </Link>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
-              {recommendedItems.map((item) => (
-                <Groceryitemcard key={item._id} item={item} />
-              ))}
             </div>
           </div>
         )}

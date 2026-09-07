@@ -38,6 +38,7 @@ import {
 import { signOut } from "next-auth/react";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart, increaseQuantity, decreaseQuantity, hydrateCart } from "@/redux/CartSlice";
+import { hydrateWishlist } from "@/redux/WishlistSlice";
 import type { RootState, AppDispatch } from "@/redux/store";
 import { AnimatePresence, motion } from "framer-motion";
 import { createPortal } from "react-dom";
@@ -81,6 +82,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
   useEffect(() => {
     setMounted(true);
     dispatch(hydrateCart());
+    dispatch(hydrateWishlist());
     if (typeof window !== "undefined") {
       const savedLoc = localStorage.getItem("mgd_user_location");
       if (savedLoc) setLocation(savedLoc);
