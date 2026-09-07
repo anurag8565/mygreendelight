@@ -215,7 +215,7 @@ export default function Groceryitemcard({
             <button
               type="button"
               onClick={() => setShowAlertModal(true)}
-              className="w-full h-[34px] rounded-xl flex items-center justify-center gap-1 font-bold text-[11px] transition-all bg-amber-50 text-amber-800 border border-amber-200 hover:bg-amber-100 shadow-2xs cursor-pointer active:scale-95"
+              className="w-full h-[36px] rounded-xl flex items-center justify-center gap-1.5 font-bold text-[11px] transition-all bg-amber-50 text-amber-800 border border-amber-200 hover:bg-amber-100 shadow-2xs cursor-pointer active:scale-95"
             >
               <Bell size={12} className="stroke-[2.5]" />
               <span>Notify Me</span>
@@ -245,17 +245,17 @@ export default function Groceryitemcard({
                   })
                 );
               }}
-              className="w-full h-[34px] rounded-xl flex items-center justify-center gap-1 font-black text-xs transition-all duration-200 border-2 border-[#0c831f] cursor-pointer bg-white text-[#0c831f] hover:bg-[#0c831f] hover:text-white hover:shadow-[0_4px_12px_rgba(12,131,31,0.25)] shadow-2xs"
+              className="w-full h-[36px] rounded-xl flex items-center justify-center gap-1.5 font-black text-xs transition-all duration-200 border-2 border-[#0c831f] cursor-pointer bg-white text-[#0c831f] hover:bg-[#0c831f] hover:text-white hover:shadow-[0_4px_12px_rgba(12,131,31,0.25)] shadow-2xs active:scale-95"
             >
-              <Plus size={13} className="stroke-[3]" />
+              <Plus size={14} className="stroke-[3]" />
               <span>ADD</span>
             </motion.button>
           ) : (
-            <div className="flex items-center justify-between bg-[#0c831f] text-white rounded-xl overflow-hidden h-[34px] shadow-xs ring-2 ring-[#0c831f]/20">
+            <div className="flex items-center justify-between bg-[#0c831f] text-white rounded-xl overflow-hidden h-[36px] shadow-xs ring-2 ring-[#0c831f]/20">
               <motion.button
                 whileTap={{ scale: 0.85 }}
                 type="button"
-                className="w-9 h-full flex items-center justify-center hover:bg-black/20 transition-colors font-black text-sm cursor-pointer"
+                className="w-10 h-full flex items-center justify-center hover:bg-black/20 active:bg-black/30 transition-colors font-black text-sm cursor-pointer"
                 onClick={() => {
                   if (typeof window !== "undefined" && navigator.vibrate) {
                     try { navigator.vibrate(15); } catch (e) {}
@@ -263,19 +263,19 @@ export default function Groceryitemcard({
                   dispatch(decreaseQuantity(currentCartItemId));
                 }}
               >
-                <Minus size={13} className="stroke-[3]" />
+                <Minus size={14} className="stroke-[3]" />
               </motion.button>
-              <span className="flex-1 text-center font-black text-xs text-white select-none">
+              <span className="flex-1 text-center font-black text-xs sm:text-sm text-white select-none">
                 {cartitem.quantity}
               </span>
               <motion.button
                 whileTap={{ scale: 0.85 }}
                 type="button"
                 disabled={cartitem.quantity >= displayStock}
-                className={`w-9 h-full flex items-center justify-center transition-colors font-black text-sm ${
+                className={`w-10 h-full flex items-center justify-center transition-colors font-black text-sm ${
                   cartitem.quantity >= displayStock
                     ? "bg-black/25 text-white/50 cursor-not-allowed"
-                    : "hover:bg-black/20 cursor-pointer text-white"
+                    : "hover:bg-black/20 active:bg-black/30 cursor-pointer text-white"
                 }`}
                 onClick={() => {
                   if (typeof window !== "undefined" && navigator.vibrate) {
@@ -284,7 +284,7 @@ export default function Groceryitemcard({
                   dispatch(increaseQuantity(currentCartItemId));
                 }}
               >
-                <Plus size={13} className="stroke-[3]" />
+                <Plus size={14} className="stroke-[3]" />
               </motion.button>
             </div>
           )}

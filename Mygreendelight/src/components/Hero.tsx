@@ -170,7 +170,7 @@ export default function Hero({ banners = [] }: HeroProps) {
           onMouseLeave={() => setIsPaused(false)}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
-          className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.12)] hover:shadow-[0_16px_45px_rgba(15,134,70,0.22)] transition-shadow duration-500 group bg-gray-950 h-[245px] xs:h-[270px] sm:h-[330px] md:h-[380px] lg:h-[410px] border border-gray-100"
+          className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.12)] hover:shadow-[0_16px_45px_rgba(15,134,70,0.22)] transition-shadow duration-500 group bg-gray-950 h-[260px] xs:h-[285px] sm:h-[340px] md:h-[390px] lg:h-[415px] border border-gray-100"
         >
           <AnimatePresence initial={false} custom={direction} mode="popLayout">
             <motion.div
@@ -208,16 +208,16 @@ export default function Hero({ banners = [] }: HeroProps) {
               />
 
               {/* 3. Hero Animated Content */}
-              <div className="relative z-20 p-4 sm:p-8 md:p-12 lg:p-14 flex flex-col items-start max-w-xl sm:max-w-2xl">
+              <div className="relative z-20 p-4 xs:p-5 sm:p-8 md:p-12 lg:p-14 flex flex-col items-start max-w-xl sm:max-w-2xl">
                 
                 {/* Micro Offer & Quality Badge */}
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1, duration: 0.4 }}
-                  className="flex items-center gap-2 flex-wrap mb-2 sm:mb-3"
+                  className="flex items-center gap-2 flex-wrap mb-1.5 xs:mb-2 sm:mb-3"
                 >
-                  <div className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md text-white text-[9.5px] sm:text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider border border-white/30 shadow-xs">
+                  <div className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md text-white text-[9px] xs:text-[9.5px] sm:text-xs font-black px-2.5 xs:px-3 py-0.5 xs:py-1 rounded-full uppercase tracking-wider border border-white/30 shadow-xs">
                     <Sparkles size={12} className="text-yellow-300 fill-yellow-300 animate-pulse" />
                     <span>{slide.badge || "🌿 Farm Fresh • Express Delivery"}</span>
                   </div>
@@ -235,7 +235,7 @@ export default function Hero({ banners = [] }: HeroProps) {
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.18, duration: 0.45 }}
-                  className="text-xl sm:text-3xl md:text-4xl lg:text-[42px] font-black leading-tight sm:leading-[1.12] tracking-tight text-white drop-shadow-md mb-1.5 sm:mb-2.5 line-clamp-2"
+                  className="text-lg xs:text-xl sm:text-3xl md:text-4xl lg:text-[42px] font-black leading-tight sm:leading-[1.12] tracking-tight text-white drop-shadow-md mb-1.5 sm:mb-2.5 line-clamp-2"
                 >
                   {slide.title}
                 </motion.h1>
@@ -245,7 +245,7 @@ export default function Hero({ banners = [] }: HeroProps) {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.26, duration: 0.45 }}
-                  className="text-[11.5px] sm:text-sm text-emerald-100/95 font-medium mb-4 sm:mb-6 line-clamp-2 drop-shadow-sm max-w-md sm:max-w-lg leading-relaxed"
+                  className="text-[11px] xs:text-[12px] sm:text-sm text-emerald-100/95 font-medium mb-3.5 xs:mb-4 sm:mb-6 line-clamp-2 drop-shadow-sm max-w-md sm:max-w-lg leading-relaxed"
                 >
                   {slide.subtitle || "100% Ozone-Washed & Chemical-Free produce sourced daily from local contract farms."}
                 </motion.p>
@@ -255,16 +255,16 @@ export default function Hero({ banners = [] }: HeroProps) {
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.32, duration: 0.45 }}
-                  className="flex items-center gap-3 flex-wrap"
+                  className="flex items-center gap-2.5 xs:gap-3 flex-wrap"
                 >
                   <Link href={slide.link || "/shop"}>
                     <motion.button
-                      whileHover={{ scale: 1.05 }}
+                      whileHover={{ scale: 1.04 }}
                       whileTap={{ scale: 0.95 }}
-                      className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 sm:px-7 py-2.5 sm:py-3 rounded-full font-black text-xs sm:text-sm shadow-xl transition-all flex items-center gap-2 cursor-pointer border border-emerald-300/40 hover:shadow-emerald-950/60"
+                      className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4.5 xs:px-5 sm:px-7 py-2.5 sm:py-3 rounded-full font-black text-xs sm:text-sm shadow-xl transition-all flex items-center gap-2 cursor-pointer border border-emerald-300/40 hover:shadow-emerald-950/60"
                     >
                       <span>{slide.btnText || "Shop Fresh Produce"}</span>
-                      <ArrowRight size={15} className="stroke-[2.5]" />
+                      <ArrowRight size={14} className="stroke-[2.5]" />
                     </motion.button>
                   </Link>
 
@@ -358,13 +358,13 @@ export default function Hero({ banners = [] }: HeroProps) {
               </button>
 
               {/* Dots Pagination */}
-              <div className="absolute bottom-3 sm:bottom-4 right-4 z-30 flex items-center gap-1.5 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">
+              <div className="absolute bottom-3 sm:bottom-4 right-3.5 sm:right-4 z-30 flex items-center gap-1.5 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 shadow-sm">
                 {activeSlides.map((_, idx) => (
                   <button
                     key={idx}
                     type="button"
                     onClick={() => goToSlide(idx, idx > currentSlide ? 1 : -1)}
-                    className={`transition-all rounded-full cursor-pointer ${
+                    className={`transition-all duration-300 rounded-full cursor-pointer ${
                       currentSlide === idx
                         ? "w-6 h-1.5 bg-white shadow-xs"
                         : "w-1.5 h-1.5 bg-white/50 hover:bg-white/80"
