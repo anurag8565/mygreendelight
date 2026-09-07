@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import BhopalCompetitorSEOShowcase from "@/components/BhopalCompetitorSEOShowcase";
 import useGetMe from "@/hooks/useGetMe";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
@@ -317,6 +318,9 @@ export default function AboutPage() {
             </div>
           </div>
         </section>
+
+        {/* ===== BHOPAL LOCALITY HUBS, COMPETITOR COMPARISON & SEO FAQ ===== */}
+        <BhopalCompetitorSEOShowcase />
 
         {/* ===== BOTTOM CTA CALLOUT ===== */}
         <section className="max-w-7xl mx-auto px-4 md:px-8 py-16">

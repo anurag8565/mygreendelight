@@ -13,7 +13,6 @@ import connectDb from '@/lib/db'
 import Groceryitemcard from './Groceryitemcard'
 import ProductCarousel from './ProductCarousel'
 import FarmFreshPromise from './FarmFreshPromise'
-import BhopalCompetitorSEOShowcase from './BhopalCompetitorSEOShowcase'
 import Testimonials from './Testimonials'
 import { RotateCcw } from 'lucide-react'
 
@@ -163,9 +162,6 @@ export default async function Userdashbord() {
 
       {/* 11. Tone 2: Farm to Fork Freshness Promise & Trust Guarantee (Soft Luxury Gray #f8f9fa) */}
       <FarmFreshPromise />
-
-      {/* 12. Competitor Comparison, Bhopal Locality Hubs & Google FAQ Schema */}
-      <BhopalCompetitorSEOShowcase />
     </div>
   )
 }
