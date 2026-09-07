@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import connectDb from "@/lib/db";
 import DeliveryAssignment from "@/model/Deliveryassigment.model";
 import Order from "@/model/order";
+import User from "@/model/user.model";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -19,14 +20,27 @@ export async function GET(
 
     const session = await auth();
 
-    const deliveryboyid = session?.user?.id;
-
-    if (!deliveryboyid) {
+    if (!session?.user?.id && !session?.user?.email) {
       return NextResponse.json(
         { message: "Unauthorized" },
         { status: 401 }
       );
     }
+
+    const query = session.user.id 
+      ? { _id: session.user.id } 
+      : { email: session.user.email };
+
+    const user = await User.findOne(query);
+
+    if (!user) {
+      return NextResponse.json(
+        { message: "User not found" },
+        { status: 404 }
+      );
+    }
+
+    const deliveryboyid = user._id;
 
     const assigment = await DeliveryAssignment.findById(id);
 
@@ -39,7 +53,7 @@ export async function GET(
 
     if (assigment.status !== "broadcasted") {
       return NextResponse.json(
-        { message: "Assignment expired" },
+        { message: "Assignment already taken or expired" },
         { status: 400 }
       );
     }
@@ -52,7 +66,7 @@ export async function GET(
     if (alreadyAssigned) {
       return NextResponse.json(
         {
-          message: "You already have an active order",
+          message: "You already have an active order in progress",
         },
         {
           status: 400,
@@ -98,12 +112,12 @@ export async function GET(
         .populate("user", "name email mobile")
         .populate("assigneddelliveryboy", "name mobile");
       const { sendDeliveryOtpNotification } = await import("@/lib/orderNotifications");
-      await sendDeliveryOtpNotification(populatedOrder || order);
+      await sendDeliveryOtpNotification(populatedOrder || order, user);
     } catch (notifErr) {
       console.warn("Delivery OTP notification dispatch note on accept:", notifErr);
     }
 
-    // Remove other broadcasts
+    // Remove other broadcasts for this order
     await DeliveryAssignment.updateMany(
       {
         _id: { $ne: assigment._id },
@@ -120,18 +134,18 @@ export async function GET(
     return NextResponse.json(
       {
         success: true,
-        message: "Order accepted successfully",
+        message: "Order accepted successfully! Trip started.",
       },
       {
         status: 200,
       }
     );
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    console.error("Accept assignment error:", error);
 
     return NextResponse.json(
       {
-        message: "Accept assignment error",
+        message: error?.message || "Accept assignment error",
       },
       {
         status: 500,

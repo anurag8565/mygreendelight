@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
         {
           assignedto: driver._id,
           status: "assigned",
-          acceptedAt: new Date(),
+          acceptedat: new Date(),
         },
         { new: true }
       );
@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
         order: order._id,
         assignedto: driver._id,
         status: "assigned",
-        acceptedAt: new Date(),
+        acceptedat: new Date(),
       });
       order.assigment = assignment._id;
     }
@@ -85,6 +85,32 @@ export async function POST(req: NextRequest) {
     const populatedOrder = await Order.findById(orderId)
       .populate("user", "name email mobile")
       .populate("assigneddelliveryboy", "name mobile");
+
+    // 🔔 Notify Socket Server in Real-Time for Instant Rider Dispatch Ping
+    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:5000";
+    try {
+      const sanitizedOrder = { ...populatedOrder.toObject() };
+      if (sanitizedOrder.deliveryOtp) {
+        sanitizedOrder.deliveryOtp.code = undefined;
+      }
+
+      await fetch(`${socketUrl}/send-assignment`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          deliveryBoyId: driver._id.toString(),
+          assignment: {
+            _id: assignment?._id,
+            order: sanitizedOrder,
+            assignedto: driver._id,
+            status: "assigned",
+          },
+        }),
+        signal: AbortSignal.timeout(2000),
+      });
+    } catch (socketErr) {
+      console.warn("Socket assignment ping note:", socketErr);
+    }
 
     // 🔔 Dispatch OTP to Customer via Email & SMS
     try {

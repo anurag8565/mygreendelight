@@ -161,22 +161,91 @@ export default function Deliveryboy({ initialUser }: Props) {
     }
   }
 
-  // Socket listener for real-time delivery dispatches
+  // Socket listener for real-time delivery dispatches & direct assignments
   useEffect(() => {
-    socket.on('new-assignment', (assignment) => {
-      if (!isOnline) return // Ignore if driver is in rest mode
-      setAssignments((prev) => [assignment, ...prev])
-      playDispatchChime()
-      showToast('🔔 New express delivery request received!', 'info')
+    const handleNewAssignment = (data: any) => {
+      if (!isOnline) return;
+      playDispatchChime();
+      showToast('🔔 New express delivery request received!', 'info');
       if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
-        navigator.vibrate([200, 100, 200])
+        navigator.vibrate([200, 100, 200]);
       }
-    })
+      fetchAssignments();
+      fetchCurrentOrder();
+    };
+
+    const handleOrderAssigned = (data: any) => {
+      if (!isOnline) return;
+      playDispatchChime();
+      showToast('🚚 New Delivery Trip Assigned by Dispatcher!', 'success');
+      if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+        navigator.vibrate([300, 150, 300]);
+      }
+      fetchCurrentOrder();
+      fetchAssignments();
+    };
+
+    socket.on('new-assignment', handleNewAssignment);
+    socket.on('send-assignment', handleOrderAssigned);
+    socket.on('order-assigned', handleOrderAssigned);
+    socket.on('order-updated', () => {
+      fetchCurrentOrder();
+      fetchAssignments();
+    });
 
     return () => {
-      socket.off('new-assignment')
-    }
-  }, [isOnline])
+      socket.off('new-assignment', handleNewAssignment);
+      socket.off('send-assignment', handleOrderAssigned);
+      socket.off('order-assigned', handleOrderAssigned);
+      socket.off('order-updated');
+    };
+  }, [isOnline]);
+
+  // ⚡ Smart Background Auto-Sync (Every 5 seconds while driver is Online)
+  useEffect(() => {
+    if (!isOnline) return;
+
+    const syncInterval = setInterval(async () => {
+      try {
+        const [assignRes, currRes] = await Promise.all([
+          axios.get('/api/delivery/getassigments').catch(() => null),
+          axios.get('/api/delivery/currentorder').catch(() => null),
+        ]);
+
+        if (assignRes?.data?.assignments) {
+          setAssignments(assignRes.data.assignments);
+        }
+
+        if (currRes?.data) {
+          if (currRes.data.active && currRes.data.assigment) {
+            setactiverder((prev: any) => {
+              if (!prev) {
+                // Newly assigned order detected!
+                playDispatchChime();
+                showToast('🚚 New Delivery Trip Assigned by Dispatcher!', 'success');
+                if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+                  navigator.vibrate([200, 100, 200]);
+                }
+              }
+              return currRes.data.assigment;
+            });
+
+            if (currRes.data.assigment.order?.address?.latitude) {
+              setuserlocation({
+                latitude: currRes.data.assigment.order.address.latitude,
+                longitude: currRes.data.assigment.order.address.longitude,
+              });
+            }
+          } else {
+            setactiverder(null);
+            setuserlocation(null);
+          }
+        }
+      } catch (_) {}
+    }, 5000);
+
+    return () => clearInterval(syncInterval);
+  }, [isOnline]);
 
   const fetchDashboardData = async () => {
     try {
