@@ -57,7 +57,7 @@ export default function Hero({ banners = [] }: HeroProps) {
       subtitle: "Fresh Iceberg, Cherry Tomatoes, Avocados, Herbs & European salad mixes.",
       btnText: "Explore Exotics",
       link: "/shop?category=Exotics",
-      image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1600&q=85",
+      image: "/hero_basket.jpg",
       bgGradient: "from-[#134e4a]/95 via-[#115e59]/85 to-transparent/30",
       accentColor: "#2dd4bf",
       offerPill: "PESTICIDE FREE CERTIFIED",
@@ -65,16 +65,34 @@ export default function Hero({ banners = [] }: HeroProps) {
     },
   ];
 
-  const activeSlides = banners && banners.length > 0 ? banners : defaultSlides;
+  // Prioritize high-res curated default slides, appending any valid DB custom banners
+  const activeSlides = React.useMemo(() => {
+    if (!banners || banners.length === 0) return defaultSlides;
+    const formattedDbBanners = banners.map((b: any, idx: number) => ({
+      _id: b._id || `db-${idx}`,
+      badge: b.badge || "⚡ Special Offer • Express Delivery",
+      title: b.title,
+      subtitle: b.subtitle || "Premium farm produce delivered to your doorstep.",
+      btnText: b.btnText || "Shop Now",
+      link: b.link || "/shop",
+      image: b.image,
+      bgGradient: b.bgGradient || "from-[#052e16]/95 via-[#064e3b]/85 to-transparent/30",
+      accentColor: b.accentColor || "#10b981",
+      offerPill: b.offerPill || "LIMITED TIME DEAL",
+      floatingStat: b.floatingStat || "🌿 100% Farm Fresh",
+    }));
+    return [...defaultSlides, ...formattedDbBanners];
+  }, [banners]);
+
   const [currentSlide, setCurrentSlide] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
 
-  // Auto-slide every 5.5 seconds
+  // Auto-slide every 5 seconds
   useEffect(() => {
     if (activeSlides.length <= 1) return;
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % activeSlides.length);
-    }, 5500);
+    }, 5000);
     return () => clearInterval(timer);
   }, [activeSlides.length]);
 
@@ -121,7 +139,7 @@ export default function Hero({ banners = [] }: HeroProps) {
         <div
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
-          className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:shadow-[0_12px_40px_rgba(15,134,70,0.18)] transition-all duration-500 group bg-gray-950 h-[220px] xs:h-[245px] sm:h-[300px] md:h-[350px] lg:h-[380px] border border-gray-100/80"
+          className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:shadow-[0_12px_40px_rgba(15,134,70,0.18)] transition-all duration-500 group bg-gray-950 h-[240px] xs:h-[265px] sm:h-[320px] md:h-[370px] lg:h-[400px] border border-gray-100/80"
         >
           <AnimatePresence mode="wait">
             <motion.div
@@ -134,8 +152,10 @@ export default function Hero({ banners = [] }: HeroProps) {
             >
               {/* 1. HD Produce Image */}
               <img
-                src={slide.image || "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1600&q=85"}
+                src={slide.image || "/hero_fresh_farm.jpg"}
                 alt={slide.title}
+                loading="eager"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover object-center scale-100 group-hover:scale-105 transition-transform duration-700"
               />
 
@@ -174,7 +194,7 @@ export default function Hero({ banners = [] }: HeroProps) {
 
                 {/* Hero Subtitle */}
                 <p className="text-[11.5px] sm:text-sm text-emerald-100/95 font-medium mb-4 sm:mb-6 line-clamp-2 drop-shadow-sm max-w-md sm:max-w-lg leading-relaxed">
-                  {slide.subtitle || slide.desc || "100% Ozone-Washed & Chemical-Free produce sourced daily from local contract farms."}
+                  {slide.subtitle || "100% Ozone-Washed & Chemical-Free produce sourced daily from local contract farms."}
                 </p>
 
                 {/* Action CTA Group */}
