@@ -24,7 +24,7 @@ function useGetMe() {
 
         if (typeof result.data === 'object' && result.data !== null && result.data.email) {
           dispatch(setUserdata(result.data))
-          if (result.data.wishlist) {
+          if (Array.isArray(result.data.wishlist) && result.data.wishlist.length > 0 && typeof result.data.wishlist[0] === 'object' && result.data.wishlist[0]?.name) {
             dispatch(setWishlist(result.data.wishlist))
           }
         } else if (session?.user?.email) {

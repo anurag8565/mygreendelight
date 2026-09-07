@@ -65,7 +65,7 @@ export default function Groceryitemcard({
     Math.round(((activeMRP - displayPrice) / activeMRP) * 100)
   );
 
-  const isLiked = wishlistItems.some((w) => w._id === item._id.toString());
+  const isLiked = wishlistItems.some((w) => String(w._id) === String(item._id));
 
   return (
     <motion.div
@@ -124,11 +124,19 @@ export default function Groceryitemcard({
           onClick={async (e) => {
             e.preventDefault();
             e.stopPropagation();
-            dispatch(toggleWishlist(item as any));
+            dispatch(toggleWishlist({
+              _id: String(item._id),
+              name: item.name,
+              price: displayPrice,
+              image: item.image,
+              unit: displayUnit,
+              category: item.category,
+              stock: displayStock,
+            }));
             try {
-              await axios.post("/api/wishlist", { productId: item._id });
+              await axios.post("/api/wishlist", { productId: String(item._id) });
             } catch (error) {
-              console.log("Error updating wishlist", error);
+              // Guest or offline
             }
           }}
           className="absolute top-2 right-2 p-1.5 bg-white/90 backdrop-blur-xs rounded-full shadow-2xs hover:bg-white hover:scale-110 transition-all z-10 cursor-pointer border border-gray-100"

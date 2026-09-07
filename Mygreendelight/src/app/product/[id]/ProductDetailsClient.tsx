@@ -57,7 +57,7 @@ export default function ProductDetailsClient({
   const [submittingReview, setSubmittingReview] = useState(false);
   const [reviewMsg, setReviewMsg] = useState("");
 
-  const isWishlisted = wishlistItems.some((item) => item._id === product._id);
+  const isWishlisted = wishlistItems.some((item) => String(item._id) === String(product._id));
   const hasVariations = product.variations && product.variations.length > 0;
   const currentPrice = hasVariations
     ? product.variations[selectedVarIndex].price
@@ -191,11 +191,19 @@ export default function ProductDetailsClient({
             <button
               type="button"
               onClick={async () => {
-                dispatch(toggleWishlist(product));
+                dispatch(toggleWishlist({
+                  _id: String(product._id),
+                  name: product.name,
+                  price: currentPrice,
+                  image: product.image,
+                  unit: currentUnit,
+                  category: product.category,
+                  stock: currentStock,
+                }));
                 setShowWishlistToast(true);
                 setTimeout(() => setShowWishlistToast(false), 2500);
                 try {
-                  await axios.post("/api/wishlist", { productId: product._id });
+                  await axios.post("/api/wishlist", { productId: String(product._id) });
                 } catch (error) {}
               }}
               className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white border border-gray-200 shadow-2xs hover:bg-gray-50 flex items-center justify-center transition cursor-pointer active:scale-90"
