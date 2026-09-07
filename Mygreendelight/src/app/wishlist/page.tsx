@@ -16,6 +16,11 @@ import {
   Zap,
   Leaf,
   RotateCcw,
+  Sparkles,
+  Layers,
+  Compass,
+  Check,
+  Package,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -39,17 +44,18 @@ export default function WishlistPage() {
   const [loadingRecs, setLoadingRecs] = useState(false);
   const [addedAllSuccess, setAddedAllSuccess] = useState(false);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Fetch trending groceries for empty state or recommendations
+  // Fetch trending groceries for recommendations
   useEffect(() => {
     const fetchRecommendations = async () => {
       try {
         setLoadingRecs(true);
-        const res = await axios.get("/api/groceries?limit=8");
+        const res = await axios.get(`/api/groceries?limit=10&_t=${Date.now()}`);
         if (res.data?.groceries) {
           setRecommendedItems(res.data.groceries);
         }
@@ -63,6 +69,12 @@ export default function WishlistPage() {
   }, []);
 
   if (!mounted) return null;
+
+  // Filter items by category if selected
+  const filteredItems = items.filter((item) => {
+    if (selectedCategory === "All") return true;
+    return (item.category || "").toLowerCase() === selectedCategory.toLowerCase();
+  });
 
   // Calculate wishlist estimated value
   const totalEstimated = items.reduce(
@@ -80,20 +92,26 @@ export default function WishlistPage() {
     0
   );
 
+  // Categories available in user's saved items
+  const categoriesInWishlist = [
+    "All",
+    ...Array.from(new Set(items.map((i) => i.category || "Vegetables"))),
+  ];
+
   // Add all wishlist items to cart
   const handleAddAllToCart = () => {
     if (!items || items.length === 0) return;
 
     const cartItemsToAdd = items.map((item: any) => ({
       _id: item._id,
-      cartItemId: item._id.toString() + (item.unit ? `-${item.unit}` : ""),
+      cartItemId: `${item._id}_default`,
       name: item.name,
       price: Number(item.price) || 0,
       unit: item.unit || "1 unit",
       image: item.image,
       quantity: 1,
       stock: item.stock ?? 50,
-      category: item.category || "General",
+      category: item.category || "Vegetables",
       createdAt: new Date(),
       updatedAt: new Date(),
     }));
@@ -112,66 +130,57 @@ export default function WishlistPage() {
   };
 
   return (
-    <div className="bg-[#fcfdfc] min-h-screen flex flex-col justify-between font-sans text-gray-800 pb-20 md:pb-0">
+    <div className="bg-[#f8faf9] min-h-screen flex flex-col justify-between font-sans text-gray-900 pb-20 md:pb-0">
       <Nav user={(userdata as any) || { role: "user" }} />
 
-      {/* Top Mobile Header & Breadcrumb Bar */}
-      <div className="bg-white border-b border-gray-100 sticky top-0 z-30 shadow-2xs">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2 sm:gap-3">
+      {/* Top Header Bar */}
+      <div className="bg-white border-b border-gray-200/80 sticky top-0 z-30 shadow-2xs">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-3.5 flex items-center justify-between">
+          <div className="flex items-center gap-3">
             <button
               onClick={() => router.back()}
               aria-label="Go Back"
-              className="p-1.5 -ml-1 text-gray-600 hover:text-gray-900 rounded-full hover:bg-gray-100 transition-colors"
+              className="p-1.5 -ml-1 text-gray-600 hover:text-gray-900 rounded-xl hover:bg-gray-100 transition cursor-pointer"
             >
-              <ArrowLeft size={20} />
+              <ArrowLeft size={18} />
             </button>
             <div className="flex items-center gap-2">
-              <h1 className="text-base sm:text-lg font-black text-gray-900 flex items-center gap-1.5">
-                <span>My Wishlist</span>
-                <span className="bg-red-50 text-red-600 text-xs px-2 py-0.5 rounded-full font-bold">
+              <h1 className="text-base sm:text-lg font-black text-gray-900 tracking-tight flex items-center gap-2">
+                <span>My Saved Favorites</span>
+                <span className="bg-rose-50 text-rose-600 border border-rose-200 text-xs px-2.5 py-0.5 rounded-full font-black">
                   {items.length}
                 </span>
               </h1>
             </div>
           </div>
 
-          <div className="hidden sm:flex items-center gap-1.5 text-xs text-gray-500">
-            <Link href="/" className="hover:text-[#0c831f] transition">
-              Home
+          <div className="flex items-center gap-3">
+            <Link
+              href="/shop"
+              className="text-xs font-black text-[#0f8646] hover:underline flex items-center gap-1 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200/80"
+            >
+              <span>Explore Shop</span>
+              <ChevronRight size={14} />
             </Link>
-            <ChevronRight size={12} />
-            <Link href="/shop" className="hover:text-[#0c831f] transition">
-              Shop
-            </Link>
-            <ChevronRight size={12} />
-            <span className="text-[#0c831f] font-bold">Wishlist</span>
           </div>
-
-          <Link
-            href="/shop"
-            className="text-xs font-bold text-[#0c831f] hover:underline flex items-center gap-1"
-          >
-            <span>Browse Shop</span>
-            <ChevronRight size={14} />
-          </Link>
         </div>
       </div>
 
-      <main className="max-w-7xl mx-auto px-3 sm:px-4 md:px-8 py-4 sm:py-6 w-full flex-1">
+      <main className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-5 sm:py-8 w-full flex-1 space-y-6">
+        
         {/* Quick Trust / Info Ribbon */}
-        <div className="grid grid-cols-3 gap-2 mb-4 sm:mb-6 bg-gradient-to-r from-emerald-50/60 via-green-50/40 to-teal-50/60 border border-emerald-100/80 rounded-2xl p-2.5 sm:p-3 text-center">
-          <div className="flex items-center justify-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs font-bold text-emerald-900">
-            <Zap size={14} className="text-amber-500 fill-amber-500 shrink-0" />
-            <span className="truncate">10-15 Min Bhopal Delivery</span>
+        <div className="grid grid-cols-3 gap-2 bg-white border border-gray-200/80 rounded-2xl p-3 text-center shadow-2xs">
+          <div className="flex items-center justify-center gap-1.5 text-[11px] sm:text-xs font-bold text-gray-700">
+            <Zap size={14} className="text-amber-500 fill-amber-400 shrink-0" />
+            <span className="truncate">15-45 Min Bhopal Express</span>
           </div>
-          <div className="flex items-center justify-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs font-bold text-emerald-900 border-x border-emerald-200/60 px-1">
-            <Leaf size={14} className="text-emerald-600 shrink-0" />
-            <span className="truncate">5:00 AM Sunrise Fresh</span>
+          <div className="flex items-center justify-center gap-1.5 text-[11px] sm:text-xs font-bold text-gray-700 border-x border-gray-100 px-1">
+            <Leaf size={14} className="text-[#0f8646] shrink-0" />
+            <span className="truncate">Same-Day Farm Harvest</span>
           </div>
-          <div className="flex items-center justify-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs font-bold text-emerald-900">
-            <RotateCcw size={14} className="text-teal-600 shrink-0" />
-            <span className="truncate">Zero-Risk Doorstep Return</span>
+          <div className="flex items-center justify-center gap-1.5 text-[11px] sm:text-xs font-bold text-gray-700">
+            <RotateCcw size={14} className="text-blue-600 shrink-0" />
+            <span className="truncate">100% Quality Replacement</span>
           </div>
         </div>
 
@@ -179,18 +188,18 @@ export default function WishlistPage() {
         <AnimatePresence>
           {addedAllSuccess && (
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="mb-4 p-3 bg-emerald-500 text-white rounded-2xl shadow-md flex items-center justify-between text-xs sm:text-sm font-bold"
+              exit={{ opacity: 0, y: -8 }}
+              className="p-3.5 bg-[#0f8646] text-white rounded-2xl shadow-md flex items-center justify-between text-xs sm:text-sm font-bold"
             >
               <div className="flex items-center gap-2">
                 <CheckCircle2 size={18} className="shrink-0" />
-                <span>All {items.length} saved items added to your cart! 🛒</span>
+                <span>All {items.length} saved produce items added to your basket! 🛒</span>
               </div>
               <Link
                 href="/user/cart"
-                className="bg-white text-[#0c831f] px-3 py-1 rounded-xl text-xs font-black shadow-xs hover:bg-emerald-50 transition"
+                className="bg-white text-[#0f8646] px-3.5 py-1.5 rounded-xl text-xs font-black shadow-xs hover:bg-emerald-50 transition"
               >
                 Go to Cart →
               </Link>
@@ -199,49 +208,48 @@ export default function WishlistPage() {
         </AnimatePresence>
 
         {items.length > 0 ? (
-          <div>
-            {/* Action Bar */}
-            <div className="bg-white rounded-2xl sm:rounded-3xl border border-gray-100 shadow-xs p-3.5 sm:p-5 mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="space-y-5">
+            
+            {/* Action Bar Card */}
+            <div className="bg-white rounded-3xl border border-gray-200/80 shadow-2xs p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <h2 className="text-lg sm:text-xl font-black text-gray-900 flex items-center gap-2">
-                  <span>Saved Fresh Produce</span>
-                  <span className="text-xs bg-emerald-100 text-[#0c831f] px-2.5 py-0.5 rounded-full font-extrabold">
+                <div className="flex items-center gap-2 mb-1">
+                  <h2 className="text-lg sm:text-xl font-black text-gray-900 tracking-tight">
+                    Saved Harvest Essentials
+                  </h2>
+                  <span className="text-xs bg-emerald-50 text-[#0f8646] border border-emerald-200 px-2.5 py-0.5 rounded-full font-black">
                     {items.length} Items
                   </span>
-                </h2>
-                <p className="text-xs text-gray-500 mt-0.5">
-                  Estimated Total:{" "}
-                  <span className="font-extrabold text-gray-900">
-                    ₹{totalEstimated}
-                  </span>{" "}
-                  • Ready for 10-15 min express dispatch
+                </div>
+                <p className="text-xs text-gray-500 font-medium">
+                  Estimated Total: <strong className="text-gray-900 font-black">₹{totalEstimated}</strong> • Direct wholesale rates from Bhopal farms
                 </p>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2.5 flex-wrap">
                 <button
                   type="button"
                   onClick={handleAddAllToCart}
-                  className="flex-1 sm:flex-none bg-[#0c831f] hover:bg-[#096718] active:scale-95 text-white px-4 sm:px-5 py-2.5 rounded-xl font-black text-xs sm:text-sm shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="flex-1 sm:flex-none bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-3 rounded-2xl font-black text-xs sm:text-sm shadow-sm hover:shadow-md transition flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <ShoppingBag size={15} />
+                  <ShoppingBag size={16} />
                   <span>Add All to Cart</span>
                 </button>
 
                 {showClearConfirm ? (
-                  <div className="flex items-center gap-1.5 bg-red-50 p-1 rounded-xl border border-red-200">
+                  <div className="flex items-center gap-1.5 bg-red-50 p-1 rounded-2xl border border-red-200">
                     <button
                       type="button"
                       onClick={handleClearWishlist}
-                      className="px-2.5 py-1 bg-red-600 text-white rounded-lg text-xs font-bold hover:bg-red-700 transition cursor-pointer"
+                      className="px-3 py-1.5 bg-red-600 text-white rounded-xl text-xs font-black hover:bg-red-700 transition cursor-pointer"
                     >
-                      Confirm
+                      Clear All
                     </button>
                     <button
                       type="button"
                       onClick={() => setShowClearConfirm(false)}
-                      className="px-2 py-1 text-gray-600 hover:text-gray-900 rounded-lg text-xs font-bold transition cursor-pointer"
+                      className="px-2.5 py-1.5 text-gray-600 hover:text-gray-900 rounded-xl text-xs font-bold transition cursor-pointer"
                     >
                       Cancel
                     </button>
@@ -250,7 +258,7 @@ export default function WishlistPage() {
                   <button
                     type="button"
                     onClick={() => setShowClearConfirm(true)}
-                    className="p-2.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition border border-gray-100 cursor-pointer"
+                    className="p-3 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-2xl transition border border-gray-200 cursor-pointer shadow-2xs"
                     title="Clear Wishlist"
                   >
                     <Trash2 size={16} />
@@ -259,66 +267,112 @@ export default function WishlistPage() {
               </div>
             </div>
 
+            {/* Category Filter Pills (if multiple categories present) */}
+            {categoriesInWishlist.length > 2 && (
+              <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+                {categoriesInWishlist.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setSelectedCategory(cat)}
+                    className={`px-4 py-2 rounded-2xl text-xs font-black transition whitespace-nowrap cursor-pointer ${
+                      selectedCategory === cat
+                        ? "bg-[#0f8646] text-white shadow-xs"
+                        : "bg-white text-gray-700 border border-gray-200/80 hover:border-emerald-300"
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+            )}
+
             {/* Wishlist Items Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 sm:gap-4">
-              {items.map((item) => (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+              {filteredItems.map((item) => (
                 <Groceryitemcard key={item._id} item={item as any} />
               ))}
             </div>
           </div>
         ) : (
           /* Empty State */
-          <div className="my-4">
-            <div className="bg-white rounded-3xl border border-gray-100 p-8 sm:p-12 text-center max-w-lg mx-auto shadow-xs">
-              <div className="w-20 h-20 bg-red-50 text-red-400 rounded-full flex items-center justify-center mx-auto mb-4 relative">
-                <Heart size={36} className="fill-red-100 text-red-500 animate-pulse" />
-                <span className="absolute -bottom-1 -right-1 bg-emerald-500 text-white p-1 rounded-full text-[10px]">
+          <div className="my-6">
+            <div className="bg-white rounded-3xl border border-gray-200/80 p-8 sm:p-14 text-center max-w-md mx-auto shadow-2xs">
+              <div className="w-20 h-20 bg-rose-50 border border-rose-100 text-rose-500 rounded-3xl flex items-center justify-center mx-auto mb-4 relative shadow-2xs">
+                <Heart size={36} className="fill-rose-100 text-rose-500 animate-pulse" />
+                <span className="absolute -bottom-1 -right-1 bg-[#0f8646] text-white p-1 rounded-full text-[10px]">
                   🌱
                 </span>
               </div>
-              <h2 className="text-xl sm:text-2xl font-black text-gray-900 mb-1.5">
+              
+              <h2 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight mb-2">
                 Your Wishlist is Empty
               </h2>
-              <p className="text-xs sm:text-sm text-gray-500 mb-6 leading-relaxed max-w-xs mx-auto">
-                Save your daily farm-fresh vegetables and seasonal fruits to re-order in 1-tap!
+              
+              <p className="text-xs sm:text-sm text-gray-500 mb-6 leading-relaxed max-w-xs mx-auto font-medium">
+                Tap the heart icon on any vegetable or fruit to save your favorites for 1-tap reordering!
               </p>
-              <Link
-                href="/shop"
-                className="bg-[#0c831f] hover:bg-[#096718] active:scale-95 text-white px-7 py-3 rounded-2xl font-black text-xs sm:text-sm shadow-md transition inline-flex items-center gap-2"
-              >
-                <ShoppingBag size={16} />
-                <span>Explore Fresh Farm Harvest</span>
-              </Link>
+              
+              <div className="space-y-2.5">
+                <Link
+                  href="/shop"
+                  className="w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3.5 px-6 rounded-2xl font-black text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <ShoppingBag size={16} />
+                  <span>Explore Fresh Farm Harvest</span>
+                </Link>
+
+                {/* 3 Quick Category Pills */}
+                <div className="grid grid-cols-3 gap-2 pt-2">
+                  <Link
+                    href="/shop?category=Vegetables"
+                    className="p-2 rounded-xl bg-gray-50 hover:bg-emerald-50 border border-gray-200/70 text-[11px] font-black text-gray-800 transition"
+                  >
+                    🥬 Vegetables
+                  </Link>
+                  <Link
+                    href="/shop?category=Fruits"
+                    className="p-2 rounded-xl bg-gray-50 hover:bg-amber-50 border border-gray-200/70 text-[11px] font-black text-gray-800 transition"
+                  >
+                    🍎 Fruits
+                  </Link>
+                  <Link
+                    href="/shop?category=Exotics"
+                    className="p-2 rounded-xl bg-gray-50 hover:bg-purple-50 border border-gray-200/70 text-[11px] font-black text-gray-800 transition"
+                  >
+                    🥑 Exotics
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         )}
 
-        {/* Recommended Produce Section */}
+        {/* Recommended Trending Produce Section */}
         {recommendedItems.length > 0 && (
-          <div className="mt-10 sm:mt-14 border-t border-gray-100 pt-8">
-            <div className="flex items-center justify-between mb-4 sm:mb-6">
+          <div className="mt-12 pt-8 border-t border-gray-200/80">
+            <div className="flex items-center justify-between mb-5">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-lg">🔥</span>
-                  <h3 className="text-base sm:text-xl font-black text-gray-900">
-                    Trending Bhopal Farm Produce
+                  <span className="text-base">🔥</span>
+                  <h3 className="text-base sm:text-xl font-black text-gray-900 tracking-tight">
+                    Trending Daily Farm Harvest
                   </h3>
                 </div>
-                <p className="text-xs text-gray-500 mt-0.5">
-                  Harvested fresh today from contract farms
+                <p className="text-xs text-gray-500 font-medium mt-0.5">
+                  Handpicked & packed fresh today from contract Bhopal farms
                 </p>
               </div>
 
               <Link
                 href="/shop"
-                className="text-xs font-black text-[#0c831f] hover:underline flex items-center gap-1"
+                className="text-xs font-black text-[#0f8646] hover:underline flex items-center gap-1"
               >
-                <span>View All</span>
+                <span>View All Shop</span>
                 <ChevronRight size={14} />
               </Link>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 sm:gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
               {recommendedItems.map((item) => (
                 <Groceryitemcard key={item._id} item={item} />
               ))}
@@ -338,20 +392,20 @@ export default function WishlistPage() {
           >
             <Link
               href="/user/cart"
-              className="bg-[#0c831f] text-white rounded-2xl p-3 shadow-[0_8px_25px_rgba(12,131,31,0.35)] flex items-center justify-between font-sans border border-emerald-400/30"
+              className="bg-[#0f8646] text-white rounded-2xl p-3.5 shadow-[0_8px_25px_rgba(15,134,70,0.35)] flex items-center justify-between font-sans border border-emerald-400/30"
             >
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center font-black text-sm">
+                <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center font-black text-xs">
                   {totalCartItems}
                 </div>
                 <div>
                   <p className="text-[10px] font-bold text-emerald-100 uppercase tracking-wider">
-                    {totalCartItems} Item{totalCartItems > 1 ? "s" : ""} in Cart
+                    {totalCartItems} Item{totalCartItems > 1 ? "s" : ""} in Basket
                   </p>
                   <p className="text-sm font-black">₹{totalCartAmount}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-1 bg-white text-[#0c831f] px-3.5 py-1.5 rounded-xl font-black text-xs shadow-xs">
+              <div className="flex items-center gap-1 bg-white text-[#0f8646] px-3.5 py-1.5 rounded-xl font-black text-xs shadow-xs">
                 <span>View Cart</span>
                 <ChevronRight size={14} />
               </div>
