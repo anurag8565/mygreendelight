@@ -59,6 +59,16 @@ export async function POST(req: NextRequest) {
             }
         }
 
+        // 🔐 Authentication Check
+        const { auth } = await import("@/auth");
+        const session = await auth();
+        if (!session?.user || (session.user.id !== userid && (session.user as any).role !== "admin")) {
+            return NextResponse.json(
+                { success: false, message: "Unauthorized: Invalid or expired session" },
+                { status: 401 }
+            );
+        }
+
         // ✅ check user exists
         const user = await User.findById(userid);
 
@@ -87,37 +97,56 @@ export async function POST(req: NextRequest) {
 
         for (const item of items) {
             const isValidId = item.grocery && mongoose.Types.ObjectId.isValid(item.grocery);
-            let realPrice = Number(item.price) || 0;
-            let realName = item.name;
-            let realImage = item.image;
-            let realUnit = item.unit;
+            if (!isValidId) {
+                return NextResponse.json(
+                    { success: false, message: `Invalid produce item ID provided for "${item.name || 'item'}"` },
+                    { status: 400 }
+                );
+            }
 
-            if (isValidId) {
-                const dbGrocery = await GroceryModel.findById(item.grocery);
-                if (dbGrocery) {
-                    realName = dbGrocery.name || item.name;
-                    realImage = dbGrocery.image || item.image;
-                    realUnit = dbGrocery.unit || item.unit;
+            const dbGrocery = await GroceryModel.findById(item.grocery);
+            if (!dbGrocery) {
+                return NextResponse.json(
+                    { success: false, message: `Item "${item.name || 'produce'}" is no longer available.` },
+                    { status: 400 }
+                );
+            }
 
-                    if (item.variationWeight && dbGrocery.variations && dbGrocery.variations.length > 0) {
-                        const matchedVar = dbGrocery.variations.find((v: any) => v.weight === item.variationWeight);
-                        if (matchedVar && matchedVar.price) {
-                            realPrice = Number(matchedVar.price);
-                        } else {
-                            realPrice = Number(dbGrocery.price);
-                        }
-                    } else {
-                        realPrice = Number(dbGrocery.price);
-                    }
+            let realPrice = Number(dbGrocery.price);
+            let realName = dbGrocery.name;
+            let realImage = dbGrocery.image;
+            let realUnit = dbGrocery.unit || "kg";
+            const itemQty = Math.max(1, Math.min(100, Number(item.quantity) || 1));
+
+            if (item.variationWeight && dbGrocery.variations && dbGrocery.variations.length > 0) {
+                const matchedVar = dbGrocery.variations.find((v: any) => v.weight === item.variationWeight);
+                if (!matchedVar) {
+                    return NextResponse.json(
+                        { success: false, message: `Weight variation "${item.variationWeight}" is not available for "${dbGrocery.name}".` },
+                        { status: 400 }
+                    );
+                }
+                if (matchedVar.stock < itemQty) {
+                    return NextResponse.json(
+                        { success: false, message: `Insufficient stock for "${dbGrocery.name} (${item.variationWeight})". Available: ${matchedVar.stock}` },
+                        { status: 400 }
+                    );
+                }
+                realPrice = Number(matchedVar.price);
+            } else {
+                if (dbGrocery.stock < itemQty) {
+                    return NextResponse.json(
+                        { success: false, message: `Insufficient stock for "${dbGrocery.name}". Available: ${dbGrocery.stock}` },
+                        { status: 400 }
+                    );
                 }
             }
 
-            const itemQty = Math.max(1, Math.min(100, Number(item.quantity) || 1));
             verifiedSubtotal += realPrice * itemQty;
 
             sanitizedItems.push({
-                grocery: isValidId ? item.grocery : undefined,
-                groceryId: item.grocery ? String(item.grocery) : undefined,
+                grocery: item.grocery,
+                groceryId: String(item.grocery),
                 name: realName,
                 price: realPrice,
                 unit: realUnit,

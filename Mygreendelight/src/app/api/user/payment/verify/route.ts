@@ -72,13 +72,37 @@ export async function POST(req: NextRequest) {
 
     const finalStatus = statusData.body?.resultInfo?.resultStatus;
 
+    const order = await Order.findById(mongoOrderId);
+    if (!order) {
+      console.error("Order not found during Paytm verification:", mongoOrderId);
+      return NextResponse.redirect(
+        `${process.env.NEXT_URL}/user/checkout?error=order_not_found`,
+        { status: 302 }
+      );
+    }
+
     if (finalStatus === "TXN_SUCCESS" || txnStatus === "TXN_SUCCESS") {
+      // 🛡️ Double Verification: Ensure Amount Paid matches Order Total
+      const paidAmount = Number(paytmResponse.TXNAMOUNT || statusData.body?.txnAmount || 0);
+      const expectedAmount = Number(order.totalamount);
+
+      if (paidAmount < expectedAmount) {
+        console.error(`🚨 Payment Amount Mismatch: Expected ₹${expectedAmount}, Paid ₹${paidAmount}`);
+        order.paymentStatus = "failed";
+        order.cancellationReason = `Payment amount mismatch: Expected ₹${expectedAmount}, Received ₹${paidAmount}`;
+        await order.save();
+
+        return NextResponse.redirect(
+          `${process.env.NEXT_URL}/user/checkout?error=amount_mismatch`,
+          { status: 302 }
+        );
+      }
+
       // ✅ Payment Successful — Mark order as paid
-      await Order.findByIdAndUpdate(mongoOrderId, {
-        ispaid: true,
-        paymentId: txnId || paytmResponse.TXNID,
-        paymentStatus: "completed",
-      });
+      order.ispaid = true;
+      order.paymentId = txnId || paytmResponse.TXNID;
+      order.paymentStatus = "completed";
+      await order.save();
 
       return NextResponse.redirect(
         `${process.env.NEXT_URL}/user/ordersuccess?orderId=${mongoOrderId}`,
@@ -86,9 +110,8 @@ export async function POST(req: NextRequest) {
       );
     } else if (finalStatus === "PENDING" || txnStatus === "PENDING") {
       // ⏳ Payment Pending
-      await Order.findByIdAndUpdate(mongoOrderId, {
-        paymentStatus: "pending",
-      });
+      order.paymentStatus = "pending";
+      await order.save();
 
       return NextResponse.redirect(
         `${process.env.NEXT_URL}/user/ordersuccess?orderId=${mongoOrderId}&status=pending`,

@@ -159,6 +159,12 @@ const GrocerySchema = new mongoose.Schema<IGrosery>(
   }
 );
 
+// ⚡ High-Performance MongoDB Compound Indexes
+GrocerySchema.index({ category: 1, status: 1 });
+GrocerySchema.index({ status: 1, isFeatured: 1 });
+GrocerySchema.index({ status: 1, isTopRated: 1 });
+GrocerySchema.index({ name: "text", description: "text" });
+
 const Grocery =
   mongoose.models.Grocery ||
   mongoose.model<IGrosery>("Grocery", GrocerySchema);

@@ -43,10 +43,11 @@ export async function POST(req: Request) {
       );
     }
 
-    if (order.deliveryOtp.code !== otp.trim()) {
+    const currentAttempts = order.deliveryOtp.attempts || 0;
+    if (currentAttempts >= 5) {
       return NextResponse.json(
-        { message: "Invalid OTP code. Please check again." },
-        { status: 400 }
+        { message: "Too many failed OTP attempts. Please click 'Send OTP' to request a new code." },
+        { status: 429 }
       );
     }
 
@@ -56,6 +57,17 @@ export async function POST(req: Request) {
     ) {
       return NextResponse.json(
         { message: "OTP has expired. Please request a new OTP." },
+        { status: 400 }
+      );
+    }
+
+    if (order.deliveryOtp.code !== otp.trim()) {
+      order.deliveryOtp.attempts = currentAttempts + 1;
+      await order.save();
+
+      const remaining = 5 - (currentAttempts + 1);
+      return NextResponse.json(
+        { message: `Invalid OTP code. ${remaining > 0 ? `${remaining} attempts remaining.` : 'Please request a new OTP.'}` },
         { status: 400 }
       );
     }

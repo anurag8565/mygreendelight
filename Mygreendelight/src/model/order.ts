@@ -55,6 +55,7 @@ export interface iorder {
         code: string | null
         expiresAt: Date | null
         verified: boolean
+        attempts?: number
     }
 
 }
@@ -66,6 +67,7 @@ const orderSchema = new mongoose.Schema<iorder>(
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
             required: true,
+            index: true,
         },
         deliveryOtp: {
             code: {
@@ -79,6 +81,10 @@ const orderSchema = new mongoose.Schema<iorder>(
             verified: {
                 type: Boolean,
                 default: false,
+            },
+            attempts: {
+                type: Number,
+                default: 0,
             },
         },
 
@@ -137,13 +143,15 @@ const orderSchema = new mongoose.Schema<iorder>(
         assigneddelliveryboy: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
-            default: null
+            default: null,
+            index: true,
         },
 
         status: {
             type: String,
             enum: ["pending", "out of delivery", "delivered", "cancelled"],
             default: "pending",
+            index: true,
         },
         cancellationReason: {
             type: String,
@@ -203,6 +211,11 @@ const orderSchema = new mongoose.Schema<iorder>(
         timestamps: true,
     }
 );
+
+// ⚡ Compound Indexes for High-Performance Scalability
+orderSchema.index({ user: 1, createdAt: -1 });
+orderSchema.index({ status: 1, createdAt: -1 });
+orderSchema.index({ assigneddelliveryboy: 1, status: 1 });
 
 const Order =
     mongoose.models.Order || mongoose.model("Order", orderSchema);

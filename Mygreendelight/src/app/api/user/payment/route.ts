@@ -56,23 +56,53 @@ export async function POST(req: NextRequest) {
     address.city = "Bhopal";
     address.state = "Madhya Pradesh";
 
-    // Sanitize items: ensure invalid/custom ObjectIds don't crash Mongoose
-    const sanitizedItems = items.map((item: any) => {
-      const isValid = item.grocery && mongoose.Types.ObjectId.isValid(item.grocery);
-      return {
-        grocery: isValid ? item.grocery : undefined,
-        groceryId: item.grocery ? String(item.grocery) : undefined,
-        name: item.name,
-        price: Number(item.price) || 0,
-        unit: item.unit,
-        variationWeight: item.variationWeight,
-        image: item.image,
-        quantity: Number(item.quantity) || 1,
-      };
-    });
+    // Sanitize items & fetch real produce data from DB to prevent client price tampering
+    const GroceryModel = (await import("@/model/groseri.model")).default;
+    const sanitizedItems: any[] = [];
+    let subtotalCalc = 0;
 
-    // Compute verified subtotal
-    const subtotalCalc = sanitizedItems.reduce((sum: number, item: any) => sum + (item.price * item.quantity), 0);
+    for (const item of items) {
+      if (!item.grocery || !mongoose.Types.ObjectId.isValid(item.grocery)) {
+        return NextResponse.json(
+          { success: false, message: "Invalid product item in checkout basket." },
+          { status: 400 }
+        );
+      }
+
+      const dbGrocery = await GroceryModel.findById(item.grocery);
+      if (!dbGrocery) {
+        return NextResponse.json(
+          { success: false, message: `Produce item "${item.name || "Unknown"}" is no longer available.` },
+          { status: 400 }
+        );
+      }
+
+      let realPrice = Number(dbGrocery.price) || 0;
+      let realName = dbGrocery.name || item.name;
+      let realImage = dbGrocery.image || item.image;
+      let realUnit = dbGrocery.unit || item.unit;
+
+      if (item.variationWeight && dbGrocery.variations && dbGrocery.variations.length > 0) {
+        const matchedVar = dbGrocery.variations.find((v: any) => v.weight === item.variationWeight);
+        if (matchedVar && matchedVar.price) {
+          realPrice = Number(matchedVar.price);
+        }
+      }
+
+      const itemQty = Math.max(1, Math.min(100, Number(item.quantity) || 1));
+      subtotalCalc += realPrice * itemQty;
+
+      sanitizedItems.push({
+        grocery: item.grocery,
+        groceryId: String(item.grocery),
+        name: realName,
+        price: realPrice,
+        unit: realUnit,
+        variationWeight: item.variationWeight,
+        image: realImage,
+        quantity: itemQty,
+      });
+    }
 
     // Fetch dynamic delivery fee settings from Database
     let deliveryFeeCalc = 0;
@@ -96,10 +126,7 @@ export async function POST(req: NextRequest) {
 
     const discountCalc = Number(discount) || 0;
     const walletDiscountCalc = Number(walletDiscount) || 0;
-    const computedPayableTotal = Math.max(0, subtotalCalc + deliveryFeeCalc - discountCalc - walletDiscountCalc);
-    const finalTotalToSave = (totalamount !== undefined && totalamount !== null && !isNaN(Number(totalamount)))
-      ? Number(totalamount)
-      : computedPayableTotal;
+    const finalTotalToSave = Math.max(0, subtotalCalc + deliveryFeeCalc - discountCalc - walletDiscountCalc);
 
     // ✅ create order (ispaid = false initially)
     const neworder = await Order.create({

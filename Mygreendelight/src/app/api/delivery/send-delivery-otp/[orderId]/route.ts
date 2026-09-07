@@ -1,6 +1,7 @@
 import connectDb from "@/lib/db";
 import Order from "@/model/order";
 import { sendMail } from "@/lib/mailer";
+import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 
 export async function POST(
@@ -14,6 +15,14 @@ export async function POST(
   try {
     await connectDb();
 
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json(
+        { message: "Unauthorized: Session required" },
+        { status: 401 }
+      );
+    }
+
     const { orderId } = await context.params;
     const order = await Order.findById(orderId).populate("user");
 
@@ -24,6 +33,18 @@ export async function POST(
       );
     }
 
+    const userId = session.user.id;
+    const userRole = (session.user as any).role;
+    const isAssignedRider = order.assigneddelliveryboy?.toString() === userId;
+    const isAdmin = userRole === "admin";
+
+    if (!isAssignedRider && !isAdmin) {
+      return NextResponse.json(
+        { message: "Forbidden: Only assigned delivery partner or admin can trigger delivery OTP" },
+        { status: 403 }
+      );
+    }
+
     // 4-digit clean numeric OTP
     const otp = Math.floor(1000 + Math.random() * 9000).toString();
 
@@ -31,6 +52,7 @@ export async function POST(
       code: otp,
       expiresAt: new Date(Date.now() + 15 * 60 * 1000),
       verified: false,
+      attempts: 0,
     };
 
     await order.save();

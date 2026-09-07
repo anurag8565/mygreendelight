@@ -26,38 +26,33 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const order = await Order.findById(orderId);
+    // Atomic status transition from pending -> cancelled
+    const cancelledOrder = await Order.findOneAndUpdate(
+      {
+        _id: orderId,
+        status: "pending",
+        ...(session.user.role === "admin" ? {} : { user: session.user.id }),
+      },
+      {
+        $set: {
+          status: "cancelled",
+          cancellationReason: reason || "Cancelled by customer",
+        },
+      },
+      { new: true }
+    );
 
-    if (!order) {
-      return NextResponse.json(
-        { success: false, message: "Order not found." },
-        { status: 404 }
-      );
-    }
-
-    // Verify ownership
-    if (order.user.toString() !== session.user.id && session.user.role !== "admin") {
-      return NextResponse.json(
-        { success: false, message: "You are not authorized to cancel this order." },
-        { status: 403 }
-      );
-    }
-
-    // Only pending orders can be cancelled by user
-    if (order.status !== "pending") {
+    if (!cancelledOrder) {
       return NextResponse.json(
         {
           success: false,
-          message: `Order cannot be cancelled because it is already ${order.status}.`,
+          message: "Order cannot be cancelled. It may already be processed, delivered, or cancelled.",
         },
         { status: 400 }
       );
     }
 
-    // 1. Mark status as cancelled
-    order.status = "cancelled";
-    order.cancellationReason = reason || "Cancelled by customer";
-    await order.save();
+    const order = cancelledOrder;
 
     // 2. Automatically Restore Produce Stock in MongoDB
     if (order.items && order.items.length > 0) {

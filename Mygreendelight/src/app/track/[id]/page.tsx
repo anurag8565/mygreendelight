@@ -97,9 +97,29 @@ export default function TrackOrderPage() {
 
   useEffect(() => {
     fetchTracking();
-    const interval = setInterval(fetchTracking, 5000);
-    return () => clearInterval(interval);
-  }, [params.id]);
+
+    const interval = setInterval(() => {
+      // ⚡ Battery & Bandwidth Optimization: Only poll when tab is active and order is ongoing
+      if (document.visibilityState === "visible") {
+        if (data?.order?.status !== "delivered" && data?.order?.status !== "cancelled") {
+          fetchTracking();
+        }
+      }
+    }, 5000);
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        fetchTracking();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [params.id, data?.order?.status]);
 
   if (loading) {
     return (
