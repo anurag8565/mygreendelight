@@ -15,6 +15,10 @@ import {
   Scale,
   Award,
   ArrowRight,
+  Store,
+  Truck,
+  HeartHandshake,
+  Check,
 } from "lucide-react";
 
 export default function BhopalCompetitorSEOShowcase() {
@@ -54,65 +58,103 @@ export default function BhopalCompetitorSEOShowcase() {
     { label: "🥗 Daily Salad Diet Box", query: "salad" },
   ];
 
+  // Competitor Ecosystem in Bhopal
+  const competitorCards = [
+    {
+      category: "Local Bhopal Farm Apps",
+      competitors: "Gram Hat • Ram Bhaji • E-Vegetable Bazaar",
+      subziAdvantage: "Instant 1-click live checkout, real-time delivery GPS tracking, and city-wide 15-45m express slots (vs slow WhatsApp chat ordering & limited Kolar coverage).",
+      icon: <Leaf className="text-emerald-600" size={20} />,
+      badge: "Local Farm Advantage",
+    },
+    {
+      category: "Exotic & Organic Niches",
+      competitors: "Beybey Farms • Organic Outlets",
+      subziAdvantage: "120+ exotic items (Avocados, Hydroponic greens, Basil, Berries, Zucchini) at direct wholesale farm rates with zero premium middleman markup.",
+      icon: <Sparkles className="text-amber-600" size={20} />,
+      badge: "Largest Bhopal Exotics Catalog",
+    },
+    {
+      category: "Quick-Commerce Apps",
+      competitors: "Blinkit • Zepto • Swiggy Instamart",
+      subziAdvantage: "Zero 40% app markup, 100% daily 5:00 AM fresh harvest (not refrigerated dark-store wilted veggies), zero surge pricing, and customized weight options.",
+      icon: <Zap className="text-blue-600" size={20} />,
+      badge: "Wholesale Rates vs 40% Markup",
+    },
+    {
+      category: "Supermarkets & Retail Chains",
+      competitors: "Ondoor • Reliance Smart Point • BigBasket",
+      subziAdvantage: "Same-day morning dispatch within 15–45 minutes, 100% certified ozone bubble wash (99.4% pesticide-free), and instant no-questions-asked refund policy.",
+      icon: <Store className="text-purple-600" size={20} />,
+      badge: "Ozone Washed & Same-Day",
+    },
+  ];
+
   const comparisonData = [
     {
-      feature: "Produce Sourcing",
+      feature: "Produce Freshness",
       subziquick: "Daily 5:00 AM Sunrise Harvest from local Kisan farms",
-      supermarkets: "3 to 5-day old central warehouse inventory",
-      quickApps: "Dark-store warehouse refrigeration (wilted leaves)",
+      supermarkets: "3 to 5-day old central warehouse inventory (Ondoor/Reliance)",
+      quickApps: "Dark-store warehouse refrigeration (Blinkit/Zepto)",
+      localApps: "Batch harvest but delayed WhatsApp dispatch (Ram Bhaji/Gram Hat)",
     },
     {
       feature: "Customer Pricing",
       subziquick: "Direct Farm Wholesale Rates (Zero middleman cut)",
       supermarkets: "Standard retail markup + plastic packaging cost",
-      quickApps: "35% - 50% high markup + high handling/platform fees",
+      quickApps: "35% - 50% high markup + platform/handling fees",
+      localApps: "Manual pricing without dynamic wholesale discounts",
     },
     {
       feature: "Hygiene & Washing",
-      subziquick: "100% Ozone-Washed & graded (Removes 99% pesticides)",
+      subziquick: "100% Ozone-Washed & graded (Removes 99.4% pesticides)",
       supermarkets: "Stored unwashed in plastic wraps",
-      quickApps: "Unwashed batch crates",
+      quickApps: "Unwashed batch crates in dark store",
+      localApps: "Basic hand sorted without ozone cleaning",
     },
     {
-      feature: "Delivery Experience",
+      feature: "Delivery Speed",
       subziquick: "15–45 min dedicated Bhopal slots (6 AM – 8 PM)",
       supermarkets: "Next day or fixed 24-hr delayed slots",
       quickApps: "10-min rush delivery (High surge & small portions)",
+      localApps: "Limited same-day slots only in Kolar/Salaiya",
     },
     {
       feature: "Exotics & Variety",
       subziquick: "120+ items (Hydroponics, Berries, Zucchini, Italian Basil)",
       supermarkets: "Limited to 15-20 common grocery items",
       quickApps: "Frequent out-of-stock on fresh exotics",
+      localApps: "Very limited or no exotic produce available",
     },
     {
-      feature: "Replacement Guarantee",
-      subziquick: "Instant 100% no-questions-asked refund or replace",
+      feature: "Support & Refund",
+      subziquick: "Instant 100% no-questions-asked UPI refund or replace",
       supermarkets: "Manual store visits required for return",
       quickApps: "Automated chatbot dispute with delayed wallet coins",
+      localApps: "Manual WhatsApp coordination with delay",
     },
   ];
 
   const faqs = [
     {
       q: "How does SubziQuick provide fresher vegetables than Blinkit, Zepto, or Ondoor in Bhopal?",
-      a: "Unlike warehouse-based quick-commerce apps that store vegetables in cold dark stores for 3–5 days, SubziQuick procures directly from local Bhopal farming clusters every morning at 5:00 AM. Every batch is ozone-cleaned, graded, and delivered the same morning to your kitchen.",
+      a: "Unlike warehouse-based quick-commerce apps that store vegetables in dark stores for 3–5 days, SubziQuick procures directly from local Bhopal farming clusters every morning at 5:00 AM. Every batch is ozone-cleaned, graded, and delivered the same morning to your kitchen.",
+    },
+    {
+      q: "How does SubziQuick compare with local Bhopal services like Gram Hat, Ram Bhaji, or E-Vegetable Bazaar?",
+      a: "While local services rely on manual WhatsApp ordering or limited neighborhood delivery (like Kolar only), SubziQuick offers a full-featured online web & app experience, live stock availability across 250+ produce items, instant online/UPI checkout, and guaranteed 15–45 min express delivery across all 20+ Bhopal localities.",
+    },
+    {
+      q: "Why is SubziQuick better than Beybey Farms for exotic vegetables in Bhopal?",
+      a: "Beybey Farms is known for exotics, but SubziQuick offers Bhopal's largest exotic catalog (Hass Avocados, Hydroponic Romaine/Iceberg Lettuce, Button & Portobello Mushrooms, Zucchini, Dragon Fruit, Berries, Italian Basil, Bok Choy) at direct farm wholesale rates with instant 1-click ordering and same-day delivery.",
+    },
+    {
+      q: "What is SubziQuick's 100% Ozone Bubble Washing and Quality Guarantee?",
+      a: "Every batch of green leafy vegetables, salad produce, and fruits undergoes certified ozone bubble washing. This removes 99.4% of surface chemical pesticides, bacteria, and dust without using harmful detergents, keeping your food pure, natural, and safe for your family.",
     },
     {
       q: "Which areas in Bhopal do you deliver fresh vegetables and fruits to?",
       a: "SubziQuick delivers across all major Bhopal localities including Arera Colony (E1-E8), MP Nagar, Kolar Road, Bittan Market, Gulmohar, Shahpura, Bawadiya Kalan, Katara Hills, Hoshangabad Road, Ayodhya Bypass, Indrapuri, BHEL, Awadhpuri, TT Nagar, Chuna Bhatti, Nehru Nagar, Trilanga, and Salaiya.",
-    },
-    {
-      q: "Are exotic vegetables like Avocado, Broccoli, and Hydroponic Lettuce available in Bhopal?",
-      a: "Yes! SubziQuick has Bhopal's largest catalog of exotic produce including Hass Avocados, Green & Purple Broccoli, Hydroponic Romaine/Iceberg Lettuce, Zucchini, Button Mushrooms, Cherry Tomatoes, Italian Basil, Celery, Bok Choy, Blueberries, and Dragon Fruit at wholesale farm prices.",
-    },
-    {
-      q: "What is SubziQuick's 100% Ozone Washing and Quality Guarantee?",
-      a: "Every batch of green leafy vegetables, salad produce, and fruits undergoes certified ozone bubble washing. This removes 99.4% of surface chemical pesticides, bacteria, and dust without using harmful detergents, keeping your food pure, natural, and safe for your family.",
-    },
-    {
-      q: "What are the delivery slots and minimum order value?",
-      a: "We offer flexible slots starting with Early Sunrise (6:00 AM – 8:30 AM), Morning Fresh (8:30 AM – 11:00 AM), Midday (11:00 AM – 1:00 PM), and Evening (4:00 PM – 7:30 PM). There is no high minimum cart limit, so you can order exactly what you need for daily cooking.",
     },
   ];
 
@@ -127,22 +169,55 @@ export default function BhopalCompetitorSEOShowcase() {
             <span>BHOPAL&apos;S #1 RATED ONLINE PRODUCE PLATFORM</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-black text-gray-950 tracking-tight leading-tight">
-            Why Bhopal Chooses SubziQuick Over Cold-Storage Apps
+            Why Bhopal Chooses SubziQuick Over Other Apps & Supermarkets
           </h2>
           <p className="text-xs sm:text-sm text-gray-600 mt-2.5 font-medium leading-relaxed">
-            Experience direct sunrise farm harvest, 100% ozone-cleaned produce, and true wholesale prices delivered in 15–45 minutes across all Bhopal societies.
+            From local startups (Gram Hat, Ram Bhaji, Beybey Farms) to quick-commerce apps (Blinkit, Zepto) and supermarkets (Ondoor, Reliance) — discover how SubziQuick delivers the freshest sunrise harvest at honest wholesale farm rates.
           </p>
         </div>
 
-        {/* 1. Competitor Comparison Table */}
+        {/* 1. Competitor Category Advantage Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 sm:mb-16">
+          {competitorCards.map((card, idx) => (
+            <div
+              key={idx}
+              className="bg-white p-5 rounded-3xl border border-gray-200/80 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between"
+            >
+              <div>
+                <div className="w-10 h-10 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center mb-3">
+                  {card.icon}
+                </div>
+                <span className="text-[10px] font-black uppercase text-[#0c831f] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 inline-block mb-1.5">
+                  {card.badge}
+                </span>
+                <h3 className="font-extrabold text-sm sm:text-base text-gray-900 leading-snug">
+                  vs {card.category}
+                </h3>
+                <p className="text-[11px] text-gray-400 font-semibold mb-2.5">
+                  {card.competitors}
+                </p>
+                <p className="text-xs text-gray-600 leading-relaxed font-normal">
+                  {card.subziAdvantage}
+                </p>
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-gray-100 flex items-center gap-1 text-[11px] font-bold text-[#0c831f]">
+                <Check size={14} className="stroke-[3]" />
+                <span>SubziQuick Guaranteed</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* 2. Comprehensive 360° Competitor Comparison Table */}
         <div className="mb-12 sm:mb-16 bg-white rounded-3xl border border-gray-200/80 shadow-sm overflow-hidden">
           <div className="bg-[#093e21] text-white p-4 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div>
               <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-300">
-                Direct Market Comparison
+                Direct Bhopal Market Comparison
               </span>
               <h3 className="text-lg sm:text-xl font-black tracking-tight text-white mt-0.5">
-                SubziQuick vs Dark-Store Apps & Supermarkets
+                SubziQuick vs Quick Commerce, Supermarkets & Local Apps
               </h3>
             </div>
             <span className="bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-xs font-bold px-3 py-1 rounded-full">
@@ -154,12 +229,13 @@ export default function BhopalCompetitorSEOShowcase() {
             <table className="w-full text-left border-collapse text-xs sm:text-sm">
               <thead>
                 <tr className="bg-gray-50 border-b border-gray-200 text-gray-700 font-black text-[11px] sm:text-xs uppercase tracking-wider">
-                  <th className="py-3.5 px-4 sm:px-6 w-1/4">Key Standard</th>
-                  <th className="py-3.5 px-4 sm:px-6 w-1/3 bg-emerald-50 text-emerald-900 border-x border-emerald-200 font-extrabold">
+                  <th className="py-3.5 px-4 sm:px-6 w-1/5">Key Standard</th>
+                  <th className="py-3.5 px-4 sm:px-6 w-1/4 bg-emerald-50 text-emerald-900 border-x border-emerald-200 font-extrabold">
                     🌿 SubziQuick (Bhopal)
                   </th>
-                  <th className="py-3.5 px-4 sm:px-6 w-1/4 text-gray-500">Quick Commerce Apps</th>
-                  <th className="py-3.5 px-4 sm:px-6 w-1/4 text-gray-500">Supermarket Stores</th>
+                  <th className="py-3.5 px-4 sm:px-6 w-1/5 text-gray-500">Blinkit / Zepto</th>
+                  <th className="py-3.5 px-4 sm:px-6 w-1/5 text-gray-500">Ondoor / Reliance</th>
+                  <th className="py-3.5 px-4 sm:px-6 w-1/5 text-gray-500">Ram Bhaji / Gram Hat</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 font-medium">
@@ -187,6 +263,12 @@ export default function BhopalCompetitorSEOShowcase() {
                         <span>{row.supermarkets}</span>
                       </div>
                     </td>
+                    <td className="py-3.5 px-4 sm:px-6 text-gray-600">
+                      <div className="flex items-start gap-1.5">
+                        <XCircle size={14} className="text-gray-400 shrink-0 mt-0.5" />
+                        <span>{row.localApps}</span>
+                      </div>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -194,7 +276,7 @@ export default function BhopalCompetitorSEOShowcase() {
           </div>
         </div>
 
-        {/* 2. Bhopal High-Intent Search Tags Grid */}
+        {/* 3. Bhopal High-Intent Search Tags Grid */}
         <div className="mb-12 sm:mb-16 bg-white p-5 sm:p-8 rounded-3xl border border-gray-200/80 shadow-sm">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
             <div>
@@ -231,7 +313,7 @@ export default function BhopalCompetitorSEOShowcase() {
           </div>
         </div>
 
-        {/* 3. Bhopal Locality Delivery Hubs */}
+        {/* 4. Bhopal Locality Delivery Hubs */}
         <div className="mb-12 sm:mb-16 bg-gradient-to-br from-[#0c831f] to-[#095a16] text-white p-6 sm:p-10 rounded-3xl shadow-lg relative overflow-hidden">
           <div className="relative z-10">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
@@ -274,7 +356,7 @@ export default function BhopalCompetitorSEOShowcase() {
           </div>
         </div>
 
-        {/* 4. Google FAQ Schema Rich Snippets */}
+        {/* 5. Google FAQ Schema Rich Snippets */}
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-8">
             <span className="text-xs font-bold text-[#0c831f] uppercase tracking-wider">
