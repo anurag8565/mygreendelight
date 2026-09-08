@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { RiArrowRightSLine, RiLayoutGridFill } from "react-icons/ri";
 import { motion } from "framer-motion";
 
 // Clean, luxury category metadata with 4K assets and cache buster
@@ -122,9 +122,9 @@ export default function CategorySlider({
             className="text-[#0c831f] hover:text-[#096618] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition"
           >
             <span>See all</span>
-            <ChevronRight
-              size={15}
-              className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]"
+            <RiArrowRightSLine
+              size={18}
+              className="group-hover:translate-x-0.5 transition-transform"
             />
           </Link>
         </div>
