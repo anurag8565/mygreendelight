@@ -30,22 +30,23 @@ export default function Logo({
         <Image
           src="/logo-icon.png"
           alt="SubziQuick Logo"
-          width={isCompact ? 32 : 40}
-          height={isCompact ? 32 : 40}
-          className="w-full h-full object-contain drop-shadow-xs"
+          width={isCompact ? 32 : 42}
+          height={isCompact ? 32 : 42}
+          className="w-full h-full object-contain filter drop-shadow-[0_1px_2px_rgba(0,0,0,0.12)] select-none"
           priority
+          unoptimized
         />
       </div>
 
       {/* 🏷️ SubziQuick Serif Brand Wordmark */}
-      <div className="flex flex-col leading-none font-[family-name:var(--font-brand-serif),serif]">
+      <div className="flex flex-col leading-none font-[family-name:var(--font-brand-serif),serif] antialiased">
         <div className="flex items-baseline tracking-tight">
           <span
             className={`font-semibold tracking-[-0.01em] ${
               isCompact ? "text-xl" : "text-2xl sm:text-[25px]"
             } ${
               isWhite
-                ? "text-white drop-shadow-xs"
+                ? "text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.25)]"
                 : isInvoice
                 ? "text-gray-950"
                 : "text-[#083621]"
@@ -59,7 +60,7 @@ export default function Logo({
             } ${
               isInvoice
                 ? "text-amber-700"
-                : "bg-gradient-to-b from-[#e5be7a] via-[#c49335] to-[#805710] bg-clip-text text-transparent drop-shadow-xs"
+                : "bg-gradient-to-b from-[#e5be7a] via-[#c49335] to-[#805710] bg-clip-text text-transparent drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]"
             }`}
           >
             .IN
