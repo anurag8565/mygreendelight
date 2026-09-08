@@ -1,5 +1,6 @@
-import Logo from "@/components/Logo";
 "use client";
+
+import Logo from "@/components/Logo";
 
 import {
   ArrowLeft,
