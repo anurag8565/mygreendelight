@@ -20,6 +20,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import Logo from "@/components/Logo";
 
 export default function Login() {
   const router = useRouter();
@@ -101,12 +102,7 @@ export default function Login() {
 
           {/* Top Brand Emblem */}
           <div className="relative z-10">
-            <Link href="/" className="inline-flex items-center gap-2.5 bg-white/10 hover:bg-white/15 backdrop-blur-md px-3.5 py-1.5 rounded-2xl border border-white/10 transition">
-              <div className="w-7 h-7 rounded-xl bg-emerald-500 flex items-center justify-center text-white shadow-xs">
-                <Leaf size={15} />
-              </div>
-              <span className="font-black text-sm tracking-tight text-white">SubziQuick</span>
-            </Link>
+            <Logo variant="white" />
 
             <div className="mt-8 space-y-2">
               <span className="text-[11px] font-black uppercase tracking-wider text-emerald-300 flex items-center gap-1.5">
@@ -167,9 +163,8 @@ export default function Login() {
           
           {/* Mobile Brand Header */}
           <div className="text-center lg:text-left mb-6">
-            <div className="inline-flex lg:hidden items-center gap-2 bg-emerald-50 text-emerald-800 px-3 py-1.5 rounded-2xl border border-emerald-200 mb-3 shadow-2xs">
-              <Leaf size={14} className="text-[#0f8646]" />
-              <span className="font-black text-xs">SubziQuick Bhopal</span>
+            <div className="inline-block lg:hidden mb-4">
+              <Logo />
             </div>
 
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
