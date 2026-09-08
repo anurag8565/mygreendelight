@@ -200,7 +200,7 @@ export default function VoiceSearchModal({ isOpen, onClose }: VoiceSearchModalPr
         {/* Live Transcript Display */}
         {transcript && (
           <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl mb-4 text-emerald-950 font-black text-sm">
-            "{transcript}"
+            &ldquo;{transcript}&rdquo;
           </div>
         )}
 

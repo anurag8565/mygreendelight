@@ -20,7 +20,7 @@ interface iUser {
   }
 
   socketid: string | null,
-  isonline: Boolean,
+  isonline: boolean,
   wishlist?: mongoose.Types.ObjectId[],
   walletBalance?: number;
   walletHistory?: {
