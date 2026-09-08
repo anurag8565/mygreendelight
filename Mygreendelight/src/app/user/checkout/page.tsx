@@ -1019,69 +1019,100 @@ export default function Checkout() {
                     <div className="p-4 pt-0 border-t border-emerald-100/80 bg-white space-y-4">
                       {/* Mobile 1-Click Pay Apps Button */}
                       <div className="pt-3">
-                        <span className="text-[11px] font-bold text-gray-600 block mb-2">
-                          ⚡ Tap to Pay Directly on Phone (Mobile UPI Apps):
+                        <span className="text-[11px] font-bold text-gray-700 block mb-2">
+                          ⚡ Option A: Tap to Pay with Mobile UPI Apps:
                         </span>
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                           <a
-                            href={`upi://pay?pa=9981418565-2@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Fresh%20Order`}
-                            className="bg-[#5f259f] hover:bg-[#4a1c7d] text-white py-2 px-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs transition"
+                            href={`phonepe://pay?pa=9981418565@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Order`}
+                            className="bg-[#5f259f] hover:bg-[#4a1c7d] text-white py-2.5 px-3 rounded-xl text-xs font-black flex items-center justify-center gap-1.5 shadow-xs transition active:scale-95 text-center"
                           >
-                            <span>PhonePe</span>
+                            <span>🟣 PhonePe</span>
                           </a>
                           <a
-                            href={`upi://pay?pa=9981418565-2@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Fresh%20Order`}
-                            className="bg-[#1a73e8] hover:bg-[#1557b0] text-white py-2 px-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs transition"
+                            href={`upi://pay?pa=9981418565@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Order`}
+                            className="bg-[#1a73e8] hover:bg-[#1557b0] text-white py-2.5 px-3 rounded-xl text-xs font-black flex items-center justify-center gap-1.5 shadow-xs transition active:scale-95 text-center"
                           >
-                            <span>GPay</span>
+                            <span>🔵 Google Pay</span>
                           </a>
                           <a
-                            href={`upi://pay?pa=9981418565-2@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Fresh%20Order`}
-                            className="bg-[#00baf2] hover:bg-[#0092bf] text-white py-2 px-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs transition col-span-2 sm:col-span-1"
+                            href={`upi://pay?pa=9981418565@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Order`}
+                            className="bg-[#00baf2] hover:bg-[#0092bf] text-white py-2.5 px-3 rounded-xl text-xs font-black flex items-center justify-center gap-1.5 shadow-xs transition active:scale-95 col-span-2 sm:col-span-1 text-center"
                           >
-                            <span>Paytm / BHIM</span>
+                            <span>🔷 Paytm / BHIM</span>
                           </a>
+                        </div>
+
+                        {/* Self-transfer / Device Error Help Banner */}
+                        <div className="mt-3 bg-amber-50 border border-amber-300/80 rounded-xl p-3 text-amber-950 text-[11px] leading-relaxed">
+                          <span className="font-extrabold text-amber-900 block flex items-center gap-1.5 mb-1">
+                            <AlertCircle size={14} className="text-amber-600 shrink-0" />
+                            <span>PhonePe me "Device not verified" ya Security Error aa raha hai?</span>
+                          </span>
+                          <p className="text-amber-800 font-medium">
+                            Yeh error tab aata hai jab aap <strong>usi phone/SIM se test karte hain</strong> jismein store ka number linked hai (Self-Payment Block by NPCI/Bank) ya browser security deep-link rok deta hai.
+                          </p>
+                          <p className="text-amber-900 font-bold mt-1">
+                            👉 <strong>Solution:</strong> Niche diya gaya <strong>"Copy UPI ID"</strong> dabayein aur PhonePe me jakar <em>"To UPI ID"</em> me paste karke pay karein, ya fir <strong>QR Code scan karein</strong>!
+                          </p>
                         </div>
                       </div>
 
-                      {/* Dynamic QR Code Box */}
-                      <div className="bg-emerald-50/50 p-4 rounded-2xl border border-emerald-200/80 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+                      {/* Dynamic QR Code & 1-Tap Copy Box */}
+                      <div className="bg-emerald-50/60 p-4 rounded-2xl border border-emerald-200/90 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
                         <div className="relative bg-white p-2 rounded-xl shadow-xs border border-gray-200 shrink-0">
                           <img
-                            src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(
-                              `upi://pay?pa=9981418565-2@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Fresh%20Order`
+                            src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(
+                              `upi://pay?pa=9981418565@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Order`
                             )}`}
                             alt="SubziQuick UPI QR"
                             className="w-28 h-28 object-contain"
                           />
                           <span className="text-[9px] font-bold text-gray-500 block text-center mt-1">
-                            Scan with Any App
+                            Scan with Any UPI App
                           </span>
                         </div>
 
-                        <div className="space-y-1.5 flex-1">
-                          <span className="text-[10px] font-black uppercase text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-md inline-block">
-                            Direct Bank Transfer
-                          </span>
-                          <h4 className="font-extrabold text-xs sm:text-sm text-gray-900">
-                            Scan & Pay ₹{finalPayableTotal}
-                          </h4>
+                        <div className="space-y-2 flex-1">
+                          <div>
+                            <span className="text-[10px] font-black uppercase text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-md inline-block">
+                              ⚡ Option B: Scan QR or Copy UPI ID
+                            </span>
+                            <h4 className="font-extrabold text-xs sm:text-sm text-gray-900 mt-1">
+                              Pay ₹{finalPayableTotal} to SubziQuick
+                            </h4>
+                          </div>
                           
-                          {/* Copyable UPI ID */}
-                          <div className="flex items-center gap-2 pt-1">
-                            <code className="bg-white border border-gray-200 px-2 py-1 rounded-lg text-xs font-mono font-bold text-gray-800">
-                              9981418565-2@ybl
+                          {/* Copyable Primary UPI ID */}
+                          <div className="flex flex-wrap items-center gap-2 pt-0.5 justify-center sm:justify-start">
+                            <code className="bg-white border border-gray-300 px-2.5 py-1 rounded-lg text-xs font-mono font-black text-gray-900 shadow-2xs">
+                              9981418565@ybl
                             </code>
                             <button
                               type="button"
                               onClick={() => {
-                                navigator.clipboard.writeText("9981418565-2@ybl");
+                                navigator.clipboard.writeText("9981418565@ybl");
                                 setCopiedUpi(true);
-                                setTimeout(() => setCopiedUpi(false), 2000);
+                                setTimeout(() => setCopiedUpi(false), 2500);
                               }}
-                              className="text-[11px] font-bold text-[#0f8646] hover:underline cursor-pointer flex items-center gap-1"
+                              className="px-3 py-1 bg-[#0f8646] hover:bg-[#0c6a38] text-white rounded-lg text-xs font-bold transition shadow-xs cursor-pointer flex items-center gap-1"
                             >
-                              {copiedUpi ? "✓ Copied" : "Copy ID"}
+                              {copiedUpi ? "✓ Copied!" : "📋 Copy UPI ID"}
+                            </button>
+                          </div>
+
+                          {/* Secondary Backup Handle */}
+                          <div className="flex items-center gap-1.5 text-[10px] text-gray-500 justify-center sm:justify-start">
+                            <span>Backup Handle:</span>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                navigator.clipboard.writeText("9981418565-2@ybl");
+                                alert("Backup UPI ID 9981418565-2@ybl copied to clipboard!");
+                              }}
+                              className="font-mono text-emerald-700 hover:underline cursor-pointer font-bold"
+                            >
+                              9981418565-2@ybl
                             </button>
                           </div>
                         </div>
