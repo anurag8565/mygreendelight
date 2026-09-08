@@ -52,10 +52,10 @@ export default function OffersPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fcfdfc] flex flex-col font-sans">
+    <div className="min-h-screen bg-[#f8f9fa] flex flex-col font-sans">
       <Nav user={userdata as any} />
 
-      <main className="flex-1 max-w-6xl w-full mx-auto px-3.5 sm:px-6 md:px-8 py-6 sm:py-10">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3.5 sm:px-6 md:px-8 py-5 sm:py-8">
         
         {/* Top Header Banner */}
         <div className="bg-gradient-to-r from-[#032412] via-[#073b1d] to-[#0f8646] text-white rounded-3xl p-6 sm:p-8 shadow-lg relative overflow-hidden mb-6 sm:mb-8">
@@ -205,7 +205,8 @@ export default function OffersPage() {
             className="w-full sm:w-auto bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2.5 rounded-xl font-black text-xs shadow-xs transition text-center flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <ShoppingBag size={14} />
-            <span>Start Shopping ➔</span>
+            <span>Start Shopping</span>
+            <ArrowRight size={14} />
           </Link>
         </div>
 

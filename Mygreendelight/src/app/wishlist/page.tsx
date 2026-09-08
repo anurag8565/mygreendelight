@@ -92,7 +92,7 @@ export default function WishlistPage() {
   };
 
   return (
-    <div className="bg-[#f8faf9] min-h-screen flex flex-col justify-between font-sans text-gray-900 pb-20 md:pb-0">
+    <div className="bg-[#f8f9fa] min-h-screen flex flex-col justify-between font-sans text-gray-900 pb-20 md:pb-0">
       <Nav user={(userdata as any) || { role: "user" }} />
 
       {/* Top Header Bar */}
@@ -157,7 +157,7 @@ export default function WishlistPage() {
             >
               <div className="flex items-center gap-2">
                 <CheckCircle2 size={18} className="shrink-0" />
-                <span>All {items.length} saved produce items added to your basket! 🛒</span>
+                <span>All {items.length} saved produce items added to your basket!</span>
               </div>
               <Link
                 href="/user/cart"
@@ -242,8 +242,8 @@ export default function WishlistPage() {
             <div className="bg-white rounded-3xl border border-gray-200/80 p-8 sm:p-14 text-center max-w-md mx-auto shadow-2xs">
               <div className="w-20 h-20 bg-rose-50 border border-rose-100 text-rose-500 rounded-3xl flex items-center justify-center mx-auto mb-4 relative shadow-2xs">
                 <Heart size={36} className="fill-rose-100 text-rose-500 animate-pulse" />
-                <span className="absolute -bottom-1 -right-1 bg-[#0f8646] text-white p-1 rounded-full text-[10px]">
-                  🌱
+                <span className="absolute -bottom-1 -right-1 bg-[#0f8646] text-white p-1 rounded-full text-[10px] flex items-center justify-center">
+                  <Leaf size={11} />
                 </span>
               </div>
               

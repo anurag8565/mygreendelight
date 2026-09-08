@@ -148,8 +148,8 @@ export default function ProductDetailsClient({
   };
 
   return (
-    <div className="bg-[#f8faf9] min-h-screen font-sans">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 md:px-8 py-2.5 sm:py-5 pb-32 sm:pb-16">
+    <div className="bg-[#f8f9fa] min-h-screen font-sans">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-5 sm:py-8 pb-32 sm:pb-16">
         
         {/* Top Breadcrumb & Mobile Back Navigation */}
         <div className="flex items-center justify-between gap-2 mb-3">

@@ -204,10 +204,10 @@ export default function MyOrder() {
   ).length;
 
   return (
-    <div className="bg-[#f8faf9] min-h-screen flex flex-col justify-between font-sans selection:bg-emerald-500 selection:text-white">
+    <div className="bg-[#f8f9fa] min-h-screen flex flex-col justify-between font-sans selection:bg-emerald-500 selection:text-white">
       <Nav user={(userdata as any) || { role: "user" }} />
 
-      <main className="max-w-5xl mx-auto px-3 sm:px-6 md:px-8 py-5 sm:py-8 pb-32 sm:pb-16 w-full flex-1">
+      <main className="max-w-5xl mx-auto px-3.5 sm:px-6 md:px-8 py-5 sm:py-8 pb-32 sm:pb-16 w-full flex-1">
         
         {/* Top Header Card */}
         <div className="bg-white rounded-3xl p-5 sm:p-7 border border-gray-200/80 shadow-2xs mb-5">

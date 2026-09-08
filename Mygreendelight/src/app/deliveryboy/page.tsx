@@ -31,7 +31,7 @@ export default async function DeliveryBoyPage() {
   const plainUser = JSON.parse(JSON.stringify(user));
 
   return (
-    <div className="min-h-screen bg-[#f8faf9] text-gray-900 font-sans">
+    <div className="min-h-screen bg-[#f8f9fa] text-gray-900 font-sans">
       <Deliveryboydashbord initialUser={plainUser} />
     </div>
   );

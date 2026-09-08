@@ -143,7 +143,7 @@ function OrderSuccessContent() {
       : "UPI (Verification Pending)";
 
   return (
-    <div className="bg-[#f7faf8] min-h-screen flex flex-col justify-between font-sans text-gray-900">
+    <div className="bg-[#f8f9fa] min-h-screen flex flex-col justify-between font-sans text-gray-900">
       <Nav user={(userdata as any) || { role: "user" }} />
 
       <main className="max-w-xl mx-auto px-4 py-8 sm:py-12 pb-28 sm:pb-20 w-full flex-1 flex flex-col items-center">
@@ -465,7 +465,7 @@ export default function OrderSuccess() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-[#f7faf8]">
+        <div className="min-h-screen flex items-center justify-center bg-[#f8f9fa]">
           <div className="w-10 h-10 border-4 border-[#0f8646] border-t-transparent rounded-full animate-spin" />
         </div>
       }

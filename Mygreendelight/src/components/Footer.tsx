@@ -220,16 +220,16 @@ export default function Footer() {
                 </h3>
                 <div className="flex flex-col gap-2.5 text-xs text-emerald-100/80 font-medium">
                   <Link href="/shop?category=Vegetables" className="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1.5 py-0.5">
-                    🥬 Daily Vegetables
+                    Daily Fresh Vegetables
                   </Link>
                   <Link href="/shop?category=Fruits" className="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1.5 py-0.5">
-                    🍎 Seasonal Fruits
+                    Seasonal Fruits
                   </Link>
                   <Link href="/shop?category=Exotics" className="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1.5 py-0.5">
-                    🥑 Exotics & Salads
+                    Exotics & Salads
                   </Link>
                   <Link href="/shop" className="hover:text-amber-300 text-amber-300 font-bold hover:translate-x-1 transition-all inline-flex items-center gap-1.5 py-0.5">
-                    🎁 Value Combos & Deals
+                    Value Combos & Deals
                   </Link>
                 </div>
               </div>
@@ -242,19 +242,19 @@ export default function Footer() {
                 </h3>
                 <div className="flex flex-col gap-2.5 text-xs text-emerald-100/80 font-medium">
                   <Link href="/user/myorder" className="hover:text-white hover:translate-x-1 transition-all py-0.5">
-                    📦 Track Orders
+                    Track Orders
                   </Link>
                   <Link href="/wishlist" className="hover:text-white hover:translate-x-1 transition-all py-0.5">
-                    ❤️ Saved Favorites
+                    Saved Favorites
                   </Link>
                   <Link href="/offers" className="hover:text-amber-300 text-amber-300 font-bold hover:translate-x-1 transition-all py-0.5">
-                    🏷️ Offers & Scratch Deals
+                    Offers & Scratch Deals
                   </Link>
                   <Link href="/contact" className="hover:text-white hover:translate-x-1 transition-all py-0.5">
-                    📞 Customer Support
+                    Customer Support
                   </Link>
                   <Link href="/about" className="hover:text-white hover:translate-x-1 transition-all py-0.5">
-                    ℹ️ About SubziQuick
+                    About SubziQuick
                   </Link>
                 </div>
               </div>
@@ -306,16 +306,16 @@ export default function Footer() {
                 {openSection === "categories" && (
                   <div className="px-4 pb-3 pt-1 border-t border-white/5 flex flex-col gap-2 text-xs text-emerald-100/80 font-medium">
                     <Link href="/shop?category=Vegetables" className="py-1 hover:text-white">
-                      🥬 Daily Vegetables
+                      Daily Fresh Vegetables
                     </Link>
                     <Link href="/shop?category=Fruits" className="py-1 hover:text-white">
-                      🍎 Seasonal Fresh Fruits
+                      Seasonal Fresh Fruits
                     </Link>
                     <Link href="/shop?category=Exotics" className="py-1 hover:text-white">
-                      🥑 Exotic Vegetables & Salads
+                      Exotic Vegetables & Salads
                     </Link>
                     <Link href="/shop" className="py-1 text-amber-300 font-bold">
-                      🎁 Value Combos & Deals
+                      Value Combos & Deals
                     </Link>
                   </div>
                 )}
@@ -341,19 +341,19 @@ export default function Footer() {
                 {openSection === "account" && (
                   <div className="px-4 pb-3 pt-1 border-t border-white/5 flex flex-col gap-2 text-xs text-emerald-100/80 font-medium">
                     <Link href="/user/myorder" className="py-1 hover:text-white">
-                      📦 Track My Orders
+                      Track My Orders
                     </Link>
                     <Link href="/wishlist" className="py-1 hover:text-white">
-                      ❤️ Saved Favorites
+                      Saved Favorites
                     </Link>
                     <Link href="/offers" className="py-1 text-amber-300 font-bold">
-                      🏷️ Offers & Discounts
+                      Offers & Discounts
                     </Link>
                     <Link href="/contact" className="py-1 hover:text-white">
-                      📞 Customer Support
+                      Customer Support
                     </Link>
                     <Link href="/about" className="py-1 hover:text-white">
-                      ℹ️ About SubziQuick
+                      About SubziQuick
                     </Link>
                   </div>
                 )}

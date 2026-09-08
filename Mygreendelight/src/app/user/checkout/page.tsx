@@ -28,6 +28,7 @@ import {
   Upload,
   Camera,
   Image as ImageIcon,
+  ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
@@ -385,7 +386,7 @@ export default function Checkout() {
 
   if (status === "unauthenticated" && !userdata) {
     return (
-      <div className="bg-[#f8faf9] min-h-screen flex flex-col justify-between font-sans">
+      <div className="bg-[#f8f9fa] min-h-screen flex flex-col justify-between font-sans">
         <Nav user={null} />
         <main className="max-w-md mx-auto px-4 py-24 text-center flex-1 flex flex-col items-center justify-center">
           <div className="w-16 h-16 rounded-3xl bg-amber-50 text-amber-600 flex items-center justify-center mb-4 mx-auto border border-amber-200 shadow-inner">
@@ -397,9 +398,10 @@ export default function Checkout() {
           </p>
           <Link
             href="/login?callbackUrl=/user/checkout"
-            className="w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3.5 px-6 rounded-2xl font-black text-xs sm:text-sm shadow-md transition text-center"
+            className="w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3.5 px-6 rounded-2xl font-black text-xs sm:text-sm shadow-md transition text-center flex items-center justify-center gap-2"
           >
-            Login / Create Account ➔
+            <span>Login / Create Account</span>
+            <ArrowRight size={14} />
           </Link>
         </main>
         <Footer />
@@ -433,7 +435,7 @@ export default function Checkout() {
 
   if (!submitting && (!cartdata || cartdata.length === 0)) {
     return (
-      <div className="bg-[#f8faf9] min-h-screen flex flex-col justify-between font-sans">
+      <div className="bg-[#f8f9fa] min-h-screen flex flex-col justify-between font-sans">
         <Nav user={(userdata as any) || { role: "user" }} />
         <main className="max-w-md mx-auto px-4 py-20 text-center flex-1 flex flex-col items-center justify-center">
           <div className="w-20 h-20 rounded-3xl bg-emerald-50 text-[#0f8646] flex items-center justify-center mb-4 mx-auto border border-emerald-100 shadow-inner">
@@ -448,9 +450,10 @@ export default function Checkout() {
           <div className="flex flex-col sm:flex-row gap-3 w-full max-w-xs mx-auto">
             <Link
               href="/shop"
-              className="w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3.5 px-6 rounded-2xl font-black text-xs sm:text-sm shadow-md transition text-center"
+              className="w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3.5 px-6 rounded-2xl font-black text-xs sm:text-sm shadow-md transition text-center flex items-center justify-center gap-1.5"
             >
-              Explore Farm Produce ➔
+              <span>Explore Farm Produce</span>
+              <ArrowRight size={14} />
             </Link>
             <Link
               href="/user/myorder"
@@ -466,10 +469,10 @@ export default function Checkout() {
   }
 
   return (
-    <div className="bg-[#f8faf9] min-h-screen flex flex-col justify-between font-sans selection:bg-green-100 selection:text-green-900">
+    <div className="bg-[#f8f9fa] min-h-screen flex flex-col justify-between font-sans selection:bg-green-100 selection:text-green-900">
       <Nav user={(userdata as any) || { role: "user" }} />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-28 sm:pb-12 w-full flex-1">
+      <main className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-5 sm:py-8 pb-28 sm:pb-12 w-full flex-1">
         {/* Top Breadcrumb & Clean Header */}
         <div className="flex items-center gap-2 text-xs text-gray-500 mb-4">
           <Link href="/" className="hover:text-[#0f8646] transition font-medium">

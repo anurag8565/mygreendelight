@@ -147,10 +147,10 @@ export default function CartPage() {
   };
 
   return (
-    <div className="bg-[#fbfcfb] min-h-screen flex flex-col justify-between">
+    <div className="bg-[#f8f9fa] min-h-screen flex flex-col justify-between font-sans">
       <Nav user={(userdata as any) || { role: "user" }} />
 
-      <main className="max-w-7xl mx-auto px-4 md:px-8 py-8 pb-28 lg:pb-8 w-full flex-1">
+      <main className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-5 sm:py-8 pb-28 lg:pb-8 w-full flex-1">
         {/* Breadcrumb Navigation */}
         <div className="flex items-center gap-2 text-xs text-gray-500 mb-6">
           <Link href="/" className="hover:text-[#0f8646] transition">
@@ -238,7 +238,7 @@ export default function CartPage() {
                     <Truck size={16} className="text-[#0f8646]" />
                     {isFreeDelivery ? (
                       <span className="text-[#0f8646]">
-                        Congratulations! You unlocked FREE Delivery 🎉
+                        Congratulations! You unlocked FREE Delivery
                       </span>
                     ) : (
                       <span>

@@ -235,16 +235,16 @@ export default function AboutPage() {
                 {/* Quick Quality Badges */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2">
                   {[
-                    { label: "100% Ozone Washed", icon: "🫧" },
-                    { label: "5 AM Sunrise Harvest", icon: "🌱" },
-                    { label: "10-15 Min Express", icon: "⚡" },
-                    { label: "Instant UPI Refund", icon: "🛡️" },
+                    { label: "100% Ozone Washed", icon: <Droplets size={16} className="text-blue-500" /> },
+                    { label: "5 AM Sunrise Harvest", icon: <Leaf size={16} className="text-[#0f8646]" /> },
+                    { label: "10-15 Min Express", icon: <Zap size={16} className="text-amber-500 fill-amber-400" /> },
+                    { label: "Instant UPI Refund", icon: <ShieldCheck size={16} className="text-teal-600" /> },
                   ].map((pill, i) => (
                     <div
                       key={i}
                       className="bg-white border border-gray-200/80 rounded-2xl p-2.5 sm:p-3 shadow-2xs flex items-center gap-2"
                     >
-                      <span className="text-base">{pill.icon}</span>
+                      <span className="shrink-0">{pill.icon}</span>
                       <span className="text-[11px] sm:text-xs font-black text-gray-800 leading-tight">
                         {pill.label}
                       </span>

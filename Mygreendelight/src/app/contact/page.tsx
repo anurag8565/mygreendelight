@@ -192,7 +192,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="bg-[#f8faf9] min-h-screen flex flex-col justify-between font-sans text-gray-900">
+    <div className="bg-[#f8f9fa] min-h-screen flex flex-col justify-between font-sans text-gray-900">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}

@@ -32,10 +32,10 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 const CATEGORY_IMAGES: Record<string, string> = {
-  all: "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=600&q=80",
-  vegetables: "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=600&q=80",
-  fruits: "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=600&q=80",
-  exotics: "https://images.unsplash.com/photo-1518843875459-f738682238a6?auto=format&fit=crop&w=600&q=80",
+  all: "/categories/vegetables_4k.jpg?v=4",
+  vegetables: "/categories/vegetables_4k.jpg?v=4",
+  fruits: "/categories/fruits_4k.jpg?v=4",
+  exotics: "/categories/exotics_4k.jpg?v=4",
   combos: "/combo_banner.jpg",
 };
 
@@ -205,10 +205,10 @@ export default function ShopPage() {
   };
 
   return (
-    <div className="bg-[#f8faf9] min-h-screen flex flex-col justify-between font-sans">
+    <div className="bg-[#f8f9fa] min-h-screen flex flex-col justify-between font-sans">
       <Nav user={(userdata as any) || { role: "user" }} />
 
-      <main className="flex-1 max-w-7xl mx-auto px-3 sm:px-6 md:px-8 py-3 sm:py-6 pb-28 sm:pb-16 w-full">
+      <main className="flex-1 max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-5 sm:py-8 pb-28 sm:pb-16 w-full">
         
         {/* 1. Clean Breadcrumb Navigation */}
         <div className="flex items-center gap-1.5 text-[11px] sm:text-xs text-gray-500 mb-2">

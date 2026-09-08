@@ -79,7 +79,7 @@ export default function UserProfileHub() {
 
   if (status === "unauthenticated" && !isLoggedIn) {
     return (
-      <div className="min-h-screen bg-[#f7faf8] flex flex-col font-sans text-gray-900">
+      <div className="min-h-screen bg-[#f8f9fa] flex flex-col font-sans text-gray-900">
         <Nav />
         <main className="flex-1 max-w-md w-full mx-auto px-4 py-16 flex flex-col items-center justify-center text-center">
           <div className="w-20 h-20 rounded-3xl bg-emerald-100/80 text-[#0f8646] flex items-center justify-center mb-5 shadow-xs border border-emerald-200">
@@ -105,10 +105,10 @@ export default function UserProfileHub() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f8faf9] flex flex-col font-sans text-gray-900">
+    <div className="min-h-screen bg-[#f8f9fa] flex flex-col font-sans text-gray-900">
       <Nav user={activeUser} />
 
-      <main className="flex-1 max-w-4xl w-full mx-auto px-3.5 sm:px-6 py-6 sm:py-10 pb-28 sm:pb-20 space-y-6">
+      <main className="flex-1 max-w-4xl w-full mx-auto px-3.5 sm:px-6 md:px-8 py-5 sm:py-8 pb-28 sm:pb-20 space-y-6">
         
         {/* Top Minimal Navigation Bar */}
         <div className="flex items-center justify-between">
