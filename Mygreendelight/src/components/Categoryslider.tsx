@@ -6,45 +6,57 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 
-// Clean, high-converting category metadata
+// Clean, high-converting category metadata with Zepto/Instamart glow styling
 const CATEGORY_MAP: Record<
   string,
   {
     title: string;
     subtitle: string;
     tag: string;
+    badge: string;
+    badgeBg: string;
     imgUrl: string;
     bgGradient: string;
     borderColor: string;
     textColor: string;
+    glowShadow: string;
   }
 > = {
   vegetables: {
     title: "Vegetables",
     subtitle: "Farm Fresh Daily Harvest",
-    tag: "Daily Fresh",
+    tag: "Daily Greens",
+    badge: "🌿 100% Farm Fresh",
+    badgeBg: "bg-emerald-600 text-white",
     imgUrl: "/categories/vegetables_4k.jpg",
-    bgGradient: "bg-gradient-to-b from-emerald-50/90 to-green-50/40",
-    borderColor: "border-emerald-200/80",
+    bgGradient: "bg-gradient-to-b from-emerald-100/80 via-emerald-50/40 to-white",
+    borderColor: "border-emerald-200/90 hover:border-emerald-400",
     textColor: "text-emerald-950",
+    glowShadow: "hover:shadow-[0_16px_32px_rgba(16,185,129,0.18)]",
   },
   fruits: {
     title: "Fruits",
     subtitle: "Juicy & Naturally Sweet",
     tag: "Sweet & Juicy",
+    badge: "🍎 Naturally Sweet",
+    badgeBg: "bg-amber-600 text-white",
     imgUrl: "/categories/fruits_4k.jpg",
-    bgGradient: "bg-gradient-to-b from-amber-50/90 to-orange-50/40",
-    borderColor: "border-amber-200/80",
+    bgGradient: "bg-gradient-to-b from-amber-100/80 via-orange-50/40 to-white",
+    borderColor: "border-amber-200/90 hover:border-amber-400",
     textColor: "text-amber-950",
+    glowShadow: "hover:shadow-[0_16px_32px_rgba(245,158,11,0.18)]",
   },
   exotics: {
     title: "Exotics",
     subtitle: "Hydroponic & Gourmet Greens",
     tag: "Gourmet Fresh",
+    badge: "🥑 Hydroponic",
+    badgeBg: "bg-purple-600 text-white",
     imgUrl: "/categories/exotics_4k.jpg",
-    bgGradient: "bg-gradient-to-b from-purple-50/90 to-fuchsia-50/40",
-    borderColor: "border-purple-200/80",
+    bgGradient: "bg-gradient-to-b from-purple-100/80 via-fuchsia-50/40 to-white",
+    borderColor: "border-purple-200/90 hover:border-purple-400",
     textColor: "text-purple-950",
+    glowShadow: "hover:shadow-[0_16px_32px_rgba(168,85,247,0.18)]",
   },
 };
 
@@ -97,30 +109,33 @@ export default function CategorySlider({
   }
 
   return (
-    <section className="w-full py-4 sm:py-7 bg-white font-sans border-b border-gray-100">
+    <section className="w-full py-4 sm:py-6 bg-white font-sans border-b border-gray-100/80">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Header Row */}
-        <div className="flex items-center justify-between gap-2 mb-3 sm:mb-5">
+        <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">
           <div className="flex items-center gap-2">
             <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight flex items-center gap-1.5">
               <span>Shop by Category</span>
             </h2>
+            <span className="hidden sm:inline-block text-[10px] uppercase font-black tracking-wider text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
+              ⚡ 10-15 Min Express
+            </span>
           </div>
 
           <Link
             href="/shop"
-            className="text-[#0c831f] hover:text-[#096618] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition shrink-0"
+            className="text-[#0c831f] hover:text-[#096618] font-black text-xs sm:text-sm flex items-center gap-0.5 group transition shrink-0"
           >
             <span>See All</span>
             <ChevronRight
-              size={14}
-              className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]"
+              size={15}
+              className="group-hover:translate-x-1 transition-transform stroke-[3]"
             />
           </Link>
         </div>
 
         {/* 
-          Clean Minimalist 3-Column Touch & Desktop Cards
+          Vibrant Pastel Glow 3-Column Category Cards (Zepto & Instamart Style)
         */}
         <div className="grid grid-cols-3 max-w-5xl md:mx-auto gap-2.5 sm:gap-4 md:gap-6">
           {activeCategories.map((item, idx) => {
@@ -129,10 +144,13 @@ export default function CategorySlider({
               title: item.name,
               subtitle: "Fresh Harvested Produce",
               tag: "Farm Fresh",
+              badge: "🌱 Fresh",
+              badgeBg: "bg-emerald-600 text-white",
               imgUrl: item.image || "/categories/vegetables_4k.jpg",
-              bgGradient: "bg-gradient-to-b from-gray-50 to-slate-50",
-              borderColor: "border-gray-200",
+              bgGradient: "bg-gradient-to-b from-gray-100 to-white",
+              borderColor: "border-gray-200 hover:border-gray-400",
               textColor: "text-gray-900",
+              glowShadow: "hover:shadow-[0_16px_32px_rgba(0,0,0,0.12)]",
             };
 
             const imageSrc =
@@ -144,28 +162,36 @@ export default function CategorySlider({
               <motion.div
                 key={item._id || item.name || idx}
                 whileTap={{ scale: 0.96 }}
-                whileHover={{ y: -5 }}
+                whileHover={{ y: -6 }}
                 transition={{ type: "spring", stiffness: 350, damping: 22 }}
                 onClick={() =>
                   router.push(`/shop?category=${encodeURIComponent(item.name)}`)
                 }
-                className={`group cursor-pointer rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 md:p-5 ${config.bgGradient} border ${config.borderColor} shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.09)] transition-all duration-300 flex flex-col justify-between select-none relative overflow-hidden`}
+                className={`group cursor-pointer rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 md:p-5 ${config.bgGradient} border ${config.borderColor} shadow-[0_4px_16px_rgba(0,0,0,0.04)] ${config.glowShadow} transition-all duration-300 flex flex-col justify-between select-none relative overflow-hidden`}
               >
-                {/* Subtle Hover Shimmer */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/30 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                {/* Visual Glassmorphic Light Flare on Hover */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/40 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-                {/* 4K Image Container */}
-                <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-white shadow-2xs border border-white/80">
+                {/* 4K Image Container with Micro Badge */}
+                <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-white shadow-2xs border border-white/90">
                   <img
                     src={imageSrc}
                     alt={config.title}
-                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 ease-out"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
                     onError={(e: any) => {
                       e.target.src = config.imgUrl || "/categories/vegetables_4k.jpg";
                     }}
                   />
+                  
+                  {/* Category Pill Badge on Card */}
+                  <div className="absolute top-1.5 left-1.5 sm:top-2 sm:left-2 z-10">
+                    <span className={`text-[8px] sm:text-[9.5px] font-black px-1.5 sm:px-2 py-0.5 rounded-md shadow-xs uppercase tracking-wider block ${config.badgeBg}`}>
+                      {config.tag}
+                    </span>
+                  </div>
+
                   {/* Subtle Gradient Overlay on Hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
 
                 {/* Text Content */}
@@ -179,10 +205,7 @@ export default function CategorySlider({
                     </div>
                   </div>
 
-                  {/* Mobile Tag / Desktop Subtitle */}
-                  <p className="text-[10px] text-gray-500 font-semibold sm:hidden mt-0.5 truncate">
-                    {config.tag}
-                  </p>
+                  {/* Desktop Subtitle */}
                   <p className="hidden sm:block text-xs text-gray-500 font-medium truncate mt-1">
                     {config.subtitle}
                   </p>

@@ -324,16 +324,32 @@ export default function Hero({ banners = [] }: HeroProps) {
             </motion.div>
           </AnimatePresence>
 
-          {/* Smooth Auto-Slide Progress Bar at bottom */}
-          {total > 1 && !isPaused && (
-            <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/15 z-30 overflow-hidden">
-              <motion.div
-                key={currentSlide}
-                initial={{ width: "0%" }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 5.5, ease: "linear" }}
-                className="h-full bg-emerald-400"
-              />
+          {/* 4. Top/Bottom Segmented Story-Style Progress Bar */}
+          {total > 1 && (
+            <div className="absolute top-2 sm:top-3 left-4 right-4 sm:left-8 sm:right-8 z-30 flex items-center gap-1.5 sm:gap-2">
+              {activeSlides.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => goToSlide(idx, idx > currentSlide ? 1 : -1)}
+                  className="flex-1 h-1 sm:h-1.5 rounded-full bg-white/20 backdrop-blur-xs overflow-hidden cursor-pointer relative group transition-all"
+                  title={`Slide ${idx + 1}`}
+                >
+                  {currentSlide === idx ? (
+                    <motion.div
+                      key={`active-${idx}`}
+                      initial={{ width: "0%" }}
+                      animate={{ width: isPaused ? "100%" : "100%" }}
+                      transition={{ duration: 5.5, ease: "linear" }}
+                      className="h-full bg-emerald-400 rounded-full shadow-[0_0_8px_#34d399]"
+                    />
+                  ) : idx < currentSlide ? (
+                    <div className="h-full w-full bg-white/80 rounded-full" />
+                  ) : (
+                    <div className="h-full w-0 bg-white/30 rounded-full group-hover:w-full transition-all duration-300" />
+                  )}
+                </button>
+              ))}
             </div>
           )}
 
@@ -357,21 +373,15 @@ export default function Hero({ banners = [] }: HeroProps) {
                 <ChevronRight size={22} className="stroke-[2.5]" />
               </button>
 
-              {/* Dots Pagination */}
-              <div className="absolute bottom-3 sm:bottom-4 right-3.5 sm:right-4 z-30 flex items-center gap-1.5 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 shadow-sm">
-                {activeSlides.map((_, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => goToSlide(idx, idx > currentSlide ? 1 : -1)}
-                    className={`transition-all duration-300 rounded-full cursor-pointer ${
-                      currentSlide === idx
-                        ? "w-6 h-1.5 bg-white shadow-xs"
-                        : "w-1.5 h-1.5 bg-white/50 hover:bg-white/80"
-                    }`}
-                    title={`Slide ${idx + 1}`}
-                  />
-                ))}
+              {/* Bottom Interactive Slide Counter Pill */}
+              <div className="absolute bottom-3 sm:bottom-4 right-3.5 sm:right-4 z-30 flex items-center gap-2 bg-black/45 hover:bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 shadow-sm transition">
+                <span className="text-[10px] font-black text-emerald-300 tracking-wider">
+                  0{currentSlide + 1}
+                </span>
+                <span className="text-[9px] text-white/40">/</span>
+                <span className="text-[10px] font-bold text-white/70">
+                  0{total}
+                </span>
               </div>
             </>
           )}
