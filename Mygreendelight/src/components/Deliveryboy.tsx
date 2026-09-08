@@ -518,8 +518,8 @@ export default function Deliveryboy({ initialUser }: Props) {
           {/* Driver Profile */}
           <div className="flex items-center gap-3">
             <div className="relative">
-              <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-50 via-white to-amber-50 p-1 flex items-center justify-center shadow-sm border border-emerald-500/20 shrink-0">
-                <img src="/logo-icon.png" alt="SubziQuick Partner" className="w-full h-full object-contain filter drop-shadow-xs" />
+              <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-[#0f8646] to-emerald-400 text-white flex items-center justify-center font-black text-lg shadow-sm shadow-emerald-600/20">
+                {currentUser?.name ? currentUser.name.charAt(0).toUpperCase() : <Bike size={22} />}
               </div>
               <span
                 className={`absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full border-2 border-white ${
