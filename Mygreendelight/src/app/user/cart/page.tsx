@@ -27,6 +27,7 @@ import {
   Sparkles,
   Coins,
   Lock,
+  Gift,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -294,7 +295,8 @@ export default function CartPage() {
                         <div className="flex items-center gap-1.5 mt-1">
                           {item.price === 0 ? (
                             <span className="bg-emerald-100 text-[#0f8646] font-black text-[10px] uppercase px-2 py-0.5 rounded-md flex items-center gap-1">
-                              <span>🎁 FREE UNLOCKED GIFT</span>
+                              <Gift size={11} className="text-[#0f8646]" />
+                              <span>FREE UNLOCKED GIFT</span>
                               <span className="line-through text-gray-400 font-bold">₹35</span>
                               <span>₹0</span>
                             </span>

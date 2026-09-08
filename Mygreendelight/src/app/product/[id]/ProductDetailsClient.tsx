@@ -314,7 +314,7 @@ export default function ProductDetailsClient({
                   </div>
                   <div>
                     <p className="text-xs font-black text-emerald-950 leading-tight">
-                      ⚡ 10-15 Min Express Delivery in Bhopal
+                      10-15 Min Express Delivery in Bhopal
                     </p>
                     <p className="text-[10px] text-emerald-700 font-medium">
                       Harvested sunrise 5:00 AM • 100% Ozone Cleaned

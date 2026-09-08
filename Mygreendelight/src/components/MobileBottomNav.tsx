@@ -15,6 +15,7 @@ import {
   ArrowRight,
   Search,
   ShieldCheck,
+  Zap,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -102,8 +103,9 @@ export default function MobileBottomNav() {
                         {cartCount} {cartCount > 1 ? "ITEMS" : "ITEM"}
                       </span>
                       <span className="text-emerald-300/60 text-[10px]">•</span>
-                      <span className="text-[10px] font-bold text-amber-300">
-                        ⚡ 10-15 MIN
+                      <span className="text-[10px] font-bold text-amber-300 inline-flex items-center gap-0.5">
+                        <Zap size={10} className="fill-amber-300 text-amber-300" />
+                        10-15 MIN
                       </span>
                     </div>
                     <span className="text-base font-black text-white leading-tight block truncate">

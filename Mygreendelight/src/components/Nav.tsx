@@ -646,11 +646,12 @@ export default function Nav({ user }: { user?: iUser | null }) {
                       <div className="mb-3.5">
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-[11px] font-black uppercase text-gray-500 tracking-wider flex items-center gap-1.5">
-                            <Sparkles size={12} className="text-amber-500" />
-                            Explore Real Categories
+                            <LayoutGrid size={12} className="text-[#0c831f]" />
+                            Explore Categories
                           </span>
-                          <span className="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80">
-                            ⚡ 10-15 Min Delivery
+                          <span className="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80 inline-flex items-center gap-1">
+                            <Zap size={10} className="text-amber-500 fill-amber-500" />
+                            10-15 Min Delivery
                           </span>
                         </div>
 
@@ -1118,11 +1119,12 @@ export default function Nav({ user }: { user?: iUser | null }) {
                   <div className="mb-3">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-[11px] font-black uppercase text-gray-500 tracking-wider flex items-center gap-1.5">
-                        <Sparkles size={12} className="text-amber-500" />
+                        <LayoutGrid size={12} className="text-[#0c831f]" />
                         Explore Categories
                       </span>
-                      <span className="text-[9.5px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80">
-                        ⚡ 10-15 Min
+                      <span className="text-[9.5px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80 inline-flex items-center gap-1">
+                        <Zap size={10} className="text-amber-500 fill-amber-500" />
+                        10-15 Min
                       </span>
                     </div>
 

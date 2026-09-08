@@ -23,6 +23,7 @@ import {
   Leaf,
   ChevronRight,
   Package,
+  Zap,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Nav from "@/components/Nav";
@@ -328,8 +329,9 @@ function OrderSuccessContent() {
                     <p className="font-extrabold text-gray-900 text-xs">
                       {deliverySlot}
                     </p>
-                    <p className="text-[11px] text-emerald-700 font-semibold">
-                      ⚡ Express 15-45 Mins
+                    <p className="text-[11px] text-emerald-700 font-semibold inline-flex items-center gap-1">
+                      <Zap size={11} className="text-amber-500 fill-amber-500" />
+                      Express 15-45 Mins
                     </p>
                   </div>
                 </div>
@@ -403,7 +405,7 @@ function OrderSuccessContent() {
                   onClick={() => setShowRewardModal(true)}
                   className="px-3.5 py-2 bg-[#0f8646] hover:bg-[#0c6a38] text-white rounded-xl text-xs font-black shadow-xs transition cursor-pointer shrink-0"
                 >
-                  {reward.isScratched ? "View" : "Scratch 🎁"}
+                  {reward.isScratched ? "View" : "Scratch & Win"}
                 </button>
               </div>
             )}
