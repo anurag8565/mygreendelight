@@ -6,7 +6,7 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 
-// Clean, luxury category metadata with 4K assets
+// Clean, luxury category metadata with 4K assets and cache buster
 const CATEGORY_MAP: Record<
   string,
   {
@@ -16,44 +16,44 @@ const CATEGORY_MAP: Record<
   }
 > = {
   vegetables: {
-    title: "Fresh Vegetables",
-    subtitle: "Daily Farm Harvest",
-    imgUrl: "/categories/vegetables_4k.jpg",
+    title: "Vegetables",
+    subtitle: "Farm Fresh Daily",
+    imgUrl: "/categories/vegetables_4k.jpg?v=3",
   },
   vegetable: {
-    title: "Fresh Vegetables",
-    subtitle: "Daily Farm Harvest",
-    imgUrl: "/categories/vegetables_4k.jpg",
+    title: "Vegetables",
+    subtitle: "Farm Fresh Daily",
+    imgUrl: "/categories/vegetables_4k.jpg?v=3",
   },
   fruits: {
-    title: "Fresh Fruits",
+    title: "Fruits",
     subtitle: "Sweet & Juicy",
-    imgUrl: "/categories/fruits_4k.jpg",
+    imgUrl: "/categories/fruits_4k.jpg?v=3",
   },
   fruit: {
-    title: "Fresh Fruits",
+    title: "Fruits",
     subtitle: "Sweet & Juicy",
-    imgUrl: "/categories/fruits_4k.jpg",
+    imgUrl: "/categories/fruits_4k.jpg?v=3",
   },
   exotics: {
-    title: "Hydroponic Exotics",
-    subtitle: "Gourmet Salads & Greens",
-    imgUrl: "/categories/exotics_4k.jpg",
+    title: "Exotics",
+    subtitle: "Hydroponic Greens",
+    imgUrl: "/categories/exotics_4k.jpg?v=3",
   },
   exotic: {
-    title: "Hydroponic Exotics",
-    subtitle: "Gourmet Salads & Greens",
-    imgUrl: "/categories/exotics_4k.jpg",
+    title: "Exotics",
+    subtitle: "Hydroponic Greens",
+    imgUrl: "/categories/exotics_4k.jpg?v=3",
   },
   dairy: {
-    title: "Dairy & Essentials",
-    subtitle: "100% Pure & Fresh",
-    imgUrl: "/categories/dairy_4k.jpg",
+    title: "Dairy & Milk",
+    subtitle: "Pure & Fresh",
+    imgUrl: "/categories/dairy_4k.jpg?v=3",
   },
   "ready to cook": {
     title: "Ready to Cook",
     subtitle: "Pre-Cleaned & Cut",
-    imgUrl: "/categories/ready_to_cook.jpg",
+    imgUrl: "/categories/ready_to_cook.jpg?v=3",
   },
 };
 
@@ -106,12 +106,12 @@ export default function CategorySlider({
   }
 
   return (
-    <section className="w-full py-4 sm:py-7 bg-white font-sans border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
+    <section className="w-full py-4 sm:py-6 bg-white font-sans border-b border-gray-100">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 md:px-8">
         {/* Header Row */}
-        <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#0c831f]" />
+        <div className="flex items-center justify-between gap-2 mb-3 sm:mb-5">
+          <div className="flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-[#0c831f]" />
             <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
               Shop by Category
             </h2>
@@ -138,41 +138,38 @@ export default function CategorySlider({
             const config = CATEGORY_MAP[matchedKey] || {
               title: item.name,
               subtitle: "Fresh Harvest",
-              imgUrl: item.image || "/categories/vegetables_4k.jpg",
+              imgUrl: item.image || "/categories/vegetables_4k.jpg?v=3",
             };
 
-            const imageSrc =
-              item.image &&
-              (item.image.startsWith("/categories/") || item.image.startsWith("http"))
-                ? item.image
-                : config.imgUrl;
+            // Always prioritize our crisp 4k studio photography
+            const imageSrc = config.imgUrl || item.image || "/categories/vegetables_4k.jpg?v=3";
 
             return (
               <motion.div
                 key={item._id || item.name || idx}
-                whileTap={{ scale: 0.97 }}
-                whileHover={{ y: -4 }}
+                whileTap={{ scale: 0.96 }}
+                whileHover={{ y: -3 }}
                 transition={{ type: "spring", stiffness: 350, damping: 24 }}
                 onClick={() =>
                   router.push(`/shop?category=${encodeURIComponent(item.name)}`)
                 }
-                className="group cursor-pointer bg-white hover:bg-[#fafdfa] rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 border border-gray-200/80 hover:border-emerald-400/80 shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_rgba(12,131,31,0.09)] transition-all duration-300 select-none flex flex-col justify-between"
+                className="group cursor-pointer bg-white hover:bg-[#fafdfa] rounded-2xl sm:rounded-3xl p-2 sm:p-3.5 border border-gray-200/80 hover:border-emerald-400/80 shadow-[0_2px_10px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_24px_rgba(12,131,31,0.09)] transition-all duration-200 select-none flex flex-col justify-between"
               >
-                {/* Clean Photo Container (No Badges, Pure Studio 4K Photography) */}
+                {/* Clean Photo Container (No Badges, Pure 4K Photography) */}
                 <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-gray-50/80 ring-1 ring-black/[0.04]">
                   <img
                     src={imageSrc}
                     alt={config.title}
                     className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-500 ease-out"
                     onError={(e: any) => {
-                      e.target.src = config.imgUrl || "/categories/vegetables_4k.jpg";
+                      e.target.src = "/categories/vegetables_4k.jpg?v=3";
                     }}
                   />
                 </div>
 
-                {/* Typography & Details */}
-                <div className="mt-2.5 sm:mt-3.5 text-center flex flex-col items-center">
-                  <h3 className="font-extrabold text-xs sm:text-base md:text-lg text-gray-900 group-hover:text-[#0c831f] transition-colors duration-200 leading-tight tracking-tight truncate w-full">
+                {/* Typography */}
+                <div className="mt-2 sm:mt-3 text-center flex flex-col items-center">
+                  <h3 className="font-black text-xs sm:text-base md:text-lg text-gray-900 group-hover:text-[#0c831f] transition-colors duration-200 leading-tight tracking-tight truncate w-full">
                     {config.title}
                   </h3>
                   <p className="text-[10px] sm:text-xs text-gray-500 font-medium truncate mt-0.5 sm:mt-1 w-full">

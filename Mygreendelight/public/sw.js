@@ -1,5 +1,5 @@
 // MyGreenDelight PWA Service Worker
-const CACHE_NAME = "mygreendelight-pwa-v1";
+const CACHE_NAME = "mygreendelight-pwa-v2";
 
 self.addEventListener("install", (event) => {
   self.skipWaiting();
