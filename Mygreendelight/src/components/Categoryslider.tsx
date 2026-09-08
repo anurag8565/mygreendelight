@@ -138,11 +138,11 @@ export default function CategorySlider({
             const config = CATEGORY_MAP[matchedKey] || {
               title: item.name,
               subtitle: "Fresh Harvest",
-              imgUrl: item.image || "/categories/vegetables_4k.jpg?v=3",
+              imgUrl: item.image || "/categories/vegetables_4k.jpg?v=4",
             };
 
             // Always prioritize our crisp 4k studio photography
-            const imageSrc = config.imgUrl || item.image || "/categories/vegetables_4k.jpg?v=3";
+            const imageSrc = config.imgUrl || item.image || "/categories/vegetables_4k.jpg?v=4";
 
             return (
               <motion.div
@@ -162,7 +162,7 @@ export default function CategorySlider({
                     alt={config.title}
                     className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-500 ease-out"
                     onError={(e: any) => {
-                      e.target.src = "/categories/vegetables_4k.jpg?v=3";
+                      e.target.src = "/categories/vegetables_4k.jpg?v=4";
                     }}
                   />
                 </div>
