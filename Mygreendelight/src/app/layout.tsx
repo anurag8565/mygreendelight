@@ -30,13 +30,26 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://subziquick.in"),
   title: {
-    default: "Online Vegetable & Fruit Delivery in Bhopal | Farm Fresh Produce - SubziQuick",
-    template: "%s | SubziQuick Bhopal - Online Vegetable Delivery",
+    default: "SubziQuick: Online Fresh Vegetable & Fruit Delivery in Bhopal | 10-15 Min Express",
+    template: "%s | SubziQuick Bhopal",
   },
   description:
-    "Order farm-fresh vegetables, seasonal fruits & groceries online in Bhopal at wholesale direct farm rates. 100% ozone-washed, pesticide-free with same-day express home delivery (15-45 mins) across all Bhopal localities. Cash on delivery & zero platform fee.",
+    "SubziQuick (Subzi Quick) is Bhopal's #1 farm-fresh vegetable & fruit delivery service. 100% ozone-washed, pesticide-safe produce sourced at 5:00 AM from local Kisan farms. Delivered in 10-15 mins with cash on delivery & zero platform fee across all Bhopal societies.",
   keywords: [
-    // Category 1: High Volume Commercial & Money Keywords
+    // Primary Brand & Name Variations (For #1 Brand Search Ranking)
+    "subzi quick",
+    "subziquick",
+    "subzi quick bhopal",
+    "subziquick bhopal",
+    "subziquick in",
+    "subzi quick app",
+    "subzi quick online vegetable delivery",
+    "subziquick fresh vegetables",
+    "subzi quick bagsewaniya bhopal",
+
+    // Primary High-Volume Category Keywords (Vegetables & Fruits in Bhopal)
+    "vegetables and fruits in bhopal",
+    "fresh vegetables and fruits in bhopal",
     "online vegetable delivery in bhopal",
     "buy fresh fruits online bhopal",
     "fresh sabzi online cash on delivery bhopal",
@@ -47,8 +60,10 @@ export const metadata: Metadata = {
     "no minimum order vegetable delivery bhopal",
     "free vegetable delivery in bhopal",
     "cheap fresh vegetable delivery online bhopal",
+    "taaza sabzi online bhopal",
+    "bhopal sabzi mandi online",
 
-    // Category 2: Hyperlocal Bhopal Locality Keywords
+    // Hyperlocal Bhopal Locality Keywords
     "vegetable delivery in arera colony bhopal",
     "fresh fruit delivery kolar road bhopal",
     "online sabzi delivery mp nagar bhopal",
@@ -63,8 +78,10 @@ export const metadata: Metadata = {
     "vegetables delivery chunabhatti bhopal",
     "fresh fruits saket nagar bhopal",
     "sabzi delivery bagsewaniya bhopal",
+    "fresh vegetables trilanga bhopal",
+    "vegetable delivery misrod bhopal",
 
-    // Category 3 & 4: Exotic & Daily Produce Keywords
+    // Exotic & Daily Produce Keywords
     "buy hass avocado in bhopal online",
     "fresh green broccoli price in bhopal",
     "fresh button mushroom 200g online bhopal",
@@ -74,10 +91,9 @@ export const metadata: Metadata = {
     "nashik red onion pyaz wholesale price bhopal",
     "fresh organic spinach palak online bhopal",
     "fresh green peas matar buy online bhopal",
-    "chopped ready to cook vegetable pack bhopal",
     "weekly vegetable family combo basket 10kg bhopal",
 
-    // Category 5: Trust, Health & Voice Search Keywords
+    // Trust, Purity & Voice Search Queries
     "pesticide free vegetables in bhopal",
     "100 percent ozone washed clean vegetables bhopal",
     "direct kisan wholesale price online sabzi bhopal",
@@ -85,10 +101,8 @@ export const metadata: Metadata = {
     "instant fresh sabzi delivery near me",
     "bhopal me online sabzi order kaise karein",
     "aaj bhopal me tamatar pyaz ka rate",
-    "chemical free sabzi kahan milegi bhopal me",
+    "best app to buy fresh vegetables in bhopal",
     "zero platform fee vegetable delivery app bhopal",
-    "best vegetable delivery service in bhopal 2026",
-    "SubziQuick Bhopal",
   ],
   authors: [{ name: "SubziQuick Bhopal" }],
   creator: "SubziQuick",
@@ -163,12 +177,26 @@ export default function RootLayout({
   const storeJsonLd = {
     "@context": "https://schema.org",
     "@type": "GroceryStore",
-    "name": "SubziQuick Bhopal",
+    "@id": "https://subziquick.in/#store",
+    "name": "SubziQuick",
+    "alternateName": [
+      "Subzi Quick",
+      "SubziQuick Bhopal",
+      "Subzi Quick Bhopal",
+      "SubziQuick.in",
+      "Subzi Quick App",
+      "Subzi Quick Online Vegetable Delivery"
+    ],
+    "description": "SubziQuick (Subzi Quick) is Bhopal's leading 10-15 min online vegetable and fruit delivery service. 100% ozone-washed, direct Kisan farm harvest at wholesale prices with zero platform fee.",
+    "disambiguatingDescription": "Online vegetable and fruit delivery service headquartered in Bagsewaniya, Bhopal, delivering across all Bhopal residential colonies.",
     "image": "https://subziquick.in/hero_basket.jpg",
+    "logo": "https://subziquick.in/logo.png",
     "url": "https://subziquick.in",
     "telephone": "+919981418565",
     "email": "anuragsinghas098@gmail.com",
-    "priceRange": "₹₹",
+    "priceRange": "₹",
+    "currenciesAccepted": "INR",
+    "paymentAccepted": "Cash, UPI, Credit Card, Debit Card, Net Banking",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Amrai, Bagsewaniya",
@@ -219,9 +247,15 @@ export default function RootLayout({
       "Bawadiya Kalan",
       "Trilanga"
     ],
-    "paymentAccepted": "Cash, UPI, Credit Card, Debit Card, Net Banking",
-    "currenciesAccepted": "INR",
-    "servesCuisine": "Fresh Vegetables, Seasonal Fruits, Fresh Produce, Dairy, Groceries",
+    "knowsAbout": [
+      "Subzi Quick",
+      "SubziQuick",
+      "Online Vegetable Delivery in Bhopal",
+      "Fresh Fruit Delivery Bhopal",
+      "Ozone Washed Chemical Free Vegetables",
+      "Bhopal Sabzi Mandi Bhav"
+    ],
+    "servesCuisine": "Fresh Vegetables, Seasonal Fruits, Hydroponic Exotics, Farm Produce, Groceries",
     "sameAs": [
       "https://www.instagram.com/subziquick",
       "https://wa.me/919981418565"
@@ -231,7 +265,15 @@ export default function RootLayout({
   const websiteJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": "https://subziquick.in/#website",
     "name": "SubziQuick",
+    "alternateName": [
+      "Subzi Quick",
+      "SubziQuick Bhopal",
+      "Subzi Quick Bhopal",
+      "Subzi Quick App",
+      "subziquick.in"
+    ],
     "url": "https://subziquick.in",
     "potentialAction": {
       "@type": "SearchAction",
@@ -246,18 +288,26 @@ export default function RootLayout({
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "How to get fresh vegetable delivery in Bhopal?",
+        "name": "What is SubziQuick (Subzi Quick) in Bhopal?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "You can order daily farm-fresh vegetables and fruits online in Bhopal via SubziQuick (https://subziquick.in). All vegetables are sourced at 5:00 AM from local farms, 100% ozone-cleaned, and delivered same-day in 15-45 minutes across Arera Colony, MP Nagar, Kolar Road, and all Bhopal societies."
+          "text": "SubziQuick (also searched as Subzi Quick) is Bhopal's dedicated hyperlocal quick-commerce platform delivering 100% ozone-washed, farm-fresh vegetables and seasonal fruits to your doorstep in 10-15 minutes at wholesale mandi prices with zero platform fee."
         }
       },
       {
         "@type": "Question",
-        "name": "Bhopal me online sabzi order kaise karein?",
+        "name": "How to order fresh vegetables and fruits in Bhopal online?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Bhopal me online sabzi order karne ke liye SubziQuick website (subziquick.in) par jayein ya Android/iOS app open karein. Apni pasand ki taaza sabziyan aur phal cart me add karein aur Cash on Delivery (COD) ya UPI se checkout karein. 15-45 minute me delivery aapke ghar pahunch jayegi."
+          "text": "You can order daily farm-fresh vegetables and fruits online in Bhopal via SubziQuick (https://subziquick.in). All vegetables are sourced at 5:00 AM from local Kisan farms, 100% ozone-cleaned, and delivered same-day in 10-15 minutes across Arera Colony, MP Nagar, Kolar Road, and all Bhopal societies with Cash on Delivery (COD) and UPI."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Bhopal me online sabzi aur phal order kaise karein?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Bhopal me online taaza sabzi aur phal order karne ke liye SubziQuick website (subziquick.in) open karein. Apni pasand ki taaza sabziyan cart me add karein aur Cash on Delivery (COD) ya UPI se order place karein. 10-15 minute me Bagsewaniya central store se delivery aapke ghar pahunch jayegi."
         }
       },
       {
@@ -270,18 +320,10 @@ export default function RootLayout({
       },
       {
         "@type": "Question",
-        "name": "Aaj Bhopal me tamatar aur pyaz ka rate kya chal raha hai?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "SubziQuick par roz subah 5 baje direct kisan farm harvest rates update hote hain. Tamatar, Pyaz aur Aaloo ke live dynamic rates dekhne ke liye subziquick.in par live price ticker check karein jahan wholesale farm bhav par sabzi milti hai."
-        }
-      },
-      {
-        "@type": "Question",
         "name": "Are SubziQuick vegetables pesticide-free and ozone cleaned?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes, every batch of leafy vegetables, fruits, and salad items is ozone-bubble washed to remove 99.4% of surface chemical pesticides, bacteria, and grime before dispatch, ensuring pure and healthy food."
+          "text": "Yes, every batch of vegetables and fruits is ozone micro-bubble washed to remove 99.4% of surface chemical pesticides, bacteria, and grime before dispatch, ensuring pure and healthy food."
         }
       },
       {

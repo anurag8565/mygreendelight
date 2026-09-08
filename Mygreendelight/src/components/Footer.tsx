@@ -120,7 +120,7 @@ export default function Footer() {
             </div>
 
             <p className="text-xs sm:text-sm text-emerald-100/80 mb-5 leading-relaxed font-medium max-w-sm">
-              Bhopal’s dedicated 10-15 min quick grocery delivery service. 100% ozone-washed, chemical-free farm vegetables and fresh seasonal fruits.
+              SubziQuick (Subzi Quick) is Bhopal’s dedicated 10-15 min online fresh vegetable and fruit delivery service. 100% ozone-washed, chemical-free farm produce direct to your kitchen.
             </p>
 
             {/* Store Hub & Hours Bento Chips */}
