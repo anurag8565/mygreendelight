@@ -37,45 +37,40 @@ export default function Logo({
         />
       </div>
 
-      {/* 🏷️ SubziQuick Balanced Modern Wordmark */}
-      <div className="flex flex-col leading-none">
+      {/* 🏷️ SubziQuick Serif Brand Wordmark */}
+      <div className="flex flex-col leading-none font-[family-name:var(--font-brand-serif),serif]">
         <div className="flex items-baseline tracking-tight">
           <span
-            className={`font-black tracking-[-0.03em] ${
-              isCompact ? "text-lg" : "text-xl sm:text-[22px]"
-            } ${isWhite ? "text-white" : isInvoice ? "text-gray-950" : "text-[#052e16]"}`}
-          >
-            Subzi
-          </span>
-          <span
-            className={`font-black tracking-[-0.03em] ${
-              isCompact ? "text-lg" : "text-xl sm:text-[22px]"
+            className={`font-semibold tracking-[-0.01em] ${
+              isCompact ? "text-xl" : "text-2xl sm:text-[25px]"
             } ${
               isWhite
-                ? "text-yellow-300"
+                ? "text-white drop-shadow-xs"
                 : isInvoice
-                ? "text-gray-700"
-                : "text-[#0f8646]"
+                ? "text-gray-950"
+                : "text-[#083621]"
             }`}
           >
-            Quick
+            SubziQuick
           </span>
           <span
-            className={`font-black text-[9px] sm:text-[10px] px-1 py-0.5 ml-1 rounded-md tracking-wider uppercase ${
-              isWhite
-                ? "bg-white/20 text-emerald-100 border border-white/20"
-                : "bg-emerald-100 text-[#075225] border border-emerald-200"
+            className={`font-bold tracking-wider uppercase ml-0.5 ${
+              isCompact ? "text-sm" : "text-base sm:text-lg"
+            } ${
+              isInvoice
+                ? "text-amber-700"
+                : "bg-gradient-to-b from-[#e5be7a] via-[#c49335] to-[#805710] bg-clip-text text-transparent drop-shadow-xs"
             }`}
           >
-            .in
+            .IN
           </span>
         </div>
 
-        {/* Minimalist Micro Tagline */}
+        {/* Refined Micro Tagline */}
         {showTagline && !isCompact && (
-          <div className="flex items-center gap-1 mt-0.5">
+          <div className="flex items-center gap-1.5 mt-0.5 font-sans">
             <span
-              className={`text-[8px] sm:text-[8.5px] font-black tracking-wider uppercase ${
+              className={`text-[8px] sm:text-[8.5px] font-bold tracking-wider uppercase ${
                 isWhite
                   ? "text-emerald-200"
                   : isInvoice
@@ -85,9 +80,9 @@ export default function Logo({
             >
               Farm Fresh
             </span>
-            <span className={`text-[7px] ${isWhite ? "text-emerald-300" : "text-emerald-400"}`}>•</span>
+            <span className={`text-[6px] ${isWhite ? "text-emerald-300" : "text-emerald-500"}`}>•</span>
             <span
-              className={`text-[8px] sm:text-[8.5px] font-bold tracking-wider uppercase ${
+              className={`text-[8px] sm:text-[8.5px] font-semibold tracking-wider uppercase ${
                 isWhite
                   ? "text-emerald-100/80"
                   : isInvoice

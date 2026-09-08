@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import Provider from "@/Provider";
 import StoreProviders from "@/redux/StoreProviders";
@@ -9,6 +10,13 @@ import WhatsAppWidget from "@/components/WhatsAppWidget";
 import MobileBottomNav from "@/components/MobileBottomNav";
 import BroadcastBar from "@/components/BroadcastBar";
 import ContentProtection from "@/components/ContentProtection";
+
+const brandSerif = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-brand-serif",
+  display: "swap",
+});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -303,7 +311,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       </head>
-      <body className="w-full min-h-screen bg-linear-to-b from-green-50 to-white text-gray-900 overflow-x-hidden">
+      <body className={`${brandSerif.variable} w-full min-h-screen bg-linear-to-b from-green-50 to-white text-gray-900 overflow-x-hidden font-sans`}>
         <ContentProtection />
         <Provider>
           <StoreProviders>
