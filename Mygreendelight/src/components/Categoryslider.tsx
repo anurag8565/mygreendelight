@@ -18,42 +18,42 @@ const CATEGORY_MAP: Record<
   vegetables: {
     title: "Vegetables",
     subtitle: "Farm Fresh Daily",
-    imgUrl: "/categories/vegetables_4k.jpg?v=3",
+    imgUrl: "/categories/vegetables_4k.jpg?v=4",
   },
   vegetable: {
     title: "Vegetables",
     subtitle: "Farm Fresh Daily",
-    imgUrl: "/categories/vegetables_4k.jpg?v=3",
+    imgUrl: "/categories/vegetables_4k.jpg?v=4",
   },
   fruits: {
     title: "Fruits",
     subtitle: "Sweet & Juicy",
-    imgUrl: "/categories/fruits_4k.jpg?v=3",
+    imgUrl: "/categories/fruits_4k.jpg?v=4",
   },
   fruit: {
     title: "Fruits",
     subtitle: "Sweet & Juicy",
-    imgUrl: "/categories/fruits_4k.jpg?v=3",
+    imgUrl: "/categories/fruits_4k.jpg?v=4",
   },
   exotics: {
     title: "Exotics",
     subtitle: "Hydroponic Greens",
-    imgUrl: "/categories/exotics_4k.jpg?v=3",
+    imgUrl: "/categories/exotics_4k.jpg?v=4",
   },
   exotic: {
     title: "Exotics",
     subtitle: "Hydroponic Greens",
-    imgUrl: "/categories/exotics_4k.jpg?v=3",
+    imgUrl: "/categories/exotics_4k.jpg?v=4",
   },
   dairy: {
     title: "Dairy & Milk",
     subtitle: "Pure & Fresh",
-    imgUrl: "/categories/dairy_4k.jpg?v=3",
+    imgUrl: "/categories/dairy_4k.jpg?v=4",
   },
   "ready to cook": {
     title: "Ready to Cook",
     subtitle: "Pre-Cleaned & Cut",
-    imgUrl: "/categories/ready_to_cook.jpg?v=3",
+    imgUrl: "/categories/ready_to_cook.jpg?v=4",
   },
 };
 
