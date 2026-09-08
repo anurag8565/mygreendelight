@@ -57,10 +57,10 @@ export default function FarmFreshPromise() {
             </span>
             <div>
               <h2 className="text-sm sm:text-base md:text-lg font-black text-gray-900 tracking-tight leading-tight">
-                Farm to Fork Quality Promise
+                Farm to Kitchen Freshness Promise
               </h2>
               <p className="text-[10.5px] sm:text-xs text-gray-500 font-medium">
-                100% Organic & Bhopal Kisan Sourced
+                100% Ozone Washed & Bhopal Kisan Sourced
               </p>
             </div>
           </div>

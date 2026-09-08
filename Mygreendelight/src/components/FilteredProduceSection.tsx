@@ -123,7 +123,7 @@ export default function FilteredProduceSection({
             <div className="flex items-center gap-2">
               <Leaf size={20} className="text-[#0c831f]" />
               <h2 className="text-lg sm:text-2xl font-black text-gray-900 tracking-tight">
-                Daily Fresh Produce
+                Fresh Farm Vegetables & Fruits
               </h2>
               <span className="bg-emerald-50 text-[#0c831f] border border-emerald-200/90 text-[11px] font-black px-2.5 py-0.5 rounded-full hidden xs:inline-flex items-center gap-1">
                 <CheckCircle2 size={12} className="text-[#0c831f]" />
@@ -131,7 +131,7 @@ export default function FilteredProduceSection({
               </span>
             </div>
             <p className="text-xs text-gray-500 font-medium mt-1">
-              Direct Mandi Harvest • 10-15 Min Express Delivery in Bhopal
+              5:00 AM Direct Mandi Harvest • 100% Ozone Washed • 10-15 Min Express Delivery in Bhopal
             </p>
           </div>
 

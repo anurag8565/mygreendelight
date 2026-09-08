@@ -69,10 +69,10 @@ export default function CombosSection({
           <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
             <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight flex items-center gap-2">
               <ShoppingBag size={20} className="text-[#0c831f]" />
-              <span>Value Combos & Multipacks</span>
+              <span>Fresh Produce Combos & Family Bundles</span>
             </h2>
             <span className="bg-amber-50 text-amber-800 border border-amber-200/80 text-[10.5px] font-bold px-2.5 py-0.5 rounded-full">
-              Up to 25% Off
+              Up to 25% Off Wholesale Rate
             </span>
           </div>
 

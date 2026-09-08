@@ -241,16 +241,16 @@ export default function ShopPage() {
                 {searchParam
                   ? `Search: "${searchParam}"`
                   : categoryParam
-                  ? categoryParam
-                  : "All Farm Fresh Produce"}
+                  ? `Fresh ${categoryParam} in Bhopal`
+                  : "Buy Fresh Vegetables & Fruits in Bhopal"}
               </h1>
               <span className="text-[10px] font-black uppercase text-[#0c831f] bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-full inline-flex items-center gap-1">
                 <Zap size={11} className="text-amber-500 fill-amber-500" />
-                Express Dispatch
+                10-15 Min Express
               </span>
             </div>
             <p className="text-[11px] sm:text-xs text-gray-500 font-medium mt-0.5">
-              Direct from Bhopal & Sehore contract farms • 100% Sorted & Ozone-Washed
+              5:00 AM Direct Mandi Harvest • 100% Ozone Washed & Pesticide Safe • Express Delivery Across Bhopal
             </p>
           </div>
 
