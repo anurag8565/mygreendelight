@@ -107,14 +107,14 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-[#031d0e] text-white font-sans border-t border-emerald-950/90 pb-28 sm:pb-20 md:pb-8 lg:pb-8 w-full max-w-full overflow-hidden selection:bg-emerald-500 selection:text-white">
+    <footer className="bg-[#031d0e] text-white font-sans border-t border-emerald-950/90 pb-28 sm:pb-24 md:pb-10 lg:pb-10 w-full max-w-full overflow-hidden selection:bg-emerald-500 selection:text-white">
       
       {/* Main Footer Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pt-10 sm:pt-14 pb-4">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pt-10 sm:pt-12 md:pt-14 pb-4">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-8 lg:gap-10 items-start">
           
-          {/* Column 1: Store Brand & Contact Center (Desktop: 4.5 Cols) */}
-          <div className="lg:col-span-4 flex flex-col w-full">
+          {/* Column 1: Store Brand & Contact Center (Desktop: 4 Cols, Tablet: 5 Cols) */}
+          <div className="md:col-span-5 lg:col-span-4 flex flex-col w-full">
             <div className="mb-3">
               <Logo variant="white" />
             </div>
@@ -124,7 +124,7 @@ export default function Footer() {
             </p>
 
             {/* Store Hub & Hours Bento Chips */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-2.5 max-w-md mb-4.5 w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-2.5 max-w-md mb-4.5 w-full">
               <div className="bg-white/5 hover:bg-white/[0.08] border border-white/10 rounded-2xl p-3 flex items-center gap-3 transition">
                 <div className="w-8.5 h-8.5 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center shrink-0 shadow-inner">
                   <MapPin size={15} />
@@ -206,11 +206,11 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Column 2: 3-Column Navigation Grid (Desktop: 8 Cols) */}
-          <div className="lg:col-span-8 w-full pt-1">
+          {/* Column 2: 3-Column Navigation Grid (Desktop: 8 Cols, Tablet: 7 Cols) */}
+          <div className="md:col-span-7 lg:col-span-8 w-full pt-1">
             
-            {/* Desktop Navigation View (3 Wide Columns on Desktop >= 640px) */}
-            <div className="hidden sm:grid sm:grid-cols-3 gap-8 lg:gap-10">
+            {/* Tablet & Desktop Navigation View (3 Columns on screens >= 640px / Tablets) */}
+            <div className="hidden sm:grid sm:grid-cols-3 gap-6 md:gap-6 lg:gap-10">
               
               {/* Col 1: Produce Categories */}
               <div className="flex flex-col">
