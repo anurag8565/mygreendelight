@@ -34,6 +34,7 @@ import {
   LayoutGrid,
   Sparkles,
   ShieldCheck,
+  Zap,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useSelector, useDispatch } from "react-redux";

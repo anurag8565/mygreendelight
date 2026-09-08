@@ -63,7 +63,7 @@ export default function DailyRewardWidget() {
   };
 
   return (
-    <div className="w-full py-2.5 sm:py-3.5 bg-white font-sans">
+    <div className="w-full py-4 sm:py-6 bg-white border-b border-gray-100 font-sans">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         <div className="bg-[#f8f9fa] rounded-2xl sm:rounded-3xl p-3.5 sm:p-4 border border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-2xs">
           {/* Left: Icon & Text */}

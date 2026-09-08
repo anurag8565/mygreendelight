@@ -62,7 +62,7 @@ export default function CombosSection({
   };
 
   return (
-    <div className="w-full py-5 sm:py-8 bg-[#f8f9fa] border-y border-gray-100 font-sans">
+    <div className="w-full py-6 sm:py-8 bg-[#f8f9fa] border-b border-gray-100 font-sans">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Section Header */}
         <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">

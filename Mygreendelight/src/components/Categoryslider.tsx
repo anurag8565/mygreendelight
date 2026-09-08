@@ -106,10 +106,10 @@ export default function CategorySlider({
   }
 
   return (
-    <section className="w-full py-4 sm:py-6 bg-white font-sans border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 md:px-8">
+    <section className="w-full py-5 sm:py-7 bg-white font-sans border-b border-gray-100">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Header Row */}
-        <div className="flex items-center justify-between gap-2 mb-3 sm:mb-5">
+        <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">
           <div className="flex items-center gap-2">
             <LayoutGrid size={20} className="text-[#0c831f]" />
             <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
@@ -148,14 +148,14 @@ export default function CategorySlider({
               <motion.div
                 key={item._id || item.name || idx}
                 whileTap={{ scale: 0.96 }}
-                whileHover={{ y: -3 }}
+                whileHover={{ y: -4 }}
                 transition={{ type: "spring", stiffness: 350, damping: 24 }}
                 onClick={() =>
                   router.push(`/shop?category=${encodeURIComponent(item.name)}`)
                 }
-                className="group cursor-pointer bg-white hover:bg-[#fafdfa] rounded-2xl sm:rounded-3xl p-2 sm:p-3.5 border border-gray-200/80 hover:border-emerald-400/80 shadow-[0_2px_10px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_24px_rgba(12,131,31,0.09)] transition-all duration-200 select-none flex flex-col justify-between"
+                className="group cursor-pointer bg-white hover:bg-[#fafdfa] rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 border border-gray-200/80 hover:border-emerald-400/90 shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_rgba(12,131,31,0.11)] transition-all duration-300 select-none flex flex-col justify-between"
               >
-                {/* Clean Photo Container (No Badges, Pure 4K Photography) */}
+                {/* Clean Photo Container (Pure 4K Photography with Subtle Ambient Ring) */}
                 <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-gray-50/80 ring-1 ring-black/[0.04]">
                   <img
                     src={imageSrc}
