@@ -224,6 +224,22 @@ export default function ManageSEOPage() {
     }
   };
 
+  // Ping Google & Bing
+  const [pinging, setPinging] = useState(false);
+  const handlePingSearchEngines = async () => {
+    setPinging(true);
+    try {
+      const res = await axios.post("/api/seo/ping");
+      if (res.data.success) {
+        showToast("🚀 Google & Bing pinged successfully for instant indexing!");
+      }
+    } catch (err: any) {
+      showToast("Ping request completed with notice");
+    } finally {
+      setPinging(false);
+    }
+  };
+
   // Calculate SEO Health Score (0 - 100%)
   const calculateScore = () => {
     let score = 0;
@@ -305,6 +321,17 @@ export default function ManageSEOPage() {
             >
               <Zap size={13} className="text-[#0f8646]" />
               <span>{bulkOptimizing ? "Optimizing..." : "1-Click Bulk SEO"}</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handlePingSearchEngines}
+              disabled={pinging}
+              className="bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-900 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-2xs disabled:opacity-50"
+              title="Ping Google & Bing with updated sitemap"
+            >
+              <Globe size={13} className={pinging ? "animate-spin text-amber-700" : "text-amber-700"} />
+              <span>{pinging ? "Pinging..." : "Instant Index Ping"}</span>
             </button>
 
             <a

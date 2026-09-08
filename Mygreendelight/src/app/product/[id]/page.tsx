@@ -208,7 +208,7 @@ export default async function ProductPage(props: { params: Promise<{ id: string 
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <Nav user={userData as any} />
-      <div className="min-h-screen bg-[#fcfdfc] pt-0">
+      <div className="min-h-screen bg-[#f8f9fa] pt-0">
         <ProductDetailsClient product={product} relatedProducts={relatedProducts} />
       </div>
     </>
