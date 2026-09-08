@@ -90,8 +90,9 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
         {/* Flash Deals Header Row */}
         <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4">
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-            <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight flex items-center gap-1.5">
-              <span>⚡ Flash Deals</span>
+            <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight flex items-center gap-2">
+              <Flame size={20} className="text-amber-500 fill-amber-500" />
+              <span>Flash Deals</span>
             </h2>
 
             {/* Real-time Reverse Countdown Badge */}

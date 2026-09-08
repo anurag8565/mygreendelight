@@ -7,11 +7,11 @@ import {
   ChevronRight,
   LayoutGrid,
   List,
-  Sparkles,
   ChevronDown,
   CheckCircle2,
   SlidersHorizontal,
   Flame,
+  Leaf,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -121,7 +121,7 @@ export default function FilteredProduceSection({
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 mb-4 sm:mb-6">
           <div>
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#0c831f]" />
+              <Leaf size={20} className="text-[#0c831f]" />
               <h2 className="text-lg sm:text-2xl font-black text-gray-900 tracking-tight">
                 Daily Fresh Produce
               </h2>

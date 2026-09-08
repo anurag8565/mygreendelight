@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, LayoutGrid } from "lucide-react";
 import { motion } from "framer-motion";
 
 // Clean, luxury category metadata with 4K assets and cache buster
@@ -110,8 +110,8 @@ export default function CategorySlider({
       <div className="max-w-7xl mx-auto px-3 sm:px-6 md:px-8">
         {/* Header Row */}
         <div className="flex items-center justify-between gap-2 mb-3 sm:mb-5">
-          <div className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-[#0c831f]" />
+          <div className="flex items-center gap-2">
+            <LayoutGrid size={20} className="text-[#0c831f]" />
             <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
               Shop by Category
             </h2>

@@ -74,14 +74,15 @@ export default function DailyRewardWidget() {
 
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-1.5">
-                <span className="bg-amber-50 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-200/60">
-                  🎁 Daily Scratch Reward
+                <span className="bg-amber-50 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-200/60 inline-flex items-center gap-1">
+                  <Gift size={11} className="text-amber-700" />
+                  <span>Daily Scratch Reward</span>
                 </span>
               </div>
 
               <h3 className="text-gray-900 font-bold text-xs sm:text-sm mt-0.5">
                 {reward?.isScratched
-                  ? `🎉 You won FLAT ₹${reward.discountAmount} OFF!`
+                  ? `You won FLAT ₹${reward.discountAmount} OFF!`
                   : "Scratch Today's Card & Win Instant Discount"}
               </h3>
             </div>
@@ -104,7 +105,7 @@ export default function DailyRewardWidget() {
                 onClick={handleStartScratch}
                 className="bg-[#0c831f] hover:bg-[#096618] text-white px-4 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 transition shadow-xs cursor-pointer"
               >
-                <Sparkles size={13} />
+                <Gift size={13} />
                 <span>Scratch Card</span>
                 <ArrowRight size={13} />
               </button>
