@@ -26,19 +26,30 @@ export async function generateMetadata(props: {
     if (product) {
       const priceText = product.price ? `₹${product.price}` : "";
       const unitText = product.unit ? `(${product.unit})` : "";
-      const defaultTitle = `${product.name} ${unitText} - ${priceText} | SubziQuick Bhopal`;
-      const defaultDesc =
-        product.description ||
-        `Order farm fresh ${product.name} online in Bhopal at Direct Farm rates on SubziQuick. 100% ozone-washed & pesticide-safe with same-day home delivery across Bhopal.`;
+      const title = product.metaTitle || `Buy Fresh ${product.name} ${unitText} in Bhopal - ${priceText} | SubziQuick`;
+      const description =
+        product.metaDescription ||
+        `Order farm fresh ${product.name} online in Bhopal for ${priceText} at wholesale farm rates on SubziQuick (Subzi Quick). 100% ozone-washed, pesticide-safe with 10-15 min express delivery across Arera Colony, Kolar Road, MP Nagar & all Bhopal areas.`;
 
-      const title = product.metaTitle || defaultTitle;
-      const description = product.metaDescription || defaultDesc;
-      const productUrl = product.canonicalUrl || `https://subziquick.in/product/${product._id}`;
+      const productUrl = product.canonicalUrl || `https://subziquick.in/product/${product.slug || product._id}`;
 
       return {
         title,
         description,
-        keywords: product.metaKeywords || `${product.name}, fresh vegetables bhopal, fresh vegetables rate bhopal`,
+        keywords: [
+          "subzi quick",
+          "subziquick",
+          `subzi quick ${product.name}`,
+          product.name,
+          `buy ${product.name} in bhopal`,
+          `fresh ${product.name} online bhopal`,
+          `${product.name} price in bhopal`,
+          `today ${product.name} rate in bhopal`,
+          `fresh vegetables and fruits in bhopal`,
+          `online vegetable delivery in bhopal`,
+          "pesticide free vegetables in bhopal",
+          "100 percent ozone washed vegetables bhopal",
+        ],
         alternates: {
           canonical: productUrl,
         },
@@ -52,7 +63,7 @@ export async function generateMetadata(props: {
               url: product.image,
               width: 800,
               height: 800,
-              alt: product.name,
+              alt: `${product.name} - SubziQuick Bhopal`,
             },
           ],
           type: "website",
@@ -68,8 +79,8 @@ export async function generateMetadata(props: {
   } catch (error) {}
 
   return {
-    title: "Farm Fresh Produce Online | SubziQuick Bhopal",
-    description: "Daily farm fresh vegetables, fruits & staples with same-day home delivery in Bhopal on SubziQuick.",
+    title: "Buy Fresh Vegetables & Fruits Online in Bhopal | SubziQuick",
+    description: "Daily farm fresh vegetables, seasonal fruits & groceries delivered in 10-15 mins across Bhopal on SubziQuick.",
   };
 }
 
@@ -197,6 +208,37 @@ export default async function ProductPage(props: { params: Promise<{ id: string 
     ],
   };
 
+  const productFaqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: `How fast can I get fresh ${product.name} delivered in Bhopal?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: `SubziQuick delivers fresh ${product.name} across Bhopal (Arera Colony, Kolar Road, MP Nagar, Katara Hills, Bagsewaniya & beyond) in 10-15 minutes from our central store hub.`,
+        },
+      },
+      {
+        "@type": "Question",
+        name: `Is ${product.name} on SubziQuick ozone-washed and pesticide safe?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: `Yes! Every batch of ${product.name} is washed using certified 100% ozone micro-bubble water technology to remove 99.4% of surface chemical pesticides, bacteria, and dust before delivery.`,
+        },
+      },
+      {
+        "@type": "Question",
+        name: `What is the price of fresh ${product.name} in Bhopal today?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: `Fresh ${product.name} is available on SubziQuick at wholesale farm rates of ₹${product.price} per ${product.unit || "pack"} with zero platform fee.`,
+        },
+      },
+    ],
+  };
+
   return (
     <>
       <script
@@ -206,6 +248,10 @@ export default async function ProductPage(props: { params: Promise<{ id: string 
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productFaqJsonLd) }}
       />
       <Nav user={userData as any} />
       <div className="min-h-screen bg-[#f8f9fa] pt-0">

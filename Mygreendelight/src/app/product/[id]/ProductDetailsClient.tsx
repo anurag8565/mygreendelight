@@ -560,6 +560,39 @@ export default function ProductDetailsClient({
                 </div>
               )}
             </div>
+
+            {/* Bhopal Local Delivery & Purity Guarantee */}
+            <div>
+              <button
+                type="button"
+                onClick={() => setOpenSection(openSection === "delivery" ? "" : "delivery")}
+                className="w-full p-3.5 flex items-center justify-between text-left hover:bg-gray-50 transition cursor-pointer"
+              >
+                <span className="text-xs sm:text-sm font-black text-gray-900">
+                  10-15 Min Bhopal Delivery & 100% Ozone Purity
+                </span>
+                <ChevronDown
+                  size={15}
+                  className={`text-gray-400 transition-transform ${openSection === "delivery" ? "rotate-180 text-[#0c831f]" : ""}`}
+                />
+              </button>
+              {openSection === "delivery" && (
+                <div className="px-3.5 pb-3.5 text-xs text-gray-600 leading-relaxed font-medium space-y-1.5">
+                  <p>
+                    • <strong>Express Dispatch</strong>: Packed and dispatched within 10-15 minutes directly from SubziQuick Central Store Hub at Amrai, Bagsewaniya.
+                  </p>
+                  <p>
+                    • <strong>Covered Localities</strong>: Arera Colony (E1-E8), Kolar Road, MP Nagar, Bawadiya Kalan, Katara Hills, Shahpura, Chunabhatti, Trilanga, Gulmohar, Hoshangabad Road, and all major Bhopal societies.
+                  </p>
+                  <p>
+                    • <strong>100% Ozone Cleaned</strong>: Certified micro-bubble wash removes 99.4% of surface pesticides, bacteria, and dust before delivery.
+                  </p>
+                  <p>
+                    • <strong>Doorstep Guarantee</strong>: Check freshness at your door. If unsatisfied, return immediately for an instant UPI refund or replacement.
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
