@@ -4,14 +4,15 @@ import User from "@/model/user.model";
 import Setting from "@/model/setting.model";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
+import { sanitizeInput } from "@/lib/sanitize";
 
 export async function POST(req: NextRequest) {
     try {
         await connectDb();
 
-        // ✅ read body once
-        const body = await req.json();
-        console.log(body);
+        // ✅ read body once & sanitize
+        const rawBody = await req.json();
+        const body = sanitizeInput(rawBody);
         const {
             userid,
             items,
