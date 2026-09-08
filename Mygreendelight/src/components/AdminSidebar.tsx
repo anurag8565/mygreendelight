@@ -137,6 +137,11 @@ export default function AdminSidebar() {
           href: "/admin/manage-broadcast",
           icon: <Radio size={17} />,
         },
+        {
+          name: "1-Click DB Backup",
+          href: "/api/admin/backup",
+          icon: <Truck size={17} />,
+        },
       ],
     },
   ];
