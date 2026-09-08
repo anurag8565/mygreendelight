@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Zap, Sparkles, ShieldCheck, RefreshCw } from "lucide-react";
+import { Zap, Clock, ShieldCheck, RefreshCw } from "lucide-react";
 
 export default function TrustRibbon() {
   const highlights = [
@@ -12,21 +12,21 @@ export default function TrustRibbon() {
       bg: "bg-amber-50/70 border-amber-200/60 text-amber-950",
     },
     {
-      icon: <Sparkles size={15} className="text-emerald-600 fill-emerald-600" />,
-      title: "5:00 AM Harvested",
-      subtitle: "Direct Kisan Farm Sourced",
+      icon: <Clock size={15} className="text-emerald-600" />,
+      title: "5:00 AM Mandi Fresh",
+      subtitle: "Daily Morning Harvest",
       bg: "bg-emerald-50/70 border-emerald-200/60 text-emerald-950",
     },
     {
       icon: <ShieldCheck size={15} className="text-teal-600" />,
-      title: "100% Ozone Washed",
+      title: "100% Ozone Cleaned",
       subtitle: "Pesticide & Dirt Free",
       bg: "bg-teal-50/70 border-teal-200/60 text-teal-950",
     },
     {
       icon: <RefreshCw size={15} className="text-blue-600" />,
-      title: "Zero-Risk Return",
-      subtitle: "Instant Replacement",
+      title: "Instant Replacement",
+      subtitle: "No Questions Asked",
       bg: "bg-blue-50/70 border-blue-200/60 text-blue-950",
     },
   ];

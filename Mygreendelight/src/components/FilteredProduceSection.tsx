@@ -62,9 +62,9 @@ export default function FilteredProduceSection({
         id: "vegetables",
         label: "Vegetables",
         hindi: "ताज़ी सब्जियां",
-        imgUrl: "/categories/vegetables_4k.jpg",
+        imgUrl: "/categories/vegetables_4k.jpg?v=4",
         count: vegItems.length,
-        badge: "Daily Farm Fresh",
+        badge: "Daily Fresh",
         themeColor: "from-emerald-600 to-green-700",
         activeBorder: "border-[#0c831f]",
       },
@@ -72,9 +72,9 @@ export default function FilteredProduceSection({
         id: "fruits",
         label: "Fruits",
         hindi: "ताज़े मीठे फल",
-        imgUrl: "/categories/fruits_4k.jpg",
+        imgUrl: "/categories/fruits_4k.jpg?v=4",
         count: fruitItems.length,
-        badge: "Juicy & Sweet",
+        badge: "Sweet & Seasonal",
         themeColor: "from-amber-600 to-orange-600",
         activeBorder: "border-amber-600",
       },
@@ -82,9 +82,9 @@ export default function FilteredProduceSection({
         id: "exotics",
         label: "Exotics & Salads",
         hindi: "विदेशी व सलाद",
-        imgUrl: "/categories/exotics_4k.jpg",
+        imgUrl: "/categories/exotics_4k.jpg?v=4",
         count: exoticItems.length,
-        badge: "Hydroponic Greens",
+        badge: "Hydroponic & Salads",
         themeColor: "from-purple-600 to-indigo-700",
         activeBorder: "border-purple-600",
       },
@@ -121,19 +121,17 @@ export default function FilteredProduceSection({
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 mb-4 sm:mb-6">
           <div>
             <div className="flex items-center gap-2">
-              <span className="flex items-center justify-center w-7 h-7 rounded-xl bg-emerald-100 text-[#0c831f] text-sm font-black shadow-2xs">
-                🌿
-              </span>
+              <span className="w-2.5 h-2.5 rounded-full bg-[#0c831f]" />
               <h2 className="text-lg sm:text-2xl font-black text-gray-900 tracking-tight">
-                Daily Fresh Farm Harvest
+                Daily Fresh Produce
               </h2>
               <span className="bg-emerald-50 text-[#0c831f] border border-emerald-200/90 text-[11px] font-black px-2.5 py-0.5 rounded-full hidden xs:inline-flex items-center gap-1">
                 <CheckCircle2 size={12} className="text-[#0c831f]" />
-                {filteredList.length} Fresh Items
+                {filteredList.length} Items Available
               </span>
             </div>
             <p className="text-xs text-gray-500 font-medium mt-1">
-              100% Ozone-Washed • Direct 5:00 AM Sunrise Kisan Batch • 10-15 Min Bhopal Delivery
+              Direct Mandi Harvest • 10-15 Min Express Delivery in Bhopal
             </p>
           </div>
 
