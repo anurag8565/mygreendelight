@@ -4,13 +4,15 @@ import React, { useState, useMemo, useEffect } from "react";
 import Groceryitemcard from "./Groceryitemcard";
 import Link from "next/link";
 import {
-  RiGridFill,
-  RiListUnordered,
-  RiCheckboxCircleFill,
-  RiArrowRightSLine,
-  RiEqualizerLine,
-  RiArrowDownSLine,
-} from "react-icons/ri";
+  ChevronRight,
+  LayoutGrid,
+  List,
+  Sparkles,
+  ChevronDown,
+  CheckCircle2,
+  SlidersHorizontal,
+  Flame,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface TabConfig {
@@ -124,7 +126,7 @@ export default function FilteredProduceSection({
                 Daily Fresh Produce
               </h2>
               <span className="bg-emerald-50 text-[#0c831f] border border-emerald-200/90 text-[11px] font-black px-2.5 py-0.5 rounded-full hidden xs:inline-flex items-center gap-1">
-                <RiCheckboxCircleFill size={13} className="text-[#0c831f]" />
+                <CheckCircle2 size={12} className="text-[#0c831f]" />
                 {filteredList.length} Items Available
               </span>
             </div>
@@ -148,7 +150,7 @@ export default function FilteredProduceSection({
                 title="Grid View"
                 aria-label="Grid View"
               >
-                <RiGridFill size={15} />
+                <LayoutGrid size={15} />
                 <span className="hidden xs:inline">Grid</span>
               </button>
               <button
@@ -162,7 +164,7 @@ export default function FilteredProduceSection({
                 title="List View"
                 aria-label="List View"
               >
-                <RiListUnordered size={15} />
+                <List size={15} />
                 <span className="hidden xs:inline">List</span>
               </button>
             </div>
@@ -179,9 +181,9 @@ export default function FilteredProduceSection({
               className="bg-white hover:bg-emerald-50 text-[#0c831f] border border-emerald-200/80 hover:border-emerald-300 font-black text-xs px-3 py-2 rounded-xl flex items-center gap-1 transition shadow-2xs shrink-0 group"
             >
               <span>View All {activeTabMeta.label}</span>
-              <RiArrowRightSLine
-                size={16}
-                className="group-hover:translate-x-0.5 transition-transform"
+              <ChevronRight
+                size={14}
+                className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]"
               />
             </Link>
           </div>

@@ -3,15 +3,7 @@
 import { addToCart, decreaseQuantity, increaseQuantity } from "@/redux/CartSlice";
 import { toggleWishlist } from "@/redux/WishlistSlice";
 import { AppDispatch, RootState } from "@/redux/store";
-import {
-  RiHeartLine,
-  RiHeartFill,
-  RiAddLine,
-  RiSubtractLine,
-  RiNotification3Line,
-  RiFlashlightFill,
-  RiStarFill,
-} from "react-icons/ri";
+import { Heart, Plus, Minus, Bell, Zap } from "lucide-react";
 import mongoose from "mongoose";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -108,7 +100,7 @@ export default function Groceryitemcard({
         <div className="absolute top-2 left-2 flex flex-col gap-1 z-10">
           {item.isFeatured && (
             <span className="bg-amber-500 text-white text-[8.5px] font-black px-1.5 py-0.5 rounded-md shadow-xs flex items-center gap-0.5 tracking-tight animate-pulse">
-              <RiStarFill size={10} className="text-yellow-200" />
+              <span>⭐</span>
               <span>FEATURED</span>
             </span>
           )}
@@ -120,8 +112,8 @@ export default function Groceryitemcard({
         </div>
 
         {/* Fresh Farm Produce Tag */}
-        <span className="absolute bottom-1.5 left-2 bg-white/95 backdrop-blur-xs text-emerald-800 text-[8.5px] font-black px-1.5 py-0.5 rounded-md shadow-2xs flex items-center gap-1 border border-emerald-200/60 group-hover:border-emerald-400 group-hover:text-[#0c831f] transition-colors">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#0c831f]" />
+        <span className="absolute bottom-1.5 left-2 bg-white/95 backdrop-blur-xs text-emerald-800 text-[8.5px] font-black px-1.5 py-0.5 rounded-md shadow-2xs flex items-center gap-0.5 border border-emerald-200/60 group-hover:border-emerald-400 group-hover:text-[#0c831f] transition-colors">
+          <span className="text-[9px]">🌿</span>
           <span>FARM FRESH</span>
         </span>
 
@@ -149,11 +141,12 @@ export default function Groceryitemcard({
           }}
           className="absolute top-2 right-2 p-1.5 bg-white/90 backdrop-blur-xs rounded-full shadow-2xs hover:bg-white hover:scale-110 transition-all z-10 cursor-pointer border border-gray-100"
         >
-          {isLiked ? (
-            <RiHeartFill size={14} className="text-rose-500 scale-110" />
-          ) : (
-            <RiHeartLine size={14} className="text-gray-400 hover:text-rose-500" />
-          )}
+          <Heart
+            size={13}
+            className={`transition-colors duration-200 ${
+              isLiked ? "text-rose-500 fill-rose-500 scale-110" : "text-gray-400 hover:text-rose-500"
+            }`}
+          />
         </motion.button>
 
         {/* Out of Stock Overlay */}
@@ -224,7 +217,7 @@ export default function Groceryitemcard({
               onClick={() => setShowAlertModal(true)}
               className="w-full h-[36px] rounded-xl flex items-center justify-center gap-1.5 font-bold text-[11px] transition-all bg-amber-50 text-amber-800 border border-amber-200 hover:bg-amber-100 shadow-2xs cursor-pointer active:scale-95"
             >
-              <RiNotification3Line size={13} />
+              <Bell size={12} className="stroke-[2.5]" />
               <span>Notify Me</span>
             </button>
           ) : !cartitem ? (
@@ -254,7 +247,7 @@ export default function Groceryitemcard({
               }}
               className="w-full h-[36px] rounded-xl flex items-center justify-center gap-1.5 font-black text-xs transition-all duration-200 border-2 border-[#0c831f] cursor-pointer bg-white text-[#0c831f] hover:bg-[#0c831f] hover:text-white hover:shadow-[0_4px_12px_rgba(12,131,31,0.25)] shadow-2xs active:scale-95"
             >
-              <RiAddLine size={16} />
+              <Plus size={14} className="stroke-[3]" />
               <span>ADD</span>
             </motion.button>
           ) : (
@@ -270,7 +263,7 @@ export default function Groceryitemcard({
                   dispatch(decreaseQuantity(currentCartItemId));
                 }}
               >
-                <RiSubtractLine size={16} />
+                <Minus size={14} className="stroke-[3]" />
               </motion.button>
               <span className="flex-1 text-center font-black text-xs sm:text-sm text-white select-none">
                 {cartitem.quantity}
@@ -291,7 +284,7 @@ export default function Groceryitemcard({
                   dispatch(increaseQuantity(currentCartItemId));
                 }}
               >
-                <RiAddLine size={16} />
+                <Plus size={14} className="stroke-[3]" />
               </motion.button>
             </div>
           )}
