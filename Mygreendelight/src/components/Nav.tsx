@@ -85,12 +85,12 @@ export default function Nav({ user }: { user?: iUser | null }) {
   useEffect(() => {
     setMounted(true);
     dispatch(hydrateCart());
-    dispatch(hydrateWishlist());
+    dispatch(hydrateWishlist({ userId: activeUser?._id ? String(activeUser._id) : null }));
     if (typeof window !== "undefined") {
       const savedLoc = localStorage.getItem("mgd_user_location");
       if (savedLoc) setLocation(savedLoc);
     }
-  }, [dispatch]);
+  }, [dispatch, activeUser?._id]);
 
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [isSearching, setIsSearching] = useState(false);

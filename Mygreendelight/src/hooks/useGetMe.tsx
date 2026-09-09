@@ -15,6 +15,7 @@ function useGetMe() {
   useEffect(() => {
     if (status === "unauthenticated") {
       dispatch(setUserdata(null))
+      dispatch(setWishlist({ items: [], userId: null }))
       return
     }
 
@@ -24,15 +25,28 @@ function useGetMe() {
 
         if (typeof result.data === 'object' && result.data !== null && result.data.email) {
           dispatch(setUserdata(result.data))
-          if (Array.isArray(result.data.wishlist) && result.data.wishlist.length > 0 && typeof result.data.wishlist[0] === 'object' && result.data.wishlist[0]?.name) {
-            dispatch(setWishlist(result.data.wishlist))
-          }
+          const validWishlist = Array.isArray(result.data.wishlist)
+            ? result.data.wishlist.filter((w: any) => w && typeof w === 'object' && w.name)
+            : []
+          dispatch(setWishlist({ items: validWishlist, userId: result.data._id ? String(result.data._id) : null }))
         } else if (session?.user?.email) {
           dispatch(setUserdata(session.user as any))
+          try {
+            const wRes = await axios.get("/api/wishlist")
+            if (wRes.data?.success && Array.isArray(wRes.data?.wishlist)) {
+              dispatch(setWishlist({ items: wRes.data.wishlist, userId: (session.user as any)?._id || (session.user as any)?.id || null }))
+            }
+          } catch (_) {}
         }
       } catch (error) {
         if (session?.user?.email) {
           dispatch(setUserdata(session.user as any))
+          try {
+            const wRes = await axios.get("/api/wishlist")
+            if (wRes.data?.success && Array.isArray(wRes.data?.wishlist)) {
+              dispatch(setWishlist({ items: wRes.data.wishlist, userId: (session.user as any)?._id || (session.user as any)?.id || null }))
+            }
+          } catch (_) {}
         }
       }
     }

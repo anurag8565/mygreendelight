@@ -192,13 +192,16 @@ export default function ProductDetailsClient({
               type="button"
               onClick={async () => {
                 dispatch(toggleWishlist({
-                  _id: String(product._id),
-                  name: product.name,
-                  price: currentPrice,
-                  image: product.image,
-                  unit: currentUnit,
-                  category: product.category,
-                  stock: currentStock,
+                  item: {
+                    _id: String(product._id),
+                    name: product.name,
+                    price: currentPrice,
+                    image: product.image,
+                    unit: currentUnit,
+                    category: product.category,
+                    stock: currentStock,
+                  },
+                  userId: userdata?._id || null,
                 }));
                 setShowWishlistToast(true);
                 setTimeout(() => setShowWishlistToast(false), 2500);

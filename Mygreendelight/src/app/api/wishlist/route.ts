@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import connectDb from "@/lib/db";
 import User from "@/model/user.model";
 import { NextResponse } from "next/server";
+import mongoose from "mongoose";
 
 export async function GET() {
   try {
@@ -9,14 +10,24 @@ export async function GET() {
     const session = await auth();
 
     if (!session?.user?.email) {
-      return NextResponse.json({ success: false, items: [] }, { status: 401 });
+      return NextResponse.json({ success: false, items: [], wishlist: [] }, { status: 401 });
     }
 
+    // Ensure Grocery model is registered
     const Grocery = (await import("@/model/groseri.model")).default;
-    const user = await User.findOne({ email: session.user.email }).populate("wishlist");
+    const cleanEmail = session.user.email.trim().toLowerCase();
+
+    const user = await User.findOne({
+      email: { $regex: new RegExp(`^${cleanEmail}$`, "i") },
+    }).populate("wishlist");
+
+    const validWishlist = (user?.wishlist || []).filter(
+      (item: any) => item && typeof item === "object" && item.name
+    );
+
     return NextResponse.json({
       success: true,
-      wishlist: user?.wishlist || [],
+      wishlist: validWishlist,
     });
   } catch (error: any) {
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
@@ -29,40 +40,89 @@ export async function POST(req: Request) {
     const session = await auth();
 
     if (!session?.user?.email) {
-      return NextResponse.json({ message: "Not Authenticated" }, { status: 401 });
+      return NextResponse.json({ success: false, message: "Not Authenticated" }, { status: 401 });
     }
 
     const { productId } = await req.json();
 
     if (!productId) {
-      return NextResponse.json({ message: "Product ID required" }, { status: 400 });
+      return NextResponse.json({ success: false, message: "Product ID required" }, { status: 400 });
     }
 
-    const user = await User.findOne({ email: session.user.email });
+    const cleanEmail = session.user.email.trim().toLowerCase();
+    const user = await User.findOne({
+      email: { $regex: new RegExp(`^${cleanEmail}$`, "i") },
+    });
 
     if (!user) {
-      return NextResponse.json({ message: "User not found" }, { status: 404 });
+      return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
     }
 
-    const index = user.wishlist?.indexOf(productId);
+    if (!Array.isArray(user.wishlist)) {
+      user.wishlist = [];
+    }
 
-    if (index !== undefined && index > -1) {
+    const prodIdStr = String(productId).trim();
+    const existingIndex = user.wishlist.findIndex(
+      (item: any) => String(item?._id || item) === prodIdStr
+    );
+
+    let isAdded = false;
+    if (existingIndex > -1) {
       // Remove from wishlist
-      user.wishlist?.splice(index, 1);
+      user.wishlist.splice(existingIndex, 1);
+      isAdded = false;
     } else {
       // Add to wishlist
-      if (!user.wishlist) {
-        user.wishlist = [];
+      if (mongoose.Types.ObjectId.isValid(prodIdStr)) {
+        user.wishlist.push(new mongoose.Types.ObjectId(prodIdStr));
       }
-      user.wishlist.push(productId);
+      isAdded = true;
     }
 
     await user.save();
 
-    return NextResponse.json({ message: "Wishlist updated", wishlist: user.wishlist });
+    // Populate and return clean updated wishlist for this user
+    const Grocery = (await import("@/model/groseri.model")).default;
+    const updatedUser = await User.findById(user._id).populate("wishlist");
+    const validWishlist = (updatedUser?.wishlist || []).filter(
+      (item: any) => item && typeof item === "object" && item.name
+    );
 
-  } catch (error) {
-    console.log("WISHLIST API ERROR", error);
-    return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json({
+      success: true,
+      isAdded,
+      message: isAdded ? "Added to wishlist" : "Removed from wishlist",
+      wishlist: validWishlist,
+    });
+  } catch (error: any) {
+    console.error("WISHLIST API ERROR", error);
+    return NextResponse.json({ success: false, message: error.message || "Internal Server Error" }, { status: 500 });
   }
 }
+
+export async function DELETE() {
+  try {
+    await connectDb();
+    const session = await auth();
+
+    if (!session?.user?.email) {
+      return NextResponse.json({ success: false, message: "Not Authenticated" }, { status: 401 });
+    }
+
+    const cleanEmail = session.user.email.trim().toLowerCase();
+    await User.updateOne(
+      { email: { $regex: new RegExp(`^${cleanEmail}$`, "i") } },
+      { $set: { wishlist: [] } }
+    );
+
+    return NextResponse.json({
+      success: true,
+      message: "Wishlist cleared successfully",
+      wishlist: [],
+    });
+  } catch (error: any) {
+    return NextResponse.json({ success: false, message: error.message || "Failed to clear wishlist" }, { status: 500 });
+  }
+}
+

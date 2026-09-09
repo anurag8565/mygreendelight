@@ -20,9 +20,10 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import useGetMe from "@/hooks/useGetMe";
-import { clearWishlist, hydrateWishlist } from "@/redux/WishlistSlice";
+import { clearWishlist, hydrateWishlist, setWishlist } from "@/redux/WishlistSlice";
 import { addMultipleToCart } from "@/redux/CartSlice";
 import { motion, AnimatePresence } from "framer-motion";
+import axios from "axios";
 
 export default function WishlistPage() {
   useGetMe();
@@ -37,10 +38,26 @@ export default function WishlistPage() {
   const [addedAllSuccess, setAddedAllSuccess] = useState(false);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
 
+  const currentUserId = userdata?._id ? String(userdata._id) : null;
+
   useEffect(() => {
     setMounted(true);
-    dispatch(hydrateWishlist());
-  }, [dispatch]);
+    dispatch(hydrateWishlist({ userId: currentUserId }));
+  }, [dispatch, currentUserId]);
+
+  useEffect(() => {
+    if (!currentUserId) return;
+    axios
+      .get("/api/wishlist")
+      .then((res) => {
+        if (res.data?.success && Array.isArray(res.data?.wishlist)) {
+          dispatch(setWishlist({ items: res.data.wishlist, userId: currentUserId }));
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to load wishlist", err);
+      });
+  }, [currentUserId, dispatch]);
 
   if (!mounted) return null;
 
@@ -86,9 +103,16 @@ export default function WishlistPage() {
   };
 
   // Clear wishlist
-  const handleClearWishlist = () => {
-    dispatch(clearWishlist());
+  const handleClearWishlist = async () => {
+    dispatch(clearWishlist({ userId: currentUserId }));
     setShowClearConfirm(false);
+    if (currentUserId) {
+      try {
+        await axios.delete("/api/wishlist");
+      } catch (e) {
+        console.error("Failed to clear wishlist on server", e);
+      }
+    }
   };
 
   return (

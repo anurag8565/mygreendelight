@@ -12,21 +12,30 @@ export interface WishlistItem {
 
 interface WishlistState {
     items: WishlistItem[];
+    currentUserId: string | null;
 }
 
-const saveWishlist = (items: WishlistItem[]) => {
+const getStorageKey = (userId?: string | null) => {
+    return userId ? `subziquick_wishlist_user_${userId}` : "subziquick_wishlist_guest";
+};
+
+const saveWishlist = (items: WishlistItem[], userId?: string | null) => {
     if (typeof window === "undefined") return;
     try {
-        localStorage.setItem("subziquick_wishlist_data", JSON.stringify(items));
+        const key = getStorageKey(userId);
+        localStorage.setItem(key, JSON.stringify(items));
+        // Clean up legacy global key if it exists
+        localStorage.removeItem("subziquick_wishlist_data");
     } catch (e) {
         console.error("Wishlist save error:", e);
     }
 };
 
-const getSavedWishlist = (): WishlistItem[] => {
+const getSavedWishlist = (userId?: string | null): WishlistItem[] => {
     if (typeof window === "undefined") return [];
     try {
-        const saved = localStorage.getItem("subziquick_wishlist_data");
+        const key = getStorageKey(userId);
+        const saved = localStorage.getItem(key);
         if (saved) {
             const parsed = JSON.parse(saved);
             if (Array.isArray(parsed)) {
@@ -49,27 +58,42 @@ const getSavedWishlist = (): WishlistItem[] => {
 
 const initialState: WishlistState = {
     items: [],
+    currentUserId: null,
 };
 
 const wishlistSlice = createSlice({
     name: "wishlist",
     initialState,
     reducers: {
-        hydrateWishlist: (state) => {
-            const saved = getSavedWishlist();
-            if (saved.length > 0) {
-                state.items = saved;
-            }
+        hydrateWishlist: (state, action: PayloadAction<{ userId?: string | null } | undefined>) => {
+            const userId = action?.payload?.userId !== undefined ? action.payload.userId : state.currentUserId;
+            state.currentUserId = userId || null;
+            state.items = getSavedWishlist(state.currentUserId);
         },
-        setWishlist: (state, action: PayloadAction<any[]>) => {
-            if (!Array.isArray(action.payload)) return;
+        setWishlist: (
+            state,
+            action: PayloadAction<{ items: any[]; userId?: string | null } | any[]>
+        ) => {
+            let rawItems: any[] = [];
+            let userId: string | null | undefined = state.currentUserId;
 
-            // Only update if payload contains actual populated item objects
-            const validItems = action.payload
-                .filter((item) => item && typeof item === "object" && item._id && item.name)
+            if (Array.isArray(action.payload)) {
+                rawItems = action.payload;
+            } else if (action.payload && typeof action.payload === "object") {
+                rawItems = Array.isArray(action.payload.items) ? action.payload.items : [];
+                if (action.payload.userId !== undefined) {
+                    userId = action.payload.userId || null;
+                }
+            }
+
+            state.currentUserId = userId || null;
+
+            // Map and sanitize the incoming user items
+            const validItems: WishlistItem[] = rawItems
+                .filter((item) => item && typeof item === "object" && (item._id || item.name))
                 .map((item) => ({
                     _id: String(item._id),
-                    name: String(item.name),
+                    name: String(item.name || "Fresh Produce"),
                     price: Number(item.price) || 0,
                     image: String(item.image || ""),
                     unit: String(item.unit || "1 unit"),
@@ -77,18 +101,27 @@ const wishlistSlice = createSlice({
                     stock: typeof item.stock === "number" ? item.stock : 50,
                 }));
 
-            if (validItems.length > 0) {
-                // Merge unique items with existing
-                const existingMap = new Map<string, WishlistItem>();
-                state.items.forEach((item) => existingMap.set(String(item._id), item));
-                validItems.forEach((item) => existingMap.set(String(item._id), item));
-                state.items = Array.from(existingMap.values());
-                saveWishlist(state.items);
-            }
+            // Crucial: REPLACE state.items with this user's exact wishlist (DO NOT merge with other users!)
+            state.items = validItems;
+            saveWishlist(state.items, state.currentUserId);
         },
-        toggleWishlist: (state, action: PayloadAction<any>) => {
+        toggleWishlist: (
+            state,
+            action: PayloadAction<{ item: any; userId?: string | null } | any>
+        ) => {
             if (!action.payload) return;
-            const rawId = String(action.payload._id || "");
+
+            let payloadItem = action.payload;
+            let targetUserId = state.currentUserId;
+
+            if (action.payload.item && typeof action.payload.item === "object") {
+                payloadItem = action.payload.item;
+                if (action.payload.userId !== undefined) {
+                    targetUserId = action.payload.userId || null;
+                }
+            }
+
+            const rawId = String(payloadItem._id || "");
             if (!rawId) return;
 
             const existingIndex = state.items.findIndex(
@@ -100,23 +133,25 @@ const wishlistSlice = createSlice({
             } else {
                 state.items.push({
                     _id: rawId,
-                    name: String(action.payload.name || "Fresh Produce"),
-                    price: Number(action.payload.price) || 0,
-                    image: String(action.payload.image || ""),
-                    unit: String(action.payload.unit || "1 unit"),
-                    category: String(action.payload.category || "Vegetables"),
-                    stock: typeof action.payload.stock === "number" ? action.payload.stock : 50,
+                    name: String(payloadItem.name || "Fresh Produce"),
+                    price: Number(payloadItem.price) || 0,
+                    image: String(payloadItem.image || ""),
+                    unit: String(payloadItem.unit || "1 unit"),
+                    category: String(payloadItem.category || "Vegetables"),
+                    stock: typeof payloadItem.stock === "number" ? payloadItem.stock : 50,
                 });
             }
-            saveWishlist(state.items);
+            saveWishlist(state.items, targetUserId);
         },
-        clearWishlist: (state) => {
+        clearWishlist: (state, action: PayloadAction<{ userId?: string | null } | undefined>) => {
+            const userId = action?.payload?.userId !== undefined ? action.payload.userId : state.currentUserId;
             state.items = [];
-            saveWishlist(state.items);
+            saveWishlist([], userId);
         }
     }
 });
 
 export const { hydrateWishlist, toggleWishlist, setWishlist, clearWishlist } = wishlistSlice.actions;
 export default wishlistSlice.reducer;
+
 

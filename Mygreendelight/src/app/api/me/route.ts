@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import connectDb from "@/lib/db";
 import User from "@/model/user.model";
+import Grocery from "@/model/groseri.model";
 import { NextResponse } from "next/server";
 
 export async function GET() {

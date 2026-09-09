@@ -37,6 +37,7 @@ export default function Groceryitemcard({
   const dispatch = useDispatch<AppDispatch>();
   const { cartdata } = useSelector((state: RootState) => state.cart);
   const { items: wishlistItems } = useSelector((state: RootState) => state.wishlist);
+  const { userdata } = useSelector((state: RootState) => state.user);
 
   const [selectedVariation, setSelectedVariation] = React.useState(
     item.variations && item.variations.length > 0 ? item.variations[0] : null
@@ -125,13 +126,16 @@ export default function Groceryitemcard({
             e.preventDefault();
             e.stopPropagation();
             dispatch(toggleWishlist({
-              _id: String(item._id),
-              name: item.name,
-              price: displayPrice,
-              image: item.image,
-              unit: displayUnit,
-              category: item.category,
-              stock: displayStock,
+              item: {
+                _id: String(item._id),
+                name: item.name,
+                price: displayPrice,
+                image: item.image,
+                unit: displayUnit,
+                category: item.category,
+                stock: displayStock,
+              },
+              userId: userdata?._id || null,
             }));
             try {
               await axios.post("/api/wishlist", { productId: String(item._id) });
