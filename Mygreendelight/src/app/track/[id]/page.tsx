@@ -198,7 +198,7 @@ export default function TrackOrderPage() {
               title="View Invoice"
             >
               <Printer size={13} className="text-[#0f8646]" />
-              <span className="hidden sm:inline">Tax Invoice</span>
+              <span className="hidden sm:inline">Bill / Receipt</span>
             </button>
 
             {order && (

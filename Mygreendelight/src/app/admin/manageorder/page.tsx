@@ -738,7 +738,7 @@ export default function ManageOrder() {
                         <button
                           onClick={() => setSelectedInvoiceOrder(order)}
                           className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-2.5 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 transition cursor-pointer border border-gray-200"
-                          title="Print Customer Bill / Tax Invoice"
+                          title="Print Customer Bill / Receipt"
                         >
                           <Printer size={13} className="text-[#0f8646]" />
                           <span>Invoice</span>
