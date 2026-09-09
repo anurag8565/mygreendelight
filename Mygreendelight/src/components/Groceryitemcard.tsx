@@ -1,7 +1,7 @@
 "use client";
 
 import { addToCart, decreaseQuantity, increaseQuantity } from "@/redux/CartSlice";
-import { toggleWishlist } from "@/redux/WishlistSlice";
+import { toggleWishlist, setWishlist } from "@/redux/WishlistSlice";
 import { AppDispatch, RootState } from "@/redux/store";
 import { Heart, Plus, Minus, Bell, Zap } from "lucide-react";
 import mongoose from "mongoose";
@@ -125,6 +125,8 @@ export default function Groceryitemcard({
           onClick={async (e) => {
             e.preventDefault();
             e.stopPropagation();
+            const rawId = userdata?._id || (userdata as any)?.id || null;
+            const cleanUserId = rawId ? String(rawId) : null;
             dispatch(toggleWishlist({
               item: {
                 _id: String(item._id),
@@ -135,10 +137,13 @@ export default function Groceryitemcard({
                 category: item.category,
                 stock: displayStock,
               },
-              userId: userdata?._id || null,
+              userId: cleanUserId,
             }));
             try {
-              await axios.post("/api/wishlist", { productId: String(item._id) });
+              const res = await axios.post("/api/wishlist", { productId: String(item._id) });
+              if (res.data?.success && Array.isArray(res.data?.wishlist) && res.data.wishlist.length > 0) {
+                dispatch(setWishlist({ items: res.data.wishlist, userId: cleanUserId }));
+              }
             } catch (error) {
               // Guest or offline
             }

@@ -74,7 +74,9 @@ export default function Nav({ user }: { user?: iUser | null }) {
   const { cartdata } = useSelector((state: RootState) => state.cart);
   const { items: wishlistItems } = useSelector((state: RootState) => state.wishlist);
   const { userdata } = useSelector((state: RootState) => state.user);
-  const activeUser = user || (userdata as any);
+  const activeUser = (user && (user._id || user.email)) ? user : (userdata as any);
+  const rawUserId = activeUser?._id || (activeUser as any)?.id || null;
+  const cleanUserId = rawUserId ? String(rawUserId) : null;
   const [search, setSearch] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [isMobileSearchFocused, setIsMobileSearchFocused] = useState(false);
@@ -85,12 +87,12 @@ export default function Nav({ user }: { user?: iUser | null }) {
   useEffect(() => {
     setMounted(true);
     dispatch(hydrateCart());
-    dispatch(hydrateWishlist({ userId: activeUser?._id ? String(activeUser._id) : null }));
+    dispatch(hydrateWishlist({ userId: cleanUserId }));
     if (typeof window !== "undefined") {
       const savedLoc = localStorage.getItem("mgd_user_location");
       if (savedLoc) setLocation(savedLoc);
     }
-  }, [dispatch, activeUser?._id]);
+  }, [dispatch, cleanUserId]);
 
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [isSearching, setIsSearching] = useState(false);

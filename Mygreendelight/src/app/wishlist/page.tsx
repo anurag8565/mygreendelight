@@ -38,7 +38,7 @@ export default function WishlistPage() {
   const [addedAllSuccess, setAddedAllSuccess] = useState(false);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
 
-  const currentUserId = userdata?._id ? String(userdata._id) : null;
+  const currentUserId = userdata?._id ? String(userdata._id) : ((userdata as any)?.id ? String((userdata as any).id) : null);
 
   useEffect(() => {
     setMounted(true);
@@ -50,7 +50,7 @@ export default function WishlistPage() {
     axios
       .get("/api/wishlist")
       .then((res) => {
-        if (res.data?.success && Array.isArray(res.data?.wishlist)) {
+        if (res.data?.success && Array.isArray(res.data?.wishlist) && res.data.wishlist.length > 0) {
           dispatch(setWishlist({ items: res.data.wishlist, userId: currentUserId }));
         }
       })
@@ -117,7 +117,7 @@ export default function WishlistPage() {
 
   return (
     <div className="bg-[#f8f9fa] min-h-screen flex flex-col justify-between font-sans text-gray-900 pb-20 md:pb-0">
-      <Nav user={(userdata as any) || { role: "user" }} />
+      <Nav user={userdata} />
 
       {/* Top Header Bar */}
       <div className="bg-white border-b border-gray-200/80 sticky top-0 z-30 shadow-2xs">

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, increaseQuantity, decreaseQuantity } from "@/redux/CartSlice";
-import { toggleWishlist } from "@/redux/WishlistSlice";
+import { toggleWishlist, setWishlist } from "@/redux/WishlistSlice";
 import type { RootState, AppDispatch } from "@/redux/store";
 import {
   Minus,
@@ -191,6 +191,8 @@ export default function ProductDetailsClient({
             <button
               type="button"
               onClick={async () => {
+                const rawId = userdata?._id || (userdata as any)?.id || null;
+                const cleanUserId = rawId ? String(rawId) : null;
                 dispatch(toggleWishlist({
                   item: {
                     _id: String(product._id),
@@ -201,12 +203,15 @@ export default function ProductDetailsClient({
                     category: product.category,
                     stock: currentStock,
                   },
-                  userId: userdata?._id || null,
+                  userId: cleanUserId,
                 }));
                 setShowWishlistToast(true);
                 setTimeout(() => setShowWishlistToast(false), 2500);
                 try {
-                  await axios.post("/api/wishlist", { productId: String(product._id) });
+                  const res = await axios.post("/api/wishlist", { productId: String(product._id) });
+                  if (res.data?.success && Array.isArray(res.data?.wishlist) && res.data.wishlist.length > 0) {
+                    dispatch(setWishlist({ items: res.data.wishlist, userId: cleanUserId }));
+                  }
                 } catch (error) {}
               }}
               className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white border border-gray-200 shadow-2xs hover:bg-gray-50 flex items-center justify-center transition cursor-pointer active:scale-90"

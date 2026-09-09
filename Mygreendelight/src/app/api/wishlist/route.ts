@@ -10,7 +10,7 @@ export async function GET() {
     const session = await auth();
 
     if (!session?.user?.email) {
-      return NextResponse.json({ success: false, items: [], wishlist: [] }, { status: 401 });
+      return NextResponse.json({ success: true, items: [], wishlist: [] }, { status: 200 });
     }
 
     // Ensure Grocery model is registered
