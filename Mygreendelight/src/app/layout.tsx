@@ -61,7 +61,14 @@ export const metadata: Metadata = {
     "free vegetable delivery in bhopal",
     "cheap fresh vegetable delivery online bhopal",
     "taaza sabzi online bhopal",
-    "bhopal sabzi mandi online",
+    // Fast Delivery & Time-Based Speed Keywords
+    "10-15 minute grocery delivery bhopal",
+    "15 minute vegetable delivery bhopal",
+    "fastest sabzi delivery bhopal",
+    "instant fresh vegetable delivery near me bhopal",
+    "quick commerce vegetable delivery bhopal",
+    "early morning vegetable delivery bhopal",
+    "express grocery delivery bhopal",
 
     // Hyperlocal Bhopal Locality Keywords
     "vegetable delivery in arera colony bhopal",
@@ -332,6 +339,22 @@ export default function RootLayout({
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "No, SubziQuick operates with Zero Platform Fee, Zero Surge Charges, and No Minimum Order limit on fresh vegetable and fruit delivery across Bhopal."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Bhopal me sabse fast 10-15 minute me sabzi delivery kaun karta hai?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SubziQuick Bhopal me sabse fast 10-15 minute express hyperlocal delivery provide karta hai. Taaza sabzi aur fruits direct kisan farm se Bagsewaniya hub se deliver hote hain."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How fast is vegetable delivery in Bhopal on SubziQuick?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SubziQuick delivers within 10 to 15 minutes across all major Bhopal residential societies including Arera Colony, MP Nagar, Kolar Road, and Bagsewaniya with real-time delivery status."
         }
       }
     ]
