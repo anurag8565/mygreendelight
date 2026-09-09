@@ -89,7 +89,7 @@ export default function Groceryitemcard({
       >
         <img
           src={item.image}
-          alt={item.name}
+          alt={`Fresh ${item.name} Online Delivery in Bhopal | SubziQuick`}
           onError={(e) => {
             (e.target as HTMLImageElement).src =
               "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=500&q=80";

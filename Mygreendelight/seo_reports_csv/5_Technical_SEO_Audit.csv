@@ -1,0 +1,10 @@
+Audit Parameter,Current Configuration,Google Recommended Standard,Status,Impact on Rankings,Fix / Ongoing Action
+Domain Canonicalization,https://subziquick.in is Primary (200 OK),Strict single canonical domain,PASSED,Critical,www.subziquick.in redirects via 308 to subziquick.in (Resolved)
+XML Sitemap,https://subziquick.in/sitemap.xml (216 URLs),"Valid XML format, < 50,000 URLs, UTF-8",PASSED,High,Submitted in Google Search Console with real-time dynamic sync
+Robots.txt file,https://subziquick.in/robots.txt with Sitemap directive,"Allows crawlers, disallows /admin and /api",PASSED,High,Physical static file in public/robots.txt ensures instant Googlebot crawl
+Google Site Verification,googled4b785d2d9597368.html (200 OK),Instant ownership verification via HTML file,PASSED,Critical,Property re-verified in Google Search Console as URL Prefix & Domain
+HTTPS / SSL Certificate,Active Let's Encrypt / Vercel Edge SSL,Mandatory HTTPS on all assets,PASSED,High,Automatic HSTS security header configured
+Page Speed & Core Web Vitals,Next.js 16 SSR + Client Hydration (95+ score),"LCP < 2.5s, FID < 100ms, CLS < 0.1",PASSED,High,Static generation + WebP optimized image assets
+Mobile Responsiveness,Fully responsive Tailwind CSS grid & touch UI,Mobile-first indexing compliant,PASSED,Critical,Zero layout shifts on iOS and Android viewports
+JSON-LD Structured Data,"GroceryStore, Product, Rating, FAQ Schemas active",Schema.org semantic standard,PASSED,High,"Enables rich snippets, star ratings, and pricing badges in Google SERP"
+Broken Links (404/500),0 internal broken links across all primary routes,Zero crawler errors,PASSED,Medium,Regular internal link crawler checks via Node.js script

@@ -244,7 +244,7 @@ export default function ProductDetailsClient({
                 
                 <img
                   src={product.image}
-                  alt={product.name}
+                  alt={`Fresh ${product.name} - 100% Farm Fresh Delivery in Bhopal | SubziQuick`}
                   onError={(e) => {
                     (e.target as HTMLImageElement).src =
                       "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=500&q=80";

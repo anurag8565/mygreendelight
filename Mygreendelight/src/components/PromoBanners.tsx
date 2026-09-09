@@ -59,7 +59,7 @@ export default function PromoBanners({ banners = [] }: { banners?: any[] }) {
           <div className="relative z-10 shrink-0 w-28 h-28 sm:w-36 sm:h-36 rounded-2xl overflow-hidden shadow-lg border-2 border-white/30 hidden sm:flex items-center justify-center bg-white/10 backdrop-blur-xs">
             <img
               src={b1.image}
-              alt={b1.title}
+              alt={`${b1.title} - Fresh Vegetables Bhopal SubziQuick`}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
           </div>
@@ -90,7 +90,7 @@ export default function PromoBanners({ banners = [] }: { banners?: any[] }) {
           <div className="relative z-10 shrink-0 w-28 h-28 sm:w-36 sm:h-36 rounded-2xl overflow-hidden shadow-lg border-2 border-white/60 hidden sm:flex items-center justify-center bg-white/40">
             <img
               src={b2.image}
-              alt="Express Delivery"
+              alt="Express Fresh Vegetable Delivery Bhopal - SubziQuick"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
           </div>
