@@ -85,7 +85,7 @@ export default function OrderInvoiceModal({
               <FileText size={16} />
             </div>
             <div>
-              <span className="font-extrabold text-sm block">Tax Invoice & Delivery Receipt</span>
+              <span className="font-extrabold text-sm block">Retail Invoice & Delivery Receipt</span>
               <span className="text-[10px] text-gray-400 font-mono">Order #{orderShortId}</span>
             </div>
           </div>
@@ -121,18 +121,18 @@ export default function OrderInvoiceModal({
               <div className="mt-2.5 space-y-0.5 text-[11px] text-gray-500">
                 <p className="font-bold text-gray-700">SubziQuick Fresh Retail & Logistics</p>
                 <p>Amrai, Bagsewaniya, Bhopal, Madhya Pradesh - 462043</p>
-                <p className="font-mono text-[10px] text-gray-400">
-                  GSTIN: 23AABCS1234F1Z0 • FSSAI Lic: 11424850000123
+                <p className="text-[10px] text-emerald-700 font-medium">
+                  Fresh Produce Retail • 0% GST Nil-Rated Agricultural Goods
                 </p>
                 <p className="text-[10px] text-gray-500">
-                  Customer Care: <strong>+91 99814 18565</strong> • anuragsinghas098@gmail.com
+                  Customer Care: <strong>+91 99814 18565</strong> • support@subziquick.in
                 </p>
               </div>
             </div>
 
             <div className="flex flex-row sm:flex-col items-start sm:items-end justify-between w-full sm:w-auto gap-2">
               <span className="bg-emerald-50 text-[#0f8646] border border-emerald-300 font-black text-xs uppercase tracking-widest px-3.5 py-1 rounded-xl shadow-2xs">
-                TAX INVOICE
+                RETAIL INVOICE
               </span>
               <div className="text-left sm:text-right space-y-0.5">
                 <p className="text-sm font-black text-gray-900 font-mono tracking-tight">
@@ -351,7 +351,7 @@ export default function OrderInvoiceModal({
               Thank you for trusting SubziQuick — Delivering Bhopal&apos;s Freshest Harvest!
             </p>
             <p className="font-mono text-gray-400">
-              This is a computer-generated tax invoice. No physical signature is required.
+              This is a computer-generated retail bill & delivery receipt. No physical signature is required.
             </p>
           </div>
         </div>
