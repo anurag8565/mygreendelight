@@ -39,7 +39,7 @@ const CATEGORY_IMAGES: Record<string, string> = {
   combos: "/combo_banner.jpg",
 };
 
-export default function ShopPage() {
+function ShopContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const categoryParam = searchParams.get("category");
@@ -744,3 +744,31 @@ export default function ShopPage() {
   );
 }
 
+function ShopLoadingFallback() {
+  return (
+    <div className="bg-[#f8f9fa] min-h-screen flex flex-col justify-between font-sans">
+      <main className="flex-1 max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-5 sm:py-8 pb-28 sm:pb-16 w-full">
+        <div className="bg-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-gray-100 shadow-xs mb-3">
+          <h1 className="text-lg sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
+            Buy Fresh Vegetables &amp; Fruits in Bhopal
+          </h1>
+          <p className="text-[11px] sm:text-xs text-gray-500 font-medium mt-0.5">
+            5:00 AM Direct Mandi Harvest • 100% Ozone Washed &amp; Pesticide Safe • Express Delivery Across Bhopal
+          </p>
+        </div>
+        <div className="flex items-center justify-center py-24">
+          <div className="w-10 h-10 border-4 border-emerald-300 border-t-emerald-600 rounded-full animate-spin" />
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+export default function ShopPage() {
+  return (
+    <React.Suspense fallback={<ShopLoadingFallback />}>
+      <ShopContent />
+    </React.Suspense>
+  );
+}

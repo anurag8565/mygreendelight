@@ -373,6 +373,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+        <script
           src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
           defer
         />
