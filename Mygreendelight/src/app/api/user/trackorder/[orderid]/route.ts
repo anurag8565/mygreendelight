@@ -37,6 +37,7 @@ export async function GET(
 
     if (orderObj.deliveryOtp) {
       orderObj.deliveryOtp = {
+        code: orderObj.deliveryOtp.code,
         verified: isOtpVerified,
         expiresAt: orderObj.deliveryOtp.expiresAt,
         hasOtp,

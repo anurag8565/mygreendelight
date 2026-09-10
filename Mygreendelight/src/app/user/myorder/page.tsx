@@ -68,6 +68,10 @@ interface OrderType {
     state?: string;
     pincode?: string;
   };
+  deliveryOtp?: {
+    code?: string;
+    verified?: boolean;
+  };
   createdAt: string;
 }
 
@@ -522,13 +526,21 @@ export default function MyOrder() {
                         </div>
                       </div>
 
-                      <a
-                        href={`tel:${order.assigneddelliveryboy.mobile}`}
-                        className="bg-white border border-emerald-300 text-[#0f8646] hover:bg-emerald-50 px-3.5 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 transition shadow-2xs cursor-pointer"
-                      >
-                        <Phone size={12} />
-                        <span>Call Rider</span>
-                      </a>
+                      <div className="flex items-center gap-2">
+                        {order.deliveryOtp?.code && !order.deliveryOtp?.verified && (
+                          <div className="bg-white border-2 border-emerald-500 text-emerald-950 px-3 py-1 rounded-xl shadow-2xs flex items-center gap-1.5" title="Doorstep Verification OTP">
+                            <span className="text-[9px] font-black uppercase text-emerald-700">OTP</span>
+                            <span className="font-mono text-sm font-black tracking-widest text-[#0f8646]">{order.deliveryOtp.code}</span>
+                          </div>
+                        )}
+                        <a
+                          href={`tel:${order.assigneddelliveryboy.mobile}`}
+                          className="bg-white border border-emerald-300 text-[#0f8646] hover:bg-emerald-50 px-3 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 transition shadow-2xs cursor-pointer"
+                        >
+                          <Phone size={12} />
+                          <span>Call</span>
+                        </a>
+                      </div>
                     </div>
                   )}
 
