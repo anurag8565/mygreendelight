@@ -330,4 +330,33 @@ export async function sendDeliveryOtpNotification(order: any, driver?: any) {
       console.warn("Fast2SMS OTP dispatch warning:", smsErr);
     }
   }
+
+  // 3. 🔔 OneSignal Push Notification to Customer (Out for Delivery + OTP)
+  const oneSignalApiKey = process.env.ONESIGNAL_REST_API_KEY || process.env.ONESIGNAL_API_KEY;
+  if (oneSignalApiKey) {
+    try {
+      const orderIdStr = String(order._id);
+      await fetch("https://onesignal.com/api/v1/notifications", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Basic ${oneSignalApiKey}`,
+        },
+        body: JSON.stringify({
+          app_id: "6fa7f8ec-5436-446f-93b4-7b4bcad7055d",
+          filters: [
+            { field: "tag", key: "last_order_id", relation: "=", value: orderIdStr },
+          ],
+          headings: { en: `🚚 Out for Delivery! (OTP: ${otp})` },
+          contents: {
+            en: `Hi ${customerName}, ${driverName} is out for delivery with your fresh harvest. Share OTP ${otp} at doorstep.`,
+          },
+          url: `https://subziquick.in/track/${orderIdStr}`,
+        }),
+      });
+      console.log(`✓ Delivery OTP ${otp} OneSignal push dispatched for order #${orderShortId}`);
+    } catch (pushErr) {
+      console.warn("OneSignal OTP push dispatch warning:", pushErr);
+    }
+  }
 }

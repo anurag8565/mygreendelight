@@ -41,6 +41,16 @@ function useGetMe() {
           } else {
             dispatch(hydrateWishlist({ userId }))
           }
+
+          // Sync user identity & role with OneSignal
+          if (typeof window !== "undefined" && (window as any).OneSignalDeferred) {
+            (window as any).OneSignalDeferred.push(async function (OneSignal: any) {
+              try {
+                if (userId) await OneSignal.User.addTag("user_id", String(userId));
+                if (result.data?.role) await OneSignal.User.addTag("role", String(result.data.role));
+              } catch (_) {}
+            });
+          }
         } else if (session?.user?.email) {
           dispatch(setUserdata(session.user as any))
           const rawId = (session.user as any)?._id || (session.user as any)?.id || null
