@@ -38,25 +38,20 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        // 🛡️ Prevent Fake UPI: Duplicate UTR & Format Validation
+        // 🛡️ UPI Handling: Validate UTR uniqueness if provided
         if (paymentmethod === "upi") {
             const cleanPaymentId = paymentId ? String(paymentId).trim() : "";
-            if (!cleanPaymentId || cleanPaymentId.length < 6) {
-                return NextResponse.json(
-                    { success: false, message: "A valid 12-digit UPI UTR / Reference Number is required for UPI orders." },
-                    { status: 400 }
-                );
-            }
-
-            const existingOrderWithUtr = await Order.findOne({ paymentId: cleanPaymentId });
-            if (existingOrderWithUtr) {
-                return NextResponse.json(
-                    { 
-                        success: false, 
-                        message: "⚠️ This UPI UTR / Reference Number has already been submitted for another order. Please check your payment receipt and enter your unique UTR." 
-                    },
-                    { status: 400 }
-                );
+            if (cleanPaymentId && cleanPaymentId.startsWith("UTR_") && cleanPaymentId.length >= 8) {
+                const existingOrderWithUtr = await Order.findOne({ paymentId: cleanPaymentId });
+                if (existingOrderWithUtr) {
+                    return NextResponse.json(
+                        { 
+                            success: false, 
+                            message: "This UPI Reference Number has already been submitted for another order." 
+                        },
+                        { status: 400 }
+                    );
+                }
             }
         }
 

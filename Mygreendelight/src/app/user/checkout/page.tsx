@@ -271,14 +271,6 @@ export default function Checkout() {
       return;
     }
 
-    if (paymentMethod === "upi") {
-      const cleanUtr = upiRefNumber.trim();
-      if (!cleanUtr || cleanUtr.length < 6) {
-        alert("⚠️ कृपया UPI पेमेंट करने के बाद 12-अंकों का UTR / Reference Number दर्ज करें, ताकि आपका पेमेंट वेरिफाई हो सके।\n\n(Please enter the 12-digit UPI UTR / Reference Number from your payment receipt before confirming order).");
-        return;
-      }
-    }
-
     setSubmitting(true);
     const payableAmount = finalPayableTotal;
 
@@ -334,7 +326,14 @@ export default function Checkout() {
           longitude: position ? position[1] : currentArea.lng,
         },
         paymentmethod: paymentMethod, // "cod" | "upi"
-        paymentId: paymentMethod === "upi" ? `UTR_${cleanUtr}` : null,
+        paymentId:
+          paymentMethod === "upi"
+            ? cleanUtr
+              ? cleanUtr.startsWith("UTR_")
+                ? cleanUtr
+                : `UTR_${cleanUtr}`
+              : `UPI_APP_${Date.now().toString().slice(-6)}`
+            : null,
         paymentProofImage: uploadedProofUrl,
         couponCode: couponCode || undefined,
         discount: discount || 0,
@@ -1021,43 +1020,39 @@ export default function Checkout() {
                   {paymentMethod === "upi" && (
                     <div className="p-4 pt-0 border-t border-emerald-100/80 bg-white space-y-4">
                       {/* Mobile 1-Click Pay Apps Button */}
-                      <div className="pt-3">
-                        <span className="text-[11px] font-bold text-gray-700 block mb-2">
-                          ⚡ Option A: Tap to Pay with Mobile UPI Apps:
+                      <div className="pt-3 space-y-2">
+                        <span className="text-[11px] font-bold text-gray-700 block">
+                          ⚡ Tap to Pay with Any UPI App:
                         </span>
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                        
+                        {/* Universal 1-Click UPI Payment Button */}
+                        <a
+                          href={`upi://pay?pa=9981418565@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Order`}
+                          className="w-full bg-gradient-to-r from-emerald-600 via-[#0f8646] to-green-600 hover:from-emerald-700 hover:to-green-700 text-white py-3 px-4 rounded-xl text-xs sm:text-sm font-black flex items-center justify-center gap-2 shadow-sm transition active:scale-98 text-center cursor-pointer"
+                        >
+                          <Zap size={16} />
+                          <span>Pay ₹{finalPayableTotal} via UPI App (PhonePe / GPay / Paytm)</span>
+                        </a>
+
+                        <div className="grid grid-cols-3 gap-2 pt-1">
                           <a
-                            href={`phonepe://pay?pa=9981418565@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Order`}
-                            className="bg-[#5f259f] hover:bg-[#4a1c7d] text-white py-2.5 px-3 rounded-xl text-xs font-black flex items-center justify-center gap-1.5 shadow-xs transition active:scale-95 text-center"
+                            href={`upi://pay?pa=9981418565@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Order`}
+                            className="bg-[#5f259f] hover:bg-[#4a1c7d] text-white py-2 px-2 rounded-xl text-[11px] font-black flex items-center justify-center gap-1 shadow-2xs transition active:scale-95 text-center"
                           >
                             <span>🟣 PhonePe</span>
                           </a>
                           <a
                             href={`upi://pay?pa=9981418565@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Order`}
-                            className="bg-[#1a73e8] hover:bg-[#1557b0] text-white py-2.5 px-3 rounded-xl text-xs font-black flex items-center justify-center gap-1.5 shadow-xs transition active:scale-95 text-center"
+                            className="bg-[#1a73e8] hover:bg-[#1557b0] text-white py-2 px-2 rounded-xl text-[11px] font-black flex items-center justify-center gap-1 shadow-2xs transition active:scale-95 text-center"
                           >
-                            <span>🔵 Google Pay</span>
+                            <span>🔵 GPay</span>
                           </a>
                           <a
                             href={`upi://pay?pa=9981418565@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Order`}
-                            className="bg-[#00baf2] hover:bg-[#0092bf] text-white py-2.5 px-3 rounded-xl text-xs font-black flex items-center justify-center gap-1.5 shadow-xs transition active:scale-95 col-span-2 sm:col-span-1 text-center"
+                            className="bg-[#00baf2] hover:bg-[#0092bf] text-white py-2 px-2 rounded-xl text-[11px] font-black flex items-center justify-center gap-1 shadow-2xs transition active:scale-95 text-center"
                           >
-                            <span>🔷 Paytm / BHIM</span>
+                            <span>🔷 Paytm</span>
                           </a>
-                        </div>
-
-                        {/* Self-transfer / Device Error Help Banner */}
-                        <div className="mt-3 bg-amber-50 border border-amber-300/80 rounded-xl p-3 text-amber-950 text-[11px] leading-relaxed">
-                          <span className="font-extrabold text-amber-900 block flex items-center gap-1.5 mb-1">
-                            <AlertCircle size={14} className="text-amber-600 shrink-0" />
-                            <span>PhonePe me "Device not verified" ya Security Error aa raha hai?</span>
-                          </span>
-                          <p className="text-amber-800 font-medium">
-                            Yeh error tab aata hai jab aap <strong>usi phone/SIM se test karte hain</strong> jismein store ka number linked hai (Self-Payment Block by NPCI/Bank) ya browser security deep-link rok deta hai.
-                          </p>
-                          <p className="text-amber-900 font-bold mt-1">
-                            👉 <strong>Solution:</strong> Niche diya gaya <strong>"Copy UPI ID"</strong> dabayein aur PhonePe me jakar <em>"To UPI ID"</em> me paste karke pay karein, ya fir <strong>QR Code scan karein</strong>!
-                          </p>
                         </div>
                       </div>
 
@@ -1122,26 +1117,26 @@ export default function Checkout() {
                       </div>
 
                       {/* 12-Digit UTR / Reference ID Field */}
-                      <div className="bg-amber-50/60 p-3.5 rounded-2xl border border-amber-200">
+                      <div className="bg-emerald-50/50 p-3.5 rounded-2xl border border-emerald-200">
                         <div className="flex items-center justify-between mb-1.5">
-                          <label className="text-xs font-black text-amber-950 flex items-center gap-1.5">
-                            <span>Step 2: Enter 12-Digit UPI UTR No.</span>
-                            <span className="text-[10px] font-bold text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded">
-                              Required
+                          <label className="text-xs font-black text-emerald-950 flex items-center gap-1.5">
+                            <span>Step 2: Enter UPI UTR / Reference No.</span>
+                            <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded">
+                              Optional
                             </span>
                           </label>
-                          <span className="text-[10px] font-bold text-gray-500">From GPay/PhonePe</span>
+                          <span className="text-[10px] font-bold text-gray-400">From GPay/PhonePe</span>
                         </div>
                         <input
                           type="text"
-                          maxLength={16}
+                          maxLength={20}
                           placeholder="e.g. 423987123456 (from your UPI receipt)"
                           value={upiRefNumber}
                           onChange={(e) => setUpiRefNumber(e.target.value.replace(/[^a-zA-Z0-9]/g, ""))}
-                          className="w-full bg-white border border-amber-300 rounded-xl py-2.5 px-3 text-xs font-bold text-gray-900 outline-none focus:border-[#0f8646] focus:ring-1 focus:ring-[#0f8646] transition shadow-2xs placeholder:text-gray-400 placeholder:font-normal"
+                          className="w-full bg-white border border-emerald-300 rounded-xl py-2.5 px-3 text-xs font-bold text-gray-900 outline-none focus:border-[#0f8646] focus:ring-1 focus:ring-[#0f8646] transition shadow-2xs placeholder:text-gray-400 placeholder:font-normal"
                         />
-                        <p className="text-[10px] text-amber-800/80 mt-1.5 font-medium leading-tight">
-                          💡 Pay on your UPI app ➔ Copy the 12-digit UTR/Ref No. ➔ Paste here & attach screenshot below.
+                        <p className="text-[10px] text-emerald-800 mt-1.5 font-medium leading-tight">
+                          💡 Enter UTR number if available, then click Place Order below to confirm.
                         </p>
                       </div>
 
