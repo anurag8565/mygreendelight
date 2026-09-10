@@ -55,8 +55,8 @@ export default function Footer() {
     },
     {
       name: "Facebook",
-      handle: "subziquick",
-      href: "https://facebook.com/subziquick",
+      handle: "SubziQuick",
+      href: "https://www.facebook.com/profile.php?id=61594046110147",
       title: "Follow SubziQuick on Facebook",
       bgGradient: "bg-[#1877F2]",
       icon: (

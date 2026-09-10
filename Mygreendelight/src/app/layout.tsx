@@ -265,7 +265,8 @@ export default function RootLayout({
     "servesCuisine": "Fresh Vegetables, Seasonal Fruits, Hydroponic Exotics, Farm Produce, Groceries",
     "sameAs": [
       "https://www.instagram.com/subziquick",
-      "https://wa.me/919981418565"
+      "https://wa.me/919981418565",
+      "https://www.facebook.com/profile.php?id=61594046110147"
     ]
   };
 
