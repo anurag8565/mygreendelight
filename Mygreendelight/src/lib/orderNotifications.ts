@@ -235,6 +235,33 @@ export async function sendOrderNotifications(payload: OrderNotificationPayload) 
       console.warn("Fast2SMS dispatch warning:", smsErr);
     }
   }
+
+  // 4. 🔔 OneSignal Push Notification (Admin & Active Subscribers)
+  const oneSignalApiKey = process.env.ONESIGNAL_REST_API_KEY || process.env.ONESIGNAL_API_KEY;
+  if (oneSignalApiKey) {
+    try {
+      const shortId = payload.orderId.slice(-6).toUpperCase();
+      await fetch("https://onesignal.com/api/v1/notifications", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Basic ${oneSignalApiKey}`,
+        },
+        body: JSON.stringify({
+          app_id: "6fa7f8ec-5436-446f-93b4-7b4bcad7055d",
+          included_segments: ["Total Subscriptions"],
+          headings: { en: `🚨 New Order #${shortId} Received! (₹${payload.totalAmount})` },
+          contents: {
+            en: `Customer: ${payload.customerName} (${payload.customerMobile}) • Slot: ${payload.deliverySlot} • Address: ${payload.address.fulladress?.slice(0, 45) || "Bhopal"}`,
+          },
+          url: "https://subziquick.in/admin/manageorder",
+        }),
+      });
+      console.log("✓ OneSignal push notification dispatched for order:", shortId);
+    } catch (pushErr) {
+      console.warn("OneSignal push dispatch note:", pushErr);
+    }
+  }
 }
 
 /**

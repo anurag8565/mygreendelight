@@ -51,6 +51,81 @@ function OrderSuccessContent() {
   useEffect(() => {
     dispatch(clearCart());
 
+    // 🔔 Instant Order Confirmation Push Notification & OneSignal tagging
+    if (typeof window !== "undefined") {
+      try {
+        const shortId = orderId ? `#${String(orderId).slice(-6).toUpperCase()}` : "";
+        const notifTitle = `🌿 SubziQuick: Order Confirmed ${shortId}`;
+        const notifBody = "Aapka order successfully place ho gaya hai! 10-15 min me Bagsewaniya Mandi hub se deliver hoga.";
+
+        // 1. OneSignal User Tagging
+        if ((window as any).OneSignalDeferred) {
+          (window as any).OneSignalDeferred.push(async function (OneSignal: any) {
+            try {
+              if (orderId) {
+                await OneSignal.User.addTag("last_order_id", String(orderId));
+                await OneSignal.User.addTag("customer_tier", "active_buyer");
+              }
+              if (OneSignal.Notifications && !OneSignal.Notifications.permission) {
+                await OneSignal.Notifications.requestPermission();
+              }
+            } catch (_) {}
+          });
+        }
+
+        // 2. Native Browser Push Notification
+        if ("Notification" in window) {
+          if (Notification.permission === "granted") {
+            new Notification(notifTitle, {
+              body: notifBody,
+              icon: "/hero_basket.jpg",
+              badge: "/hero_basket.jpg",
+            });
+          } else if (Notification.permission === "default") {
+            Notification.requestPermission().then((perm) => {
+              if (perm === "granted") {
+                new Notification(notifTitle, {
+                  body: notifBody,
+                  icon: "/hero_basket.jpg",
+                  badge: "/hero_basket.jpg",
+                });
+              }
+            });
+          }
+        }
+
+        // 3. Synthesize a clean pleasant confirmation chime via Web Audio API
+        const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+        if (AudioCtx) {
+          const ctx = new AudioCtx();
+          const now = ctx.currentTime;
+          const osc1 = ctx.createOscillator();
+          const gain1 = ctx.createGain();
+          osc1.type = "sine";
+          osc1.frequency.setValueAtTime(659.25, now);
+          gain1.gain.setValueAtTime(0.12, now);
+          gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+          osc1.connect(gain1);
+          gain1.connect(ctx.destination);
+          osc1.start(now);
+          osc1.stop(now + 0.35);
+
+          const osc2 = ctx.createOscillator();
+          const gain2 = ctx.createGain();
+          osc2.type = "sine";
+          osc2.frequency.setValueAtTime(987.77, now + 0.12);
+          gain2.gain.setValueAtTime(0.15, now + 0.12);
+          gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
+          osc2.connect(gain2);
+          gain2.connect(ctx.destination);
+          osc2.start(now + 0.12);
+          osc2.stop(now + 0.55);
+        }
+      } catch (notifErr) {
+        console.warn("Client notification note:", notifErr);
+      }
+    }
+
     // If orderId is present, fetch exact order details
     if (orderId) {
       axios
