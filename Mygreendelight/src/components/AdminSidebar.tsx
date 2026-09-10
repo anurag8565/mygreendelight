@@ -33,6 +33,19 @@ export default function AdminSidebar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  React.useEffect(() => {
+    if (typeof window !== "undefined" && (window as any).OneSignalDeferred) {
+      (window as any).OneSignalDeferred.push(async function (OneSignal: any) {
+        try {
+          await OneSignal.User.addTag("role", "admin");
+          if (OneSignal.Notifications && !OneSignal.Notifications.permission) {
+            await OneSignal.Notifications.requestPermission();
+          }
+        } catch (_) {}
+      });
+    }
+  }, []);
+
   const navGroups = [
     {
       groupTitle: "Store Operations",

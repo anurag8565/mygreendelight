@@ -249,7 +249,7 @@ export async function sendOrderNotifications(payload: OrderNotificationPayload) 
         },
         body: JSON.stringify({
           app_id: "6fa7f8ec-5436-446f-93b4-7b4bcad7055d",
-          included_segments: ["Total Subscriptions"],
+          filters: [{ field: "tag", key: "role", relation: "=", value: "admin" }],
           headings: { en: `🚨 New Order #${shortId} Received! (₹${payload.totalAmount})` },
           contents: {
             en: `Customer: ${payload.customerName} (${payload.customerMobile}) • Slot: ${payload.deliverySlot} • Address: ${payload.address.fulladress?.slice(0, 45) || "Bhopal"}`,
