@@ -42,6 +42,7 @@ export async function POST(
       order.paymentStatus = paymentStatus || (ispaid ? "completed" : "pending");
     }
 
+    const previousStatus = order.status;
     if (status && status !== order.status) {
       if (status === "cancelled" && order.status !== "cancelled") {
         // Restore stock for each valid grocery item
@@ -148,6 +149,18 @@ export async function POST(
     }
 
     await order.save();
+
+    // 🔔 Dispatch Status Push Notification to Customer via OneSignal
+    if (status && status !== previousStatus) {
+      try {
+        const customerId = (order.user as any)?._id?.toString() || (order.user as any)?.toString();
+        const customerName = (order.user as any)?.name || order.address?.fullname || "Customer";
+        const { sendOrderStatusPushNotification } = await import("@/lib/orderNotifications");
+        await sendOrderStatusPushNotification(order._id.toString(), customerId, customerName, status);
+      } catch (pushErr) {
+        console.warn("Status push dispatch warning:", pushErr);
+      }
+    }
 
     return NextResponse.json({
       success: true,

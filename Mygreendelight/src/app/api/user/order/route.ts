@@ -370,6 +370,7 @@ try {
         const { sendOrderNotifications } = await import("@/lib/orderNotifications");
         await sendOrderNotifications({
           orderId: neworder._id.toString(),
+          customerId: user._id ? user._id.toString() : user.id ? user.id.toString() : undefined,
           customerName: user.name || address?.fullname || "Customer",
           customerMobile: user.mobile || address?.mobile || "",
           customerEmail: user.email || undefined,

@@ -2,6 +2,7 @@ import { sendMail } from "./mailer";
 
 export interface OrderNotificationPayload {
   orderId: string;
+  customerId?: string;
   customerName: string;
   customerMobile: string;
   customerEmail?: string;
@@ -236,11 +237,13 @@ export async function sendOrderNotifications(payload: OrderNotificationPayload) 
     }
   }
 
-  // 4. 🔔 OneSignal Push Notification (Admin & Active Subscribers)
+  // 4. 🔔 OneSignal Push Notification (Admin Alert & Customer Confirmation)
   const oneSignalApiKey = process.env.ONESIGNAL_REST_API_KEY || process.env.ONESIGNAL_API_KEY;
   if (oneSignalApiKey) {
+    const shortId = payload.orderId.slice(-6).toUpperCase();
+
+    // 4A. Admin Alert
     try {
-      const shortId = payload.orderId.slice(-6).toUpperCase();
       await fetch("https://onesignal.com/api/v1/notifications", {
         method: "POST",
         headers: {
@@ -257,9 +260,38 @@ export async function sendOrderNotifications(payload: OrderNotificationPayload) 
           url: "https://subziquick.in/admin/manageorder",
         }),
       });
-      console.log("✓ OneSignal push notification dispatched for order:", shortId);
+      console.log("✓ OneSignal Admin push notification dispatched for order:", shortId);
     } catch (pushErr) {
-      console.warn("OneSignal push dispatch note:", pushErr);
+      console.warn("OneSignal Admin push dispatch note:", pushErr);
+    }
+
+    // 4B. Customer Confirmation Push
+    if (payload.customerId) {
+      try {
+        await fetch("https://onesignal.com/api/v1/notifications", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            Authorization: `Basic ${oneSignalApiKey}`,
+          },
+          body: JSON.stringify({
+            app_id: "6fa7f8ec-5436-446f-93b4-7b4bcad7055d",
+            filters: [
+              { field: "tag", key: "user_id", relation: "=", value: String(payload.customerId) },
+              { operator: "OR" },
+              { field: "tag", key: "last_order_id", relation: "=", value: String(payload.orderId) },
+            ],
+            headings: { en: `🌿 Order Confirmed #${shortId}!` },
+            contents: {
+              en: `Hi ${payload.customerName}, your fresh harvest order (₹${payload.totalAmount}) is confirmed! 10-15 min express delivery.`,
+            },
+            url: "https://subziquick.in/user/myorder",
+          }),
+        });
+        console.log("✓ OneSignal Customer push notification dispatched for order:", shortId);
+      } catch (custPushErr) {
+        console.warn("OneSignal Customer push dispatch note:", custPushErr);
+      }
     }
   }
 }
@@ -336,6 +368,14 @@ export async function sendDeliveryOtpNotification(order: any, driver?: any) {
   if (oneSignalApiKey) {
     try {
       const orderIdStr = String(order._id);
+      const customerUserId = order.user?._id ? String(order.user._id) : order.user ? String(order.user) : null;
+      const filters: any[] = [];
+      if (customerUserId) {
+        filters.push({ field: "tag", key: "user_id", relation: "=", value: customerUserId });
+        filters.push({ operator: "OR" });
+      }
+      filters.push({ field: "tag", key: "last_order_id", relation: "=", value: orderIdStr });
+
       await fetch("https://onesignal.com/api/v1/notifications", {
         method: "POST",
         headers: {
@@ -344,9 +384,7 @@ export async function sendDeliveryOtpNotification(order: any, driver?: any) {
         },
         body: JSON.stringify({
           app_id: "6fa7f8ec-5436-446f-93b4-7b4bcad7055d",
-          filters: [
-            { field: "tag", key: "last_order_id", relation: "=", value: orderIdStr },
-          ],
+          filters,
           headings: { en: `🚚 Out for Delivery! (OTP: ${otp})` },
           contents: {
             en: `Hi ${customerName}, ${driverName} is out for delivery with your fresh harvest. Share OTP ${otp} at doorstep.`,
@@ -360,3 +398,61 @@ export async function sendDeliveryOtpNotification(order: any, driver?: any) {
     }
   }
 }
+
+/**
+ * Dispatches Order Status Updates to Customer via OneSignal
+ */
+export async function sendOrderStatusPushNotification(
+  orderId: string,
+  customerId?: string,
+  customerName: string = "Customer",
+  status: string = "updated"
+) {
+  const oneSignalApiKey = process.env.ONESIGNAL_REST_API_KEY || process.env.ONESIGNAL_API_KEY;
+  if (!oneSignalApiKey) return;
+
+  const orderIdStr = String(orderId);
+  const shortId = orderIdStr.slice(-6).toUpperCase();
+  let title = `📦 Order #${shortId} Update`;
+  let message = `Hi ${customerName}, your order status has been updated to ${status}.`;
+
+  const cleanStatus = status.toLowerCase().trim();
+  if (cleanStatus === "out of delivery" || cleanStatus === "out for delivery") {
+    title = `🚚 Out for Delivery! #${shortId}`;
+    message = `Hi ${customerName}, your fresh farm harvest is out for express 10-15 min delivery!`;
+  } else if (cleanStatus === "delivered") {
+    title = `🎉 Order Delivered! #${shortId}`;
+    message = `Hi ${customerName}, your SubziQuick fresh harvest order has been delivered! Enjoy farm-fresh health.`;
+  } else if (cleanStatus === "cancelled") {
+    title = `❌ Order Cancelled #${shortId}`;
+    message = `Hi ${customerName}, your order #${shortId} has been cancelled. Any paid amount has been refunded to your wallet.`;
+  }
+
+  const filters: any[] = [];
+  if (customerId) {
+    filters.push({ field: "tag", key: "user_id", relation: "=", value: String(customerId) });
+    filters.push({ operator: "OR" });
+  }
+  filters.push({ field: "tag", key: "last_order_id", relation: "=", value: orderIdStr });
+
+  try {
+    await fetch("https://onesignal.com/api/v1/notifications", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Basic ${oneSignalApiKey}`,
+      },
+      body: JSON.stringify({
+        app_id: "6fa7f8ec-5436-446f-93b4-7b4bcad7055d",
+        filters,
+        headings: { en: title },
+        contents: { en: message },
+        url: `https://subziquick.in/track/${orderIdStr}`,
+      }),
+    });
+    console.log(`✓ Status push notification (${status}) sent for order #${shortId}`);
+  } catch (err) {
+    console.warn("OneSignal status push dispatch warning:", err);
+  }
+}
+

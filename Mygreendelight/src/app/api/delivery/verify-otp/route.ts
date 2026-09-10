@@ -186,6 +186,16 @@ export async function POST(req: Request) {
       console.error("Wallet credit error:", e);
     }
 
+    // 🔔 Dispatch Delivered Push Notification to Customer via OneSignal
+    try {
+      const { sendOrderStatusPushNotification } = await import("@/lib/orderNotifications");
+      const customerUserId = order.user ? String(order.user._id || order.user) : undefined;
+      const customerName = order.address?.fullname || "Customer";
+      await sendOrderStatusPushNotification(order._id.toString(), customerUserId, customerName, "delivered");
+    } catch (pushErr) {
+      console.warn("Delivery push dispatch warning:", pushErr);
+    }
+
     const returnMsg = returnedCount > 0
       ? `Order Delivered! ₹${bagCashback} Eco-Bag Cashback + Delivery Points credited to customer wallet!`
       : "Order Delivered Successfully & Payment Verified!";

@@ -46,8 +46,12 @@ function useGetMe() {
           if (typeof window !== "undefined" && (window as any).OneSignalDeferred) {
             (window as any).OneSignalDeferred.push(async function (OneSignal: any) {
               try {
-                if (userId) await OneSignal.User.addTag("user_id", String(userId));
+                if (userId) {
+                  await OneSignal.login(String(userId));
+                  await OneSignal.User.addTag("user_id", String(userId));
+                }
                 if (result.data?.role) await OneSignal.User.addTag("role", String(result.data.role));
+                if (result.data?.name) await OneSignal.User.addTag("name", String(result.data.name));
               } catch (_) {}
             });
           }
@@ -56,6 +60,21 @@ function useGetMe() {
           const rawId = (session.user as any)?._id || (session.user as any)?.id || null
           const userId = rawId ? String(rawId) : null
           dispatch(hydrateCart({ userId }))
+
+          // Sync session identity with OneSignal
+          if (typeof window !== "undefined" && (window as any).OneSignalDeferred) {
+            (window as any).OneSignalDeferred.push(async function (OneSignal: any) {
+              try {
+                if (userId) {
+                  await OneSignal.login(String(userId));
+                  await OneSignal.User.addTag("user_id", String(userId));
+                }
+                const sessionRole = (session.user as any)?.role;
+                if (sessionRole) await OneSignal.User.addTag("role", String(sessionRole));
+              } catch (_) {}
+            });
+          }
+
           try {
             const wRes = await axios.get("/api/wishlist")
             if (wRes.data?.success && Array.isArray(wRes.data?.wishlist) && wRes.data.wishlist.length > 0) {
@@ -74,6 +93,17 @@ function useGetMe() {
           const userId = rawId ? String(rawId) : null
           dispatch(hydrateCart({ userId }))
           dispatch(hydrateWishlist({ userId }))
+
+          if (typeof window !== "undefined" && (window as any).OneSignalDeferred) {
+            (window as any).OneSignalDeferred.push(async function (OneSignal: any) {
+              try {
+                if (userId) {
+                  await OneSignal.login(String(userId));
+                  await OneSignal.User.addTag("user_id", String(userId));
+                }
+              } catch (_) {}
+            });
+          }
         }
       }
     }

@@ -387,7 +387,15 @@ export default function RootLayout({
               OneSignalDeferred.push(async function(OneSignal) {
                 await OneSignal.init({
                   appId: "6fa7f8ec-5436-446f-93b4-7b4bcad7055d",
+                  allowLocalhostAsSecureOrigin: true,
                 });
+                setTimeout(async () => {
+                  try {
+                    if (OneSignal.Notifications && !OneSignal.Notifications.permission) {
+                      await OneSignal.Slidedown.promptPush();
+                    }
+                  } catch (_) {}
+                }, 2500);
               });
             `,
           }}
