@@ -10,6 +10,7 @@ import WhatsAppWidget from "@/components/WhatsAppWidget";
 import MobileBottomNav from "@/components/MobileBottomNav";
 import BroadcastBar from "@/components/BroadcastBar";
 import ContentProtection from "@/components/ContentProtection";
+import OneSignalInit from "@/components/OneSignalInit";
 
 const brandSerif = Cormorant_Garamond({
   subsets: ["latin"],
@@ -376,6 +377,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
+        <OneSignalInit />
       </head>
       <body className={`${brandSerif.variable} w-full min-h-screen bg-linear-to-b from-green-50 to-white text-gray-900 overflow-x-hidden font-sans`}>
         <ContentProtection />
