@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDb from "@/lib/db";
 import { auth } from "@/auth";
 import PaytmChecksum from "paytmchecksum";
+import { getBaseUrl } from "@/lib/getBaseUrl";
 
 const MID = process.env.PAYTM_MID;
 const MERCHANT_KEY = process.env.PAYTM_MERCHANT_KEY;
@@ -44,7 +45,7 @@ export async function POST(req: NextRequest) {
         mid: MID,
         websiteName: WEBSITE,
         orderId: rechargeId,
-        callbackUrl: `${process.env.NEXT_URL}/api/user/wallet/verify`,
+        callbackUrl: `${getBaseUrl()}/api/user/wallet/verify`,
         txnAmount: {
           value: String(numAmount.toFixed(2)),
           currency: "INR",
@@ -84,7 +85,7 @@ export async function POST(req: NextRequest) {
         amount: numAmount,
         bonus: numBonus,
         mid: MID,
-        callbackUrl: `${process.env.NEXT_URL}/api/user/wallet/verify`,
+        callbackUrl: `${getBaseUrl()}/api/user/wallet/verify`,
       });
     } else {
       return NextResponse.json(

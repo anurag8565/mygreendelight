@@ -3,6 +3,7 @@ import connectDb from "@/lib/db";
 import PaytmChecksum from "paytmchecksum";
 import UserWallet from "@/model/wallet.model";
 import User from "@/model/user.model";
+import { getBaseUrl } from "@/lib/getBaseUrl";
 
 const MID = process.env.PAYTM_MID;
 const MERCHANT_KEY = process.env.PAYTM_MERCHANT_KEY;
@@ -52,7 +53,7 @@ export async function POST(req: NextRequest) {
         // Prevent transaction replay attacks
         const existingTxn = wallet.transactions?.find((t: any) => t.orderId === orderId);
         if (existingTxn) {
-          return NextResponse.redirect(`${process.env.NEXT_URL}/user/wallet?status=success&amount=${txnAmount}`, {
+          return NextResponse.redirect(`${getBaseUrl()}/user/wallet?status=success&amount=${txnAmount}`, {
             status: 303,
           });
         }
@@ -72,18 +73,18 @@ export async function POST(req: NextRequest) {
           $inc: { walletBalance: txnAmount },
         });
 
-        return NextResponse.redirect(`${process.env.NEXT_URL}/user/wallet?status=success&amount=${txnAmount}`, {
+        return NextResponse.redirect(`${getBaseUrl()}/user/wallet?status=success&amount=${txnAmount}`, {
           status: 303,
         });
       }
     }
 
-    return NextResponse.redirect(`${process.env.NEXT_URL}/user/wallet?status=failed`, {
+    return NextResponse.redirect(`${getBaseUrl()}/user/wallet?status=failed`, {
       status: 303,
     });
   } catch (error: any) {
     console.error("Paytm wallet verify error:", error);
-    return NextResponse.redirect(`${process.env.NEXT_URL}/user/wallet?status=error`, {
+    return NextResponse.redirect(`${getBaseUrl()}/user/wallet?status=error`, {
       status: 303,
     });
   }

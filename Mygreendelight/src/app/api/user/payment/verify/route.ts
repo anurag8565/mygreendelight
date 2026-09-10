@@ -2,6 +2,7 @@ import connectDb from "@/lib/db";
 import Order from "@/model/order";
 import PaytmChecksum from "paytmchecksum";
 import { NextRequest, NextResponse } from "next/server";
+import { getBaseUrl } from "@/lib/getBaseUrl";
 
 const MID = process.env.PAYTM_MID!;
 const MERCHANT_KEY = process.env.PAYTM_MERCHANT_KEY!;
@@ -33,7 +34,7 @@ export async function POST(req: NextRequest) {
     if (!isValid) {
       console.error("Paytm checksum verification failed!");
       return NextResponse.redirect(
-        `${process.env.NEXT_URL}/user/checkout?error=payment_verification_failed`,
+        `${getBaseUrl()}/user/checkout?error=payment_verification_failed`,
         { status: 302 }
       );
     }
@@ -76,7 +77,7 @@ export async function POST(req: NextRequest) {
     if (!order) {
       console.error("Order not found during Paytm verification:", mongoOrderId);
       return NextResponse.redirect(
-        `${process.env.NEXT_URL}/user/checkout?error=order_not_found`,
+        `${getBaseUrl()}/user/checkout?error=order_not_found`,
         { status: 302 }
       );
     }
@@ -93,7 +94,7 @@ export async function POST(req: NextRequest) {
         await order.save();
 
         return NextResponse.redirect(
-          `${process.env.NEXT_URL}/user/checkout?error=amount_mismatch`,
+          `${getBaseUrl()}/user/checkout?error=amount_mismatch`,
           { status: 302 }
         );
       }
@@ -105,7 +106,7 @@ export async function POST(req: NextRequest) {
       await order.save();
 
       return NextResponse.redirect(
-        `${process.env.NEXT_URL}/user/ordersuccess?orderId=${mongoOrderId}`,
+        `${getBaseUrl()}/user/ordersuccess?orderId=${mongoOrderId}`,
         { status: 302 }
       );
     } else if (finalStatus === "PENDING" || txnStatus === "PENDING") {
@@ -114,7 +115,7 @@ export async function POST(req: NextRequest) {
       await order.save();
 
       return NextResponse.redirect(
-        `${process.env.NEXT_URL}/user/ordersuccess?orderId=${mongoOrderId}&status=pending`,
+        `${getBaseUrl()}/user/ordersuccess?orderId=${mongoOrderId}&status=pending`,
         { status: 302 }
       );
     } else {
@@ -159,14 +160,14 @@ export async function POST(req: NextRequest) {
       }
 
       return NextResponse.redirect(
-        `${process.env.NEXT_URL}/user/checkout?error=payment_failed`,
+        `${getBaseUrl()}/user/checkout?error=payment_failed`,
         { status: 302 }
       );
     }
   } catch (error) {
     console.error("PAYTM VERIFY ERROR:", error);
     return NextResponse.redirect(
-      `${process.env.NEXT_URL}/user/checkout?error=server_error`,
+      `${getBaseUrl()}/user/checkout?error=server_error`,
       { status: 302 }
     );
   }

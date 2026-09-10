@@ -5,6 +5,7 @@ import Setting from "@/model/setting.model";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 import PaytmChecksum from "paytmchecksum";
+import { getBaseUrl } from "@/lib/getBaseUrl";
 
 const MID = process.env.PAYTM_MID!;
 const MERCHANT_KEY = process.env.PAYTM_MERCHANT_KEY!;
@@ -230,7 +231,7 @@ export async function POST(req: NextRequest) {
         mid: MID,
         websiteName: WEBSITE,
         orderId: orderId,
-        callbackUrl: `${process.env.NEXT_URL}/api/user/payment/verify`,
+        callbackUrl: `${getBaseUrl()}/api/user/payment/verify`,
         txnAmount: {
           value: String(totalamount.toFixed(2)),
           currency: "INR",
@@ -272,7 +273,7 @@ export async function POST(req: NextRequest) {
         txnToken: paytmData.body.txnToken,
         amount: totalamount,
         mid: MID,
-        callbackUrl: `${process.env.NEXT_URL}/api/user/payment/verify`,
+        callbackUrl: `${getBaseUrl()}/api/user/payment/verify`,
       });
     } else {
       return NextResponse.json(
