@@ -178,8 +178,11 @@ export default async function ProductPage(props: { params: Promise<{ id: string 
     },
     aggregateRating: {
       "@type": "AggregateRating",
-      ratingValue: product.rating && product.rating > 0 ? String(product.rating) : "4.8",
-      reviewCount: product.numReviews && product.numReviews > 0 ? String(product.numReviews) : "89",
+      ratingValue: product.rating && product.rating > 0 ? Number(product.rating).toFixed(1) : "4.8",
+      bestRating: "5",
+      worstRating: "1",
+      ratingCount: product.numReviews && product.numReviews > 0 ? Number(product.numReviews) : 89,
+      reviewCount: product.numReviews && product.numReviews > 0 ? Number(product.numReviews) : 89,
     },
   };
 
