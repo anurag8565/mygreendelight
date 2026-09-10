@@ -79,9 +79,12 @@ export default function Checkout() {
   const router = useRouter();
   const { data: session, status } = useSession();
 
+  const rawUserId = userdata?._id || (userdata as any)?.id || (session?.user as any)?._id || (session?.user as any)?.id || null;
+  const cleanUserId = rawUserId ? String(rawUserId) : null;
+
   useEffect(() => {
-    dispatch(hydrateCart());
-  }, [dispatch]);
+    dispatch(hydrateCart({ userId: cleanUserId }));
+  }, [dispatch, cleanUserId]);
 
   useEffect(() => {
     if (status === "unauthenticated" && !userdata) {

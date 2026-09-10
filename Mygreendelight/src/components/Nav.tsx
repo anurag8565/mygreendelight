@@ -86,7 +86,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
 
   useEffect(() => {
     setMounted(true);
-    dispatch(hydrateCart());
+    dispatch(hydrateCart({ userId: cleanUserId }));
     dispatch(hydrateWishlist({ userId: cleanUserId }));
     if (typeof window !== "undefined") {
       const savedLoc = localStorage.getItem("mgd_user_location");
@@ -527,6 +527,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
             <button
               onClick={() => {
                 setmenuopen(false);
+                dispatch(hydrateCart({ userId: null }));
                 signOut({ callbackUrl: "/login" });
               }}
               className="w-full flex items-center justify-center gap-2 text-red-600 hover:text-white font-black py-2.5 rounded-xl hover:bg-red-600 transition text-xs cursor-pointer border border-red-200"
@@ -1043,6 +1044,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                       type="button"
                       onClick={() => {
                         setOpen(false);
+                        dispatch(hydrateCart({ userId: null }));
                         signOut({ callbackUrl: "/login" });
                       }}
                       className="w-full text-left px-4 py-3 text-xs text-red-600 hover:bg-red-50 font-black flex items-center gap-2 transition cursor-pointer"

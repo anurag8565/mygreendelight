@@ -2,6 +2,7 @@
 
 import { setUserdata } from '@/redux/userSlice'
 import { setWishlist, hydrateWishlist } from '@/redux/WishlistSlice'
+import { hydrateCart } from '@/redux/CartSlice'
 import axios from 'axios'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
@@ -16,6 +17,7 @@ function useGetMe() {
     if (status === "unauthenticated") {
       dispatch(setUserdata(null))
       dispatch(hydrateWishlist({ userId: null }))
+      dispatch(hydrateCart({ userId: null }))
       return
     }
 
@@ -30,6 +32,7 @@ function useGetMe() {
         if (typeof result.data === 'object' && result.data !== null && result.data.email) {
           dispatch(setUserdata(result.data))
           const userId = result.data._id ? String(result.data._id) : null
+          dispatch(hydrateCart({ userId }))
           const validWishlist = Array.isArray(result.data.wishlist)
             ? result.data.wishlist.filter((w: any) => w && typeof w === 'object' && w.name)
             : []
@@ -42,6 +45,7 @@ function useGetMe() {
           dispatch(setUserdata(session.user as any))
           const rawId = (session.user as any)?._id || (session.user as any)?.id || null
           const userId = rawId ? String(rawId) : null
+          dispatch(hydrateCart({ userId }))
           try {
             const wRes = await axios.get("/api/wishlist")
             if (wRes.data?.success && Array.isArray(wRes.data?.wishlist) && wRes.data.wishlist.length > 0) {
@@ -58,6 +62,7 @@ function useGetMe() {
           dispatch(setUserdata(session.user as any))
           const rawId = (session.user as any)?._id || (session.user as any)?.id || null
           const userId = rawId ? String(rawId) : null
+          dispatch(hydrateCart({ userId }))
           dispatch(hydrateWishlist({ userId }))
         }
       }

@@ -63,8 +63,11 @@ export default function CartPage() {
     deliveryNotice: "",
   });
 
+  const rawUserId = userdata?._id || (userdata as any)?.id || (session?.user as any)?._id || (session?.user as any)?.id || null;
+  const cleanUserId = rawUserId ? String(rawUserId) : null;
+
   React.useEffect(() => {
-    dispatch(hydrateCart());
+    dispatch(hydrateCart({ userId: cleanUserId }));
     axios
       .get("/api/groceries?limit=12&sort=price_asc")
       .then((res) => {
