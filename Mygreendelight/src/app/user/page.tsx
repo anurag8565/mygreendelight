@@ -214,24 +214,24 @@ export default function UserProfileHub() {
         {(activeUser?.role === "deliveryboy" || activeUser?.role === "admin") && (
           <Link
             href="/deliveryboy"
-            className="bg-gradient-to-r from-emerald-600 to-[#0c831f] text-white rounded-2xl p-4 shadow-sm border border-emerald-500/30 flex items-center justify-between group hover:shadow-md transition-all"
+            className="bg-gradient-to-r from-emerald-600 via-[#0c831f] to-green-700 text-white rounded-3xl p-4 sm:p-5 shadow-sm border border-emerald-500/30 flex items-center justify-between group hover:shadow-md transition-all"
           >
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-white shrink-0">
-                <Truck size={20} />
+            <div className="flex items-center gap-3.5 min-w-0">
+              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center text-white shrink-0 border border-white/20 shadow-inner">
+                <Truck size={22} />
               </div>
-              <div>
-                <h3 className="text-sm font-black text-white">
+              <div className="min-w-0">
+                <h3 className="text-sm sm:text-base font-black text-white truncate">
                   Rider Delivery Partner Hub
                 </h3>
-                <p className="text-[11px] text-emerald-100 font-medium">
-                  Dispatch orders, map routes & OTP verification
+                <p className="text-[11px] sm:text-xs text-emerald-100 font-medium truncate">
+                  Dispatch trips, customer map & OTP verification
                 </p>
               </div>
             </div>
 
-            <div className="w-8 h-8 rounded-xl bg-white text-[#0c831f] flex items-center justify-center font-bold shrink-0 group-hover:translate-x-0.5 transition-transform shadow-xs">
-              <ChevronRight size={16} />
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-white text-[#0c831f] flex items-center justify-center font-black shrink-0 group-hover:translate-x-0.5 transition-transform shadow-xs">
+              <ChevronRight size={17} className="stroke-[2.5]" />
             </div>
           </Link>
         )}
@@ -306,35 +306,45 @@ export default function UserProfileHub() {
         {/* 3. Live Active Order Card (If Any) */}
         {activeOrder && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="bg-gradient-to-r from-[#0c831f] to-emerald-700 text-white rounded-2xl p-4 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3"
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-gradient-to-r from-[#0c831f] via-emerald-600 to-[#0c831f] text-white rounded-3xl p-4 sm:p-5 shadow-sm border border-emerald-500/40 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3.5"
           >
-            <div className="flex items-center gap-3 text-center sm:text-left">
-              <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-white shrink-0">
-                <Truck size={20} className="animate-pulse" />
+            {/* Left: Icon & Info */}
+            <div className="flex items-center gap-3.5 min-w-0">
+              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center text-white shrink-0 border border-white/20 shadow-inner">
+                <Truck size={22} className="animate-pulse" />
               </div>
-              <div>
-                <div className="flex items-center justify-center sm:justify-start gap-2">
-                  <span className="bg-amber-400 text-gray-950 text-[9px] font-black uppercase px-2 py-0.5 rounded-full">
-                    {activeOrder.status === "out of delivery" ? "Out For Delivery" : "Packing Harvest"}
+
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2 flex-wrap mb-1">
+                  <span className={`text-[9.5px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full inline-flex items-center gap-1 ${
+                    activeOrder.status === "out of delivery"
+                      ? "bg-amber-400 text-gray-950"
+                      : "bg-white/20 text-white"
+                  }`}>
+                    <span className="w-1.5 h-1.5 rounded-full bg-current animate-ping" />
+                    <span>{activeOrder.status === "out of delivery" ? "Out For Delivery" : "Order Packing"}</span>
                   </span>
-                  <span className="text-xs font-mono font-bold text-emerald-100">
-                    #SZQ-{activeOrder._id.slice(-6).toUpperCase()}
+
+                  <span className="text-xs font-mono font-bold text-emerald-100/90 truncate">
+                    #SZQ-{String(activeOrder._id).slice(-6).toUpperCase()}
                   </span>
                 </div>
-                <p className="text-[11px] text-emerald-100 mt-0.5">
-                  {activeOrder.items?.length || 1} Items • ₹{activeOrder.totalamount}
+
+                <p className="text-xs text-emerald-100 font-medium truncate">
+                  {activeOrder.items?.length || 1} Fresh Items • Total: ₹{activeOrder.totalamount}
                 </p>
               </div>
             </div>
 
+            {/* Right: Track Button */}
             <Link
               href={`/track/${activeOrder._id}`}
-              className="bg-white hover:bg-emerald-50 text-[#0c831f] px-4 py-2 rounded-xl font-black text-xs shadow-2xs transition flex items-center justify-center gap-1 w-full sm:w-auto shrink-0"
+              className="bg-white hover:bg-emerald-50 active:scale-98 text-[#0c831f] px-5 py-2.5 rounded-xl font-black text-xs shadow-xs transition-all flex items-center justify-center gap-1.5 shrink-0 group self-stretch sm:self-auto"
             >
-              <span>Track Delivery</span>
-              <ChevronRight size={13} />
+              <span>Track Live Delivery</span>
+              <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]" />
             </Link>
           </motion.div>
         )}
