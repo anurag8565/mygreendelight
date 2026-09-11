@@ -105,53 +105,57 @@ export default function UserProfileHub() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] flex flex-col font-sans text-gray-900">
+    <div className="min-h-screen bg-[#fafbfc] flex flex-col font-sans text-gray-900">
       <Nav user={activeUser} />
 
-      <main className="flex-1 max-w-4xl w-full mx-auto px-3.5 sm:px-6 md:px-8 py-5 sm:py-8 pb-28 sm:pb-20 space-y-6">
+      <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 md:px-8 py-6 sm:py-9 pb-28 sm:pb-20 space-y-5">
         
-        {/* Top Minimal Navigation Bar */}
+        {/* Top Header Bar */}
         <div className="flex items-center justify-between">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs font-black text-gray-700 hover:text-[#0f8646] transition bg-white px-3.5 py-2 rounded-xl border border-gray-200/90 shadow-2xs hover:shadow-xs"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-600 hover:text-[#0c831f] transition bg-white px-3 py-1.5 rounded-xl border border-gray-200/80 shadow-2xs hover:shadow-xs group"
           >
-            <ArrowLeft size={14} />
-            <span>Back to Store</span>
+            <ArrowLeft size={13} className="group-hover:-translate-x-0.5 transition-transform" />
+            <span>Store</span>
           </Link>
           
           <div className="flex items-center gap-2">
             <button
               onClick={fetchAccountData}
               disabled={loading}
-              className="bg-white hover:bg-gray-50 text-gray-600 border border-gray-200/90 px-2.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1 cursor-pointer disabled:opacity-50"
-              title="Refresh Account Data"
+              className="bg-white hover:bg-gray-50 text-gray-600 border border-gray-200/80 px-2.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1 cursor-pointer disabled:opacity-50 shadow-2xs"
+              title="Refresh Data"
             >
-              <RefreshCw size={12} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+              <RefreshCw size={12} className={loading ? "animate-spin text-[#0c831f]" : ""} />
               <span className="hidden sm:inline">Refresh</span>
             </button>
 
-            <span className="text-[11px] font-black text-[#0f8646] uppercase tracking-wider bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200/80 flex items-center gap-1.5">
-              <Sparkles size={13} /> Account Hub
-            </span>
+            <button
+              onClick={() => signOut({ callbackUrl: "/login" })}
+              className="bg-white hover:bg-rose-50 text-gray-600 hover:text-rose-600 border border-gray-200/80 hover:border-rose-200 text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
+            >
+              <LogOut size={12} />
+              <span>Logout</span>
+            </button>
           </div>
         </div>
 
-        {/* 1. Ultra-Luxury Profile Header Card */}
+        {/* 1. Sleek Modern Profile Card */}
         <motion.div
-          initial={{ opacity: 0, y: 8 }}
+          initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="relative bg-white rounded-3xl border border-gray-200/80 p-5 sm:p-7 shadow-[0_4px_24px_rgba(0,0,0,0.03)] overflow-hidden"
+          transition={{ duration: 0.25 }}
+          className="relative bg-white rounded-3xl border border-gray-200/70 p-5 sm:p-6 shadow-[0_2px_16px_rgba(0,0,0,0.03)] overflow-hidden"
         >
-          {/* Subtle Ambient Emerald Glow */}
-          <div className="absolute top-0 right-0 w-72 h-72 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none" />
+          {/* Subtle Ambient Light */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="relative z-10 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-5 text-center sm:text-left">
-            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-5">
+          <div className="relative z-10 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 text-center sm:text-left">
+            <div className="flex flex-col sm:flex-row items-center gap-4">
               
               {/* Avatar Box */}
-              <div className="relative w-18 h-18 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-tr from-[#0f8646] to-emerald-400 text-white flex items-center justify-center font-black text-2xl sm:text-3xl shadow-md shrink-0 overflow-hidden border-2 border-white ring-2 ring-emerald-500/20">
+              <div className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-2xl bg-gradient-to-tr from-[#0c831f] via-emerald-600 to-green-500 text-white flex items-center justify-center font-black text-2xl shadow-sm shrink-0 overflow-hidden ring-4 ring-emerald-50">
                 {activeUser?.image ? (
                   <img
                     src={activeUser.image}
@@ -164,439 +168,399 @@ export default function UserProfileHub() {
                 ) : activeUser?.name ? (
                   activeUser.name.charAt(0).toUpperCase()
                 ) : (
-                  <UserIcon size={32} />
+                  <UserIcon size={28} />
                 )}
               </div>
 
               {/* User Bio */}
               <div className="min-w-0">
                 <div className="flex items-center justify-center sm:justify-start gap-2 mb-1 flex-wrap">
-                  <h1 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight">
-                    {activeUser?.name || "SubziQuick Customer"}
+                  <h1 className="text-lg sm:text-2xl font-black text-gray-900 tracking-tight">
+                    {activeUser?.name || "SubziQuick Member"}
                   </h1>
 
                   {activeUser?.role === "admin" ? (
-                    <span className="bg-amber-100 text-amber-900 border border-amber-300 font-black text-[10px] uppercase px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-2xs">
-                      <ShieldCheck size={11} className="text-amber-700" /> Admin
+                    <span className="bg-amber-100 text-amber-900 border border-amber-300 font-bold text-[10px] uppercase px-2 py-0.5 rounded-full inline-flex items-center gap-1">
+                      <ShieldCheck size={11} /> Admin
                     </span>
                   ) : activeUser?.role === "deliveryboy" ? (
-                    <span className="bg-blue-100 text-blue-900 border border-blue-300 font-black text-[10px] uppercase px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-2xs">
-                      <Truck size={11} className="text-blue-700" /> Rider
+                    <span className="bg-blue-100 text-blue-900 border border-blue-300 font-bold text-[10px] uppercase px-2 py-0.5 rounded-full inline-flex items-center gap-1">
+                      <Truck size={11} /> Delivery Partner
                     </span>
                   ) : (
-                    <span className="bg-emerald-50 text-[#0f8646] border border-emerald-200 font-black text-[10px] uppercase px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-2xs">
-                      <Sparkles size={11} /> Verified Customer
+                    <span className="bg-emerald-50 text-[#0c831f] border border-emerald-200/90 font-bold text-[10px] px-2 py-0.5 rounded-full inline-flex items-center gap-1">
+                      <Sparkles size={10} /> Verified Member
                     </span>
                   )}
                 </div>
 
                 <p className="text-xs text-gray-500 font-medium truncate">
-                  {activeUser?.email || activeUser?.mobile || "Farm-Fresh Grocery Member"}
+                  {activeUser?.email || activeUser?.mobile || "Customer Account"}
                 </p>
 
-                <div className="flex items-center justify-center sm:justify-start gap-2.5 mt-2.5 text-[11px] text-gray-600 font-semibold flex-wrap">
-                  <span className="flex items-center gap-1 text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-lg border border-emerald-200/80">
-                    <MapPin size={12} className="text-[#0f8646]" /> Bhopal, Madhya Pradesh
+                <div className="flex items-center justify-center sm:justify-start gap-2 mt-2 text-[11px] text-gray-500 font-medium">
+                  <span className="inline-flex items-center gap-1 text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-100">
+                    <MapPin size={11} className="text-[#0c831f]" /> Bhopal, MP
                   </span>
+                  <span>•</span>
+                  <span>10-15 Min Express Delivery</span>
                 </div>
               </div>
             </div>
 
-            {/* Logout Button */}
-            <button
-              onClick={() => signOut({ callbackUrl: "/login" })}
-              className="bg-gray-100/80 hover:bg-red-50 hover:text-red-700 hover:border-red-200 text-gray-700 font-black text-xs px-4 py-2.5 rounded-xl border border-gray-200/90 transition flex items-center gap-1.5 cursor-pointer shrink-0 shadow-2xs"
-              title="Sign Out"
-            >
-              <LogOut size={13} />
-              <span>Sign Out</span>
-            </button>
+            {/* Quick Actions (Wallet & VIP Pass) */}
+            <div className="flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-end mt-2 sm:mt-0 pt-3 sm:pt-0 border-t sm:border-t-0 border-gray-100">
+              <Link
+                href="/user/wallet"
+                className="flex items-center gap-1.5 bg-[#f8f9fa] hover:bg-emerald-50 text-gray-800 hover:text-[#0c831f] border border-gray-200/80 hover:border-emerald-300 px-3 py-2 rounded-xl text-xs font-bold transition shadow-2xs group"
+              >
+                <div className="w-2 h-2 rounded-full bg-[#0c831f]" />
+                <span>Wallet</span>
+                <ChevronRight size={13} className="text-gray-400 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+
+              <Link
+                href="/user/vip-pass"
+                className="flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-3 py-2 rounded-xl text-xs font-black transition shadow-xs group"
+              >
+                <Sparkles size={12} className="text-amber-200" />
+                <span>VIP Pass</span>
+              </Link>
+            </div>
           </div>
         </motion.div>
 
-        {/* 🚀 Delivery Partner Quick-Launch Banner (If Rider) */}
+        {/* 🚀 Delivery Partner Hub Strip (If Rider or Admin) */}
         {(activeUser?.role === "deliveryboy" || activeUser?.role === "admin") && (
           <Link
             href="/deliveryboy"
-            className="relative overflow-hidden bg-gradient-to-r from-emerald-600 via-emerald-700 to-green-800 text-white rounded-3xl p-5 sm:p-6 shadow-lg shadow-emerald-900/10 border border-emerald-500/30 flex items-center justify-between group hover:scale-[1.01] transition-transform duration-200"
+            className="bg-gradient-to-r from-emerald-600 to-[#0c831f] text-white rounded-2xl p-4 shadow-sm border border-emerald-500/30 flex items-center justify-between group hover:shadow-md transition-all"
           >
-            <div className="flex items-center gap-4">
-              <div className="w-13 h-13 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center font-black text-white shrink-0 shadow-sm">
-                <Truck size={26} />
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-white shrink-0">
+                <Truck size={20} />
               </div>
               <div>
-                <div className="flex items-center gap-2">
-                  <span className="bg-emerald-300/30 text-emerald-100 font-black text-[10px] px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                    ● Duty Online Hub
-                  </span>
-                  <span className="text-xs text-emerald-200 font-semibold">10-15 Min Express</span>
-                </div>
-                <h3 className="text-lg sm:text-xl font-black text-white mt-1">
-                  Open Delivery Partner Portal
+                <h3 className="text-sm font-black text-white">
+                  Rider Delivery Partner Hub
                 </h3>
-                <p className="text-xs text-emerald-100/80 font-medium">
-                  View active delivery trips, OTP verification & earnings dashboard
+                <p className="text-[11px] text-emerald-100 font-medium">
+                  Dispatch orders, map routes & OTP verification
                 </p>
               </div>
             </div>
 
-            <div className="w-10 h-10 rounded-2xl bg-white text-emerald-800 flex items-center justify-center font-black shrink-0 group-hover:translate-x-1 transition-transform shadow-md">
-              <ChevronRight size={20} />
+            <div className="w-8 h-8 rounded-xl bg-white text-[#0c831f] flex items-center justify-center font-bold shrink-0 group-hover:translate-x-0.5 transition-transform shadow-xs">
+              <ChevronRight size={16} />
             </div>
           </Link>
         )}
 
-        {/* 2. Three 100% Real Metric Quick-Action Tiles */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        {/* 2. Three Metric Quick-Action Tiles */}
+        <div className="grid grid-cols-3 gap-2.5 sm:gap-3.5">
           
-          {/* Tile 1: My Orders */}
+          {/* Orders */}
           <Link
             href="/user/myorder"
-            className="bg-white rounded-2xl p-4 sm:p-4.5 border border-gray-200/80 shadow-2xs hover:border-emerald-400 hover:shadow-xs transition-all flex items-center justify-between group"
+            className="bg-white rounded-2xl p-3 sm:p-4 border border-gray-200/70 shadow-2xs hover:border-blue-400 hover:shadow-xs transition-all flex flex-col justify-between group text-center sm:text-left"
           >
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-black shrink-0 border border-blue-100 group-hover:scale-105 transition-transform">
-                <Package size={22} />
+            <div className="flex items-center justify-between mb-2">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-black mx-auto sm:mx-0 border border-blue-100">
+                <Package size={18} />
               </div>
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block">
-                  Orders Placed
-                </span>
-                <span className="text-base sm:text-lg font-black text-gray-900">
-                  {orders.length} {orders.length === 1 ? "Order" : "Orders"}
-                </span>
-              </div>
+              <ChevronRight size={14} className="hidden sm:block text-gray-300 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-transform" />
             </div>
-            <ChevronRight size={16} className="text-gray-400 group-hover:text-blue-600 transition-transform group-hover:translate-x-0.5" />
+            <div>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 block">
+                Orders
+              </span>
+              <span className="text-sm sm:text-lg font-black text-gray-900 mt-0.5 block">
+                {orders.length}
+              </span>
+            </div>
           </Link>
 
-          {/* Tile 2: Wishlist */}
+          {/* Favorites / Wishlist */}
           <Link
             href="/wishlist"
-            className="bg-white rounded-2xl p-4 sm:p-4.5 border border-gray-200/80 shadow-2xs hover:border-emerald-400 hover:shadow-xs transition-all flex items-center justify-between group"
+            className="bg-white rounded-2xl p-3 sm:p-4 border border-gray-200/70 shadow-2xs hover:border-rose-400 hover:shadow-xs transition-all flex flex-col justify-between group text-center sm:text-left"
           >
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center font-black shrink-0 border border-rose-100 group-hover:scale-105 transition-transform">
-                <Heart size={22} />
+            <div className="flex items-center justify-between mb-2">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center font-black mx-auto sm:mx-0 border border-rose-100">
+                <Heart size={18} />
               </div>
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block">
-                  Saved Favorites
-                </span>
-                <span className="text-base sm:text-lg font-black text-gray-900">
-                  {wishlistItems.length} {wishlistItems.length === 1 ? "Item" : "Items"}
-                </span>
-              </div>
+              <ChevronRight size={14} className="hidden sm:block text-gray-300 group-hover:text-rose-600 group-hover:translate-x-0.5 transition-transform" />
             </div>
-            <ChevronRight size={16} className="text-gray-400 group-hover:text-rose-600 transition-transform group-hover:translate-x-0.5" />
+            <div>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 block">
+                Favorites
+              </span>
+              <span className="text-sm sm:text-lg font-black text-gray-900 mt-0.5 block">
+                {wishlistItems.length}
+              </span>
+            </div>
           </Link>
 
-          {/* Tile 3: Active Cart Basket */}
+          {/* Cart */}
           <Link
             href="/user/cart"
-            className="bg-white rounded-2xl p-4 sm:p-4.5 border border-gray-200/80 shadow-2xs hover:border-emerald-400 hover:shadow-xs transition-all flex items-center justify-between group"
+            className="bg-white rounded-2xl p-3 sm:p-4 border border-gray-200/70 shadow-2xs hover:border-emerald-400 hover:shadow-xs transition-all flex flex-col justify-between group text-center sm:text-left"
           >
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-xl bg-emerald-50 text-[#0f8646] flex items-center justify-center font-black shrink-0 border border-emerald-100 group-hover:scale-105 transition-transform">
-                <ShoppingCart size={22} />
+            <div className="flex items-center justify-between mb-2">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-50 text-[#0c831f] flex items-center justify-center font-black mx-auto sm:mx-0 border border-emerald-100">
+                <ShoppingCart size={18} />
               </div>
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block">
-                  Cart Items
-                </span>
-                <span className="text-base sm:text-lg font-black text-gray-900">
-                  {totalCartCount} {totalCartCount === 1 ? "Item" : "Items"}
-                </span>
-              </div>
+              <ChevronRight size={14} className="hidden sm:block text-gray-300 group-hover:text-[#0c831f] group-hover:translate-x-0.5 transition-transform" />
             </div>
-            <ChevronRight size={16} className="text-gray-400 group-hover:text-[#0f8646] transition-transform group-hover:translate-x-0.5" />
+            <div>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 block">
+                In Cart
+              </span>
+              <span className="text-sm sm:text-lg font-black text-gray-900 mt-0.5 block">
+                {totalCartCount}
+              </span>
+            </div>
           </Link>
         </div>
 
-        {/* 3. Live Active Order Banner (Only if order is pending or out for delivery) */}
+        {/* 3. Live Active Order Card (If Any) */}
         {activeOrder && (
           <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-gradient-to-r from-emerald-600 via-[#0f8646] to-emerald-700 text-white rounded-2xl p-4 sm:p-5 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4"
+            className="bg-gradient-to-r from-[#0c831f] to-emerald-700 text-white rounded-2xl p-4 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3"
           >
-            <div className="flex items-center gap-3.5 text-center sm:text-left">
-              <div className="w-11 h-11 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-white shrink-0 shadow-inner">
-                <Truck size={22} className="animate-pulse" />
+            <div className="flex items-center gap-3 text-center sm:text-left">
+              <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-white shrink-0">
+                <Truck size={20} className="animate-pulse" />
               </div>
               <div>
-                <div className="flex items-center justify-center sm:justify-start gap-2 mb-0.5">
-                  <span className="bg-amber-400 text-gray-950 text-[9.5px] font-black uppercase px-2 py-0.5 rounded-full">
-                    {activeOrder.status === "out of delivery" ? "🛵 Out For Delivery" : "🌱 Packing Harvest"}
+                <div className="flex items-center justify-center sm:justify-start gap-2">
+                  <span className="bg-amber-400 text-gray-950 text-[9px] font-black uppercase px-2 py-0.5 rounded-full">
+                    {activeOrder.status === "out of delivery" ? "Out For Delivery" : "Packing Harvest"}
                   </span>
                   <span className="text-xs font-mono font-bold text-emerald-100">
                     #SZQ-{activeOrder._id.slice(-6).toUpperCase()}
                   </span>
                 </div>
-                <p className="text-xs text-emerald-100 font-medium">
-                  {activeOrder.items?.length || 1} Items • ₹{activeOrder.totalamount} • Express 15-45 Mins
+                <p className="text-[11px] text-emerald-100 mt-0.5">
+                  {activeOrder.items?.length || 1} Items • ₹{activeOrder.totalamount}
                 </p>
               </div>
             </div>
 
             <Link
               href={`/track/${activeOrder._id}`}
-              className="bg-white hover:bg-emerald-50 text-[#0f8646] px-4 py-2.5 rounded-xl font-black text-xs shadow-xs transition flex items-center justify-center gap-1.5 w-full sm:w-auto shrink-0"
+              className="bg-white hover:bg-emerald-50 text-[#0c831f] px-4 py-2 rounded-xl font-black text-xs shadow-2xs transition flex items-center justify-center gap-1 w-full sm:w-auto shrink-0"
             >
-              <span>Track Live Delivery</span>
-              <ChevronRight size={14} />
+              <span>Track Delivery</span>
+              <ChevronRight size={13} />
             </Link>
           </motion.div>
         )}
 
-        {/* 4. Organized Minimal Navigation Grid */}
-        <div className="space-y-4">
-          
-          {/* Section: Orders & Cart */}
-          <div className="bg-white rounded-3xl p-4 sm:p-6 border border-gray-200/80 shadow-2xs">
-            <h2 className="text-[11px] font-black uppercase tracking-wider text-gray-400 mb-3 px-1 flex items-center gap-1.5">
-              <ShoppingBag size={14} className="text-[#0f8646]" /> Orders & Shopping
-            </h2>
+        {/* 4. Minimalist Action Menu */}
+        <div className="bg-white rounded-3xl border border-gray-200/70 p-4 sm:p-5 shadow-2xs space-y-3">
+          <h2 className="text-[11px] font-black uppercase tracking-wider text-gray-400 px-1">
+            Account & Orders
+          </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              <Link
-                href="/user/myorder"
-                className="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50/70 hover:bg-emerald-50/50 border border-gray-100 hover:border-emerald-300 transition group"
-              >
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-9 h-9 rounded-xl bg-white text-[#0f8646] flex items-center justify-center border border-gray-200 shadow-2xs shrink-0">
-                    <Package size={18} />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="text-xs font-black text-gray-900 group-hover:text-[#0f8646] transition truncate">
-                      My Orders & Invoices
-                    </h3>
-                    <p className="text-[10.5px] text-gray-500 truncate">
-                      Track delivery, reorder basket & download receipts
-                    </p>
-                  </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <Link
+              href="/user/myorder"
+              className="flex items-center justify-between p-3 rounded-2xl bg-gray-50/70 hover:bg-emerald-50/50 border border-gray-100 hover:border-emerald-300 transition group"
+            >
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-9 h-9 rounded-xl bg-white text-[#0c831f] flex items-center justify-center border border-gray-200/80 shadow-2xs shrink-0">
+                  <Package size={17} />
                 </div>
-                <ChevronRight size={16} className="text-gray-400 group-hover:text-[#0f8646] shrink-0" />
-              </Link>
-
-              <Link
-                href="/user/cart"
-                className="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50/70 hover:bg-emerald-50/50 border border-gray-100 hover:border-emerald-300 transition group"
-              >
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-9 h-9 rounded-xl bg-white text-emerald-600 flex items-center justify-center border border-gray-200 shadow-2xs shrink-0">
-                    <ShoppingCart size={18} />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="text-xs font-black text-gray-900 group-hover:text-[#0f8646] transition truncate">
-                      Active Basket
-                    </h3>
-                    <p className="text-[10.5px] text-gray-500 truncate">
-                      {totalCartCount} fresh produce items in cart
-                    </p>
-                  </div>
+                <div className="min-w-0">
+                  <h3 className="text-xs font-bold text-gray-900 group-hover:text-[#0c831f] transition truncate">
+                    My Orders & Invoices
+                  </h3>
+                  <p className="text-[10.5px] text-gray-500 truncate">
+                    Order history, receipts & reorder
+                  </p>
                 </div>
-                <ChevronRight size={16} className="text-gray-400 group-hover:text-[#0f8646] shrink-0" />
-              </Link>
-            </div>
-          </div>
-
-          {/* Section: Offers & Discounts */}
-          <div className="bg-white rounded-3xl p-4 sm:p-6 border border-gray-200/80 shadow-2xs">
-            <h2 className="text-[11px] font-black uppercase tracking-wider text-gray-400 mb-3 px-1 flex items-center gap-1.5">
-              <Tag size={14} className="text-amber-600" /> Coupons & Deals
-            </h2>
-
-            <div className="grid grid-cols-1 gap-2.5">
-              <Link
-                href="/offers"
-                className="flex items-center justify-between p-3.5 rounded-2xl bg-amber-50/40 hover:bg-amber-50 border border-amber-200/80 hover:border-amber-300 transition group"
-              >
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-9 h-9 rounded-xl bg-white text-amber-600 flex items-center justify-center border border-amber-200 shadow-2xs shrink-0">
-                    <Tag size={18} />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="text-xs font-black text-gray-900 group-hover:text-amber-800 transition truncate">
-                      Available Coupons & Seasonal Offers
-                    </h3>
-                    <p className="text-[10.5px] text-amber-900/80 truncate">
-                      View active promo codes for Bhopal delivery
-                    </p>
-                  </div>
-                </div>
-                <ChevronRight size={16} className="text-gray-400 group-hover:text-amber-700 shrink-0" />
-              </Link>
-            </div>
-          </div>
-
-          {/* Section: Shop Fresh Produce Categories */}
-          <div className="bg-white rounded-3xl p-4 sm:p-6 border border-gray-200/80 shadow-2xs">
-            <h2 className="text-[11px] font-black uppercase tracking-wider text-gray-400 mb-3 px-1 flex items-center gap-1.5">
-              <Leaf size={14} className="text-[#0f8646]" /> Shop Fresh Produce Categories
-            </h2>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-              
-              {/* Vegetables */}
-              <Link
-                href="/shop?category=Vegetables"
-                className="flex items-center justify-between p-3 rounded-2xl bg-gray-50/70 hover:bg-emerald-50/50 border border-gray-100 hover:border-emerald-300 transition group"
-              >
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-10 h-10 rounded-xl overflow-hidden bg-emerald-100 shrink-0 border border-emerald-200 p-0.5">
-                    <img
-                      src="/categories/vegetables_4k.jpg"
-                      alt="Vegetables"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src =
-                          "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=120&q=80";
-                      }}
-                      className="w-full h-full object-cover rounded-lg"
-                    />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="text-xs font-black text-gray-900 group-hover:text-[#0f8646] transition truncate">
-                      Fresh Vegetables
-                    </h3>
-                    <p className="text-[10px] text-gray-400 truncate">Farm harvested daily</p>
-                  </div>
-                </div>
-                <ChevronRight size={15} className="text-gray-400 group-hover:text-[#0f8646] shrink-0" />
-              </Link>
-
-              {/* Fruits */}
-              <Link
-                href="/shop?category=Fruits"
-                className="flex items-center justify-between p-3 rounded-2xl bg-gray-50/70 hover:bg-amber-50/50 border border-gray-100 hover:border-amber-300 transition group"
-              >
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-10 h-10 rounded-xl overflow-hidden bg-amber-100 shrink-0 border border-amber-200 p-0.5">
-                    <img
-                      src="/categories/fruits_4k.jpg"
-                      alt="Fruits"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src =
-                          "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=120&q=80";
-                      }}
-                      className="w-full h-full object-cover rounded-lg"
-                    />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="text-xs font-black text-gray-900 group-hover:text-amber-800 transition truncate">
-                      Seasonal Fruits
-                    </h3>
-                    <p className="text-[10px] text-gray-400 truncate">Sweet & juicy picks</p>
-                  </div>
-                </div>
-                <ChevronRight size={15} className="text-gray-400 group-hover:text-amber-700 shrink-0" />
-              </Link>
-
-              {/* Exotics */}
-              <Link
-                href="/shop?category=Exotics"
-                className="flex items-center justify-between p-3 rounded-2xl bg-gray-50/70 hover:bg-purple-50/50 border border-gray-100 hover:border-purple-300 transition group"
-              >
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-10 h-10 rounded-xl overflow-hidden bg-purple-100 shrink-0 border border-purple-200 p-0.5">
-                    <img
-                      src="/categories/exotics_4k.jpg"
-                      alt="Exotics"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src =
-                          "https://images.unsplash.com/photo-1518843875459-f738682238a6?auto=format&fit=crop&w=120&q=80";
-                      }}
-                      className="w-full h-full object-cover rounded-lg"
-                    />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="text-xs font-black text-gray-900 group-hover:text-purple-800 transition truncate">
-                      Hydroponics & Exotics
-                    </h3>
-                    <p className="text-[10px] text-gray-400 truncate">Gourmet & salad greens</p>
-                  </div>
-                </div>
-                <ChevronRight size={15} className="text-gray-400 group-hover:text-purple-700 shrink-0" />
-              </Link>
-            </div>
-          </div>
-
-          {/* Section: Staff / Role Portals (Conditional) */}
-          {(activeUser?.role === "admin" || activeUser?.role === "deliveryboy") && (
-            <div className="bg-white rounded-3xl p-4 sm:p-6 border border-gray-200/80 shadow-2xs">
-              <h2 className="text-[11px] font-black uppercase tracking-wider text-gray-400 mb-3 px-1 flex items-center gap-1.5">
-                <ShieldCheck size={14} className="text-indigo-600" /> Operational Portals
-              </h2>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {activeUser?.role === "admin" && (
-                  <Link
-                    href="/admin"
-                    className="flex items-center justify-between p-3.5 rounded-2xl bg-purple-50/50 hover:bg-purple-50 border border-purple-200 transition group"
-                  >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-9 h-9 rounded-xl bg-purple-600 text-white flex items-center justify-center shadow-xs shrink-0">
-                        <ShieldCheck size={18} />
-                      </div>
-                      <div className="min-w-0">
-                        <h3 className="text-xs font-black text-purple-950 transition truncate">
-                          Admin Control Center
-                        </h3>
-                        <p className="text-[10.5px] text-purple-700 truncate">
-                          Manage orders, groceries, inventory & fleet
-                        </p>
-                      </div>
-                    </div>
-                    <ChevronRight size={16} className="text-purple-400 group-hover:text-purple-700 shrink-0" />
-                  </Link>
-                )}
-
-                {activeUser?.role === "deliveryboy" && (
-                  <Link
-                    href="/deliveryboy"
-                    className="flex items-center justify-between p-3.5 rounded-2xl bg-emerald-50/60 hover:bg-emerald-100/60 border border-emerald-300 transition group"
-                  >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-9 h-9 rounded-xl bg-[#0f8646] text-white flex items-center justify-center shadow-xs shrink-0">
-                        <Truck size={18} />
-                      </div>
-                      <div className="min-w-0">
-                        <h3 className="text-xs font-black text-emerald-950 transition truncate">
-                          Rider Delivery Partner Hub
-                        </h3>
-                        <p className="text-[10.5px] text-[#0f8646] truncate">
-                          View assigned trips & deliver with OTP
-                        </p>
-                      </div>
-                    </div>
-                    <ChevronRight size={16} className="text-[#0f8646]" />
-                  </Link>
-                )}
               </div>
-            </div>
-          )}
+              <ChevronRight size={15} className="text-gray-400 group-hover:text-[#0c831f] group-hover:translate-x-0.5 transition-transform shrink-0" />
+            </Link>
+
+            <Link
+              href="/user/subscriptions"
+              className="flex items-center justify-between p-3 rounded-2xl bg-gray-50/70 hover:bg-emerald-50/50 border border-gray-100 hover:border-emerald-300 transition group"
+            >
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-9 h-9 rounded-xl bg-white text-emerald-600 flex items-center justify-center border border-gray-200/80 shadow-2xs shrink-0">
+                  <RefreshCw size={17} />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="text-xs font-bold text-gray-900 group-hover:text-[#0c831f] transition truncate">
+                    Daily Subscriptions
+                  </h3>
+                  <p className="text-[10.5px] text-gray-500 truncate">
+                    Morning milk & fresh vegetable plans
+                  </p>
+                </div>
+              </div>
+              <ChevronRight size={15} className="text-gray-400 group-hover:text-[#0c831f] group-hover:translate-x-0.5 transition-transform shrink-0" />
+            </Link>
+
+            <Link
+              href="/offers"
+              className="flex items-center justify-between p-3 rounded-2xl bg-gray-50/70 hover:bg-amber-50/50 border border-gray-100 hover:border-amber-300 transition group"
+            >
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-9 h-9 rounded-xl bg-white text-amber-600 flex items-center justify-center border border-gray-200/80 shadow-2xs shrink-0">
+                  <Tag size={17} />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="text-xs font-bold text-gray-900 group-hover:text-amber-800 transition truncate">
+                    Coupons & Offers
+                  </h3>
+                  <p className="text-[10.5px] text-gray-500 truncate">
+                    Exclusive discount vouchers
+                  </p>
+                </div>
+              </div>
+              <ChevronRight size={15} className="text-gray-400 group-hover:text-amber-700 group-hover:translate-x-0.5 transition-transform shrink-0" />
+            </Link>
+
+            <Link
+              href="/user/wallet"
+              className="flex items-center justify-between p-3 rounded-2xl bg-gray-50/70 hover:bg-emerald-50/50 border border-gray-100 hover:border-emerald-300 transition group"
+            >
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-9 h-9 rounded-xl bg-white text-teal-600 flex items-center justify-center border border-gray-200/80 shadow-2xs shrink-0">
+                  <Sparkles size={17} />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="text-xs font-bold text-gray-900 group-hover:text-[#0c831f] transition truncate">
+                    SubziQuick Wallet
+                  </h3>
+                  <p className="text-[10.5px] text-gray-500 truncate">
+                    Cashback & 1-tap checkout balance
+                  </p>
+                </div>
+              </div>
+              <ChevronRight size={15} className="text-gray-400 group-hover:text-[#0c831f] group-hover:translate-x-0.5 transition-transform shrink-0" />
+            </Link>
+          </div>
         </div>
 
-        {/* 5. Minimal 24/7 Bhopal Support Card */}
-        <div className="bg-white rounded-3xl p-5 sm:p-6 border border-gray-200/80 shadow-2xs flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5 text-center sm:text-left">
-            <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-[#0f8646] flex items-center justify-center font-black shadow-2xs shrink-0 border border-emerald-100">
-              <Phone size={20} />
+        {/* 5. Direct Produce Category Shortcuts */}
+        <div className="bg-white rounded-3xl border border-gray-200/70 p-4 sm:p-5 shadow-2xs space-y-3">
+          <div className="flex items-center justify-between px-1">
+            <h2 className="text-[11px] font-black uppercase tracking-wider text-gray-400">
+              Shop Fresh Produce
+            </h2>
+            <Link href="/shop" className="text-xs font-bold text-[#0c831f] hover:underline">
+              All Produce
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-3 gap-2 sm:gap-3">
+            <Link
+              href="/shop?category=Vegetables"
+              className="p-3 rounded-2xl bg-gray-50/70 hover:bg-emerald-50/50 border border-gray-100 hover:border-emerald-300 transition text-center flex flex-col items-center group"
+            >
+              <div className="w-12 h-12 rounded-xl overflow-hidden mb-2 bg-white border border-gray-100 shadow-2xs">
+                <img
+                  src="/categories/vegetables_4k.jpg?v=4"
+                  alt="Vegetables"
+                  className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-300"
+                />
+              </div>
+              <span className="text-xs font-black text-gray-900 group-hover:text-[#0c831f] truncate w-full">
+                Vegetables
+              </span>
+              <span className="text-[10px] text-gray-400 truncate w-full mt-0.5">Farm Fresh</span>
+            </Link>
+
+            <Link
+              href="/shop?category=Fruits"
+              className="p-3 rounded-2xl bg-gray-50/70 hover:bg-amber-50/50 border border-gray-100 hover:border-amber-300 transition text-center flex flex-col items-center group"
+            >
+              <div className="w-12 h-12 rounded-xl overflow-hidden mb-2 bg-white border border-gray-100 shadow-2xs">
+                <img
+                  src="/categories/fruits_4k.jpg?v=4"
+                  alt="Fruits"
+                  className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-300"
+                />
+              </div>
+              <span className="text-xs font-black text-gray-900 group-hover:text-amber-800 truncate w-full">
+                Fruits
+              </span>
+              <span className="text-[10px] text-gray-400 truncate w-full mt-0.5">Naturally Sweet</span>
+            </Link>
+
+            <Link
+              href="/shop?category=Exotics"
+              className="p-3 rounded-2xl bg-gray-50/70 hover:bg-purple-50/50 border border-gray-100 hover:border-purple-300 transition text-center flex flex-col items-center group"
+            >
+              <div className="w-12 h-12 rounded-xl overflow-hidden mb-2 bg-white border border-gray-100 shadow-2xs">
+                <img
+                  src="/categories/exotics_4k.jpg?v=4"
+                  alt="Exotics"
+                  className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-300"
+                />
+              </div>
+              <span className="text-xs font-black text-gray-900 group-hover:text-purple-800 truncate w-full">
+                Exotics
+              </span>
+              <span className="text-[10px] text-gray-400 truncate w-full mt-0.5">Hydroponics</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* 6. Staff Portals (If Admin) */}
+        {activeUser?.role === "admin" && (
+          <div className="bg-white rounded-3xl border border-gray-200/70 p-4 sm:p-5 shadow-2xs">
+            <h2 className="text-[11px] font-black uppercase tracking-wider text-gray-400 px-1 mb-2.5">
+              Management
+            </h2>
+            <Link
+              href="/admin"
+              className="flex items-center justify-between p-3 rounded-2xl bg-purple-50/40 hover:bg-purple-50 border border-purple-200/80 transition group"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-purple-600 text-white flex items-center justify-center shadow-xs shrink-0">
+                  <ShieldCheck size={18} />
+                </div>
+                <div>
+                  <h3 className="text-xs font-black text-purple-950">
+                    Admin Control Center
+                  </h3>
+                  <p className="text-[10.5px] text-purple-700">
+                    Manage orders, inventory, pricing & fleet
+                  </p>
+                </div>
+              </div>
+              <ChevronRight size={16} className="text-purple-400 group-hover:text-purple-700 group-hover:translate-x-0.5 transition-transform" />
+            </Link>
+          </div>
+        )}
+
+        {/* 7. Minimal 24/7 Bhopal Support Card */}
+        <div className="bg-white rounded-3xl p-4 sm:p-5 border border-gray-200/70 shadow-2xs flex flex-col sm:flex-row items-center justify-between gap-3.5">
+          <div className="flex items-center gap-3 text-center sm:text-left">
+            <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#0c831f] flex items-center justify-center shrink-0 border border-emerald-100 shadow-2xs">
+              <Phone size={18} />
             </div>
             <div>
-              <h4 className="text-sm font-black text-gray-900">
-                SubziQuick Bhopal Helpdesk
+              <h4 className="text-xs sm:text-sm font-black text-gray-900">
+                SubziQuick Bhopal Support
               </h4>
-              <p className="text-xs text-gray-500 font-medium">
-                Live Help & Dispatch Status: <strong className="text-gray-900">+91 9981418565</strong>
+              <p className="text-[11px] text-gray-500 font-medium">
+                Live help & dispatch queries: <strong>+91 9981418565</strong>
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5 w-full sm:w-auto">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
             <a
               href="tel:9981418565"
-              className="flex-1 sm:flex-initial bg-white hover:bg-gray-50 text-gray-800 border border-gray-300 px-4 py-2.5 rounded-xl font-black text-xs transition text-center shadow-2xs cursor-pointer"
+              className="flex-1 sm:flex-initial bg-white hover:bg-gray-50 text-gray-800 border border-gray-200/90 px-3.5 py-2 rounded-xl font-bold text-xs transition text-center shadow-2xs"
             >
               Call Support
             </a>
@@ -604,9 +568,9 @@ export default function UserProfileHub() {
               href="https://wa.me/919981418565?text=Hello%20SubziQuick!%20I%20need%20help%20with%20my%20account%20or%20orders."
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 sm:flex-initial bg-[#25D366] hover:bg-[#20ba59] text-white px-4 py-2.5 rounded-xl font-black text-xs shadow-xs transition text-center flex items-center justify-center gap-1.5 cursor-pointer"
+              className="flex-1 sm:flex-initial bg-[#25D366] hover:bg-[#20ba59] text-white px-3.5 py-2 rounded-xl font-bold text-xs shadow-xs transition text-center flex items-center justify-center gap-1.5"
             >
-              <MessageCircle size={15} />
+              <MessageCircle size={14} />
               <span>WhatsApp</span>
             </a>
           </div>
