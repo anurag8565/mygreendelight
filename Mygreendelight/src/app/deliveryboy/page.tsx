@@ -13,14 +13,24 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic';
 
 export default async function DeliveryBoyPage() {
-  await connectDb();
+  try {
+    await connectDb();
+  } catch (err) {
+    console.error("DeliveryBoyPage DB connect error:", err);
+  }
+
   const session = await auth();
 
   if (!session?.user?.email) {
     redirect('/login?callbackUrl=/deliveryboy');
   }
 
-  const user = await User.findOne({ email: session.user.email }).lean();
+  let user = null;
+  try {
+    user = await User.findOne({ email: session.user.email }).lean();
+  } catch (err) {
+    console.error("DeliveryBoyPage find user error:", err);
+  }
 
   if (!user) {
     redirect('/login');
