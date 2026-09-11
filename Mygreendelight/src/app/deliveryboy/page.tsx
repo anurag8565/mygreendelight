@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description: 'Rider dispatch, live navigation, customer OTP verification and route dashboard.',
 };
 
+export const dynamic = 'force-dynamic';
+
 export default async function DeliveryBoyPage() {
   await connectDb();
   const session = await auth();
