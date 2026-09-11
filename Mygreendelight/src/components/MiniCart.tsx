@@ -66,7 +66,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                   <span>🥗 Farm Freshness Meter</span>
                 </span>
                 <span className="bg-yellow-300 text-gray-950 font-black text-[10px] px-2 py-0.5 rounded-full uppercase">
-                  100% Ozone Clean
+                  100% Farm Fresh
                 </span>
               </div>
             )}

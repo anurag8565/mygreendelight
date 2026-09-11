@@ -19,8 +19,8 @@ export default function TrustRibbon() {
     },
     {
       icon: <ShieldCheck size={15} className="text-teal-600" />,
-      title: "100% Ozone Cleaned",
-      subtitle: "Pesticide & Dirt Free",
+      title: "100% Hand-Graded",
+      subtitle: "A-Grade Freshness",
       bg: "bg-teal-50/70 border-teal-200/60 text-teal-950",
     },
     {

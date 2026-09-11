@@ -24,14 +24,14 @@ export default function Hero({ banners = [] }: HeroProps) {
       _id: "s1",
       badge: "10-15 Min Express Delivery in Bhopal",
       title: "Online Fresh Vegetable Delivery in Bhopal",
-      subtitle: "5:00 AM Sunrise Mandi harvest, 100% ozone-washed, pesticide-safe & wholesale direct farm rates.",
+      subtitle: "5:00 AM Sunrise Mandi harvest, handpicked fresh, pesticide-safe & wholesale direct farm rates.",
       btnText: "Order Fresh Vegetables",
       link: "/shop?category=Vegetables",
       image: "/banners/veggies_clean_4k.jpg",
       bgGradient: "from-[#032010]/95 via-[#064e3b]/85 to-transparent/30",
       accentColor: "#10b981",
       offerPill: "FLAT ₹50 OFF • CODE: FIRST50",
-      floatingStat: "100% Ozone Washed",
+      floatingStat: "100% Handpicked Fresh",
     },
     {
       _id: "s2",
@@ -68,7 +68,7 @@ export default function Hero({ banners = [] }: HeroProps) {
       _id: b._id || `db-${idx}`,
       badge: b.badge || "🌿 Sunrise Farm Harvest • Express",
       title: b.title,
-      subtitle: b.subtitle || "100% Ozone-Washed & Fresh produce delivered to your doorstep.",
+      subtitle: b.subtitle || "Handpicked & Fresh produce delivered to your doorstep.",
       btnText: b.btnText || "Shop Now",
       link: b.link || "/shop",
       image: b.image || "/banners/veggies_clean_4k.jpg",
@@ -247,7 +247,7 @@ export default function Hero({ banners = [] }: HeroProps) {
                   transition={{ delay: 0.26, duration: 0.45 }}
                   className="text-[11px] xs:text-[12px] sm:text-sm text-emerald-100/95 font-medium mb-3.5 xs:mb-4 sm:mb-6 line-clamp-2 drop-shadow-sm max-w-md sm:max-w-lg leading-relaxed"
                 >
-                  {slide.subtitle || "100% Ozone-Washed & Chemical-Free produce sourced daily from local contract farms."}
+                  {slide.subtitle || "Handpicked & Chemical-Free produce sourced daily from local contract farms."}
                 </motion.p>
 
                 {/* Action CTA Buttons */}
@@ -298,7 +298,7 @@ export default function Hero({ banners = [] }: HeroProps) {
                       SubziQuick Certified
                     </span>
                     <span className="text-xs font-black text-white">
-                      {slide.floatingStat || "100% Ozone Washed & Fresh"}
+                      {slide.floatingStat || "100% Handpicked & Fresh"}
                     </span>
                   </div>
                 </motion.div>

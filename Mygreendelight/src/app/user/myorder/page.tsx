@@ -709,7 +709,7 @@ export default function MyOrder() {
               Cancel Order #SZQ-{cancelModalOrder._id.slice(-6).toUpperCase()}?
             </h3>
             <p className="text-xs text-gray-500 mb-4 leading-relaxed">
-              Are you sure you want to cancel this order? Produce stock will be immediately restored to Bhopal hub.
+              Are you sure you want to cancel this order? Produce stock will be immediately released.
             </p>
 
             <div className="space-y-2 mb-5">

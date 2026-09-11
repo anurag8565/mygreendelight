@@ -62,8 +62,8 @@ export default function BhopalCompetitorSEOShowcase() {
     { label: "🥒 Fresh Green Zucchini", query: "zucchini" },
     { label: "🥗 Daily Salad Diet Box", query: "salad" },
     { label: "🧺 Weekly Family Veg Combo", query: "combo" },
-    { label: "🧼 100% Ozone Washed Clean Veggies", query: "clean" },
-    { label: "🚜 Direct Kisan Farm Fresh", query: "fresh" },
+    { label: "🥬 100% Hand-Graded Fresh Veggies", query: "fresh" },
+    { label: "🚜 Direct Kisan Farm Fresh", query: "farm" },
   ];
 
   // Industry Standard Categories (No Competitor Brand Names)
@@ -78,9 +78,9 @@ export default function BhopalCompetitorSEOShowcase() {
     {
       category: "Supermarket Retail Chains",
       description: "24-48 hr delayed slots & plastic-wrapped stale batches",
-      subziAdvantage: "15–45 min same-day fresh morning dispatch, 100% certified ozone bubble wash (99.4% pesticide removal), and instant replacement.",
+      subziAdvantage: "15–45 min same-day fresh morning dispatch, strict triple-check hand grading, and instant replacement.",
       icon: <Store className="text-purple-600" size={20} />,
-      badge: "Ozone Washed & Same-Day",
+      badge: "Hand-Graded & Same-Day",
     },
     {
       category: "Manual WhatsApp Vendors",
@@ -114,11 +114,11 @@ export default function BhopalCompetitorSEOShowcase() {
       localVendors: "Manual pricing without transparent weight scales",
     },
     {
-      feature: "Hygiene & Washing",
-      subziquick: "100% Ozone-Washed & graded (Removes 99.4% pesticides)",
+      feature: "Hygiene & Sorting",
+      subziquick: "Triple-checked hand grading & clean cold water rinse",
       supermarkets: "Stored unwashed in plastic wraps",
       quickApps: "Unwashed batch crates in dark store",
-      localVendors: "Basic hand sorted without ozone cleaning",
+      localVendors: "Basic hand sorted without quality grading",
     },
     {
       feature: "Delivery Speed",
@@ -146,7 +146,7 @@ export default function BhopalCompetitorSEOShowcase() {
   const faqs = [
     {
       q: "How does SubziQuick provide fresher vegetables than dark-store apps and supermarkets?",
-      a: "Unlike warehouse-based grocery apps that store produce in cold dark stores for 3–5 days, SubziQuick procures directly from local Bhopal farming clusters every morning at 5:00 AM. Every batch is ozone-cleaned, graded, and delivered the same morning to your kitchen.",
+      a: "Unlike warehouse-based grocery apps that store produce in cold dark stores for 3–5 days, SubziQuick procures directly from local Bhopal farming clusters every morning at 5:00 AM. Every batch is hand-sorted, graded, and delivered the same morning to your kitchen.",
     },
     {
       q: "Bhopal me online sabzi order kaise karein?",
@@ -161,8 +161,8 @@ export default function BhopalCompetitorSEOShowcase() {
       a: "SubziQuick par roz subah 5:00 AM kisan harvest bhav live update hota hai. Daily mandi wholesale comparison rates hamare homepage live ticker par available rehte hain, jisse aapko sabse saste aur best quality sabziyan milti hain.",
     },
     {
-      q: "What is SubziQuick's 100% Ozone Bubble Washing and Quality Guarantee?",
-      a: "Every batch of green leafy vegetables, salad produce, and fruits undergoes certified ozone bubble washing. This removes 99.4% of surface chemical pesticides, bacteria, and dust without using harmful detergents, keeping your food pure, natural, and safe for your family.",
+      q: "What is SubziQuick's Quality Guarantee and Freshness Promise?",
+      a: "Every batch of green leafy vegetables, salad produce, and fruits undergoes strict hand-sorting and quality grading. We inspect produce before dispatch and offer a 100% doorstep guarantee: check the items at delivery, and if anything isn't fresh, get an instant replacement or refund.",
     },
     {
       q: "Which areas in Bhopal do you deliver fresh vegetables and fruits to?",
@@ -192,7 +192,7 @@ export default function BhopalCompetitorSEOShowcase() {
             Why Bhopal Chooses SubziQuick Over Cold-Storage Apps & Supermarkets
           </h2>
           <p className="text-xs sm:text-sm text-gray-600 mt-2.5 font-medium leading-relaxed">
-            Experience direct sunrise farm harvest, 100% ozone-cleaned produce, and true wholesale prices delivered in 15–45 minutes across all Bhopal societies.
+            Experience direct sunrise farm harvest, handpicked A-grade produce, and true wholesale prices delivered in 15–45 minutes across all Bhopal societies.
           </p>
         </div>
 

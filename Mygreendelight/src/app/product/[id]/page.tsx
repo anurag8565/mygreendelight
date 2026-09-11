@@ -29,7 +29,7 @@ export async function generateMetadata(props: {
       const title = product.metaTitle || `Buy Fresh ${product.name} ${unitText} in Bhopal - ${priceText} | SubziQuick`;
       const description =
         product.metaDescription ||
-        `Order farm fresh ${product.name} online in Bhopal for ${priceText} at wholesale farm rates on SubziQuick (Subzi Quick). 100% ozone-washed, pesticide-safe with 10-15 min express delivery across Arera Colony, Kolar Road, MP Nagar & all Bhopal areas.`;
+        `Order farm fresh ${product.name} online in Bhopal for ${priceText} at wholesale farm rates on SubziQuick (Subzi Quick). 100% handpicked, graded fresh with 10-15 min express delivery across Arera Colony, Kolar Road, MP Nagar & all Bhopal areas.`;
 
       const productUrl = product.canonicalUrl || `https://subziquick.in/product/${product.slug || product._id}`;
 
@@ -48,7 +48,7 @@ export async function generateMetadata(props: {
           `fresh vegetables and fruits in bhopal`,
           `online vegetable delivery in bhopal`,
           "pesticide free vegetables in bhopal",
-          "100 percent ozone washed vegetables bhopal",
+          "100 percent handpicked fresh vegetables bhopal",
         ],
         alternates: {
           canonical: productUrl,
@@ -225,10 +225,10 @@ export default async function ProductPage(props: { params: Promise<{ id: string 
       },
       {
         "@type": "Question",
-        name: `Is ${product.name} on SubziQuick ozone-washed and pesticide safe?`,
+        name: `Is ${product.name} on SubziQuick fresh and chemical-safe?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `Yes! Every batch of ${product.name} is washed using certified 100% ozone micro-bubble water technology to remove 99.4% of surface chemical pesticides, bacteria, and dust before delivery.`,
+          text: `Yes! Every batch of ${product.name} is harvested at 5:00 AM from verified local farms, hand-graded, and cleaned with pure water before delivery.`,
         },
       },
       {

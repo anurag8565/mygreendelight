@@ -849,7 +849,7 @@ export default function BulkUploadPage() {
               </div>
             </div>
 
-            {/* Card 8: Organic Ozone-Washed Farm Dataset (67 Products) */}
+            {/* Card 8: Organic Farm Fresh Dataset (67 Products) */}
             <div className="bg-gradient-to-br from-yellow-50 to-amber-50 rounded-3xl p-6 shadow-xs border border-amber-200/90 flex flex-col justify-between md:col-span-2">
               <div>
                 <div className="flex items-center justify-between mb-3">
@@ -860,10 +860,10 @@ export default function BulkUploadPage() {
                   <span className="text-xs text-amber-900 font-bold">67 Bhopal Farm Harvest Items</span>
                 </div>
                 <h3 className="text-lg font-black text-gray-900 mb-1">
-                  Bhopal Organic & Ozone-Washed Produce Dataset
+                  Bhopal Organic & Handpicked Produce Dataset
                 </h3>
                 <p className="text-xs text-gray-600 leading-relaxed mb-5">
-                  67 organic, ozone-washed Bhopal farm items (Oyster Mushrooms, Farm Palak, Desi Tamatar, Bhopal Veggies, Ghee & Dairy) with pack size variations (100g, 250g, 500g, 1kg) and HD photos.
+                  67 organic, hand-graded Bhopal farm items (Oyster Mushrooms, Farm Palak, Desi Tamatar, Bhopal Veggies, Ghee & Dairy) with pack size variations (100g, 250g, 500g, 1kg) and HD photos.
                 </p>
               </div>
 

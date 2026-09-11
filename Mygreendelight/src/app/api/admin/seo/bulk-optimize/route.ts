@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
         // Auto-craft High-Ranking Meta Description (120-160 chars)
         const metaDescription = `Buy farm-fresh ${cleanName}${
           hindiName ? ` (${hindiName})` : ""
-        } online in Bhopal at direct farm wholesale rates. 100% ozone-washed, pesticide-safe. Same-day delivery across Bhopal on SubziQuick.`.slice(0, 160);
+        } online in Bhopal at direct farm wholesale rates. 100% handpicked, pesticide-safe. Same-day delivery across Bhopal on SubziQuick.`.slice(0, 160);
 
         // Auto-craft Local Bhopal Keywords
         const metaKeywords = [

@@ -1,4 +1,4 @@
-﻿import mongoose, { Schema, Document, Model } from "mongoose";
+import mongoose, { Schema, Document, Model } from "mongoose";
 
 export interface IProduceGuide extends Document {
   category: string;
@@ -24,7 +24,7 @@ const ProduceGuideSchema = new Schema<IProduceGuide>(
     kitchenHacks: { type: String, required: true },
     washingAdvice: {
       type: String,
-      default: "100% Ozone washed before delivery. Rinse gently under cold running water before cooking.",
+      default: "Hand-graded & cleaned before delivery. Rinse gently under cold running water before cooking.",
     },
   },
   { timestamps: true }

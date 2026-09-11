@@ -42,7 +42,7 @@ const DEFAULT_BHOPAL_REVIEWS = [
     location: "Bawadiya Kalan, Bhopal",
     rating: 5,
     comment:
-      "Direct farmer rates without middlemen markup. 100% clean, ozone-sorted, and no chemical smell in coriander or tomatoes.",
+      "Direct farmer rates without middlemen markup. 100% clean, hand-sorted, and no chemical smell in coriander or tomatoes.",
     tag: "Verified Resident",
   },
   {

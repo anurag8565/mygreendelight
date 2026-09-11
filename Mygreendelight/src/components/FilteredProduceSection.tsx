@@ -131,7 +131,7 @@ export default function FilteredProduceSection({
               </span>
             </div>
             <p className="text-xs text-gray-500 font-medium mt-1">
-              5:00 AM Direct Mandi Harvest • 100% Ozone Washed • 10-15 Min Express Delivery in Bhopal
+              5:00 AM Direct Mandi Harvest • Handpicked & Fresh • 10-15 Min Express Delivery in Bhopal
             </p>
           </div>
 

@@ -120,10 +120,10 @@ export default function Footer() {
             </div>
 
             <p className="text-xs sm:text-sm text-emerald-100/80 mb-5 leading-relaxed font-medium max-w-sm">
-              SubziQuick (Subzi Quick) is Bhopal’s dedicated 10-15 min online fresh vegetable and fruit delivery service. 100% ozone-washed, chemical-free farm produce direct to your kitchen.
+              SubziQuick (Subzi Quick) is Bhopal’s dedicated 10-15 min online fresh vegetable and fruit delivery service. Handpicked, farm-fresh produce direct to your kitchen.
             </p>
 
-            {/* Store Hub & Hours Bento Chips */}
+            {/* Store Address & Hours Bento Chips */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-2.5 max-w-md mb-4.5 w-full">
               <div className="bg-white/5 hover:bg-white/[0.08] border border-white/10 rounded-2xl p-3 flex items-center gap-3 transition">
                 <div className="w-8.5 h-8.5 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center shrink-0 shadow-inner">
@@ -131,7 +131,7 @@ export default function Footer() {
                 </div>
                 <div className="min-w-0">
                   <span className="text-[9px] font-black uppercase text-emerald-300 tracking-wider block">
-                    Store Hub
+                    Store Location
                   </span>
                   <p className="text-xs text-white font-bold truncate">
                     Bagsewaniya, Bhopal

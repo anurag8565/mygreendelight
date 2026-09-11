@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 export const OFFICIAL_DEFAULT_BANNERS = [
   {
     title: "Direct From Local Bhopal & Sehore Farms",
-    subtitle: "100% Ozone-Washed, Handpicked Vegetables & Fruits Delivered Fresh.",
+    subtitle: "100% Farm Fresh, Handpicked Vegetables & Fruits Delivered Daily.",
     btnText: "Order Fresh Produce",
     link: "/shop?category=Vegetables",
     image: "/banners/veggies_clean_4k.jpg",

@@ -25,8 +25,8 @@ export default function FarmFreshPromise() {
     {
       step: "02",
       icon: <CheckCircle2 className="text-[#0c831f]" size={18} />,
-      title: "Ozone Cleaned",
-      desc: "Zero chemical 3-layer purity sort",
+      title: "Hand Graded",
+      desc: "Triple-layer freshness check",
       badge: "Pure",
     },
     {
@@ -40,7 +40,7 @@ export default function FarmFreshPromise() {
       step: "04",
       icon: <Truck className="text-[#0c831f]" size={18} />,
       title: "10-15 Min Express",
-      desc: "Bagsewaniya hub se direct aapke ghar",
+      desc: "Seedha aapke ghar doorstep dispatch",
       badge: "Express",
     },
   ];
@@ -60,7 +60,7 @@ export default function FarmFreshPromise() {
                 Farm to Kitchen Freshness Promise
               </h2>
               <p className="text-[10.5px] sm:text-xs text-gray-500 font-medium">
-                100% Ozone Washed & Bhopal Kisan Sourced
+                100% Handpicked & Bhopal Kisan Sourced
               </p>
             </div>
           </div>

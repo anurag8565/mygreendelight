@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState, useEffect } from "react";
 import { Sparkles, Salad, Plus, Check, ShoppingBag, Flame, Dumbbell, ArrowRight, RotateCcw } from "lucide-react";
@@ -111,7 +111,7 @@ export default function CustomBoxBuilder({ initialIngredients = [] }: { initialI
                 Craft Your Own Fresh Salad & Detox Bowl
               </h2>
               <p className="text-xs text-gray-500 font-medium">
-                Choose base greens, toppings, superfoods & zesty dressing • 100% Ozone Washed
+                Choose base greens, toppings, superfoods & zesty dressing • 100% Farm Fresh & Clean
               </p>
             </div>
           </div>

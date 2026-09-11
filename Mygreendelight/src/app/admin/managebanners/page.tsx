@@ -301,7 +301,7 @@ export default function ManageBanners() {
                     <textarea
                       rows={2}
                       required
-                      placeholder="e.g. 100% Ozone-Washed, Handpicked Vegetables & Fruits Delivered Fresh."
+                      placeholder="e.g. 100% Farm Fresh, Handpicked Vegetables & Fruits Delivered Daily."
                       value={formData.subtitle}
                       onChange={(e) =>
                         setFormData({ ...formData, subtitle: e.target.value })

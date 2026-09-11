@@ -149,7 +149,7 @@ export default function TrackOrderPage() {
     { title: "Placed", desc: "Received", done: true },
     {
       title: "Packing",
-      desc: "Ozone Wash",
+      desc: "Hand Graded",
       done: status === "out of delivery" || isDelivered,
     },
     {
@@ -545,7 +545,7 @@ export default function TrackOrderPage() {
                   Assigning Nearest Bhopal Rider...
                 </h3>
                 <p className="text-xs text-gray-500 mt-0.5">
-                  Our store hub is picking & ozone-washing your produce. A rider will be assigned in 2-3 minutes.
+                  We are hand-sorting and packing your fresh harvest. A rider will be assigned in 2-3 minutes.
                 </p>
               </div>
             </div>
@@ -784,7 +784,7 @@ export default function TrackOrderPage() {
               Cancel Order #SZQ-{order._id.slice(-6).toUpperCase()}?
             </h3>
             <p className="text-xs text-gray-500 mb-4 leading-relaxed">
-              Are you sure you want to cancel? All reserved fresh produce will be returned to Bhopal hub.
+              Are you sure you want to cancel? All reserved fresh produce will be released.
             </p>
 
             <div className="space-y-2 mb-5">

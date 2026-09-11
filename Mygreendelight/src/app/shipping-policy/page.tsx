@@ -65,7 +65,7 @@ export default function ShippingPolicyPage() {
               <span>2. Store Location & Delivery Coverage Area</span>
             </h2>
             <p>
-              <strong>Central Store Address:</strong> Amrai, Bagsewaniya, Bhopal, MP - 462043.
+              <strong>Store & Dispatch Address:</strong> Amrai, Bagsewaniya, Bhopal, MP - 462043.
             </p>
             <p className="text-xs text-gray-600">
               <strong>Covered Areas in Bhopal:</strong> Bagsewaniya, Amrai, AIIMS, Saket Nagar, Hoshangabad Road, MP Nagar, Arera Colony, Gulmohar, Kolar Road, Shahpura, Chunabhatti, aur aas-paas ke sabhi Bhopal sectors.

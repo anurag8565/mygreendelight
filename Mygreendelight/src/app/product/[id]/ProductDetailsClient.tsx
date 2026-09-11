@@ -325,7 +325,7 @@ export default function ProductDetailsClient({
                       10-15 Min Express Delivery in Bhopal
                     </p>
                     <p className="text-[10px] text-emerald-700 font-medium">
-                      Harvested sunrise 5:00 AM • 100% Ozone Cleaned
+                      Harvested sunrise 5:00 AM • 100% Handpicked Fresh
                     </p>
                   </div>
                 </div>
@@ -349,7 +349,7 @@ export default function ProductDetailsClient({
                     </span>
                   </div>
                   <p className="text-[10px] sm:text-[11px] text-gray-500 font-medium mt-1">
-                    Inclusive of all taxes • 100% Ozone-Washed & Chemical-Free
+                    Inclusive of all taxes • 100% Handpicked & Farm Fresh
                   </p>
                 </div>
               </div>
@@ -457,7 +457,7 @@ export default function ProductDetailsClient({
             </div>
             <div>
               <h4 className="font-black text-xs text-gray-900">100% Quality Checked</h4>
-              <p className="text-[10px] text-gray-500 font-medium">Ozone-washed & graded</p>
+              <p className="text-[10px] text-gray-500 font-medium">Hand-graded & clean</p>
             </div>
           </div>
 
@@ -541,7 +541,7 @@ export default function ProductDetailsClient({
               {openSection === "sourcing" && (
                 <div className="px-3.5 pb-3.5 text-xs text-gray-600 leading-relaxed font-medium">
                   {product.sourcing ||
-                    `Harvested daily at 4:30 AM from agricultural contract farms near Bhopal. Cleaned using 100% chemical-free organic ozone wash to ensure complete safety.`}
+                    `Harvested daily at 4:30 AM from agricultural contract farms near Bhopal. Hand-graded and naturally cleaned to ensure complete safety and kitchen-ready freshness.`}
                 </div>
               )}
             </div>
@@ -577,7 +577,7 @@ export default function ProductDetailsClient({
                 className="w-full p-3.5 flex items-center justify-between text-left hover:bg-gray-50 transition cursor-pointer"
               >
                 <span className="text-xs sm:text-sm font-black text-gray-900">
-                  10-15 Min Bhopal Delivery & 100% Ozone Purity
+                  10-15 Min Bhopal Delivery & Farm Fresh Purity
                 </span>
                 <ChevronDown
                   size={15}
@@ -593,7 +593,7 @@ export default function ProductDetailsClient({
                     • <strong>Covered Localities</strong>: Arera Colony (E1-E8), Kolar Road, MP Nagar, Bawadiya Kalan, Katara Hills, Shahpura, Chunabhatti, Trilanga, Gulmohar, Hoshangabad Road, and all major Bhopal societies.
                   </p>
                   <p>
-                    • <strong>100% Ozone Cleaned</strong>: Certified micro-bubble wash removes 99.4% of surface pesticides, bacteria, and dust before delivery.
+                    • <strong>100% Hand-Graded & Cleaned</strong>: Triple quality check ensures zero damaged produce, dirt, or dust before dispatch.
                   </p>
                   <p>
                     • <strong>Doorstep Guarantee</strong>: Check freshness at your door. If unsatisfied, return immediately for an instant UPI refund or replacement.

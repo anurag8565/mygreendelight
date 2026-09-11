@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "SubziQuick: Buy Fresh Vegetables & Fruits in Bhopal | 10-15 Min Express",
   description:
-    "Order 270+ farm-fresh vegetables, seasonal fruits, and exotic greens online in Bhopal at wholesale mandi rates. 100% ozone-washed, pesticide-safe with 10-15 min express doorstep delivery on SubziQuick.",
+    "Order 270+ farm-fresh vegetables, seasonal fruits, and exotic greens online in Bhopal at wholesale mandi rates. Handpicked fresh with 10-15 min express doorstep delivery on SubziQuick.",
   keywords: [
     "subzi quick",
     "subziquick",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Buy Fresh Vegetables, Fruits & Exotics in Bhopal | SubziQuick",
     description:
-      "270+ farm-fresh vegetables, seasonal fruits, and exotic greens delivered same-day in Bhopal at direct farm wholesale rates. 100% ozone-washed.",
+      "270+ farm-fresh vegetables, seasonal fruits, and exotic greens delivered same-day in Bhopal at direct farm wholesale rates. Handpicked fresh daily.",
     url: "https://subziquick.in/shop",
     siteName: "SubziQuick Bhopal",
     images: [

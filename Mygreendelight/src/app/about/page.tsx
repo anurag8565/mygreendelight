@@ -38,10 +38,10 @@ export default function AboutPage() {
       icon: <Sun size={20} className="text-amber-500" />,
     },
     {
-      value: "99.4%",
-      label: "Ozone Cleansed",
-      desc: "Certified removal of surface chemicals & dust",
-      icon: <Droplets size={20} className="text-blue-500" />,
+      value: "100%",
+      label: "Hand-Graded Fresh",
+      desc: "Sorted & triple-checked for crisp A-grade quality",
+      icon: <ShieldCheck size={20} className="text-emerald-600" />,
     },
     {
       value: "10-15m",
@@ -68,11 +68,11 @@ export default function AboutPage() {
     },
     {
       number: "02",
-      tag: "Pure Scientific Cleansing",
-      title: "100% Ozone Micro-Bubble wash. Zero harsh chemicals.",
-      desc: "Plain water rinsing fails to remove modern chemical pesticides, transport fumes, and roadside bacteria. We cleanse our leafy greens and produce with natural ozone-infused micro-bubbles. This breaks down 99.4% of pesticide residues naturally, leaving vital nutrients completely intact.",
+      tag: "Triple Quality Check",
+      title: "Hand-sorted, graded & cleaned for crisp perfection.",
+      desc: "We reject wilted, bruised, or substandard produce at the gate. Every batch of leafy greens and daily vegetables is carefully hand-sorted, graded, and cleaned with pure running water to eliminate field dust and grime—delivering only fresh, kitchen-ready vegetables.",
       image: "/banners/veggies_clean_4k.jpg",
-      points: ["Certified 99.4% pesticide reduction", "Safe for raw salads & baby food", "No detergents or synthetic chemicals"],
+      points: ["100% A-grade produce selection", "Pure cold water rinse for crisp crunch", "Zero wilted or damaged pieces"],
     },
     {
       number: "03",
@@ -92,8 +92,8 @@ export default function AboutPage() {
     },
     {
       aspect: "Safety & Hygiene",
-      subziQuick: "100% Ozone micro-bubble pesticide wash",
-      traditional: "Sprayed with water or left unwashed",
+      subziQuick: "Triple-checked hand grading & clean water rinse",
+      traditional: "Sprayed with dirty water or left unwashed in dust",
     },
     {
       aspect: "Delivery Speed",
@@ -132,11 +132,11 @@ export default function AboutPage() {
   const faqs = [
     {
       q: "How does SubziQuick deliver so fast without keeping days-old stock?",
-      a: "Our entire supply chain is streamlined for morning throughput. Farmers harvest at sunrise, our express packing stations sort and ozone-clean immediately, and our hyperlocal delivery fleet delivers directly across Bhopal within 10-15 minutes.",
+      a: "Our entire supply chain is streamlined for morning throughput. Farmers harvest at sunrise, our express packing stations hand-sort and clean immediately, and our hyperlocal delivery fleet delivers directly across Bhopal within 10-15 minutes.",
     },
     {
-      q: "What is 100% Ozone Micro-Bubble Cleansing?",
-      a: "Ozone (O3) is a natural purifier. When dissolved in water, micro-bubbles neutralize pesticide molecules, dirt, and bacteria on the surface of vegetables and fruits. After doing its job, ozone turns back into pure oxygen, leaving no chemical residue.",
+      q: "How does SubziQuick ensure produce cleanliness and hygiene?",
+      a: "Every batch is inspected at sunrise upon arrival from the farms. We hand-grade every item to remove damaged pieces, rinse leafy vegetables under pure running water to wash off field dust, and pack them in ventilated eco-friendly containers.",
     },
     {
       q: "Are there any hidden platform charges or surge fees?",
@@ -188,7 +188,7 @@ export default function AboutPage() {
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="text-gray-600 text-sm sm:text-base lg:text-lg leading-relaxed mb-8 max-w-2xl font-normal"
               >
-                We started SubziQuick to end the compromise between wilted roadside produce and days-old warehouse dark stores. Sourced at dawn from regional growers, 100% ozone-washed, and delivered crisp in 10-15 minutes.
+                We started SubziQuick to end the compromise between wilted roadside produce and days-old warehouse dark stores. Sourced at dawn from regional growers, handpicked for quality, and delivered crisp in 10-15 minutes.
               </motion.p>
 
               {/* Action Buttons */}
@@ -245,7 +245,7 @@ export default function AboutPage() {
                   </div>
                   <div className="bg-white/15 backdrop-blur-md border border-white/20 px-3.5 py-1.5 rounded-full text-xs font-bold text-white flex items-center gap-2">
                     <Sparkles size={13} className="text-amber-300" />
-                    <span>Tested & Ozone Washed Daily</span>
+                    <span>Tested & Hand-Graded Daily</span>
                   </div>
                 </div>
               </div>
@@ -482,7 +482,7 @@ export default function AboutPage() {
                 Cook With Fresh Produce Today
               </h2>
               <p className="text-emerald-100/90 text-xs sm:text-sm leading-relaxed mb-6 font-normal">
-                Join thousands of Bhopal homes enjoying 100% ozone-washed, sunrise-harvested vegetables and fruits delivered to your door in 10-15 minutes.
+                Join thousands of Bhopal homes enjoying handpicked, sunrise-harvested vegetables and fruits delivered to your door in 10-15 minutes.
               </p>
               <div className="flex flex-wrap items-center gap-3">
                 <Link

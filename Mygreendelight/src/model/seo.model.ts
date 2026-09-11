@@ -34,12 +34,12 @@ const GlobalSEOSchema = new mongoose.Schema<IGlobalSEO>(
     defaultDescription: {
       type: String,
       default:
-        "Order farm-fresh vegetables, seasonal fruits & groceries online in Bhopal at direct farm wholesale rates. 100% ozone-washed, pesticide-safe with same-day doorstep delivery across Bhopal.",
+        "Order farm-fresh vegetables, seasonal fruits & groceries online in Bhopal at direct farm wholesale rates. 100% handpicked, graded fresh with same-day doorstep delivery across Bhopal.",
     },
     primaryKeywords: {
       type: String,
       default:
-        "online vegetable delivery in bhopal, buy fresh fruits online bhopal, fresh sabzi online cash on delivery bhopal, today vegetable rate in bhopal, same day fresh vegetable delivery bhopal, online sabzi delivery app bhopal free delivery, fresh farm vegetables home delivery bhopal, no minimum order vegetable delivery bhopal, free vegetable delivery in bhopal, cheap fresh vegetable delivery online bhopal, vegetable delivery in arera colony bhopal, fresh fruit delivery kolar road bhopal, online sabzi delivery mp nagar bhopal, organic vegetables bawadiya kalan bhopal, vegetable home delivery katara hills bhopal, pesticide free vegetables in bhopal, 100 percent ozone washed clean vegetables bhopal, direct kisan wholesale price online sabzi bhopal, zero platform fee vegetable delivery app bhopal",
+        "online vegetable delivery in bhopal, buy fresh fruits online bhopal, fresh sabzi online cash on delivery bhopal, today vegetable rate in bhopal, same day fresh vegetable delivery bhopal, online sabzi delivery app bhopal free delivery, fresh farm vegetables home delivery bhopal, no minimum order vegetable delivery bhopal, free vegetable delivery in bhopal, cheap fresh vegetable delivery online bhopal, vegetable delivery in arera colony bhopal, fresh fruit delivery kolar road bhopal, online sabzi delivery mp nagar bhopal, organic vegetables bawadiya kalan bhopal, vegetable home delivery katara hills bhopal, pesticide free vegetables in bhopal, 100 percent handpicked clean vegetables bhopal, direct kisan wholesale price online sabzi bhopal, zero platform fee vegetable delivery app bhopal",
     },
     bhopalDeliveryAreas: {
       type: [String],

@@ -57,7 +57,7 @@ export async function GET() {
             { key: "ayodhya", name: "Ayodhya Bypass", count: 0, revenue: 0, lat: 23.2750, lng: 77.4520 },
             { key: "new market", name: "New Market / TT Nagar", count: 0, revenue: 0, lat: 23.2384, lng: 77.3995 },
             { key: "shahpura", name: "Shahpura & Chunabhatti", count: 0, revenue: 0, lat: 23.2010, lng: 77.4210 },
-            { key: "bhopal", name: "Central Bhopal Hub", count: 0, revenue: 0, lat: 23.2599, lng: 77.4126 },
+            { key: "bhopal", name: "Bhopal Local Coverage", count: 0, revenue: 0, lat: 23.2599, lng: 77.4126 },
         ];
 
         (allOrders || []).forEach((o: any) => {

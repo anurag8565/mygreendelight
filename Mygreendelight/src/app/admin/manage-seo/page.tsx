@@ -61,7 +61,7 @@ export default function ManageSEOPage() {
     siteName: "SubziQuick Bhopal",
     defaultTitle: "Online Vegetable & Fruit Delivery in Bhopal | Farm Fresh Produce - SubziQuick",
     defaultDescription:
-      "Order farm-fresh vegetables, seasonal fruits & groceries online in Bhopal at wholesale farm rates. 100% ozone-washed, pesticide-safe with same-day doorstep delivery across Bhopal.",
+      "Order farm-fresh vegetables, seasonal fruits & groceries online in Bhopal at wholesale farm rates. 100% handpicked, graded fresh with same-day doorstep delivery across Bhopal.",
     primaryKeywords:
       "vegetable delivery bhopal, fresh vegetables bhopal, buy vegetables online bhopal, farm fresh produce bhopal, subziquick",
     canonicalBase: "https://subziquick.in",
@@ -114,7 +114,7 @@ export default function ManageSEOPage() {
       metaTitle: prod.metaTitle || `${prod.name} (₹${prod.price}/${prod.unit || "kg"}) | SubziQuick Bhopal`,
       metaDescription:
         prod.metaDescription ||
-        `Order farm fresh ${prod.name} online in Bhopal at wholesale farm rates. 100% ozone-washed with same-day home delivery across Bhopal.`,
+        `Order farm fresh ${prod.name} online in Bhopal at wholesale farm rates. 100% handpicked & graded fresh with same-day home delivery across Bhopal.`,
       metaKeywords: prod.metaKeywords || `${prod.name.toLowerCase()}, ${prod.name.toLowerCase()} delivery bhopal, fresh vegetables bhopal`,
       focusKeyword: prod.focusKeyword || `${prod.name.toLowerCase()} bhopal`,
       canonicalUrl: prod.canonicalUrl || `https://subziquick.in/product/${prod._id}`,
@@ -132,7 +132,7 @@ export default function ManageSEOPage() {
     const smartTitle = `${rawName} (${priceStr}) | Farm Fresh Bhopal - SubziQuick`;
     const smartDesc = `Buy farm-fresh ${cleanName}${
       hindiName ? ` (${hindiName})` : ""
-    } online in Bhopal at direct farm wholesale rates. 100% ozone-washed, pesticide-safe. Same-day delivery across Bhopal on SubziQuick.`;
+    } online in Bhopal at direct farm wholesale rates. 100% handpicked, pesticide-safe. Same-day delivery across Bhopal on SubziQuick.`;
     
     const smartKeywords = [
       cleanName.toLowerCase(),
@@ -396,7 +396,7 @@ export default function ManageSEOPage() {
             <div className="bg-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-gray-200/90 shadow-2xs flex items-center justify-between">
               <div className="min-w-0">
                 <span className="text-[10px] sm:text-[11px] font-bold text-gray-400 uppercase tracking-wider block truncate">
-                  Bhopal Hub
+                  Bhopal Coverage
                 </span>
                 <span className="text-[11px] sm:text-xs font-black text-gray-800 mt-0.5 block truncate">
                   19 Localities
@@ -614,7 +614,7 @@ export default function ManageSEOPage() {
                     {/* Meta Description Snippet */}
                     <p className="text-[11.5px] sm:text-xs md:text-[13px] text-gray-600 leading-relaxed line-clamp-3 sm:line-clamp-2 break-words">
                       {productForm.metaDescription ||
-                        `Order farm-fresh ${productForm.name} online in Bhopal at direct farm wholesale rates. 100% ozone-washed, pesticide-safe with same-day doorstep delivery.`}
+                        `Order farm-fresh ${productForm.name} online in Bhopal at direct farm wholesale rates. 100% handpicked, pesticide-safe with same-day doorstep delivery.`}
                     </p>
                   </div>
 
