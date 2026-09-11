@@ -35,7 +35,78 @@ export default function OrderInvoiceModal({
   if (!isOpen || !order) return null;
 
   const handlePrint = () => {
-    window.print();
+    const printContent = invoiceRef.current;
+    if (!printContent) {
+      window.print();
+      return;
+    }
+
+    try {
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "fixed";
+      iframe.style.right = "0";
+      iframe.style.bottom = "0";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "0";
+      document.body.appendChild(iframe);
+
+      const doc = iframe.contentWindow?.document;
+      if (!doc) {
+        window.print();
+        return;
+      }
+
+      let stylesHtml = "";
+      document.querySelectorAll("style, link[rel='stylesheet']").forEach((node) => {
+        stylesHtml += node.outerHTML;
+      });
+
+      doc.open();
+      doc.write(`
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>Receipt_${invoiceNumber}</title>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            ${stylesHtml}
+            <style>
+              @page {
+                size: A4;
+                margin: 10mm;
+              }
+              body {
+                background: #ffffff !important;
+                color: #111827 !important;
+                margin: 0 !important;
+                padding: 16px !important;
+                font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+              }
+            </style>
+          </head>
+          <body>
+            <div>${printContent.innerHTML}</div>
+          </body>
+        </html>
+      `);
+      doc.close();
+
+      setTimeout(() => {
+        iframe.contentWindow?.focus();
+        iframe.contentWindow?.print();
+        setTimeout(() => {
+          if (document.body.contains(iframe)) {
+            document.body.removeChild(iframe);
+          }
+        }, 1500);
+      }, 300);
+    } catch (err) {
+      console.error("Print iframe fallback to window.print", err);
+      window.print();
+    }
   };
 
   const orderShortId = String(order._id).slice(-6).toUpperCase();

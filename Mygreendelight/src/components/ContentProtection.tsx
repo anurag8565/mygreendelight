@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect } from "react";
 
@@ -43,11 +43,6 @@ export default function ContentProtection() {
         return false;
       }
 
-      // Ctrl + P (Print webpage to PDF)
-      if (isCtrlOrCmd && (e.key === "p" || e.key === "P" || e.keyCode === 80)) {
-        e.preventDefault();
-        return false;
-      }
 
       // Ctrl + U (View Page Source)
       if (isCtrlOrCmd && (e.key === "u" || e.key === "U" || e.keyCode === 85)) {

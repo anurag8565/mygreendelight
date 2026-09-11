@@ -46,11 +46,29 @@ input, textarea, [contenteditable="true"] {
   user-select: text !important;
 }
 
-/* 🖨️ Disable Print Screen / Save as PDF */
+/* 🖨️ Clean Printable Documents (Invoices, Receipts, Dispatch Slips) */
 @media print {
+  *, *::before, *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
   html, body {
+    background: #ffffff !important;
+    color: #111827 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  /* Hide navigation, sidebar, and non-printable elements */
+  nav,
+  header:not(#printable-invoice header),
+  footer,
+  aside,
+  .print\:hidden {
     display: none !important;
-    visibility: hidden !important;
   }
 }
 
