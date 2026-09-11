@@ -207,26 +207,6 @@ export default function UserProfileHub() {
                 </div>
               </div>
             </div>
-
-            {/* Quick Actions (Wallet & VIP Pass) */}
-            <div className="flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-end mt-2 sm:mt-0 pt-3 sm:pt-0 border-t sm:border-t-0 border-gray-100">
-              <Link
-                href="/user/wallet"
-                className="flex items-center gap-1.5 bg-[#f8f9fa] hover:bg-emerald-50 text-gray-800 hover:text-[#0c831f] border border-gray-200/80 hover:border-emerald-300 px-3 py-2 rounded-xl text-xs font-bold transition shadow-2xs group"
-              >
-                <div className="w-2 h-2 rounded-full bg-[#0c831f]" />
-                <span>Wallet</span>
-                <ChevronRight size={13} className="text-gray-400 group-hover:translate-x-0.5 transition-transform" />
-              </Link>
-
-              <Link
-                href="/user/vip-pass"
-                className="flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-3 py-2 rounded-xl text-xs font-black transition shadow-xs group"
-              >
-                <Sparkles size={12} className="text-amber-200" />
-                <span>VIP Pass</span>
-              </Link>
-            </div>
           </div>
         </motion.div>
 
