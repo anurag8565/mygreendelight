@@ -120,15 +120,11 @@ export default function FilteredProduceSection({
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 sm:mb-5">
           <div className="min-w-0">
-            <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-2">
               <Leaf size={20} className="text-[#0c831f] shrink-0" />
               <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
                 Fresh Farm Vegetables & Fruits
               </h2>
-              <span className="bg-emerald-50 text-[#0c831f] border border-emerald-200/90 text-[10px] sm:text-[11px] font-black px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">
-                <CheckCircle2 size={11} className="text-[#0c831f]" />
-                <span>{filteredList.length} Items</span>
-              </span>
             </div>
           </div>
 
