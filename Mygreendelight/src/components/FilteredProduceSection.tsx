@@ -130,9 +130,6 @@ export default function FilteredProduceSection({
                 <span>{filteredList.length} Items</span>
               </span>
             </div>
-            <p className="text-[11px] sm:text-xs text-gray-500 font-medium mt-1 leading-snug">
-              5:00 AM Direct Mandi Harvest • 100% Handpicked Fresh • 10-15 Min Express Delivery in Bhopal
-            </p>
           </div>
 
           {/* Controls: Grid/List Toggle & View All */}
