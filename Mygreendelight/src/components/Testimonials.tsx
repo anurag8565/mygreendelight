@@ -110,8 +110,10 @@ export const DEFAULT_GOOGLE_REVIEWS = [
 
 export default function Testimonials({
   initialTestimonials = [],
+  initialGoogleSettings = null,
 }: {
   initialTestimonials?: any[];
+  initialGoogleSettings?: any;
 }) {
   const sanitizeList = (list: any[]) => {
     if (!list || list.length === 0) return DEFAULT_GOOGLE_REVIEWS;
@@ -129,6 +131,14 @@ export default function Testimonials({
     sanitizeList(initialTestimonials)
   );
 
+  const [googleSettings, setGoogleSettings] = useState({
+    googleRating: initialGoogleSettings?.googleRating ?? 4.9,
+    googleReviewsCount: initialGoogleSettings?.googleReviewsCount || "50+ Google Reviews",
+    googleReviewUrl: initialGoogleSettings?.googleReviewUrl || GOOGLE_PROFILE_URL,
+    showGoogleRatingPill: initialGoogleSettings?.showGoogleRatingPill !== false,
+    googleReviewsHeading: initialGoogleSettings?.googleReviewsHeading || "Customer Reviews on Google",
+  });
+
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // Review Modal State
@@ -145,8 +155,17 @@ export default function Testimonials({
   const fetchLiveTestimonials = async () => {
     try {
       const res = await axios.get("/api/testimonials");
-      if (res.data?.success && res.data.testimonials?.length > 0) {
-        setTestimonials(sanitizeList(res.data.testimonials));
+      if (res.data?.success) {
+        if (res.data.testimonials?.length > 0) {
+          setTestimonials(sanitizeList(res.data.testimonials));
+        }
+        setGoogleSettings({
+          googleRating: res.data.googleRating ?? 4.9,
+          googleReviewsCount: res.data.googleReviewsCount || "50+ Google Reviews",
+          googleReviewUrl: res.data.googleReviewUrl || GOOGLE_PROFILE_URL,
+          showGoogleRatingPill: res.data.showGoogleRatingPill !== false,
+          googleReviewsHeading: res.data.googleReviewsHeading || "Customer Reviews on Google",
+        });
       }
     } catch (e) {
       console.error(e);
@@ -215,24 +234,28 @@ export default function Testimonials({
         {/* Section Header: Google My Business Focused */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5 sm:mb-7">
           <div>
-            {/* Google Rating Pill */}
-            <div className="inline-flex items-center gap-2 bg-white border border-gray-200/90 px-3 py-1 rounded-full shadow-2xs mb-2">
-              <GoogleGIcon className="w-4 h-4 shrink-0" />
-              <div className="flex items-center gap-1 text-xs">
-                <span className="font-black text-gray-900">4.9</span>
-                <div className="flex items-center text-amber-400">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={12} className="fill-amber-400 text-amber-400" />
-                  ))}
+            {/* Google Rating Pill (Controllable from Admin Panel) */}
+            {googleSettings.showGoogleRatingPill && (
+              <div className="inline-flex items-center gap-2 bg-white border border-gray-200/90 px-3 py-1 rounded-full shadow-2xs mb-2">
+                <GoogleGIcon className="w-4 h-4 shrink-0" />
+                <div className="flex items-center gap-1 text-xs">
+                  <span className="font-black text-gray-900">
+                    {Number(googleSettings.googleRating || 4.9).toFixed(1)}
+                  </span>
+                  <div className="flex items-center text-amber-400">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} size={12} className="fill-amber-400 text-amber-400" />
+                    ))}
+                  </div>
+                  <span className="text-[11px] text-gray-500 font-medium ml-0.5">
+                    {googleSettings.googleReviewsCount || "on Google Reviews"}
+                  </span>
                 </div>
-                <span className="text-[11px] text-gray-500 font-medium ml-0.5">
-                  on Google Reviews
-                </span>
               </div>
-            </div>
+            )}
 
             <h2 className="text-lg sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
-              Customer Reviews on Google
+              {googleSettings.googleReviewsHeading || "Customer Reviews on Google"}
             </h2>
             <p className="text-[11px] sm:text-xs text-gray-500 font-medium mt-0.5">
               100% verified farm-to-table feedback from Bhopal residents
@@ -242,7 +265,7 @@ export default function Testimonials({
           {/* Action CTAs: Review on Google + Write on Website */}
           <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
             <a
-              href={GOOGLE_PROFILE_URL}
+              href={googleSettings.googleReviewUrl || GOOGLE_PROFILE_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-white hover:bg-gray-50 text-gray-900 border border-gray-300 px-3.5 sm:px-4 py-2 rounded-full font-black text-xs flex items-center gap-2 shadow-2xs transition active:scale-95"
@@ -318,7 +341,7 @@ export default function Testimonials({
                       {/* Source Badge (Google vs Verified Customer) */}
                       {isGoogleSource ? (
                         <a
-                          href={GOOGLE_PROFILE_URL}
+                          href={googleSettings.googleReviewUrl || GOOGLE_PROFILE_URL}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-1 bg-white hover:bg-blue-50 text-gray-700 hover:text-blue-700 border border-gray-200 px-2 py-0.5 rounded-full text-[10px] font-bold shadow-2xs shrink-0 transition"
@@ -421,7 +444,7 @@ export default function Testimonials({
                     Aap apna review hamare official Google Business Profile par bhi share kar sakte hain:
                   </p>
                   <a
-                    href={GOOGLE_PROFILE_URL}
+                    href={googleSettings.googleReviewUrl || GOOGLE_PROFILE_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 bg-[#0f8646] text-white px-4 py-2 rounded-xl text-xs font-black shadow-sm hover:bg-[#0c6a38] transition"

@@ -1,19 +1,32 @@
 import connectDb from "@/lib/db";
 import Testimonial from "@/model/testimonial.model";
+import Setting from "@/model/setting.model";
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 
 export async function GET(req: Request) {
   try {
     await connectDb();
-    const testimonials = await Testimonial.find({
-      status: "approved",
-      comment: { $nin: ["yummy", "bad rice", "test", ""] },
-    })
-      .sort({ createdAt: -1 })
-      .limit(25);
+    const [testimonials, setting] = await Promise.all([
+      Testimonial.find({
+        status: "approved",
+        comment: { $nin: ["yummy", "bad rice", "test", ""] },
+      })
+        .sort({ createdAt: -1 })
+        .limit(25)
+        .lean(),
+      Setting.findOne({ key: "store_delivery_settings" }).lean(),
+    ]);
 
-    return NextResponse.json({ success: true, testimonials });
+    return NextResponse.json({
+      success: true,
+      testimonials,
+      googleRating: setting?.googleRating ?? 4.9,
+      googleReviewsCount: setting?.googleReviewsCount || "50+ Google Reviews",
+      googleReviewUrl: setting?.googleReviewUrl || "https://share.google/YAXXJGqvygILNyVNr",
+      showGoogleRatingPill: setting?.showGoogleRatingPill !== false,
+      googleReviewsHeading: setting?.googleReviewsHeading || "Customer Reviews on Google",
+    });
   } catch (error) {
     console.error("Testimonial GET Error:", error);
     return NextResponse.json({ success: false, message: "Server error" }, { status: 500 });

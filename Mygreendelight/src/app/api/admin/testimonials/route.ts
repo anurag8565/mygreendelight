@@ -1,5 +1,6 @@
 import connectDb from "@/lib/db";
 import Testimonial from "@/model/testimonial.model";
+import Setting from "@/model/setting.model";
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 
@@ -11,8 +12,22 @@ export async function GET(req: Request) {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 403 });
     }
 
-    const testimonials = await Testimonial.find().sort({ createdAt: -1 });
-    return NextResponse.json({ success: true, testimonials });
+    const [testimonials, setting] = await Promise.all([
+      Testimonial.find().sort({ createdAt: -1 }),
+      Setting.findOne({ key: "store_delivery_settings" }).lean(),
+    ]);
+
+    return NextResponse.json({
+      success: true,
+      testimonials,
+      googleSettings: {
+        googleRating: setting?.googleRating ?? 4.9,
+        googleReviewsCount: setting?.googleReviewsCount || "50+ Google Reviews",
+        googleReviewUrl: setting?.googleReviewUrl || "https://share.google/YAXXJGqvygILNyVNr",
+        showGoogleRatingPill: setting?.showGoogleRatingPill !== false,
+        googleReviewsHeading: setting?.googleReviewsHeading || "Customer Reviews on Google",
+      },
+    });
   } catch (error) {
     console.error("Admin Testimonial GET Error:", error);
     return NextResponse.json({ success: false, message: "Server error" }, { status: 500 });
@@ -29,6 +44,29 @@ export async function POST(req: Request) {
 
     const body = await req.json();
     const { action, name, comment, rating, location, tag, status, source, timeAgo } = body;
+
+    // Action: Update Google Rating & Display Settings
+    if (action === "update_google_settings") {
+      const { googleRating, googleReviewsCount, googleReviewUrl, showGoogleRatingPill, googleReviewsHeading } = body;
+      const updatedSetting = await Setting.findOneAndUpdate(
+        { key: "store_delivery_settings" },
+        {
+          $set: {
+            googleRating: Number(googleRating) >= 0 ? Number(googleRating) : 4.9,
+            googleReviewsCount: googleReviewsCount || "50+ Google Reviews",
+            googleReviewUrl: googleReviewUrl || "https://share.google/YAXXJGqvygILNyVNr",
+            showGoogleRatingPill: Boolean(showGoogleRatingPill),
+            googleReviewsHeading: googleReviewsHeading || "Customer Reviews on Google",
+          },
+        },
+        { upsert: true, new: true }
+      );
+      return NextResponse.json({
+        success: true,
+        message: "Google Review settings updated successfully!",
+        setting: updatedSetting,
+      });
+    }
 
     // Action: Seed verified Bhopal reviews
     if (action === "seed_bhopal") {

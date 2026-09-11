@@ -8,6 +8,11 @@ export interface ISetting extends Document {
   minOrderAmount: number;
   expressDeliveryMins: string;
   deliveryNotice?: string;
+  googleRating: number;
+  googleReviewsCount: string;
+  googleReviewUrl: string;
+  showGoogleRatingPill: boolean;
+  googleReviewsHeading: string;
   updatedAt: Date;
 }
 
@@ -45,6 +50,26 @@ const SettingSchema = new Schema<ISetting>(
     deliveryNotice: {
       type: String,
       default: "",
+    },
+    googleRating: {
+      type: Number,
+      default: 4.9,
+    },
+    googleReviewsCount: {
+      type: String,
+      default: "50+ Google Reviews",
+    },
+    googleReviewUrl: {
+      type: String,
+      default: "https://share.google/YAXXJGqvygILNyVNr",
+    },
+    showGoogleRatingPill: {
+      type: Boolean,
+      default: true,
+    },
+    googleReviewsHeading: {
+      type: String,
+      default: "Customer Reviews on Google",
     },
   },
   {

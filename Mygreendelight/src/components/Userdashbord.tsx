@@ -18,6 +18,7 @@ import { RotateCcw } from 'lucide-react'
 
 import Banner from '@/model/banner.model'
 import Testimonial from '@/model/testimonial.model'
+import Setting from '@/model/setting.model'
 import { auth } from '@/auth'
 import Order from '@/model/order'
 
@@ -37,6 +38,7 @@ export default async function Userdashbord() {
   let testimonials: any[] = [];
   let orderAgain: any[] = [];
   let comboBundles: any[] = [];
+  let storeSetting: any = null;
 
   try {
     await connectDb();
@@ -73,6 +75,7 @@ export default async function Userdashbord() {
     }
 
     const comboBundlesPromise = ComboBundle.find({ isActive: true }).lean().catch(() => []);
+    const settingPromise = Setting.findOne({ key: "store_delivery_settings" }).lean().catch(() => null);
 
     const results = await Promise.all([
       newGroceriesPromise.catch(() => []),
@@ -83,6 +86,7 @@ export default async function Userdashbord() {
       testimonialsPromise.catch(() => []),
       orderAgainGroceriesPromise,
       comboBundlesPromise,
+      settingPromise,
     ]);
 
     newGroceries = results[0] || [];
@@ -93,6 +97,7 @@ export default async function Userdashbord() {
     testimonials = results[5] || [];
     orderAgain = results[6] || [];
     comboBundles = results[7] || [];
+    storeSetting = results[8] || null;
   } catch (err) {
     console.error("Userdashbord data fetch error:", err);
   }
@@ -105,6 +110,7 @@ export default async function Userdashbord() {
   const plainTestimonials = JSON.parse(JSON.stringify(testimonials || []));
   const plainOrderAgain = JSON.parse(JSON.stringify(orderAgain || []));
   const plainCombos = JSON.parse(JSON.stringify(comboBundles || []));
+  const plainGoogleSettings = storeSetting ? JSON.parse(JSON.stringify(storeSetting)) : null;
 
   return (
     <div className="bg-white w-full max-w-full overflow-x-clip font-sans">
@@ -158,7 +164,10 @@ export default async function Userdashbord() {
       )}
 
       {/* 10. Tone 1: Customer Testimonials & Reviews (Pure White) */}
-      <Testimonials initialTestimonials={plainTestimonials} />
+      <Testimonials
+        initialTestimonials={plainTestimonials}
+        initialGoogleSettings={plainGoogleSettings}
+      />
 
       {/* 11. Tone 2: Farm to Fork Freshness Promise & Trust Guarantee (Soft Luxury Gray #f8f9fa) */}
       <FarmFreshPromise />

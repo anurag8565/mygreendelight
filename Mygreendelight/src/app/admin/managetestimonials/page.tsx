@@ -37,6 +37,15 @@ export default function ManageTestimonials() {
   });
   const [isAdding, setIsAdding] = useState(false);
 
+  const [googleSettings, setGoogleSettings] = useState({
+    googleRating: 4.9,
+    googleReviewsCount: "50+ Google Reviews",
+    googleReviewUrl: GOOGLE_PROFILE_URL,
+    showGoogleRatingPill: true,
+    googleReviewsHeading: "Customer Reviews on Google",
+  });
+  const [savingSettings, setSavingSettings] = useState(false);
+
   const fetchTestimonials = async () => {
     setLoading(true);
     try {
@@ -45,11 +54,32 @@ export default function ManageTestimonials() {
       });
       if (res.data.success) {
         setTestimonials(res.data.testimonials || []);
+        if (res.data.googleSettings) {
+          setGoogleSettings(res.data.googleSettings);
+        }
       }
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSaveGoogleSettings = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSavingSettings(true);
+    try {
+      const res = await axios.post("/api/admin/testimonials", {
+        action: "update_google_settings",
+        ...googleSettings,
+      });
+      if (res.data.success) {
+        alert("🎉 Google Review settings updated successfully!");
+      }
+    } catch (err) {
+      alert("Failed to update Google settings");
+    } finally {
+      setSavingSettings(false);
     }
   };
 
@@ -215,6 +245,133 @@ export default function ManageTestimonials() {
 
           {/* Content Body */}
           <div className="p-3.5 sm:p-6 lg:p-8 space-y-6 flex-1">
+            {/* Google Rating & Badge Command Center */}
+            <div className="bg-white rounded-3xl p-5 sm:p-6 border border-gray-200/90 shadow-2xs">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-gray-100">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-10 h-10 rounded-2xl bg-blue-50 border border-blue-200 flex items-center justify-center shrink-0">
+                    <GoogleGIcon className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm sm:text-base font-black text-gray-900">
+                      Google Reviews & Rating Command
+                    </h3>
+                    <p className="text-[11px] text-gray-500 font-medium">
+                      Control the live rating pill, review count, section heading and Google Maps link
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <label className="flex items-center gap-2 cursor-pointer bg-gray-50 hover:bg-gray-100 px-3 py-1.5 rounded-xl border border-gray-200 text-xs font-bold text-gray-700 select-none">
+                    <input
+                      type="checkbox"
+                      checked={googleSettings.showGoogleRatingPill}
+                      onChange={(e) =>
+                        setGoogleSettings({
+                          ...googleSettings,
+                          showGoogleRatingPill: e.target.checked,
+                        })
+                      }
+                      className="w-4 h-4 text-[#0f8646] rounded focus:ring-0 cursor-pointer"
+                    />
+                    <span>Show Rating Pill on Homepage</span>
+                  </label>
+                </div>
+              </div>
+
+              <form onSubmit={handleSaveGoogleSettings} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 text-xs font-bold">
+                <div>
+                  <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
+                    Google Rating (Number)
+                  </label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    min="1"
+                    max="5"
+                    value={googleSettings.googleRating}
+                    onChange={(e) =>
+                      setGoogleSettings({
+                        ...googleSettings,
+                        googleRating: parseFloat(e.target.value) || 5,
+                      })
+                    }
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-black text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
+                    Review Count Text
+                  </label>
+                  <input
+                    type="text"
+                    value={googleSettings.googleReviewsCount}
+                    onChange={(e) =>
+                      setGoogleSettings({
+                        ...googleSettings,
+                        googleReviewsCount: e.target.value,
+                      })
+                    }
+                    placeholder="e.g. on Google Reviews / 50+ reviews"
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
+                    Section Heading
+                  </label>
+                  <input
+                    type="text"
+                    value={googleSettings.googleReviewsHeading}
+                    onChange={(e) =>
+                      setGoogleSettings({
+                        ...googleSettings,
+                        googleReviewsHeading: e.target.value,
+                      })
+                    }
+                    placeholder="e.g. Customer Reviews on Google"
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
+                    Google Maps Share URL
+                  </label>
+                  <input
+                    type="text"
+                    value={googleSettings.googleReviewUrl}
+                    onChange={(e) =>
+                      setGoogleSettings({
+                        ...googleSettings,
+                        googleReviewUrl: e.target.value,
+                      })
+                    }
+                    placeholder="https://share.google/..."
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-mono text-[11px]"
+                  />
+                </div>
+
+                <div className="sm:col-span-2 lg:col-span-4 flex items-center justify-between pt-2 border-t border-gray-100 flex-wrap gap-2">
+                  <span className="text-[11px] text-gray-500 font-medium">
+                    {googleSettings.showGoogleRatingPill
+                      ? `🟢 Pill Status: Active on Homepage ("${googleSettings.googleRating} ★★★★★ ${googleSettings.googleReviewsCount}")`
+                      : "⚪ Pill Status: Currently HIDDEN on Homepage"}
+                  </span>
+                  <button
+                    type="submit"
+                    disabled={savingSettings}
+                    className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2.5 rounded-xl font-black text-xs transition shadow-sm cursor-pointer disabled:opacity-50"
+                  >
+                    {savingSettings ? "Saving Settings..." : "Save Google Settings"}
+                  </button>
+                </div>
+              </form>
+            </div>
+
             {loading ? (
               <div className="py-24 flex flex-col items-center justify-center">
                 <Loader2 size={36} className="animate-spin text-[#0f8646] mb-3" />
