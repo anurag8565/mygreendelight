@@ -22,42 +22,42 @@ export default function Hero({ banners = [] }: HeroProps) {
   const defaultSlides = [
     {
       _id: "s1",
-      badge: "🌿 Sunrise Farm Harvest • 10-15 Min Express",
-      title: "Sunrise Harvested Vegetables, Farm-to-Table",
-      subtitle: "Handpicked daily at 5:00 AM from verified local MP kisan farms. Cleaned, graded, and delivered fresh in 10-15 minutes.",
-      btnText: "Explore Fresh Harvest",
+      badge: "10-15 Min Express Delivery in Bhopal",
+      title: "Online Fresh Vegetable Delivery in Bhopal",
+      subtitle: "5:00 AM Sunrise Mandi harvest, handpicked fresh, pesticide-safe & wholesale direct farm rates.",
+      btnText: "Order Fresh Vegetables",
       link: "/shop?category=Vegetables",
       image: "/banners/veggies_clean_4k.jpg",
-      bgGradient: "from-[#052312]/95 via-[#0c3e21]/85 to-transparent/30",
+      bgGradient: "from-[#032010]/95 via-[#064e3b]/85 to-transparent/30",
       accentColor: "#10b981",
       offerPill: "FLAT ₹50 OFF • CODE: FIRST50",
-      floatingStat: "100% Hand-Graded Fresh",
+      floatingStat: "100% Handpicked Fresh",
     },
     {
       _id: "s2",
-      badge: "🍎 Naturally Sweet & Ripe • Carbide Free",
-      title: "Naturally Sweet & Juicy Seasonal Fruits",
-      subtitle: "Ethically grown, sun-ripened orchard fruits. Pure natural goodness delivered fresh to your doorstep in Bhopal.",
-      btnText: "Explore Fresh Fruits",
+      badge: "100% Naturally Ripe • Bhopal Same Day",
+      title: "Fresh Seasonal Fruits Home Delivery in Bhopal",
+      subtitle: "Sweet Apples, Fresh Bananas, Nagpur Oranges, Mangoes & Pomegranates delivered in 15 mins.",
+      btnText: "Buy Fresh Fruits Online",
       link: "/shop?category=Fruits",
       image: "/banners/fruits_clean_4k.jpg",
-      bgGradient: "from-[#351404]/95 via-[#67240c]/85 to-transparent/30",
+      bgGradient: "from-[#381303]/95 via-[#7c2d12]/85 to-transparent/30",
       accentColor: "#f59e0b",
-      offerPill: "WHOLESALE FARM RATES",
-      floatingStat: "Naturally Sweet & Crisp",
+      offerPill: "BEST WHOLESALE PRICE",
+      floatingStat: "Naturally Sweet & Ripe",
     },
     {
       _id: "s3",
-      badge: "🥬 Hydroponic Greens • Everyday Wellness",
-      title: "Crisp Hydroponic Greens & Exotic Salads",
-      subtitle: "Hass Avocados, Broccoli, Romaine Lettuce & Herbs — nutrient-rich farm greens for mindful, healthy living.",
-      btnText: "Explore Fresh Greens",
+      badge: "Hydroponic Greens • Pesticide Free",
+      title: "Hydroponic Salads & Exotic Vegetables in Bhopal",
+      subtitle: "Hass Avocados, Fresh Broccoli, Romaine Lettuce, Cherry Tomatoes, Button Mushrooms & Herbs.",
+      btnText: "Explore Fresh Exotics",
       link: "/shop?category=Exotics",
       image: "/banners/exotics_clean_4k.jpg",
-      bgGradient: "from-[#0c2e28]/95 via-[#114b43]/85 to-transparent/30",
+      bgGradient: "from-[#0f3a36]/95 via-[#115e59]/85 to-transparent/30",
       accentColor: "#2dd4bf",
-      offerPill: "100% FRESH GUARANTEE",
-      floatingStat: "Daily Morning Harvest",
+      offerPill: "100% PESTICIDE FREE",
+      floatingStat: "Daily Fresh Harvest",
     },
   ];
 
@@ -161,7 +161,7 @@ export default function Hero({ banners = [] }: HeroProps) {
   };
 
   return (
-    <section className="w-full bg-[#FAF8F5] pt-2.5 sm:pt-4 pb-2 sm:pb-3 font-sans">
+    <section className="w-full bg-gradient-to-b from-emerald-50/40 via-white to-white pt-2.5 sm:pt-4 pb-2 sm:pb-3 font-sans">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         
         {/* Main Luxury Hero Banner Card */}
@@ -170,7 +170,7 @@ export default function Hero({ banners = [] }: HeroProps) {
           onMouseLeave={() => setIsPaused(false)}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
-          className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_12px_36px_rgba(26,38,20,0.12)] hover:shadow-[0_18px_50px_rgba(20,83,45,0.25)] transition-shadow duration-500 group bg-[#111827] h-[260px] xs:h-[285px] sm:h-[340px] md:h-[390px] lg:h-[415px] border border-[#EAE4D9]/60"
+          className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.12)] hover:shadow-[0_16px_45px_rgba(15,134,70,0.22)] transition-shadow duration-500 group bg-gray-950 h-[260px] xs:h-[285px] sm:h-[340px] md:h-[390px] lg:h-[415px] border border-gray-100"
         >
           <AnimatePresence initial={false} custom={direction} mode="popLayout">
             <motion.div
@@ -259,9 +259,9 @@ export default function Hero({ banners = [] }: HeroProps) {
                 >
                   <Link href={slide.link || "/shop"}>
                     <motion.button
-                      whileHover={{ scale: 1.03 }}
+                      whileHover={{ scale: 1.04 }}
                       whileTap={{ scale: 0.95 }}
-                      className="bg-[#14532D] hover:bg-[#0f3e22] text-white px-5 sm:px-7 py-2.5 sm:py-3 rounded-full font-black text-xs sm:text-sm shadow-xl transition-all flex items-center gap-2 cursor-pointer border border-emerald-400/40 hover:shadow-emerald-950/60"
+                      className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4.5 xs:px-5 sm:px-7 py-2.5 sm:py-3 rounded-full font-black text-xs sm:text-sm shadow-xl transition-all flex items-center gap-2 cursor-pointer border border-emerald-300/40 hover:shadow-emerald-950/60"
                     >
                       <span>{slide.btnText || "Shop Fresh Produce"}</span>
                       <ArrowRight size={14} className="stroke-[2.5]" />
@@ -270,10 +270,10 @@ export default function Hero({ banners = [] }: HeroProps) {
 
                   <Link
                     href="/shop"
-                    className="hidden sm:inline-flex items-center gap-1.5 text-[#FAF8F5] hover:text-white bg-white/15 hover:bg-white/25 backdrop-blur-md px-4.5 py-2.5 rounded-full font-bold text-xs border border-white/25 transition"
+                    className="hidden sm:inline-flex items-center gap-1.5 text-white/90 hover:text-white bg-white/15 hover:bg-white/25 backdrop-blur-md px-4 py-2.5 rounded-full font-bold text-xs border border-white/25 transition"
                   >
-                    <Zap size={13} className="text-amber-300 fill-amber-300" />
-                    <span>Explore Fresh Catalog</span>
+                    <Zap size={13} className="text-amber-300" />
+                    <span>Explore 150+ Items</span>
                   </Link>
                 </motion.div>
               </div>

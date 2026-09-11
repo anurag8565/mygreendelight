@@ -553,24 +553,24 @@ export default function Nav({ user }: { user?: iUser | null }) {
 
   return (
     <>
-      <header className="w-full flex flex-col z-50 bg-[#FAF8F5]/95 backdrop-blur-md sticky top-0 shadow-[0_4px_20px_rgba(26,38,20,0.04)] border-b border-[#EAE4D9]/80">
-        {/* Tier 1: Top Bar (Deep Heritage Green) */}
-        <div className="bg-[#14532D] text-[#FAF8F5] py-1.5 px-4 md:px-8 text-xs font-medium flex justify-between items-center hidden sm:flex">
+      <header className="w-full flex flex-col z-50 bg-white sticky top-0 shadow-2xs">
+        {/* Tier 1: Top Bar (Green) */}
+        <div className="bg-[#0f8646] text-white py-1.5 px-4 md:px-8 text-xs font-medium flex justify-between items-center hidden sm:flex">
           <div className="flex items-center gap-2">
-            <Truck size={14} className="text-emerald-300" />
-            <span>FREE EXPRESS DELIVERY on orders above ₹199 in Bhopal</span>
+            <Truck size={14} />
+            <span>FREE DELIVERY on orders above ₹199 in Bhopal</span>
           </div>
           <div className="flex items-center gap-6">
-            <Link href="/user/myorder" className="cursor-pointer hover:text-emerald-200">Track Order</Link>
-            <Link href="/contact" className="cursor-pointer hover:text-emerald-200">Help & Support</Link>
+            <Link href="/user/myorder" className="cursor-pointer hover:text-green-200">Track Order</Link>
+            <Link href="/contact" className="cursor-pointer hover:text-green-200">Help & Support</Link>
             {activeUser?.role === "admin" && (
-              <Link href="/admin" className="cursor-pointer font-bold text-amber-300 hover:underline">Admin Center</Link>
+              <Link href="/admin" className="cursor-pointer font-bold text-yellow-300 hover:underline">Admin Center</Link>
             )}
           </div>
         </div>
 
         {/* Tier 2: Main Middle Bar */}
-        <div className="pt-3 pb-2 sm:py-4 px-3.5 sm:px-4 md:px-8 flex items-center justify-between border-b sm:border-b-0 border-[#EAE4D9]/60 gap-2 sm:gap-4 w-full max-w-full relative z-30">
+        <div className="pt-3 pb-2 sm:py-4 px-3.5 sm:px-4 md:px-8 flex items-center justify-between border-b sm:border-b-0 border-gray-100/80 gap-2 sm:gap-4 w-full max-w-full relative z-30">
           {/* Mobile Menu & Logo */}
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 sm:flex-initial">
             <button onClick={() => setmenuopen(true)} className="lg:hidden p-1 text-gray-700 hover:text-[#0f8646] shrink-0">
@@ -609,7 +609,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
 
             {/* Search Bar */}
             <div ref={searchRef} className="hidden md:flex flex-1 max-w-xl relative ml-4 lg:ml-8 h-11 z-[60]">
-              <form onSubmit={handleSearch} className="w-full h-full flex items-center bg-white border border-[#EAE4D9] rounded-xl overflow-hidden focus-within:border-[#14532D] focus-within:ring-2 focus-within:ring-[#14532D]/15 shadow-2xs transition-all">
+              <form onSubmit={handleSearch} className="w-full h-full flex items-center bg-gray-50 border border-gray-200 rounded-lg overflow-hidden focus-within:border-[#0f8646] focus-within:ring-1 focus-within:ring-[#0f8646] transition-all">
                 <input
                   type="text"
                   value={search}
@@ -617,8 +617,8 @@ export default function Nav({ user }: { user?: iUser | null }) {
                   onFocus={() => {
                     setIsSearchFocused(true);
                   }}
-                  placeholder="Search farm fresh vegetables, fruits, groceries..."
-                  className="w-full h-full bg-transparent outline-none px-4 text-sm text-[#1C1917] placeholder-[#A8A29E]"
+                  placeholder="Search for fresh vegetables, fruits, groceries..."
+                  className="w-full h-full bg-transparent outline-none px-4 text-sm text-gray-700"
                 />
 
                 {/* Voice Search Button */}
@@ -626,12 +626,12 @@ export default function Nav({ user }: { user?: iUser | null }) {
                   type="button"
                   onClick={handleVoiceSearch}
                   title="Search by voice in Hindi or English"
-                  className="p-2 mr-1.5 rounded-full transition-all flex items-center justify-center shrink-0 cursor-pointer text-[#78716C] hover:text-[#14532D] hover:bg-emerald-50"
+                  className="p-2 mr-1.5 rounded-full transition-all flex items-center justify-center shrink-0 cursor-pointer text-gray-400 hover:text-[#0f8646] hover:bg-green-50"
                 >
                   <Mic size={18} />
                 </button>
 
-                <button type="submit" className="bg-[#14532D] hover:bg-[#0f3e22] text-white px-6 font-bold transition-colors text-sm h-full shrink-0 cursor-pointer">
+                <button type="submit" className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-6 font-semibold transition-colors text-sm h-full shrink-0">
                   Search
                 </button>
               </form>
@@ -1378,18 +1378,18 @@ export default function Nav({ user }: { user?: iUser | null }) {
         </div>
 
         {/* Tier 3: Bottom Nav Bar (Desktop Only) */}
-        <div className="hidden lg:flex px-8 border-t border-[#EAE4D9]/80 items-center justify-center gap-8 h-12 bg-[#FAF8F5] relative">
+        <div className="hidden lg:flex px-8 border-b border-gray-100 items-center justify-center gap-8 h-12 bg-white relative">
           {/* Categories Dropdown */}
           <div className="absolute left-8 h-full group">
-            <div className="bg-[#14532D] text-white h-full px-6 flex items-center gap-3 cursor-pointer hover:bg-[#0f3e22] transition-colors rounded-t-xl font-bold text-sm shadow-xs">
+            <div className="bg-[#0f8646] text-white h-full px-6 flex items-center gap-3 cursor-pointer hover:bg-[#0c6a38] transition-colors rounded-t-md font-semibold text-sm">
               <Menu size={18} />
               All Categories
               <ChevronDown size={16} className="ml-4" />
             </div>
-            <div className="absolute top-full left-0 w-64 bg-white shadow-xl rounded-b-2xl border border-[#EAE4D9] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 flex flex-col py-2.5">
-               <Link href="/shop" className="px-4 py-2 text-sm text-[#292524] hover:text-[#14532D] hover:bg-[#FAF8F5] font-semibold">All Products</Link>
+            <div className="absolute top-full left-0 w-64 bg-white shadow-xl rounded-b-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 flex flex-col py-2">
+               <Link href="/shop" className="px-4 py-2 text-sm text-gray-700 hover:text-[#0f8646] hover:bg-green-50 font-medium">All Products</Link>
                {navCategories.map((cat: any) => (
-                 <Link key={cat._id} href={`/shop?category=${encodeURIComponent(cat.name)}`} className="px-4 py-2 text-sm text-[#292524] hover:text-[#14532D] hover:bg-[#FAF8F5] font-medium">
+                 <Link key={cat._id} href={`/shop?category=${encodeURIComponent(cat.name)}`} className="px-4 py-2 text-sm text-gray-700 hover:text-[#0f8646] hover:bg-green-50 font-medium">
                    {cat.name}
                  </Link>
                ))}
@@ -1397,11 +1397,11 @@ export default function Nav({ user }: { user?: iUser | null }) {
           </div>
 
           {/* Links */}
-          <nav className="flex items-center gap-8 text-sm font-bold pl-[240px]">
-            <Link href="/" className={`transition-colors ${pathname === "/" ? "text-[#14532D]" : "text-[#78716C] hover:text-[#14532D]"}`}>Home</Link>
-            <Link href="/shop" className={`transition-colors ${pathname === "/shop" ? "text-[#14532D]" : "text-[#78716C] hover:text-[#14532D]"}`}>Shop</Link>
-            <Link href="/about" className={`transition-colors ${pathname === "/about" ? "text-[#14532D]" : "text-[#78716C] hover:text-[#14532D]"}`}>About Us</Link>
-            <Link href="/contact" className={`transition-colors ${pathname === "/contact" ? "text-[#14532D]" : "text-[#78716C] hover:text-[#14532D]"}`}>Contact Us</Link>
+          <nav className="flex items-center gap-8 text-sm font-semibold pl-[240px]">
+            <Link href="/" className={`transition-colors ${pathname === "/" ? "text-[#0f8646] font-bold" : "text-gray-700 hover:text-[#0f8646]"}`}>Home</Link>
+            <Link href="/shop" className={`transition-colors ${pathname === "/shop" ? "text-[#0f8646] font-bold" : "text-gray-700 hover:text-[#0f8646]"}`}>Shop</Link>
+            <Link href="/about" className={`transition-colors ${pathname === "/about" ? "text-[#0f8646] font-bold" : "text-gray-700 hover:text-[#0f8646]"}`}>About Us</Link>
+            <Link href="/contact" className={`transition-colors ${pathname === "/contact" ? "text-[#0f8646] font-bold" : "text-gray-700 hover:text-[#0f8646]"}`}>Contact Us</Link>
           </nav>
         </div>
       </header>

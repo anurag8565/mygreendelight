@@ -72,7 +72,7 @@ export default function Groceryitemcard({
     <motion.div
       whileHover={{ y: -4 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className={`w-full bg-white rounded-2xl sm:rounded-3xl border border-[#EAE4D9] hover:border-[#14532D]/40 shadow-[0_4px_20px_rgba(26,38,20,0.04)] hover:shadow-[0_14px_32px_rgba(20,83,45,0.09)] transition-all duration-300 flex flex-col justify-between relative group font-sans ${
+      className={`w-full bg-white rounded-2xl sm:rounded-3xl border border-gray-100 hover:border-emerald-400/90 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_28px_rgba(12,131,31,0.1)] transition-all duration-300 flex flex-col justify-between relative group font-sans ${
         isList
           ? "flex-row max-w-full gap-4 p-3.5 min-h-[135px]"
           : "h-[320px] sm:h-[340px] p-2.5 sm:p-3"
@@ -81,7 +81,7 @@ export default function Groceryitemcard({
       {/* 1. TOP IMAGE BOX */}
       <Link
         href={`/product/${item._id}`}
-        className={`relative bg-[#F9F7F2] group-hover:bg-[#F3EFE6] transition-colors duration-300 rounded-xl sm:rounded-2xl flex items-center justify-center cursor-pointer overflow-hidden shrink-0 border border-[#EAE4D9]/60 ${
+        className={`relative bg-[#f8f9fa] group-hover:bg-emerald-50/30 transition-colors duration-300 rounded-xl sm:rounded-2xl flex items-center justify-center cursor-pointer overflow-hidden shrink-0 border border-gray-100/80 ${
           isList
             ? "w-[110px] h-[110px] sm:w-[130px] sm:h-[130px]"
             : "w-full h-[130px] sm:h-[145px]"
@@ -100,20 +100,20 @@ export default function Groceryitemcard({
         {/* Badges Container */}
         <div className="absolute top-2 left-2 flex flex-col gap-1 z-10">
           {item.isFeatured && (
-            <span className="bg-amber-600 text-white text-[8.5px] font-black px-2 py-0.5 rounded-full shadow-xs flex items-center gap-0.5 tracking-tight animate-pulse">
+            <span className="bg-amber-500 text-white text-[8.5px] font-black px-1.5 py-0.5 rounded-md shadow-xs flex items-center gap-0.5 tracking-tight animate-pulse">
               <span>⭐</span>
               <span>FEATURED</span>
             </span>
           )}
           {discountPercent > 0 && (
-            <span className="bg-[#14532D] text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-xs tracking-tight">
+            <span className="bg-[#0c831f] text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded-md shadow-xs">
               {discountPercent}% OFF
             </span>
           )}
         </div>
 
         {/* Fresh Farm Produce Tag */}
-        <span className="absolute bottom-1.5 left-2 bg-[#FAF8F5]/95 backdrop-blur-xs text-[#14532D] text-[8.5px] font-black px-2 py-0.5 rounded-full shadow-2xs flex items-center gap-0.5 border border-[#EAE4D9] group-hover:border-[#14532D]/40 transition-colors">
+        <span className="absolute bottom-1.5 left-2 bg-white/95 backdrop-blur-xs text-emerald-800 text-[8.5px] font-black px-1.5 py-0.5 rounded-md shadow-2xs flex items-center gap-0.5 border border-emerald-200/60 group-hover:border-emerald-400 group-hover:text-[#0c831f] transition-colors">
           <span className="text-[9px]">🌿</span>
           <span>FARM FRESH</span>
         </span>
@@ -173,7 +173,7 @@ export default function Groceryitemcard({
         <div>
           {/* TITLE (Strict 2-line clamp) */}
           <Link href={`/product/${item._id}`}>
-            <h3 className="text-xs sm:text-[13px] font-black text-[#1C1917] leading-snug line-clamp-2 h-[34px] sm:h-[36px] group-hover:text-[#14532D] transition-colors">
+            <h3 className="text-xs sm:text-[13px] font-bold text-gray-900 leading-snug line-clamp-2 h-[34px] sm:h-[36px] group-hover:text-[#0c831f] transition-colors">
               {item.name}
             </h3>
           </Link>
@@ -182,7 +182,7 @@ export default function Groceryitemcard({
           <div className="mt-1 min-h-[24px]">
             {item.variations && item.variations.length > 1 ? (
               <select
-                className="w-full text-[10px] font-semibold py-0.5 px-2 border border-[#EAE4D9] hover:border-emerald-300 rounded-lg outline-none focus:border-[#14532D] bg-[#FAF8F5] text-[#292524] h-[22px] cursor-pointer shadow-2xs transition-colors"
+                className="w-full text-[10px] font-semibold py-0.5 px-2 border border-gray-200 hover:border-emerald-300 rounded-lg outline-none focus:border-[#0c831f] bg-gray-50 text-gray-700 h-[22px] cursor-pointer shadow-2xs transition-colors"
                 value={selectedVariation?.weight || item.variations[0]?.weight}
                 onChange={(e) => {
                   const v = item.variations?.find((varItem) => varItem.weight === e.target.value);
@@ -196,7 +196,7 @@ export default function Groceryitemcard({
                 ))}
               </select>
             ) : (
-              <p className="text-[11px] text-[#78716C] font-semibold truncate h-[22px] flex items-center">
+              <p className="text-[11px] text-gray-400 font-medium truncate h-[22px] flex items-center">
                 {displayUnit}
               </p>
             )}
@@ -204,14 +204,14 @@ export default function Groceryitemcard({
 
           {/* PRICE ROW & SAVINGS */}
           <div className="flex items-center gap-1.5 mt-1 h-[20px] flex-wrap">
-            <span className="text-sm sm:text-base font-black text-[#1C1917] group-hover:text-[#14532D] transition-colors">
+            <span className="text-sm sm:text-base font-black text-gray-950 group-hover:text-[#0c831f] transition-colors">
               ₹{displayPrice}
             </span>
-            <span className="text-[11px] text-[#A8A29E] line-through font-normal">
+            <span className="text-[11px] text-gray-400 line-through font-normal">
               ₹{activeMRP}
             </span>
             {activeMRP > displayPrice && (
-              <span className="text-[9.5px] font-black text-[#14532D] bg-[#FAF8F5] border border-emerald-200/90 px-2 py-0.5 rounded-full ml-auto shadow-2xs">
+              <span className="text-[9.5px] font-black text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-1.5 py-0.2 rounded-md ml-auto">
                 Save ₹{activeMRP - displayPrice}
               </span>
             )}
@@ -224,7 +224,7 @@ export default function Groceryitemcard({
             <button
               type="button"
               onClick={() => setShowAlertModal(true)}
-              className="w-full h-[36px] rounded-xl flex items-center justify-center gap-1.5 font-bold text-[11px] transition-all bg-amber-50 text-amber-900 border border-amber-200 hover:bg-amber-100 shadow-2xs cursor-pointer active:scale-95"
+              className="w-full h-[36px] rounded-xl flex items-center justify-center gap-1.5 font-bold text-[11px] transition-all bg-amber-50 text-amber-800 border border-amber-200 hover:bg-amber-100 shadow-2xs cursor-pointer active:scale-95"
             >
               <Bell size={12} className="stroke-[2.5]" />
               <span>Notify Me</span>
@@ -254,13 +254,13 @@ export default function Groceryitemcard({
                   })
                 );
               }}
-              className="w-full h-[36px] rounded-xl flex items-center justify-center gap-1.5 font-black text-xs transition-all duration-200 border-2 border-[#14532D] cursor-pointer bg-[#FAF8F5] text-[#14532D] hover:bg-[#14532D] hover:text-white hover:shadow-[0_4px_14px_rgba(20,83,45,0.25)] shadow-2xs active:scale-95"
+              className="w-full h-[36px] rounded-xl flex items-center justify-center gap-1.5 font-black text-xs transition-all duration-200 border-2 border-[#0c831f] cursor-pointer bg-white text-[#0c831f] hover:bg-[#0c831f] hover:text-white hover:shadow-[0_4px_12px_rgba(12,131,31,0.25)] shadow-2xs active:scale-95"
             >
               <Plus size={14} className="stroke-[3]" />
               <span>ADD</span>
             </motion.button>
           ) : (
-            <div className="flex items-center justify-between bg-[#14532D] text-white rounded-xl overflow-hidden h-[36px] shadow-xs ring-2 ring-[#14532D]/20">
+            <div className="flex items-center justify-between bg-[#0c831f] text-white rounded-xl overflow-hidden h-[36px] shadow-xs ring-2 ring-[#0c831f]/20">
               <motion.button
                 whileTap={{ scale: 0.85 }}
                 type="button"
