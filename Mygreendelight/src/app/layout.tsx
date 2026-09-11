@@ -315,7 +315,7 @@ export default function RootLayout({
         "name": "Bhopal me online sabzi aur phal order kaise karein?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Bhopal me online taaza sabzi aur phal order karne ke liye SubziQuick website (subziquick.in) open karein. Apni pasand ki taaza sabziyan cart me add karein aur Cash on Delivery (COD) ya UPI se order place karein. 10-15 minute me Bagsewaniya central store se delivery aapke ghar pahunch jayegi."
+          "text": "Bhopal me online taaza sabzi aur phal order karne ke liye SubziQuick website (subziquick.in) open karein. Apni pasand ki taaza sabziyan cart me add karein aur Cash on Delivery (COD) ya UPI se order place karein. 10-15 minute me express delivery se taaza sabzi aapke ghar pahunch jayegi."
         }
       },
       {

@@ -146,7 +146,7 @@ export default function Registerform({ onBack }: RegisterformProps) {
               </div>
               <div>
                 <span className="font-bold text-xs text-white block leading-tight">10-15 Min Express Route</span>
-                <span className="text-[10.5px] text-emerald-200/70">From Bagsewaniya Central Hub</span>
+                <span className="text-[10.5px] text-emerald-200/70">Direct sunrise farm dispatch</span>
               </div>
             </div>
 

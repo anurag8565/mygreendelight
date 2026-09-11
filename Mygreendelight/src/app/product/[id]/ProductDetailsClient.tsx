@@ -587,7 +587,7 @@ export default function ProductDetailsClient({
               {openSection === "delivery" && (
                 <div className="px-3.5 pb-3.5 text-xs text-gray-600 leading-relaxed font-medium space-y-1.5">
                   <p>
-                    • <strong>Express Dispatch</strong>: Packed and dispatched within 10-15 minutes directly from SubziQuick Central Store Hub at Amrai, Bagsewaniya.
+                    • <strong>Express Dispatch</strong>: Packed and dispatched fresh within 10-15 minutes across Bhopal.
                   </p>
                   <p>
                     • <strong>Covered Localities</strong>: Arera Colony (E1-E8), Kolar Road, MP Nagar, Bawadiya Kalan, Katara Hills, Shahpura, Chunabhatti, Trilanga, Gulmohar, Hoshangabad Road, and all major Bhopal societies.

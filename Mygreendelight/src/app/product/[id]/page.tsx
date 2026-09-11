@@ -220,7 +220,7 @@ export default async function ProductPage(props: { params: Promise<{ id: string 
         name: `How fast can I get fresh ${product.name} delivered in Bhopal?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `SubziQuick delivers fresh ${product.name} across Bhopal (Arera Colony, Kolar Road, MP Nagar, Katara Hills, Bagsewaniya & beyond) in 10-15 minutes from our central store hub.`,
+          text: `SubziQuick delivers fresh ${product.name} across Bhopal (Arera Colony, Kolar Road, MP Nagar, Katara Hills, Bagsewaniya & beyond) in 10-15 minutes direct to your doorstep.`,
         },
       },
       {

@@ -505,7 +505,7 @@ export default function ContactPage() {
                 <div className="p-3.5 rounded-2xl bg-emerald-50/50 border border-emerald-200/80 flex items-start gap-3">
                   <MapPin size={18} className="text-[#0f8646] shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="text-xs font-black text-gray-900">SubziQuick Central Store</h4>
+                    <h4 className="text-xs font-black text-gray-900">SubziQuick Store & Dispatch</h4>
                     <p className="text-[11px] text-gray-600 mt-0.5 leading-relaxed">
                       Amrai, Bagsewaniya, Bhopal, Madhya Pradesh – 462043
                     </p>
