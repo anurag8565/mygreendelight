@@ -109,22 +109,22 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-8 lg:gap-10 items-start">
           
           {/* Column 1: Store Brand & Contact Center */}
-          <div className="md:col-span-5 lg:col-span-4 flex flex-col w-full">
-            <div className="mb-3">
+          <div className="md:col-span-5 lg:col-span-4 flex flex-col items-center sm:items-start text-center sm:text-left w-full">
+            <div className="mb-3 flex justify-center sm:justify-start w-full">
               <Logo variant="white" />
             </div>
 
-            <p className="text-xs sm:text-sm text-emerald-100/80 mb-5 leading-relaxed font-medium max-w-sm">
+            <p className="text-xs sm:text-sm text-emerald-100/80 mb-5 leading-relaxed font-medium max-w-sm mx-auto sm:mx-0">
               SubziQuick (Subzi Quick) is Bhopal&apos;s dedicated 10-15 min online fresh vegetable and fruit delivery service. Handpicked, farm-fresh produce direct to your kitchen.
             </p>
 
             {/* Store Address & Hours Bento Chips */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-w-md mb-4 w-full">
-              <div className="bg-white/5 hover:bg-white/[0.08] border border-white/10 rounded-2xl p-3 flex items-center gap-3 transition">
+            <div className="grid grid-cols-2 gap-2.5 max-w-md mb-4 w-full">
+              <div className="bg-white/5 hover:bg-white/[0.08] border border-white/10 rounded-2xl p-2.5 sm:p-3 flex items-center gap-2.5 sm:gap-3 transition">
                 <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center shrink-0 shadow-inner">
                   <MapPin size={15} />
                 </div>
-                <div className="min-w-0 flex-1">
+                <div className="min-w-0 flex-1 text-left">
                   <span className="text-[9px] font-black uppercase text-emerald-300 tracking-wider block">
                     Store Location
                   </span>
@@ -134,11 +134,11 @@ export default function Footer() {
                 </div>
               </div>
 
-              <div className="bg-white/5 hover:bg-white/[0.08] border border-white/10 rounded-2xl p-3 flex items-center gap-3 transition">
+              <div className="bg-white/5 hover:bg-white/[0.08] border border-white/10 rounded-2xl p-2.5 sm:p-3 flex items-center gap-2.5 sm:gap-3 transition">
                 <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center shrink-0 shadow-inner">
                   <Clock size={15} />
                 </div>
-                <div className="min-w-0 flex-1">
+                <div className="min-w-0 flex-1 text-left">
                   <span className="text-[9px] font-black uppercase text-amber-300 tracking-wider block">
                     Fast Dispatch
                   </span>
@@ -399,14 +399,14 @@ export default function Footer() {
         </div>
 
         {/* 3. Bhopal Express Delivery Localities Strip */}
-        <div className="border-t border-white/10 mt-8 pt-5 pb-2">
-          <div className="flex items-center gap-2 mb-2.5">
+        <div className="border-t border-white/10 mt-8 pt-6 pb-2">
+          <div className="flex items-center justify-center sm:justify-start gap-2 mb-3 text-center sm:text-left">
             <Truck size={14} className="text-emerald-400 shrink-0" />
             <span className="font-black text-[11px] text-emerald-300 uppercase tracking-wider">
               10-15 Min Express Delivery Localities Across Bhopal:
             </span>
           </div>
-          <div className="flex flex-wrap gap-1.5 sm:gap-2">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 sm:gap-2">
             {localities.map((loc, i) => (
               <span
                 key={i}
@@ -419,8 +419,8 @@ export default function Footer() {
         </div>
 
         {/* 4. Bottom Legal & Payment Badges */}
-        <div className="border-t border-white/10 mt-5 pt-4 flex flex-col sm:flex-row items-center justify-between text-xs text-emerald-200/70 gap-3 text-center sm:text-left">
-          <div className="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-3">
+        <div className="border-t border-white/10 mt-6 pt-5 flex flex-col sm:flex-row items-center justify-between text-xs text-emerald-200/70 gap-3.5 text-center sm:text-left">
+          <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1.5 sm:gap-3">
             <p className="text-[11px] font-medium text-emerald-100/80">
               © {currentYear} SubziQuick Bhopal • Farm Fresh Everyday
             </p>
@@ -431,16 +431,16 @@ export default function Footer() {
           </div>
 
           <div className="flex items-center justify-center gap-1.5 flex-wrap">
-            <span className="bg-white/10 px-2 py-0.5 rounded-md font-bold text-[10px] text-white">
+            <span className="bg-white/10 px-2.5 py-0.5 rounded-md font-bold text-[10px] text-white">
               UPI
             </span>
-            <span className="bg-white/10 px-2 py-0.5 rounded-md font-bold text-[10px] text-white">
+            <span className="bg-white/10 px-2.5 py-0.5 rounded-md font-bold text-[10px] text-white">
               Credit / Debit Cards
             </span>
-            <span className="bg-white/10 px-2 py-0.5 rounded-md font-bold text-[10px] text-white">
+            <span className="bg-white/10 px-2.5 py-0.5 rounded-md font-bold text-[10px] text-white">
               NetBanking
             </span>
-            <span className="bg-white/10 px-2 py-0.5 rounded-md font-bold text-[10px] text-white">
+            <span className="bg-white/10 px-2.5 py-0.5 rounded-md font-bold text-[10px] text-white">
               Cash on Delivery
             </span>
           </div>
