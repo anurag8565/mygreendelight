@@ -65,36 +65,36 @@ export default function DailyRewardWidget() {
   return (
     <div className="w-full py-4 sm:py-6 bg-white border-b border-gray-100 font-sans">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
-        <div className="bg-[#f8f9fa] rounded-2xl sm:rounded-3xl p-3.5 sm:p-4 border border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-2xs">
+        <div className="bg-[#f8f9fa] rounded-2xl sm:rounded-3xl p-3 sm:p-4 border border-gray-100 flex items-center justify-between gap-2.5 shadow-2xs">
           {/* Left: Icon & Text */}
-          <div className="flex items-center gap-3 w-full sm:w-auto">
-            <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0">
-              <Gift size={20} className="stroke-[2.5]" />
+          <div className="flex items-center gap-2.5 min-w-0 flex-1">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0">
+              <Gift size={18} className="stroke-[2.5]" />
             </div>
 
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-1.5">
-                <span className="bg-amber-50 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-200/60 inline-flex items-center gap-1">
-                  <Gift size={11} className="text-amber-700" />
+                <span className="bg-amber-50 text-amber-800 text-[9.5px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-200/60 inline-flex items-center gap-1">
+                  <Gift size={10} className="text-amber-700" />
                   <span>Daily Scratch Reward</span>
                 </span>
               </div>
 
-              <h3 className="text-gray-900 font-bold text-xs sm:text-sm mt-0.5">
+              <h3 className="text-gray-900 font-bold text-xs sm:text-sm mt-0.5 truncate">
                 {reward?.isScratched
                   ? `You won FLAT ₹${reward.discountAmount} OFF!`
-                  : "Scratch Today's Card & Win Instant Discount"}
+                  : "Scratch Today's Card & Win"}
               </h3>
             </div>
           </div>
 
           {/* Right: Action Button */}
-          <div className="flex items-center gap-2 w-full sm:w-auto justify-end shrink-0">
+          <div className="flex items-center gap-2 shrink-0">
             {reward?.isScratched ? (
               <button
                 type="button"
                 onClick={handleCopy}
-                className="bg-white hover:bg-gray-50 text-[#0c831f] border border-[#0c831f] px-3.5 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 transition cursor-pointer shadow-2xs"
+                className="bg-white hover:bg-gray-50 text-[#0c831f] border border-[#0c831f] px-2.5 sm:px-3.5 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 transition cursor-pointer shadow-2xs whitespace-nowrap"
               >
                 {copied ? <Check size={13} /> : <Copy size={13} />}
                 <span>{copied ? "Copied" : reward.couponCode}</span>
@@ -103,7 +103,7 @@ export default function DailyRewardWidget() {
               <button
                 type="button"
                 onClick={handleStartScratch}
-                className="bg-[#0c831f] hover:bg-[#096618] text-white px-4 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 transition shadow-xs cursor-pointer"
+                className="bg-[#0c831f] hover:bg-[#096618] text-white px-3 sm:px-4 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 transition shadow-xs cursor-pointer whitespace-nowrap"
               >
                 <Gift size={13} />
                 <span>Scratch Card</span>

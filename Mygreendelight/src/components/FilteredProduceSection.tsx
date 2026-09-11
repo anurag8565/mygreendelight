@@ -118,24 +118,24 @@ export default function FilteredProduceSection({
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 sm:mb-5">
-          <div className="min-w-0">
-            <div className="flex items-center gap-2">
-              <Leaf size={20} className="text-[#0c831f] shrink-0" />
-              <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
+        <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <Leaf size={18} className="text-[#0c831f] shrink-0 sm:w-5 sm:h-5" />
+              <h2 className="text-sm sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight truncate">
                 Fresh Farm Vegetables & Fruits
               </h2>
             </div>
           </div>
 
           {/* Controls: Grid/List Toggle & View All */}
-          <div className="flex items-center justify-between sm:justify-end gap-2.5 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
             {/* View Mode Switcher */}
-            <div className="flex items-center bg-white p-1 rounded-xl border border-gray-200/80 shadow-2xs">
+            <div className="flex items-center bg-white p-0.5 sm:p-1 rounded-xl border border-gray-200/80 shadow-2xs">
               <button
                 type="button"
                 onClick={() => setViewMode("grid")}
-                className={`px-2.5 py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1.5 text-xs font-black ${
+                className={`p-1 sm:px-2.5 sm:py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1 text-xs font-black ${
                   viewMode === "grid"
                     ? "bg-[#0c831f] text-white shadow-xs"
                     : "text-gray-500 hover:text-gray-800 hover:bg-gray-50"
@@ -144,12 +144,12 @@ export default function FilteredProduceSection({
                 aria-label="Grid View"
               >
                 <LayoutGrid size={14} />
-                <span className="hidden xs:inline">Grid</span>
+                <span className="hidden sm:inline">Grid</span>
               </button>
               <button
                 type="button"
                 onClick={() => setViewMode("list")}
-                className={`px-2.5 py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1.5 text-xs font-black ${
+                className={`p-1 sm:px-2.5 sm:py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1 text-xs font-black ${
                   viewMode === "list"
                     ? "bg-[#0c831f] text-white shadow-xs"
                     : "text-gray-500 hover:text-gray-800 hover:bg-gray-50"
@@ -158,7 +158,7 @@ export default function FilteredProduceSection({
                 aria-label="List View"
               >
                 <List size={14} />
-                <span className="hidden xs:inline">List</span>
+                <span className="hidden sm:inline">List</span>
               </button>
             </div>
 
@@ -171,11 +171,11 @@ export default function FilteredProduceSection({
                   ? "/shop?category=Fruits"
                   : "/shop?category=Exotics"
               }
-              className="bg-white hover:bg-emerald-50 text-[#0c831f] border border-emerald-200/80 hover:border-emerald-300 font-black text-xs px-3 py-1.5 rounded-xl flex items-center gap-1 transition shadow-2xs shrink-0 group"
+              className="bg-white hover:bg-emerald-50 text-[#0c831f] border border-emerald-200/80 hover:border-emerald-300 font-bold text-[11px] sm:text-xs px-2.5 sm:px-3 py-1.5 rounded-xl flex items-center gap-0.5 transition shadow-2xs shrink-0 group whitespace-nowrap"
             >
               <span>View All</span>
               <ChevronRight
-                size={14}
+                size={13}
                 className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]"
               />
             </Link>

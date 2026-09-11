@@ -66,23 +66,24 @@ export default function CombosSection({
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Section Header */}
         <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">
-          <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
-            <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight flex items-center gap-2">
-              <ShoppingBag size={20} className="text-[#0c831f]" />
-              <span>Fresh Produce Combos & Family Bundles</span>
+          <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0 flex-1">
+            <h2 className="text-xs sm:text-lg md:text-xl font-black text-gray-900 tracking-tight flex items-center gap-1.5 truncate">
+              <ShoppingBag size={17} className="text-[#0c831f] shrink-0 sm:w-5 sm:h-5" />
+              <span className="truncate">Fresh Produce Combos</span>
+              <span className="hidden xs:inline truncate">& Family Bundles</span>
             </h2>
-            <span className="bg-amber-50 text-amber-800 border border-amber-200/80 text-[10.5px] font-bold px-2.5 py-0.5 rounded-full">
-              Up to 25% Off Wholesale Rate
+            <span className="bg-amber-50 text-amber-800 border border-amber-200/80 text-[10px] sm:text-[10.5px] font-bold px-2 sm:px-2.5 py-0.5 rounded-full whitespace-nowrap shrink-0">
+              Up to 25% Off
             </span>
           </div>
 
           <Link
             href="/shop"
-            className="text-[#0c831f] hover:text-[#096618] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition"
+            className="text-[#0c831f] hover:text-[#096618] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition whitespace-nowrap shrink-0"
           >
             <span>See All</span>
             <ChevronRight
-              size={14}
+              size={13}
               className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]"
             />
           </Link>
