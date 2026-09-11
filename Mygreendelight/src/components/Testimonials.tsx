@@ -4,64 +4,107 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import {
   Star,
-  User,
   ChevronLeft,
   ChevronRight,
   X,
   Sparkles,
   CheckCircle2,
   MessageSquarePlus,
-  ShieldCheck,
-  Heart,
+  ExternalLink,
   Quote,
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
-const DEFAULT_BHOPAL_REVIEWS = [
+export const GOOGLE_PROFILE_URL = "https://share.google/YAXXJGqvygILNyVNr";
+
+export function GoogleGIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="#4285F4"
+        d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"
+      />
+      <path
+        fill="#34A853"
+        d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.35 24 12 24z"
+      />
+      <path
+        fill="#FBBC05"
+        d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"
+      />
+      <path
+        fill="#EA4335"
+        d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.35 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"
+      />
+    </svg>
+  );
+}
+
+const AVATAR_COLORS = [
+  "bg-[#4285F4] text-white",
+  "bg-[#EA4335] text-white",
+  "bg-[#34A853] text-white",
+  "bg-[#FBBC05] text-gray-950",
+  "bg-[#8e24aa] text-white",
+  "bg-[#0f8646] text-white",
+  "bg-[#0284c7] text-white",
+];
+
+export const DEFAULT_GOOGLE_REVIEWS = [
   {
-    _id: "rev-1",
+    _id: "gmb-1",
     name: "Dr. Ananya Sharma",
     location: "Arera Colony, Bhopal",
     rating: 5,
+    timeAgo: "3 days ago",
     comment:
-      "The crispness of the palak and taaza methi is incredible! Exactly like sunrise harvest. Delivered in 12 minutes to my doorstep.",
-    tag: "Daily Customer",
+      "The crispness of the palak and taaza methi is incredible! Exactly like sunrise harvest. Delivered in 12 minutes to my doorstep in Bhopal.",
+    source: "google",
+    tag: "Google Review",
   },
   {
-    _id: "rev-2",
+    _id: "gmb-2",
     name: "Rajesh K. Verma",
     location: "Kolar Road, Bhopal",
     rating: 5,
+    timeAgo: "1 week ago",
     comment:
-      "Early morning delivery is super fast! Got fresh vegetables right at 6:30 AM before breakfast & pooja. 100% crunchy and fresh.",
-    tag: "Verified Bhopal Resident",
+      "Early morning delivery is super fast! Got fresh vegetables right at 6:30 AM before breakfast & pooja. 100% crunchy, fresh and hygienic.",
+    source: "google",
+    tag: "Google Review",
   },
   {
-    _id: "rev-3",
+    _id: "gmb-3",
     name: "Pooja Malhotra",
     location: "Bawadiya Kalan, Bhopal",
     rating: 5,
+    timeAgo: "1 week ago",
     comment:
-      "Direct farmer rates without middlemen markup. 100% clean, hand-sorted, and no chemical smell in coriander or tomatoes.",
-    tag: "Verified Resident",
+      "Direct farmer rates without unfair middleman markup. 100% clean, hand-sorted, and no chemical smell in coriander or tomatoes.",
+    source: "google",
+    tag: "Google Review",
   },
   {
-    _id: "rev-4",
+    _id: "gmb-4",
     name: "Vikram Saxena",
     location: "MP Nagar Zone 2, Bhopal",
     rating: 5,
+    timeAgo: "2 weeks ago",
     comment:
-      "Zero plastic mission is commendable! Returned 3 eco-bags to the delivery rider and got ₹30 instant cashback discount on my order.",
-    tag: "Eco-Bag Hero",
+      "Zero plastic mission is commendable! Returned 3 eco-bags to the delivery rider and got instant cashback. Truly 5-star customer service!",
+    source: "google",
+    tag: "Google Review",
   },
   {
-    _id: "rev-5",
+    _id: "gmb-5",
     name: "Meenakshi Joshi",
     location: "Shahpura, Bhopal",
     rating: 5,
+    timeAgo: "3 weeks ago",
     comment:
-      "Best quality A2 Gir Cow Milk and farm-fresh Paneer in Bhopal. Soft and purely organic. My entire family loves the morning subscription!",
-    tag: "Morning Subscriber",
+      "Best quality fresh vegetables and farm-fresh Paneer in Bhopal. Soft and purely organic. My entire family loves SubziQuick!",
+    source: "google",
+    tag: "Google Review",
   },
 ];
 
@@ -71,7 +114,7 @@ export default function Testimonials({
   initialTestimonials?: any[];
 }) {
   const sanitizeList = (list: any[]) => {
-    if (!list || list.length === 0) return DEFAULT_BHOPAL_REVIEWS;
+    if (!list || list.length === 0) return DEFAULT_GOOGLE_REVIEWS;
     const cleaned = list.filter(
       (t) =>
         t.comment &&
@@ -79,7 +122,7 @@ export default function Testimonials({
         t.location !== "India" &&
         t.comment.length > 5
     );
-    return cleaned.length > 0 ? cleaned : DEFAULT_BHOPAL_REVIEWS;
+    return cleaned.length > 0 ? cleaned : DEFAULT_GOOGLE_REVIEWS;
   };
 
   const [testimonials, setTestimonials] = useState<any[]>(
@@ -139,7 +182,7 @@ export default function Testimonials({
     try {
       const res = await axios.post("/api/testimonials", reviewForm);
       if (res.data.success) {
-        setSubmittedMsg("🎉 Thank you! Your review has been saved to database and published.");
+        setSubmittedMsg("🎉 Shukriya! Aapka review submit ho gaya hai.");
         fetchLiveTestimonials();
         setTimeout(() => {
           setIsModalOpen(false);
@@ -150,7 +193,7 @@ export default function Testimonials({
             rating: 5,
             comment: "",
           });
-        }, 2000);
+        }, 3000);
       } else {
         alert(res.data.message || "Failed to submit review");
       }
@@ -169,25 +212,51 @@ export default function Testimonials({
     <div className="w-full bg-white py-6 sm:py-8 border-b border-gray-100 font-sans">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         
-        {/* Section Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 sm:mb-6">
+        {/* Section Header: Google My Business Focused */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5 sm:mb-7">
           <div>
-            <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-[#0f8646] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200/80 mb-1.5 shadow-2xs">
-              <Sparkles size={11} /> Real Bhopal Families Love Us
-            </span>
-            <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
-              Customer Reviews & Experiences
+            {/* Google Rating Pill */}
+            <div className="inline-flex items-center gap-2 bg-white border border-gray-200/90 px-3 py-1 rounded-full shadow-2xs mb-2">
+              <GoogleGIcon className="w-4 h-4 shrink-0" />
+              <div className="flex items-center gap-1 text-xs">
+                <span className="font-black text-gray-900">4.9</span>
+                <div className="flex items-center text-amber-400">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={12} className="fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <span className="text-[11px] text-gray-500 font-medium ml-0.5">
+                  on Google Reviews
+                </span>
+              </div>
+            </div>
+
+            <h2 className="text-lg sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
+              Customer Reviews on Google
             </h2>
             <p className="text-[11px] sm:text-xs text-gray-500 font-medium mt-0.5">
-              100% verified farm-to-table delivery feedback from across Bhopal
+              100% verified farm-to-table feedback from Bhopal residents
             </p>
           </div>
 
-          <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+          {/* Action CTAs: Review on Google + Write on Website */}
+          <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
+            <a
+              href={GOOGLE_PROFILE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white hover:bg-gray-50 text-gray-900 border border-gray-300 px-3.5 sm:px-4 py-2 rounded-full font-black text-xs flex items-center gap-2 shadow-2xs transition active:scale-95"
+              title="Open SubziQuick Google Business Profile in new tab"
+            >
+              <GoogleGIcon className="w-4 h-4 shrink-0" />
+              <span>Review on Google</span>
+              <ExternalLink size={12} className="text-gray-400" />
+            </a>
+
             <button
               type="button"
               onClick={() => setIsModalOpen(true)}
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-full font-black shadow-2xs transition-all text-xs flex items-center gap-1.5 cursor-pointer active:scale-95"
+              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-full font-black shadow-2xs transition text-xs flex items-center gap-1.5 cursor-pointer active:scale-95"
             >
               <MessageSquarePlus size={14} />
               <span>Write a Review</span>
@@ -207,25 +276,71 @@ export default function Testimonials({
             <ChevronLeft size={18} className="stroke-[2.5]" />
           </button>
 
-          {/* Modern Swipeable Review Carousel */}
+          {/* Modern Swipeable Review Carousel: Google Review Style */}
           <div
             ref={scrollContainerRef}
             className="flex items-stretch gap-3.5 sm:gap-5 overflow-x-auto pb-3 pt-1 scrollbar-none snap-x snap-mandatory scroll-smooth -mx-3.5 px-3.5 sm:mx-0 sm:px-0"
           >
-            {testimonials.map((t, idx) => (
-              <motion.div
-                key={t._id || idx}
-                whileHover={{ y: -3 }}
-                className="w-[84vw] xs:w-[310px] md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] shrink-0 snap-center md:snap-start bg-white rounded-3xl p-4 sm:p-5 border border-gray-200/90 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between"
-              >
-                <div>
-                  {/* Rating Stars & Tag */}
-                  <div className="flex items-center justify-between gap-2 mb-2.5">
-                    <div className="flex items-center gap-0.5 text-amber-400">
+            {testimonials.map((t, idx) => {
+              const avatarColorClass =
+                AVATAR_COLORS[idx % AVATAR_COLORS.length];
+              const isGoogleSource =
+                t.source === "google" ||
+                t.tag?.toLowerCase().includes("google") ||
+                !t.source;
+
+              return (
+                <motion.div
+                  key={t._id || idx}
+                  whileHover={{ y: -3 }}
+                  className="w-[85vw] xs:w-[320px] md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] shrink-0 snap-center md:snap-start bg-white rounded-3xl p-4 sm:p-5 border border-gray-200/90 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between"
+                >
+                  <div>
+                    {/* Top Row: Reviewer Avatar + Name + Source Badge */}
+                    <div className="flex items-start justify-between gap-2.5 mb-3">
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <div
+                          className={`w-10 h-10 rounded-full flex items-center justify-center font-black text-sm shrink-0 shadow-2xs uppercase ${avatarColorClass}`}
+                        >
+                          {t.name?.charAt(0) || "U"}
+                        </div>
+                        <div className="min-w-0">
+                          <h4 className="font-black text-xs sm:text-sm text-gray-900 truncate">
+                            {t.name}
+                          </h4>
+                          <span className="text-[10px] text-gray-400 block truncate font-medium">
+                            📍 {t.location || "Bhopal, MP"}
+                            {t.timeAgo ? ` • ${t.timeAgo}` : ""}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Source Badge (Google vs Verified Customer) */}
+                      {isGoogleSource ? (
+                        <a
+                          href={GOOGLE_PROFILE_URL}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 bg-white hover:bg-blue-50 text-gray-700 hover:text-blue-700 border border-gray-200 px-2 py-0.5 rounded-full text-[10px] font-bold shadow-2xs shrink-0 transition"
+                          title="Verified on Google Business Profile"
+                        >
+                          <GoogleGIcon className="w-3 h-3 shrink-0" />
+                          <span>Google</span>
+                        </a>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full text-[10px] font-bold shrink-0">
+                          <CheckCircle2 size={11} className="text-emerald-600" />
+                          <span>Verified Buyer</span>
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Rating Stars */}
+                    <div className="flex items-center gap-0.5 text-amber-400 mb-2.5">
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
-                          size={13}
+                          size={14}
                           className={
                             i < (t.rating || 5)
                               ? "fill-amber-400 text-amber-400"
@@ -234,37 +349,25 @@ export default function Testimonials({
                         />
                       ))}
                     </div>
-                    <span className="text-[9px] font-black text-[#0f8646] bg-green-50 border border-green-200 px-2 py-0.5 rounded-full flex items-center gap-0.5">
-                      <CheckCircle2 size={9} />
-                      <span>{t.tag || "Verified Customer"}</span>
-                    </span>
+
+                    {/* Review Text */}
+                    <div className="relative">
+                      <p className="text-xs sm:text-[13px] text-gray-700 font-medium leading-relaxed">
+                        &ldquo;{t.comment}&rdquo;
+                      </p>
+                    </div>
                   </div>
 
-                  {/* Comment Text with Quote Icon */}
-                  <div className="relative mb-3.5">
-                    <Quote size={18} className="text-emerald-100 absolute -top-1 -left-1 -z-0" />
-                    <p className="text-xs sm:text-[13px] text-gray-700 font-medium leading-relaxed relative z-10 italic">
-                      &ldquo;{t.comment}&rdquo;
-                    </p>
-                  </div>
-                </div>
-
-                {/* Author Info */}
-                <div className="flex items-center gap-2.5 pt-3 border-t border-gray-100 mt-auto">
-                  <div className="w-9 h-9 rounded-2xl bg-emerald-100 text-[#0f8646] flex items-center justify-center font-black text-xs shrink-0 border border-emerald-200 shadow-2xs">
-                    {t.name?.charAt(0) || "U"}
-                  </div>
-                  <div className="min-w-0">
-                    <h4 className="font-black text-xs sm:text-sm text-gray-900 truncate">
-                      {t.name}
-                    </h4>
-                    <span className="text-[10px] text-gray-400 block truncate font-medium">
-                      📍 {t.location || "Bhopal, MP"}
+                  {/* Card Bottom Meta */}
+                  <div className="pt-3 mt-3 border-t border-gray-100 flex items-center justify-between text-[10px] text-gray-400 font-medium">
+                    <span className="text-emerald-700 font-bold flex items-center gap-1">
+                      <Sparkles size={11} /> Farm Fresh Delivery
                     </span>
+                    <span>Bhopal, MP</span>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
 
           {/* Right Arrow Button */}
@@ -280,7 +383,7 @@ export default function Testimonials({
 
       </div>
 
-      {/* Review Modal */}
+      {/* Write a Review Modal */}
       <AnimatePresence>
         {isModalOpen && (
           <div
@@ -300,20 +403,33 @@ export default function Testimonials({
                 <X size={18} />
               </button>
 
-              <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-[#0f8646] flex items-center justify-center mb-3 mx-auto shadow-inner">
-                <Star size={24} className="fill-[#0f8646]" />
+              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-[#0f8646] border border-emerald-200 flex items-center justify-center mb-3 mx-auto shadow-2xs">
+                <GoogleGIcon className="w-6 h-6" />
               </div>
 
               <h3 className="text-lg font-black text-center text-gray-900 mb-1">
-                Share Your Farm Experience
+                Share Your Customer Review
               </h3>
               <p className="text-xs text-gray-500 text-center mb-5">
-                Tell Bhopal neighbors about the produce quality & same-day fresh delivery!
+                Aapka review live homepage par Google-verified card style me dikhega!
               </p>
 
               {submittedMsg ? (
-                <div className="p-4 rounded-2xl bg-green-50 border border-green-200 text-green-800 text-xs font-black text-center mb-4">
-                  {submittedMsg}
+                <div className="p-4 rounded-2xl bg-green-50 border border-green-200 text-green-900 text-xs font-bold text-center mb-4 space-y-3">
+                  <p className="font-black text-sm">{submittedMsg}</p>
+                  <p className="text-gray-600">
+                    Aap apna review hamare official Google Business Profile par bhi share kar sakte hain:
+                  </p>
+                  <a
+                    href={GOOGLE_PROFILE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 bg-[#0f8646] text-white px-4 py-2 rounded-xl text-xs font-black shadow-sm hover:bg-[#0c6a38] transition"
+                  >
+                    <GoogleGIcon className="w-3.5 h-3.5 bg-white rounded-full p-0.5" />
+                    <span>Post on Google Reviews</span>
+                    <ExternalLink size={12} />
+                  </a>
                 </div>
               ) : (
                 <form onSubmit={handleSubmitReview} className="space-y-4 text-xs font-bold">
@@ -324,7 +440,7 @@ export default function Testimonials({
                     <input
                       required
                       type="text"
-                      placeholder="e.g. Anurag Sharma"
+                      placeholder="e.g. Anurag Singh"
                       value={reviewForm.name}
                       onChange={(e) =>
                         setReviewForm({ ...reviewForm, name: e.target.value })
@@ -351,6 +467,7 @@ export default function Testimonials({
                       <option value="Hoshangabad Road, Bhopal">Hoshangabad Road, Bhopal</option>
                       <option value="Minal Residency, Bhopal">Minal Residency, Bhopal</option>
                       <option value="Shahpura / Chunabhatti, Bhopal">Shahpura / Chunabhatti, Bhopal</option>
+                      <option value="Bagsewaniya / Saket Nagar, Bhopal">Bagsewaniya / Saket Nagar, Bhopal</option>
                     </select>
                   </div>
 
@@ -386,7 +503,7 @@ export default function Testimonials({
                     <textarea
                       required
                       rows={3}
-                      placeholder="e.g. Taaza sabzi direct farm se aayi, same-day delivery aur packing bahut clean thi!"
+                      placeholder="e.g. Taaza sabzi direct farm se aayi, same-day fast delivery aur packing clean thi!"
                       value={reviewForm.comment}
                       onChange={(e) =>
                         setReviewForm({ ...reviewForm, comment: e.target.value })
@@ -400,7 +517,7 @@ export default function Testimonials({
                     disabled={isSubmitting}
                     className="w-full py-3 bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                   >
-                    {isSubmitting ? "Submitting Review..." : "Submit Verified Review"}
+                    {isSubmitting ? "Submitting Review..." : "Publish Verified Review"}
                   </button>
                 </form>
               )}

@@ -14,8 +14,10 @@ import {
   CheckCircle2,
   Sparkles,
   ShieldCheck,
+  ExternalLink,
 } from "lucide-react";
 import AdminSidebar from "@/components/AdminSidebar";
+import { GoogleGIcon, GOOGLE_PROFILE_URL } from "@/components/Testimonials";
 
 export default function ManageTestimonials() {
   const [testimonials, setTestimonials] = useState<any[]>([]);
@@ -28,7 +30,9 @@ export default function ManageTestimonials() {
     comment: "",
     rating: 5,
     location: "Arera Colony, Bhopal",
-    tag: "Verified Customer",
+    tag: "Google Review",
+    source: "google",
+    timeAgo: "Recently",
     status: "approved",
   });
   const [isAdding, setIsAdding] = useState(false);
@@ -125,7 +129,9 @@ export default function ManageTestimonials() {
           comment: "",
           rating: 5,
           location: "Arera Colony, Bhopal",
-          tag: "Verified Customer",
+          tag: "Google Review",
+          source: "google",
+          timeAgo: "Recently",
           status: "approved",
         });
         fetchTestimonials();
@@ -155,6 +161,18 @@ export default function ManageTestimonials() {
             </div>
 
             <div className="flex items-center gap-2 flex-wrap">
+              <a
+                href={GOOGLE_PROFILE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white hover:bg-gray-50 text-gray-800 border border-gray-200/90 px-3 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
+                title="View your Google My Business profile"
+              >
+                <GoogleGIcon className="w-3.5 h-3.5" />
+                <span>Google Profile</span>
+                <ExternalLink size={11} className="text-gray-400" />
+              </a>
+
               <button
                 onClick={fetchTestimonials}
                 disabled={loading}
@@ -181,8 +199,8 @@ export default function ManageTestimonials() {
                 className="bg-emerald-50 hover:bg-emerald-100 text-[#0f8646] border border-emerald-300 px-3 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                 title="Populate authentic Bhopal customer feedback"
               >
-                <Sparkles size={13} />
-                <span>Seed Bhopal Reviews</span>
+                <GoogleGIcon className="w-3.5 h-3.5" />
+                <span>Seed Google Reviews</span>
               </button>
 
               <button
@@ -215,9 +233,10 @@ export default function ManageTestimonials() {
                 </p>
                 <button
                   onClick={handleSeedBhopalReviews}
-                  className="bg-[#0f8646] text-white px-5 py-2.5 rounded-xl font-bold text-xs cursor-pointer shadow-md"
+                  disabled={actionLoading}
+                  className="bg-[#0f8646] text-white px-5 py-2.5 rounded-xl text-xs font-black shadow-md hover:bg-[#0c6a38] transition cursor-pointer"
                 >
-                  ✨ Populate 5 Bhopal Reviews
+                  Seed Google Reviews
                 </button>
               </div>
             ) : (
@@ -240,23 +259,37 @@ export default function ManageTestimonials() {
                             </h4>
                             <span className="text-[10px] text-gray-400 block font-medium">
                               📍 {t.location || "Bhopal, MP"}
+                              {t.timeAgo ? ` • ${t.timeAgo}` : ""}
                             </span>
                           </div>
                         </div>
 
-                        {/* Stars */}
-                        <div className="flex items-center gap-0.5 text-amber-400">
-                          {Array.from({ length: 5 }).map((_, i) => (
-                            <Star
-                              key={i}
-                              size={13}
-                              className={
-                                i < (t.rating || 5)
-                                  ? "fill-amber-400 text-amber-400"
-                                  : "text-gray-200"
-                              }
-                            />
-                          ))}
+                        {/* Source Badge + Stars */}
+                        <div className="flex flex-col items-end gap-1">
+                          {t.source === "google" || !t.source ? (
+                            <span className="inline-flex items-center gap-1 bg-blue-50 text-blue-800 border border-blue-200 text-[10px] font-black px-2 py-0.5 rounded-full">
+                              <GoogleGIcon className="w-3 h-3" />
+                              <span>Google</span>
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-black px-2 py-0.5 rounded-full">
+                              <CheckCircle2 size={10} />
+                              <span>Website</span>
+                            </span>
+                          )}
+                          <div className="flex items-center gap-0.5 text-amber-400">
+                            {Array.from({ length: 5 }).map((_, i) => (
+                              <Star
+                                key={i}
+                                size={12}
+                                className={
+                                  i < (t.rating || 5)
+                                    ? "fill-amber-400 text-amber-400"
+                                    : "text-gray-200"
+                                }
+                              />
+                            ))}
+                          </div>
                         </div>
                       </div>
 
@@ -361,6 +394,39 @@ export default function ManageTestimonials() {
                   <option value="Shahpura, Bhopal">Shahpura, Bhopal</option>
                   <option value="Minal Residency, Bhopal">Minal Residency, Bhopal</option>
                 </select>
+              </div>
+
+              <div>
+                <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
+                  Review Source & Badge
+                </label>
+                <select
+                  value={addForm.source}
+                  onChange={(e) =>
+                    setAddForm({
+                      ...addForm,
+                      source: e.target.value,
+                      tag: e.target.value === "google" ? "Google Review" : "Verified Customer",
+                    })
+                  }
+                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 cursor-pointer"
+                >
+                  <option value="google">🌐 Google My Business Review (Shows Google &apos;G&apos; Badge)</option>
+                  <option value="website">🛒 Website Customer Review (Shows &apos;Verified Buyer&apos; Badge)</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
+                  Time / Relative Date
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. 2 days ago, 1 week ago, Yesterday"
+                  value={addForm.timeAgo}
+                  onChange={(e) => setAddForm({ ...addForm, timeAgo: e.target.value })}
+                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium"
+                />
               </div>
 
               <div>

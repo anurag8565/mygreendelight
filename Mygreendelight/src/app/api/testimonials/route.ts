@@ -11,7 +11,7 @@ export async function GET(req: Request) {
       comment: { $nin: ["yummy", "bad rice", "test", ""] },
     })
       .sort({ createdAt: -1 })
-      .limit(10);
+      .limit(25);
 
     return NextResponse.json({ success: true, testimonials });
   } catch (error) {
@@ -39,6 +39,9 @@ export async function POST(req: Request) {
       rating: Number(rating) || 5,
       comment: comment.trim(),
       image,
+      tag: "Verified Customer",
+      source: "website",
+      timeAgo: "Just now",
       status: "approved", // Auto-approved for live visibility
     });
 

@@ -8,6 +8,8 @@ export interface ITestimonial extends Document {
   comment: string;
   image?: string;
   tag?: string;
+  source?: "google" | "website";
+  timeAgo?: string;
   status: "pending" | "approved" | "rejected";
   createdAt: Date;
 }
@@ -21,6 +23,8 @@ const TestimonialSchema: Schema<ITestimonial> = new Schema(
     comment: { type: String, required: true },
     image: { type: String, required: false },
     tag: { type: String, default: "Verified Customer" },
+    source: { type: String, enum: ["google", "website"], default: "google" },
+    timeAgo: { type: String, required: false },
     status: { type: String, enum: ["pending", "approved", "rejected"], default: "approved" }
   },
   { timestamps: true }

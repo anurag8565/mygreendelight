@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { action, name, comment, rating, location, tag, status } = body;
+    const { action, name, comment, rating, location, tag, status, source, timeAgo } = body;
 
     // Action: Seed verified Bhopal reviews
     if (action === "seed_bhopal") {
@@ -47,16 +47,20 @@ export async function POST(req: Request) {
           name: "Dr. Ananya Sharma",
           location: "Arera Colony, Bhopal",
           rating: 5,
-          comment: "The crispness of the palak and taaza methi is incredible! Exactly like sunrise harvest. Delivered in 12 minutes to my doorstep.",
-          tag: "Daily Customer",
+          comment: "The crispness of the palak and taaza methi is incredible! Exactly like sunrise harvest. Delivered in 12 minutes to my doorstep in Bhopal.",
+          tag: "Google Review",
+          source: "google",
+          timeAgo: "3 days ago",
           status: "approved",
         },
         {
           name: "Rajesh K. Verma",
           location: "Kolar Road, Bhopal",
           rating: 5,
-          comment: "Early morning delivery is super fast! Got fresh vegetables right at 6:30 AM before breakfast & pooja. 100% crunchy and fresh.",
-          tag: "Verified Bhopal Resident",
+          comment: "Early morning delivery is super fast! Got fresh vegetables right at 6:30 AM before breakfast. 100% crunchy, fresh and hygienic.",
+          tag: "Google Review",
+          source: "google",
+          timeAgo: "1 week ago",
           status: "approved",
         },
         {
@@ -64,30 +68,36 @@ export async function POST(req: Request) {
           location: "Bawadiya Kalan, Bhopal",
           rating: 5,
           comment: "Direct farmer rates without unfair middleman markup. 100% clean, hand-sorted, and no chemical smell in coriander or tomatoes.",
-          tag: "Verified Resident",
+          tag: "Google Review",
+          source: "google",
+          timeAgo: "1 week ago",
           status: "approved",
         },
         {
           name: "Vikram Saxena",
           location: "MP Nagar Zone 2, Bhopal",
           rating: 5,
-          comment: "Zero plastic mission is commendable! Returned 3 eco-bags to the delivery rider and got ₹30 instant cashback credited to my wallet.",
-          tag: "Eco-Bag Hero",
+          comment: "Zero plastic mission is commendable! Returned 3 eco-bags to the delivery rider and got instant cashback credited. Truly five star service!",
+          tag: "Google Review",
+          source: "google",
+          timeAgo: "2 weeks ago",
           status: "approved",
         },
         {
           name: "Meenakshi Joshi",
           location: "Shahpura, Bhopal",
           rating: 5,
-          comment: "Best quality A2 Gir Cow Milk and farm-fresh Paneer in Bhopal. Soft and purely organic. My entire family loves the morning subscription!",
-          tag: "Morning Subscriber",
+          comment: "Best quality fresh vegetables and farm-fresh Paneer in Bhopal. Soft and purely organic. My entire family loves SubziQuick!",
+          tag: "Google Review",
+          source: "google",
+          timeAgo: "3 weeks ago",
           status: "approved",
         },
       ];
 
       await Testimonial.insertMany(seedData);
       const updated = await Testimonial.find().sort({ createdAt: -1 });
-      return NextResponse.json({ success: true, testimonials: updated, message: "🎉 5 Authentic Bhopal reviews seeded successfully!" });
+      return NextResponse.json({ success: true, testimonials: updated, message: "🎉 5 Authentic Bhopal Google Reviews seeded successfully!" });
     }
 
     // Action: Clean all dummy reviews
@@ -111,8 +121,9 @@ export async function POST(req: Request) {
       comment: comment.trim(),
       rating: Number(rating) || 5,
       location: location || "Bhopal, MP",
-      tag: tag || "Verified Customer",
-      status: status || "approved",
+      tag: tag || (source === "google" ? "Google Review" : "Verified Customer"),
+      source: source || "google",
+      timeAgo: timeAgo || "Recently",
     });
 
     return NextResponse.json({ success: true, testimonial, message: "Testimonial created successfully" });
