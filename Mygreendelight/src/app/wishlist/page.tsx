@@ -10,15 +10,11 @@ import {
   Heart,
   ShoppingBag,
   ChevronRight,
-  ArrowLeft,
   Trash2,
   CheckCircle2,
-  Zap,
-  Leaf,
-  RotateCcw,
+  ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import useGetMe from "@/hooks/useGetMe";
 import { clearWishlist, hydrateWishlist, setWishlist } from "@/redux/WishlistSlice";
 import { addMultipleToCart } from "@/redux/CartSlice";
@@ -27,7 +23,6 @@ import axios from "axios";
 
 export default function WishlistPage() {
   useGetMe();
-  const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
 
   const { userdata } = useSelector((state: RootState) => state.user);
@@ -38,7 +33,11 @@ export default function WishlistPage() {
   const [addedAllSuccess, setAddedAllSuccess] = useState(false);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
 
-  const currentUserId = userdata?._id ? String(userdata._id) : ((userdata as any)?.id ? String((userdata as any).id) : null);
+  const currentUserId = userdata?._id
+    ? String(userdata._id)
+    : (userdata as any)?.id
+    ? String((userdata as any).id)
+    : null;
 
   useEffect(() => {
     setMounted(true);
@@ -50,8 +49,14 @@ export default function WishlistPage() {
     axios
       .get("/api/wishlist")
       .then((res) => {
-        if (res.data?.success && Array.isArray(res.data?.wishlist) && res.data.wishlist.length > 0) {
-          dispatch(setWishlist({ items: res.data.wishlist, userId: currentUserId }));
+        if (
+          res.data?.success &&
+          Array.isArray(res.data?.wishlist) &&
+          res.data.wishlist.length > 0
+        ) {
+          dispatch(
+            setWishlist({ items: res.data.wishlist, userId: currentUserId })
+          );
         }
       })
       .catch((err) => {
@@ -67,7 +72,7 @@ export default function WishlistPage() {
     0
   );
 
-  // Calculate active cart summary
+  // Active cart summary for mobile pill
   const totalCartItems = cartdata.reduce(
     (acc, item) => acc + (item.quantity || 1),
     0
@@ -99,7 +104,7 @@ export default function WishlistPage() {
     setAddedAllSuccess(true);
     setTimeout(() => {
       setAddedAllSuccess(false);
-    }, 3500);
+    }, 3000);
   };
 
   // Clear wishlist
@@ -116,76 +121,45 @@ export default function WishlistPage() {
   };
 
   return (
-    <div className="bg-[#f8f9fa] min-h-screen flex flex-col justify-between font-sans text-gray-900 pb-20 md:pb-0">
+    <div className="bg-[#f8faf8] min-h-screen flex flex-col justify-between font-sans text-gray-900 pb-20 md:pb-0 selection:bg-green-100 selection:text-green-900">
       <Nav user={userdata} />
 
-      {/* Top Header Bar */}
-      <div className="bg-white border-b border-gray-200/80 sticky top-0 z-30 shadow-2xs">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-3.5 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => router.back()}
-              aria-label="Go Back"
-              className="p-1.5 -ml-1 text-gray-600 hover:text-gray-900 rounded-xl hover:bg-gray-100 transition cursor-pointer"
-            >
-              <ArrowLeft size={18} />
-            </button>
-            <div className="flex items-center gap-2">
-              <h1 className="text-base sm:text-lg font-black text-gray-900 tracking-tight flex items-center gap-2">
-                <span>My Saved Favorites</span>
-                <span className="bg-rose-50 text-rose-600 border border-rose-200 text-xs px-2.5 py-0.5 rounded-full font-black">
-                  {items.length}
-                </span>
-              </h1>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Link
-              href="/shop"
-              className="text-xs font-black text-[#0f8646] hover:underline flex items-center gap-1 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200/80"
-            >
-              <span>Explore Shop</span>
-              <ChevronRight size={14} />
+      <main className="max-w-6xl mx-auto px-3.5 sm:px-6 py-5 sm:py-7 w-full flex-1 space-y-4 sm:space-y-5">
+        {/* Minimalist Top Breadcrumb & Actions Bar */}
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2 text-xs text-gray-400 font-medium">
+            <Link href="/" className="hover:text-gray-700 transition">
+              Home
             </Link>
+            <span className="text-gray-300">/</span>
+            <span className="text-[#0f8646] font-bold">Wishlist ({items.length})</span>
           </div>
-        </div>
-      </div>
 
-      <main className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-5 sm:py-8 w-full flex-1 space-y-6">
-        
-        {/* Quick Trust / Info Ribbon */}
-        <div className="grid grid-cols-3 gap-2 bg-white border border-gray-200/80 rounded-2xl p-3 text-center shadow-2xs">
-          <div className="flex items-center justify-center gap-1.5 text-[11px] sm:text-xs font-bold text-gray-700">
-            <Zap size={14} className="text-amber-500 fill-amber-400 shrink-0" />
-            <span className="truncate">15-45 Min Express</span>
-          </div>
-          <div className="flex items-center justify-center gap-1.5 text-[11px] sm:text-xs font-bold text-gray-700 border-x border-gray-100 px-1">
-            <Leaf size={14} className="text-[#0f8646] shrink-0" />
-            <span className="truncate">Same-Day Harvest</span>
-          </div>
-          <div className="flex items-center justify-center gap-1.5 text-[11px] sm:text-xs font-bold text-gray-700">
-            <RotateCcw size={14} className="text-blue-600 shrink-0" />
-            <span className="truncate">100% Replacement</span>
-          </div>
+          <Link
+            href="/shop"
+            className="text-xs font-semibold text-[#0f8646] hover:underline flex items-center gap-1"
+          >
+            <span>Explore Store</span>
+            <ChevronRight size={13} />
+          </Link>
         </div>
 
         {/* Success Alert Banner when Add All clicked */}
         <AnimatePresence>
           {addedAllSuccess && (
             <motion.div
-              initial={{ opacity: 0, y: -8 }}
+              initial={{ opacity: 0, y: -6 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              className="p-3.5 bg-[#0f8646] text-white rounded-2xl shadow-md flex items-center justify-between text-xs sm:text-sm font-bold"
+              exit={{ opacity: 0, y: -6 }}
+              className="p-3 bg-[#0f8646] text-white rounded-xl shadow-xs flex items-center justify-between text-xs sm:text-sm font-semibold"
             >
               <div className="flex items-center gap-2">
-                <CheckCircle2 size={18} className="shrink-0" />
-                <span>All {items.length} saved produce items added to your basket!</span>
+                <CheckCircle2 size={16} className="shrink-0" />
+                <span>All {items.length} saved items added to your basket!</span>
               </div>
               <Link
                 href="/user/cart"
-                className="bg-white text-[#0f8646] px-3.5 py-1.5 rounded-xl text-xs font-black shadow-xs hover:bg-emerald-50 transition"
+                className="bg-white text-[#0f8646] px-3 py-1 rounded-lg text-xs font-bold hover:bg-emerald-50 transition"
               >
                 Go to Cart →
               </Link>
@@ -194,48 +168,45 @@ export default function WishlistPage() {
         </AnimatePresence>
 
         {items.length > 0 ? (
-          <div className="space-y-5">
-            
-            {/* Action Bar Card */}
-            <div className="bg-white rounded-3xl border border-gray-200/80 shadow-2xs p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="space-y-4">
+            {/* Sleek Action Strip */}
+            <div className="bg-white rounded-2xl border border-gray-100 p-3.5 sm:p-4 shadow-[0_1px_3px_rgba(0,0,0,0.03)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <h2 className="text-lg sm:text-xl font-black text-gray-900 tracking-tight">
-                    Saved Fresh Produce
-                  </h2>
-                  <span className="text-xs bg-emerald-50 text-[#0f8646] border border-emerald-200 px-2.5 py-0.5 rounded-full font-black">
-                    {items.length} Items
+                <h1 className="text-sm sm:text-base font-bold text-gray-900 flex items-center gap-2">
+                  <span>Saved Items</span>
+                  <span className="text-xs font-semibold bg-emerald-50 text-[#0f8646] px-2 py-0.5 rounded-full border border-emerald-200/60">
+                    {items.length}
                   </span>
-                </div>
-                <p className="text-xs text-gray-500 font-medium">
-                  Estimated Total: <strong className="text-gray-900 font-black">₹{totalEstimated}</strong> • Direct wholesale rates from Bhopal farms
+                </h1>
+                <p className="text-xs text-gray-500 font-medium mt-0.5">
+                  Est. Total: <strong className="text-gray-900 font-bold">₹{totalEstimated}</strong>
                 </p>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex items-center gap-2.5 flex-wrap">
+              <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={handleAddAllToCart}
-                  className="flex-1 sm:flex-none bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-3 rounded-2xl font-black text-xs sm:text-sm shadow-sm hover:shadow-md transition flex items-center justify-center gap-2 cursor-pointer"
+                  className="flex-1 sm:flex-none bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-xl font-bold text-xs shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer"
                 >
-                  <ShoppingBag size={16} />
+                  <ShoppingBag size={14} />
                   <span>Add All to Cart</span>
                 </button>
 
                 {showClearConfirm ? (
-                  <div className="flex items-center gap-1.5 bg-red-50 p-1 rounded-2xl border border-red-200">
+                  <div className="flex items-center gap-1 bg-red-50 p-1 rounded-xl border border-red-200">
                     <button
                       type="button"
                       onClick={handleClearWishlist}
-                      className="px-3 py-1.5 bg-red-600 text-white rounded-xl text-xs font-black hover:bg-red-700 transition cursor-pointer"
+                      className="px-2.5 py-1 bg-red-600 text-white rounded-lg text-xs font-bold hover:bg-red-700 transition cursor-pointer"
                     >
-                      Clear All
+                      Clear
                     </button>
                     <button
                       type="button"
                       onClick={() => setShowClearConfirm(false)}
-                      className="px-2.5 py-1.5 text-gray-600 hover:text-gray-900 rounded-xl text-xs font-bold transition cursor-pointer"
+                      className="px-2 py-1 text-gray-600 rounded-lg text-xs font-semibold transition cursor-pointer"
                     >
                       Cancel
                     </button>
@@ -244,16 +215,16 @@ export default function WishlistPage() {
                   <button
                     type="button"
                     onClick={() => setShowClearConfirm(true)}
-                    className="p-3 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-2xl transition border border-gray-200 cursor-pointer shadow-2xs"
+                    className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition border border-gray-200 cursor-pointer"
                     title="Clear Wishlist"
                   >
-                    <Trash2 size={16} />
+                    <Trash2 size={15} />
                   </button>
                 )}
               </div>
             </div>
 
-            {/* Wishlist Items Grid - Real user items only */}
+            {/* Wishlist Items Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
               {items.map((item) => (
                 <Groceryitemcard key={item._id} item={item as any} />
@@ -261,30 +232,27 @@ export default function WishlistPage() {
             </div>
           </div>
         ) : (
-          /* Empty State */
-          <div className="my-6">
-            <div className="bg-white rounded-3xl border border-gray-200/80 p-8 sm:p-14 text-center max-w-md mx-auto shadow-2xs">
-              <div className="w-20 h-20 bg-rose-50 border border-rose-100 text-rose-500 rounded-3xl flex items-center justify-center mx-auto mb-4 relative shadow-2xs">
-                <Heart size={36} className="fill-rose-100 text-rose-500 animate-pulse" />
-                <span className="absolute -bottom-1 -right-1 bg-[#0f8646] text-white p-1 rounded-full text-[10px] flex items-center justify-center">
-                  <Leaf size={11} />
-                </span>
+          /* Sleek Minimalist Empty State */
+          <div className="py-12 sm:py-16 text-center">
+            <div className="bg-white rounded-3xl border border-gray-100 p-8 sm:p-12 text-center max-w-sm mx-auto shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
+              <div className="w-14 h-14 bg-rose-50 border border-rose-100/80 text-rose-500 rounded-2xl flex items-center justify-center mx-auto mb-3">
+                <Heart size={26} className="fill-rose-100 text-rose-500" />
               </div>
-              
-              <h2 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight mb-2">
+
+              <h2 className="text-base font-extrabold text-gray-900 mb-1">
                 Your Wishlist is Empty
               </h2>
-              
-              <p className="text-xs sm:text-sm text-gray-500 mb-6 leading-relaxed max-w-xs mx-auto font-medium">
-                Tap the heart icon on any vegetable or fruit to save your favorites for 1-tap reordering!
+
+              <p className="text-xs text-gray-500 mb-6 leading-relaxed max-w-xs mx-auto">
+                Save your daily vegetables and fruits here to easily reorder them anytime.
               </p>
-              
+
               <Link
                 href="/shop"
-                className="w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3.5 px-6 rounded-2xl font-black text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white py-2.5 px-4 rounded-xl font-bold text-xs shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer"
               >
-                <ShoppingBag size={16} />
-                <span>Explore Fresh Farm Harvest</span>
+                <span>Explore Produce</span>
+                <ArrowRight size={13} />
               </Link>
             </div>
           </div>
@@ -302,22 +270,22 @@ export default function WishlistPage() {
           >
             <Link
               href="/user/cart"
-              className="bg-[#0f8646] text-white rounded-2xl p-3.5 shadow-[0_8px_25px_rgba(15,134,70,0.35)] flex items-center justify-between font-sans border border-emerald-400/30"
+              className="bg-[#0f8646] text-white rounded-2xl p-3 shadow-lg flex items-center justify-between font-sans border border-emerald-400/30"
             >
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center font-black text-xs">
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center font-bold text-xs">
                   {totalCartItems}
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold text-emerald-100 uppercase tracking-wider">
-                    {totalCartItems} Item{totalCartItems > 1 ? "s" : ""} in Basket
+                  <p className="text-[10px] font-semibold text-emerald-100">
+                    {totalCartItems} {totalCartItems > 1 ? "Items" : "Item"} in Basket
                   </p>
-                  <p className="text-sm font-black">₹{totalCartAmount}</p>
+                  <p className="text-xs font-extrabold">₹{totalCartAmount}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-1 bg-white text-[#0f8646] px-3.5 py-1.5 rounded-xl font-black text-xs shadow-xs">
+              <div className="flex items-center gap-1 bg-white text-[#0f8646] px-3 py-1 rounded-xl font-bold text-xs shadow-2xs">
                 <span>View Cart</span>
-                <ChevronRight size={14} />
+                <ChevronRight size={13} />
               </div>
             </Link>
           </motion.div>
