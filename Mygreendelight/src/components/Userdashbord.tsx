@@ -1,7 +1,6 @@
 import React from 'react'
 import Hero from './Hero'
 import MarqueeTicker from './MarqueeTicker'
-import TrustRibbon from './TrustRibbon'
 import Categoryslider from './Categoryslider'
 import FilteredProduceSection from './FilteredProduceSection'
 import FlashDeals from './FlashDeals'
@@ -114,9 +113,6 @@ export default async function Userdashbord() {
 
       {/* 1.2 Live Superfast Marquee Ticker */}
       <MarqueeTicker />
-
-      {/* 1.5 Quick Commerce Trust & Speed Ribbon */}
-      <TrustRibbon />
 
       {/* 2. Shop by Category Cards */}
       <Categoryslider categories={plainCategories} />
