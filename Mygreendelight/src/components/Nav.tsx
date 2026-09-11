@@ -1067,20 +1067,31 @@ export default function Nav({ user }: { user?: iUser | null }) {
                )}
             </Link>
 
-            {/* Cart Widget */}
-            <div onClick={() => setIsMiniCartOpen(true)} className="flex items-center gap-1.5 cursor-pointer hover:opacity-80 transition-opacity shrink-0">
+            {/* Cart Widget with Bounce Animation */}
+            <motion.div
+              key={cartdata.length}
+              initial={{ scale: 1 }}
+              animate={{ scale: [1, 1.15, 0.95, 1] }}
+              transition={{ duration: 0.35, ease: "easeInOut" }}
+              onClick={() => setIsMiniCartOpen(true)}
+              className="flex items-center gap-1.5 cursor-pointer hover:opacity-80 transition-opacity shrink-0 select-none"
+            >
               <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-green-50 flex items-center justify-center text-[#0f8646] border border-green-200/60 shadow-2xs">
                 <ShoppingCart size={19} className="stroke-[2.2]" />
                 {mounted && cartdata.length > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-[#0f8646] text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="absolute -top-1 -right-1 bg-[#0f8646] text-white text-[9px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center shadow-xs"
+                  >
                     {cartdata.length}
-                  </span>
+                  </motion.span>
                 )}
               </div>
               <div className="hidden sm:flex flex-col">
                 <span className="text-[12px] font-extrabold text-gray-900">₹{mounted ? cartTotal.toFixed(2) : "0.00"}</span>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
 
