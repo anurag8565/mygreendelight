@@ -49,6 +49,8 @@ interface OrderItem {
   price: number;
   quantity: number;
   unit: string;
+  variationWeight?: string;
+  groceryId?: string;
 }
 
 interface DeliveryBoy {
@@ -393,7 +395,16 @@ export default function ManageOrder() {
       msg += `*${currentStatus.toUpperCase()}*`;
     }
 
-    msg += `\n\n📦 *Total Items:* ${itemsCount} items\n` +
+    const itemsListText = (order.items || [])
+      .map(
+        (i, idx) =>
+          `  ${idx + 1}. *${i.name}* [${i.variationWeight || i.unit || "1 unit"}] × ${i.quantity} = ₹${
+            (i.price || 0) * (i.quantity || 1)
+          }`
+      )
+      .join("\n");
+
+    msg += `\n\n📦 *Order Items (${itemsCount}):*\n${itemsListText}\n\n` +
       `💵 *Bill Amount:* ₹${order.totalamount} (${isPaid ? "✅ Paid Online" : "💵 Cash / UPI on Delivery"})\n`;
 
     if (deliveryOtp && currentStatus !== "delivered" && currentStatus !== "cancelled") {
@@ -425,7 +436,7 @@ export default function ManageOrder() {
       "Order Status",
       "Total Amount",
       "Items Count",
-      "Items Breakdown",
+      "Items Breakdown (Weight & Qty)",
     ];
 
     const rows = filteredOrders.map((o) => {
@@ -441,7 +452,7 @@ export default function ManageOrder() {
       const amount = o.totalamount;
       const count = o.items?.length || 0;
       const itemsStr = (o.items || [])
-        .map((i) => `${i.name} (x${i.quantity})`)
+        .map((i) => `${i.name} [${i.variationWeight || i.unit || "1 unit"}] (x${i.quantity})`)
         .join(" | ")
         .replace(/,/g, " ");
 
@@ -914,6 +925,26 @@ export default function ManageOrder() {
                       </div>
                     )}
 
+                    {/* Quick Items Preview (Always Visible so admin can pack without clicking) */}
+                    {order.items && order.items.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 my-2.5">
+                        {order.items.map((item, idx) => (
+                          <span
+                            key={idx}
+                            className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-950 border border-emerald-200/90 px-2.5 py-1 rounded-xl text-xs font-bold shadow-2xs"
+                          >
+                            <span className="font-black text-gray-900">{item.name}</span>
+                            <span className="bg-[#0f8646] text-white text-[10px] font-black px-1.5 py-0.5 rounded shadow-2xs">
+                              ⚖️ {item.variationWeight || item.unit || "1 unit"}
+                            </span>
+                            <span className="font-black text-emerald-700 bg-white px-1.5 py-0.5 rounded border border-emerald-200 text-[11px]">
+                              ×{item.quantity}
+                            </span>
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
                     {/* Items Dropdown Button */}
                     <button
                       onClick={() => setOpenOrder(isExpanded ? null : order._id)}
@@ -947,9 +978,17 @@ export default function ManageOrder() {
                                 <h4 className="font-extrabold text-xs text-gray-900">
                                   {item.name}
                                 </h4>
-                                <p className="text-[11px] text-gray-500">
-                                  {item.quantity} × {item.unit}
-                                </p>
+                                <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
+                                  <span className="bg-[#0f8646]/10 text-[#0f8646] border border-emerald-200 text-[11px] font-black px-1.5 py-0.5 rounded-md">
+                                    ⚖️ {item.variationWeight || item.unit || "1 unit"}
+                                  </span>
+                                  <span className="text-[11px] font-bold text-gray-600">
+                                    × {item.quantity}
+                                  </span>
+                                  <span className="text-[10px] text-gray-400 font-medium">
+                                    (@ ₹{item.price})
+                                  </span>
+                                </div>
                               </div>
                             </div>
 

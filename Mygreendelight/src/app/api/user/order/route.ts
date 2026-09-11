@@ -112,24 +112,49 @@ export async function POST(req: NextRequest) {
             let realName = dbGrocery.name;
             let realImage = dbGrocery.image;
             let realUnit = dbGrocery.unit || "kg";
+            let effectiveVariationWeight: string | null = null;
             const itemQty = Math.max(1, Math.min(100, Number(item.quantity) || 1));
 
-            if (item.variationWeight && dbGrocery.variations && dbGrocery.variations.length > 0) {
-                const matchedVar = dbGrocery.variations.find((v: any) => v.weight === item.variationWeight);
-                if (!matchedVar) {
-                    return NextResponse.json(
-                        { success: false, message: `Weight variation "${item.variationWeight}" is not available for "${dbGrocery.name}".` },
-                        { status: 400 }
-                    );
+            // Check if product has variations and match variation weight
+            if (dbGrocery.variations && Array.isArray(dbGrocery.variations) && dbGrocery.variations.length > 0) {
+                const requestedWeight = (item.variationWeight || item.unit || "").trim().toLowerCase();
+                const matchedVar = dbGrocery.variations.find(
+                    (v: any) => v.weight && v.weight.trim().toLowerCase() === requestedWeight
+                ) || dbGrocery.variations.find(
+                    (v: any) => item.variationWeight && v.weight && v.weight.trim() === item.variationWeight.trim()
+                );
+
+                if (matchedVar) {
+                    effectiveVariationWeight = matchedVar.weight;
+                    realUnit = matchedVar.weight;
+                    realPrice = Number(matchedVar.price);
+                    if (matchedVar.stock < itemQty) {
+                        return NextResponse.json(
+                            { success: false, message: `Insufficient stock for "${dbGrocery.name} (${matchedVar.weight})". Available: ${matchedVar.stock}` },
+                            { status: 400 }
+                        );
+                    }
+                } else if (item.variationWeight) {
+                    // If variation was explicitly requested but not found in DB
+                    effectiveVariationWeight = item.variationWeight;
+                    realUnit = item.variationWeight;
+                    if (dbGrocery.stock < itemQty) {
+                        return NextResponse.json(
+                            { success: false, message: `Insufficient stock for "${dbGrocery.name}". Available: ${dbGrocery.stock}` },
+                            { status: 400 }
+                        );
+                    }
+                } else {
+                    if (dbGrocery.stock < itemQty) {
+                        return NextResponse.json(
+                            { success: false, message: `Insufficient stock for "${dbGrocery.name}". Available: ${dbGrocery.stock}` },
+                            { status: 400 }
+                        );
+                    }
                 }
-                if (matchedVar.stock < itemQty) {
-                    return NextResponse.json(
-                        { success: false, message: `Insufficient stock for "${dbGrocery.name} (${item.variationWeight})". Available: ${matchedVar.stock}` },
-                        { status: 400 }
-                    );
-                }
-                realPrice = Number(matchedVar.price);
             } else {
+                effectiveVariationWeight = item.variationWeight || item.unit || realUnit;
+                realUnit = item.unit || realUnit;
                 if (dbGrocery.stock < itemQty) {
                     return NextResponse.json(
                         { success: false, message: `Insufficient stock for "${dbGrocery.name}". Available: ${dbGrocery.stock}` },
@@ -145,8 +170,8 @@ export async function POST(req: NextRequest) {
                 groceryId: String(item.grocery),
                 name: realName,
                 price: realPrice,
-                unit: realUnit,
-                variationWeight: item.variationWeight,
+                unit: effectiveVariationWeight || realUnit,
+                variationWeight: effectiveVariationWeight || realUnit,
                 image: realImage,
                 quantity: itemQty,
             });

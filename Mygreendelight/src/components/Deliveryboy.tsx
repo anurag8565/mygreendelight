@@ -812,9 +812,14 @@ export default function Deliveryboy({ initialUser }: Props) {
                     )}
                     <div>
                       <p className="font-bold text-slate-900 leading-tight">{item.name}</p>
-                      <p className="text-[10px] text-slate-400">
-                        {item.quantity} × {item.unit}
-                      </p>
+                      <div className="flex items-center gap-1.5 mt-0.5">
+                        <span className="bg-emerald-100 text-emerald-800 text-[10px] font-black px-1.5 py-0.5 rounded">
+                          ⚖️ {item.variationWeight || item.unit || "1 unit"}
+                        </span>
+                        <span className="text-[10px] text-slate-500 font-bold">
+                          × {item.quantity}
+                        </span>
+                      </div>
                     </div>
                   </div>
                   <span className="font-black text-slate-900">
