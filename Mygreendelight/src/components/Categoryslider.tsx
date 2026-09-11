@@ -7,57 +7,55 @@ import { ChevronRight, LayoutGrid } from "lucide-react";
 import { motion } from "framer-motion";
 
 // Clean, luxury category metadata with 4K assets and cache buster
+// Strictly the 3 core categories: Vegetables, Fruits, Exotics
 const CATEGORY_MAP: Record<
   string,
   {
     title: string;
     subtitle: string;
     imgUrl: string;
+    path: string;
   }
 > = {
   vegetables: {
     title: "Vegetables",
     subtitle: "Farm Fresh Daily",
     imgUrl: "/categories/vegetables_4k.jpg?v=4",
+    path: "Vegetables",
   },
   vegetable: {
     title: "Vegetables",
     subtitle: "Farm Fresh Daily",
     imgUrl: "/categories/vegetables_4k.jpg?v=4",
+    path: "Vegetables",
   },
   fruits: {
     title: "Fruits",
     subtitle: "Sweet & Juicy",
     imgUrl: "/categories/fruits_4k.jpg?v=4",
+    path: "Fruits",
   },
   fruit: {
     title: "Fruits",
     subtitle: "Sweet & Juicy",
     imgUrl: "/categories/fruits_4k.jpg?v=4",
+    path: "Fruits",
   },
   exotics: {
-    title: "Exotics",
+    title: "Exotics & Salads",
     subtitle: "Hydroponic Greens",
     imgUrl: "/categories/exotics_4k.jpg?v=4",
+    path: "Exotics",
   },
   exotic: {
-    title: "Exotics",
+    title: "Exotics & Salads",
     subtitle: "Hydroponic Greens",
     imgUrl: "/categories/exotics_4k.jpg?v=4",
-  },
-  dairy: {
-    title: "Dairy & Milk",
-    subtitle: "Pure & Fresh",
-    imgUrl: "/categories/dairy_4k.jpg?v=4",
-  },
-  "ready to cook": {
-    title: "Ready to Cook",
-    subtitle: "Pre-Cleaned & Cut",
-    imgUrl: "/categories/ready_to_cook.jpg?v=4",
+    path: "Exotics",
   },
 };
 
-const PRIORITY = ["vegetables", "fruits", "exotics", "dairy", "ready to cook"];
+const PRIORITY = ["vegetables", "fruits", "exotics"];
 
 export default function CategorySlider({
   categories = [],
@@ -75,17 +73,23 @@ export default function CategorySlider({
         .then((res) => res.json())
         .then((data) => {
           if (data.success && Array.isArray(data.categories)) {
-            sortAndSet(data.categories);
+            filterAndSet(data.categories);
           }
         })
         .catch(console.error);
     } else {
-      sortAndSet(list);
+      filterAndSet(list);
     }
   }, [categories]);
 
-  const sortAndSet = (list: any[]) => {
-    const sorted = [...list].sort((a, b) => {
+  const filterAndSet = (list: any[]) => {
+    // Filter strictly to the 3 core categories (Vegetables, Fruits, Exotics)
+    const valid = list.filter((item) => {
+      const name = (item.name || "").toLowerCase().trim();
+      return PRIORITY.some((p) => name.includes(p));
+    });
+
+    const sorted = [...(valid.length > 0 ? valid : list)].sort((a, b) => {
       const nameA = (a.name || "").toLowerCase().trim();
       const nameB = (b.name || "").toLowerCase().trim();
 
@@ -98,12 +102,26 @@ export default function CategorySlider({
       return 0;
     });
 
-    setActiveCategories(sorted);
+    // If DB has no categories or fewer than 3, fallback to the 3 core ones
+    if (sorted.length === 0) {
+      setActiveCategories([
+        { name: "Vegetables" },
+        { name: "Fruits" },
+        { name: "Exotics" },
+      ]);
+    } else {
+      setActiveCategories(sorted.slice(0, 3));
+    }
   };
 
-  if (!activeCategories || activeCategories.length === 0) {
-    return null;
-  }
+  const displayList =
+    activeCategories.length > 0
+      ? activeCategories
+      : [
+          { name: "Vegetables" },
+          { name: "Fruits" },
+          { name: "Exotics" },
+        ];
 
   return (
     <section className="w-full py-5 sm:py-7 bg-white font-sans border-b border-gray-100">
@@ -129,19 +147,19 @@ export default function CategorySlider({
           </Link>
         </div>
 
-        {/* Minimalist Premium Square Photo Cards Grid - Perfectly Balanced & Symmetrical */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 sm:gap-3.5 md:gap-4.5">
-          {activeCategories.map((item, idx) => {
+        {/* Perfectly Balanced 3-Column Grid for the 3 Core Categories */}
+        <div className="grid grid-cols-3 gap-2.5 sm:gap-5 md:gap-6">
+          {displayList.map((item, idx) => {
             const rawKey = (item.name || "").toLowerCase().trim();
             const matchedKey =
               Object.keys(CATEGORY_MAP).find((k) => rawKey.includes(k)) || "";
             const config = CATEGORY_MAP[matchedKey] || {
-              title: item.name,
+              title: item.name || "Produce",
               subtitle: "Fresh Harvest",
               imgUrl: item.image || "/categories/vegetables_4k.jpg?v=4",
+              path: item.name || "Vegetables",
             };
 
-            // Always prioritize our crisp 4k studio photography
             const imageSrc = config.imgUrl || item.image || "/categories/vegetables_4k.jpg?v=4";
 
             return (
@@ -151,11 +169,11 @@ export default function CategorySlider({
                 whileHover={{ y: -4 }}
                 transition={{ type: "spring", stiffness: 350, damping: 24 }}
                 onClick={() =>
-                  router.push(`/shop?category=${encodeURIComponent(item.name)}`)
+                  router.push(`/shop?category=${encodeURIComponent(config.path)}`)
                 }
                 className="group cursor-pointer bg-white hover:bg-[#fafdfa] rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 border border-gray-200/80 hover:border-emerald-400/90 shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_rgba(12,131,31,0.11)] transition-all duration-300 select-none flex flex-col justify-between"
               >
-                {/* Clean Photo Container (Pure 4K Photography with Subtle Ambient Ring) */}
+                {/* Clean Photo Container (Pure 4K Photography) */}
                 <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-gray-50/80 ring-1 ring-black/[0.04]">
                   <img
                     src={imageSrc}
