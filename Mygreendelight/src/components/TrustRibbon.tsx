@@ -32,15 +32,15 @@ export default function TrustRibbon() {
   ];
 
   return (
-    <div className="w-full bg-white py-2 sm:py-3 font-sans border-b border-gray-100/80">
+    <div className="w-full bg-white py-3 sm:py-3.5 font-sans border-b border-gray-100/80">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
-        <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto scrollbar-none py-1 -mx-3.5 px-3.5 sm:mx-0 sm:px-0">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
           {highlights.map((h, i) => (
             <div
               key={i}
-              className={`flex items-center gap-2 px-3 py-2 rounded-2xl border ${h.bg} shadow-2xs hover:shadow-xs hover:-translate-y-0.5 transition-all duration-200 shrink-0 select-none min-w-[135px] sm:min-w-0 sm:flex-1 cursor-default`}
+              className={`flex items-center gap-2 sm:gap-2.5 px-3 py-2 sm:py-2.5 rounded-2xl border ${h.bg} shadow-2xs hover:shadow-xs hover:-translate-y-0.5 transition-all duration-200 select-none cursor-default`}
             >
-              <div className="w-7 h-7 rounded-xl bg-white flex items-center justify-center shrink-0 shadow-xs">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-white flex items-center justify-center shrink-0 shadow-xs">
                 {h.icon}
               </div>
               <div className="min-w-0">

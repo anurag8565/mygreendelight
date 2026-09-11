@@ -129,8 +129,8 @@ export default function CategorySlider({
           </Link>
         </div>
 
-        {/* Minimalist Premium Square Photo Cards Grid */}
-        <div className="grid grid-cols-3 max-w-5xl md:mx-auto gap-2.5 sm:gap-4 md:gap-6">
+        {/* Minimalist Premium Square Photo Cards Grid - Perfectly Balanced & Symmetrical */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 sm:gap-3.5 md:gap-4.5">
           {activeCategories.map((item, idx) => {
             const rawKey = (item.name || "").toLowerCase().trim();
             const matchedKey =
