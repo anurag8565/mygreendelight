@@ -106,22 +106,24 @@ export default function CategorySlider({
   }
 
   return (
-    <section className="w-full py-5 sm:py-7 bg-white font-sans border-b border-gray-100">
+    <section className="w-full py-6 sm:py-9 bg-[#FAF8F5] font-sans border-b border-[#EAE4D9]/80">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Header Row */}
-        <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">
+        <div className="flex items-center justify-between gap-2 mb-4 sm:mb-6">
           <div className="flex items-center gap-2">
-            <LayoutGrid size={20} className="text-[#0c831f]" />
-            <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
-              Shop by Category
+            <div className="w-8 h-8 rounded-xl bg-emerald-100/80 text-[#14532D] flex items-center justify-center">
+              <LayoutGrid size={16} />
+            </div>
+            <h2 className="text-base sm:text-xl md:text-2xl font-black text-[#1C1917] tracking-tight">
+              Curated Harvest Collections
             </h2>
           </div>
 
           <Link
             href="/shop"
-            className="text-[#0c831f] hover:text-[#096618] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition"
+            className="text-[#14532D] hover:text-[#0f3e22] font-black text-xs sm:text-sm flex items-center gap-1 group transition"
           >
-            <span>See all</span>
+            <span>See full catalog</span>
             <ChevronRight
               size={15}
               className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]"
@@ -153,10 +155,10 @@ export default function CategorySlider({
                 onClick={() =>
                   router.push(`/shop?category=${encodeURIComponent(item.name)}`)
                 }
-                className="group cursor-pointer bg-white hover:bg-[#fafdfa] rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 border border-gray-200/80 hover:border-emerald-400/90 shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_rgba(12,131,31,0.11)] transition-all duration-300 select-none flex flex-col justify-between"
+                className="group cursor-pointer bg-white hover:bg-[#FDFBF7] rounded-2xl sm:rounded-3xl p-3 sm:p-4 border border-[#EAE4D9] hover:border-[#14532D]/40 shadow-[0_4px_18px_rgba(26,38,20,0.03)] hover:shadow-[0_14px_30px_rgba(20,83,45,0.09)] transition-all duration-300 select-none flex flex-col justify-between"
               >
                 {/* Clean Photo Container (Pure 4K Photography with Subtle Ambient Ring) */}
-                <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-gray-50/80 ring-1 ring-black/[0.04]">
+                <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-[#F7F4EE] ring-1 ring-black/[0.04]">
                   <img
                     src={imageSrc}
                     alt={config.title}
@@ -168,11 +170,11 @@ export default function CategorySlider({
                 </div>
 
                 {/* Typography */}
-                <div className="mt-2 sm:mt-3 text-center flex flex-col items-center">
-                  <h3 className="font-black text-xs sm:text-base md:text-lg text-gray-900 group-hover:text-[#0c831f] transition-colors duration-200 leading-tight tracking-tight truncate w-full">
+                <div className="mt-2.5 sm:mt-3 text-center flex flex-col items-center">
+                  <h3 className="font-black text-xs sm:text-base md:text-lg text-[#1C1917] group-hover:text-[#14532D] transition-colors duration-200 leading-tight tracking-tight truncate w-full">
                     {config.title}
                   </h3>
-                  <p className="text-[10px] sm:text-xs text-gray-500 font-medium truncate mt-0.5 sm:mt-1 w-full">
+                  <p className="text-[10.5px] sm:text-xs text-[#78716C] font-semibold truncate mt-0.5 sm:mt-1 w-full">
                     {config.subtitle}
                   </p>
                 </div>

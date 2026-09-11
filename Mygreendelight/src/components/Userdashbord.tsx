@@ -107,7 +107,7 @@ export default async function Userdashbord() {
   const plainCombos = JSON.parse(JSON.stringify(comboBundles || []));
 
   return (
-    <div className="bg-white w-full max-w-full overflow-x-clip font-sans">
+    <div className="bg-[#FAF8F5] w-full max-w-full overflow-x-clip font-sans selection:bg-emerald-100 selection:text-emerald-900">
       {/* 1. Hero Banner */}
       <Hero banners={plainBanners} />
 
@@ -130,19 +130,24 @@ export default async function Userdashbord() {
         <CombosSection initialCombos={plainCombos} />
       )}
 
-      {/* 7. Tone 1: Daily Lucky Scratch Card & Rewards (Pure White) */}
+      {/* 7. Tone 1: Daily Lucky Scratch Card & Rewards */}
       <DailyRewardWidget />
 
-      {/* 9. Tone 2: Order Again Carousel (Soft Luxury Gray #f8f9fa) */}
+      {/* 9. Tone 2: Order Again Carousel (Soft Warm Ivory Canvas) */}
       {plainOrderAgain && plainOrderAgain.length > 0 && (
-        <div className="w-full py-6 sm:py-8 bg-[#f8f9fa] border-b border-gray-100 font-sans">
+        <div className="w-full py-8 sm:py-10 bg-[#F5F1E8]/70 border-y border-[#EAE4D9] font-sans">
           <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
-             <div className="flex items-center justify-between mb-3.5 sm:mb-5">
-                <div className="flex items-center gap-2">
-                   <RotateCcw size={18} className="text-[#0c831f]" />
-                   <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
-                      Order Again
-                   </h2>
+             <div className="flex items-center justify-between mb-4 sm:mb-6">
+                <div className="flex items-center gap-2.5">
+                   <div className="w-8 h-8 rounded-xl bg-emerald-100/80 text-[#14532D] flex items-center justify-center">
+                     <RotateCcw size={16} />
+                   </div>
+                   <div>
+                     <span className="text-[10px] font-black uppercase tracking-wider text-emerald-800/80">Fresh Favorites</span>
+                     <h2 className="text-base sm:text-xl md:text-2xl font-black text-[#1C1917] tracking-tight">
+                        Order Again
+                     </h2>
+                   </div>
                 </div>
              </div>
 
