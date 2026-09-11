@@ -345,10 +345,10 @@ export default function UserProfileHub() {
             Account & Orders
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             <Link
               href="/user/myorder"
-              className="flex items-center justify-between p-3 rounded-2xl bg-gray-50/70 hover:bg-emerald-50/50 border border-gray-100 hover:border-emerald-300 transition group"
+              className="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50/70 hover:bg-emerald-50/50 border border-gray-100 hover:border-emerald-300 transition group"
             >
               <div className="flex items-center gap-3 min-w-0">
                 <div className="w-9 h-9 rounded-xl bg-white text-[#0c831f] flex items-center justify-center border border-gray-200/80 shadow-2xs shrink-0">
@@ -367,28 +367,8 @@ export default function UserProfileHub() {
             </Link>
 
             <Link
-              href="/user/subscriptions"
-              className="flex items-center justify-between p-3 rounded-2xl bg-gray-50/70 hover:bg-emerald-50/50 border border-gray-100 hover:border-emerald-300 transition group"
-            >
-              <div className="flex items-center gap-3 min-w-0">
-                <div className="w-9 h-9 rounded-xl bg-white text-emerald-600 flex items-center justify-center border border-gray-200/80 shadow-2xs shrink-0">
-                  <RefreshCw size={17} />
-                </div>
-                <div className="min-w-0">
-                  <h3 className="text-xs font-bold text-gray-900 group-hover:text-[#0c831f] transition truncate">
-                    Daily Subscriptions
-                  </h3>
-                  <p className="text-[10.5px] text-gray-500 truncate">
-                    Morning milk & fresh vegetable plans
-                  </p>
-                </div>
-              </div>
-              <ChevronRight size={15} className="text-gray-400 group-hover:text-[#0c831f] group-hover:translate-x-0.5 transition-transform shrink-0" />
-            </Link>
-
-            <Link
               href="/offers"
-              className="flex items-center justify-between p-3 rounded-2xl bg-gray-50/70 hover:bg-amber-50/50 border border-gray-100 hover:border-amber-300 transition group"
+              className="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50/70 hover:bg-amber-50/50 border border-gray-100 hover:border-amber-300 transition group"
             >
               <div className="flex items-center gap-3 min-w-0">
                 <div className="w-9 h-9 rounded-xl bg-white text-amber-600 flex items-center justify-center border border-gray-200/80 shadow-2xs shrink-0">
@@ -404,26 +384,6 @@ export default function UserProfileHub() {
                 </div>
               </div>
               <ChevronRight size={15} className="text-gray-400 group-hover:text-amber-700 group-hover:translate-x-0.5 transition-transform shrink-0" />
-            </Link>
-
-            <Link
-              href="/user/wallet"
-              className="flex items-center justify-between p-3 rounded-2xl bg-gray-50/70 hover:bg-emerald-50/50 border border-gray-100 hover:border-emerald-300 transition group"
-            >
-              <div className="flex items-center gap-3 min-w-0">
-                <div className="w-9 h-9 rounded-xl bg-white text-teal-600 flex items-center justify-center border border-gray-200/80 shadow-2xs shrink-0">
-                  <Sparkles size={17} />
-                </div>
-                <div className="min-w-0">
-                  <h3 className="text-xs font-bold text-gray-900 group-hover:text-[#0c831f] transition truncate">
-                    SubziQuick Wallet
-                  </h3>
-                  <p className="text-[10.5px] text-gray-500 truncate">
-                    Cashback & 1-tap checkout balance
-                  </p>
-                </div>
-              </div>
-              <ChevronRight size={15} className="text-gray-400 group-hover:text-[#0c831f] group-hover:translate-x-0.5 transition-transform shrink-0" />
             </Link>
           </div>
         </div>
