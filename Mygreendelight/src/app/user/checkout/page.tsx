@@ -29,6 +29,7 @@ import {
   Camera,
   Image as ImageIcon,
   ArrowRight,
+  ChevronDown,
 } from "lucide-react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
@@ -148,6 +149,7 @@ export default function Checkout() {
   const [deliveryInstructions, setDeliveryInstructions] = useState<string>("");
   const [riderTip, setRiderTip] = useState<number>(0);
   const [submitting, setSubmitting] = useState(false);
+  const [showMap, setShowMap] = useState<boolean>(false);
 
   // Clean Address Fields
   const [addressType, setAddressType] = useState<"Home" | "Work" | "Other">("Home");
@@ -195,7 +197,6 @@ export default function Checkout() {
       (pos) => {
         setIsLocating(false);
         const { latitude, longitude } = pos.coords;
-        // Distance calculation from Bhopal Center
         const bhopalLat = 23.2599;
         const bhopalLng = 77.4126;
         const R = 6371;
@@ -211,13 +212,11 @@ export default function Checkout() {
         const distKm = R * c;
 
         if (distKm > 35) {
-          // OUTSIDE BHOPAL -> RED WARNING
           setOutsideBhopalNotice(
-            `🚫 Delivery Unavailable at Your Current GPS Location! Your device location is outside Bhopal (~${distKm.toFixed(0)} km away). SubziQuick delivers exclusively across Bhopal city (MP - 462xxx). Please select your Bhopal delivery area from the dropdown below.`
+            `Delivery Unavailable at Your GPS Location (~${distKm.toFixed(0)} km from Bhopal). We deliver across Bhopal city (MP - 462xxx). Please select your Bhopal locality below.`
           );
           setInsideBhopalSuccess(null);
         } else {
-          // INSIDE BHOPAL -> GREEN SUCCESS & AUTO SELECT NEAREST AREA
           let nearestIdx = 0;
           let minD = 9999;
           BHOPAL_AREAS.forEach((ar, idx) => {
@@ -229,15 +228,14 @@ export default function Checkout() {
           });
           setSelectedAreaIndex(nearestIdx);
           setInsideBhopalSuccess(
-            `✅ Location Verified: Closest delivery location pinpointed as "${BHOPAL_AREAS[nearestIdx].name}" (PIN: ${BHOPAL_AREAS[nearestIdx].pincode}).`
+            `Located nearest area: "${BHOPAL_AREAS[nearestIdx].name}" (PIN: ${BHOPAL_AREAS[nearestIdx].pincode})`
           );
           setOutsideBhopalNotice(null);
         }
       },
       (err) => {
         setIsLocating(false);
-        console.log("GPS detect error:", err);
-        alert("Could not access GPS. Please ensure location permissions are allowed in your browser.");
+        alert("Could not access GPS. Please allow location access or choose locality from the list.");
       },
       { enableHighAccuracy: true, timeout: 8000 }
     );
@@ -247,7 +245,7 @@ export default function Checkout() {
 
   const handelPlaceOrder = async () => {
     if (!cartdata || cartdata.length === 0) {
-      alert("Your cart is empty. Please add farm produce items to checkout.");
+      alert("Your cart is empty. Please add items to checkout.");
       router.push("/shop");
       return;
     }
@@ -328,7 +326,7 @@ export default function Checkout() {
           latitude: position ? position[0] : currentArea.lat,
           longitude: position ? position[1] : currentArea.lng,
         },
-        paymentmethod: paymentMethod, // "cod" | "upi"
+        paymentmethod: paymentMethod,
         paymentId:
           paymentMethod === "upi"
             ? cleanUtr
@@ -377,9 +375,8 @@ export default function Checkout() {
       <div className="bg-[#f8faf9] min-h-screen flex flex-col justify-between font-sans">
         <Nav user={(userdata as any) || null} />
         <main className="max-w-md mx-auto px-4 py-24 text-center flex-1 flex flex-col items-center justify-center">
-          <Loader2 className="w-12 h-12 text-[#0f8646] animate-spin mb-4" />
-          <h2 className="text-xl font-black text-gray-900 mb-1">Checking Authentication...</h2>
-          <p className="text-xs text-gray-500">Connecting you securely to checkout.</p>
+          <Loader2 className="w-10 h-10 text-[#0f8646] animate-spin mb-3" />
+          <h2 className="text-lg font-bold text-gray-900">Loading checkout...</h2>
         </main>
         <Footer />
       </div>
@@ -391,16 +388,16 @@ export default function Checkout() {
       <div className="bg-[#f8f9fa] min-h-screen flex flex-col justify-between font-sans">
         <Nav user={null} />
         <main className="max-w-md mx-auto px-4 py-24 text-center flex-1 flex flex-col items-center justify-center">
-          <div className="w-16 h-16 rounded-3xl bg-amber-50 text-amber-600 flex items-center justify-center mb-4 mx-auto border border-amber-200 shadow-inner">
-            <Lock size={32} />
+          <div className="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mb-3 mx-auto border border-amber-200">
+            <Lock size={26} />
           </div>
-          <h2 className="text-xl font-black text-gray-900 mb-2">Please Login to Continue</h2>
-          <p className="text-xs text-gray-500 mb-6">
-            Aapko order place karne ke liye pehle Login / Signup karna hoga.
+          <h2 className="text-lg font-extrabold text-gray-900 mb-1">Please Login to Continue</h2>
+          <p className="text-xs text-gray-500 mb-5">
+            Log in to your account to review address and place your order.
           </p>
           <Link
             href="/login?callbackUrl=/user/checkout"
-            className="w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3.5 px-6 rounded-2xl font-black text-xs sm:text-sm shadow-md transition text-center flex items-center justify-center gap-2"
+            className="w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3 px-5 rounded-xl font-bold text-xs sm:text-sm shadow-sm transition flex items-center justify-center gap-2"
           >
             <span>Login / Create Account</span>
             <ArrowRight size={14} />
@@ -416,19 +413,15 @@ export default function Checkout() {
       <div className="bg-[#f8faf9] min-h-screen flex flex-col justify-between font-sans">
         <Nav user={(userdata as any) || { role: "user" }} />
         <main className="max-w-md mx-auto px-4 py-24 text-center flex-1 flex flex-col items-center justify-center">
-          <div className="w-16 h-16 rounded-3xl bg-green-100 text-[#0f8646] flex items-center justify-center mb-4 animate-bounce shadow-md">
-            <Truck size={32} />
+          <div className="w-14 h-14 rounded-2xl bg-green-100 text-[#0f8646] flex items-center justify-center mb-3 animate-bounce">
+            <Truck size={28} />
           </div>
-          <h2 className="text-xl sm:text-2xl font-black text-gray-900 mb-2">
-            Confirming Your Order...
+          <h2 className="text-lg font-black text-gray-900 mb-1">
+            Placing Your Order...
           </h2>
-          <p className="text-xs text-gray-500 mb-6">
-            Connecting to Bagsewaniya Store (Amrai, Bhopal) and generating your delivery receipt.
+          <p className="text-xs text-gray-500">
+            Confirming with Bagsewaniya Hub and generating order receipt.
           </p>
-          <div className="flex items-center gap-2 text-xs font-black text-[#0f8646] bg-green-50 px-4 py-2 rounded-full border border-green-200 shadow-2xs">
-            <span className="w-2 h-2 rounded-full bg-[#0f8646] animate-ping" />
-            <span>Connecting Morning Fresh Harvest Fleet...</span>
-          </div>
         </main>
         <Footer />
       </div>
@@ -440,28 +433,28 @@ export default function Checkout() {
       <div className="bg-[#f8f9fa] min-h-screen flex flex-col justify-between font-sans">
         <Nav user={(userdata as any) || { role: "user" }} />
         <main className="max-w-md mx-auto px-4 py-20 text-center flex-1 flex flex-col items-center justify-center">
-          <div className="w-20 h-20 rounded-3xl bg-emerald-50 text-[#0f8646] flex items-center justify-center mb-4 mx-auto border border-emerald-100 shadow-inner">
-            <ShoppingBag size={36} />
+          <div className="w-16 h-16 rounded-2xl bg-emerald-50 text-[#0f8646] flex items-center justify-center mb-3 mx-auto border border-emerald-100">
+            <ShoppingBag size={30} />
           </div>
-          <h2 className="text-xl sm:text-2xl font-black text-gray-900 mb-2">
+          <h2 className="text-lg font-black text-gray-900 mb-1">
             Your Basket is Empty
           </h2>
-          <p className="text-xs sm:text-sm text-gray-500 mb-8 max-w-xs mx-auto">
-            You have no items ready for checkout. Please add fresh farm produce from our store.
+          <p className="text-xs text-gray-500 mb-6 max-w-xs mx-auto">
+            You don&apos;t have any fresh items ready for checkout.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 w-full max-w-xs mx-auto">
+          <div className="flex gap-2.5 w-full max-w-xs mx-auto">
             <Link
               href="/shop"
-              className="w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3.5 px-6 rounded-2xl font-black text-xs sm:text-sm shadow-md transition text-center flex items-center justify-center gap-1.5"
+              className="flex-1 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3 px-4 rounded-xl font-bold text-xs shadow-sm transition flex items-center justify-center gap-1"
             >
-              <span>Explore Farm Produce</span>
-              <ArrowRight size={14} />
+              <span>Shop Now</span>
+              <ArrowRight size={13} />
             </Link>
             <Link
               href="/user/myorder"
-              className="w-full bg-white border border-gray-300 hover:border-green-500 text-gray-700 hover:text-[#0f8646] py-3.5 px-6 rounded-2xl font-bold text-xs sm:text-sm text-center transition"
+              className="flex-1 bg-white border border-gray-200 hover:border-green-500 text-gray-700 py-3 px-4 rounded-xl font-bold text-xs text-center transition"
             >
-              View Orders
+              My Orders
             </Link>
           </div>
         </main>
@@ -471,431 +464,308 @@ export default function Checkout() {
   }
 
   return (
-    <div className="bg-[#f8f9fa] min-h-screen flex flex-col justify-between font-sans selection:bg-green-100 selection:text-green-900">
+    <div className="bg-[#fbfcfb] min-h-screen flex flex-col justify-between font-sans selection:bg-green-100 selection:text-green-900">
       <Nav user={(userdata as any) || { role: "user" }} />
 
-      <main className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-5 sm:py-8 pb-28 sm:pb-12 w-full flex-1">
-        {/* Top Breadcrumb & Clean Header */}
-        <div className="flex items-center gap-2 text-xs text-gray-500 mb-4">
-          <Link href="/" className="hover:text-[#0f8646] transition font-medium">
-            Home
-          </Link>
-          <ChevronRight size={12} />
-          <Link href="/user/cart" className="hover:text-[#0f8646] transition font-medium">
-            Cart ({cartdata.length})
-          </Link>
-          <ChevronRight size={12} />
-          <span className="text-[#0f8646] font-bold">Checkout</span>
-        </div>
-
-        {/* Top Delivery Hub Strip */}
-        <div className="bg-gradient-to-r from-emerald-800 to-green-700 text-white rounded-2xl p-4 sm:p-5 mb-6 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-white/15 backdrop-blur-xs flex items-center justify-center shrink-0">
-              <Truck size={20} className="text-emerald-200" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-base sm:text-lg font-black tracking-tight">
-                  Express Bhopal Doorstep Delivery
-                </h1>
-                <span className="text-[10px] font-black uppercase tracking-wider bg-white/20 text-emerald-100 px-2.5 py-0.5 rounded-full">
-                  SAME-DAY FRESH
-                </span>
-              </div>
-              <p className="text-xs text-emerald-100/90 font-medium">
-                Freshly packed & dispatched from SubziQuick Store (Amrai, Bagsewaniya, Bhopal)
-              </p>
-            </div>
+      <main className="max-w-6xl mx-auto px-3.5 sm:px-6 py-4 sm:py-6 pb-28 sm:pb-12 w-full flex-1">
+        {/* Minimalist Top Bar */}
+        <div className="flex items-center justify-between gap-3 mb-5">
+          <div className="flex items-center gap-2 text-xs text-gray-400">
+            <Link href="/" className="hover:text-gray-700 transition">Home</Link>
+            <span>/</span>
+            <Link href="/user/cart" className="hover:text-gray-700 transition">Cart ({cartdata.length})</Link>
+            <span>/</span>
+            <span className="text-[#0f8646] font-bold">Checkout</span>
           </div>
 
-          <div className="flex items-center gap-1.5 text-[11px] font-bold bg-white/10 px-3 py-1.5 rounded-xl text-emerald-100 self-stretch sm:self-auto justify-center">
-            <ShieldCheck size={14} className="text-emerald-300" />
-            <span>100% Farm Fresh Guarantee</span>
+          <div className="flex items-center gap-2 text-[11px] font-bold text-[#0f8646] bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-full">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0f8646] animate-pulse" />
+            <span>Bhopal Express Delivery</span>
           </div>
         </div>
 
-        {/* Outside Bhopal Alert: RED WARNING */}
+        {/* Notices */}
         {outsideBhopalNotice && (
-          <div className="mb-6 bg-red-50 border-2 border-red-300 rounded-2xl p-4 sm:p-5 flex items-start justify-between gap-3 text-red-950 shadow-sm animate-pulse">
-            <div className="flex items-start gap-3">
-              <AlertCircle size={22} className="text-red-600 shrink-0 mt-0.5" />
-              <div>
-                <span className="font-black text-red-900 block text-sm sm:text-base">
-                  Delivery Unavailable Outside Bhopal
-                </span>
-                <p className="mt-1 text-xs text-red-800 leading-relaxed font-medium">
-                  {outsideBhopalNotice}
-                </p>
-              </div>
+          <div className="mb-4 bg-red-50 border border-red-200 rounded-xl p-3 sm:p-4 flex items-start justify-between gap-2.5 text-red-900 text-xs">
+            <div className="flex items-start gap-2">
+              <AlertCircle size={16} className="text-red-500 shrink-0 mt-0.5" />
+              <span>{outsideBhopalNotice}</span>
             </div>
             <button
               type="button"
               onClick={() => setOutsideBhopalNotice(null)}
-              className="text-red-500 hover:text-red-800 p-1 font-bold text-xs cursor-pointer shrink-0"
+              className="text-red-400 hover:text-red-700 font-bold p-0.5"
             >
               ✕
             </button>
           </div>
         )}
 
-        {/* Inside Bhopal Success Banner: GREEN CONFIRMATION */}
         {insideBhopalSuccess && (
-          <div className="mb-6 bg-emerald-50 border border-emerald-300 rounded-2xl p-4 flex items-start justify-between gap-3 text-emerald-950 shadow-2xs">
-            <div className="flex items-start gap-2.5">
-              <CheckCircle2 size={20} className="text-[#0f8646] shrink-0 mt-0.5" />
-              <div>
-                <span className="font-black text-emerald-900 block text-xs sm:text-sm">
-                  Bhopal Location Verified
-                </span>
-                <p className="mt-0.5 text-xs text-emerald-800 font-medium">
-                  {insideBhopalSuccess}
-                </p>
-              </div>
+          <div className="mb-4 bg-emerald-50 border border-emerald-200 rounded-xl p-3 flex items-center justify-between gap-2 text-emerald-900 text-xs font-semibold">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 size={16} className="text-[#0f8646] shrink-0" />
+              <span>{insideBhopalSuccess}</span>
             </div>
             <button
               type="button"
               onClick={() => setInsideBhopalSuccess(null)}
-              className="text-emerald-600 hover:text-emerald-900 p-1 font-bold text-xs cursor-pointer shrink-0"
+              className="text-emerald-500 hover:text-emerald-800 font-bold p-0.5"
             >
               ✕
             </button>
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
-          {/* ================= LEFT COLUMN: ADDRESS & PREFERENCES (7 cols) ================= */}
-          <div className="lg:col-span-7 space-y-6">
+        {/* 2-Column Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-start">
+          {/* ================= LEFT COLUMN: DETAILS (7 cols) ================= */}
+          <div className="lg:col-span-7 space-y-4">
             
-            {/* 1. DELIVERY ADDRESS CARD */}
-            <div className="bg-white rounded-3xl border border-gray-200/90 p-5 sm:p-7 shadow-xs">
-              <div className="flex items-center justify-between mb-5 pb-4 border-b border-gray-100">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-emerald-50 text-[#0f8646] flex items-center justify-center font-black text-sm">
+            {/* 1. DELIVERY ADDRESS */}
+            <div className="bg-white rounded-2xl border border-gray-200/80 p-4 sm:p-5 shadow-xs">
+              <div className="flex items-center justify-between mb-3.5 pb-2.5 border-b border-gray-100">
+                <div className="flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-lg bg-emerald-100/80 text-[#0f8646] flex items-center justify-center font-bold text-xs">
                     1
-                  </div>
-                  <div>
-                    <h2 className="font-extrabold text-base text-gray-900">
-                      Delivery Address
-                    </h2>
-                    <p className="text-[11px] text-gray-500">
-                      Where should we deliver your fresh produce?
-                    </p>
-                  </div>
+                  </span>
+                  <h2 className="font-bold text-sm text-gray-900">
+                    Delivery Address
+                  </h2>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={handleGPSDetect}
-                  disabled={isLocating}
-                  className="inline-flex items-center gap-1.5 text-[11px] font-extrabold text-[#0f8646] bg-emerald-50 hover:bg-emerald-100 px-3.5 py-2 rounded-xl transition cursor-pointer disabled:opacity-60 shadow-2xs"
-                >
-                  <Navigation size={13} className={isLocating ? "animate-spin" : ""} />
-                  <span>{isLocating ? "Detecting GPS..." : "Locate My Area"}</span>
-                </button>
-              </div>
-
-              {/* Address Type Selector (Home / Work / Other) */}
-              <div className="mb-5">
-                <label className="block text-xs font-bold text-gray-600 mb-2">
-                  Save Address As
-                </label>
-                <div className="grid grid-cols-3 gap-2.5">
-                  {[
-                    { id: "Home", label: "Home", icon: Home },
-                    { id: "Work", label: "Work / Office", icon: Briefcase },
-                    { id: "Other", label: "Other", icon: MapPin },
-                  ].map((item) => {
-                    const Icon = item.icon;
-                    const isSelected = addressType === item.id;
-                    return (
+                {/* GPS Detect & Type chips */}
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center bg-gray-100/80 p-0.5 rounded-lg text-[11px] font-bold">
+                    {(["Home", "Work", "Other"] as const).map((type) => (
                       <button
-                        key={item.id}
+                        key={type}
                         type="button"
-                        onClick={() => setAddressType(item.id as any)}
-                        className={`flex items-center justify-center gap-2 py-2 px-3 rounded-xl border text-xs font-bold transition cursor-pointer ${
-                          isSelected
-                            ? "bg-emerald-50 text-[#0f8646] border-[#0f8646] shadow-2xs"
-                            : "bg-gray-50/80 text-gray-600 border-gray-200 hover:bg-gray-100"
+                        onClick={() => setAddressType(type)}
+                        className={`px-2 py-1 rounded-md transition ${
+                          addressType === type
+                            ? "bg-white text-[#0f8646] shadow-2xs"
+                            : "text-gray-500 hover:text-gray-900"
                         }`}
                       >
-                        <Icon size={14} />
-                        <span>{item.label}</span>
+                        {type}
                       </button>
-                    );
-                  })}
+                    ))}
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={handleGPSDetect}
+                    disabled={isLocating}
+                    className="inline-flex items-center gap-1 text-[11px] font-bold text-[#0f8646] bg-emerald-50 hover:bg-emerald-100 px-2.5 py-1 rounded-lg transition disabled:opacity-50"
+                  >
+                    <Navigation size={12} className={isLocating ? "animate-spin" : ""} />
+                    <span>{isLocating ? "Locating..." : "Auto-Detect"}</span>
+                  </button>
                 </div>
               </div>
 
-              {/* Input Fields */}
-              <div className="space-y-4">
-                {/* Receiver Name & Phone */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-bold text-gray-700 mb-1.5">
-                      Receiver&apos;s Name *
-                    </label>
-                    <div className="relative">
-                      <User size={15} className="absolute left-3.5 top-3 text-gray-400" />
-                      <input
-                        type="text"
-                        placeholder="e.g. Anurag Sharma"
-                        value={fullname}
-                        onChange={(e) => setFullname(e.target.value)}
-                        className="w-full bg-gray-50/70 border border-gray-200 rounded-xl py-2.5 pl-10 pr-3 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] transition"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-gray-700 mb-1.5">
-                      10-Digit Mobile Number *
-                    </label>
-                    <div className="relative">
-                      <Phone size={15} className="absolute left-3.5 top-3 text-gray-400" />
-                      <input
-                        type="tel"
-                        maxLength={10}
-                        placeholder="e.g. 9981418565"
-                        value={mobile}
-                        onChange={(e) => setMobile(e.target.value.replace(/\D/g, "").slice(0, 10))}
-                        className="w-full bg-gray-50/70 border border-gray-200 rounded-xl py-2.5 pl-10 pr-3 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] transition tracking-wider"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Flat / House No */}
-                <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1.5">
-                    House / Flat No., Floor & Building *
-                  </label>
+              {/* Compact Form Grid */}
+              <div className="space-y-3">
+                {/* Name & Phone in 1 Row */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <div className="relative">
-                    <Building size={15} className="absolute left-3.5 top-3 text-gray-400" />
+                    <User size={14} className="absolute left-3 top-2.5 text-gray-400" />
                     <input
                       type="text"
-                      placeholder="e.g. Flat 302, 3rd Floor, Tower B"
-                      value={flatHouse}
-                      onChange={(e) => setFlatHouse(e.target.value)}
-                      className="w-full bg-gray-50/70 border border-gray-200 rounded-xl py-2.5 pl-10 pr-3 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] transition"
+                      placeholder="Receiver's Name *"
+                      value={fullname}
+                      onChange={(e) => setFullname(e.target.value)}
+                      className="w-full bg-gray-50/70 border border-gray-200 rounded-xl py-2 pl-9 pr-3 text-xs font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] transition placeholder:text-gray-400"
+                    />
+                  </div>
+
+                  <div className="relative">
+                    <Phone size={14} className="absolute left-3 top-2.5 text-gray-400" />
+                    <input
+                      type="tel"
+                      maxLength={10}
+                      placeholder="10-Digit Mobile Number *"
+                      value={mobile}
+                      onChange={(e) => setMobile(e.target.value.replace(/\D/g, "").slice(0, 10))}
+                      className="w-full bg-gray-50/70 border border-gray-200 rounded-xl py-2 pl-9 pr-3 text-xs font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] transition placeholder:text-gray-400 tracking-wider"
                     />
                   </div>
                 </div>
 
-                {/* Society / Colony / Street */}
-                <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1.5">
-                    Apartment Society / Colony / Street Name *
-                  </label>
+                {/* House No & Society in 1 Row */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div className="relative">
+                    <Building size={14} className="absolute left-3 top-2.5 text-gray-400" />
+                    <input
+                      type="text"
+                      placeholder="House / Flat No., Floor *"
+                      value={flatHouse}
+                      onChange={(e) => setFlatHouse(e.target.value)}
+                      className="w-full bg-gray-50/70 border border-gray-200 rounded-xl py-2 pl-9 pr-3 text-xs font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] transition placeholder:text-gray-400"
+                    />
+                  </div>
+
                   <input
                     type="text"
-                    placeholder="e.g. Green Meadows, Amrai / Danish Nagar"
+                    placeholder="Apartment / Colony / Street *"
                     value={streetSociety}
                     onChange={(e) => setStreetSociety(e.target.value)}
-                    className="w-full bg-gray-50/70 border border-gray-200 rounded-xl py-2.5 px-3.5 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] transition"
+                    className="w-full bg-gray-50/70 border border-gray-200 rounded-xl py-2 px-3 text-xs font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] transition placeholder:text-gray-400"
                   />
                 </div>
 
-                {/* Bhopal Locality Dropdown Selector */}
-                <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <label className="block text-xs font-bold text-gray-700">
-                      Bhopal Locality / Sector *
-                    </label>
-                    <span className="text-[10px] font-black text-[#0f8646] bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-                      Bhopal (MP - 462xxx)
-                    </span>
-                  </div>
+                {/* Bhopal Locality Dropdown & Landmark */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <div className="relative">
-                    <MapPin size={16} className="absolute left-3.5 top-3 text-[#0f8646]" />
+                    <MapPin size={14} className="absolute left-3 top-2.5 text-[#0f8646]" />
                     <select
                       value={selectedAreaIndex}
                       onChange={(e) => handleAreaChange(Number(e.target.value))}
-                      className="w-full bg-emerald-50/30 border border-emerald-200 rounded-xl py-2.5 pl-10 pr-8 text-xs sm:text-sm font-bold text-gray-900 outline-none focus:border-[#0f8646] cursor-pointer appearance-none"
+                      className="w-full bg-emerald-50/40 border border-emerald-200 rounded-xl py-2 pl-8.5 pr-7 text-xs font-bold text-gray-900 outline-none focus:border-[#0f8646] cursor-pointer appearance-none truncate"
                     >
                       {BHOPAL_AREAS.map((area, idx) => (
                         <option key={area.name} value={idx}>
-                          📍 {area.name} — Pincode: {area.pincode}
+                          {area.name} ({area.pincode})
                         </option>
                       ))}
                     </select>
-                    <ChevronRight size={14} className="absolute right-3.5 top-3.5 text-gray-400 rotate-90 pointer-events-none" />
+                    <ChevronRight size={13} className="absolute right-2.5 top-3 text-gray-400 rotate-90 pointer-events-none" />
                   </div>
-                </div>
 
-                {/* Landmark */}
-                <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1.5">
-                    Nearby Landmark <span className="text-gray-400 font-normal">(Optional)</span>
-                  </label>
                   <input
                     type="text"
-                    placeholder="e.g. Near 10 No. Market / Behind City Hospital"
+                    placeholder="Landmark (e.g. Near 10 No. Market)"
                     value={landmark}
                     onChange={(e) => setLandmark(e.target.value)}
-                    className="w-full bg-gray-50/70 border border-gray-200 rounded-xl py-2.5 px-3.5 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] transition"
+                    className="w-full bg-gray-50/70 border border-gray-200 rounded-xl py-2 px-3 text-xs font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] transition placeholder:text-gray-400"
                   />
                 </div>
 
-                {/* Interactive Bhopal Map Pinpoint */}
-                <div className="space-y-1.5 pt-1">
-                  <div className="flex items-center justify-between">
-                    <label className="text-xs font-bold text-gray-700 flex items-center gap-1.5">
-                      <MapPin size={14} className="text-[#0f8646]" />
-                      <span>Pinpoint Location on Bhopal Map</span>
-                    </label>
-                    <span className="text-[10px] font-extrabold text-[#0f8646] bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
-                      Drag Pin to Adjust
-                    </span>
-                  </div>
-
-                  <div className="h-52 sm:h-60 rounded-2xl overflow-hidden border border-emerald-200/80 shadow-xs relative bg-gray-100">
-                    {position && (
-                      <CheckoutMap position={position} setposition={setPosition} />
-                    )}
-                    <div className="absolute top-2.5 left-2.5 z-[400] bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl border border-gray-200/80 shadow-sm text-xs font-bold text-gray-800 flex items-center gap-1.5 pointer-events-none">
-                      <span className="w-2 h-2 rounded-full bg-[#0f8646] animate-pulse" />
-                      <span className="truncate max-w-[200px] sm:max-w-xs">{currentArea.name} ({currentArea.pincode})</span>
+                {/* Collapsible / Clean Map Toggle */}
+                <div className="pt-1">
+                  <div className="flex items-center justify-between text-xs bg-gray-50/80 px-3 py-2 rounded-xl border border-gray-200/80">
+                    <div className="flex items-center gap-1.5 text-gray-600 font-medium">
+                      <MapPin size={13} className="text-[#0f8646]" />
+                      <span>Pinpoint on Map:</span>
+                      <strong className="text-gray-900 font-bold">{currentArea.name}</strong>
                     </div>
+                    <button
+                      type="button"
+                      onClick={() => setShowMap(!showMap)}
+                      className="text-[#0f8646] hover:underline font-bold text-[11px] flex items-center gap-1 cursor-pointer"
+                    >
+                      <span>{showMap ? "Hide Map" : "Adjust Pin"}</span>
+                      <ChevronDown size={12} className={`transition-transform duration-200 ${showMap ? "rotate-180" : ""}`} />
+                    </button>
                   </div>
-                </div>
 
-                {/* Locked City & State summary badge */}
-                <div className="p-3 bg-gray-50 rounded-2xl border border-gray-100 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2">
-                    <Lock size={13} className="text-gray-400" />
-                    <span className="font-bold text-gray-700">Delivery Zone:</span>
-                    <span className="font-black text-gray-900">Bhopal, Madhya Pradesh</span>
-                  </div>
-                  <span className="font-extrabold text-[#0f8646] bg-green-50 px-2 py-0.5 rounded-lg border border-green-200">
-                    PIN: {currentArea.pincode}
-                  </span>
+                  {showMap && (
+                    <div className="mt-2 h-40 sm:h-44 rounded-xl overflow-hidden border border-emerald-200 shadow-2xs relative bg-gray-100">
+                      {position && (
+                        <CheckoutMap position={position} setposition={setPosition} />
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
 
             {/* 2. DELIVERY TIME SLOT */}
-            <div className="bg-white rounded-3xl border border-gray-200/90 p-5 sm:p-7 shadow-xs">
-              <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-100">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-emerald-50 text-[#0f8646] flex items-center justify-center font-black text-sm">
+            <div className="bg-white rounded-2xl border border-gray-200/80 p-4 sm:p-5 shadow-xs">
+              <div className="flex items-center justify-between mb-3 pb-2 border-b border-gray-100">
+                <div className="flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-lg bg-emerald-100/80 text-[#0f8646] flex items-center justify-center font-bold text-xs">
                     2
-                  </div>
-                  <div>
-                    <h2 className="font-extrabold text-base text-gray-900">
-                      Select Delivery Slot
-                    </h2>
-                    <p className="text-[11px] text-gray-500">
-                      Freshly harvested farm batches dispatched across Bhopal
-                    </p>
-                  </div>
+                  </span>
+                  <h2 className="font-bold text-sm text-gray-900">
+                    Delivery Slot
+                  </h2>
                 </div>
-                <span className="text-[10px] font-black uppercase text-[#0f8646] bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-                  Farm Fresh
+                <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full">
+                  Bhopal Daily Dispatches
                 </span>
               </div>
 
-              <div className="space-y-3">
+              {/* Compact Slot Selector Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 {[
                   {
                     id: "Early Morning Slot (6:00 AM – 8:30 AM)",
-                    title: "Early Morning Harvest",
+                    title: "Early Morning",
                     time: "6:00 AM – 8:30 AM",
-                    desc: "Direct farm harvest dispatch from SubziQuick Store for breakfast",
+                    badge: "Freshest",
                     icon: Sun,
-                    badge: "Best Freshness",
-                    badgeColor: "bg-emerald-100 text-emerald-800",
                   },
                   {
                     id: "Morning Fresh Slot (8:30 AM – 11:00 AM)",
-                    title: "Morning Farm Fresh Batch",
+                    title: "Morning Fresh",
                     time: "8:30 AM – 11:00 AM",
-                    desc: "Crisp sorted veggies & fruits for lunch preparation",
+                    badge: "Popular",
                     icon: Zap,
-                    badge: "Most Popular",
-                    badgeColor: "bg-amber-100 text-amber-900",
                   },
                   {
                     id: "Midday Slot (11:00 AM – 1:00 PM)",
-                    title: "Midday Express Batch",
+                    title: "Midday Batch",
                     time: "11:00 AM – 1:00 PM",
-                    desc: "Same-day morning harvest dispatch right to your doorstep",
-                    icon: Clock,
                     badge: "Express",
-                    badgeColor: "bg-blue-100 text-blue-900",
+                    icon: Clock,
                   },
                 ].map((slot) => {
                   const isSelected = deliverySlot === slot.id;
                   const Icon = slot.icon;
                   return (
-                    <label
+                    <div
                       key={slot.id}
                       onClick={() => setDeliverySlot(slot.id)}
-                      className={`p-3.5 sm:p-4 rounded-2xl border cursor-pointer transition-all flex items-center justify-between ${
+                      className={`p-3 rounded-xl border cursor-pointer transition flex flex-col justify-between ${
                         isSelected
-                          ? "border-[#0f8646] bg-emerald-50/40 shadow-xs"
+                          ? "border-[#0f8646] bg-emerald-50/50 shadow-2xs"
                           : "border-gray-200 hover:border-gray-300 bg-white"
                       }`}
                     >
-                      <div className="flex items-center gap-3">
-                        <div
-                          className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span
+                          className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded ${
                             isSelected
-                              ? "bg-[#0f8646] text-white"
-                              : "bg-gray-100 text-gray-500"
+                              ? "bg-emerald-600 text-white"
+                              : "bg-gray-100 text-gray-600"
                           }`}
                         >
-                          <Icon size={18} />
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <span className="font-black text-xs sm:text-sm text-gray-900">
-                              {slot.title}
-                            </span>
-                            <span
-                              className={`text-[9px] font-black uppercase px-1.5 py-0.5 rounded-md ${slot.badgeColor}`}
-                            >
-                              {slot.badge}
-                            </span>
-                          </div>
-                          <span className="text-xs text-gray-500 font-medium block mt-0.5">
-                            {slot.time} • <span className="text-gray-400">{slot.desc}</span>
-                          </span>
+                          {slot.badge}
+                        </span>
+                        <div
+                          className={`w-4 h-4 rounded-full border flex items-center justify-center ${
+                            isSelected
+                              ? "border-[#0f8646] bg-[#0f8646] text-white"
+                              : "border-gray-300"
+                          }`}
+                        >
+                          {isSelected && <Check size={10} strokeWidth={3} />}
                         </div>
                       </div>
 
-                      <div
-                        className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ml-2 ${
-                          isSelected
-                            ? "border-[#0f8646] bg-[#0f8646] text-white"
-                            : "border-gray-300 bg-white"
-                        }`}
-                      >
-                        {isSelected && <Check size={12} strokeWidth={3} />}
+                      <div>
+                        <div className="flex items-center gap-1.5">
+                          <Icon size={14} className={isSelected ? "text-[#0f8646]" : "text-gray-400"} />
+                          <span className="font-bold text-xs text-gray-900">{slot.title}</span>
+                        </div>
+                        <span className="text-[11px] text-gray-500 block mt-0.5 font-medium">
+                          {slot.time}
+                        </span>
                       </div>
-                    </label>
+                    </div>
                   );
                 })}
               </div>
-            </div>
 
-            {/* 3. DELIVERY PREFERENCES / QUIET DROP */}
-            <div className="bg-white rounded-3xl border border-gray-200/90 p-5 shadow-xs">
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-extrabold text-sm text-gray-900">
-                      🔕 Silent Doorstep Drop (Do Not Ring Bell)
-                    </span>
-                    <span className="text-[10px] font-bold bg-gray-100 text-gray-600 px-2 py-0.5 rounded-md">
-                      Quiet Mode
-                    </span>
-                  </div>
-                  <span className="text-xs text-gray-500 block mt-0.5">
-                    Rider will place bag at your doorstep without ringing bell
+              {/* Silent Delivery Option in Micro-Strip */}
+              <div className="mt-3 pt-2.5 border-t border-gray-100 flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-700 font-semibold">
+                    🔕 Silent Doorstep Drop (Do Not Ring Bell)
                   </span>
                 </div>
-
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input
                     type="checkbox"
@@ -903,455 +773,341 @@ export default function Checkout() {
                     onChange={(e) => setIsSilentDelivery(e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0f8646]"></div>
+                  <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#0f8646]"></div>
                 </label>
               </div>
 
               {isSilentDelivery && (
                 <input
                   type="text"
-                  placeholder="Optional instruction (e.g. Leave bag on shoe rack / security gate)"
+                  placeholder="Optional drop instruction (e.g. Leave on shoe rack)"
                   value={deliveryInstructions}
                   onChange={(e) => setDeliveryInstructions(e.target.value)}
-                  className="mt-3 w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-semibold text-gray-900 outline-none focus:border-[#0f8646]"
+                  className="mt-2 w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-1.5 text-xs font-semibold text-gray-900 outline-none focus:border-[#0f8646]"
                 />
               )}
             </div>
-          </div>
 
-          {/* ================= RIGHT COLUMN: PAYMENT & ORDER SUMMARY (5 cols) ================= */}
-          <div className="lg:col-span-5 space-y-6">
-            {/* PAYMENT OPTIONS */}
-            <div className="bg-white rounded-3xl border border-gray-200/90 p-5 sm:p-6 shadow-xs">
-              <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-gray-100">
-                <div className="w-8 h-8 rounded-xl bg-emerald-50 text-[#0f8646] flex items-center justify-center font-black text-sm">
-                  3
-                </div>
-                <div>
-                  <h2 className="font-extrabold text-base text-gray-900">
+            {/* 3. PAYMENT METHOD */}
+            <div className="bg-white rounded-2xl border border-gray-200/80 p-4 sm:p-5 shadow-xs">
+              <div className="flex items-center justify-between mb-3 pb-2 border-b border-gray-100">
+                <div className="flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-lg bg-emerald-100/80 text-[#0f8646] flex items-center justify-center font-bold text-xs">
+                    3
+                  </span>
+                  <h2 className="font-bold text-sm text-gray-900">
                     Payment Method
                   </h2>
-                  <p className="text-[11px] text-gray-500">
-                    Choose how you want to pay
-                  </p>
                 </div>
               </div>
 
-              <div className="space-y-3">
+              {/* Segmented Radio Cards: COD vs UPI */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 {/* Cash on Delivery */}
-                <label
+                <div
                   onClick={() => setPaymentMethod("cod")}
-                  className={`p-4 rounded-2xl border cursor-pointer transition-all flex items-center justify-between ${
+                  className={`p-3 rounded-xl border cursor-pointer transition flex items-center justify-between ${
                     paymentMethod === "cod"
-                      ? "border-[#0f8646] bg-emerald-50/40 shadow-xs"
+                      ? "border-[#0f8646] bg-emerald-50/50 shadow-2xs"
                       : "border-gray-200 hover:border-gray-300 bg-white"
                   }`}
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-emerald-100 text-[#0f8646] flex items-center justify-center shrink-0">
-                      <Wallet size={20} />
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-100 text-[#0f8646] flex items-center justify-center shrink-0">
+                      <Wallet size={16} />
                     </div>
                     <div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-black text-xs sm:text-sm text-gray-900">
-                          Cash on Delivery (COD)
-                        </span>
-                        <span className="text-[9px] font-black uppercase bg-green-100 text-green-800 px-1.5 py-0.5 rounded">
-                          Pay on Arrival
-                        </span>
-                      </div>
-                      <span className="text-xs text-gray-500 font-medium block mt-0.5">
-                        Pay via Cash or UPI directly to delivery partner at doorstep
+                      <span className="font-bold text-xs text-gray-900 block">
+                        Cash on Delivery
+                      </span>
+                      <span className="text-[10px] text-gray-500 font-medium">
+                        Pay Cash / UPI at Doorstep
                       </span>
                     </div>
                   </div>
 
                   <div
-                    className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ml-2 ${
+                    className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${
                       paymentMethod === "cod"
                         ? "border-[#0f8646] bg-[#0f8646] text-white"
-                        : "border-gray-300 bg-white"
+                        : "border-gray-300"
                     }`}
                   >
-                    {paymentMethod === "cod" && <Check size={12} strokeWidth={3} />}
+                    {paymentMethod === "cod" && <Check size={10} strokeWidth={3} />}
                   </div>
-                </label>
+                </div>
 
-                {/* Direct UPI Payment (GPay, PhonePe, Paytm, QR) */}
+                {/* Direct UPI / QR */}
                 <div
-                  className={`rounded-2xl border transition-all overflow-hidden ${
+                  onClick={() => setPaymentMethod("upi")}
+                  className={`p-3 rounded-xl border cursor-pointer transition flex items-center justify-between ${
                     paymentMethod === "upi"
-                      ? "border-[#0f8646] bg-emerald-50/30 shadow-sm"
+                      ? "border-[#0f8646] bg-emerald-50/50 shadow-2xs"
                       : "border-gray-200 hover:border-gray-300 bg-white"
                   }`}
                 >
-                  <label
-                    onClick={() => setPaymentMethod("upi")}
-                    className="p-4 cursor-pointer flex items-center justify-between"
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-600 to-[#0f8646] text-white flex items-center justify-center shrink-0 shadow-2xs">
+                      <Zap size={16} />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-bold text-xs text-gray-900">
+                          UPI / QR Code
+                        </span>
+                        <span className="text-[9px] font-bold text-emerald-800 bg-emerald-100 px-1 py-0.2 rounded">
+                          Fast
+                        </span>
+                      </div>
+                      <span className="text-[10px] text-gray-500 font-medium">
+                        GPay, PhonePe, Paytm or QR
+                      </span>
+                    </div>
+                  </div>
+
+                  <div
+                    className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${
+                      paymentMethod === "upi"
+                        ? "border-[#0f8646] bg-[#0f8646] text-white"
+                        : "border-gray-300"
+                    }`}
                   >
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 via-blue-600 to-green-600 text-white flex items-center justify-center shrink-0 shadow-sm">
-                        <Zap size={20} />
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-1.5">
-                          <span className="font-black text-xs sm:text-sm text-gray-900">
-                            Pay via UPI / QR Code
-                          </span>
-                          <span className="text-[9px] font-black uppercase bg-gradient-to-r from-purple-100 to-green-100 text-purple-900 px-1.5 py-0.5 rounded">
-                            0% Extra Fee
-                          </span>
-                        </div>
-                        <span className="text-xs text-gray-500 font-medium block mt-0.5">
-                          Google Pay, PhonePe, Paytm, BHIM or Scan QR
-                        </span>
-                      </div>
-                    </div>
-
-                    <div
-                      className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ml-2 ${
-                        paymentMethod === "upi"
-                          ? "border-[#0f8646] bg-[#0f8646] text-white"
-                          : "border-gray-300 bg-white"
-                      }`}
-                    >
-                      {paymentMethod === "upi" && <Check size={12} strokeWidth={3} />}
-                    </div>
-                  </label>
-
-                  {/* UPI QR & 1-Click Pay Extended Box */}
-                  {paymentMethod === "upi" && (
-                    <div className="p-4 pt-0 border-t border-emerald-100/80 bg-white space-y-4">
-                      {/* Mobile 1-Click Pay Apps Button */}
-                      <div className="pt-3 space-y-2">
-                        <span className="text-[11px] font-bold text-gray-700 block">
-                          ⚡ Tap to Pay with Any UPI App:
-                        </span>
-                        
-                        {/* Universal 1-Click UPI Payment Button */}
-                        <a
-                          href={`upi://pay?pa=9981418565@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Order`}
-                          className="w-full bg-gradient-to-r from-emerald-600 via-[#0f8646] to-green-600 hover:from-emerald-700 hover:to-green-700 text-white py-3 px-4 rounded-xl text-xs sm:text-sm font-black flex items-center justify-center gap-2 shadow-sm transition active:scale-98 text-center cursor-pointer"
-                        >
-                          <Zap size={16} />
-                          <span>Pay ₹{finalPayableTotal} via UPI App (PhonePe / GPay / Paytm)</span>
-                        </a>
-
-                        <div className="grid grid-cols-3 gap-2 pt-1">
-                          <a
-                            href={`upi://pay?pa=9981418565@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Order`}
-                            className="bg-[#5f259f] hover:bg-[#4a1c7d] text-white py-2 px-2 rounded-xl text-[11px] font-black flex items-center justify-center gap-1 shadow-2xs transition active:scale-95 text-center"
-                          >
-                            <span>🟣 PhonePe</span>
-                          </a>
-                          <a
-                            href={`upi://pay?pa=9981418565@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Order`}
-                            className="bg-[#1a73e8] hover:bg-[#1557b0] text-white py-2 px-2 rounded-xl text-[11px] font-black flex items-center justify-center gap-1 shadow-2xs transition active:scale-95 text-center"
-                          >
-                            <span>🔵 GPay</span>
-                          </a>
-                          <a
-                            href={`upi://pay?pa=9981418565@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Order`}
-                            className="bg-[#00baf2] hover:bg-[#0092bf] text-white py-2 px-2 rounded-xl text-[11px] font-black flex items-center justify-center gap-1 shadow-2xs transition active:scale-95 text-center"
-                          >
-                            <span>🔷 Paytm</span>
-                          </a>
-                        </div>
-                      </div>
-
-                      {/* Dynamic QR Code & 1-Tap Copy Box */}
-                      <div className="bg-emerald-50/60 p-4 rounded-2xl border border-emerald-200/90 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
-                        <div className="relative bg-white p-2 rounded-xl shadow-xs border border-gray-200 shrink-0">
-                          <img
-                            src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(
-                              `upi://pay?pa=9981418565@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Order`
-                            )}`}
-                            alt="SubziQuick UPI QR"
-                            className="w-28 h-28 object-contain"
-                          />
-                          <span className="text-[9px] font-bold text-gray-500 block text-center mt-1">
-                            Scan with Any UPI App
-                          </span>
-                        </div>
-
-                        <div className="space-y-2 flex-1">
-                          <div>
-                            <span className="text-[10px] font-black uppercase text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-md inline-block">
-                              ⚡ Option B: Scan QR or Copy UPI ID
-                            </span>
-                            <h4 className="font-extrabold text-xs sm:text-sm text-gray-900 mt-1">
-                              Pay ₹{finalPayableTotal} to SubziQuick
-                            </h4>
-                          </div>
-                          
-                          {/* Copyable Primary UPI ID */}
-                          <div className="flex flex-wrap items-center gap-2 pt-0.5 justify-center sm:justify-start">
-                            <code className="bg-white border border-gray-300 px-2.5 py-1 rounded-lg text-xs font-mono font-black text-gray-900 shadow-2xs">
-                              9981418565@ybl
-                            </code>
-                            <button
-                              type="button"
-                              onClick={() => {
-                                navigator.clipboard.writeText("9981418565@ybl");
-                                setCopiedUpi(true);
-                                setTimeout(() => setCopiedUpi(false), 2500);
-                              }}
-                              className="px-3 py-1 bg-[#0f8646] hover:bg-[#0c6a38] text-white rounded-lg text-xs font-bold transition shadow-xs cursor-pointer flex items-center gap-1"
-                            >
-                              {copiedUpi ? "✓ Copied!" : "📋 Copy UPI ID"}
-                            </button>
-                          </div>
-
-                          {/* Secondary Backup Handle */}
-                          <div className="flex items-center gap-1.5 text-[10px] text-gray-500 justify-center sm:justify-start">
-                            <span>Backup Handle:</span>
-                            <button
-                              type="button"
-                              onClick={() => {
-                                navigator.clipboard.writeText("9981418565-2@ybl");
-                                alert("Backup UPI ID 9981418565-2@ybl copied to clipboard!");
-                              }}
-                              className="font-mono text-emerald-700 hover:underline cursor-pointer font-bold"
-                            >
-                              9981418565-2@ybl
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* 12-Digit UTR / Reference ID Field */}
-                      <div className="bg-emerald-50/50 p-3.5 rounded-2xl border border-emerald-200">
-                        <div className="flex items-center justify-between mb-1.5">
-                          <label className="text-xs font-black text-emerald-950 flex items-center gap-1.5">
-                            <span>Step 2: Enter UPI UTR / Reference No.</span>
-                            <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded">
-                              Optional
-                            </span>
-                          </label>
-                          <span className="text-[10px] font-bold text-gray-400">From GPay/PhonePe</span>
-                        </div>
-                        <input
-                          type="text"
-                          maxLength={20}
-                          placeholder="e.g. 423987123456 (from your UPI receipt)"
-                          value={upiRefNumber}
-                          onChange={(e) => setUpiRefNumber(e.target.value.replace(/[^a-zA-Z0-9]/g, ""))}
-                          className="w-full bg-white border border-emerald-300 rounded-xl py-2.5 px-3 text-xs font-bold text-gray-900 outline-none focus:border-[#0f8646] focus:ring-1 focus:ring-[#0f8646] transition shadow-2xs placeholder:text-gray-400 placeholder:font-normal"
-                        />
-                        <p className="text-[10px] text-emerald-800 mt-1.5 font-medium leading-tight">
-                          💡 Enter UTR number if available, then click Place Order below to confirm.
-                        </p>
-                      </div>
-
-                      {/* Step 3: Upload Payment Screenshot (Receipt Proof) */}
-                      <div className="bg-emerald-50/40 p-3.5 rounded-2xl border border-emerald-200">
-                        <div className="flex items-center justify-between mb-1.5">
-                          <label className="text-xs font-black text-emerald-950 flex items-center gap-1.5">
-                            <Camera size={14} className="text-[#0f8646]" />
-                            <span>Step 3: Attach Payment Screenshot</span>
-                            <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded">
-                              Recommended
-                            </span>
-                          </label>
-                          <span className="text-[10px] font-bold text-gray-400">JPG/PNG</span>
-                        </div>
-
-                        <div className="relative">
-                          {paymentProofPreview ? (
-                            <div className="flex items-center justify-between bg-white p-2 rounded-xl border border-emerald-300 shadow-2xs">
-                              <div className="flex items-center gap-2.5">
-                                <img
-                                  src={paymentProofPreview}
-                                  alt="Payment Screenshot Preview"
-                                  className="w-12 h-12 rounded-lg object-cover border border-gray-200 shadow-2xs"
-                                />
-                                <div>
-                                  <span className="text-xs font-bold text-emerald-800 block flex items-center gap-1">
-                                    <Check size={13} className="stroke-[3]" /> Screenshot Attached
-                                  </span>
-                                  <span className="text-[10px] text-gray-500">Ready for 1-second admin verification</span>
-                                </div>
-                              </div>
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setPaymentProofFile(null);
-                                  setPaymentProofPreview(null);
-                                }}
-                                className="text-xs font-bold text-rose-600 hover:text-rose-800 px-2 py-1 rounded-lg hover:bg-rose-50 transition cursor-pointer"
-                              >
-                                Remove
-                              </button>
-                            </div>
-                          ) : (
-                            <label className="flex flex-col items-center justify-center p-3 border-2 border-dashed border-emerald-300 hover:border-[#0f8646] bg-white rounded-xl cursor-pointer transition group">
-                              <div className="flex items-center gap-2 text-xs font-bold text-[#0f8646] group-hover:underline">
-                                <Upload size={15} />
-                                <span>Upload Payment Receipt / Screenshot</span>
-                              </div>
-                              <span className="text-[10px] text-gray-400 mt-0.5">
-                                Click or tap to browse photo from gallery
-                              </span>
-                              <input
-                                type="file"
-                                accept="image/*"
-                                className="hidden"
-                                onChange={(e) => {
-                                  const file = e.target.files?.[0];
-                                  if (file) {
-                                    setPaymentProofFile(file);
-                                    const reader = new FileReader();
-                                    reader.onload = (ev) => {
-                                      setPaymentProofPreview(ev.target?.result as string);
-                                    };
-                                    reader.readAsDataURL(file);
-                                  }
-                                }}
-                              />
-                            </label>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                    {paymentMethod === "upi" && <Check size={10} strokeWidth={3} />}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* ORDER ITEMS & BILL BREAKDOWN */}
-            <div className="bg-white rounded-3xl border border-gray-200/90 p-5 sm:p-6 shadow-xs">
-              <div className="flex items-center justify-between mb-3 pb-3 border-b border-gray-100">
-                <span className="font-black text-sm text-gray-900">
-                  Order Summary ({cartdata.length} items)
+              {/* UPI Expanded Minimalist Section */}
+              {paymentMethod === "upi" && (
+                <div className="mt-3 p-3.5 bg-emerald-50/40 rounded-xl border border-emerald-200/80 space-y-3">
+                  {/* 1-Tap Pay Link & UPI Apps */}
+                  <div className="flex flex-col sm:flex-row items-center gap-2">
+                    <a
+                      href={`upi://pay?pa=9981418565@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Order`}
+                      className="w-full sm:flex-1 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-2 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 shadow-2xs transition active:scale-98"
+                    >
+                      <Zap size={14} />
+                      <span>Tap to Pay ₹{finalPayableTotal} via UPI App</span>
+                    </a>
+
+                    <div className="flex items-center gap-1.5 w-full sm:w-auto justify-center">
+                      <code className="bg-white border border-gray-300 px-2 py-1.5 rounded-lg text-xs font-mono font-bold text-gray-800">
+                        9981418565@ybl
+                      </code>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          navigator.clipboard.writeText("9981418565@ybl");
+                          setCopiedUpi(true);
+                          setTimeout(() => setCopiedUpi(false), 2000);
+                        }}
+                        className="px-2.5 py-1.5 bg-white border border-gray-300 hover:border-[#0f8646] text-gray-700 hover:text-[#0f8646] rounded-lg text-xs font-bold transition cursor-pointer shrink-0"
+                      >
+                        {copiedUpi ? "✓ Copied" : "Copy ID"}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* QR & Proof Upload side-by-side */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 items-center pt-1">
+                    {/* Compact QR Preview */}
+                    <div className="flex items-center gap-2.5 bg-white p-2.5 rounded-xl border border-gray-200">
+                      <img
+                        src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(
+                          `upi://pay?pa=9981418565@ybl&pn=SubziQuick&am=${finalPayableTotal}&cu=INR&tn=SubziQuick%20Order`
+                        )}`}
+                        alt="SubziQuick UPI QR"
+                        className="w-16 h-16 object-contain rounded border border-gray-100"
+                      />
+                      <div className="min-w-0">
+                        <span className="text-[11px] font-bold text-gray-900 block">Scan to Pay</span>
+                        <span className="text-[10px] text-gray-400 block">Any UPI App (GPay/Paytm)</span>
+                        <span className="text-[10px] text-[#0f8646] font-bold block mt-0.5">Amount: ₹{finalPayableTotal}</span>
+                      </div>
+                    </div>
+
+                    {/* UTR Reference input */}
+                    <div>
+                      <input
+                        type="text"
+                        maxLength={20}
+                        placeholder="UPI UTR / Ref No. (Optional)"
+                        value={upiRefNumber}
+                        onChange={(e) => setUpiRefNumber(e.target.value.replace(/[^a-zA-Z0-9]/g, ""))}
+                        className="w-full bg-white border border-gray-300 rounded-xl py-2 px-3 text-xs font-bold text-gray-900 outline-none focus:border-[#0f8646] transition placeholder:text-gray-400 placeholder:font-normal"
+                      />
+
+                      {/* Optional screenshot upload */}
+                      <div className="mt-1.5">
+                        {paymentProofPreview ? (
+                          <div className="flex items-center justify-between bg-white px-2 py-1 rounded-lg border border-emerald-300 text-[11px]">
+                            <span className="text-[#0f8646] font-bold flex items-center gap-1">
+                              <Check size={12} /> Receipt Added
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setPaymentProofFile(null);
+                                setPaymentProofPreview(null);
+                              }}
+                              className="text-red-500 hover:text-red-700 font-bold ml-2"
+                            >
+                              Remove
+                            </button>
+                          </div>
+                        ) : (
+                          <label className="flex items-center justify-center gap-1.5 py-1.5 px-2 bg-white border border-dashed border-gray-300 hover:border-[#0f8646] rounded-xl cursor-pointer text-[11px] text-gray-600 hover:text-[#0f8646] transition">
+                            <Upload size={12} />
+                            <span>Attach Screenshot (Optional)</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                  setPaymentProofFile(file);
+                                  const reader = new FileReader();
+                                  reader.onload = (ev) => {
+                                    setPaymentProofPreview(ev.target?.result as string);
+                                  };
+                                  reader.readAsDataURL(file);
+                                }
+                              }}
+                            />
+                          </label>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* ================= RIGHT COLUMN: STICKY SUMMARY (5 cols) ================= */}
+          <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-4">
+            <div className="bg-white rounded-2xl border border-gray-200/80 p-4 sm:p-5 shadow-xs">
+              <div className="flex items-center justify-between mb-3 pb-2.5 border-b border-gray-100">
+                <span className="font-bold text-sm text-gray-900">
+                  Order Summary ({cartdata.length} {cartdata.length === 1 ? "item" : "items"})
                 </span>
                 <Link href="/user/cart" className="text-xs text-[#0f8646] font-bold hover:underline">
-                  Edit Basket
+                  Edit Cart
                 </Link>
               </div>
 
-              {/* Items Mini List */}
-              <div className="space-y-2 mb-4 max-h-44 overflow-y-auto pr-1">
+              {/* Items Compact Mini List */}
+              <div className="space-y-1.5 mb-3 max-h-40 overflow-y-auto pr-1">
                 {cartdata.map((item, idx) => (
                   <div key={idx} className="flex items-center justify-between text-xs py-1">
-                    <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                    <div className="flex items-center gap-2 min-w-0 flex-1">
                       <img
                         src={item.image}
                         alt={item.name}
-                        className="w-8 h-8 rounded-lg object-contain bg-gray-50 border border-gray-100 p-0.5 shrink-0"
+                        className="w-7 h-7 rounded-md object-contain bg-gray-50 border border-gray-100 p-0.5 shrink-0"
                       />
                       <div className="min-w-0 flex-1">
-                        <span className="font-bold text-gray-900 block truncate">{item.name}</span>
+                        <span className="font-semibold text-gray-900 block truncate">{item.name}</span>
                         <span className="text-[10px] text-gray-400">
-                          Qty: {item.quantity} × {item.variation?.weight || item.unit}
+                          {item.quantity} × {item.variation?.weight || item.unit}
                         </span>
                       </div>
                     </div>
-                    {item.price === 0 ? (
-                      <span className="text-[10px] font-black text-[#0f8646] bg-green-100 px-2 py-0.5 rounded shrink-0">
-                        FREE (₹0)
-                      </span>
-                    ) : (
-                      <span className="font-black text-gray-900 shrink-0">
-                        ₹{item.price * item.quantity}
-                      </span>
-                    )}
+                    <span className="font-bold text-gray-900 shrink-0 ml-2">
+                      ₹{item.price * item.quantity}
+                    </span>
                   </div>
                 ))}
               </div>
 
               {/* Bill Details */}
-              <div className="space-y-2.5 text-xs pt-3 border-t border-gray-100">
-                <div className="flex justify-between text-gray-600 font-medium">
-                  <span>Item Total</span>
+              <div className="space-y-2 text-xs pt-2.5 border-t border-gray-100">
+                <div className="flex justify-between text-gray-600">
+                  <span>Subtotal</span>
                   <span className="font-bold text-gray-900">₹{subtotal}</span>
                 </div>
 
-                <div className="flex justify-between text-gray-600 font-medium">
-                  <span className="flex items-center gap-1">
-                    <span>Delivery Partner Fee</span>
-                  </span>
+                <div className="flex justify-between text-gray-600">
+                  <span>Delivery Fee</span>
                   <span className="font-bold text-gray-900">
                     {deliveryFee === 0 ? (
-                      <span className="text-[#0f8646] font-black bg-emerald-50 px-2 py-0.5 rounded">FREE</span>
+                      <span className="text-[#0f8646] font-bold bg-emerald-50 px-1.5 py-0.5 rounded">FREE</span>
                     ) : (
                       `₹${deliveryFee}`
                     )}
                   </span>
                 </div>
 
-                {/* Rider Tip */}
-                <div className="pt-2 pb-1 border-t border-gray-100">
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-[11px] font-bold text-gray-700">
-                      🛵 Tip your delivery partner
+                {/* Rider Tip Chips */}
+                <div className="pt-2 border-t border-gray-100">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-[11px] text-gray-600 font-semibold">
+                      🛵 Rider Tip
                     </span>
                     {riderTip > 0 && (
                       <button
                         type="button"
                         onClick={() => setRiderTip(0)}
-                        className="text-[10px] text-red-500 font-bold hover:underline cursor-pointer"
+                        className="text-[10px] text-red-500 hover:underline"
                       >
-                        Remove
+                        Clear
                       </button>
                     )}
                   </div>
-                  <div className="grid grid-cols-4 gap-1.5">
+                  <div className="grid grid-cols-4 gap-1">
                     {[10, 20, 30, 50].map((amt) => (
                       <button
                         type="button"
                         key={amt}
                         onClick={() => setRiderTip(riderTip === amt ? 0 : amt)}
-                        className={`py-1.5 px-2 rounded-xl text-xs font-black transition cursor-pointer flex items-center justify-center gap-1 ${
+                        className={`py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
                           riderTip === amt
-                            ? "bg-[#0f8646] text-white shadow-2xs"
-                            : "bg-gray-50 hover:bg-green-50 text-gray-700 border border-gray-200"
+                            ? "bg-[#0f8646] text-white"
+                            : "bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200"
                         }`}
                       >
-                        <span>₹{amt}</span>
-                        {amt === 20 && <span>⭐</span>}
+                        ₹{amt}
                       </button>
                     ))}
                   </div>
                 </div>
 
                 {discount > 0 && (
-                  <div className="flex justify-between text-[#0f8646] font-bold bg-emerald-50/70 p-2.5 rounded-xl border border-emerald-100">
-                    <span>Coupon Savings ({couponCode})</span>
+                  <div className="flex justify-between text-[#0f8646] font-bold bg-emerald-50 p-2 rounded-lg">
+                    <span>Coupon ({couponCode})</span>
                     <span>-₹{discount}</span>
                   </div>
                 )}
 
+                {/* Total */}
                 <div className="border-t border-gray-100 pt-3 flex justify-between items-baseline">
                   <div>
-                    <span className="text-sm font-black text-gray-900 block">
-                      To Pay
-                    </span>
-                    <span className="text-[10px] text-gray-400">
-                      Incl. all taxes & store packaging
-                    </span>
+                    <span className="text-sm font-bold text-gray-900 block">Total</span>
+                    <span className="text-[10px] text-gray-400">Incl. all taxes</span>
                   </div>
-                  <span className="text-2xl font-black text-[#0f8646]">
+                  <span className="text-xl font-black text-[#0f8646]">
                     ₹{finalPayableTotal}
                   </span>
                 </div>
               </div>
 
-              {/* Desktop Confirm Button */}
+              {/* Desktop Place Order Button */}
               <button
                 type="button"
                 onClick={handelPlaceOrder}
                 disabled={submitting || cartdata.length === 0}
-                className="w-full mt-5 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3.5 rounded-2xl font-black text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                className="w-full mt-4 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3 rounded-xl font-bold text-xs sm:text-sm shadow-sm hover:shadow transition flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
-                <CheckCircle2 size={18} />
+                <CheckCircle2 size={16} />
                 <span>
-                  {paymentMethod === "cod" ? "Place COD Order" : "Confirm & Place UPI Order"} • ₹{finalPayableTotal}
+                  {paymentMethod === "cod" ? "Place COD Order" : "Place UPI Order"} • ₹{finalPayableTotal}
                 </span>
               </button>
 
-              <div className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-gray-400 font-medium">
-                <ShieldCheck size={14} className="text-[#0f8646]" />
-                <span>100% Safe & Contactless Delivery in Bhopal</span>
+              <div className="mt-2.5 flex items-center justify-center gap-1 text-[11px] text-gray-400">
+                <ShieldCheck size={13} className="text-[#0f8646]" />
+                <span>Guaranteed Safe & Contactless Delivery</span>
               </div>
             </div>
           </div>
@@ -1359,12 +1115,12 @@ export default function Checkout() {
       </main>
 
       {/* ================= STICKY MOBILE BOTTOM BAR ================= */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-200/80 p-3.5 px-4 shadow-2xl flex items-center justify-between gap-3">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-200 p-3 px-4 shadow-lg flex items-center justify-between gap-3">
         <div>
           <span className="text-[10px] text-gray-400 font-bold block uppercase tracking-wider">
-            Total Payable
+            Total
           </span>
-          <span className="text-xl font-black text-[#0f8646]">
+          <span className="text-lg font-black text-[#0f8646]">
             ₹{finalPayableTotal}
           </span>
         </div>
@@ -1373,11 +1129,11 @@ export default function Checkout() {
           type="button"
           onClick={handelPlaceOrder}
           disabled={submitting || cartdata.length === 0}
-          className="flex-1 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3 px-4 rounded-2xl font-black text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
+          className="flex-1 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
         >
-          <CheckCircle2 size={16} />
+          <CheckCircle2 size={15} />
           <span>
-            {paymentMethod === "cod" ? "Place COD Order" : "Confirm UPI Order"} • ₹{finalPayableTotal}
+            {paymentMethod === "cod" ? "Place COD Order" : "Place UPI Order"} • ₹{finalPayableTotal}
           </span>
         </button>
       </div>
