@@ -1,5 +1,6 @@
 import React from 'react'
 import Hero from './Hero'
+import MarqueeTicker from './MarqueeTicker'
 import TrustRibbon from './TrustRibbon'
 import Categoryslider from './Categoryslider'
 import FilteredProduceSection from './FilteredProduceSection'
@@ -110,6 +111,9 @@ export default async function Userdashbord() {
     <div className="bg-[#FAF8F5] w-full max-w-full overflow-x-clip font-sans selection:bg-emerald-100 selection:text-emerald-900">
       {/* 1. Hero Banner */}
       <Hero banners={plainBanners} />
+
+      {/* 1.2 Live Superfast Marquee Ticker */}
+      <MarqueeTicker />
 
       {/* 1.5 Quick Commerce Trust & Speed Ribbon */}
       <TrustRibbon />
