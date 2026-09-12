@@ -119,6 +119,10 @@ export default function CartPage() {
   const total = Math.max(0, subtotal + deliveryFee - discountAmount);
   const totalItemCount = cartdata.reduce((a, b) => a + b.quantity, 0);
 
+  const minOrderAmount = deliverySettings.minOrderAmount || 99;
+  const isSubMinimum = subtotal > 0 && subtotal < minOrderAmount;
+  const remainingForMinOrder = Math.max(0, minOrderAmount - subtotal);
+
   const handleApplyCoupon = async (codeToApply?: string) => {
     const code = (codeToApply || couponInput).trim().toUpperCase();
     if (!code) return;
@@ -154,6 +158,10 @@ export default function CartPage() {
   };
 
   const handleProceed = () => {
+    if (isSubMinimum) {
+      alert(`⚠️ Minimum order amount for Bhopal express delivery is ₹${minOrderAmount}. Please add ₹${remainingForMinOrder} more produce to proceed.`);
+      return;
+    }
     const isLoggedIn = Boolean(session?.user || userdata?._id);
     if (!isLoggedIn) {
       router.push("/login?callbackUrl=/user/checkout");
@@ -161,6 +169,7 @@ export default function CartPage() {
       router.push("/user/checkout");
     }
   };
+
 
   return (
     <div className="bg-[#fafafa] min-h-screen flex flex-col justify-between font-sans text-slate-900 selection:bg-emerald-500 selection:text-white">
@@ -248,8 +257,27 @@ export default function CartPage() {
             {/* Left Column: Items & Addons (7 Cols) */}
             <div className="lg:col-span-7 space-y-4">
               
+              {/* Minimum Order Alert Strip */}
+              {isSubMinimum && (
+                <div className="bg-amber-50 border border-amber-200/80 rounded-2xl p-3.5 shadow-2xs flex items-center justify-between gap-3 text-xs font-bold text-amber-900">
+                  <div className="flex items-center gap-2">
+                    <span className="text-base">⚠️</span>
+                    <span>
+                      Minimum order for delivery is <strong>₹{minOrderAmount}</strong>. Add <strong>₹{remainingForMinOrder}</strong> more produce to checkout.
+                    </span>
+                  </div>
+                  <Link
+                    href="/shop"
+                    className="bg-amber-600 hover:bg-amber-700 text-white text-[11px] font-black px-3 py-1.5 rounded-xl transition shrink-0"
+                  >
+                    + Add Items
+                  </Link>
+                </div>
+              )}
+
               {/* Free Delivery Status Strip */}
               <div className="bg-white border border-slate-200/80 rounded-2xl p-3.5 shadow-2xs">
+
                 <div className="flex items-center justify-between text-xs mb-2">
                   <div className="flex items-center gap-2 font-bold text-slate-800">
                     <Truck size={15} className="text-[#0f8646] shrink-0" />

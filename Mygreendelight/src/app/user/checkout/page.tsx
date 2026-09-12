@@ -149,6 +149,7 @@ export default function Checkout() {
   const [isSilentDelivery, setIsSilentDelivery] = useState<boolean>(false);
   const [deliveryInstructions, setDeliveryInstructions] = useState<string>("");
   const [riderTip, setRiderTip] = useState<number>(0);
+  const [useWallet, setUseWallet] = useState<boolean>(false);
   const [submitting, setSubmitting] = useState(false);
   const [showMap, setShowMap] = useState<boolean>(false);
 
@@ -242,7 +243,10 @@ export default function Checkout() {
     );
   };
 
-  const finalPayableTotal = Math.max(0, subtotal + deliveryFee + riderTip - discount);
+  const userWalletBalance = Number(userdata?.walletBalance) || 0;
+  const preWalletTotal = Math.max(0, subtotal + deliveryFee + riderTip - discount);
+  const appliedWalletDiscount = useWallet ? Math.min(userWalletBalance, preWalletTotal) : 0;
+  const finalPayableTotal = Math.max(0, preWalletTotal - appliedWalletDiscount);
 
   const handelPlaceOrder = async () => {
     if (!cartdata || cartdata.length === 0) {
@@ -270,6 +274,13 @@ export default function Checkout() {
 
     if (!flatHouse.trim() && !streetSociety.trim()) {
       alert("Please enter your House/Flat No. or Street/Society Name.");
+      return;
+    }
+
+    const effectiveMinOrder = deliverySettings.minOrderAmount || 99;
+    if (subtotal < effectiveMinOrder) {
+      alert(`Minimum order value is ₹${effectiveMinOrder}. Please add ₹${effectiveMinOrder - subtotal} more to place this order.`);
+      router.push("/shop");
       return;
     }
 
@@ -338,7 +349,8 @@ export default function Checkout() {
         paymentProofImage: uploadedProofUrl,
         couponCode: couponCode || undefined,
         discount: discount || 0,
-        walletDiscount: 0,
+        walletDiscount: appliedWalletDiscount,
+        farmerTip: riderTip || 0,
         isSilentDelivery: isSilentDelivery || false,
         deliveryInstructions: deliveryInstructions || "",
         deliverySlot: deliverySlot,
@@ -1079,10 +1091,54 @@ export default function Checkout() {
                   </div>
                 </div>
 
+                {/* GreenPoints Wallet Redemption */}
+                {userWalletBalance > 0 && (
+                  <div className="pt-2 border-t border-gray-100">
+                    <label
+                      onClick={() => setUseWallet(!useWallet)}
+                      className={`flex items-center justify-between p-2 rounded-xl border cursor-pointer transition select-none ${
+                        useWallet
+                          ? "bg-emerald-50 border-emerald-400 shadow-2xs"
+                          : "bg-gray-50/70 border-gray-200/80 hover:bg-gray-50"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <div
+                          className={`w-4 h-4 rounded-md flex items-center justify-center border transition ${
+                            useWallet
+                              ? "bg-[#0f8646] border-[#0f8646] text-white"
+                              : "border-gray-300 bg-white"
+                          }`}
+                        >
+                          {useWallet && <Check size={11} strokeWidth={3} />}
+                        </div>
+                        <div>
+                          <span className="text-xs font-bold text-gray-900 block leading-tight">
+                            GreenPoints Wallet
+                          </span>
+                          <span className="text-[10px] text-gray-500 font-medium">
+                            Balance: ₹{userWalletBalance}
+                          </span>
+                        </div>
+                      </div>
+                      <span className="text-xs font-black text-[#0f8646]">
+                        {useWallet ? `-₹${appliedWalletDiscount}` : `Use ₹${Math.min(userWalletBalance, preWalletTotal)}`}
+                      </span>
+                    </label>
+                  </div>
+                )}
+
                 {discount > 0 && (
                   <div className="flex justify-between text-[#0f8646] font-bold bg-emerald-50/70 p-2 rounded-lg text-xs">
                     <span>Coupon ({couponCode})</span>
                     <span>-₹{discount}</span>
+                  </div>
+                )}
+
+                {appliedWalletDiscount > 0 && (
+                  <div className="flex justify-between text-[#0f8646] font-bold bg-emerald-50/70 p-2 rounded-lg text-xs">
+                    <span>Wallet GreenPoints Applied</span>
+                    <span>-₹{appliedWalletDiscount}</span>
                   </div>
                 )}
 

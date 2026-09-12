@@ -108,10 +108,15 @@ export async function POST(req: Request) {
         if (!deliveryBoy.deliveryStats) {
           deliveryBoy.deliveryStats = { totalDeliveries: 0, totalEarnings: 0 };
         }
+        const basePayout = 35; // Standard quick-commerce delivery payout per drop
+        const riderTip = Number(order.farmerTip) || 0;
+        const totalOrderPayout = basePayout + riderTip;
+
         deliveryBoy.deliveryStats.totalDeliveries = (deliveryBoy.deliveryStats.totalDeliveries || 0) + 1;
-        deliveryBoy.deliveryStats.totalEarnings = (deliveryBoy.deliveryStats.totalEarnings || 0) + 100;
+        deliveryBoy.deliveryStats.totalEarnings = (deliveryBoy.deliveryStats.totalEarnings || 0) + totalOrderPayout;
 
         await deliveryBoy.save();
+
       }
     }
 

@@ -41,16 +41,17 @@ export async function GET() {
 
     const completedToday = await Order.countDocuments(orderFilter);
     const totalDeliveries = user.deliveryStats?.totalDeliveries || (user.role === "admin" ? await Order.countDocuments({ status: "delivered" }) : 0);
-    const totalEarnings = user.deliveryStats?.totalEarnings || (totalDeliveries * 100);
+    const totalEarnings = user.deliveryStats?.totalEarnings || (totalDeliveries * 35);
 
     return NextResponse.json({
       stats: {
         totalDeliveries,
         totalEarnings,
-        todayEarnings: completedToday * 100,
-        earningPerDelivery: 100,
+        todayEarnings: completedToday * 35,
+        earningPerDelivery: 35,
       },
     });
+
   } catch (error) {
     console.error("Dashboard Stats Error:", error);
 
