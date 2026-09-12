@@ -129,6 +129,25 @@ export async function DELETE(
       );
     }
 
+    // 🧹 Cascading Cleanup: Clean up deleted product from all user carts and wishlists
+    try {
+      const Cart = (await import("@/model/cart.model")).default;
+      const User = (await import("@/model/user.model")).default;
+
+      await Promise.all([
+        Cart.updateMany(
+          { "items.product": id },
+          { $pull: { items: { product: id } } }
+        ),
+        User.updateMany(
+          { wishlist: id },
+          { $pull: { wishlist: id } }
+        ),
+      ]);
+    } catch (cleanupErr) {
+      console.warn("Cascading cleanup warning for deleted grocery:", cleanupErr);
+    }
+
     try {
       revalidatePath("/", "layout");
       revalidatePath("/shop");
@@ -136,7 +155,7 @@ export async function DELETE(
 
     return NextResponse.json({
       success: true,
-      message: "Grocery deleted successfully",
+      message: "Grocery deleted successfully and carts/wishlists cleaned.",
     });
   } catch (error) {
     console.error("Delete grocery error:", error);

@@ -415,43 +415,44 @@ try {
         console.log("SOCKET ERROR", err);
       }
 
-      // 🔔 Dispatch Multi-Channel Notifications (Admin Email, Customer Email & SMS)
-      try {
-        const { sendOrderNotifications } = await import("@/lib/orderNotifications");
-        await sendOrderNotifications({
-          orderId: neworder._id.toString(),
-          customerId: user._id ? user._id.toString() : user.id ? user.id.toString() : undefined,
-          customerName: user.name || address?.fullname || "Customer",
-          customerMobile: user.mobile || address?.mobile || "",
-          customerEmail: user.email || undefined,
-          address: {
-            fullname: address?.fullname,
-            mobile: address?.mobile,
-            fulladress: address?.fulladress,
-            city: address?.city || "Bhopal",
-            pincode: address?.pincode || "462043",
-          },
-          items: sanitizedItems.map((si: any) => ({
-            name: si.name,
-            quantity: si.quantity,
-            price: si.price,
-            unit: si.unit,
-            variationWeight: si.variationWeight,
-          })),
-          subtotal: verifiedSubtotal,
-          deliveryFee: deliveryFeeCalc,
-          discount: discountCalc,
-          walletDiscount: walletDiscountCalc,
-          farmerTip: Number(farmerTip) || 0,
-          totalAmount: finalTotalToSave,
-          paymentMethod: String(paymentmethod || "cod"),
-          paymentId: paymentId ? String(paymentId) : undefined,
-          deliverySlot: String(deliverySlot || "Standard Morning"),
-          createdAt: new Date(),
+      // 🔔 Dispatch Multi-Channel Notifications Asynchronously (Non-blocking Fire-and-Forget)
+      import("@/lib/orderNotifications")
+        .then(({ sendOrderNotifications }) => {
+          sendOrderNotifications({
+            orderId: neworder._id.toString(),
+            customerId: user._id ? user._id.toString() : user.id ? user.id.toString() : undefined,
+            customerName: user.name || address?.fullname || "Customer",
+            customerMobile: user.mobile || address?.mobile || "",
+            customerEmail: user.email || undefined,
+            address: {
+              fullname: address?.fullname,
+              mobile: address?.mobile,
+              fulladress: address?.fulladress,
+              city: address?.city || "Bhopal",
+              pincode: address?.pincode || "462043",
+            },
+            items: sanitizedItems.map((si: any) => ({
+              name: si.name,
+              quantity: si.quantity,
+              price: si.price,
+              unit: si.unit,
+              variationWeight: si.variationWeight,
+            })),
+            subtotal: verifiedSubtotal,
+            deliveryFee: deliveryFeeCalc,
+            discount: discountCalc,
+            walletDiscount: walletDiscountCalc,
+            farmerTip: Number(farmerTip) || 0,
+            totalAmount: finalTotalToSave,
+            paymentMethod: String(paymentmethod || "cod"),
+            paymentId: paymentId ? String(paymentId) : undefined,
+            deliverySlot: String(deliverySlot || "Standard Morning"),
+            createdAt: new Date(),
+          }).catch((err) => console.warn("Background order notification note:", err));
+        })
+        .catch((notifErr) => {
+          console.warn("Order notification import note:", notifErr);
         });
-      } catch (notifErr) {
-        console.warn("Order notification dispatch note:", notifErr);
-      }
 
       // 🎁 Auto-generate Dynamic Scratch Card Reward in MongoDB
       let reward = null;
