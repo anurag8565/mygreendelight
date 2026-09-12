@@ -582,9 +582,8 @@ export default function Nav({ user }: { user?: iUser | null }) {
                 onClick={() => setShowLocationPopup(true)} 
                 className="lg:hidden flex items-center gap-1 text-[10px] font-bold text-gray-500 hover:text-[#0f8646] transition text-left mt-0.5"
               >
-                <span className="text-[#0f8646] font-black shrink-0">🌿 Same-Day</span>
-                <span>•</span>
-                <span className="truncate max-w-[95px] sm:max-w-[140px]">{location}</span>
+                <MapPin size={10} className="text-[#0f8646] shrink-0" />
+                <span className="truncate max-w-[120px] sm:max-w-[160px]">{location}</span>
                 <ChevronDown size={10} className="shrink-0" />
               </button>
             </div>
