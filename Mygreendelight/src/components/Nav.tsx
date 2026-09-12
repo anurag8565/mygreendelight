@@ -575,12 +575,23 @@ export default function Nav({ user }: { user?: iUser | null }) {
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 sm:flex-initial">
             <button 
               onClick={() => setmenuopen(true)} 
-              className="lg:hidden p-1.5 -ml-1 text-gray-700 hover:text-[#0f8646] hover:bg-green-50 rounded-xl transition shrink-0 cursor-pointer"
+              className="lg:hidden p-1 text-gray-700 hover:text-[#0f8646] shrink-0"
               aria-label="Open navigation menu"
             >
-              <Menu size={22} className="stroke-[2.2]" />
+              <Menu size={22} />
             </button>
-            <Logo className="shrink-0" />
+            <div className="flex flex-col min-w-0">
+              <Logo className="shrink-0" />
+              <button 
+                onClick={() => setShowLocationPopup(true)} 
+                className="lg:hidden flex items-center gap-1 text-[11px] font-bold text-gray-600 hover:text-[#0f8646] transition text-left mt-0.5"
+                title="Change delivery location"
+              >
+                <MapPin size={11} className="text-[#0f8646] shrink-0" />
+                <span className="truncate max-w-[130px] sm:max-w-[170px] font-semibold text-gray-800">{location}</span>
+                <ChevronDown size={11} className="shrink-0 text-gray-400" />
+              </button>
+            </div>
           </div>
 
           {/* Location Dropdown (Desktop) */}
