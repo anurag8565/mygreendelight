@@ -137,11 +137,13 @@ export default function FilteredProduceSection({
                 onClick={() => setViewMode("grid")}
                 className={`p-1 sm:px-2.5 sm:py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1 text-xs font-black ${
                   viewMode === "grid"
-                    ? "bg-[#ff5a1f] text-white shadow-xs"
-                    : "text-gray-500 hover:text-gray-900"
+                    ? "bg-[#0c831f] text-white shadow-xs"
+                    : "text-gray-500 hover:text-gray-800 hover:bg-gray-50"
                 }`}
+                title="Grid View"
+                aria-label="Grid View"
               >
-                <LayoutGrid size={13} />
+                <LayoutGrid size={14} />
                 <span className="hidden sm:inline">Grid</span>
               </button>
               <button
@@ -149,16 +151,18 @@ export default function FilteredProduceSection({
                 onClick={() => setViewMode("list")}
                 className={`p-1 sm:px-2.5 sm:py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1 text-xs font-black ${
                   viewMode === "list"
-                    ? "bg-[#ff5a1f] text-white shadow-xs"
-                    : "text-gray-500 hover:text-gray-900"
+                    ? "bg-[#0c831f] text-white shadow-xs"
+                    : "text-gray-500 hover:text-gray-800 hover:bg-gray-50"
                 }`}
+                title="List View"
+                aria-label="List View"
               >
-                <List size={13} />
-                <span className="hidden sm:inline">Compact</span>
+                <List size={14} />
+                <span className="hidden sm:inline">List</span>
               </button>
             </div>
 
-            {/* View All Button */}
+            {/* Quick Link to Shop */}
             <Link
               href={
                 activeTab === "vegetables"
@@ -167,7 +171,7 @@ export default function FilteredProduceSection({
                   ? "/shop?category=Fruits"
                   : "/shop?category=Exotics"
               }
-              className="bg-white hover:bg-orange-50 text-[#ff5a1f] border border-orange-200 hover:border-orange-300 font-bold text-[11px] sm:text-xs px-2.5 sm:px-3 py-1.5 rounded-xl flex items-center gap-0.5 transition shadow-2xs shrink-0 group whitespace-nowrap"
+              className="bg-white hover:bg-emerald-50 text-[#0c831f] border border-emerald-200/80 hover:border-emerald-300 font-bold text-[11px] sm:text-xs px-2.5 sm:px-3 py-1.5 rounded-xl flex items-center gap-0.5 transition shadow-2xs shrink-0 group whitespace-nowrap"
             >
               <span>View All</span>
               <ChevronRight
@@ -195,15 +199,15 @@ export default function FilteredProduceSection({
                 onClick={() => setActiveTab(tab.id)}
                 className={`group relative p-2.5 sm:p-3.5 rounded-2xl sm:rounded-3xl transition-all duration-300 flex flex-col sm:flex-row items-center gap-2 sm:gap-3 cursor-pointer border text-center sm:text-left overflow-hidden ${
                   isSelected
-                    ? "bg-white border-[#ff5a1f] shadow-[0_6px_20px_rgba(255,90,31,0.15)] ring-2 ring-[#ff5a1f]/20"
-                    : "bg-white hover:bg-slate-50/80 border-gray-200/80 hover:border-orange-300 shadow-2xs"
+                    ? "bg-white border-[#0c831f] shadow-[0_6px_20px_rgba(12,131,31,0.12)] ring-2 ring-[#0c831f]/20"
+                    : "bg-white hover:bg-[#fafdfa] border-gray-200/80 hover:border-emerald-300 shadow-2xs"
                 }`}
               >
                 {/* Active Indicator Top Accent */}
                 {isSelected && (
                   <motion.div
                     layoutId="activeTabAccent"
-                    className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#ff5a1f] via-amber-400 to-[#ff7a00]"
+                    className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#0c831f] via-emerald-400 to-green-500"
                   />
                 )}
 

@@ -117,7 +117,7 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
 
           <Link
             href="/shop"
-            className="text-[#ff5a1f] hover:text-[#e04810] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition"
+            className="text-[#0c831f] hover:text-[#096618] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition"
           >
             <span>See All</span>
             <ChevronRight

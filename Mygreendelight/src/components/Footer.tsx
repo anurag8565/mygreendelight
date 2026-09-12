@@ -17,7 +17,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#0b1329] text-white font-sans border-t border-slate-800/90 pb-20 sm:pb-12 md:pb-6 w-full selection:bg-[#ff5a1f] selection:text-white">
+    <footer className="bg-[#041a0d] text-white font-sans border-t border-emerald-950/80 pb-20 sm:pb-12 md:pb-6 w-full selection:bg-emerald-500 selection:text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pt-8 sm:pt-10 pb-4">
         
         {/* Main 4-Column Responsive Grid (Mobile: 2 cols, Tablet: 4 cols or 2x2, Desktop: 12 cols) */}

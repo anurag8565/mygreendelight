@@ -214,7 +214,7 @@ export default function Groceryitemcard({
 
           {/* PRICE ROW & SAVINGS */}
           <div className="flex items-center gap-1.5 mt-1 h-[22px]">
-            <span className="text-sm sm:text-base font-black text-gray-950 group-hover:text-[#ff5a1f] transition-colors shrink-0">
+            <span className="text-sm sm:text-base font-black text-gray-950 group-hover:text-[#0c831f] transition-colors shrink-0">
               ₹{displayPrice}
             </span>
             <span className="text-[11px] text-gray-400 line-through font-normal shrink-0">
@@ -264,13 +264,13 @@ export default function Groceryitemcard({
                   })
                 );
               }}
-              className="w-full h-[36px] rounded-xl flex items-center justify-center gap-1.5 font-black text-xs transition-all duration-200 border-2 border-[#ff5a1f] cursor-pointer bg-white text-[#ff5a1f] hover:bg-[#ff5a1f] hover:text-white hover:shadow-[0_4px_14px_rgba(255,90,31,0.3)] shadow-2xs active:scale-95"
+              className="w-full h-[36px] rounded-xl flex items-center justify-center gap-1.5 font-black text-xs transition-all duration-200 border-2 border-[#0c831f] cursor-pointer bg-white text-[#0c831f] hover:bg-[#0c831f] hover:text-white hover:shadow-[0_4px_12px_rgba(12,131,31,0.25)] shadow-2xs active:scale-95"
             >
               <Plus size={14} className="stroke-[3]" />
               <span>ADD</span>
             </motion.button>
           ) : (
-            <div className="flex items-center justify-between bg-[#ff5a1f] text-white rounded-xl overflow-hidden h-[36px] shadow-xs ring-2 ring-[#ff5a1f]/25">
+            <div className="flex items-center justify-between bg-[#0c831f] text-white rounded-xl overflow-hidden h-[36px] shadow-xs ring-2 ring-[#0c831f]/20">
               <motion.button
                 whileTap={{ scale: 0.85 }}
                 type="button"

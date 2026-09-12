@@ -554,15 +554,15 @@ export default function Nav({ user }: { user?: iUser | null }) {
   return (
     <>
       <header className="w-full flex flex-col z-50 bg-white sticky top-0 shadow-2xs">
-        {/* Tier 1: Top Bar (Deep Midnight Navy) */}
-        <div className="bg-[#0b1329] text-white py-1.5 px-4 md:px-8 text-xs font-medium flex justify-between items-center hidden sm:flex border-b border-slate-800">
+        {/* Tier 1: Top Bar (Green) */}
+        <div className="bg-[#0f8646] text-white py-1.5 px-4 md:px-8 text-xs font-medium flex justify-between items-center hidden sm:flex">
           <div className="flex items-center gap-2">
-            <Truck size={14} className="text-[#ff5a1f]" />
-            <span>FREE DELIVERY on orders above ₹199 in Bhopal • <span className="text-amber-400 font-bold">15-45 Mins Express</span></span>
+            <Truck size={14} />
+            <span>FREE DELIVERY on orders above ₹199 in Bhopal</span>
           </div>
           <div className="flex items-center gap-6">
-            <Link href="/user/myorder" className="cursor-pointer hover:text-amber-300">Track Order</Link>
-            <Link href="/contact" className="cursor-pointer hover:text-amber-300">Help & Support</Link>
+            <Link href="/user/myorder" className="cursor-pointer hover:text-green-200">Track Order</Link>
+            <Link href="/contact" className="cursor-pointer hover:text-green-200">Help & Support</Link>
             {activeUser?.role === "admin" && (
               <Link href="/admin" className="cursor-pointer font-bold text-yellow-300 hover:underline">Admin Center</Link>
             )}
@@ -573,16 +573,16 @@ export default function Nav({ user }: { user?: iUser | null }) {
         <div className="pt-3 pb-2 sm:py-4 px-3.5 sm:px-4 md:px-8 flex items-center justify-between border-b sm:border-b-0 border-gray-100/80 gap-2 sm:gap-4 w-full max-w-full relative z-30">
           {/* Mobile Menu & Logo */}
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 sm:flex-initial">
-            <button onClick={() => setmenuopen(true)} className="lg:hidden p-1 text-gray-700 hover:text-[#ff5a1f] shrink-0">
+            <button onClick={() => setmenuopen(true)} className="lg:hidden p-1 text-gray-700 hover:text-[#0f8646] shrink-0">
               <Menu size={22} />
             </button>
             <div className="flex flex-col min-w-0">
               <Logo className="shrink-0" />
               <button 
                 onClick={() => setShowLocationPopup(true)} 
-                className="lg:hidden flex items-center gap-1 text-[10px] font-bold text-gray-500 hover:text-[#ff5a1f] transition text-left mt-0.5"
+                className="lg:hidden flex items-center gap-1 text-[10px] font-bold text-gray-500 hover:text-[#0f8646] transition text-left mt-0.5"
               >
-                <span className="text-[#ff5a1f] font-black shrink-0">⚡ Express</span>
+                <span className="text-[#0f8646] font-black shrink-0">🌿 Same-Day</span>
                 <span>•</span>
                 <span className="truncate max-w-[95px] sm:max-w-[140px]">{location}</span>
                 <ChevronDown size={10} className="shrink-0" />
@@ -595,12 +595,12 @@ export default function Nav({ user }: { user?: iUser | null }) {
             className="hidden lg:flex items-center gap-2 shrink-0 cursor-pointer group relative hover:opacity-90 transition"
             onClick={() => setShowLocationPopup(true)}
           >
-            <div className="w-9 h-9 rounded-xl bg-orange-50 flex items-center justify-center text-[#ff5a1f] group-hover:bg-[#ff5a1f] group-hover:text-white transition-colors shadow-2xs">
+            <div className="w-9 h-9 rounded-xl bg-green-50 flex items-center justify-center text-[#0f8646] group-hover:bg-[#0f8646] group-hover:text-white transition-colors">
               <MapPin size={18} />
             </div>
             <div className="flex flex-col">
               <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Deliver to</span>
-              <div className="text-xs sm:text-sm font-black text-gray-800 flex items-center gap-1 group-hover:text-[#ff5a1f] transition-colors">
+              <div className="text-xs sm:text-sm font-black text-gray-800 flex items-center gap-1 group-hover:text-[#0f8646] transition-colors">
                 <span className="truncate max-w-[160px]">{location}</span>
                 <ChevronDown size={14} className="shrink-0 text-gray-400" />
               </div>
@@ -609,7 +609,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
 
             {/* Search Bar */}
             <div ref={searchRef} className="hidden md:flex flex-1 max-w-xl relative ml-4 lg:ml-8 h-11 z-[60]">
-              <form onSubmit={handleSearch} className="w-full h-full flex items-center bg-gray-50/90 border border-gray-200 rounded-xl overflow-hidden focus-within:border-[#ff5a1f] focus-within:ring-2 focus-within:ring-orange-100 transition-all shadow-2xs">
+              <form onSubmit={handleSearch} className="w-full h-full flex items-center bg-gray-50 border border-gray-200 rounded-lg overflow-hidden focus-within:border-[#0f8646] focus-within:ring-1 focus-within:ring-[#0f8646] transition-all">
                 <input
                   type="text"
                   value={search}
@@ -618,7 +618,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                     setIsSearchFocused(true);
                   }}
                   placeholder="Search for fresh vegetables, fruits, groceries..."
-                  className="w-full h-full bg-transparent outline-none px-4 text-sm text-gray-700 placeholder:text-gray-400"
+                  className="w-full h-full bg-transparent outline-none px-4 text-sm text-gray-700"
                 />
 
                 {/* Voice Search Button */}
@@ -626,12 +626,12 @@ export default function Nav({ user }: { user?: iUser | null }) {
                   type="button"
                   onClick={handleVoiceSearch}
                   title="Search by voice in Hindi or English"
-                  className="p-2 mr-1.5 rounded-full transition-all flex items-center justify-center shrink-0 cursor-pointer text-gray-400 hover:text-[#ff5a1f] hover:bg-orange-50"
+                  className="p-2 mr-1.5 rounded-full transition-all flex items-center justify-center shrink-0 cursor-pointer text-gray-400 hover:text-[#0f8646] hover:bg-green-50"
                 >
                   <Mic size={18} />
                 </button>
 
-                <button type="submit" className="bg-[#ff5a1f] hover:bg-[#e04810] text-white px-6 font-bold transition-colors text-sm h-full shrink-0 shadow-xs cursor-pointer">
+                <button type="submit" className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-6 font-semibold transition-colors text-sm h-full shrink-0">
                   Search
                 </button>
               </form>
@@ -1076,20 +1076,20 @@ export default function Nav({ user }: { user?: iUser | null }) {
               onClick={() => setIsMiniCartOpen(true)}
               className="flex items-center gap-1.5 cursor-pointer hover:opacity-80 transition-opacity shrink-0 select-none"
             >
-              <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-orange-50 flex items-center justify-center text-[#ff5a1f] border border-orange-200/70 shadow-2xs">
+              <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-green-50 flex items-center justify-center text-[#0f8646] border border-green-200/60 shadow-2xs">
                 <ShoppingCart size={19} className="stroke-[2.2]" />
                 {mounted && cartdata.length > 0 && (
                   <motion.span
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="absolute -top-1 -right-1 bg-[#ff5a1f] text-white text-[9px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center shadow-xs"
+                    className="absolute -top-1 -right-1 bg-[#0f8646] text-white text-[9px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center shadow-xs"
                   >
                     {cartdata.length}
                   </motion.span>
                 )}
               </div>
               <div className="hidden sm:flex flex-col">
-                <span className="text-[12px] font-black text-gray-900">₹{mounted ? cartTotal.toFixed(2) : "0.00"}</span>
+                <span className="text-[12px] font-extrabold text-gray-900">₹{mounted ? cartTotal.toFixed(2) : "0.00"}</span>
               </div>
             </motion.div>
           </div>
@@ -1097,7 +1097,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
 
         {/* Mobile Search Bar (Only visible on small screens below md) */}
         <div ref={mobileSearchRef} className="md:hidden pb-2.5 px-3.5 pt-0 relative z-[60]">
-          <form onSubmit={handleSearch} className="flex items-center bg-gray-50/90 rounded-xl border border-gray-200/90 focus-within:border-[#ff5a1f] focus-within:bg-white focus-within:ring-2 focus-within:ring-orange-100 transition-all h-10 px-3 shadow-2xs">
+          <form onSubmit={handleSearch} className="flex items-center bg-gray-50/90 rounded-xl border border-gray-200/90 focus-within:border-[#0f8646] focus-within:bg-white focus-within:ring-2 focus-within:ring-green-100 transition-all h-10 px-3 shadow-2xs">
             <Search size={16} className="text-gray-400 shrink-0 mr-2" />
             <input
               type="text"
@@ -1106,7 +1106,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
               onFocus={() => {
                 setIsMobileSearchFocused(true);
               }}
-              placeholder="Search 'tomato', 'palak', 'mango'..."
+              placeholder="Search 'tomato', 'milk', 'mango'..."
               className="flex-1 bg-transparent outline-none text-xs sm:text-sm text-gray-800 placeholder-gray-400"
             />
 
@@ -1115,7 +1115,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
               type="button"
               onClick={handleVoiceSearch}
               title="Search by voice in Hindi or English"
-              className="p-1.5 rounded-full transition-all flex items-center justify-center shrink-0 cursor-pointer text-gray-400 hover:text-[#ff5a1f]"
+              className="p-1.5 rounded-full transition-all flex items-center justify-center shrink-0 cursor-pointer text-gray-400 hover:text-[#0f8646]"
             >
               <Mic size={16} />
             </button>
