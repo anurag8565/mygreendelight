@@ -280,6 +280,12 @@ export default function Checkout() {
       return;
     }
 
+    // 🔒 Anti-Scam Lock: UPI orders MUST attach a valid payment screenshot
+    if (paymentMethod === "upi" && !paymentProofFile) {
+      alert("⚠️ Payment Screenshot Required! Kripya UPI pay karne ke baad apna Payment Screenshot upload karein taaki order confirm ho sake.");
+      return;
+    }
+
     setSubmitting(true);
     const payableAmount = finalPayableTotal;
 
@@ -298,16 +304,29 @@ export default function Checkout() {
       const cleanUtr = upiRefNumber.trim();
       let uploadedProofUrl: string | null = null;
 
-      if (paymentMethod === "upi" && paymentProofFile) {
+      if (paymentMethod === "upi") {
+        if (!paymentProofFile) {
+          alert("⚠️ Payment Screenshot Required! Kripya UPI payment ka screenshot upload karein.");
+          setSubmitting(false);
+          return;
+        }
+
         try {
           const formData = new FormData();
           formData.append("file", paymentProofFile);
           const uploadRes = await axios.post("/api/user/upload-payment-proof", formData);
-          if (uploadRes.data?.success) {
+          if (uploadRes.data?.success && uploadRes.data.url) {
             uploadedProofUrl = uploadRes.data.url;
+          } else {
+            alert("Payment screenshot upload karne me samasya aayi. Kripya dobara koshish karein.");
+            setSubmitting(false);
+            return;
           }
-        } catch (upErr) {
-          console.warn("Proof upload error:", upErr);
+        } catch (upErr: any) {
+          console.error("Proof upload error:", upErr);
+          alert("Payment screenshot upload fail ho gaya: " + (upErr.response?.data?.message || upErr.message || "Kripya dobara koshish karein."));
+          setSubmitting(false);
+          return;
         }
       }
 
@@ -942,11 +961,11 @@ export default function Checkout() {
                     </div>
 
                     {/* UTR Reference input & Screenshot Upload */}
-                    <div className="space-y-1.5">
+                    <div className="space-y-2">
                       <input
                         type="text"
                         maxLength={20}
-                        placeholder="UPI Ref / UTR No. (Optional)"
+                        placeholder="UPI Ref / 12-digit UTR No. (Optional)"
                         value={upiRefNumber}
                         onChange={(e) => setUpiRefNumber(e.target.value.replace(/[^a-zA-Z0-9]/g, ""))}
                         className="w-full bg-white border border-gray-200/80 rounded-xl py-1.5 px-2.5 text-xs font-semibold text-gray-900 outline-none focus:border-[#0f8646] transition placeholder:text-gray-400 placeholder:font-normal"
@@ -954,9 +973,9 @@ export default function Checkout() {
 
                       <div>
                         {paymentProofPreview ? (
-                          <div className="flex items-center justify-between bg-white px-2 py-1 rounded-lg border border-emerald-300 text-[10px]">
-                            <span className="text-[#0f8646] font-bold flex items-center gap-1">
-                              <Check size={11} /> Screenshot Added
+                          <div className="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-xl border-2 border-emerald-400 text-xs shadow-2xs">
+                            <span className="text-[#0f8646] font-black flex items-center gap-1.5">
+                              <Check size={14} className="stroke-[3]" /> Screenshot Attached ✅
                             </span>
                             <button
                               type="button"
@@ -964,15 +983,15 @@ export default function Checkout() {
                                 setPaymentProofFile(null);
                                 setPaymentProofPreview(null);
                               }}
-                              className="text-red-500 hover:text-red-700 font-bold ml-2"
+                              className="text-red-500 hover:text-red-700 font-bold text-[11px] ml-2 cursor-pointer"
                             >
-                              Remove
+                              Change
                             </button>
                           </div>
                         ) : (
-                          <label className="flex items-center justify-center gap-1 py-1 px-2 bg-white border border-dashed border-gray-300 hover:border-[#0f8646] rounded-xl cursor-pointer text-[10px] text-gray-500 hover:text-[#0f8646] transition">
-                            <Upload size={11} />
-                            <span>Upload Screenshot (Optional)</span>
+                          <label className="flex items-center justify-center gap-1.5 py-2.5 px-3 bg-amber-50/70 border-2 border-dashed border-amber-300 hover:border-[#0f8646] hover:bg-emerald-50/50 rounded-xl cursor-pointer text-xs font-bold text-amber-900 transition shadow-2xs">
+                            <Upload size={14} className="text-amber-700" />
+                            <span>Upload Payment Screenshot <span className="text-red-600 font-black">*Required</span></span>
                             <input
                               type="file"
                               accept="image/*"
@@ -992,6 +1011,10 @@ export default function Checkout() {
                           </label>
                         )}
                       </div>
+
+                      <p className="text-[10px] text-gray-500 font-medium leading-tight">
+                        🔒 Scanner par pay karne ke baad screenshot upload karein taaki order verify ho sake.
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -1111,11 +1134,19 @@ export default function Checkout() {
                 type="button"
                 onClick={handelPlaceOrder}
                 disabled={submitting || cartdata.length === 0}
-                className="w-full mt-4 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3 rounded-xl font-bold text-xs sm:text-sm shadow-xs hover:shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className={`w-full mt-4 py-3 rounded-xl font-bold text-xs sm:text-sm shadow-xs hover:shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 ${
+                  paymentMethod === "upi" && !paymentProofFile
+                    ? "bg-amber-600 hover:bg-amber-700 text-white animate-pulse"
+                    : "bg-[#0f8646] hover:bg-[#0c6a38] text-white"
+                }`}
               >
                 <CheckCircle2 size={16} />
                 <span>
-                  {paymentMethod === "cod" ? "Place COD Order" : "Place UPI Order"} • ₹{finalPayableTotal}
+                  {submitting
+                    ? "Placing Order..."
+                    : paymentMethod === "upi" && !paymentProofFile
+                    ? `Upload Screenshot to Place Order • ₹${finalPayableTotal}`
+                    : `${paymentMethod === "cod" ? "Place COD Order" : "Place UPI Order"} • ₹${finalPayableTotal}`}
                 </span>
               </button>
 
@@ -1143,11 +1174,19 @@ export default function Checkout() {
           type="button"
           onClick={handelPlaceOrder}
           disabled={submitting || cartdata.length === 0}
-          className="flex-1 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
+          className={`flex-1 py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 ${
+            paymentMethod === "upi" && !paymentProofFile
+              ? "bg-amber-600 hover:bg-amber-700 text-white animate-pulse"
+              : "bg-[#0f8646] hover:bg-[#0c6a38] text-white"
+          }`}
         >
           <CheckCircle2 size={15} />
           <span>
-            {paymentMethod === "cod" ? "Place COD Order" : "Place UPI Order"} • ₹{finalPayableTotal}
+            {submitting
+              ? "Placing Order..."
+              : paymentMethod === "upi" && !paymentProofFile
+              ? "Upload Screenshot First"
+              : `${paymentMethod === "cod" ? "Place COD Order" : "Place UPI Order"} • ₹${finalPayableTotal}`}
           </span>
         </button>
       </div>

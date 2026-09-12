@@ -677,9 +677,17 @@ export default function Deliveryboy({ initialUser }: Props) {
               </span>
             )}
             <span className={`text-[11px] font-black px-2.5 py-0.5 rounded-full ${
-              isPaid ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-900'
+              isPaid
+                ? 'bg-emerald-100 text-emerald-800'
+                : activeOrderObj.paymentmethod === 'upi'
+                ? 'bg-amber-100 text-amber-900 border border-amber-300'
+                : 'bg-amber-100 text-amber-900'
             }`}>
-              {isPaid ? '✅ Paid Online' : `💵 Collect ₹${totalAmount}`}
+              {isPaid
+                ? '✅ Paid Online'
+                : activeOrderObj.paymentmethod === 'upi'
+                ? `💵 Collect ₹${totalAmount} (UPI Unverified)`
+                : `💵 Collect ₹${totalAmount}`}
             </span>
           </div>
         </div>

@@ -38,8 +38,18 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        // 🛡️ UPI Handling: Validate UTR uniqueness if provided
+        // 🛡️ UPI Handling: Enforce payment screenshot upload & validate UTR uniqueness
         if (paymentmethod === "upi") {
+            if (!paymentProofImage || typeof paymentProofImage !== "string" || !paymentProofImage.trim()) {
+                return NextResponse.json(
+                    {
+                        success: false,
+                        message: "Payment screenshot is required for UPI orders. Please upload your payment proof.",
+                    },
+                    { status: 400 }
+                );
+            }
+
             const cleanPaymentId = paymentId ? String(paymentId).trim() : "";
             if (cleanPaymentId && cleanPaymentId.startsWith("UTR_") && cleanPaymentId.length >= 8) {
                 const existingOrderWithUtr = await Order.findOne({ paymentId: cleanPaymentId });

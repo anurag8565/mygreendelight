@@ -277,8 +277,18 @@ export default function TrackOrderPage() {
                   ₹{order?.totalamount || 0}
                 </span>
               </div>
-              <span className="text-[10px] font-bold bg-white text-emerald-800 px-2 py-0.5 rounded-lg border border-emerald-200">
-                {order?.paymentmethod?.toUpperCase() || "COD"}
+              <span className={`text-[10px] font-black px-2.5 py-1 rounded-xl border ${
+                order?.ispaid
+                  ? "bg-emerald-50 text-emerald-800 border-emerald-300"
+                  : order?.paymentmethod === "upi"
+                  ? "bg-amber-50 text-amber-900 border-amber-300 animate-pulse"
+                  : "bg-white text-gray-800 border-gray-200"
+              }`}>
+                {order?.ispaid
+                  ? "✅ PAID ONLINE"
+                  : order?.paymentmethod === "upi"
+                  ? "🟠 UPI AWAITING VERIFICATION"
+                  : "💵 CASH ON DELIVERY"}
               </span>
             </div>
           </div>
@@ -714,6 +724,34 @@ export default function TrackOrderPage() {
                       {order.paymentmethod || "COD"}
                     </span>
                   </div>
+
+                  <div className="flex justify-between items-center">
+                    <span>Payment Status:</span>
+                    <span className={`text-[11px] font-black px-2 py-0.5 rounded-lg border ${
+                      order.ispaid
+                        ? "bg-emerald-50 text-emerald-800 border-emerald-300"
+                        : order.paymentmethod === "upi"
+                        ? "bg-amber-50 text-amber-900 border-amber-300"
+                        : "bg-gray-100 text-gray-800 border-gray-200"
+                    }`}>
+                      {order.ispaid
+                        ? "✅ Payment Verified & Received"
+                        : order.paymentmethod === "upi"
+                        ? "🟠 Verification Pending (Admin checking screenshot)"
+                        : "🟡 Unpaid (Pay Cash / UPI at Doorstep)"}
+                    </span>
+                  </div>
+
+                  {order.paymentmethod === "upi" && !order.ispaid && (
+                    <div className="p-2.5 rounded-xl bg-amber-50 border border-amber-200 text-[11px] text-amber-900 leading-snug">
+                      <p className="font-bold flex items-center gap-1 text-amber-800 mb-0.5">
+                        <span>⚠️ Payment Verification in Progress</span>
+                      </p>
+                      <p>
+                        Aapka screenshot admin verify kar raha hai. Agar screenshot match nahi hota, toh rider aane par doorstep par pay karna hoga.
+                      </p>
+                    </div>
+                  )}
 
                   {order.discount > 0 && (
                     <div className="flex justify-between items-center text-emerald-700 font-bold">
