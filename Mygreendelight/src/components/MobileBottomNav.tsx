@@ -91,9 +91,12 @@ export default function MobileBottomNav() {
             >
               <Link
                 href="/user/cart"
-                className="w-full bg-gradient-to-r from-[#0c831f] via-[#0e771e] to-[#064e13] text-white rounded-xl px-3 py-2 flex items-center justify-between shadow-[0_6px_20px_-3px_rgba(12,131,31,0.45)] border border-emerald-400/30 cursor-pointer active:scale-[0.98] transition-all"
+                className="relative overflow-hidden w-full bg-gradient-to-r from-[#0c831f] via-[#0e771e] to-[#064e13] text-white rounded-xl px-3 py-2 flex items-center justify-between shadow-[0_6px_20px_-3px_rgba(12,131,31,0.45)] border border-emerald-400/30 cursor-pointer active:scale-[0.98] transition-all"
               >
-                <div className="flex items-center gap-2.5 min-w-0">
+                {/* Subtle Shimmer Sweep */}
+                <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+
+                <div className="flex items-center gap-2.5 min-w-0 relative z-10">
                   <div className="w-8 h-8 rounded-lg bg-white/20 backdrop-blur-xs flex items-center justify-center shrink-0 shadow-inner">
                     <ShoppingCart size={15} className="text-white" />
                   </div>
@@ -114,7 +117,7 @@ export default function MobileBottomNav() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1 text-[11px] font-black bg-white text-[#0c831f] px-3 py-1.5 rounded-lg shadow-xs shrink-0 hover:bg-emerald-50 transition">
+                <div className="flex items-center gap-1 text-[11px] font-black bg-white text-[#0c831f] px-3 py-1.5 rounded-lg shadow-xs shrink-0 hover:bg-emerald-50 transition relative z-10">
                   <span>View Cart</span>
                   <ArrowRight size={12} className="stroke-[2.5]" />
                 </div>

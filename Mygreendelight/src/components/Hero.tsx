@@ -217,15 +217,17 @@ export default function Hero({ banners = [] }: HeroProps) {
                   transition={{ delay: 0.1, duration: 0.4 }}
                   className="flex items-center gap-2 flex-wrap mb-1.5 xs:mb-2 sm:mb-3"
                 >
-                  <div className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md text-white text-[9px] xs:text-[9.5px] sm:text-xs font-black px-2.5 xs:px-3 py-0.5 xs:py-1 rounded-full uppercase tracking-wider border border-white/30 shadow-xs">
-                    <Sparkles size={12} className="text-yellow-300 fill-yellow-300 animate-pulse" />
-                    <span>{slide.badge || "🌿 Farm Fresh • Express Delivery"}</span>
+                  <div className="relative overflow-hidden inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md text-white text-[9px] xs:text-[9.5px] sm:text-xs font-black px-2.5 xs:px-3 py-0.5 xs:py-1 rounded-full uppercase tracking-wider border border-white/30 shadow-xs">
+                    <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                    <Sparkles size={12} className="text-yellow-300 fill-yellow-300 animate-pulse relative z-10" />
+                    <span className="relative z-10">{slide.badge || "🌿 Farm Fresh • Express Delivery"}</span>
                   </div>
 
                   {slide.offerPill && (
-                    <span className="hidden xs:inline-flex items-center gap-1 bg-amber-400 text-gray-950 text-[9px] sm:text-[10.5px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm">
-                      <Flame size={11} className="fill-amber-950" />
-                      <span>{slide.offerPill}</span>
+                    <span className="relative overflow-hidden hidden xs:inline-flex items-center gap-1 bg-gradient-to-r from-amber-400 to-yellow-400 text-gray-950 text-[9px] sm:text-[10.5px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm">
+                      <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/50 to-transparent" />
+                      <Flame size={11} className="fill-amber-950 relative z-10" />
+                      <span className="relative z-10">{slide.offerPill}</span>
                     </span>
                   )}
                 </motion.div>
@@ -261,10 +263,11 @@ export default function Hero({ banners = [] }: HeroProps) {
                     <motion.button
                       whileHover={{ scale: 1.04 }}
                       whileTap={{ scale: 0.95 }}
-                      className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4.5 xs:px-5 sm:px-7 py-2.5 sm:py-3 rounded-full font-black text-xs sm:text-sm shadow-xl transition-all flex items-center gap-2 cursor-pointer border border-emerald-300/40 hover:shadow-emerald-950/60"
+                      className="relative overflow-hidden bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4.5 xs:px-5 sm:px-7 py-2.5 sm:py-3 rounded-full font-black text-xs sm:text-sm shadow-xl transition-all flex items-center gap-2 cursor-pointer border border-emerald-300/40 hover:shadow-emerald-950/60 group/btn"
                     >
-                      <span>{slide.btnText || "Shop Fresh Produce"}</span>
-                      <ArrowRight size={14} className="stroke-[2.5]" />
+                      <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+                      <span className="relative z-10">{slide.btnText || "Shop Fresh Produce"}</span>
+                      <ArrowRight size={14} className="stroke-[2.5] relative z-10 group-hover/btn:translate-x-0.5 transition-transform" />
                     </motion.button>
                   </Link>
 

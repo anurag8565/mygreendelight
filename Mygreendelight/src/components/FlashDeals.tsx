@@ -97,17 +97,20 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
 
             {/* Real-time Reverse Countdown Badge */}
             {!isExpired && (
-              <div className="flex items-center gap-1.5 bg-rose-50 text-rose-600 border border-rose-200/80 px-2.5 py-0.5 rounded-full text-[11px] font-bold shadow-2xs animate-pulse">
-                <Clock size={12} className="stroke-[2.5]" />
-                <span className="tabular-nums font-mono text-[11px] font-extrabold">
+              <div className="relative overflow-hidden flex items-center gap-1.5 bg-gradient-to-r from-rose-50 via-rose-100/60 to-rose-50 text-rose-600 border border-rose-300/80 px-2.5 py-0.5 rounded-full text-[11px] font-bold shadow-2xs">
+                <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/70 to-transparent" />
+                <Clock size={12} className="stroke-[2.5] text-rose-600 animate-pulse relative z-10" />
+                <span className="tabular-nums font-mono text-[11px] font-black relative z-10">
                   {timeLeft.hours}:{timeLeft.minutes}:{timeLeft.seconds} left
                 </span>
               </div>
             )}
 
             {badgeText && (
-              <span className="hidden md:inline-block bg-orange-50 text-orange-700 border border-orange-200/80 text-[10px] font-black uppercase px-2 py-0.5 rounded-md shadow-2xs">
-                {badgeText}
+              <span className="relative overflow-hidden hidden md:inline-flex items-center gap-1 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md shadow-2xs tracking-wider">
+                <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+                <Flame size={10} className="fill-white relative z-10" />
+                <span className="relative z-10">{badgeText}</span>
               </span>
             )}
           </div>

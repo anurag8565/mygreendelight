@@ -142,9 +142,11 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                     onClose();
                     router.push('/user/cart');
                   }}
-                  className="w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg transition-transform hover:scale-[1.02]"
+                  className="relative overflow-hidden w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3 rounded-xl font-black flex items-center justify-center gap-2 shadow-lg transition-transform hover:scale-[1.02] cursor-pointer"
                 >
-                  Proceed to Checkout <ArrowRight size={18} />
+                  <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+                  <span className="relative z-10">Proceed to Checkout</span>
+                  <ArrowRight size={18} className="relative z-10" />
                 </button>
               </div>
             )}

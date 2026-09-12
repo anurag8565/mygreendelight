@@ -72,8 +72,9 @@ export default function CombosSection({
               <span className="truncate">Fresh Produce Combos</span>
               <span className="hidden xs:inline truncate">& Family Bundles</span>
             </h2>
-            <span className="bg-amber-50 text-amber-800 border border-amber-200/80 text-[10px] sm:text-[10.5px] font-bold px-2 sm:px-2.5 py-0.5 rounded-full whitespace-nowrap shrink-0">
-              Up to 25% Off
+            <span className="relative overflow-hidden bg-gradient-to-r from-amber-100/90 via-amber-50 to-amber-100/90 text-amber-900 border border-amber-300/80 text-[10px] sm:text-[10.5px] font-black px-2 sm:px-2.5 py-0.5 rounded-full whitespace-nowrap shrink-0 shadow-2xs">
+              <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/70 to-transparent" />
+              <span className="relative z-10">Up to 25% Off</span>
             </span>
           </div>
 
@@ -116,8 +117,9 @@ export default function CombosSection({
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     {discount > 0 && (
-                      <span className="absolute top-2 left-2 bg-[#0c831f] text-white text-[9.5px] font-extrabold px-2 py-0.5 rounded-md shadow-xs">
-                        {discount}% OFF
+                      <span className="relative overflow-hidden absolute top-2 left-2 bg-[#0c831f] text-white text-[9.5px] font-extrabold px-2 py-0.5 rounded-md shadow-xs">
+                        <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                        <span className="relative z-10">{discount}% OFF</span>
                       </span>
                     )}
                   </div>
@@ -213,8 +215,9 @@ export default function CombosSection({
                         className="w-full h-full object-cover"
                       />
                       {discount > 0 && (
-                        <span className="absolute top-2 left-2 bg-[#0c831f] text-white text-[10px] font-extrabold px-2 py-0.5 rounded-md shadow-xs">
-                          {discount}% OFF
+                        <span className="relative overflow-hidden absolute top-2 left-2 bg-[#0c831f] text-white text-[10px] font-extrabold px-2 py-0.5 rounded-md shadow-xs">
+                          <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                          <span className="relative z-10">{discount}% OFF</span>
                         </span>
                       )}
                     </div>
