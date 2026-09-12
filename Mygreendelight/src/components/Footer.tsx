@@ -31,13 +31,13 @@ export default function Footer() {
                 Bhopal&apos;s 10-15 min fresh vegetable & fruit delivery service. 5:00 AM direct Mandi harvest to your doorstep.
               </p>
 
-              {/* Quick Contact Chips */}
-              <div className="flex items-center gap-2 pt-1 flex-wrap">
+              {/* Quick Contact & Social Chips (1 single neat line) */}
+              <div className="flex items-center gap-2 pt-1 flex-nowrap overflow-x-auto no-scrollbar">
                 <a
                   href="https://wa.me/919981418565?text=Hello%20SubziQuick%20Support,%20I%20need%20help%20with%20my%20order."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-white px-3 py-1.5 rounded-lg font-bold text-[11px] transition flex items-center gap-1.5 shadow-2xs"
+                  className="bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-white px-2.5 py-1.5 rounded-lg font-bold text-[11px] transition flex items-center gap-1.5 shadow-2xs shrink-0"
                 >
                   <FaWhatsapp className="w-3.5 h-3.5" />
                   <span>WhatsApp</span>
@@ -45,7 +45,7 @@ export default function Footer() {
 
                 <a
                   href="tel:9981418565"
-                  className="bg-white/10 hover:bg-white/15 active:scale-95 text-white px-3 py-1.5 rounded-lg font-bold text-[11px] transition flex items-center gap-1.5 border border-white/10"
+                  className="bg-white/10 hover:bg-white/15 active:scale-95 text-white px-2.5 py-1.5 rounded-lg font-bold text-[11px] transition flex items-center gap-1.5 border border-white/10 shrink-0"
                 >
                   <Phone size={12} className="text-emerald-300" />
                   <span>9981418565</span>
@@ -55,7 +55,7 @@ export default function Footer() {
                   href="https://www.instagram.com/subziquick"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition border border-white/10"
+                  className="w-7 h-7 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition border border-white/10 shrink-0"
                   title="Instagram"
                   aria-label="Instagram"
                 >
@@ -66,7 +66,7 @@ export default function Footer() {
                   href="https://www.facebook.com/profile.php?id=61594046110147"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition border border-white/10"
+                  className="w-7 h-7 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition border border-white/10 shrink-0"
                   title="Facebook"
                   aria-label="Facebook"
                 >
