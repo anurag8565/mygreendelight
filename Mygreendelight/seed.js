@@ -1,7 +1,18 @@
 const mongoose = require('mongoose');
 
-// Use the legacy connection string since the network has DNS issues with SRV
-const uri = "mongodb://anuragsinghas183_db_user:D481SSD8geGpGYQC@ac-1advsqp-shard-00-00.stkdtxo.mongodb.net:27017,ac-1advsqp-shard-00-01.stkdtxo.mongodb.net:27017,ac-1advsqp-shard-00-02.stkdtxo.mongodb.net:27017/myDatabase?ssl=true&authSource=admin&retryWrites=true&w=majority";
+const fs = require('fs');
+
+// Read MONGODB_URI safely from environment or .env.local
+let uri = process.env.MONGODB_URI;
+if (!uri && fs.existsSync('.env.local')) {
+  const envContent = fs.readFileSync('.env.local', 'utf8');
+  for (const line of envContent.split('\n')) {
+    if (line.startsWith('MONGODB_URI=')) {
+      uri = line.substring(line.indexOf('=') + 1).trim().replace(/^["']|["']$/g, '');
+      break;
+    }
+  }
+}
 
 const GrocerySchema = new mongoose.Schema({
   name: { type: String, required: true },

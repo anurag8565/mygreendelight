@@ -3,6 +3,11 @@ import mongoose, { Schema, Document, Model } from "mongoose";
 export interface IRewardConfig extends Document {
   isActive: boolean;
   dailyLimitPerUser: number;
+  minCashback?: number;
+  maxCashback?: number;
+  minOrderValue?: number;
+  expiryDays?: number;
+  couponPrefix?: string;
   availableRewards: {
     title: string;
     discountType: "fixed" | "percent" | "free_delivery";
@@ -19,6 +24,11 @@ const RewardConfigSchema = new Schema<IRewardConfig>(
   {
     isActive: { type: Boolean, default: true },
     dailyLimitPerUser: { type: Number, default: 1 },
+    minCashback: { type: Number, default: 15 },
+    maxCashback: { type: Number, default: 50 },
+    minOrderValue: { type: Number, default: 199 },
+    expiryDays: { type: Number, default: 7 },
+    couponPrefix: { type: String, default: "LUCKY" },
     availableRewards: [
       {
         title: { type: String, required: true },
@@ -36,6 +46,7 @@ const RewardConfigSchema = new Schema<IRewardConfig>(
   },
   { timestamps: true }
 );
+
 
 export interface IScratchReward extends Document {
   user?: mongoose.Types.ObjectId;

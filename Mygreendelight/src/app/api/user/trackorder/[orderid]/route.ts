@@ -31,13 +31,17 @@ export async function GET(
 
     const orderObj: any = { ...order };
 
-    // 🔒 Real Email OTP Security: Do NOT expose raw OTP code on public tracking URL
+    const { auth } = await import("@/auth");
+    const session = await auth();
+    const isDeliveryBoy = (session?.user as any)?.role === "deliveryboy";
+
+    // 🔒 Real Email OTP Security: Never expose raw OTP to delivery riders
     const hasOtp = Boolean(orderObj.deliveryOtp?.code);
     const isOtpVerified = Boolean(orderObj.deliveryOtp?.verified);
 
     if (orderObj.deliveryOtp) {
       orderObj.deliveryOtp = {
-        code: orderObj.deliveryOtp.code,
+        code: isDeliveryBoy ? undefined : orderObj.deliveryOtp.code,
         verified: isOtpVerified,
         expiresAt: orderObj.deliveryOtp.expiresAt,
         hasOtp,

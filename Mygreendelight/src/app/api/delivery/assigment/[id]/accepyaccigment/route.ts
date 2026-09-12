@@ -40,6 +40,13 @@ export async function GET(
       );
     }
 
+    if (user.role !== "deliveryboy" && user.role !== "admin") {
+      return NextResponse.json(
+        { message: "Forbidden: Only active delivery partners can accept delivery assignments." },
+        { status: 403 }
+      );
+    }
+
     const deliveryboyid = user._id;
 
     const assigment = await DeliveryAssignment.findById(id);

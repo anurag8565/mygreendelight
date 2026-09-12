@@ -442,8 +442,7 @@ try {
       // 🎁 Auto-generate Dynamic Scratch Card Reward in MongoDB
       let reward = null;
       try {
-        const RewardConfig = (await import("@/model/rewardConfig.model")).default;
-        const ScratchReward = (await import("@/model/reward.model")).default;
+        const { RewardConfig, ScratchReward } = await import("@/model/reward.model");
 
         let config = await RewardConfig.findOne().sort({ createdAt: -1 });
         if (!config) {
