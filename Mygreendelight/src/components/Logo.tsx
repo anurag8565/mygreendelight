@@ -69,7 +69,7 @@ export default function Logo({
 
         {/* Refined Micro Tagline */}
         {showTagline && !isCompact && (
-          <div className="flex items-center gap-1.5 mt-0.5 font-sans">
+          <div className="hidden sm:flex items-center gap-1.5 mt-0.5 font-sans">
             <span
               className={`text-[8px] sm:text-[8.5px] font-bold tracking-wider uppercase ${
                 isWhite
