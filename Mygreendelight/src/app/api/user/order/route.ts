@@ -222,13 +222,24 @@ export async function POST(req: NextRequest) {
 
         discountCalc = Math.min(discountCalc, verifiedSubtotal);
 
-        // Fetch dynamic delivery fee settings from Database
+        // Fetch dynamic delivery fee & minimum order settings from Database
         let deliveryFeeCalc = 0;
         try {
             const storeSetting = await Setting.findOne({ key: "store_delivery_settings" }).lean();
             const baseFee = storeSetting?.deliveryFee ?? 30;
             const threshold = storeSetting?.freeDeliveryThreshold ?? 199;
             const isFreePromo = Boolean(storeSetting?.isFreeDeliveryActive);
+            const minReqOrder = Number(storeSetting?.minOrderAmount) || 0;
+
+            if (minReqOrder > 0 && verifiedSubtotal < minReqOrder) {
+                return NextResponse.json(
+                    { 
+                        success: false, 
+                        message: `Minimum order amount for delivery is ₹${minReqOrder}. Please add a few more fresh items to proceed.` 
+                    },
+                    { status: 400 }
+                );
+            }
 
             if (verifiedSubtotal > 0) {
                 if (isFreePromo || baseFee === 0 || verifiedSubtotal >= threshold) {
