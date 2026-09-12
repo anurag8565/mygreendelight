@@ -366,6 +366,8 @@ export default function ManageOrder() {
         ? currentStatus === "out of delivery"
         : filterTab === "completed"
         ? currentStatus === "delivered" || currentStatus === "completed"
+        : filterTab === "cancelled"
+        ? currentStatus === "cancelled"
         : true;
 
     const term = searchTerm.trim().toLowerCase();
@@ -655,6 +657,11 @@ export default function ManageOrder() {
                   id: "completed",
                   label: "Delivered",
                   count: orders.filter((o) => ["delivered", "completed"].includes(statuses[o._id] || o.status)).length,
+                },
+                {
+                  id: "cancelled",
+                  label: "Cancelled",
+                  count: orders.filter((o) => (statuses[o._id] || o.status) === "cancelled").length,
                 },
               ].map((tab) => {
                 const isActive = filterTab === tab.id;
