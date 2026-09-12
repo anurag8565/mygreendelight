@@ -153,7 +153,7 @@ export default async function ProductPage(props: { params: Promise<{ id: string 
     },
     offers: {
       "@type": "Offer",
-      url: product.canonicalUrl || `https://subziquick.in/product/${product._id}`,
+      url: product.canonicalUrl || `https://subziquick.in/product/${product.slug || product._id}`,
       priceCurrency: "INR",
       price: product.price,
       priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
