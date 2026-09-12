@@ -263,7 +263,7 @@ export default function Hero({ banners = [] }: HeroProps) {
                     <motion.button
                       whileHover={{ scale: 1.04 }}
                       whileTap={{ scale: 0.95 }}
-                      className="relative overflow-hidden bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4.5 xs:px-5 sm:px-7 py-2.5 sm:py-3 rounded-full font-black text-xs sm:text-sm shadow-xl transition-all flex items-center gap-2 cursor-pointer border border-emerald-300/40 hover:shadow-emerald-950/60 group/btn"
+                      className="relative overflow-hidden bg-[#ff5a1f] hover:bg-[#e04810] text-white px-4.5 xs:px-5 sm:px-7 py-2.5 sm:py-3 rounded-full font-black text-xs sm:text-sm shadow-xl transition-all flex items-center gap-2 cursor-pointer border border-orange-300/40 hover:shadow-orange-950/60 group/btn"
                     >
                       <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/25 to-transparent" />
                       <span className="relative z-10">{slide.btnText || "Shop Fresh Produce"}</span>

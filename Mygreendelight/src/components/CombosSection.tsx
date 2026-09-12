@@ -151,8 +151,8 @@ export default function CombosSection({
                     onClick={() => handleAddCombo(combo)}
                     className={`h-[34px] px-3.5 rounded-xl font-bold text-xs flex items-center gap-1 transition-all cursor-pointer ${
                       isAdded
-                        ? "bg-[#0c831f] text-white"
-                        : "bg-white text-[#0c831f] border border-[#0c831f] hover:bg-[#0c831f] hover:text-white shadow-2xs active:scale-95"
+                        ? "bg-[#ff5a1f] text-white"
+                        : "bg-white text-[#ff5a1f] border border-[#ff5a1f] hover:bg-[#ff5a1f] hover:text-white shadow-2xs active:scale-95"
                     }`}
                   >
                     {isAdded ? (
@@ -249,8 +249,8 @@ export default function CombosSection({
                       onClick={() => handleAddCombo(combo)}
                       className={`h-[36px] px-4 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer ${
                         isAdded
-                          ? "bg-[#0c831f] text-white"
-                          : "bg-white text-[#0c831f] border border-[#0c831f] hover:bg-[#0c831f] hover:text-white shadow-2xs active:scale-95"
+                          ? "bg-[#ff5a1f] text-white"
+                          : "bg-white text-[#ff5a1f] border border-[#ff5a1f] hover:bg-[#ff5a1f] hover:text-white shadow-2xs active:scale-95"
                       }`}
                     >
                       {isAdded ? (
