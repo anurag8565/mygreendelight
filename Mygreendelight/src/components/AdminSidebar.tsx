@@ -18,6 +18,7 @@ import {
   Menu,
   X,
   Truck,
+  Users,
   Percent,
   Radio,
   Building2,
@@ -74,6 +75,11 @@ export default function AdminSidebar() {
           name: "Store Categories",
           href: "/admin/manage-categories",
           icon: <FolderTree size={17} />,
+        },
+        {
+          name: "Customers",
+          href: "/admin/manage-customers",
+          icon: <Users size={17} />,
         },
         {
           name: "Delivery Fleet & Drivers",

@@ -242,7 +242,7 @@ export default function AdminDashboardPage() {
 
                 {/* Active Customers */}
                 <Link
-                  href="/admin/manageinquiries"
+                  href="/admin/manage-customers"
                   className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 lg:p-6 border border-gray-200/80 shadow-2xs hover:shadow-md hover:border-purple-300 hover:scale-[1.02] transition-all flex flex-col justify-between cursor-pointer group"
                 >
                   <div className="flex items-center justify-between mb-2 sm:mb-4">
@@ -258,7 +258,7 @@ export default function AdminDashboardPage() {
                       {summary?.totalCustomers || 0}
                     </span>
                     <span className="text-[10px] sm:text-[11px] text-purple-600 font-bold mt-1 block truncate">
-                      Support inquiries →
+                      Manage customers →
                     </span>
                   </div>
                 </Link>
