@@ -15,6 +15,7 @@ import {
   Clock,
   RotateCcw,
 } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 
 export default function FarmFreshPromise() {
   const steps = [
@@ -82,8 +83,9 @@ export default function FarmFreshPromise() {
                 href="https://wa.me/919981418565?text=Hello%20SubziQuick,%20I%20have%20a%20question%20about%20today's%20fresh%20harvest"
                 target="_blank"
                 rel="noreferrer"
-                className="text-[11px] font-bold text-gray-700 hover:text-[#0f8646] bg-gray-50 hover:bg-emerald-50/60 px-2.5 py-1 rounded-full border border-gray-200/70 transition flex items-center gap-1"
+                className="text-[11px] font-bold text-gray-700 hover:text-[#0f8646] bg-gray-50 hover:bg-emerald-50/60 px-2.5 py-1 rounded-full border border-gray-200/70 transition flex items-center gap-1.5"
               >
+                <FaWhatsapp className="text-[#25D366] text-xs shrink-0" />
                 <span>Help Desk</span>
                 <ArrowRight size={11} />
               </a>
