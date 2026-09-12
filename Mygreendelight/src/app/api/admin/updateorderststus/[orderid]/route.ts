@@ -22,8 +22,19 @@ export async function POST(
     }
 
     const { orderid } = await context.params;
-    const body = await req.json();
-    const { status, ispaid, paymentStatus } = body;
+    const rawBody = await req.json();
+
+    const { updateOrderStatusSchema } = await import("@/lib/validations/zodSchemas");
+    const parsed = updateOrderStatusSchema.safeParse(rawBody);
+
+    if (!parsed.success) {
+      return NextResponse.json(
+        { success: false, message: parsed.error.issues[0]?.message || "Invalid status update data" },
+        { status: 400 }
+      );
+    }
+
+    const { status, ispaid, paymentStatus } = parsed.data;
 
     const order = await Order.findById(orderid).populate("user");
 

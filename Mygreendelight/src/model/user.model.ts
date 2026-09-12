@@ -139,7 +139,10 @@ const userSchema = new mongoose.Schema<iUser>(
 
 );
 
+// ⚡ High-Performance MongoDB Compound Indexes
 userSchema.index({ location: "2dsphere" });
+userSchema.index({ role: 1, isonline: 1 });
+userSchema.index({ mobile: 1 });
 
 const User = mongoose.models.User || mongoose.model<iUser>("User", userSchema);
 export default User;

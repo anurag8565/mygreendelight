@@ -17,14 +17,18 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { orderId, driverId } = await req.json();
+    const rawBody = await req.json();
+    const { assignDriverSchema } = await import("@/lib/validations/zodSchemas");
+    const parsed = assignDriverSchema.safeParse(rawBody);
 
-    if (!orderId || !driverId) {
+    if (!parsed.success) {
       return NextResponse.json(
-        { success: false, message: "Order ID and Driver ID are required" },
+        { success: false, message: parsed.error.issues[0]?.message || "Invalid Order or Driver ID" },
         { status: 400 }
       );
     }
+
+    const { orderId, driverId } = parsed.data;
 
     const [order, driver] = await Promise.all([
       Order.findById(orderId),

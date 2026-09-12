@@ -13,6 +13,18 @@ export async function POST(req: NextRequest) {
         // ✅ read body once & sanitize
         const rawBody = await req.json();
         const body = sanitizeInput(rawBody);
+
+        // 🛡️ Step 1: Strict Zod Request Validation
+        const { createOrderSchema } = await import("@/lib/validations/zodSchemas");
+        const validationResult = createOrderSchema.safeParse(body);
+        if (!validationResult.success) {
+            const firstError = validationResult.error.issues[0]?.message || "Invalid order information";
+            return NextResponse.json(
+                { success: false, message: firstError },
+                { status: 400 }
+            );
+        }
+
         const {
             userid,
             items,
@@ -28,15 +40,7 @@ export async function POST(req: NextRequest) {
             deliverySlot,
             paymentId,
             paymentProofImage,
-        } = body;
-
-        // ❌ validation
-        if (!userid || !items || !Array.isArray(items) || items.length === 0 || !address) {
-            return NextResponse.json(
-                { success: false, message: "Missing required order information or empty cart" },
-                { status: 400 }
-            );
-        }
+        } = validationResult.data;
 
         // 🛡️ UPI Handling: Enforce payment screenshot upload & validate UTR uniqueness
         if (paymentmethod === "upi") {

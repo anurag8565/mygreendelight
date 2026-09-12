@@ -19,8 +19,12 @@ const connectDb = async () => {
     }
 
     if (!cached.promise) {
-        const opts = {
+        const opts: mongoose.ConnectOptions = {
             bufferCommands: false,
+            maxPoolSize: 10, // Maintain up to 10 socket connections for high concurrency without exhausting Atlas limits
+            minPoolSize: 2,
+            serverSelectionTimeoutMS: 5000, // Fail fast after 5 seconds instead of hanging
+            socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
         };
         cached.promise = mongoose.connect(mongourl, opts).then((mongoose) => {
             return mongoose.connection;

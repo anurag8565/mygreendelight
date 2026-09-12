@@ -59,6 +59,11 @@ const DeliveryAssignmentSchema =
     }
   );
 
+// ⚡ High-Performance MongoDB Compound Indexes
+DeliveryAssignmentSchema.index({ order: 1 });
+DeliveryAssignmentSchema.index({ assignedto: 1, status: 1 });
+DeliveryAssignmentSchema.index({ status: 1, createdAt: -1 });
+
 const DeliveryAssignment =
   mongoose.models.DeliveryAssignment ||
   mongoose.model<IDeliveryAssignment>(
