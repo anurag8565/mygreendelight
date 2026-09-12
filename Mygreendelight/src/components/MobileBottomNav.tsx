@@ -83,40 +83,40 @@ export default function MobileBottomNav() {
             pathname !== "/user/myorder" &&
             !pathname.startsWith("/track") && (
             <motion.div
-              initial={{ y: 60, opacity: 0, scale: 0.92 }}
+              initial={{ y: 50, opacity: 0, scale: 0.95 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}
-              exit={{ y: 60, opacity: 0, scale: 0.92 }}
+              exit={{ y: 50, opacity: 0, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 450, damping: 28 }}
-              className="mx-3.5 mb-2.5"
+              className="mx-3 mb-2"
             >
               <Link
                 href="/user/cart"
-                className="w-full bg-gradient-to-r from-[#0c831f] via-[#0e771e] to-[#064e13] text-white rounded-2xl p-3.5 flex items-center justify-between shadow-[0_10px_25px_-5px_rgba(12,131,31,0.5)] border border-emerald-400/40 cursor-pointer active:scale-[0.98] transition-transform"
+                className="w-full bg-gradient-to-r from-[#0c831f] via-[#0e771e] to-[#064e13] text-white rounded-xl px-3 py-2 flex items-center justify-between shadow-[0_6px_20px_-3px_rgba(12,131,31,0.45)] border border-emerald-400/30 cursor-pointer active:scale-[0.98] transition-all"
               >
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-xs flex items-center justify-center font-black text-sm shrink-0 shadow-inner">
-                    <ShoppingCart size={19} className="text-white" />
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="w-8 h-8 rounded-lg bg-white/20 backdrop-blur-xs flex items-center justify-center shrink-0 shadow-inner">
+                    <ShoppingCart size={15} className="text-white" />
                   </div>
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-[10px] font-black uppercase tracking-wider text-emerald-200 block">
+                  <div className="min-w-0 leading-tight">
+                    <div className="flex items-center gap-1">
+                      <span className="text-[10px] font-black uppercase tracking-wider text-emerald-200">
                         {cartCount} {cartCount > 1 ? "ITEMS" : "ITEM"}
                       </span>
-                      <span className="text-emerald-300/60 text-[10px]">•</span>
-                      <span className="text-[10px] font-bold text-amber-300 inline-flex items-center gap-0.5">
-                        <Zap size={10} className="fill-amber-300 text-amber-300" />
-                        10-15 MIN
+                      <span className="text-emerald-300/60 text-[9px]">•</span>
+                      <span className="text-[9px] font-bold text-amber-300 inline-flex items-center gap-0.5">
+                        <Zap size={9} className="fill-amber-300 text-amber-300" />
+                        10-15M
                       </span>
                     </div>
-                    <span className="text-base font-black text-white leading-tight block truncate">
+                    <span className="text-sm font-black text-white tracking-tight">
                       ₹{cartTotal.toFixed(2)}
                     </span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1.5 text-xs font-black bg-white text-[#0c831f] px-4 py-2 rounded-xl shadow-md shrink-0 hover:bg-emerald-50 transition">
+                <div className="flex items-center gap-1 text-[11px] font-black bg-white text-[#0c831f] px-3 py-1.5 rounded-lg shadow-xs shrink-0 hover:bg-emerald-50 transition">
                   <span>View Cart</span>
-                  <ArrowRight size={14} className="stroke-[2.5]" />
+                  <ArrowRight size={12} className="stroke-[2.5]" />
                 </div>
               </Link>
             </motion.div>
