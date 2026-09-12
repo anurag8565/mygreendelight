@@ -45,11 +45,13 @@ export default function Groceryitemcard({
   );
   const [showAlertModal, setShowAlertModal] = React.useState(false);
 
-  const displayPrice = selectedVariation ? selectedVariation.price : item.price;
-  const displayUnit = selectedVariation ? selectedVariation.weight : item.unit;
-  const displayStock = selectedVariation ? selectedVariation.stock : item.stock;
-  const currentCartItemId =
-    item._id.toString() + (selectedVariation ? "-" + selectedVariation.weight : "");
+  const displayPrice = Number(selectedVariation ? selectedVariation.price : item.price) || 0;
+  const displayUnit = selectedVariation ? selectedVariation.weight : (item.unit || "kg");
+  const displayStock = typeof (selectedVariation ? selectedVariation.stock : item.stock) === "number"
+    ? (selectedVariation ? selectedVariation.stock : item.stock)
+    : 50;
+  const safeItemId = String(item._id || "");
+  const currentCartItemId = safeItemId + (selectedVariation ? "-" + selectedVariation.weight : "");
 
   const cartitem = cartdata.find(
     (c) =>

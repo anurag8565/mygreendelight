@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import axios from "axios";
 import {
   Search,
@@ -24,40 +24,44 @@ import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
 
 const POPULAR_SEARCHES = [
-  "Tomato",
-  "Palak",
-  "Potato",
-  "Onion",
-  "Shimla Mirch",
-  "Coriander",
+  "Fresh Tomato",
+  "Pahadi Potato",
+  "Nashik Onion",
+  "Fresh Coriander",
+  "Palak Spinach",
+  "Button Mushroom",
+  "Green Chilli",
   "Ginger",
-  "Apple",
-  "Banana",
+  "Shimla Apple",
+  "Robusta Banana",
   "Broccoli",
 ];
 
 const CANONICAL_CATEGORIES = [
   {
-    name: "Vegetables",
+    name: "Daily Vegetables",
+    hindi: "ताज़ी सब्ज़ियाँ",
     subtitle: "Farm Fresh Daily",
     image: "/categories/vegetables_4k.jpg?v=4",
     link: "/shop?category=Vegetables",
   },
   {
-    name: "Fruits",
+    name: "Seasonal Fruits",
+    hindi: "मीठे ताज़े फल",
     subtitle: "Sweet & Naturally Ripe",
     image: "/categories/fruits_4k.jpg?v=4",
     link: "/shop?category=Fruits",
   },
   {
-    name: "Exotics",
+    name: "Exotic & Hydroponic",
+    hindi: "विदेशी सब्जियां",
     subtitle: "Hydroponic & Salads",
     image: "/categories/exotics_4k.jpg?v=4",
     link: "/shop?category=Exotics",
   },
 ];
 
-export default function SearchPage() {
+function SearchContent() {
   useGetMe();
   const { userdata } = useSelector((state: RootState) => state.user);
   const router = useRouter();
@@ -479,5 +483,22 @@ export default function SearchPage() {
 
       <Footer />
     </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#f8faf9] flex items-center justify-center font-sans">
+          <div className="flex flex-col items-center gap-3">
+            <div className="w-10 h-10 border-4 border-[#0f8646] border-t-transparent rounded-full animate-spin" />
+            <span className="text-xs font-bold text-gray-500">Searching fresh produce...</span>
+          </div>
+        </div>
+      }
+    >
+      <SearchContent />
+    </Suspense>
   );
 }
