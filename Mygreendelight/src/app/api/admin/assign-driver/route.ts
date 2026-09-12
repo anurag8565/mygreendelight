@@ -84,7 +84,7 @@ export async function POST(req: NextRequest) {
 
     const populatedOrder = await Order.findById(orderId)
       .populate("user", "name email mobile")
-      .populate("assigneddelliveryboy", "name mobile");
+      .populate("assigneddelliveryboy", "name mobile location isonline");
 
     // 🔔 Notify Socket Server in Real-Time for Instant Rider Dispatch Ping
     const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:5000";

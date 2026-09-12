@@ -486,21 +486,33 @@ export default function TrackOrderPage() {
             {/* Live Distance & ETA Radar Badge */}
             {data?.customerLocation && deliveryBoy?.location?.coordinates && (
               (() => {
-                const lat1 = data.customerLocation[0];
-                const lon1 = data.customerLocation[1];
-                const lat2 = deliveryBoy.location.coordinates[1];
-                const lon2 = deliveryBoy.location.coordinates[0];
-                
-                const dLat = ((lat2 - lat1) * Math.PI) / 180;
-                const dLon = ((lon2 - lon1) * Math.PI) / 180;
+                // Support both object { latitude, longitude } and array [lat, lng] / [lng, lat]
+                const rawCust = data.customerLocation;
+                const custLat = Number(rawCust?.latitude ?? (Array.isArray(rawCust) ? rawCust[0] : null));
+                const custLng = Number(rawCust?.longitude ?? (Array.isArray(rawCust) ? rawCust[1] : null));
+
+                const riderCoords = deliveryBoy.location.coordinates;
+                const riderLng = Number(Array.isArray(riderCoords) ? riderCoords[0] : (deliveryBoy.location as any)?.longitude);
+                const riderLat = Number(Array.isArray(riderCoords) ? riderCoords[1] : (deliveryBoy.location as any)?.latitude);
+
+                if (
+                  isNaN(custLat) || isNaN(custLng) || !custLat || !custLng ||
+                  isNaN(riderLat) || isNaN(riderLng) || !riderLat || !riderLng
+                ) {
+                  return null;
+                }
+
+                const dLat = ((riderLat - custLat) * Math.PI) / 180;
+                const dLon = ((riderLng - custLng) * Math.PI) / 180;
                 const a =
                   Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                  Math.cos((lat1 * Math.PI) / 180) *
-                    Math.cos((lat2 * Math.PI) / 180) *
+                  Math.cos((custLat * Math.PI) / 180) *
+                    Math.cos((riderLat * Math.PI) / 180) *
                     Math.sin(dLon / 2) *
                     Math.sin(dLon / 2);
                 const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-                const distKm = Math.max(0.3, Number((6371 * c).toFixed(1)));
+                const calcDist = 6371 * c;
+                const distKm = isNaN(calcDist) ? 1.5 : Math.max(0.3, Number(calcDist.toFixed(1)));
                 const etaMins = Math.max(2, Math.round(distKm * 2.8 + 2));
 
                 return (

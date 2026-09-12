@@ -389,36 +389,47 @@ export default function ManageOrder() {
   });
 
   const calculateDistanceAndETA = (order: OrderType) => {
-    const custLat = order.address?.latitude;
-    const custLng = order.address?.longitude;
+    const rawCustLat = order.address?.latitude;
+    const rawCustLng = order.address?.longitude;
+    const custLat = Number(rawCustLat);
+    const custLng = Number(rawCustLng);
+
+    // Fallback store coordinates: Bagsewaniya Store, Bhopal
+    const STORE_LAT = 23.1985;
+    const STORE_LNG = 77.4475;
+
+    // Validate customer coordinates
+    const hasValidCustCoords = !isNaN(custLat) && !isNaN(custLng) && custLat !== 0 && custLng !== 0;
+    const safeCustLat = hasValidCustCoords ? custLat : STORE_LAT;
+    const safeCustLng = hasValidCustCoords ? custLng : STORE_LNG;
+
     const riderCoords = order.assigneddelliveryboy?.location?.coordinates;
-    const riderLng = riderCoords?.[0];
-    const riderLat = riderCoords?.[1];
+    const rawRiderLng = Array.isArray(riderCoords) ? Number(riderCoords[0]) : NaN;
+    const rawRiderLat = Array.isArray(riderCoords) ? Number(riderCoords[1]) : NaN;
+    const hasRiderGPS = !isNaN(rawRiderLat) && !isNaN(rawRiderLng) && rawRiderLat !== 0 && rawRiderLng !== 0;
 
-    if (!custLat || !custLng) return null;
-
-    // If rider has GPS coordinates, compute distance from rider, otherwise from Bagsewaniya Store (23.1985, 77.4475)
-    const originLat = riderLat || 23.1985;
-    const originLng = riderLng || 77.4475;
+    const originLat = hasRiderGPS ? rawRiderLat : STORE_LAT;
+    const originLng = hasRiderGPS ? rawRiderLng : STORE_LNG;
 
     const R = 6371; // Earth radius in km
-    const dLat = ((custLat - originLat) * Math.PI) / 180;
-    const dLon = ((custLng - originLng) * Math.PI) / 180;
+    const dLat = ((safeCustLat - originLat) * Math.PI) / 180;
+    const dLon = ((safeCustLng - originLng) * Math.PI) / 180;
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.cos((originLat * Math.PI) / 180) *
-        Math.cos((custLat * Math.PI) / 180) *
+        Math.cos((safeCustLat * Math.PI) / 180) *
         Math.sin(dLon / 2) *
         Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const distKm = Math.max(0.3, Math.round(R * c * 10) / 10);
+    const calcDist = R * c;
+    const distKm = isNaN(calcDist) ? 1.5 : Math.max(0.3, Math.round(calcDist * 10) / 10);
     const etaMins = Math.max(5, Math.round(distKm * 3.2) + 4);
 
     return {
       distKm,
       etaMins,
-      hasRiderGPS: !!(riderLat && riderLng),
-      mapsUrl: `https://www.google.com/maps/dir/?api=1&origin=${originLat},${originLng}&destination=${custLat},${custLng}`,
+      hasRiderGPS,
+      mapsUrl: `https://www.google.com/maps/dir/?api=1&origin=${originLat},${originLng}&destination=${safeCustLat},${safeCustLng}`,
     };
   };
 
