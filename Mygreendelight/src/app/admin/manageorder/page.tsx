@@ -36,6 +36,7 @@ import {
   X,
   ExternalLink,
   ShieldCheck,
+  Trash2,
 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
 import { socket } from "@/lib/socket";
@@ -136,7 +137,63 @@ export default function ManageOrder() {
     }
   };
 
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [clearingAll, setClearingAll] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+
+  const handleDeleteOrder = async (orderId: string) => {
+    if (
+      !window.confirm(
+        `Are you sure you want to permanently delete Order #${orderId.slice(-6).toUpperCase()}?\nThis will remove its dispatch assignments and chat records.`
+      )
+    ) {
+      return;
+    }
+    setDeletingId(orderId);
+    try {
+      const res = await axios.delete(`/api/admin/manageorder?orderId=${orderId}`);
+      if (res.data?.success) {
+        setOrders((prev) => prev.filter((o) => o._id !== orderId));
+        setToastMsg(`✓ Order #${orderId.slice(-6).toUpperCase()} deleted successfully`);
+        setTimeout(() => setToastMsg(null), 3000);
+      } else {
+        alert(res.data?.message || "Failed to delete order");
+      }
+    } catch (err: any) {
+      console.error("Delete order error:", err);
+      alert(err.response?.data?.message || "Failed to delete order");
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
+  const handleClearAllTestOrders = async () => {
+    const confirmation = window.prompt(
+      '⚠️ CAUTION: This will permanently delete ALL orders, assignments, and test chats from the database!\n\nType "DELETE" to confirm:'
+    );
+    if (confirmation !== "DELETE") {
+      if (confirmation !== null) {
+        alert("Action cancelled. You must type 'DELETE' to confirm.");
+      }
+      return;
+    }
+    setClearingAll(true);
+    try {
+      const res = await axios.delete("/api/admin/manageorder?clearAll=true");
+      if (res.data?.success) {
+        setOrders([]);
+        setToastMsg(`✓ ${res.data.message || "All test orders cleared!"}`);
+        setTimeout(() => setToastMsg(null), 4000);
+      } else {
+        alert(res.data?.message || "Failed to clear test orders");
+      }
+    } catch (err: any) {
+      console.error("Clear all orders error:", err);
+      alert(err.response?.data?.message || "Failed to clear test orders");
+    } finally {
+      setClearingAll(false);
+    }
+  };
 
   const fetchOrders = async (showToast = false) => {
     try {
@@ -551,6 +608,21 @@ export default function ManageOrder() {
               />
               <span>Refresh</span>
             </button>
+
+            <button
+              type="button"
+              onClick={handleClearAllTestOrders}
+              disabled={orders.length === 0 || clearingAll}
+              className="bg-rose-50 hover:bg-rose-100 border border-rose-300 text-rose-700 px-3.5 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-2xs disabled:opacity-40"
+              title="Delete all test orders and reset database records"
+            >
+              {clearingAll ? (
+                <Loader2 size={14} className="animate-spin text-rose-600" />
+              ) : (
+                <Trash2 size={14} className="text-rose-600" />
+              )}
+              <span>Clear Test Orders</span>
+            </button>
           </div>
         </header>
 
@@ -777,6 +849,21 @@ export default function ManageOrder() {
                             <option value="completed">✓ Completed & Delivered</option>
                             <option value="cancelled">✕ Cancelled</option>
                           </select>
+
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteOrder(order._id)}
+                            disabled={deletingId === order._id}
+                            className="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 px-2.5 py-1.5 rounded-xl text-xs font-black flex items-center gap-1 transition cursor-pointer disabled:opacity-50"
+                            title="Delete this test order"
+                          >
+                            {deletingId === order._id ? (
+                              <Loader2 size={13} className="animate-spin text-rose-600" />
+                            ) : (
+                              <Trash2 size={13} className="text-rose-500" />
+                            )}
+                            <span className="hidden xs:inline">Delete</span>
+                          </button>
                         </div>
                       </div>
                     </div>
