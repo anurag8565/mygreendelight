@@ -113,3 +113,16 @@ input, textarea, [contenteditable="true"] {
   animation-play-state: paused;
 }
 
+/* ✨ Continuous Subtle Shimmer Sweep Animation */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s infinite ease-in-out;
+}
