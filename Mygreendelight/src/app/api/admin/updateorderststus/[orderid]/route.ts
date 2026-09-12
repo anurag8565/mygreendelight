@@ -61,6 +61,16 @@ export async function POST(
             }
           }
         }
+
+        // Cancel active DeliveryAssignment so riders do not attempt delivery
+        try {
+          await DeliveryAssignment.updateMany(
+            { order: order._id, status: { $nin: ["completed", "cancelled"] } },
+            { $set: { status: "cancelled", assignedto: null } }
+          );
+        } catch (dErr) {
+          console.warn("Delivery assignment cancel warning on admin cancel:", dErr);
+        }
       }
 
       order.status = status;

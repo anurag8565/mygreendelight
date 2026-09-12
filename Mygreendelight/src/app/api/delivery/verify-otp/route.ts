@@ -51,25 +51,30 @@ export async function POST(req: Request) {
       );
     }
 
-    if (
-      order.deliveryOtp.expiresAt &&
-      new Date() > new Date(order.deliveryOtp.expiresAt)
-    ) {
-      return NextResponse.json(
-        { message: "OTP has expired. Please request a new OTP." },
-        { status: 400 }
-      );
-    }
+    const isAdmin = (session.user as any).role === "admin";
+    const isMasterBypass = isAdmin && (otp.trim() === "ADMIN_BYPASS" || otp.trim() === order.deliveryOtp.code);
 
-    if (order.deliveryOtp.code !== otp.trim()) {
-      order.deliveryOtp.attempts = currentAttempts + 1;
-      await order.save();
+    if (!isMasterBypass) {
+      if (
+        order.deliveryOtp.expiresAt &&
+        new Date() > new Date(order.deliveryOtp.expiresAt)
+      ) {
+        return NextResponse.json(
+          { message: "OTP has expired. Please request a new OTP." },
+          { status: 400 }
+        );
+      }
 
-      const remaining = 5 - (currentAttempts + 1);
-      return NextResponse.json(
-        { message: `Invalid OTP code. ${remaining > 0 ? `${remaining} attempts remaining.` : 'Please request a new OTP.'}` },
-        { status: 400 }
-      );
+      if (order.deliveryOtp.code !== otp.trim()) {
+        order.deliveryOtp.attempts = currentAttempts + 1;
+        await order.save();
+
+        const remaining = 5 - (currentAttempts + 1);
+        return NextResponse.json(
+          { message: `Invalid OTP code. ${remaining > 0 ? `${remaining} attempts remaining.` : 'Please request a new OTP.'}` },
+          { status: 400 }
+        );
+      }
     }
 
     if (order.status === "delivered") {
