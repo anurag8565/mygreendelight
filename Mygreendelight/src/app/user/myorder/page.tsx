@@ -36,7 +36,11 @@ import {
   Check,
   ShieldCheck,
   Zap,
+  HelpCircle,
+  MessageSquare,
 } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
+
 
 interface OrderItem {
   grocery: string;
@@ -91,6 +95,13 @@ export default function MyOrder() {
   const [cancelModalOrder, setCancelModalOrder] = useState<OrderType | null>(null);
   const [cancelReason, setCancelReason] = useState("Ordered by mistake");
   const [cancelling, setCancelling] = useState(false);
+
+  // 💬 Customer Complaint & Help Modal State
+  const [helpModalOrder, setHelpModalOrder] = useState<OrderType | null>(null);
+  const [helpIssueType, setHelpIssueType] = useState("Damaged / Rotten Produce");
+  const [helpDetails, setHelpDetails] = useState("");
+  const [submittingHelp, setSubmittingHelp] = useState(false);
+
 
   useEffect(() => {
     fetchOrders();
@@ -176,6 +187,42 @@ export default function MyOrder() {
       setToastMsg(null);
     }, 4000);
   };
+
+  const handleWhatsAppHelp = () => {
+    if (!helpModalOrder) return;
+    const shortId = helpModalOrder._id.slice(-6).toUpperCase();
+    const customerName = userdata?.name || helpModalOrder.address?.fullname || "Customer";
+    const text = `*🌿 SubziQuick Customer Complaint / Help*\n\n*Order ID:* #SZQ-${shortId}\n*Customer:* ${customerName}\n*Issue:* ${helpIssueType}\n*Details:* ${helpDetails.trim() || "Need urgent resolution for this order."}\n\nPlease help me resolve this.`;
+    window.open(`https://wa.me/919981418565?text=${encodeURIComponent(text)}`, "_blank");
+  };
+
+  const handleSubmitSupportTicket = async () => {
+    if (!helpModalOrder) return;
+    setSubmittingHelp(true);
+    try {
+      const shortId = helpModalOrder._id.slice(-6).toUpperCase();
+      const customerName = userdata?.name || helpModalOrder.address?.fullname || "Customer";
+      const customerPhone = userdata?.mobile || helpModalOrder.address?.mobile || "N/A";
+      const customerEmail = userdata?.email || "customer@subziquick.in";
+
+      await axios.post("/api/contact", {
+        name: customerName,
+        email: customerEmail,
+        phone: customerPhone,
+        subject: `Order #${shortId} Issue: ${helpIssueType}`,
+        message: helpDetails.trim() || `Customer reported: ${helpIssueType} for Order #${shortId}. Immediate action requested.`,
+      });
+
+      showToast("✅ Support complaint ticket submitted! Our Bhopal team will contact you shortly.");
+      setHelpModalOrder(null);
+      setHelpDetails("");
+    } catch (err) {
+      showToast("Failed to submit ticket. Please chat on WhatsApp.");
+    } finally {
+      setSubmittingHelp(false);
+    }
+  };
+
 
   // Filtered orders list based on active tab and search query
   const filteredOrders = useMemo(() => {
@@ -590,7 +637,17 @@ export default function MyOrder() {
                       <span className="hidden sm:inline">Receipt</span>
                     </button>
 
-                    {/* Secondary 3: Cancel Order (Only if Pending) */}
+                    {/* Secondary 3: Need Help / Report Issue */}
+                    <button
+                      onClick={() => setHelpModalOrder(order)}
+                      className="bg-amber-50 hover:bg-amber-100 active:scale-95 text-amber-900 border border-amber-200 py-2.5 px-3 rounded-xl text-xs font-black transition flex items-center gap-1 cursor-pointer shrink-0 shadow-2xs"
+                      title="Report an issue or complaint for this order"
+                    >
+                      <HelpCircle size={13} className="text-amber-600" />
+                      <span>Need Help?</span>
+                    </button>
+
+                    {/* Secondary 4: Cancel Order (Only if Pending) */}
                     {isPending && (
                       <button
                         onClick={() => setCancelModalOrder(order)}
@@ -601,6 +658,7 @@ export default function MyOrder() {
                         <span>Cancel</span>
                       </button>
                     )}
+
 
                   </div>
 
@@ -773,7 +831,116 @@ export default function MyOrder() {
         </div>
       )}
 
+      {/* 💬 Order Help & Complaint Resolution Modal */}
+      {helpModalOrder && (
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-xs">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto"
+          >
+            <div className="flex items-center justify-between pb-3 border-b border-gray-100 mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-[#0f8646] flex items-center justify-center font-black">
+                  <HelpCircle size={20} />
+                </div>
+                <div>
+                  <h3 className="text-base font-black text-gray-900">
+                    Need Help with Order #SZQ-{helpModalOrder._id.slice(-6).toUpperCase()}?
+                  </h3>
+                  <p className="text-[11px] text-gray-500">
+                    Bhopal Customer Support & Instant Resolution
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setHelpModalOrder(null)}
+                className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 flex items-center justify-center transition cursor-pointer"
+              >
+                <X size={15} />
+              </button>
+            </div>
+
+            <p className="text-xs text-gray-600 mb-3 font-medium">
+              What issue did you experience with this delivery?
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
+              {[
+                { label: "Damaged / Rotten Produce", icon: "🥬" },
+                { label: "Missing Item in Delivery", icon: "📦" },
+                { label: "Delivery Delay / Rider Issue", icon: "🛵" },
+                { label: "Refund / Payment Inquiry", icon: "💳" },
+                { label: "Wrong Item Delivered", icon: "🔄" },
+                { label: "General Feedback", icon: "💬" },
+              ].map((item) => (
+                <button
+                  key={item.label}
+                  type="button"
+                  onClick={() => setHelpIssueType(item.label)}
+                  className={`p-3 rounded-2xl border text-xs font-bold text-left flex items-center gap-2.5 transition cursor-pointer ${
+                    helpIssueType === item.label
+                      ? "border-[#0f8646] bg-emerald-50 text-[#0f8646] shadow-2xs font-extrabold"
+                      : "border-gray-200 text-gray-700 hover:bg-gray-50"
+                  }`}
+                >
+                  <span className="text-base">{item.icon}</span>
+                  <span className="leading-tight">{item.label}</span>
+                </button>
+              ))}
+            </div>
+
+            <div className="mb-5">
+              <label className="block text-[11px] font-black uppercase text-gray-400 tracking-wider mb-1.5">
+                Additional Details / Description (Optional):
+              </label>
+              <textarea
+                value={helpDetails}
+                onChange={(e) => setHelpDetails(e.target.value)}
+                placeholder="E.g., 500g tomatoes were squashed, or rider arrived late..."
+                rows={3}
+                className="w-full text-xs p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] focus:ring-1 focus:ring-[#0f8646] transition resize-none text-gray-800"
+              />
+            </div>
+
+            <div className="space-y-2.5">
+              {/* Option 1: Direct WhatsApp Chat */}
+              <button
+                type="button"
+                onClick={handleWhatsAppHelp}
+                className="w-full py-3 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-xl text-xs font-black transition flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+              >
+                <FaWhatsapp size={16} />
+                <span>Instant WhatsApp Resolution (&lt; 2 Mins)</span>
+              </button>
+
+              {/* Option 2: Submit in-app support ticket */}
+              <button
+                type="button"
+                onClick={handleSubmitSupportTicket}
+                disabled={submittingHelp}
+                className="w-full py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
+              >
+                {submittingHelp ? (
+                  <>
+                    <Loader2 size={14} className="animate-spin text-[#0f8646]" />
+                    <span>Submitting Ticket...</span>
+                  </>
+                ) : (
+                  <>
+                    <MessageSquare size={14} className="text-[#0f8646]" />
+                    <span>Submit Formal Support Ticket</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+
       <Footer />
     </div>
+
   );
 }

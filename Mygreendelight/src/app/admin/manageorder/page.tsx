@@ -790,10 +790,18 @@ export default function ManageOrder() {
                           )}
                         </div>
 
+                        {currentStatus === "cancelled" && (order as any).cancellationReason && (
+                          <div className="bg-rose-50 border border-rose-200 text-rose-800 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 mt-2">
+                            <AlertCircle size={14} className="text-rose-600 shrink-0" />
+                            <span>Cancellation Reason: <strong className="text-rose-950">{(order as any).cancellationReason}</strong></span>
+                          </div>
+                        )}
+
                         <p className="text-xs text-gray-400 mt-1">
                           Placed on: {new Date(order.createdAt).toLocaleString("en-IN")}
                         </p>
                       </div>
+
 
                       {/* Action Buttons: WhatsApp, Slip, Bill & Status */}
                       <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">

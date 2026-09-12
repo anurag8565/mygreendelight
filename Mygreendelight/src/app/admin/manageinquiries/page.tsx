@@ -16,7 +16,9 @@ import {
   RefreshCw,
   Loader2,
 } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 import AdminSidebar from "@/components/AdminSidebar";
+
 
 export default function ManageInquiriesPage() {
   const [messages, setMessages] = useState<any[]>([]);
@@ -221,11 +223,22 @@ export default function ManageInquiriesPage() {
                   </p>
 
                   {/* Quick Contact Links */}
-                  <div className="flex flex-wrap gap-4 text-xs font-bold text-gray-600">
+                  <div className="flex flex-wrap items-center gap-4 text-xs font-bold text-gray-600">
+                    {msg.phone && (
+                      <a
+                        href={`https://wa.me/91${String(msg.phone).replace(/\D/g, "").slice(-10)}?text=Hello%20${encodeURIComponent(msg.name)}!%20SubziQuick%20Support%20here%20regarding%20your%20inquiry:%20${encodeURIComponent(msg.subject || "Order Help")}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center gap-1.5 bg-[#25D366]/10 text-[#0f8646] hover:bg-[#25D366]/20 px-3 py-1.5 rounded-xl transition border border-[#25D366]/30 cursor-pointer shadow-2xs font-extrabold"
+                      >
+                        <FaWhatsapp size={15} className="text-[#25D366]" />
+                        <span>Reply on WhatsApp</span>
+                      </a>
+                    )}
                     {msg.email && (
                       <a
                         href={`mailto:${msg.email}`}
-                        className="flex items-center gap-1.5 hover:text-[#0f8646] transition"
+                        className="flex items-center gap-1.5 hover:text-[#0f8646] transition bg-gray-50 hover:bg-gray-100 px-3 py-1.5 rounded-xl border border-gray-200 cursor-pointer"
                       >
                         <Mail size={14} className="text-[#0f8646]" />
                         <span>{msg.email}</span>
@@ -234,13 +247,14 @@ export default function ManageInquiriesPage() {
                     {msg.phone && (
                       <a
                         href={`tel:${msg.phone}`}
-                        className="flex items-center gap-1.5 hover:text-[#0f8646] transition"
+                        className="flex items-center gap-1.5 hover:text-[#0f8646] transition bg-gray-50 hover:bg-gray-100 px-3 py-1.5 rounded-xl border border-gray-200 cursor-pointer"
                       >
                         <Phone size={14} className="text-[#0f8646]" />
                         <span>{msg.phone}</span>
                       </a>
                     )}
                   </div>
+
                 </div>
               ))}
             </div>
