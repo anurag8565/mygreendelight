@@ -29,6 +29,7 @@ import {
   Leaf,
   RefreshCw,
 } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 import { motion } from "framer-motion";
 
 export default function UserProfileHub() {
@@ -520,7 +521,7 @@ export default function UserProfileHub() {
               rel="noopener noreferrer"
               className="flex-1 sm:flex-initial bg-[#25D366] hover:bg-[#20ba59] text-white px-3.5 py-2 rounded-xl font-bold text-xs shadow-xs transition text-center flex items-center justify-center gap-1.5"
             >
-              <MessageCircle size={14} />
+              <FaWhatsapp size={14} />
               <span>WhatsApp</span>
             </a>
           </div>

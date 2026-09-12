@@ -37,6 +37,7 @@ import {
   ExternalLink,
   ShieldCheck,
 } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 import { socket } from "@/lib/socket";
 import AdminSidebar from "@/components/AdminSidebar";
 import OrderInvoiceModal from "@/components/OrderInvoiceModal";
@@ -733,7 +734,7 @@ export default function ManageOrder() {
                           className="bg-emerald-50 hover:bg-emerald-100 text-[#0f8646] border border-emerald-300 px-3 py-1.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition cursor-pointer shadow-2xs"
                           title="Send instant WhatsApp order status update to customer"
                         >
-                          <MessageSquare size={13} className="text-[#0f8646]" />
+                          <FaWhatsapp size={13} className="text-[#25D366]" />
                           <span>WhatsApp</span>
                         </button>
 

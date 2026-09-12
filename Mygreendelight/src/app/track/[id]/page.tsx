@@ -34,6 +34,7 @@ import {
   Check,
   Navigation,
 } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 import Link from "next/link";
 import OrderInvoiceModal from "@/components/OrderInvoiceModal";
 import { segregateOrderProduce } from "@/lib/bagSegregation";
@@ -204,15 +205,13 @@ export default function TrackOrderPage() {
             {order && (
               <a
                 href={`https://wa.me/919981418565?text=${encodeURIComponent(
-                  `Hello SubziQuick Support! 🌿\n\nI need help regarding my Order #SZQ-${String(
-                    params.id
-                  ).slice(-6).toUpperCase()}.\nStatus: ${status.toUpperCase()}\nAmount: ₹${order?.totalamount || 0}\nLive Tracking: https://subziquick.in/track/${params.id}`
+                  `Hello SubziQuick Support, I need help with my Order #${params.id}`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-white px-3.5 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 transition shadow-2xs cursor-pointer"
               >
-                <MessageCircle size={13} />
+                <FaWhatsapp size={14} />
                 <span className="hidden sm:inline">WhatsApp Help</span>
               </a>
             )}
@@ -413,7 +412,7 @@ export default function TrackOrderPage() {
                   className="bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-white text-[10.5px] font-black px-3 py-3 rounded-2xl border border-emerald-500 transition cursor-pointer flex flex-col items-center justify-center gap-0.5 shadow-2xs"
                   title="Send OTP to Rider on WhatsApp"
                 >
-                  <MessageCircle size={14} />
+                  <FaWhatsapp size={15} />
                   <span>WhatsApp</span>
                 </a>
               )}

@@ -12,12 +12,12 @@ import {
   Droplets,
   Sun,
   Users,
-  MessageCircle,
   Check,
   X,
   Zap,
   Sparkles,
 } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import useGetMe from "@/hooks/useGetMe";
@@ -212,7 +212,7 @@ export default function AboutPage() {
                   rel="noopener noreferrer"
                   className="bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 px-6 sm:px-7 py-3 rounded-full font-bold text-xs sm:text-sm transition-all shadow-2xs flex items-center gap-2 cursor-pointer"
                 >
-                  <MessageCircle size={16} className="text-[#25D366]" />
+                  <FaWhatsapp size={16} className="text-[#25D366]" />
                   <span>WhatsApp Concierge</span>
                 </a>
               </motion.div>

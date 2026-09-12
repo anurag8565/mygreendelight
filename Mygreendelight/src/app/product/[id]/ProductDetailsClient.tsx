@@ -29,6 +29,7 @@ import {
   Timer,
   ShoppingBasket,
 } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Groceryitemcard from "@/components/Groceryitemcard";
@@ -229,7 +230,7 @@ export default function ProductDetailsClient({
               className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white border border-gray-200 shadow-2xs hover:bg-emerald-50 text-[#25D366] flex items-center justify-center transition cursor-pointer active:scale-90"
               title="Share on WhatsApp"
             >
-              <Share2 size={15} />
+              <FaWhatsapp size={16} />
             </button>
           </div>
         </div>

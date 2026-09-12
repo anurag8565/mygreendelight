@@ -25,6 +25,7 @@ import {
   Package,
   Zap,
 } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -447,7 +448,7 @@ function OrderSuccessContent() {
               rel="noopener noreferrer"
               className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white py-3 px-4 rounded-2xl text-xs font-black flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition cursor-pointer mb-5"
             >
-              <MessageCircle size={17} />
+              <FaWhatsapp size={17} />
               <span>Send Order Confirmation to Store on WhatsApp</span>
             </a>
 

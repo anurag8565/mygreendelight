@@ -43,6 +43,7 @@ import {
   ChevronLeft,
   Bike,
 } from 'lucide-react'
+import { FaWhatsapp } from 'react-icons/fa6'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 import { signOut } from 'next-auth/react'
@@ -731,8 +732,8 @@ export default function Deliveryboy({ initialUser }: Props) {
               rel="noopener noreferrer"
               className="bg-[#25D366] hover:bg-[#20bd5a] text-white p-3 rounded-2xl font-black text-xs flex flex-col items-center justify-center gap-1.5 transition active:scale-95 shadow-xs text-center"
             >
-              <MessageCircle size={17} />
-              <span>WhatsApp 💬</span>
+              <FaWhatsapp size={18} />
+              <span>WhatsApp</span>
             </a>
           ) : null}
 

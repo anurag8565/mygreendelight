@@ -32,6 +32,7 @@ import {
   Leaf,
   ExternalLink,
 } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import useGetMe from "@/hooks/useGetMe";
@@ -145,7 +146,7 @@ export default function ContactPage() {
       external: true,
     },
     {
-      icon: <MessageCircle className="text-[#25D366]" size={20} />,
+      icon: <FaWhatsapp className="text-[#25D366]" size={20} />,
       title: "WhatsApp Helpdesk",
       desc: "Instant live chat with Bhopal dispatch team in < 2 mins",
       link: "https://wa.me/919981418565?text=Hello%20SubziQuick!%20I%20need%20quick%20assistance.",
@@ -303,7 +304,7 @@ export default function ContactPage() {
               className="bg-white rounded-3xl p-5 border border-gray-200/80 shadow-2xs hover:border-emerald-300 hover:shadow-xs transition-all flex items-start gap-3.5 group cursor-pointer"
             >
               <div className="w-11 h-11 rounded-2xl bg-[#25D366]/10 text-[#25D366] border border-green-200 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                <MessageCircle size={20} />
+                <FaWhatsapp size={20} />
               </div>
               <div className="min-w-0">
                 <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block">
