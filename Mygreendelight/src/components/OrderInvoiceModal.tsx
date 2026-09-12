@@ -393,9 +393,9 @@ export default function OrderInvoiceModal({
                 </div>
               )}
 
-              {order.walletDiscount > 0 && (
+              {(order.walletDiscount || 0) > 0 && (
                 <div className="flex justify-between text-emerald-700 font-bold">
-                  <span>GreenPoints Redeemed:</span>
+                  <span>Wallet Discount:</span>
                   <span>-₹{order.walletDiscount}</span>
                 </div>
               )}

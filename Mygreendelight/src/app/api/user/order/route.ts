@@ -253,14 +253,10 @@ export async function POST(req: NextRequest) {
             deliveryFeeCalc = verifiedSubtotal > 0 && verifiedSubtotal < 199 ? 30 : 0;
         }
         
-        let walletDiscountCalc = Math.max(0, Number(walletDiscount) || 0);
-        const currentWalletBal = Number(user.walletBalance) || 0;
-        if (walletDiscountCalc > currentWalletBal) {
-            walletDiscountCalc = currentWalletBal;
-        }
+        const walletDiscountCalc = 0;
 
         const validTip = Math.max(0, Math.min(200, Number(farmerTip) || 0));
-        const finalTotalToSave = Math.max(0, verifiedSubtotal + deliveryFeeCalc + validTip - discountCalc - walletDiscountCalc);
+        const finalTotalToSave = Math.max(0, verifiedSubtotal + deliveryFeeCalc + validTip - discountCalc);
         const isFullyPaid = finalTotalToSave === 0;
 
         // 🔑 Generate 4-digit Doorstep Delivery Verification OTP
@@ -273,15 +269,16 @@ export async function POST(req: NextRequest) {
             paymentmethod,
             totalamount: finalTotalToSave,
             address,
+            paymentId: paymentId || null,
+            paymentProofImage: paymentProofImage || null,
+            status: "pending",
             couponCode: validatedCouponCode,
             discount: discountCalc,
-            walletDiscount: walletDiscountCalc,
+            walletDiscount: 0,
             farmerTip: validTip,
             isSilentDelivery: isSilentDelivery || false,
             deliveryInstructions: deliveryInstructions || "",
             deliverySlot: deliverySlot || "Instant Express (30-45 Mins)",
-            paymentId: paymentId || null,
-            paymentProofImage: paymentProofImage || null,
             paymentStatus: isFullyPaid ? "completed" : "pending",
             ispaid: isFullyPaid,
             deliveryOtp: {

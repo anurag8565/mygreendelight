@@ -126,8 +126,8 @@ export async function POST(req: NextRequest) {
     }
 
     const discountCalc = Number(discount) || 0;
-    const walletDiscountCalc = Number(walletDiscount) || 0;
-    const finalTotalToSave = Math.max(0, subtotalCalc + deliveryFeeCalc - discountCalc - walletDiscountCalc);
+    const walletDiscountCalc = 0;
+    const finalTotalToSave = Math.max(0, subtotalCalc + deliveryFeeCalc - discountCalc);
 
     // 🔑 Generate 4-digit Doorstep Delivery Verification OTP
     const autoDeliveryOtp = Math.floor(1000 + Math.random() * 9000).toString();
@@ -141,7 +141,7 @@ export async function POST(req: NextRequest) {
       address,
       couponCode: couponCode || null,
       discount: discountCalc,
-      walletDiscount: walletDiscountCalc,
+      walletDiscount: 0,
       deliverySlot: deliverySlot || "Instant Express (30-45 Mins)",
       ispaid: false,
       deliveryOtp: {
@@ -151,45 +151,6 @@ export async function POST(req: NextRequest) {
         attempts: 0,
       },
     });
-
-    // 💰 Deduct GreenPoints Wallet if redeemed
-    if (walletDiscount && walletDiscount > 0) {
-      await User.findByIdAndUpdate(userid, {
-        $inc: { walletBalance: -walletDiscount },
-        $push: {
-          walletHistory: {
-            amount: walletDiscount,
-            type: "debit",
-            description: `Redeemed GreenPoints on Order #${neworder._id
-              .toString()
-              .slice(-6)
-              .toUpperCase()}`,
-            date: new Date(),
-          },
-        },
-      });
-
-      try {
-        const UserWallet = (await import("@/model/wallet.model")).default;
-        await UserWallet.findOneAndUpdate(
-          { user: userid },
-          {
-            $inc: { balance: -walletDiscount },
-            $push: {
-              transactions: {
-                type: "debit",
-                amount: walletDiscount,
-                description: `Redeemed on Order #${neworder._id.toString().slice(-6).toUpperCase()}`,
-                orderId: neworder._id.toString(),
-                createdAt: new Date(),
-              },
-            },
-          }
-        );
-      } catch (wErr) {
-        console.warn("Wallet ledger sync warning:", wErr);
-      }
-    }
 
     // 🎟️ Mark Scratch Reward Coupon as Used if applied
     if (couponCode) {
