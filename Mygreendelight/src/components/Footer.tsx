@@ -20,14 +20,14 @@ export default function Footer() {
     <footer className="bg-[#041a0d] text-white font-sans border-t border-emerald-950/80 pb-20 sm:pb-12 md:pb-6 w-full selection:bg-emerald-500 selection:text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pt-8 sm:pt-10 pb-4">
         
-        {/* Main 4-Column Responsive Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-12 gap-6 sm:gap-8 pb-6 border-b border-white/10">
+        {/* Main 4-Column Responsive Grid (Mobile: 2 cols, Tablet: 4 cols or 2x2, Desktop: 12 cols) */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-6 sm:gap-6 lg:gap-8 pb-6 border-b border-white/10">
           
-          {/* Col 1: Brand & Contact (Desktop: 4 cols) */}
-          <div className="col-span-2 md:col-span-4 space-y-3.5 flex flex-col justify-between">
+          {/* Col 1: Brand & Contact (Mobile: 2 cols, Tablet: 4 cols or 2 cols on sm, Desktop: 4 cols) */}
+          <div className="col-span-2 sm:col-span-2 md:col-span-4 lg:col-span-4 space-y-3.5 flex flex-col justify-between">
             <div className="space-y-3">
               <Logo variant="white" />
-              <p className="text-xs text-emerald-100/70 font-medium leading-relaxed max-w-sm">
+              <p className="text-xs text-emerald-100/70 font-medium leading-relaxed max-w-sm md:max-w-md lg:max-w-sm">
                 Bhopal&apos;s 10-15 min fresh vegetable & fruit delivery service. 5:00 AM direct Mandi harvest to your doorstep.
               </p>
 
@@ -81,8 +81,8 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Col 2: Categories (Desktop: 3 cols) */}
-          <div className="col-span-1 md:col-span-3 space-y-3">
+          {/* Col 2: Categories (Mobile: 1 col, Tablet: 1 col or 2 on sm, Desktop: 3 cols) */}
+          <div className="col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-3 space-y-3">
             <h3 className="font-bold text-xs uppercase tracking-wider text-emerald-300">
               Fresh Produce
             </h3>
@@ -115,8 +115,8 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Col 3: Quick Links & Customer Care (Desktop: 3 cols) */}
-          <div className="col-span-1 md:col-span-3 space-y-3">
+          {/* Col 3: Quick Links & Customer Care (Mobile: 1 col, Tablet: 1 col or 2 on sm, Desktop: 3 cols) */}
+          <div className="col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-3 space-y-3">
             <h3 className="font-bold text-xs uppercase tracking-wider text-emerald-300">
               Customer Help
             </h3>
@@ -149,12 +149,12 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Col 4: Trust & Policies (Desktop: 2 cols) */}
-          <div className="col-span-2 md:col-span-2 space-y-3">
+          {/* Col 4: Trust & Policies (Mobile: 2 cols, Tablet: 4 cols on md or 2 cols on sm, Desktop: 2 cols) */}
+          <div className="col-span-2 sm:col-span-2 md:col-span-4 lg:col-span-2 space-y-3">
             <h3 className="font-bold text-xs uppercase tracking-wider text-emerald-300">
               Legal & Trust
             </h3>
-            <ul className="space-y-2 text-xs text-emerald-100/70 font-medium flex flex-wrap gap-x-4 gap-y-2 md:flex-col">
+            <ul className="space-y-2 text-xs text-emerald-100/70 font-medium flex flex-wrap gap-x-4 gap-y-2 md:flex-row lg:flex-col">
               <li>
                 <Link href="/privacy-policy" className="hover:text-emerald-300 transition block">
                   Privacy Policy
