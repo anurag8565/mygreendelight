@@ -580,17 +580,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
             >
               <Menu size={22} className="stroke-[2.2]" />
             </button>
-            <div className="flex flex-col min-w-0">
-              <Logo className="shrink-0" />
-              <button 
-                onClick={() => setShowLocationPopup(true)} 
-                className="lg:hidden inline-flex items-center gap-1 text-[10px] font-bold text-gray-700 hover:text-[#0f8646] bg-emerald-50/90 hover:bg-emerald-100/90 px-2 py-0.5 rounded-full border border-emerald-200/80 transition text-left mt-1 w-fit max-w-[170px] shadow-2xs cursor-pointer select-none"
-              >
-                <MapPin size={10} className="text-[#0f8646] shrink-0" />
-                <span className="truncate">{location.split(",")[0] || "Bhopal"}</span>
-                <ChevronDown size={10} className="shrink-0 text-emerald-700" />
-              </button>
-            </div>
+            <Logo className="shrink-0" />
           </div>
 
           {/* Location Dropdown (Desktop) */}

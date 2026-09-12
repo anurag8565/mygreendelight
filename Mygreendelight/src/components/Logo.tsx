@@ -24,14 +24,14 @@ export default function Logo({
       {/* 🌿 Master Logo Emblem */}
       <div
         className={`relative flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-105 ${
-          isCompact ? "w-8 h-8" : "w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10"
+          isCompact ? "w-8 h-8" : "w-9 h-9 sm:w-10 sm:h-10"
         }`}
       >
         <Image
           src="/logo-icon.png"
           alt="SubziQuick Logo"
-          width={isCompact ? 32 : 40}
-          height={isCompact ? 32 : 40}
+          width={isCompact ? 32 : 42}
+          height={isCompact ? 32 : 42}
           className="w-full h-full object-contain filter drop-shadow-[0_1px_2px_rgba(0,0,0,0.12)] select-none"
           priority
           unoptimized
@@ -43,7 +43,7 @@ export default function Logo({
         <div className="flex items-baseline tracking-tight">
           <span
             className={`font-semibold tracking-[-0.01em] ${
-              isCompact ? "text-xl" : "text-[20px] sm:text-2xl lg:text-[25px]"
+              isCompact ? "text-xl" : "text-2xl sm:text-[25px]"
             } ${
               isWhite
                 ? "text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.25)]"
@@ -56,7 +56,7 @@ export default function Logo({
           </span>
           <span
             className={`font-bold tracking-wider uppercase ml-0.5 ${
-              isCompact ? "text-xs" : "text-sm sm:text-base lg:text-lg"
+              isCompact ? "text-sm" : "text-base sm:text-lg"
             } ${
               isInvoice
                 ? "text-amber-700"
@@ -69,7 +69,7 @@ export default function Logo({
 
         {/* Refined Micro Tagline */}
         {showTagline && !isCompact && (
-          <div className="hidden sm:flex items-center gap-1.5 mt-0.5 font-sans">
+          <div className="flex items-center gap-1.5 mt-0.5 font-sans">
             <span
               className={`text-[8px] sm:text-[8.5px] font-bold tracking-wider uppercase ${
                 isWhite
