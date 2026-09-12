@@ -37,7 +37,7 @@ export default function WhatsAppWidget() {
   const message = "Hello SubziQuick! I need quick assistance with farm fresh vegetables / my order.";
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
-  // When mobile has active items in cart, float higher (bottom-[114px]) so the compact cart strip is NEVER overlapped
+  // When mobile has active items in cart, float higher (bottom-[126px]) so the compact cart strip is NEVER overlapped
   const isMobileCartActive =
     cartCount > 0 &&
     pathname !== "/user/cart" &&
@@ -49,7 +49,7 @@ export default function WhatsAppWidget() {
   return (
     <div
       className={`fixed ${
-        isMobileCartActive ? "bottom-[114px]" : "bottom-24"
+        isMobileCartActive ? "bottom-[126px]" : "bottom-20"
       } right-3.5 z-40 md:bottom-7 md:right-7 flex flex-col items-end pointer-events-auto font-sans transition-all duration-300`}
     >
       {/* 🌟 Floating Contextual Glass Bubble ("Bhopal Dispatch Active") */}

@@ -70,11 +70,19 @@ export default function ProductDetailsClient({
     ? product.variations[selectedVarIndex].stock
     : product.stock;
 
-  // Active MRP & Discount
-  const activeMRP =
-    product.mrp && product.mrp > currentPrice
-      ? product.mrp
-      : Math.round(currentPrice * 1.25);
+  // Active Realistic MRP & Discount
+  const activeMRP = useMemo(() => {
+    const selectedVar = hasVariations ? product.variations[selectedVarIndex] : null;
+    if (selectedVar?.mrp && selectedVar.mrp > currentPrice) {
+      return selectedVar.mrp;
+    }
+    if (product.mrp && product.price && product.mrp > product.price) {
+      const baseRatio = product.mrp / product.price;
+      return Math.round(currentPrice * baseRatio);
+    }
+    return Math.round(currentPrice * 1.22);
+  }, [hasVariations, product.variations, selectedVarIndex, currentPrice, product.mrp, product.price]);
+
   const discountPercent = Math.max(
     1,
     Math.round(((activeMRP - currentPrice) / activeMRP) * 100)

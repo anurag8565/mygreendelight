@@ -16,13 +16,14 @@ interface IGrosery {
   _id: mongoose.Types.ObjectId;
   name: string;
   price: number;
+  mrp?: number;
   unit: string;
   image: string;
   category: string;
   stock: number;
   isFeatured?: boolean;
   status?: string;
-  variations?: { weight: string; price: number; stock: number }[];
+  variations?: { weight: string; price: number; stock: number; mrp?: number }[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -56,11 +57,19 @@ export default function Groceryitemcard({
       (!c.cartItemId && c._id?.toString() === item._id?.toString())
   );
 
-  // Dynamic MRP & Discount
-  const activeMRP =
-    (item as any).mrp && (item as any).mrp > displayPrice
-      ? (item as any).mrp
-      : Math.round(displayPrice * 1.25);
+  // Dynamic Realistic MRP & Discount
+  // If variation has its own MRP, use it. Otherwise, if base item has MRP and price, apply the exact same discount ratio to this variation.
+  const activeMRP = React.useMemo(() => {
+    if (selectedVariation?.mrp && selectedVariation.mrp > displayPrice) {
+      return selectedVariation.mrp;
+    }
+    if (item.mrp && item.price && item.mrp > item.price) {
+      const baseRatio = item.mrp / item.price;
+      return Math.round(displayPrice * baseRatio);
+    }
+    return Math.round(displayPrice * 1.22);
+  }, [selectedVariation, item.mrp, item.price, displayPrice]);
+
   const discountPercent = Math.max(
     1,
     Math.round(((activeMRP - displayPrice) / activeMRP) * 100)
@@ -90,11 +99,12 @@ export default function Groceryitemcard({
         <img
           src={item.image}
           alt={`Fresh ${item.name} Online Delivery in Bhopal | SubziQuick`}
+          loading="lazy"
           onError={(e) => {
             (e.target as HTMLImageElement).src =
               "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=500&q=80";
           }}
-          className="w-full h-full object-contain group-hover:scale-108 transition-transform duration-500 ease-out p-2"
+          className="w-full h-full max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500 ease-out p-1.5"
         />
 
         {/* Badges Container */}
