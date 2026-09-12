@@ -28,3 +28,11 @@ export function sanitizeInput<T = any>(obj: T): T {
 
   return obj;
 }
+
+/**
+ * 🛡️ Escapes special regular expression characters to prevent ReDoS & regex injection
+ */
+export function escapeRegex(text: string): string {
+  if (!text || typeof text !== "string") return "";
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}

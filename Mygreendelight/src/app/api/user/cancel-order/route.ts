@@ -109,10 +109,22 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    // 4. Cancel active DeliveryAssignment so riders don't deliver a cancelled order
+    try {
+      const DeliveryAssignment = (await import("@/model/Deliveryassigment.model")).default;
+      await DeliveryAssignment.updateMany(
+        { order: order._id, status: { $nin: ["completed", "cancelled"] } },
+        { $set: { status: "cancelled", assignedto: null } }
+      );
+    } catch (dErr) {
+      console.warn("Delivery assignment cancel note:", dErr);
+    }
+
     return NextResponse.json({
       success: true,
       message: "Order cancelled successfully and inventory restored.",
       order,
+
     });
   } catch (error: any) {
     console.error("Cancel order error:", error);

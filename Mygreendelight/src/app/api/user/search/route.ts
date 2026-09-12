@@ -40,16 +40,18 @@ export async function GET(req: Request) {
       return NextResponse.json([]);
     }
 
-    const cleanQuery = query.trim();
+    const { escapeRegex } = await import("@/lib/sanitize");
+    const safePattern = escapeRegex(cleanQuery);
 
     const filter: any = {
       status: { $ne: "draft" },
       $or: [
-        { name: { $regex: cleanQuery, $options: "i" } },
-        { category: { $regex: cleanQuery, $options: "i" } },
-        { description: { $regex: cleanQuery, $options: "i" } },
+        { name: { $regex: safePattern, $options: "i" } },
+        { category: { $regex: safePattern, $options: "i" } },
+        { description: { $regex: safePattern, $options: "i" } },
       ],
     };
+
 
     if (activeCatNames.length > 0) {
       filter.category = { $in: activeCatNames };

@@ -35,7 +35,8 @@ export async function GET(req: NextRequest) {
     }
     
     if (search) {
-      query.name = { $regex: search, $options: "i" };
+      const { escapeRegex } = await import("@/lib/sanitize");
+      query.name = { $regex: escapeRegex(search), $options: "i" };
     }
     
     let sortObj: any = { createdAt: -1 }; // default newest
