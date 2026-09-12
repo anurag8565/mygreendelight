@@ -570,21 +570,25 @@ export default function Nav({ user }: { user?: iUser | null }) {
         </div>
 
         {/* Tier 2: Main Middle Bar */}
-        <div className="pt-3 pb-2 sm:py-4 px-3.5 sm:px-4 md:px-8 flex items-center justify-between border-b sm:border-b-0 border-gray-100/80 gap-2 sm:gap-4 w-full max-w-full relative z-30">
+        <div className="pt-2.5 pb-2 sm:py-3.5 px-3.5 sm:px-6 md:px-8 flex items-center justify-between border-b sm:border-b-0 border-gray-100/80 gap-2 sm:gap-4 w-full max-w-full relative z-30">
           {/* Mobile Menu & Logo */}
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 sm:flex-initial">
-            <button onClick={() => setmenuopen(true)} className="lg:hidden p-1 text-gray-700 hover:text-[#0f8646] shrink-0">
-              <Menu size={22} />
+            <button 
+              onClick={() => setmenuopen(true)} 
+              className="lg:hidden p-1.5 -ml-1 text-gray-700 hover:text-[#0f8646] hover:bg-green-50 rounded-xl transition shrink-0 cursor-pointer"
+              aria-label="Open navigation menu"
+            >
+              <Menu size={22} className="stroke-[2.2]" />
             </button>
             <div className="flex flex-col min-w-0">
               <Logo className="shrink-0" />
               <button 
                 onClick={() => setShowLocationPopup(true)} 
-                className="lg:hidden flex items-center gap-1 text-[10px] font-bold text-gray-500 hover:text-[#0f8646] transition text-left mt-0.5"
+                className="lg:hidden inline-flex items-center gap-1 text-[10px] font-bold text-gray-700 hover:text-[#0f8646] bg-emerald-50/90 hover:bg-emerald-100/90 px-2 py-0.5 rounded-full border border-emerald-200/80 transition text-left mt-1 w-fit max-w-[170px] shadow-2xs cursor-pointer select-none"
               >
                 <MapPin size={10} className="text-[#0f8646] shrink-0" />
-                <span className="truncate max-w-[120px] sm:max-w-[160px]">{location}</span>
-                <ChevronDown size={10} className="shrink-0" />
+                <span className="truncate">{location.split(",")[0] || "Bhopal"}</span>
+                <ChevronDown size={10} className="shrink-0 text-emerald-700" />
               </button>
             </div>
           </div>
