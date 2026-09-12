@@ -40,6 +40,7 @@ export async function GET(req: Request) {
       return NextResponse.json([]);
     }
 
+    const cleanQuery = query.trim();
     const { escapeRegex } = await import("@/lib/sanitize");
     const safePattern = escapeRegex(cleanQuery);
 

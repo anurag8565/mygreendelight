@@ -17,7 +17,7 @@ export const createOrderSchema = z.object({
     )
     .min(1, "Cart must contain at least 1 item"),
   paymentmethod: z.enum(["cod", "upi"], {
-    errorMap: () => ({ message: "Payment method must be either 'cod' or 'upi'" }),
+    message: "Payment method must be either 'cod' or 'upi'",
   }),
   totalamount: z.number().nonnegative("Total amount must be non-negative"),
   address: z.object({

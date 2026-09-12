@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, increaseQuantity, decreaseQuantity } from "@/redux/CartSlice";
 import { toggleWishlist, setWishlist } from "@/redux/WishlistSlice";

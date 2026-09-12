@@ -459,7 +459,7 @@ try {
       try {
         const { RewardConfig, ScratchReward } = await import("@/model/reward.model");
 
-        let config = await RewardConfig.findOne().sort({ createdAt: -1 });
+        let config: any = await RewardConfig.findOne().sort({ createdAt: -1 });
         if (!config) {
           config = {
             minCashback: 15,
@@ -471,7 +471,7 @@ try {
           };
         }
 
-        if (config.isActive) {
+        if (config && config.isActive) {
           const min = config.minCashback || 15;
           const max = config.maxCashback || 50;
           const randomDiscount =
