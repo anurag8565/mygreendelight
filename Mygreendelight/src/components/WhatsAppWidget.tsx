@@ -3,22 +3,23 @@
 import React, { useState, useEffect } from "react";
 import { FaWhatsapp } from "react-icons/fa6";
 import { usePathname } from "next/navigation";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/redux/store";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 
 export default function WhatsAppWidget() {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
+  const { cartdata } = useSelector((state: RootState) => state.cart);
+  const cartCount = cartdata.reduce((total, item) => total + item.quantity, 0);
+
+  // Keep bubble visible and open by default
+  const [isOpen, setIsOpen] = useState(true);
   const [hasDismissed, setHasDismissed] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    // Show gentle auto-preview prompt after 4 seconds if user hasn't dismissed it
-    const timer = setTimeout(() => {
-      setIsOpen(true);
-    }, 4000);
-    return () => clearTimeout(timer);
   }, []);
 
   // Hide widget on admin, delivery boy, or auth pages to maintain clean focus
@@ -36,10 +37,22 @@ export default function WhatsAppWidget() {
   const message = "Hello SubziQuick! I need quick assistance with farm fresh vegetables / my order.";
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
+  // When mobile has active items in cart, float higher (bottom-40) so the cart strip is NEVER overlapped
+  const isMobileCartActive =
+    cartCount > 0 &&
+    pathname !== "/user/cart" &&
+    pathname !== "/user/checkout" &&
+    pathname !== "/user/ordersuccess" &&
+    pathname !== "/user/myorder" &&
+    !pathname.startsWith("/track");
+
   return (
-    <div className="fixed bottom-24 right-3.5 z-40 md:bottom-7 md:right-7 flex flex-col items-end pointer-events-auto font-sans">
-      
-      {/* 🌟 Floating Contextual Glass Bubble (Auto or Click) */}
+    <div
+      className={`fixed ${
+        isMobileCartActive ? "bottom-[138px]" : "bottom-24"
+      } right-3.5 z-40 md:bottom-7 md:right-7 flex flex-col items-end pointer-events-auto font-sans transition-all duration-300`}
+    >
+      {/* 🌟 Floating Contextual Glass Bubble ("Bhopal Dispatch Active") */}
       <AnimatePresence>
         {isOpen && !hasDismissed && (
           <motion.div
