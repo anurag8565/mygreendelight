@@ -140,67 +140,178 @@ export default function MobileBottomNav() {
           )}
         </AnimatePresence>
 
-        {/* Bottom Navigation Dock with Safe Area Bottom Padding */}
-        <nav className="bg-white/95 backdrop-blur-lg border-t border-gray-200/90 px-2 pt-1.5 pb-2.5 sm:pb-2 flex items-center justify-around shadow-[0_-4px_25px_rgba(0,0,0,0.08)]">
-          {navItems.map((item) => {
-            const isActive =
-              item.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(item.href);
-            const Icon = item.icon;
+        {/* Bottom Navigation Dock: Style 11 (iOS Floating Dock) + Style 05 (Pill Highlight) + Style 06 (Center FAB) */}
+        <div className="px-3.5 pb-2.5 pt-1">
+          <nav className="relative bg-white/95 backdrop-blur-2xl border border-stone-200/90 rounded-3xl px-2 py-1.5 flex items-center justify-between shadow-[0_10px_35px_-5px_rgba(0,0,0,0.15)] ring-1 ring-black/5">
+            {/* 1. Left Items: Home & Shop */}
+            <div className="flex items-center flex-1 justify-around">
+              {/* Home */}
+              {(() => {
+                const isActive = pathname === "/";
+                return (
+                  <Link
+                    href="/"
+                    className={`relative py-1.5 px-3 rounded-2xl flex flex-col items-center justify-center transition-all ${
+                      isActive ? "text-[#0a3d24]" : "text-stone-400 hover:text-stone-600"
+                    }`}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="activePill"
+                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                        className="absolute inset-0 bg-emerald-50 rounded-2xl border border-emerald-200/70 z-0"
+                      />
+                    )}
+                    <div className="relative z-10 flex flex-col items-center">
+                      <Home size={19} className={isActive ? "stroke-[2.5]" : "stroke-[1.8]"} />
+                      <span className={`text-[10px] mt-0.5 tracking-tight ${isActive ? "font-extrabold" : "font-semibold"}`}>
+                        Home
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })()}
 
-            return (
+              {/* Shop */}
+              {(() => {
+                const isActive = pathname === "/shop" || pathname.startsWith("/product");
+                return (
+                  <Link
+                    href="/shop"
+                    className={`relative py-1.5 px-3 rounded-2xl flex flex-col items-center justify-center transition-all ${
+                      isActive ? "text-[#0a3d24]" : "text-stone-400 hover:text-stone-600"
+                    }`}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="activePill"
+                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                        className="absolute inset-0 bg-emerald-50 rounded-2xl border border-emerald-200/70 z-0"
+                      />
+                    )}
+                    <div className="relative z-10 flex flex-col items-center">
+                      <ShoppingBag size={19} className={isActive ? "stroke-[2.5]" : "stroke-[1.8]"} />
+                      <span className={`text-[10px] mt-0.5 tracking-tight ${isActive ? "font-extrabold" : "font-semibold"}`}>
+                        Shop
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })()}
+            </div>
+
+            {/* 2. STYLE 06: Center Elevated Circular FAB Button (Express Cart with live items counter & glow) */}
+            <div className="relative -top-5 shrink-0 px-1.5 z-20">
               <Link
-                key={item.label}
-                href={item.href}
-                className={`flex-1 py-1 flex flex-col items-center justify-center transition-all relative rounded-xl ${
-                  isActive ? "text-[#0a3d24]" : "text-stone-400 hover:text-stone-600"
-                }`}
+                href="/user/cart"
+                className="group relative flex flex-col items-center focus:outline-none"
               >
-                <div className="relative flex items-center justify-center">
-                  {item.isUserTab && isLoggedIn && activeUser?.image ? (
-                    <img
-                      src={activeUser.image}
-                      alt="User"
-                      className={`w-5.5 h-5.5 rounded-full object-cover border transition-all ${
-                        isActive ? "border-[#0a3d24] scale-110" : "border-stone-300"
-                      }`}
-                    />
-                  ) : (
-                    <Icon
-                      size={22}
-                      className={`transition-transform ${
-                        isActive ? "scale-110 stroke-[2.5]" : "stroke-[1.8]"
-                      }`}
-                    />
-                  )}
-                  {item.isUserTab && isLoggedIn && !activeUser?.image && (
-                    <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-[#0a3d24] rounded-full ring-2 ring-white" />
-                  )}
-                  {item.badge && (
-                    <span className="absolute -top-1.5 -right-2.5 bg-rose-600 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
-                      {item.badge}
-                    </span>
-                  )}
-                </div>
-                <span
-                  className={`text-[10px] mt-1 tracking-tight ${
-                    isActive ? "font-bold text-[#0a3d24]" : "font-medium"
+                {/* Subtle outer pulsing ring when cart has items */}
+                {cartCount > 0 && (
+                  <span className="absolute -inset-1 rounded-full bg-[#0a3d24]/25 animate-ping" />
+                )}
+
+                <motion.div
+                  whileTap={{ scale: 0.9 }}
+                  className={`w-14 h-14 rounded-full flex flex-col items-center justify-center shadow-[0_8px_25px_rgba(10,61,36,0.45)] border-3 border-white transition-transform duration-200 ${
+                    pathname === "/user/cart"
+                      ? "bg-[#072817] text-white ring-2 ring-[#0a3d24]"
+                      : "bg-gradient-to-tr from-[#072817] via-[#0a3d24] to-[#072817] text-white"
                   }`}
                 >
-                  {item.label}
-                </span>
+                  <ShoppingCart size={22} className="stroke-[2.5]" />
+                  {cartCount > 0 ? (
+                    <span className="text-[9px] font-black leading-none mt-0.5 tracking-tighter">
+                      ₹{Math.round(cartTotal)}
+                    </span>
+                  ) : null}
+                </motion.div>
 
-                {isActive && (
-                  <motion.div
-                    layoutId="activeTabIndicator"
-                    className="absolute -bottom-1 w-4 h-1 bg-[#0a3d24] rounded-full"
-                  />
+                {/* Badge count on FAB */}
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-amber-400 text-gray-950 font-black text-[10px] min-w-[20px] h-5 px-1 rounded-full flex items-center justify-center border-2 border-white shadow-sm">
+                    {cartCount}
+                  </span>
                 )}
+
+                <span className="text-[9.5px] font-black text-[#0a3d24] mt-1 tracking-tight">
+                  Cart
+                </span>
               </Link>
-            );
-          })}
-        </nav>
+            </div>
+
+            {/* 3. Right Items: Search & Account/Wishlist */}
+            <div className="flex items-center flex-1 justify-around">
+              {/* Search */}
+              {(() => {
+                const isActive = pathname === "/user/search";
+                return (
+                  <Link
+                    href="/user/search"
+                    className={`relative py-1.5 px-3 rounded-2xl flex flex-col items-center justify-center transition-all ${
+                      isActive ? "text-[#0a3d24]" : "text-stone-400 hover:text-stone-600"
+                    }`}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="activePill"
+                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                        className="absolute inset-0 bg-emerald-50 rounded-2xl border border-emerald-200/70 z-0"
+                      />
+                    )}
+                    <div className="relative z-10 flex flex-col items-center">
+                      <Search size={19} className={isActive ? "stroke-[2.5]" : "stroke-[1.8]"} />
+                      <span className={`text-[10px] mt-0.5 tracking-tight ${isActive ? "font-extrabold" : "font-semibold"}`}>
+                        Search
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })()}
+
+              {/* Account / Login */}
+              {(() => {
+                const targetHref = isAdmin ? "/admin" : isLoggedIn ? "/user" : "/login";
+                const isActive = pathname.startsWith("/user") && pathname !== "/user/cart" && pathname !== "/user/search" || pathname.startsWith("/admin");
+                const Icon = isAdmin ? ShieldCheck : User;
+                const labelText = isAdmin ? "Admin" : isLoggedIn ? "Account" : "Login";
+
+                return (
+                  <Link
+                    href={targetHref}
+                    className={`relative py-1.5 px-3 rounded-2xl flex flex-col items-center justify-center transition-all ${
+                      isActive ? "text-[#0a3d24]" : "text-stone-400 hover:text-stone-600"
+                    }`}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="activePill"
+                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                        className="absolute inset-0 bg-emerald-50 rounded-2xl border border-emerald-200/70 z-0"
+                      />
+                    )}
+                    <div className="relative z-10 flex flex-col items-center">
+                      {isLoggedIn && activeUser?.image ? (
+                        <img
+                          src={activeUser.image}
+                          alt="User"
+                          className={`w-5 h-5 rounded-full object-cover border ${
+                            isActive ? "border-[#0a3d24]" : "border-stone-300"
+                          }`}
+                        />
+                      ) : (
+                        <Icon size={19} className={isActive ? "stroke-[2.5]" : "stroke-[1.8]"} />
+                      )}
+                      <span className={`text-[10px] mt-0.5 tracking-tight ${isActive ? "font-extrabold" : "font-semibold"}`}>
+                        {labelText}
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })()}
+            </div>
+          </nav>
+        </div>
       </div>
     </div>
   );
