@@ -9,8 +9,6 @@ import { motion } from "framer-motion";
 
 export default function WhatsAppWidget() {
   const pathname = usePathname();
-  const { cartdata } = useSelector((state: RootState) => state.cart);
-  const cartCount = cartdata.reduce((total, item) => total + item.quantity, 0);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -32,20 +30,9 @@ export default function WhatsAppWidget() {
   const message = "Hello SubziQuick! I need quick assistance with farm fresh vegetables / my order.";
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
-  // When mobile has active items in cart, float higher (bottom-[126px]) so the compact cart strip is NEVER overlapped
-  const isMobileCartActive =
-    cartCount > 0 &&
-    pathname !== "/user/cart" &&
-    pathname !== "/user/checkout" &&
-    pathname !== "/user/ordersuccess" &&
-    pathname !== "/user/myorder" &&
-    !pathname.startsWith("/track");
-
   return (
     <div
-      className={`fixed ${
-        isMobileCartActive ? "bottom-[126px]" : "bottom-20"
-      } right-3.5 z-40 md:bottom-7 md:right-7 flex flex-col items-end pointer-events-auto font-sans transition-all duration-300`}
+      className="fixed bottom-[4.8rem] right-3.5 z-40 md:bottom-7 md:right-7 flex flex-col items-end pointer-events-auto font-sans transition-all duration-300"
     >
       {/* 🚀 Main Interactive Pulsing Button - Clean FAB (Floating Action Button) */}
       <motion.a
