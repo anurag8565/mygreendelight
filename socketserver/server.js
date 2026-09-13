@@ -163,6 +163,15 @@ app.post("/update-location", (req, res) => {
   });
 });
 
+app.post("/order-status-updated", (req, res) => {
+  const { orderId, status, ispaid } = req.body;
+  console.log(`ORDER STATUS UPDATED: ${orderId} -> ${status}`);
+  io.emit("order-status-updated", { orderId, status, ispaid });
+  return res.json({
+    success: true,
+  });
+});
+
 app.get("/", (req, res) => {
   res.send("MyGreenDelight Socket Server is healthy and running!");
 });

@@ -53,6 +53,13 @@ export async function POST(
       order.paymentStatus = paymentStatus || (ispaid ? "completed" : "pending");
     }
 
+    if ((order.status === "delivered" || order.status === "completed") && status && status !== order.status) {
+      return NextResponse.json(
+        { success: false, message: "Cannot change status of an already delivered order." },
+        { status: 400 }
+      );
+    }
+
     const previousStatus = order.status;
     if (status && status !== order.status) {
       if (status === "cancelled" && order.status !== "cancelled") {
@@ -180,6 +187,23 @@ export async function POST(
         await sendOrderStatusPushNotification(order._id.toString(), customerId, customerName, status);
       } catch (pushErr) {
         console.warn("Status push dispatch warning:", pushErr);
+      }
+
+      // 🔔 Notify Socket Server for Instant Real-Time Status Update
+      const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:5000";
+      try {
+        await fetch(`${socketUrl}/order-status-updated`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            orderId: order._id.toString(),
+            status,
+            ispaid: order.ispaid,
+          }),
+          signal: AbortSignal.timeout(2000),
+        });
+      } catch (socketErr) {
+        console.warn("Socket status update ping note:", socketErr);
       }
     }
 

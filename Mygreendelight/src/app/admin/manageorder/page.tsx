@@ -253,6 +253,24 @@ export default function ManageOrder() {
       setTimeout(() => setToastMsg(null), 5000);
     });
 
+    socket.on("order-status-updated", ({ orderId, status, ispaid }: { orderId: string; status: string; ispaid?: boolean }) => {
+      setStatuses((prev) => ({
+        ...prev,
+        [orderId]: status,
+      }));
+      setOrders((prev) =>
+        prev.map((o) =>
+          o._id === orderId
+            ? { ...o, status, ...(typeof ispaid === "boolean" ? { ispaid } : {}) }
+            : o
+        )
+      );
+      if (status === "delivered" || status === "completed") {
+        setToastMsg(`✅ Order #${orderId.slice(-6).toUpperCase()} was marked DELIVERED by driver!`);
+        setTimeout(() => setToastMsg(null), 4000);
+      }
+    });
+
     // Auto sync background check every 15s
     const pollTimer = setInterval(async () => {
       try {
@@ -268,17 +286,32 @@ export default function ManageOrder() {
             }
             return list;
           });
+
+          // Synchronize statuses dictionary so UI dropdowns and filter tabs match DB immediately
+          setStatuses((prev) => {
+            const next = { ...prev };
+            list.forEach((o: OrderType) => {
+              next[o._id] = o.status;
+            });
+            return next;
+          });
         }
       } catch (e) {}
     }, 15000);
 
     return () => {
       socket.off("new-order");
+      socket.off("order-status-updated");
       clearInterval(pollTimer);
     };
   }, []);
 
   const updateStatus = async (orderid: string, status: string) => {
+    if (statuses[orderid] === "delivered" || statuses[orderid] === "completed") {
+      alert("This order is already marked delivered and its status is locked.");
+      return;
+    }
+
     setUpdatingId(orderid);
     try {
       const res = await axios.post(`/api/admin/updateorderststus/${orderid}`, {
@@ -298,9 +331,9 @@ export default function ManageOrder() {
       setToastMsg(`✓ Order #${orderid.slice(-6).toUpperCase()} updated to "${status}"`);
       setTimeout(() => setToastMsg(null), 3000);
       fetchOrders();
-    } catch (error) {
+    } catch (error: any) {
       console.error("Status update error:", error);
-      alert("Failed to update status.");
+      alert(error.response?.data?.message || "Failed to update status.");
     } finally {
       setUpdatingId(null);
     }
@@ -858,23 +891,33 @@ export default function ManageOrder() {
                           <span className="text-xs font-bold text-gray-500 hidden sm:inline">
                             Status:
                           </span>
-                          <select
-                            value={currentStatus}
-                            disabled={updatingId === order._id}
-                            onChange={(e) => updateStatus(order._id, e.target.value)}
-                            className={`px-3 py-1.5 rounded-xl text-xs font-extrabold border outline-none cursor-pointer transition ${
-                              currentStatus === "pending"
-                                ? "bg-amber-50 text-amber-900 border-amber-300"
-                                : isOutForDelivery
-                                ? "bg-blue-50 text-blue-900 border-blue-300"
-                                : "bg-green-50 text-green-900 border-green-300"
-                            }`}
-                          >
-                            <option value="pending">⏳ Pending</option>
-                            <option value="out of delivery">🚀 Out For Delivery</option>
-                            <option value="completed">✓ Completed & Delivered</option>
-                            <option value="cancelled">✕ Cancelled</option>
-                          </select>
+                          {isDelivered ? (
+                            <span
+                              className="bg-emerald-100 text-emerald-900 border border-emerald-300 px-3 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 shadow-2xs cursor-default"
+                              title="Delivered order status is permanently locked and cannot be changed"
+                            >
+                              <CheckCircle2 size={13} className="text-[#0f8646]" />
+                              <span>✓ Delivered (Locked)</span>
+                            </span>
+                          ) : (
+                            <select
+                              value={currentStatus === "completed" ? "delivered" : currentStatus}
+                              disabled={updatingId === order._id}
+                              onChange={(e) => updateStatus(order._id, e.target.value)}
+                              className={`px-3 py-1.5 rounded-xl text-xs font-extrabold border outline-none cursor-pointer transition ${
+                                currentStatus === "pending"
+                                  ? "bg-amber-50 text-amber-900 border-amber-300"
+                                  : isOutForDelivery
+                                  ? "bg-blue-50 text-blue-900 border-blue-300"
+                                  : "bg-green-50 text-green-900 border-green-300"
+                              }`}
+                            >
+                              <option value="pending">⏳ Pending</option>
+                              <option value="out of delivery">🚀 Out For Delivery</option>
+                              <option value="delivered">✓ Completed & Delivered</option>
+                              <option value="cancelled">✕ Cancelled</option>
+                            </select>
+                          )}
 
                           <button
                             type="button"
@@ -953,19 +996,26 @@ export default function ManageOrder() {
                             )}
 
                             {/* Reassign Dropdown */}
-                            <select
-                              onChange={(e) => assignDriver(order._id, e.target.value)}
-                              defaultValue=""
-                              disabled={assigningId === order._id}
-                              className="bg-white border border-gray-200 text-gray-700 text-xs font-bold px-3 py-2 rounded-xl outline-none cursor-pointer hover:border-[#0f8646] transition"
-                            >
-                              <option value="" disabled>Change Rider</option>
-                              {deliveryBoys.map((db) => (
-                                <option key={db._id} value={db._id}>
-                                  Reassign to: {db.name} ({db.mobile || db.email})
-                                </option>
-                              ))}
-                            </select>
+                            {isDelivered ? (
+                              <span className="text-[11px] font-bold text-emerald-800 bg-emerald-100/70 border border-emerald-300 px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-2xs">
+                                <Check size={13} className="text-[#0f8646]" />
+                                <span>Delivered by {order.assigneddelliveryboy?.name}</span>
+                              </span>
+                            ) : (
+                              <select
+                                onChange={(e) => assignDriver(order._id, e.target.value)}
+                                defaultValue=""
+                                disabled={assigningId === order._id}
+                                className="bg-white border border-gray-200 text-gray-700 text-xs font-bold px-3 py-2 rounded-xl outline-none cursor-pointer hover:border-[#0f8646] transition"
+                              >
+                                <option value="" disabled>Change Rider</option>
+                                {deliveryBoys.map((db) => (
+                                  <option key={db._id} value={db._id}>
+                                    Reassign to: {db.name} ({db.mobile || db.email})
+                                  </option>
+                                ))}
+                              </select>
+                            )}
                           </div>
                         </div>
 
@@ -1019,23 +1069,25 @@ export default function ManageOrder() {
                         </div>
 
                         {/* Direct Driver Allocation Dropdown */}
-                        <div className="flex items-center gap-2">
-                          <select
-                            onChange={(e) => assignDriver(order._id, e.target.value)}
-                            defaultValue=""
-                            disabled={assigningId === order._id}
-                            className="bg-white border border-amber-300 text-amber-950 text-xs font-black px-3.5 py-2 rounded-xl outline-none cursor-pointer shadow-2xs hover:border-[#0f8646] transition"
-                          >
-                            <option value="" disabled>
-                              ⚡ Direct Assign Driver ({deliveryBoys.length} Available)
-                            </option>
-                            {deliveryBoys.map((db) => (
-                              <option key={db._id} value={db._id}>
-                                🛵 {db.name} ({db.mobile || db.email})
+                        {!isDelivered && (
+                          <div className="flex items-center gap-2">
+                            <select
+                              onChange={(e) => assignDriver(order._id, e.target.value)}
+                              defaultValue=""
+                              disabled={assigningId === order._id}
+                              className="bg-white border border-amber-300 text-amber-950 text-xs font-black px-3.5 py-2 rounded-xl outline-none cursor-pointer shadow-2xs hover:border-[#0f8646] transition"
+                            >
+                              <option value="" disabled>
+                                ⚡ Direct Assign Driver ({deliveryBoys.length} Available)
                               </option>
-                            ))}
-                          </select>
-                        </div>
+                              {deliveryBoys.map((db) => (
+                                <option key={db._id} value={db._id}>
+                                  🛵 {db.name} ({db.mobile || db.email})
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        )}
                       </div>
                     )}
 

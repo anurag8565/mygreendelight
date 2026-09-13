@@ -97,6 +97,23 @@ export async function POST(req: Request) {
 
     await order.save();
 
+    // 🔔 Notify Socket Server in Real-Time for Instant Order Status Update across dashboards
+    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:5000";
+    try {
+      await fetch(`${socketUrl}/order-status-updated`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          orderId: order._id.toString(),
+          status: "delivered",
+          ispaid: true,
+        }),
+        signal: AbortSignal.timeout(2000),
+      });
+    } catch (socketErr) {
+      console.warn("Socket delivered ping note:", socketErr);
+    }
+
     // Update assignment status
     if (order.assigment) {
       await DeliveryAssignment.findByIdAndUpdate(order.assigment, {

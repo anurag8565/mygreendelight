@@ -42,6 +42,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    if (order.status === "delivered" || order.status === "completed") {
+      return NextResponse.json(
+        { success: false, message: "Cannot assign or change driver for an already delivered order." },
+        { status: 400 }
+      );
+    }
+
     if (!driver) {
       return NextResponse.json(
         { success: false, message: "Delivery driver not found" },
