@@ -73,12 +73,17 @@ export default function CartPage() {
     (session?.user as any)?.id ||
     null;
   const cleanUserId = rawUserId ? String(rawUserId) : null;
+  const [mounted, setMounted] = useState(false);
 
   // Real-time live cart sync across devices (WebSocket, focus, tabs, heartbeat)
   useCartSync(cleanUserId);
 
   useEffect(() => {
+    setMounted(true);
+    dispatch(hydrateCart({ userId: cleanUserId }));
+  }, [dispatch, cleanUserId]);
 
+  useEffect(() => {
     axios
       .get("/api/groceries?limit=12&sort=price_asc")
       .then((res) => {
@@ -102,7 +107,7 @@ export default function CartPage() {
         }
       })
       .catch(() => {});
-  }, [dispatch, cleanUserId]);
+  }, []);
 
   const { cartdata, couponCode, discountAmount } = useSelector(
     (state: RootState) => state.cart
@@ -336,7 +341,12 @@ export default function CartPage() {
         )}
 
         {/* Empty State */}
-        {cartdata.length === 0 ? (
+        {!mounted ? (
+          <div className="bg-white rounded-3xl border border-stone-200/90 p-12 text-center max-w-md mx-auto shadow-2xs my-8">
+            <div className="w-8 h-8 border-3 border-[#0a3d24] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+            <p className="text-xs text-stone-500 font-semibold">Loading your basket...</p>
+          </div>
+        ) : cartdata.length === 0 ? (
           <div className="bg-white rounded-3xl border border-stone-200/90 p-8 sm:p-14 text-center max-w-md mx-auto shadow-2xs my-8">
             <div className="w-16 h-16 bg-emerald-50 text-[#0a3d24] rounded-2xl flex items-center justify-center mx-auto mb-4 border border-emerald-100">
               <ShoppingBag size={28} />

@@ -84,19 +84,21 @@ export default function Checkout() {
 
   const rawUserId = userdata?._id || (userdata as any)?.id || (session?.user as any)?._id || (session?.user as any)?.id || null;
   const cleanUserId = rawUserId ? String(rawUserId) : null;
+  const [mounted, setMounted] = useState(false);
 
   // Real-time live cart sync across devices (WebSocket, focus, tabs, heartbeat)
   useCartSync(cleanUserId);
 
   useEffect(() => {
+    setMounted(true);
     dispatch(hydrateCart({ userId: cleanUserId }));
   }, [dispatch, cleanUserId]);
 
   useEffect(() => {
-    if (status === "unauthenticated" && !userdata) {
+    if (mounted && status === "unauthenticated" && !userdata) {
       router.replace("/login?callbackUrl=/user/checkout");
     }
-  }, [status, userdata, router]);
+  }, [status, userdata, router, mounted]);
 
   const [deliverySettings, setDeliverySettings] = useState<{
     deliveryFee: number;
@@ -401,7 +403,7 @@ export default function Checkout() {
     }
   };
 
-  if (status === "loading" || (!isCloudHydrated && (!cartdata || cartdata.length === 0))) {
+  if (!mounted || status === "loading" || (!isCloudHydrated && (!cartdata || cartdata.length === 0))) {
     return (
       <div className="bg-[#fcfdfc] min-h-screen flex flex-col justify-between font-sans">
         <Nav user={(userdata as any) || null} />

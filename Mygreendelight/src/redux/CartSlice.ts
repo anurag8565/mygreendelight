@@ -142,38 +142,91 @@ const saveCart = (cartdata: IGrocery[], couponCode: string | null, discountAmoun
 const getSavedCart = (userId?: any): { cartdata: IGrocery[]; couponCode: string | null; discountAmount: number } => {
     if (typeof window === "undefined") return { cartdata: [], couponCode: null, discountAmount: 0 };
     try {
-        const cartKey = getCartStorageKey(userId);
-        const couponKey = getCouponStorageKey(userId);
-        const savedCart = localStorage.getItem(cartKey);
-        const savedCoupon = localStorage.getItem(couponKey);
+        const cleanId = getCleanUserId(userId);
+        const userCartKey = cleanId ? `subziquick_cart_user_${cleanId}` : null;
+        const guestCartKey = "subziquick_cart_guest";
+        const legacyCartKey = "mgd_cart_data";
 
-        let cartdata: IGrocery[] = [];
-        let couponCode: string | null = null;
-        let discountAmount = 0;
+        // Read all possible keys
+        const userRaw = userCartKey ? localStorage.getItem(userCartKey) : null;
+        const guestRaw = localStorage.getItem(guestCartKey);
+        const legacyRaw = localStorage.getItem(legacyCartKey);
 
-        if (savedCart) {
-            const parsed = JSON.parse(savedCart);
-            if (Array.isArray(parsed)) {
-                cartdata = parsed
-                    .filter((item) => item && (item._id || item.name))
-                    .map((item) => ({
-                        ...item,
-                        _id: item._id ? String(item._id) : "",
-                        cartItemId: item.cartItemId || (item.variation ? `${item._id}-${item.variation.weight}` : String(item._id || "")),
-                        name: String(item.name || "Item"),
-                        price: Number(item.price) || 0,
-                        quantity: Number(item.quantity) || 1,
-                        stock: typeof item.stock === "number" ? item.stock : 50,
-                    }));
+        const parseItems = (raw: string | null): IGrocery[] => {
+            if (!raw) return [];
+            try {
+                const parsed = JSON.parse(raw);
+                if (Array.isArray(parsed)) {
+                    return parsed
+                        .filter((item) => item && (item._id || item.name))
+                        .map((item) => ({
+                            ...item,
+                            _id: item._id ? String(item._id) : "",
+                            cartItemId: item.cartItemId || (item.variation ? `${item._id}-${item.variation.weight}` : String(item._id || "")),
+                            name: String(item.name || "Item"),
+                            price: Number(item.price) || 0,
+                            quantity: Number(item.quantity) || 1,
+                            stock: typeof item.stock === "number" ? item.stock : 50,
+                        }));
+                }
+            } catch (_) {}
+            return [];
+        };
+
+        const userItems = parseItems(userRaw);
+        const guestItems = parseItems(guestRaw);
+        const legacyItems = parseItems(legacyRaw);
+
+        // Merge user + guest + legacy items so no produce is ever lost across transitions
+        let combined: IGrocery[] = [];
+        const seenKeys = new Set<string>();
+
+        const addItem = (item: IGrocery) => {
+            const key = item.cartItemId || String(item._id);
+            if (!key) return;
+            const existing = combined.find(i => (i.cartItemId && i.cartItemId === key) || String(i._id) === String(item._id));
+            if (existing) {
+                const maxStock = existing.variation ? existing.variation.stock : existing.stock;
+                existing.quantity = Math.min(existing.quantity + item.quantity, maxStock);
+            } else {
+                combined.push({ ...item });
+                seenKeys.add(key);
+            }
+        };
+
+        if (cleanId) {
+            userItems.forEach(addItem);
+            guestItems.forEach(addItem);
+            legacyItems.forEach(addItem);
+        } else {
+            guestItems.forEach(addItem);
+            legacyItems.forEach(addItem);
+            // If guest has nothing, check if there was an existing user cart key in localStorage
+            if (combined.length === 0) {
+                for (let i = 0; i < localStorage.length; i++) {
+                    const k = localStorage.key(i);
+                    if (k && k.startsWith("subziquick_cart_user_")) {
+                        const items = parseItems(localStorage.getItem(k));
+                        items.forEach(addItem);
+                        if (combined.length > 0) break;
+                    }
+                }
             }
         }
+
+        let couponCode: string | null = null;
+        let discountAmount = 0;
+        const couponKey = getCouponStorageKey(userId);
+        const savedCoupon = localStorage.getItem(couponKey) || localStorage.getItem("subziquick_coupon_guest");
         if (savedCoupon) {
-            const parsed = JSON.parse(savedCoupon);
-            couponCode = parsed.couponCode || null;
-            discountAmount = parsed.discountAmount || 0;
+            try {
+                const parsed = JSON.parse(savedCoupon);
+                couponCode = parsed.couponCode || null;
+                discountAmount = parsed.discountAmount || 0;
+            } catch (_) {}
         }
 
-        return { cartdata, couponCode, discountAmount };
+        return { cartdata: combined, couponCode, discountAmount };
     } catch (e) {
         return { cartdata: [], couponCode: null, discountAmount: 0 };
     }
@@ -202,61 +255,35 @@ const cartSlice = createSlice({
                 const cleanId = passedId !== undefined ? getCleanUserId(passedId) : state.currentUserId;
                 state.currentUserId = cleanId;
 
-                if (cleanId) {
-                    const guestCart = getSavedCart(null);
-                    const userCart = getSavedCart(cleanId);
+                const saved = getSavedCart(cleanId);
 
-                    // Prefer saved userCart, fallback to existing in-memory items
-                    let merged = userCart.cartdata.length > 0
-                        ? [...userCart.cartdata]
-                        : (state.cartdata.length > 0 ? [...state.cartdata] : []);
-
-                    if (guestCart.cartdata.length > 0) {
-                        for (const gItem of guestCart.cartdata) {
-                            const gKey = gItem.cartItemId || String(gItem._id);
-                            const existing = merged.find(i => (i.cartItemId && i.cartItemId === gKey) || String(i._id) === String(gItem._id));
-                            if (existing) {
-                                const maxStock = existing.variation ? existing.variation.stock : existing.stock;
-                                existing.quantity = Math.min(existing.quantity + gItem.quantity, maxStock);
-                            } else {
-                                merged.push(gItem);
-                            }
-                        }
-                        // Clear guest cart once merged into user account
-                        saveCartToStorage([], null, 0, null);
-                        // Sync this explicit guest migration to backend
-                        syncCartToBackend(merged, userCart.couponCode || guestCart.couponCode, userCart.discountAmount || guestCart.discountAmount, cleanId);
-                    }
-
-                    // Also preserve in-memory items if they weren't in userCart yet
-                    if (state.cartdata.length > 0) {
-                        for (const memItem of state.cartdata) {
-                            const mKey = memItem.cartItemId || String(memItem._id);
-                            const existing = merged.find(i => (i.cartItemId && i.cartItemId === mKey) || String(i._id) === String(memItem._id));
-                            if (!existing) {
-                                merged.push(memItem);
-                            }
+                // Merge in-memory state with saved localStorage
+                let merged = [...saved.cartdata];
+                if (state.cartdata.length > 0) {
+                    for (const memItem of state.cartdata) {
+                        const mKey = memItem.cartItemId || String(memItem._id);
+                        const existing = merged.find(i => (i.cartItemId && i.cartItemId === mKey) || String(i._id) === String(memItem._id));
+                        if (!existing) {
+                            merged.push(memItem);
                         }
                     }
-
-                    state.cartdata = merged;
-                    state.couponCode = userCart.couponCode || guestCart.couponCode || state.couponCode;
-                    state.discountAmount = userCart.discountAmount || guestCart.discountAmount || state.discountAmount;
-                    // Cache locally for offline fast startup without pushing to backend
-                    saveCartToStorage(state.cartdata, state.couponCode, state.discountAmount, cleanId);
-                } else {
-                    const guestCart = getSavedCart(null);
-                    if (guestCart.cartdata.length > 0) {
-                        state.cartdata = guestCart.cartdata;
-                        state.couponCode = guestCart.couponCode;
-                        state.discountAmount = guestCart.discountAmount;
-                    } else if (state.cartdata.length === 0) {
-                        state.cartdata = [];
-                    }
-                    state.isCloudHydrated = true;
                 }
+
+                state.cartdata = merged;
+                state.couponCode = saved.couponCode || state.couponCode;
+                state.discountAmount = saved.discountAmount || state.discountAmount;
+
+                // Save back to both user & guest storage so items are consistently available
+                saveCartToStorage(state.cartdata, state.couponCode, state.discountAmount, cleanId);
+
+                if (cleanId && merged.length > 0) {
+                    syncCartToBackend(merged, state.couponCode, state.discountAmount, cleanId);
+                }
+
+                state.isCloudHydrated = true;
             } catch (e) {
                 console.error("Cart hydrate error:", e);
+                state.isCloudHydrated = true;
             }
         },
 
@@ -414,8 +441,21 @@ const cartSlice = createSlice({
                 return;
             }
 
+            // 3. 🛡️ EMPTY CLOUD OVERWRITE SHIELD:
+            // If the incoming cloud cart is empty, but we already have items in local state (or in localStorage),
+            // this happens right after login before guest cart synced to cloud. Do NOT wipe the user's basket!
+            const incomingItems = action.payload.cartdata || [];
+            if (incomingItems.length === 0 && state.cartdata.length > 0 && !action.payload.force) {
+                // Keep local items and push them to cloud
+                if (cleanId) {
+                    syncCartToBackend(state.cartdata, state.couponCode, state.discountAmount, cleanId);
+                }
+                state.isCloudHydrated = true;
+                return;
+            }
+
             // Otherwise, apply authoritative cloud cart state
-            state.cartdata = action.payload.cartdata || [];
+            state.cartdata = incomingItems;
             state.couponCode = action.payload.couponCode || null;
             state.discountAmount = action.payload.discountAmount || 0;
             state.isCloudHydrated = true;
