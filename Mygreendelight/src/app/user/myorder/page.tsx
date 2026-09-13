@@ -64,6 +64,8 @@ interface OrderType {
   paymentmethod: string;
   status: string;
   ispaid: boolean;
+  paymentId?: string;
+  paymentProofImage?: string;
   address: {
     fullname?: string;
     mobile?: string;
@@ -460,17 +462,19 @@ export default function MyOrder() {
                           <span
                             className={`px-2 py-0.5 rounded-full text-[9.5px] font-bold ${
                               order.ispaid
-                                ? "bg-gray-100 text-gray-700"
+                                ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
                                 : order.paymentmethod === "upi"
                                 ? "bg-amber-50 text-amber-800 border border-amber-200/60"
                                 : "bg-gray-100 text-gray-600"
                             }`}
                           >
                             {order.ispaid
-                              ? `Paid (${(order.paymentmethod || "Online").toUpperCase()})`
+                              ? `✅ Paid (${(order.paymentmethod || "Online").toUpperCase()})`
                               : order.paymentmethod === "upi"
-                              ? "UPI Verification Pending"
-                              : "Cash on Delivery"}
+                              ? order.paymentProofImage || order.paymentId
+                                ? `📱 UPI Submitted (Ref: ${String(order.paymentId || "Proof Attached").replace("UTR_", "")})`
+                                : "🟠 UPI Verification Pending"
+                              : "💵 Cash on Delivery"}
                           </span>
                         </div>
 

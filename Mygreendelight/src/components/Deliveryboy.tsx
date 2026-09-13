@@ -42,6 +42,7 @@ import {
   ExternalLink,
   ChevronLeft,
   Bike,
+  Eye,
 } from 'lucide-react'
 import { FaWhatsapp } from 'react-icons/fa6'
 import { useSelector } from 'react-redux'
@@ -105,6 +106,7 @@ export default function Deliveryboy({ initialUser }: Props) {
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [showItemsList, setShowItemsList] = useState(false)
   const [showMapPreview, setShowMapPreview] = useState(true)
+  const [previewProof, setPreviewProof] = useState<string | null>(null)
 
   // Real Database-backed Online/Offline Duty State
   const [isOnline, setIsOnline] = useState<boolean>(true)
@@ -631,8 +633,11 @@ export default function Deliveryboy({ initialUser }: Props) {
     const customerName = activeOrderObj.address?.fullname || activeOrderObj.user?.name || 'Customer'
     const customerMobile = activeOrderObj.address?.mobile || activeOrderObj.user?.mobile || ''
     const customerAddress = activeOrderObj.address?.fulladress || 'Bhopal Address'
-    const totalAmount = activeOrderObj.totalamount || 0
+    const totalAmount = Number(activeOrderObj.totalamount) || 0
     const isPaid = !!activeOrderObj.ispaid
+    const isUpiMethod = activeOrderObj.paymentmethod === 'upi'
+    const isCodMethod = activeOrderObj.paymentmethod === 'cod'
+    const hasUpiProof = !!(activeOrderObj.paymentProofImage || activeOrderObj.paymentId)
     const cleanMobile = String(customerMobile).replace(/[^0-9]/g, '').slice(-10)
 
     const custLat = activeOrderObj.address?.latitude
@@ -641,16 +646,40 @@ export default function Deliveryboy({ initialUser }: Props) {
       ? `https://www.google.com/maps/dir/?api=1&destination=${custLat},${custLng}`
       : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(customerAddress + ', Bhopal')}`
 
+    let paymentStatusMsg = ''
+    if (isPaid) {
+      paymentStatusMsg = `✅ *Paid Online* — Bill amount *₹${totalAmount}* already paid (Doorstep par ₹0 cash dena hai).`
+    } else if (isUpiMethod) {
+      if (hasUpiProof) {
+        paymentStatusMsg = `📱 *Online UPI Payment* (Ref/Proof: ${activeOrderObj.paymentId || 'Screenshot Attached'})\n_(Agar aapne checkout par online UPI pay kar diya hai, toh ₹0 cash dein, rider ko sirf 4-digit OTP share karein)_`
+      } else {
+        paymentStatusMsg = `📱 *UPI Payment Pending* — Total Bill: *₹${totalAmount}* (Doorstep par scan karke ya cash pay karein)`
+      }
+    } else if (isCodMethod) {
+      paymentStatusMsg = `💵 *Cash on Delivery (COD)* — Delivery lene par rider ko *₹${totalAmount}* pay karein.`
+    } else {
+      paymentStatusMsg = `💵 *Pay at Doorstep:* *₹${totalAmount}* (Cash ya UPI)`
+    }
+
+    const itemsSummary = (activeOrderObj.items || [])
+      .map(
+        (it: any, i: number) =>
+          `  ${i + 1}. *${it.name}* [${it.variationWeight || it.unit || '1 unit'}] × ${it.quantity} = ₹${(it.price || 0) * (it.quantity || 1)}`
+      )
+      .join('\n')
+
     const arrivalWhatsappMsg = encodeURIComponent(
       `*🌿 SubziQuick Farm Fresh Express Delivery*\n` +
       `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
       `Namaste *${customerName}*! 🙏\n\n` +
       `Main aapka *SubziQuick Delivery Partner* aapke doorstep par taaza grocery leke pahunch gaya hoon.\n\n` +
       `📦 *Order ID:* #${orderShortId}\n` +
-      `📍 *Address:* ${customerAddress}\n` +
-      `💵 *Payment:* ${isPaid ? '✅ Paid Online (₹0 to pay)' : `💵 Collect Cash / UPI: ₹${totalAmount}`}\n\n` +
+      (itemsSummary ? `🛒 *Items Ordered (${(activeOrderObj.items || []).length}):*\n${itemsSummary}\n\n` : '') +
+      `💰 *Total Order Bill:* *₹${totalAmount}*\n` +
+      `💳 *Payment Status:* ${paymentStatusMsg}\n\n` +
+      `📍 *Address:* ${customerAddress}\n\n` +
       `👉 Kripya delivery lete waqt apna *4-digit verification OTP* share karein taaki order handover complete ho sake.\n\n` +
-      `Live Tracking: https://subziquick.in/track/${activeOrderObj._id}\n` +
+      `🌐 Live Tracking: https://subziquick.in/track/${activeOrderObj._id}\n` +
       `Dhanyawaad! 🌿`
     )
     const whatsappArrivalUrl = `https://wa.me/91${cleanMobile}?text=${arrivalWhatsappMsg}`
@@ -669,7 +698,7 @@ export default function Deliveryboy({ initialUser }: Props) {
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             {gpsActive && (
               <span className="text-[10px] font-bold text-sky-700 bg-sky-50 border border-sky-200/80 px-2.5 py-0.5 rounded-full flex items-center gap-1">
                 <Radio size={10} className="animate-pulse" />
@@ -678,17 +707,31 @@ export default function Deliveryboy({ initialUser }: Props) {
             )}
             <span className={`text-[11px] font-black px-2.5 py-0.5 rounded-full ${
               isPaid
-                ? 'bg-emerald-100 text-emerald-800'
-                : activeOrderObj.paymentmethod === 'upi'
+                ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                : isUpiMethod
                 ? 'bg-amber-100 text-amber-900 border border-amber-300'
                 : 'bg-amber-100 text-amber-900'
             }`}>
               {isPaid
-                ? '✅ Paid Online'
-                : activeOrderObj.paymentmethod === 'upi'
-                ? `💵 Collect ₹${totalAmount} (UPI Unverified)`
-                : `💵 Collect ₹${totalAmount}`}
+                ? `✅ Paid Online (₹${totalAmount})`
+                : isUpiMethod
+                ? hasUpiProof
+                  ? `📱 UPI Submitted (Ref: ${String(activeOrderObj.paymentId || 'Attached').replace('UTR_', '')})`
+                  : `💵 Collect ₹${totalAmount} (UPI)`
+                : `💵 Collect ₹${totalAmount} (COD)`}
             </span>
+
+            {activeOrderObj.paymentProofImage && (
+              <button
+                type="button"
+                onClick={() => setPreviewProof(activeOrderObj.paymentProofImage)}
+                className="bg-purple-50 hover:bg-purple-100 text-purple-800 border border-purple-300 px-2 py-0.5 rounded-full text-[10px] font-black flex items-center gap-1 cursor-pointer transition shadow-2xs"
+                title="View Customer's Uploaded UPI Screenshot"
+              >
+                <Eye size={11} className="text-purple-600" />
+                <span>Receipt Proof</span>
+              </button>
+            )}
           </div>
         </div>
 
@@ -1238,6 +1281,41 @@ export default function Deliveryboy({ initialUser }: Props) {
           otherUserName={activeOrderObj.address?.fullname || activeOrderObj.user?.name || 'Customer'}
           onClose={() => setIsChatOpen(false)}
         />
+      )}
+
+      {/* UPI Payment Proof Image Preview Modal for Rider */}
+      {previewProof && (
+        <div
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in"
+          onClick={() => setPreviewProof(null)}
+        >
+          <div
+            className="bg-white rounded-3xl max-w-md w-full p-5 space-y-4 shadow-2xl relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-black text-slate-900 flex items-center gap-1.5">
+                <span>📱 Customer UPI Payment Screenshot</span>
+              </h3>
+              <button
+                onClick={() => setPreviewProof(null)}
+                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center cursor-pointer transition"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            <div className="rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 max-h-[65vh] flex items-center justify-center">
+              <img
+                src={previewProof}
+                alt="Payment Proof"
+                className="w-full h-auto max-h-[65vh] object-contain"
+              />
+            </div>
+            <p className="text-[11px] text-slate-500 text-center">
+              Agar customer ka UPI screenshot match hota hai toh cash collect na karein. Bas 4-digit OTP lekar delivery verify karein.
+            </p>
+          </div>
+        </div>
       )}
     </div>
   )

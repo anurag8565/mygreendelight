@@ -281,13 +281,15 @@ export default function TrackOrderPage() {
                 order?.ispaid
                   ? "bg-emerald-50 text-emerald-800 border-emerald-300"
                   : order?.paymentmethod === "upi"
-                  ? "bg-amber-50 text-amber-900 border-amber-300 animate-pulse"
+                  ? "bg-amber-50 text-amber-900 border-amber-300"
                   : "bg-white text-gray-800 border-gray-200"
               }`}>
                 {order?.ispaid
-                  ? "✅ PAID ONLINE"
+                  ? `✅ PAID ONLINE (${(order?.paymentmethod || "Online").toUpperCase()})`
                   : order?.paymentmethod === "upi"
-                  ? "🟠 UPI AWAITING VERIFICATION"
+                  ? order?.paymentProofImage || order?.paymentId
+                    ? "📱 UPI PAYMENT SUBMITTED"
+                    : "🟠 UPI AWAITING VERIFICATION"
                   : "💵 CASH ON DELIVERY"}
               </span>
             </div>
@@ -747,20 +749,22 @@ export default function TrackOrderPage() {
                         : "bg-gray-100 text-gray-800 border-gray-200"
                     }`}>
                       {order.ispaid
-                        ? "✅ Payment Verified & Received"
+                        ? `✅ Payment Verified & Received (₹${order.totalamount})`
                         : order.paymentmethod === "upi"
-                        ? "🟠 Verification Pending (Admin checking screenshot)"
-                        : "🟡 Unpaid (Pay Cash / UPI at Doorstep)"}
+                        ? order.paymentProofImage || order.paymentId
+                          ? "📱 Online UPI Submitted (Verification at delivery)"
+                          : "🟠 Verification Pending"
+                        : `🟡 Pay ₹${order.totalamount} Cash/UPI at Doorstep`}
                     </span>
                   </div>
 
                   {order.paymentmethod === "upi" && !order.ispaid && (
                     <div className="p-2.5 rounded-xl bg-amber-50 border border-amber-200 text-[11px] text-amber-900 leading-snug">
                       <p className="font-bold flex items-center gap-1 text-amber-800 mb-0.5">
-                        <span>⚠️ Payment Verification in Progress</span>
+                        <span>📱 Online UPI Payment Submitted</span>
                       </p>
                       <p>
-                        Aapka screenshot admin verify kar raha hai. Agar screenshot match nahi hota, toh rider aane par doorstep par pay karna hoga.
+                        Aapka payment screenshot submit ho gaya hai. Rider aane par apna 4-digit OTP share karein, koi extra cash pay na karein.
                       </p>
                     </div>
                   )}
