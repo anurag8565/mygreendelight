@@ -35,6 +35,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import useGetMe from "@/hooks/useGetMe";
 import { useSession } from "next-auth/react";
+import { FaWhatsapp } from "react-icons/fa6";
 
 export default function CartPage() {
   const dispatch = useDispatch<AppDispatch>();
@@ -168,6 +169,43 @@ export default function CartPage() {
     } else {
       router.push("/user/checkout");
     }
+  };
+
+  const handleWhatsAppOrder = () => {
+    if (cartdata.length === 0) return;
+
+    if (isSubMinimum) {
+      alert(`⚠️ Minimum order amount for Bhopal express delivery is ₹${minOrderAmount}. Please add ₹${remainingForMinOrder} more produce to proceed.`);
+      return;
+    }
+
+    const itemsText = cartdata
+      .map((item, idx) => {
+        const wt = item.variation?.weight || item.unit || "1 unit";
+        const priceTotal = item.price * item.quantity;
+        return `${idx + 1}. *${item.name}* [${wt}] × ${item.quantity} = ₹${priceTotal}`;
+      })
+      .join("\n");
+
+    const custName = userdata?.name || (session?.user as any)?.name || "Bhopal Customer";
+    const custPhone = userdata?.mobile || "";
+
+    const orderMsg =
+      `*🌿 New Order Request - SubziQuick Bhopal*\n` +
+      `━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+      `👤 *Customer:* ${custName}${custPhone ? ` (${custPhone})` : ""}\n\n` +
+      `🛒 *Order Items (${totalItemCount}):*\n` +
+      `${itemsText}\n\n` +
+      `━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+      `📦 *Subtotal:* ₹${subtotal}\n` +
+      `🚚 *Delivery:* ${deliveryFee === 0 ? "FREE" : `₹${deliveryFee}`}\n` +
+      (discountAmount > 0 ? `🏷️ *Coupon (${couponCode}):* -₹${discountAmount}\n` : "") +
+      `💰 *Total Amount:* *₹${total}*\n` +
+      `━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+      `📍 *Please share delivery address & preferred time slot:*`;
+
+    const whatsappUrl = `https://wa.me/919981418565?text=${encodeURIComponent(orderMsg)}`;
+    window.open(whatsappUrl, "_blank");
   };
 
 
@@ -589,6 +627,17 @@ export default function CartPage() {
                     </>
                   )}
                 </button>
+
+                {/* 1-Click WhatsApp Quick Order */}
+                <button
+                  type="button"
+                  onClick={handleWhatsAppOrder}
+                  className="w-full mt-2.5 bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#128C7E] border border-[#25D366]/40 py-3 rounded-2xl font-black text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98 shadow-2xs"
+                  title="Direct order list to SubziQuick WhatsApp helpline"
+                >
+                  <FaWhatsapp size={18} className="text-[#25D366]" />
+                  <span>Order via WhatsApp (1-Click)</span>
+                </button>
               </div>
 
             </div>
@@ -598,22 +647,33 @@ export default function CartPage() {
 
         {/* Mobile Sticky Floating Bar */}
         {cartdata.length > 0 && (
-          <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-3 shadow-xl flex items-center justify-between gap-3">
+          <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3.5 py-2.5 shadow-xl flex items-center justify-between gap-2.5">
             <div>
               <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">
                 {totalItemCount} Items • Total
               </span>
-              <span className="text-xl font-black text-[#0f8646]">
+              <span className="text-lg font-black text-[#0f8646]">
                 ₹{total}
               </span>
             </div>
-            <button
-              onClick={handleProceed}
-              className="flex-1 bg-[#0f8646] active:scale-98 hover:bg-[#0c6a38] text-white py-3 px-5 rounded-2xl font-black text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <span>Proceed to Checkout</span>
-              <ArrowRight size={14} />
-            </button>
+            <div className="flex items-center gap-2 flex-1 justify-end">
+              <button
+                type="button"
+                onClick={handleWhatsAppOrder}
+                className="bg-[#25D366] active:scale-95 text-white p-2.5 rounded-xl font-black text-xs shadow-sm flex items-center justify-center cursor-pointer shrink-0"
+                title="Order on WhatsApp"
+                aria-label="Order on WhatsApp"
+              >
+                <FaWhatsapp size={18} />
+              </button>
+              <button
+                onClick={handleProceed}
+                className="flex-1 max-w-[200px] bg-[#0f8646] active:scale-98 hover:bg-[#0c6a38] text-white py-2.5 px-3.5 rounded-xl font-black text-xs shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                <span>Checkout</span>
+                <ArrowRight size={13} />
+              </button>
+            </div>
           </div>
         )}
       </main>
