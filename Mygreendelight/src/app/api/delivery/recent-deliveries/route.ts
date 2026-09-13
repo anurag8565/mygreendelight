@@ -24,12 +24,16 @@ export async function GET() {
       .sort({ updatedAt: -1 })
       .limit(10);
 
-    const formatted = orders.map((order: any) => ({
-      _id: order._id,
-      createdAt: order.updatedAt || order.createdAt,
-      totalamount: order.totalamount,
-      status: order.status,
-    }));
+    const formatted = orders.map((order: any) => {
+      const payout = 35 + (Number(order.farmerTip) || 0) + ((Number(order.bagsReturned) || 0) * 10);
+      return {
+        _id: order._id,
+        createdAt: order.updatedAt || order.createdAt,
+        totalamount: order.totalamount,
+        status: order.status,
+        payout,
+      };
+    });
 
     return NextResponse.json(formatted);
   } catch (error) {

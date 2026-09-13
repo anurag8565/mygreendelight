@@ -86,7 +86,7 @@ export default function RecentDeliveries({ deliveries }: Props) {
                     ₹{order.totalamount}
                   </div>
                   <div className="text-[11px] font-extrabold text-[#0f8646]">
-                    +₹100 Earning
+                    +₹{(order as any).payout || 35} Payout
                   </div>
                 </div>
               </div>

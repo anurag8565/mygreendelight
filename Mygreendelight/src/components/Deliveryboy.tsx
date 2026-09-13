@@ -552,7 +552,7 @@ export default function Deliveryboy({ initialUser }: Props) {
             <button
               onClick={handleToggleDuty}
               disabled={togglingDuty}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-2xl font-black text-xs transition-all duration-200 cursor-pointer border active:scale-95 shadow-2xs ${
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-2xl font-black text-xs transition-all duration-200 cursor-pointer border active:scale-95 shadow-2xs ${
                 isOnline
                   ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100'
                   : 'bg-slate-100 text-slate-600 border-slate-300 hover:bg-slate-200'
@@ -560,7 +560,7 @@ export default function Deliveryboy({ initialUser }: Props) {
               title="Toggle Online/Offline Duty"
             >
               <Power size={13} className={isOnline ? 'text-emerald-600' : 'text-slate-400'} />
-              <span className="hidden xs:inline">{isOnline ? 'Online' : 'Offline'}</span>
+              <span className="font-extrabold text-xs">{isOnline ? 'Online' : 'Offline'}</span>
               <div
                 className={`w-2 h-2 rounded-full ${
                   isOnline ? 'bg-emerald-600 animate-ping' : 'bg-slate-400'
@@ -589,19 +589,19 @@ export default function Deliveryboy({ initialUser }: Props) {
 
         {/* Shift Quick Metrics Bar */}
         <div className="grid grid-cols-3 gap-2 mt-3 pt-2.5 border-t border-slate-100">
-          <div className="bg-emerald-50/80 border border-emerald-200/70 rounded-2xl p-2.5 flex items-center gap-2.5">
+          <div className="bg-emerald-50/80 border border-emerald-200/70 rounded-2xl p-2 sm:p-2.5 flex items-center gap-2">
             <div className="w-7 h-7 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
               <IndianRupee size={13} />
             </div>
             <div className="min-w-0">
               <span className="text-[10px] uppercase font-bold text-slate-500 block leading-tight truncate">Today's Pay</span>
               <span className="text-xs font-black text-slate-900 truncate block">
-                ₹{dashboardStats.todayEarnings || dashboardStats.totalDeliveries * 100}
+                ₹{dashboardStats.todayEarnings || dashboardStats.totalDeliveries * (dashboardStats.earningPerDelivery || 35)}
               </span>
             </div>
           </div>
 
-          <div className="bg-sky-50/80 border border-sky-200/70 rounded-2xl p-2.5 flex items-center gap-2.5">
+          <div className="bg-sky-50/80 border border-sky-200/70 rounded-2xl p-2 sm:p-2.5 flex items-center gap-2">
             <div className="w-7 h-7 rounded-xl bg-sky-600 text-white flex items-center justify-center shrink-0">
               <CheckCircle2 size={13} />
             </div>
@@ -611,13 +611,13 @@ export default function Deliveryboy({ initialUser }: Props) {
             </div>
           </div>
 
-          <div className="bg-purple-50/80 border border-purple-200/70 rounded-2xl p-2.5 flex items-center gap-2.5">
+          <div className="bg-purple-50/80 border border-purple-200/70 rounded-2xl p-2 sm:p-2.5 flex items-center gap-2">
             <div className="w-7 h-7 rounded-xl bg-purple-600 text-white flex items-center justify-center shrink-0">
               <Zap size={13} />
             </div>
             <div className="min-w-0">
-              <span className="text-[10px] uppercase font-bold text-slate-500 block leading-tight truncate">Rate</span>
-              <span className="text-xs font-black text-slate-900 truncate block">₹100 / Trip</span>
+              <span className="text-[10px] uppercase font-bold text-slate-500 block leading-tight truncate">Base Pay</span>
+              <span className="text-xs font-black text-slate-900 truncate block">₹{dashboardStats.earningPerDelivery || 35} / Drop</span>
             </div>
           </div>
         </div>

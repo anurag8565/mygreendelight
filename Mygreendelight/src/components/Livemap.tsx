@@ -183,14 +183,14 @@ export default function Livemap({
   }
 
   return (
-    <div>
+    <div className="space-y-2.5">
       {hasValidCurrent && (
-        <div className="flex flex-wrap gap-3 mb-4">
-          <div className="bg-green-100 text-green-800 px-4 py-2 rounded-xl text-xs font-black shadow-2xs flex items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1.5 rounded-xl text-xs font-black shadow-2xs flex items-center gap-1.5">
             📍 {distance > 0 ? `${distance.toFixed(2)} KM Away` : "Nearby"}
           </div>
 
-          <div className="bg-blue-100 text-blue-800 px-4 py-2 rounded-xl text-xs font-black shadow-2xs flex items-center gap-1.5">
+          <div className="bg-sky-50 text-sky-800 border border-sky-200 px-3 py-1.5 rounded-xl text-xs font-black shadow-2xs flex items-center gap-1.5">
             ⏱ ETA: ~{minutes || 15} Mins
           </div>
 
@@ -199,16 +199,16 @@ export default function Livemap({
               target="_blank"
               rel="noopener noreferrer"
               href={`https://www.google.com/maps/dir/?api=1&destination=${customerLocation.latitude},${customerLocation.longitude}`}
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-xl text-xs font-black shadow-2xs transition"
+              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-3.5 py-1.5 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1"
             >
-              Open in Google Maps
+              Open in Maps 🗺️
             </a>
           )}
         </div>
       )}
 
-      <div className="rounded-2xl overflow-hidden border border-gray-200 shadow-2xs">
-        <MapContainer center={center} zoom={14} className="w-full h-[450px]">
+      <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-2xs">
+        <MapContainer center={center} zoom={14} className="w-full h-[260px] sm:h-[340px] md:h-[400px]">
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
           {hasValidCustomer && (

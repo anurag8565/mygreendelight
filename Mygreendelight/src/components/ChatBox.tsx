@@ -13,8 +13,12 @@ export default function ChatBox({
   orderId,
   userId,
   deliveryBoyId,
+  currentUserId,
+  otherUserName,
   onClose,
 }: any) {
+  const myId = currentUserId || userId || deliveryBoyId;
+
   const [suggestions, setSuggestions] =
     useState<string[]>([])
 
@@ -41,8 +45,8 @@ const lastAiMessageRef = useRef("")
           "/api/chat/create",
           {
             orderId,
-            userId,
-            deliveryBoyId,
+            userId: userId || myId,
+            deliveryBoyId: deliveryBoyId || myId,
           }
         )
 
@@ -92,7 +96,7 @@ if (
           "/api/chat/send",
           {
             chatId,
-            senderId: userId,
+            senderId: myId,
             text,
           }
         )
@@ -184,8 +188,8 @@ if (
         >
 
           <div>
-            <h2 className="font-bold text-lg">
-              Delivery Chat
+            <h2 className="font-bold text-base sm:text-lg truncate max-w-[280px]">
+              {otherUserName ? `Chat: ${otherUserName}` : "Delivery Chat"}
             </h2>
 
             <p className="text-xs opacity-80">
@@ -195,9 +199,9 @@ if (
 
           <button
             onClick={onClose}
-            className="hover:bg-white/20 p-2 rounded-full"
+            className="hover:bg-white/20 p-2 rounded-full cursor-pointer transition"
           >
-            <X size={22} />
+            <X size={20} />
           </button>
 
         </div>
@@ -224,7 +228,7 @@ if (
           {messages.map((m) => {
 
             const mine =
-              m.sender?._id === userId
+              String(m.sender?._id || m.sender) === String(myId)
 
             return (
               <div

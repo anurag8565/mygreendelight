@@ -108,6 +108,22 @@ export async function GET(
       console.warn("Delivery OTP notification dispatch note on accept:", notifErr);
     }
 
+    // 🔔 Broadcast Instant Status Update via Socket to Admin & Tracking dashboards
+    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:5000";
+    try {
+      await fetch(`${socketUrl}/order-status-updated`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          orderId: order._id.toString(),
+          status: "out of delivery",
+        }),
+        signal: AbortSignal.timeout(2000),
+      });
+    } catch (socketErr) {
+      console.warn("Socket status update ping note on accept:", socketErr);
+    }
+
     // Remove other broadcasts for this order
     await DeliveryAssignment.updateMany(
       {
