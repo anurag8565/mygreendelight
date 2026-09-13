@@ -302,7 +302,7 @@ export default function ContactPage() {
               rel="noopener noreferrer"
               className="bg-white rounded-3xl p-5 border border-gray-200/80 shadow-2xs hover:border-emerald-300 hover:shadow-xs transition-all flex items-start gap-3.5 group cursor-pointer"
             >
-              <div className="w-11 h-11 rounded-2xl bg-[#25D366]/10 text-[#25D366] border border-green-200 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+              <div className="w-11 h-11 rounded-2xl bg-[#25D366]/10 text-[#25D366] border border-[#25D366]/30 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                 <FaWhatsapp size={20} />
               </div>
               <div className="min-w-0">

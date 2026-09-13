@@ -336,8 +336,9 @@ if (
               onClick={() => setText(msg)}
               className="
               whitespace-nowrap
-              bg-green-100
-              text-green-700
+              bg-emerald-100
+              text-[#0a3d24]
+              font-bold
               px-3 py-1
               rounded-full
               text-sm

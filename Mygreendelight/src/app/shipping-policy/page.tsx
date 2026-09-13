@@ -44,7 +44,7 @@ export default function ShippingPolicyPage() {
               Hamara store subah <strong>6:00 AM se dopehar 1:00 PM</strong> tak active rehta hai taaki aapko subah ka sabse taaza harvest mile:
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-              <div className="p-4 rounded-2xl bg-green-50 border border-green-200">
+              <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200">
                 <span className="font-extrabold text-[#0a3d24] block text-sm mb-1">Slot 1: Early Morning</span>
                 <p className="text-gray-600">6:00 AM – 8:30 AM (Sunrise Pooja & Breakfast Essentials)</p>
               </div>

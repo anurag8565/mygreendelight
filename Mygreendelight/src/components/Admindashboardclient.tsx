@@ -43,7 +43,7 @@ export default function Admindashboardclient() {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center">
-        <div className="animate-spin h-10 w-10 border-4 border-green-500 border-t-transparent rounded-full mx-auto" />
+        <div className="animate-spin h-10 w-10 border-4 border-[#0a3d24] border-t-transparent rounded-full mx-auto" />
         <p className="mt-4 text-gray-500">
           Loading Dashboard...
         </p>
@@ -62,7 +62,7 @@ export default function Admindashboardclient() {
         <div className="grid md:grid-cols-4 gap-5">
 
             <div className="bg-white rounded-2xl shadow p-5">
-                <DollarSign className="text-green-600 mb-2" />
+                <DollarSign className="text-[#0a3d24] mb-2" />
                 <p className="text-gray-500">
                     Total Sales
                 </p>
@@ -136,7 +136,7 @@ export default function Admindashboardclient() {
                 </p>
             </div>
 
-            <div className="bg-green-50 p-5 rounded-2xl">
+            <div className="bg-emerald-50 border border-emerald-200 p-5 rounded-2xl">
                 <h3 className="font-bold">
                     Delivered Orders
                 </h3>

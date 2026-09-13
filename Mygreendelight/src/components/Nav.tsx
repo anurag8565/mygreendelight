@@ -13,6 +13,8 @@ import {
   X,
   MapPin,
   ChevronDown,
+  ChevronRight,
+  Leaf,
   User as UserIcon,
   Phone,
   Truck,
@@ -306,334 +308,378 @@ export default function Nav({ user }: { user?: iUser | null }) {
         initial={{ x: "-100%" }}
         animate={{ x: 0 }}
         exit={{ x: "-100%" }}
-        transition={{ type: "spring", damping: 30, stiffness: 300 }}
-        className="fixed top-0 left-0 w-[300px] xs:w-[320px] h-screen bg-white z-[1000] shadow-2xl flex flex-col font-sans"
+        transition={{ type: "spring", damping: 32, stiffness: 320 }}
+        className="fixed top-0 left-0 w-[300px] xs:w-[325px] h-screen bg-[#faf9f5] z-[1000] shadow-2xl flex flex-col font-sans border-r border-stone-200/80"
       >
-        {/* Top Header & User Card */}
-        <div className="p-4 bg-gradient-to-br from-[#051f12] to-[#0a3d24] text-white relative">
+        {/* Top Header & Brand Bar */}
+        <div className="p-4 bg-white border-b border-stone-200/80 flex items-center justify-between">
+          <div onClick={() => setmenuopen(false)} className="cursor-pointer">
+            <Logo showTagline={false} />
+          </div>
           <button
             onClick={() => setmenuopen(false)}
-            className="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center transition cursor-pointer"
+            className="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 hover:text-stone-900 flex items-center justify-center transition cursor-pointer"
             title="Close Menu"
           >
-            <X size={18} />
+            <X size={17} />
           </button>
+        </div>
 
-          <div className="mb-3" onClick={() => setmenuopen(false)}>
-            <Logo variant="white" showTagline={false} />
-          </div>
-
-          {/* User Profile Mini Bar */}
-          {activeUser?.email ? (
-            <div className="flex items-center gap-3 pt-1">
-              <div className="w-11 h-11 rounded-2xl bg-white/20 border border-white/20 text-white flex items-center justify-center font-black text-base shrink-0 shadow-xs">
+        {/* Minimalist User Card */}
+        {activeUser?.email ? (
+          <div className="p-4 bg-white border-b border-stone-200/60">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-2xl bg-emerald-50 border border-emerald-200 text-[#0a3d24] flex items-center justify-center font-black text-base shrink-0 shadow-2xs">
                 {activeUser?.image ? (
                   <img
                     src={activeUser.image}
                     alt={activeUser.name || "User"}
                     className="w-full h-full rounded-2xl object-cover"
                   />
+                ) : activeUser?.name ? (
+                  activeUser.name.charAt(0).toUpperCase()
                 ) : (
-                  activeUser?.name ? activeUser.name.charAt(0).toUpperCase() : <UserIcon size={18} />
+                  <UserIcon size={18} />
                 )}
               </div>
               <div className="min-w-0 flex-1">
-                <h4 className="font-black text-sm text-white truncate">
+                <h4 className="font-extrabold text-sm text-stone-900 truncate">
                   {activeUser.name || "Customer"}
                 </h4>
-                <p className="text-[11px] text-emerald-100/90 truncate font-medium">
+                <p className="text-[11px] text-stone-500 truncate font-medium">
                   {activeUser.email}
                 </p>
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="text-[9.5px] font-black bg-emerald-900/60 text-emerald-200 px-2 py-0.5 rounded-md flex items-center gap-1">
-                    {activeUser.role === "admin" ? (
-                      <>
-                        <ShieldCheck size={11} className="text-amber-400" /> Admin
-                      </>
-                    ) : (
-                      <>
-                        <Sparkles size={11} className="text-emerald-300" /> Verified Member
-                      </>
-                    )}
+                <span className="inline-flex items-center gap-1 text-[9.5px] font-bold text-[#0a3d24] bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-full mt-1">
+                  {activeUser.role === "admin" ? (
+                    <ShieldCheck size={11} className="text-[#0a3d24]" />
+                  ) : (
+                    <Sparkles size={11} className="text-[#0a3d24]" />
+                  )}
+                  <span>
+                    {activeUser.role === "admin"
+                      ? "Store Administrator"
+                      : "Fresh Member"}
                   </span>
-                </div>
+                </span>
               </div>
             </div>
-          ) : (
-            <div className="pt-1 pb-1">
-              <p className="text-xs text-emerald-100 font-medium mb-2">
-                Log in to explore orders, saved wishlist & exclusive discounts.
-              </p>
-              <Link
-                href="/login"
-                onClick={() => setmenuopen(false)}
-                className="inline-flex items-center gap-2 bg-white text-[#0a3d24] font-black text-xs px-4 py-2 rounded-xl shadow-xs hover:bg-emerald-50 transition"
-              >
-                <UserIcon size={14} />
-                <span>Login or Sign Up</span>
-              </Link>
+          </div>
+        ) : (
+          <div className="p-4 bg-white border-b border-stone-200/60">
+            <p className="text-xs text-stone-600 font-medium mb-3">
+              Sign in to track orders, earn wallet rewards, and save fresh produce.
+            </p>
+            <Link
+              href="/login"
+              onClick={() => setmenuopen(false)}
+              className="w-full inline-flex items-center justify-center gap-2 bg-[#0a3d24] hover:bg-[#072817] text-white font-bold text-xs py-2.5 rounded-xl shadow-xs transition"
+            >
+              <UserIcon size={14} />
+              <span>Login or Create Account</span>
+            </Link>
+          </div>
+        )}
+
+        {/* Location Quick-Bar */}
+        <div className="px-3 pt-3">
+          <button
+            onClick={() => {
+              setmenuopen(false);
+              setShowLocationPopup(true);
+            }}
+            className="w-full flex items-center justify-between p-2.5 rounded-xl bg-white border border-stone-200/80 hover:border-emerald-300 transition text-left cursor-pointer group shadow-2xs"
+          >
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="w-7 h-7 rounded-lg bg-emerald-50 text-[#0a3d24] flex items-center justify-center shrink-0">
+                <MapPin size={14} />
+              </div>
+              <div className="min-w-0">
+                <span className="text-[10px] text-stone-400 font-bold uppercase tracking-wider block">
+                  Deliver to
+                </span>
+                <span className="text-xs font-black text-stone-800 truncate block max-w-[170px]">
+                  {location}
+                </span>
+              </div>
             </div>
-          )}
+            <span className="text-[10px] font-bold text-[#0a3d24] group-hover:underline">
+              Change
+            </span>
+          </button>
         </div>
 
         {/* Scrollable Navigation Aisles */}
         <div className="flex-1 overflow-y-auto p-3 space-y-4 scrollbar-none text-xs font-bold">
-          
           {/* Section 1: Fresh Produce Categories */}
           <div>
-            <span className="text-[10px] uppercase font-black tracking-wider text-gray-400 block px-2 mb-1.5">
-              Fresh Categories
+            <span className="text-[10px] uppercase font-bold tracking-wider text-stone-400 block px-2 mb-1.5">
+              Produce Aisles
             </span>
-            <div className="space-y-1">
+            <div className="bg-white rounded-2xl border border-stone-200/80 overflow-hidden divide-y divide-stone-100 shadow-2xs">
               <Link
                 href="/shop?category=Vegetables"
                 onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-emerald-50 hover:text-[#0a3d24] transition group"
+                className="flex items-center justify-between p-3 hover:bg-emerald-50/50 transition group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl overflow-hidden bg-emerald-50 border border-emerald-100/80 flex-shrink-0 shadow-xs">
-                    <img
-                      src="https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=120&q=80"
-                      alt="Vegetables"
-                      className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
-                    />
+                  <div className="w-8 h-8 rounded-xl bg-emerald-50 text-[#0a3d24] flex items-center justify-center shrink-0">
+                    <Leaf size={16} />
                   </div>
-                  <div className="flex flex-col">
-                    <span className="font-bold text-xs">Fresh Vegetables</span>
-                    <span className="text-[10px] text-gray-400 font-medium">ताज़ी सब्जियां</span>
-                  </div>
+                  <span className="font-bold text-xs text-stone-800 group-hover:text-[#0a3d24]">
+                    Fresh Vegetables
+                  </span>
                 </div>
-                <ArrowRight size={14} className="text-gray-300 group-hover:text-[#0a3d24] group-hover:translate-x-0.5 transition" />
+                <ChevronRight
+                  size={14}
+                  className="text-stone-300 group-hover:text-[#0a3d24] group-hover:translate-x-0.5 transition-transform"
+                />
               </Link>
 
               <Link
                 href="/shop?category=Fruits"
                 onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-amber-50 hover:text-amber-800 transition group"
+                className="flex items-center justify-between p-3 hover:bg-emerald-50/50 transition group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl overflow-hidden bg-amber-50 border border-amber-100/80 flex-shrink-0 shadow-xs">
-                    <img
-                      src="https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=120&q=80"
-                      alt="Fruits"
-                      className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
-                    />
+                  <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-800 flex items-center justify-center shrink-0">
+                    <Sparkles size={16} className="text-amber-600" />
                   </div>
-                  <div className="flex flex-col">
-                    <span className="font-bold text-xs">Seasonal Fruits</span>
-                    <span className="text-[10px] text-gray-400 font-medium">ताज़े फल</span>
-                  </div>
+                  <span className="font-bold text-xs text-stone-800 group-hover:text-[#0a3d24]">
+                    Seasonal Fruits
+                  </span>
                 </div>
-                <ArrowRight size={14} className="text-gray-300 group-hover:text-amber-700 group-hover:translate-x-0.5 transition" />
+                <ChevronRight
+                  size={14}
+                  className="text-stone-300 group-hover:text-[#0a3d24] group-hover:translate-x-0.5 transition-transform"
+                />
               </Link>
 
               <Link
                 href="/shop?category=Exotics"
                 onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-purple-50 hover:text-purple-800 transition group"
+                className="flex items-center justify-between p-3 hover:bg-emerald-50/50 transition group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl overflow-hidden bg-purple-50 border border-purple-100/80 flex-shrink-0 shadow-xs">
-                    <img
-                      src="https://images.unsplash.com/photo-1518843875459-f738682238a6?auto=format&fit=crop&w=120&q=80"
-                      alt="Exotics"
-                      className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
-                    />
+                  <div className="w-8 h-8 rounded-xl bg-emerald-50 text-[#0a3d24] flex items-center justify-center shrink-0">
+                    <Sparkles size={16} />
                   </div>
-                  <div className="flex flex-col">
-                    <span className="font-bold text-xs">Hydroponics & Exotics</span>
-                    <span className="text-[10px] text-gray-400 font-medium">विदेशी व सलाद</span>
-                  </div>
+                  <span className="font-bold text-xs text-stone-800 group-hover:text-[#0a3d24]">
+                    Hydroponics & Exotics
+                  </span>
                 </div>
-                <ArrowRight size={14} className="text-gray-300 group-hover:text-purple-700 group-hover:translate-x-0.5 transition" />
+                <ChevronRight
+                  size={14}
+                  className="text-stone-300 group-hover:text-[#0a3d24] group-hover:translate-x-0.5 transition-transform"
+                />
+              </Link>
+
+              <Link
+                href="/shop?category=Combos"
+                onClick={() => setmenuopen(false)}
+                className="flex items-center justify-between p-3 hover:bg-emerald-50/50 transition group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-50 text-[#0a3d24] flex items-center justify-center shrink-0">
+                    <Gift size={16} />
+                  </div>
+                  <span className="font-bold text-xs text-stone-800 group-hover:text-[#0a3d24]">
+                    Combos & Bulk Savers
+                  </span>
+                </div>
+                <ChevronRight
+                  size={14}
+                  className="text-stone-300 group-hover:text-[#0a3d24] group-hover:translate-x-0.5 transition-transform"
+                />
               </Link>
 
               <Link
                 href="/shop"
                 onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-50/70 text-[#0a3d24] hover:bg-emerald-100/80 transition font-black group"
+                className="flex items-center justify-between p-3 bg-stone-50/60 hover:bg-emerald-50 transition group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-[#0a3d24] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+                  <div className="w-8 h-8 rounded-xl bg-[#0a3d24] text-white flex items-center justify-center shrink-0">
                     <LayoutGrid size={15} />
                   </div>
-                  <div className="flex flex-col">
-                    <span className="font-black text-xs">All Produce Catalog</span>
-                    <span className="text-[10px] text-emerald-800/80 font-medium">पूरी दुकान देखें</span>
-                  </div>
+                  <span className="font-extrabold text-xs text-[#0a3d24]">
+                    Browse Complete Store
+                  </span>
                 </div>
-                <ArrowRight size={14} className="text-[#0a3d24] group-hover:translate-x-0.5 transition" />
+                <ArrowRight
+                  size={14}
+                  className="text-[#0a3d24] group-hover:translate-x-0.5 transition-transform"
+                />
               </Link>
             </div>
           </div>
 
-          {/* Section 2: Deals & Combos */}
+          {/* Section 2: Account & Services */}
           <div>
-            <span className="text-[10px] uppercase font-black tracking-wider text-gray-400 block px-2 mb-1.5">
-              Deals & Offers
+            <span className="text-[10px] uppercase font-bold tracking-wider text-stone-400 block px-2 mb-1.5">
+              Account & Services
             </span>
-            <div className="space-y-1">
-              <Link
-                href="/shop?category=Combos"
-                onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-amber-50/60 transition group"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center flex-shrink-0 shadow-xs">
-                    <Gift size={15} />
-                  </div>
-                  <span className="font-bold text-xs">Value Combos</span>
-                </div>
-                <span className="bg-amber-100 text-amber-800 text-[9.5px] font-black px-2 py-0.5 rounded-full">
-                  Save More
-                </span>
-              </Link>
-
-              <Link
-                href="/offers"
-                onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-rose-50/60 transition group"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center flex-shrink-0 shadow-xs">
-                    <Tag size={15} />
-                  </div>
-                  <span className="font-bold text-xs">Offers & Coupons</span>
-                </div>
-                <span className="bg-rose-100 text-rose-700 text-[9.5px] font-black px-2 py-0.5 rounded-full">
-                  Discounts
-                </span>
-              </Link>
-            </div>
-          </div>
-
-          {/* Section 3: My Account & Support */}
-          <div>
-            <span className="text-[10px] uppercase font-black tracking-wider text-gray-400 block px-2 mb-1.5">
-              My Account
-            </span>
-            <div className="space-y-1">
+            <div className="bg-white rounded-2xl border border-stone-200/80 overflow-hidden divide-y divide-stone-100 shadow-2xs">
               <Link
                 href="/user/myorder"
                 onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-sky-50/60 transition group"
+                className="flex items-center justify-between p-3 hover:bg-stone-50 transition group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center flex-shrink-0 shadow-xs">
+                  <div className="w-8 h-8 rounded-xl bg-stone-100 text-stone-700 flex items-center justify-center shrink-0">
                     <Package size={15} />
                   </div>
-                  <span className="font-bold text-xs">My Orders</span>
+                  <span className="font-bold text-xs text-stone-800 group-hover:text-[#0a3d24]">
+                    My Orders & Live Tracking
+                  </span>
                 </div>
-                <ArrowRight size={14} className="text-gray-300 group-hover:text-sky-700 group-hover:translate-x-0.5 transition" />
+                <ChevronRight
+                  size={14}
+                  className="text-stone-300 group-hover:text-[#0a3d24] transition-transform"
+                />
               </Link>
 
               <Link
                 href="/wishlist"
                 onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-pink-50/60 transition group"
+                className="flex items-center justify-between p-3 hover:bg-stone-50 transition group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center flex-shrink-0 shadow-xs">
+                  <div className="w-8 h-8 rounded-xl bg-stone-100 text-stone-700 flex items-center justify-center shrink-0">
                     <Heart size={15} />
                   </div>
-                  <span className="font-bold text-xs">My Wishlist</span>
+                  <span className="font-bold text-xs text-stone-800 group-hover:text-[#0a3d24]">
+                    Saved Wishlist
+                  </span>
                 </div>
                 {wishlistItems.length > 0 && (
-                  <span className="bg-[#0a3d24] text-white text-[9.5px] px-2 py-0.2 rounded-full font-black">
+                  <span className="bg-[#0a3d24] text-white text-[10px] px-2 py-0.5 rounded-full font-bold">
                     {wishlistItems.length}
                   </span>
                 )}
               </Link>
 
               <Link
-                href="/contact"
+                href="/offers"
                 onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-emerald-50/60 transition group"
+                className="flex items-center justify-between p-3 hover:bg-stone-50 transition group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center flex-shrink-0 shadow-xs">
-                    <MessageCircle size={15} />
+                  <div className="w-8 h-8 rounded-xl bg-stone-100 text-stone-700 flex items-center justify-center shrink-0">
+                    <Tag size={15} />
                   </div>
-                  <span className="font-bold text-xs">Help & Support</span>
+                  <span className="font-bold text-xs text-stone-800 group-hover:text-[#0a3d24]">
+                    Offers & Coupons
+                  </span>
                 </div>
-                <ArrowRight size={14} className="text-gray-300 group-hover:text-[#0a3d24] group-hover:translate-x-0.5 transition" />
+                <span className="bg-emerald-50 text-[#0a3d24] border border-emerald-200 text-[10px] font-black px-2 py-0.5 rounded-full">
+                  Discounts
+                </span>
               </Link>
 
-              <button
-                type="button"
-                onClick={() => {
-                  setmenuopen(false);
-                  if (typeof window !== "undefined") {
-                    window.dispatchEvent(new CustomEvent("trigger-pwa-install"));
-                  }
-                }}
-                className="w-full flex items-center justify-between p-2.5 rounded-xl text-emerald-950 bg-emerald-50/80 hover:bg-emerald-100 transition group cursor-pointer text-left"
+              <Link
+                href="/contact"
+                onClick={() => setmenuopen(false)}
+                className="flex items-center justify-between p-3 hover:bg-stone-50 transition group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-[#0a3d24] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
-                    <Smartphone size={15} />
+                  <div className="w-8 h-8 rounded-xl bg-emerald-50 text-[#0a3d24] flex items-center justify-center shrink-0">
+                    <MessageCircle size={15} />
                   </div>
                   <div>
-                    <span className="font-bold text-xs text-[#0a3d24] block">Install SubziQuick App</span>
-                    <span className="text-[10px] text-gray-500 font-medium">1-Tap Fast Mobile Access</span>
+                    <span className="font-bold text-xs text-stone-800 block leading-tight">
+                      Help & WhatsApp Support
+                    </span>
+                    <span className="text-[10px] text-stone-400 font-medium">
+                      Chat directly with Bhopal hub
+                    </span>
                   </div>
                 </div>
-                <span className="bg-[#0a3d24] text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase">
-                  Install
-                </span>
-              </button>
+                <ChevronRight
+                  size={14}
+                  className="text-stone-300 group-hover:text-[#0a3d24] transition-transform"
+                />
+              </Link>
             </div>
           </div>
 
           {/* Admin Shortcuts (If admin) */}
           {activeUser?.role === "admin" && (
-            <div className="pt-2 border-t border-gray-100">
-              <span className="text-[10px] uppercase font-black tracking-wider text-amber-700 flex items-center gap-1 px-2 mb-1.5">
-                <ShieldCheck size={12} className="text-amber-600" /> Admin Center
+            <div>
+              <span className="text-[10px] uppercase font-bold tracking-wider text-amber-800 flex items-center gap-1 px-2 mb-1.5">
+                <ShieldCheck size={12} className="text-amber-600" /> Admin
+                Center
               </span>
-              <div className="space-y-1">
-                <Link href="/admin" onClick={() => setmenuopen(false)} className="flex items-center gap-2.5 p-2 rounded-xl text-gray-700 hover:bg-amber-50">
+              <div className="bg-white rounded-2xl border border-stone-200/80 overflow-hidden divide-y divide-stone-100 shadow-2xs">
+                <Link
+                  href="/admin"
+                  onClick={() => setmenuopen(false)}
+                  className="flex items-center gap-2.5 p-3 text-stone-800 hover:bg-amber-50/50 transition"
+                >
                   <PlusCircle size={15} className="text-[#0a3d24]" />
-                  <span>Dashboard Overview</span>
+                  <span className="text-xs font-bold">Dashboard Overview</span>
                 </Link>
-                <Link href="/admin/manageorder" onClick={() => setmenuopen(false)} className="flex items-center gap-2.5 p-2 rounded-xl text-gray-700 hover:bg-amber-50">
+                <Link
+                  href="/admin/manageorder"
+                  onClick={() => setmenuopen(false)}
+                  className="flex items-center gap-2.5 p-3 text-stone-800 hover:bg-amber-50/50 transition"
+                >
                   <ClipboardCheck size={15} className="text-[#0a3d24]" />
-                  <span>Manage Orders</span>
+                  <span className="text-xs font-bold">Manage Orders</span>
                 </Link>
-                <Link href="/admin/viewgrocery" onClick={() => setmenuopen(false)} className="flex items-center gap-2.5 p-2 rounded-xl text-gray-700 hover:bg-amber-50">
+                <Link
+                  href="/admin/viewgrocery"
+                  onClick={() => setmenuopen(false)}
+                  className="flex items-center gap-2.5 p-3 text-stone-800 hover:bg-amber-50/50 transition"
+                >
                   <Box size={15} className="text-[#0a3d24]" />
-                  <span>Inventory Stock</span>
+                  <span className="text-xs font-bold">Inventory Stock</span>
                 </Link>
               </div>
             </div>
           )}
-
         </div>
 
-        {/* Drawer Footer (Logout / App Version) */}
-        <div className="p-3 border-t border-gray-100 bg-gray-50/80">
-          {activeUser?.email ? (
+        {/* Drawer Footer */}
+        <div className="p-3 bg-white border-t border-stone-200/80 space-y-2">
+          <button
+            type="button"
+            onClick={() => {
+              setmenuopen(false);
+              if (typeof window !== "undefined") {
+                window.dispatchEvent(new CustomEvent("trigger-pwa-install"));
+              }
+            }}
+            className="w-full flex items-center justify-between p-2.5 rounded-xl bg-emerald-50/80 hover:bg-emerald-100/80 border border-emerald-200 text-[#0a3d24] transition cursor-pointer"
+          >
+            <div className="flex items-center gap-2.5">
+              <Smartphone size={16} />
+              <span className="text-xs font-bold">Install SubziQuick App</span>
+            </div>
+            <span className="text-[10px] font-black uppercase tracking-wider bg-[#0a3d24] text-white px-2 py-0.5 rounded-md">
+              10m
+            </span>
+          </button>
+
+          {activeUser?.email && (
             <button
               onClick={() => {
                 setmenuopen(false);
                 dispatch(hydrateCart({ userId: null }));
                 signOut({ callbackUrl: "/login" });
               }}
-              className="w-full flex items-center justify-center gap-2 text-red-600 hover:text-white font-black py-2.5 rounded-xl hover:bg-red-600 transition text-xs cursor-pointer border border-red-200"
+              className="w-full flex items-center justify-center gap-2 text-stone-500 hover:text-rose-600 font-bold py-2 rounded-xl hover:bg-rose-50 transition text-xs cursor-pointer"
             >
-              <LogOut size={15} />
-              <span>Log Out</span>
+              <LogOut size={14} />
+              <span>Sign Out</span>
             </button>
-          ) : (
-            <Link
-              href="/login"
-              onClick={() => setmenuopen(false)}
-              className="w-full flex items-center justify-center gap-2 bg-[#0a3d24] text-white font-black py-2.5 rounded-xl hover:bg-[#072817] transition text-xs shadow-xs"
-            >
-              <UserIcon size={15} />
-              <span>Login / Register</span>
-            </Link>
           )}
+
+          <div className="text-center pt-1">
+            <span className="text-[10px] text-stone-400 font-medium flex items-center justify-center gap-1">
+              <Truck size={12} className="text-[#0a3d24]" />
+              <span>Direct Kisan Mandi • Bhopal Express 10-15m</span>
+            </span>
+          </div>
         </div>
       </motion.div>
     </AnimatePresence>,
@@ -842,7 +888,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                                   >
                                     <button
                                       type="button"
-                                      className="w-5.5 h-full flex items-center justify-center bg-green-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-xs cursor-pointer"
+                                      className="w-5.5 h-full flex items-center justify-center bg-emerald-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-xs cursor-pointer"
                                       onClick={() =>
                                         dispatch(
                                           decreaseQuantity(cartItem.cartItemId || item._id)
@@ -856,7 +902,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                                     </span>
                                     <button
                                       type="button"
-                                      className="w-5.5 h-full flex items-center justify-center bg-green-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-xs cursor-pointer"
+                                      className="w-5.5 h-full flex items-center justify-center bg-emerald-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-xs cursor-pointer"
                                       onClick={() =>
                                         dispatch(
                                           increaseQuantity(cartItem.cartItemId || item._id)
@@ -955,7 +1001,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                                 >
                                   <button
                                     type="button"
-                                    className="w-6 h-full flex items-center justify-center bg-green-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-xs cursor-pointer"
+                                    className="w-6 h-full flex items-center justify-center bg-emerald-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-xs cursor-pointer"
                                     onClick={() =>
                                       dispatch(
                                         decreaseQuantity(cartItem.cartItemId || item._id)
@@ -969,7 +1015,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                                   </span>
                                   <button
                                     type="button"
-                                    className="w-6 h-full flex items-center justify-center bg-green-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-xs cursor-pointer"
+                                    className="w-6 h-full flex items-center justify-center bg-emerald-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-xs cursor-pointer"
                                     onClick={() =>
                                       dispatch(
                                         increaseQuantity(cartItem.cartItemId || item._id)
@@ -985,7 +1031,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                         })}
                         <div 
                           onClick={() => handleSearch()}
-                          className="p-3 text-center text-sm text-[#0a3d24] font-bold bg-green-50/50 hover:bg-green-100 cursor-pointer"
+                          className="p-3 text-center text-sm text-[#0a3d24] font-bold bg-emerald-50/50 hover:bg-emerald-100/60 cursor-pointer"
                         >
                           View all results for "{search.trim()}"
                         </div>
@@ -1011,7 +1057,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                 }
               }}
             >
-              <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 group-hover:bg-green-50 transition-colors shadow-2xs border border-gray-200/80">
+              <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 group-hover:bg-emerald-50 transition-colors shadow-2xs border border-gray-200/80">
                 {activeUser?.image ? (
                   <img
                     src={activeUser.image}
@@ -1346,7 +1392,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                               >
                                 <button
                                   type="button"
-                                  className="w-5 h-full flex items-center justify-center bg-green-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-[10px] cursor-pointer"
+                                  className="w-5 h-full flex items-center justify-center bg-emerald-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-[10px] cursor-pointer"
                                   onClick={() =>
                                     dispatch(
                                       decreaseQuantity(cartItem.cartItemId || item._id)
@@ -1360,7 +1406,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                                 </span>
                                 <button
                                   type="button"
-                                  className="w-5 h-full flex items-center justify-center bg-green-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-[10px] cursor-pointer"
+                                  className="w-5 h-full flex items-center justify-center bg-emerald-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-[10px] cursor-pointer"
                                   onClick={() =>
                                     dispatch(
                                       increaseQuantity(cartItem.cartItemId || item._id)
@@ -1408,7 +1454,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                             setSearchResults([]);
                             router.push(`/product/${item._id}`);
                           }}
-                          className="flex items-center justify-between gap-3 p-3 hover:bg-green-50 cursor-pointer border-b border-gray-50 last:border-0 transition"
+                          className="flex items-center justify-between gap-3 p-3 hover:bg-emerald-50/50 cursor-pointer border-b border-gray-50 last:border-0 transition"
                         >
                           <div className="flex items-center gap-2.5 min-w-0 flex-1">
                             <img
@@ -1459,7 +1505,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                             >
                               <button
                                 type="button"
-                                className="w-6 h-full flex items-center justify-center bg-green-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-xs cursor-pointer"
+                                className="w-6 h-full flex items-center justify-center bg-emerald-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-xs cursor-pointer"
                                 onClick={() =>
                                   dispatch(
                                     decreaseQuantity(cartItem.cartItemId || item._id)
@@ -1473,7 +1519,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                               </span>
                               <button
                                 type="button"
-                                className="w-6 h-full flex items-center justify-center bg-green-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-xs cursor-pointer"
+                                className="w-6 h-full flex items-center justify-center bg-emerald-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-xs cursor-pointer"
                                 onClick={() =>
                                   dispatch(
                                     increaseQuantity(cartItem.cartItemId || item._id)
@@ -1489,7 +1535,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                     })}
                     <div 
                       onClick={() => handleSearch()}
-                      className="p-3 text-center text-sm text-[#0a3d24] font-bold bg-green-50/50 hover:bg-green-100 cursor-pointer"
+                      className="p-3 text-center text-sm text-[#0a3d24] font-bold bg-emerald-50/50 hover:bg-emerald-100/60 cursor-pointer"
                     >
                       View all results
                     </div>

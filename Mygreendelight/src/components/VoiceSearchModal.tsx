@@ -171,7 +171,7 @@ export default function VoiceSearchModal({ isOpen, onClose }: VoiceSearchModalPr
               <motion.div
                 animate={{ scale: [1, 1.8, 1], opacity: [0.4, 0, 0.4] }}
                 transition={{ repeat: Infinity, duration: 1.8, delay: 0.3 }}
-                className="absolute w-28 h-28 rounded-full bg-green-200"
+                className="absolute w-28 h-28 rounded-full bg-emerald-300"
               />
             </>
           )}

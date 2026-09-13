@@ -118,7 +118,7 @@ export default function ManageReviewsPage() {
           <div
             className={`p-4 rounded-xl mb-6 text-xs sm:text-sm font-bold flex items-center gap-2 ${
               msg.type === "success"
-                ? "bg-green-50 text-green-800 border border-green-200"
+                ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
                 : "bg-red-50 text-red-800 border border-red-200"
             }`}
           >

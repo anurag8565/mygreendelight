@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from "react";
 import axios from "axios";
@@ -97,7 +97,7 @@ export default function ReviewProductModal({
 
           {success ? (
             <div className="text-center py-6">
-              <div className="w-16 h-16 bg-green-100 text-[#0a3d24] rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
+              <div className="w-16 h-16 bg-emerald-100 text-[#0a3d24] rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
                 <CheckCircle2 size={36} />
               </div>
               <h3 className="text-xl font-black text-gray-900 mb-2">
@@ -111,7 +111,7 @@ export default function ReviewProductModal({
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Header */}
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-green-50 text-[#0a3d24] flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#0a3d24] flex items-center justify-center shrink-0">
                   <MessageSquareHeart size={20} />
                 </div>
                 <div>

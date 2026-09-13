@@ -462,7 +462,7 @@ export default function ManageTestimonials() {
                         <span
                           className={`text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full ${
                             t.status === "approved"
-                              ? "bg-green-100 text-[#0a3d24]"
+                              ? "bg-emerald-100 text-[#0a3d24]"
                               : "bg-amber-100 text-amber-800"
                           }`}
                         >
@@ -472,7 +472,7 @@ export default function ManageTestimonials() {
                         {t.status !== "approved" ? (
                           <button
                             onClick={() => updateStatus(t._id, "approved")}
-                            className="bg-green-50 hover:bg-green-100 text-[#0a3d24] px-2 py-0.5 rounded-lg text-xs font-bold transition flex items-center gap-1 cursor-pointer"
+                            className="bg-emerald-50 hover:bg-emerald-100 text-[#0a3d24] px-2 py-0.5 rounded-lg text-xs font-bold transition flex items-center gap-1 cursor-pointer"
                           >
                             <Check size={12} /> Approve
                           </button>

@@ -459,7 +459,7 @@ export default function BulkUploadPage() {
             </div>
 
             {/* Card 1: Master Merged Bhopal Dataset (115 Products) */}
-            <div className="bg-gradient-to-br from-emerald-900 to-green-950 text-white rounded-3xl p-6 shadow-md border border-green-800 flex flex-col justify-between relative overflow-hidden">
+            <div className="bg-gradient-to-br from-[#0a3d24] to-[#062415] text-white rounded-3xl p-6 shadow-md border border-emerald-800 flex flex-col justify-between relative overflow-hidden">
               <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-emerald-500/10 rounded-full blur-xl pointer-events-none" />
               <div>
                 <div className="flex items-center justify-between mb-3">
@@ -679,14 +679,14 @@ export default function BulkUploadPage() {
             </div>
 
             {/* Card 5: Regional Produce Master Dataset (39 Products) */}
-            <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl p-6 shadow-xs border border-green-200/90 flex flex-col justify-between md:col-span-2">
+            <div className="bg-gradient-to-br from-emerald-50/80 to-[#fbf9f4] rounded-3xl p-6 shadow-xs border border-emerald-200/90 flex flex-col justify-between md:col-span-2">
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <span className="bg-[#0a3d24] text-white text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-2xs flex items-center gap-1.5">
                     <Sparkles size={12} />
                     <span>Regional Produce Catalog</span>
                   </span>
-                  <span className="text-xs text-green-900 font-bold">39 Farm Fresh Produce Items</span>
+                  <span className="text-xs text-emerald-900 font-bold">39 Farm Fresh Produce Items</span>
                 </div>
                 <h3 className="text-lg font-black text-gray-900 mb-1">
                   Bhopal Regional Produce Dataset
@@ -696,7 +696,7 @@ export default function BulkUploadPage() {
                 </p>
               </div>
 
-              <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-green-200/60">
+              <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-emerald-200/60">
                 <a
                   href="/cut_veggies_products_master.xlsx"
                   download="cut_veggies_products_master.xlsx"
@@ -709,7 +709,7 @@ export default function BulkUploadPage() {
                 <a
                   href="/cut_veggies_products_master.csv"
                   download="cut_veggies_products_master.csv"
-                  className="bg-white hover:bg-green-50 border border-green-300 text-green-900 px-3.5 py-2 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
+                  className="bg-white hover:bg-emerald-50 border border-emerald-300 text-[#0a3d24] px-3.5 py-2 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <FileSpreadsheet size={14} />
                   <span>Download CSV</span>
@@ -727,7 +727,7 @@ export default function BulkUploadPage() {
                       alert("Failed to load regional produce dataset");
                     }
                   }}
-                  className="bg-green-100 hover:bg-green-200 text-green-950 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+                  className="bg-emerald-100 hover:bg-emerald-200 text-emerald-950 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <Layers size={14} />
                   <span>Preview & Upload (39)</span>
@@ -912,7 +912,7 @@ export default function BulkUploadPage() {
             <div
               className={`p-5 rounded-3xl text-xs sm:text-sm font-bold flex items-start gap-3 border shadow-xs ${
                 resultMsg.type === "success"
-                  ? "bg-green-50 border-green-200 text-green-900"
+                  ? "bg-emerald-50 border-emerald-200 text-emerald-900"
                   : "bg-red-50 border-red-200 text-red-900"
               }`}
             >
@@ -924,7 +924,7 @@ export default function BulkUploadPage() {
               <div className="flex-1">
                 <p className="font-extrabold text-sm">{resultMsg.text}</p>
                 {resultMsg.inserted ? (
-                  <p className="text-xs text-green-700 mt-1 font-medium">
+                  <p className="text-xs text-emerald-700 mt-1 font-medium">
                     ✓ All {resultMsg.inserted} produce items have been added to your live store catalog!
                   </p>
                 ) : null}
@@ -935,7 +935,7 @@ export default function BulkUploadPage() {
           {/* Custom File Upload Dropzone Box */}
           <div className="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-xs text-center">
             <div className="max-w-xl mx-auto flex flex-col items-center">
-              <div className="w-16 h-16 rounded-3xl bg-green-50 text-[#0a3d24] flex items-center justify-center mb-4 shadow-inner">
+              <div className="w-16 h-16 rounded-3xl bg-emerald-50 text-[#0a3d24] flex items-center justify-center mb-4 shadow-inner">
                 <UploadCloud size={32} />
               </div>
 
@@ -977,7 +977,7 @@ export default function BulkUploadPage() {
                 <div>
                   <h3 className="font-black text-lg text-gray-900 flex items-center gap-2">
                     <span>Parsed Dataset Preview</span>
-                    <span className="bg-green-100 text-[#0a3d24] text-xs font-bold px-2.5 py-0.5 rounded-full">
+                    <span className="bg-emerald-100 text-[#0a3d24] text-xs font-bold px-2.5 py-0.5 rounded-full">
                       {parsedProducts.length} items loaded
                     </span>
                   </h3>

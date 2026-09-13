@@ -17,7 +17,7 @@ export default function InteractiveFarmFeatures() {
       link: "/shop/custom-box",
       btnText: "Build Custom Box",
       badge: "Popular in Bhopal",
-      gradient: "from-emerald-50 to-green-50/70 border-emerald-200/90",
+      gradient: "from-emerald-50 to-teal-50/60 border-emerald-200/90",
       btnColor: "bg-[#0a3d24] hover:bg-[#072817] text-white",
     },
     {

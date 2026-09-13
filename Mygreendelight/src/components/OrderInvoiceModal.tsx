@@ -217,7 +217,7 @@ export default function OrderInvoiceModal({
                   <span
                     className={`text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md inline-block border ${
                       isPrepaid
-                        ? "bg-green-50 text-green-800 border-green-200"
+                        ? "bg-emerald-50 text-emerald-800 border-emerald-200"
                         : "bg-amber-50 text-amber-800 border-amber-200"
                     }`}
                   >
@@ -359,8 +359,8 @@ export default function OrderInvoiceModal({
               </div>
 
               {totalSavings > 0 && (
-                <div className="bg-green-100/70 border border-green-300 rounded-2xl p-3 flex items-center gap-2.5 text-xs font-black text-green-900">
-                  <Sparkles size={16} className="text-green-700 shrink-0" />
+                <div className="bg-emerald-100/70 border border-emerald-300 rounded-2xl p-3 flex items-center gap-2.5 text-xs font-black text-emerald-900">
+                  <Sparkles size={16} className="text-emerald-700 shrink-0" />
                   <span>🎉 You saved a total of ₹{totalSavings} on this order!</span>
                 </div>
               )}
@@ -377,7 +377,7 @@ export default function OrderInvoiceModal({
                 <span>Delivery Partner Fee:</span>
                 <span className="font-bold">
                   {deliveryFee === 0 ? (
-                    <span className="text-[#0a3d24] font-bold bg-green-100 px-1.5 py-0.5 rounded text-[10px]">
+                    <span className="text-[#0a3d24] font-bold bg-emerald-100 px-1.5 py-0.5 rounded text-[10px]">
                       FREE
                     </span>
                   ) : (

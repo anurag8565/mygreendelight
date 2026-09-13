@@ -420,7 +420,7 @@ export default function Testimonials({
               </p>
 
               {submittedMsg ? (
-                <div className="p-4 rounded-2xl bg-green-50 border border-green-200 text-green-900 text-xs font-bold text-center mb-4 space-y-3">
+                <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs font-bold text-center mb-4 space-y-3">
                   <p className="font-black text-sm">{submittedMsg}</p>
                   <p className="text-gray-600">
                     Aap apna review hamare official Google Business Profile par bhi share kar sakte hain:

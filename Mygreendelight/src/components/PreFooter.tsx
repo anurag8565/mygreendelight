@@ -13,7 +13,7 @@ export default function PreFooter() {
       icon: <ThumbsUp className="text-[#0a3d24]" size={18} />,
       title: "Fresh or Refund",
       desc: "Instant doorstep replacement",
-      bg: "bg-green-50/80 border-green-100"
+      bg: "bg-emerald-50/80 border-emerald-100"
     },
     {
       icon: <Headset className="text-[#0a3d24]" size={18} />,

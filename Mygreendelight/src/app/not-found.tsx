@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 
 export default function NotFound() {
   return (
-    <div className="h-screen w-full flex flex-col items-center justify-center bg-green-50 text-center px-4">
+    <div className="h-screen w-full flex flex-col items-center justify-center bg-[#f4f7f4] text-center px-4">
       
       {/* Animated 404 */}
       <motion.h1

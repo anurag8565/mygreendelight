@@ -474,7 +474,7 @@ export default function ViewGrocery() {
 
             <Link
               href="/admin/bulk-upload"
-              className="bg-green-50 hover:bg-green-100 border border-green-300 text-[#0a3d24] px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5"
+              className="bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-[#0a3d24] px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5"
             >
               <FileSpreadsheet size={15} />
               <span>Bulk CSV</span>
@@ -868,7 +868,7 @@ export default function ViewGrocery() {
                         <tr
                           key={item._id}
                           className={`hover:bg-gray-50/60 transition group ${
-                            isSelected ? "bg-green-50/40" : ""
+                            isSelected ? "bg-emerald-50/40" : ""
                           } ${isDraft ? "opacity-75 bg-amber-50/20" : ""}`}
                         >
                           <td className="py-3.5 px-4">
@@ -954,7 +954,7 @@ export default function ViewGrocery() {
                           </td>
 
                           <td className="py-3.5 px-4">
-                            <span className="bg-green-50 text-[#0a3d24] font-bold text-[11px] px-2.5 py-1 rounded-lg border border-green-200">
+                            <span className="bg-emerald-50 text-[#0a3d24] font-bold text-[11px] px-2.5 py-1 rounded-lg border border-emerald-200">
                               {item.category || "General"}
                             </span>
                           </td>
@@ -990,7 +990,7 @@ export default function ViewGrocery() {
                                   <span>Low: {stockCount} left</span>
                                 </span>
                               ) : (
-                                <span className="bg-green-100 text-[#0a3d24] font-extrabold text-[10px] px-2.5 py-0.5 rounded-md uppercase">
+                                <span className="bg-emerald-100 text-[#0a3d24] font-extrabold text-[10px] px-2.5 py-0.5 rounded-md uppercase">
                                   In Stock ({stockCount})
                                 </span>
                               )}

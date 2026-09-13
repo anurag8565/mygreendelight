@@ -66,7 +66,7 @@ export default function FastReorderWidget() {
   };
 
   return (
-    <div className="w-full py-3.5 sm:py-5 bg-gradient-to-r from-emerald-50/90 via-green-50/60 to-emerald-50/90 border-y border-emerald-100/90 font-sans overflow-hidden">
+    <div className="w-full py-3.5 sm:py-5 bg-gradient-to-r from-emerald-50/90 via-emerald-50/50 to-emerald-50/90 border-y border-emerald-100/90 font-sans overflow-hidden">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         <div className="bg-white rounded-3xl p-4 sm:p-6 shadow-2xs border border-emerald-200/90 flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 sm:gap-6 overflow-hidden">
           

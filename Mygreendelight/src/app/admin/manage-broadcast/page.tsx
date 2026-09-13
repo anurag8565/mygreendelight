@@ -123,7 +123,7 @@ export default function ManageBroadcastPage() {
           <div
             className={`p-4 rounded-2xl mb-6 text-xs font-bold flex items-center gap-2 ${
               msg.type === "success"
-                ? "bg-green-50 text-[#0a3d24] border border-green-200"
+                ? "bg-emerald-50 text-[#0a3d24] border border-emerald-200"
                 : "bg-red-50 text-red-600 border border-red-200"
             }`}
           >

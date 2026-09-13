@@ -344,7 +344,7 @@ export default function BhopalCompetitorSEOShowcase() {
                 <h3 className="text-xl sm:text-3xl font-black tracking-tight mt-2 text-white">
                   Fast Doorstep Produce Delivery in Bhopal
                 </h3>
-                <p className="text-xs sm:text-sm text-green-100/90 mt-1 max-w-xl">
+                <p className="text-xs sm:text-sm text-emerald-100/90 mt-1 max-w-xl">
                   Dispatched from SubziQuick Store (Amrai, Bagsewaniya) with temperature-safe packing for crisp, fresh delivery.
                 </p>
               </div>

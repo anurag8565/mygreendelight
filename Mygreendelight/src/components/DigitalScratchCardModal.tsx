@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
@@ -177,7 +177,7 @@ export default function DigitalScratchCardModal({
         >
           {/* Confetti & Glow Background */}
           <div className="absolute -top-12 -right-12 w-32 h-32 bg-yellow-400/20 rounded-full blur-2xl pointer-events-none" />
-          <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-green-400/20 rounded-full blur-2xl pointer-events-none" />
+          <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-emerald-400/20 rounded-full blur-2xl pointer-events-none" />
 
           {/* Close Button */}
           <button
@@ -201,7 +201,7 @@ export default function DigitalScratchCardModal({
           </h2>
 
           {/* Scratch Area Wrapper */}
-          <div className="relative w-full h-48 rounded-2xl overflow-hidden shadow-inner border-2 border-dashed border-amber-300 bg-gradient-to-br from-amber-50 via-green-50 to-emerald-100 flex flex-col items-center justify-center p-4 mb-5">
+          <div className="relative w-full h-48 rounded-2xl overflow-hidden shadow-inner border-2 border-dashed border-amber-300 bg-gradient-to-br from-amber-50 via-emerald-50 to-emerald-100 flex flex-col items-center justify-center p-4 mb-5">
             {/* Hidden Prize underneath */}
             <div className="flex flex-col items-center justify-center text-center select-none">
               <span className="text-3xl font-black text-[#0a3d24] tracking-tight">
@@ -212,7 +212,7 @@ export default function DigitalScratchCardModal({
               </span>
 
               {/* Revealed Coupon Pill */}
-              <div className="mt-3 bg-white border border-green-300 rounded-xl px-3 py-1.5 flex items-center gap-2 shadow-xs">
+              <div className="mt-3 bg-white border border-emerald-300 rounded-xl px-3 py-1.5 flex items-center gap-2 shadow-xs">
                 <span className="font-mono font-black text-sm text-[#0a3d24] tracking-wider">
                   {reward.couponCode}
                 </span>
@@ -222,7 +222,7 @@ export default function DigitalScratchCardModal({
                   className="p-1 text-gray-500 hover:text-[#0a3d24] transition cursor-pointer"
                   title="Copy Coupon"
                 >
-                  {copied ? <Check size={14} className="text-green-600" /> : <Copy size={14} />}
+                  {copied ? <Check size={14} className="text-emerald-700" /> : <Copy size={14} />}
                 </button>
               </div>
             </div>

@@ -120,8 +120,8 @@ export default function AdminMandiProfitAnalytics() {
           </span>
         </div>
 
-        <div className="bg-green-50/80 border border-green-300 rounded-2xl p-4 sm:p-5">
-          <span className="text-[11px] font-extrabold uppercase text-green-900 tracking-wider block mb-1">
+        <div className="bg-emerald-50/80 border border-emerald-300 rounded-2xl p-4 sm:p-5">
+          <span className="text-[11px] font-extrabold uppercase text-emerald-900 tracking-wider block mb-1">
             Net Estimated Profit
           </span>
           <h3 className="text-2xl sm:text-3xl font-black text-[#0a3d24]">
@@ -235,7 +235,7 @@ export default function AdminMandiProfitAnalytics() {
 
                 {/* Margin % */}
                 <td className="py-3 px-4 text-center">
-                  <span className="bg-green-100 text-green-900 font-black text-[10px] px-2.5 py-1 rounded-full border border-green-200">
+                  <span className="bg-emerald-100 text-emerald-900 font-black text-[10px] px-2.5 py-1 rounded-full border border-emerald-200">
                     +{it.marginPercent}% (+₹{it.unitProfit})
                   </span>
                 </td>

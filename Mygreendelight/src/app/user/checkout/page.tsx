@@ -491,7 +491,7 @@ export default function Checkout() {
   }
 
   return (
-    <div className="bg-[#f8faf8] min-h-screen flex flex-col justify-between font-sans selection:bg-green-100 selection:text-green-900">
+    <div className="bg-[#f8faf8] min-h-screen flex flex-col justify-between font-sans selection:bg-emerald-100 selection:text-emerald-900">
       <Nav user={(userdata as any) || { role: "user" }} />
 
       <main className="max-w-5xl mx-auto px-3.5 sm:px-6 py-5 sm:py-7 pb-28 sm:pb-12 w-full flex-1">

@@ -136,7 +136,7 @@ export default function ManageMandiPage() {
           <div
             className={`p-4 rounded-xl mb-6 text-xs sm:text-sm font-bold flex items-center gap-2 ${
               msg.type === "success"
-                ? "bg-green-50 text-green-800 border border-green-200"
+                ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
                 : "bg-red-50 text-red-800 border border-red-200"
             }`}
           >
@@ -170,7 +170,7 @@ export default function ManageMandiPage() {
                       <span
                         className={`px-2 py-0.5 rounded-md font-bold text-[10px] uppercase ${
                           item.priceChange === "down"
-                            ? "bg-green-100 text-green-800"
+                            ? "bg-emerald-100 text-emerald-800"
                             : item.priceChange === "up"
                             ? "bg-red-100 text-red-800"
                             : "bg-gray-100 text-gray-700"
@@ -179,11 +179,11 @@ export default function ManageMandiPage() {
                         {item.priceChange === "down" ? "↓ Price Drop" : item.priceChange === "up" ? "↑ Increased" : "Stable"}
                       </span>
                     </td>
-                    <td className="py-3 px-3 font-bold text-green-700">
+                    <td className="py-3 px-3 font-bold text-emerald-700">
                       {item.percentageChange > 0 ? `${item.percentageChange}% OFF` : "—"}
                     </td>
                     <td className="py-3 px-3">
-                      <span className={`text-[10px] font-bold ${item.isActive ? "text-green-600" : "text-gray-400"}`}>
+                      <span className={`text-[10px] font-bold ${item.isActive ? "text-emerald-700" : "text-gray-400"}`}>
                         {item.isActive ? "🟢 Active" : "⚪ Hidden"}
                       </span>
                     </td>

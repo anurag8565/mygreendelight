@@ -175,7 +175,7 @@ export default function AddGrocery() {
           <div className="flex items-center gap-3">
             <Link
               href="/admin/bulk-upload"
-              className="bg-green-50 hover:bg-green-100 border border-green-300 text-[#0a3d24] px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 shadow-xs"
+              className="bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-[#0a3d24] px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 shadow-xs"
             >
               <Upload size={14} />
               <span>Bulk CSV Upload</span>

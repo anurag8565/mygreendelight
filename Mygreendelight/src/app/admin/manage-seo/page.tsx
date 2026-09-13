@@ -384,11 +384,11 @@ export default function ManageSEOPage() {
                 <span className="text-[10px] sm:text-[11px] font-bold text-gray-400 uppercase tracking-wider block truncate">
                   Google Index
                 </span>
-                <span className="text-[10px] sm:text-xs font-black text-green-700 bg-green-100 px-2 py-0.5 rounded-lg mt-0.5 inline-block truncate">
+                <span className="text-[10px] sm:text-xs font-black text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-lg mt-0.5 inline-block truncate">
                   ✓ LIVE
                 </span>
               </div>
-              <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-green-50 text-green-600 flex items-center justify-center shrink-0 ml-1">
+              <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 ml-1">
                 <CheckCircle2 size={16} className="sm:w-5 sm:h-5" />
               </div>
             </div>
@@ -518,7 +518,7 @@ export default function ManageSEOPage() {
 
                         <div className="shrink-0">
                           {hasCustomSeo ? (
-                            <span className="text-[8.5px] sm:text-[9px] font-black uppercase bg-green-100 text-green-800 px-1.5 sm:px-2 py-0.5 rounded-md">
+                            <span className="text-[8.5px] sm:text-[9px] font-black uppercase bg-emerald-100 text-emerald-800 px-1.5 sm:px-2 py-0.5 rounded-md">
                               ✓ SEO Set
                             </span>
                           ) : (
@@ -625,7 +625,7 @@ export default function ManageSEOPage() {
                       <span
                         className={`text-[11px] sm:text-xs font-black px-2 py-0.5 rounded-md ${
                           seoScore >= 80
-                            ? "bg-green-100 text-green-900"
+                            ? "bg-emerald-100 text-emerald-900"
                             : seoScore >= 50
                             ? "bg-amber-100 text-amber-900"
                             : "bg-red-100 text-red-900"

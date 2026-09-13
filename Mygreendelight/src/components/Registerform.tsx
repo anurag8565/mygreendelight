@@ -92,7 +92,7 @@ export default function Registerform({ onBack }: RegisterformProps) {
     <div className="min-h-screen bg-[#f3f6f4] flex flex-col justify-between relative overflow-x-hidden font-sans">
       {/* Background Soft Glow Accents */}
       <div className="hidden sm:block absolute -top-28 -left-28 w-96 h-96 bg-emerald-300/20 rounded-full blur-3xl pointer-events-none" />
-      <div className="hidden sm:block absolute -bottom-28 -right-28 w-96 h-96 bg-green-400/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="hidden sm:block absolute -bottom-28 -right-28 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl pointer-events-none" />
 
       {/* Top Floating Back Button */}
       <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-30">
@@ -115,7 +115,7 @@ export default function Registerform({ onBack }: RegisterformProps) {
           <div className="lg:hidden relative bg-gradient-to-b from-[#072817] via-[#0a3d24] to-[#0d4a2d] text-white pt-14 pb-10 px-6 overflow-hidden flex flex-col items-center text-center">
             {/* Background Blur Rings */}
             <div className="absolute -top-10 -right-10 w-44 h-44 bg-emerald-400/20 rounded-full blur-2xl pointer-events-none" />
-            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-green-500/20 rounded-full blur-xl pointer-events-none" />
+            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-emerald-500/20 rounded-full blur-xl pointer-events-none" />
 
             {/* Pattern watermark overlay */}
             <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
@@ -170,7 +170,7 @@ export default function Registerform({ onBack }: RegisterformProps) {
           <div className="hidden lg:flex lg:col-span-5 bg-gradient-to-br from-[#062013] via-[#0a3d24] to-[#082e1b] text-white p-8 sm:p-10 flex-col justify-between relative overflow-hidden">
             {/* Glowing Accent Orbs */}
             <div className="absolute -top-12 -right-12 w-64 h-64 bg-emerald-400/15 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-12 -left-12 w-64 h-64 bg-green-500/15 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-12 -left-12 w-64 h-64 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
 
             {/* Top Logo & Branding */}
             <div className="relative z-10">

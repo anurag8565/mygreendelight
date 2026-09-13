@@ -27,7 +27,7 @@ export default function BhopalStoreMap({
 
   if (!mounted || !icon) {
     return (
-      <div className="w-full h-full min-h-[380px] bg-green-50/70 rounded-2xl flex items-center justify-center text-gray-400 font-medium">
+      <div className="w-full h-full min-h-[380px] bg-emerald-50/70 rounded-2xl flex items-center justify-center text-gray-400 font-medium">
         Loading Bhopal Map...
       </div>
     );
@@ -59,7 +59,7 @@ export default function BhopalStoreMap({
               <div className="p-1 max-w-[200px]">
                 <h4 className="font-bold text-gray-900 text-sm">{hub.name}</h4>
                 <p className="text-xs text-gray-600 mt-1">{hub.address}</p>
-                <p className="text-xs text-green-700 font-semibold mt-1">🕒 {hub.hours}</p>
+                <p className="text-xs text-emerald-800 font-semibold mt-1">🕒 {hub.hours}</p>
                 <p className="text-xs text-gray-500 mt-0.5">📞 {hub.phone}</p>
               </div>
             </Popup>

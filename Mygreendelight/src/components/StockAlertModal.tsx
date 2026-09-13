@@ -86,11 +86,11 @@ export default function StockAlertModal({ grocery, isOpen, onClose }: StockAlert
         </div>
 
         {successMsg ? (
-          <div className="p-4 bg-green-50 border border-green-200 rounded-2xl text-center">
+          <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl text-center">
             <div className="w-8 h-8 bg-[#0a3d24] text-white rounded-full flex items-center justify-center mx-auto mb-2">
               <Check size={16} />
             </div>
-            <p className="text-xs font-bold text-green-900">{successMsg}</p>
+            <p className="text-xs font-bold text-emerald-900">{successMsg}</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-3">

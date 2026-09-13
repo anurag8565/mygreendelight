@@ -167,7 +167,7 @@ export default function ManageInquiriesPage() {
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-100 pb-4 mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-2xl bg-green-50 text-[#0a3d24] flex items-center justify-center font-black text-sm">
+                      <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#0a3d24] flex items-center justify-center font-black text-sm">
                         {msg.name.slice(0, 1).toUpperCase()}
                       </div>
                       <div>
@@ -189,7 +189,7 @@ export default function ManageInquiriesPage() {
                         }
                         className={`px-3 py-1.5 rounded-xl text-xs font-bold border outline-none cursor-pointer ${
                           msg.status === "resolved"
-                            ? "bg-green-50 text-green-800 border-green-200"
+                            ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
                             : msg.status === "read"
                             ? "bg-blue-50 text-blue-800 border-blue-200"
                             : "bg-amber-50 text-amber-800 border-amber-200"
@@ -212,7 +212,7 @@ export default function ManageInquiriesPage() {
 
                   {/* Subject Tag */}
                   <div className="mb-3">
-                    <span className="bg-green-100 text-[#0a3d24] font-bold text-[10px] uppercase px-2.5 py-0.5 rounded-full">
+                    <span className="bg-emerald-100 text-[#0a3d24] font-bold text-[10px] uppercase px-2.5 py-0.5 rounded-full">
                       Subject: {msg.subject || "General Inquiry"}
                     </span>
                   </div>

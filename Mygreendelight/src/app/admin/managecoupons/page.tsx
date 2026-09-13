@@ -193,7 +193,7 @@ export default function ManageCoupons() {
                       <div>
                         {/* Top Code Pill & Toggle */}
                         <div className="flex items-center justify-between mb-4">
-                          <span className="bg-green-50 border border-green-300 text-[#0a3d24] px-3 py-1 rounded-xl font-black text-sm tracking-wider uppercase">
+                          <span className="bg-emerald-50 border border-emerald-300 text-[#0a3d24] px-3 py-1 rounded-xl font-black text-sm tracking-wider uppercase">
                             {coupon.code}
                           </span>
 

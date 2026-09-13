@@ -30,7 +30,7 @@ export default function DeliveryDashboardStats({
       {/* Bento Grid Top Performance Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4">
         {/* Today's Completed Deliveries */}
-        <div className="relative overflow-hidden bg-gradient-to-br from-emerald-600 via-emerald-700 to-green-800 text-white rounded-3xl p-5 shadow-lg shadow-emerald-900/10 border border-emerald-500/30 flex flex-col justify-between group hover:scale-[1.01] transition-transform duration-200">
+        <div className="relative overflow-hidden bg-gradient-to-br from-emerald-600 via-emerald-700 to-[#0a3d24] text-white rounded-3xl p-5 shadow-lg shadow-emerald-900/10 border border-emerald-500/30 flex flex-col justify-between group hover:scale-[1.01] transition-transform duration-200">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-black uppercase tracking-wider text-emerald-200/90 flex items-center gap-1.5">
               <Sparkles size={13} className="text-yellow-300 animate-pulse" />

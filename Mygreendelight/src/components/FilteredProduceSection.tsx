@@ -65,7 +65,7 @@ export default function FilteredProduceSection({
         imgUrl: "/categories/vegetables_4k.jpg?v=4",
         count: vegItems.length,
         badge: "Daily Fresh",
-        themeColor: "from-emerald-600 to-green-700",
+        themeColor: "from-emerald-600 to-emerald-800",
         activeBorder: "border-[#0a3d24]",
       },
       {

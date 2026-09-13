@@ -168,7 +168,7 @@ export default function AdminSidebar() {
   return (
     <>
       {/* Mobile Top Header (Fixed at top on phones) */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 h-14 bg-[#093e21] text-white px-4 flex items-center justify-between z-50 shadow-md border-b border-green-800/60">
+      <div className="lg:hidden fixed top-0 left-0 right-0 h-14 bg-[#093e21] text-white px-4 flex items-center justify-between z-50 shadow-md border-b border-emerald-900/60">
         <div className="flex items-center gap-2.5">
           <button
             onClick={() => setMobileOpen(true)}
@@ -215,7 +215,7 @@ export default function AdminSidebar() {
       >
         {/* Top Header & Branding */}
         <div>
-          <div className="p-5 border-b border-green-800/60 flex items-center justify-between">
+          <div className="p-5 border-b border-emerald-900/60 flex items-center justify-between">
             <Link
               href="/admin"
               onClick={() => setMobileOpen(false)}
@@ -233,10 +233,10 @@ export default function AdminSidebar() {
           </div>
 
           {/* Scrollable Navigation Links */}
-          <nav className="p-3 space-y-4 overflow-y-auto max-h-[calc(100vh-175px)] scrollbar-thin scrollbar-thumb-green-800">
+          <nav className="p-3 space-y-4 overflow-y-auto max-h-[calc(100vh-175px)] scrollbar-thin scrollbar-thumb-emerald-900">
             {navGroups.map((group, gIdx) => (
               <div key={gIdx}>
-                <span className="px-3 text-[10px] font-black uppercase tracking-wider text-green-400/60 block mb-1.5">
+                <span className="px-3 text-[10px] font-black uppercase tracking-wider text-emerald-400/70 block mb-1.5">
                   {group.groupTitle}
                 </span>
                 <div className="space-y-1">
@@ -250,10 +250,10 @@ export default function AdminSidebar() {
                         className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition-all ${
                           isActive
                             ? "bg-[#0a3d24] text-white shadow-sm font-extrabold"
-                            : "text-green-100/75 hover:bg-white/10 hover:text-white"
+                            : "text-emerald-100/75 hover:bg-white/10 hover:text-white"
                         }`}
                       >
-                        <span className={isActive ? "text-white" : "text-green-300/80 shrink-0"}>
+                        <span className={isActive ? "text-white" : "text-emerald-300/80 shrink-0"}>
                           {item.icon}
                         </span>
                         <span className="truncate">{item.name}</span>
@@ -267,8 +267,8 @@ export default function AdminSidebar() {
         </div>
 
         {/* Bottom Store Link, Status & Logout */}
-        <div className="p-4 border-t border-green-800/60 bg-[#073019] shrink-0 space-y-2.5">
-          <div className="flex items-center gap-2 text-xs text-green-200/80 px-1">
+        <div className="p-4 border-t border-emerald-900/60 bg-[#073019] shrink-0 space-y-2.5">
+          <div className="flex items-center gap-2 text-xs text-emerald-200/80 px-1">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
             <span className="font-bold text-[11px] truncate">Amrai Central Store Live</span>
           </div>

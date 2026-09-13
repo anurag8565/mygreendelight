@@ -121,7 +121,7 @@ export default function WishlistPage() {
   };
 
   return (
-    <div className="bg-[#f8faf8] min-h-screen flex flex-col justify-between font-sans text-gray-900 pb-20 md:pb-0 selection:bg-green-100 selection:text-green-900">
+    <div className="bg-[#f8faf8] min-h-screen flex flex-col justify-between font-sans text-gray-900 pb-20 md:pb-0 selection:bg-emerald-100 selection:text-emerald-900">
       <Nav user={userdata} />
 
       <main className="max-w-6xl mx-auto px-3.5 sm:px-6 py-5 sm:py-7 w-full flex-1 space-y-4 sm:space-y-5">

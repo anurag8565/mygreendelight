@@ -56,7 +56,7 @@ export default function RecentOrdersTable() {
                             <td>
                                 <span
                                     className={`px-2 py-1 rounded text-xs ${o.status === "delivered"
-                                            ? "bg-green-100 text-green-700"
+                                            ? "bg-emerald-100 text-[#0a3d24] font-bold"
                                             : o.status === "pending"
                                                 ? "bg-yellow-100 text-yellow-700"
                                                 : "bg-blue-100 text-blue-700"

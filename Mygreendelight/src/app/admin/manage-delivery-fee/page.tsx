@@ -166,7 +166,7 @@ export default function ManageDeliveryFee() {
                 <h3 className="text-lg sm:text-xl font-black text-white">
                   1-Click FREE Delivery for ALL Orders
                 </h3>
-                <p className="text-xs text-green-100/90 mt-1 leading-relaxed">
+                <p className="text-xs text-emerald-100/90 mt-1 leading-relaxed">
                   Turn this ON to give 100% Free Delivery on every customer order across Bhopal, regardless of cart value.
                 </p>
               </div>

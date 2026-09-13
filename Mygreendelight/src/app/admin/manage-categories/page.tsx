@@ -231,7 +231,7 @@ export default function ManageCategories() {
                   {categories.map((cat) => (
                     <div
                       key={cat._id}
-                      className="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50/70 border border-gray-100 hover:bg-green-50/60 hover:border-green-200 transition group"
+                      className="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50/70 border border-gray-100 hover:bg-emerald-50/60 hover:border-emerald-200 transition group"
                     >
                       <div className="flex items-center gap-3">
                         <img

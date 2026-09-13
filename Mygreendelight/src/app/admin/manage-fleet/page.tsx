@@ -252,7 +252,7 @@ export default function ManageFleetPage() {
               </span>
               <span className="text-2xl font-black text-gray-900">{riders.length}</span>
             </div>
-            <div className="w-11 h-11 rounded-xl bg-green-50 text-[#0a3d24] flex items-center justify-center">
+            <div className="w-11 h-11 rounded-xl bg-emerald-50 text-[#0a3d24] flex items-center justify-center">
               <Truck size={22} />
             </div>
           </div>
@@ -329,7 +329,7 @@ export default function ManageFleetPage() {
                 </thead>
                 <tbody className="divide-y divide-gray-100 font-medium text-gray-700">
                   {riders.map((rider) => (
-                    <tr key={rider._id} className="hover:bg-green-50/40 transition">
+                    <tr key={rider._id} className="hover:bg-emerald-50/40 transition">
                       <td className="p-4">
                         <div className="flex items-center gap-3">
                           <div className="w-9 h-9 rounded-xl bg-emerald-100 text-[#0a3d24] font-black flex items-center justify-center text-sm shadow-2xs">
@@ -405,7 +405,7 @@ export default function ManageFleetPage() {
             <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-gray-100 animate-in fade-in zoom-in-95 duration-200">
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 rounded-2xl bg-green-100 text-[#0a3d24] flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center">
                     <Truck size={20} />
                   </div>
                   <div>

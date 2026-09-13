@@ -38,7 +38,7 @@ export default function PromoBanners({ banners = [] }: { banners?: any[] }) {
         {/* Banner 1: Farm Fresh Produce */}
         <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#072817] via-[#0a3d24] to-[#072817] min-h-[200px] sm:min-h-[220px] flex items-center justify-between shadow-md hover:shadow-lg transition-all group p-5 sm:p-8 border border-emerald-900/60">
           <div className="relative z-10 flex flex-col items-start max-w-xs">
-            <span className="inline-flex items-center gap-1 bg-white/20 backdrop-blur-xs text-green-100 text-[10px] sm:text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider mb-2.5 border border-white/20">
+            <span className="inline-flex items-center gap-1 bg-white/20 backdrop-blur-xs text-emerald-100 text-[10px] sm:text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider mb-2.5 border border-white/20">
               <Sparkles size={12} className="text-yellow-300" /> Bhopal Farm Produce
             </span>
             <h3 className="text-xl sm:text-2xl font-black text-white leading-tight mb-1.5">

@@ -200,7 +200,7 @@ export default function ManageFlashDeals() {
                   <div className="flex items-center gap-3">
                     <div
                       className={`w-9 h-9 rounded-xl flex items-center justify-center font-black ${
-                        formData.isActive ? "bg-green-100 text-[#0a3d24]" : "bg-gray-200 text-gray-500"
+                        formData.isActive ? "bg-emerald-100 text-[#0a3d24]" : "bg-gray-200 text-gray-500"
                       }`}
                     >
                       <Power size={18} />
@@ -267,14 +267,14 @@ export default function ManageFlashDeals() {
                     <button
                       type="button"
                       onClick={() => applyPreset("tonight")}
-                      className="px-3 py-1.5 bg-gray-100 hover:bg-green-50 hover:text-[#0a3d24] hover:border-green-200 border border-gray-200 rounded-xl text-xs font-bold transition cursor-pointer"
+                      className="px-3 py-1.5 bg-gray-100 hover:bg-emerald-50 hover:text-[#0a3d24] hover:border-emerald-200 border border-gray-200 rounded-xl text-xs font-bold transition cursor-pointer"
                     >
                       🌙 Tonight (11:59 PM)
                     </button>
                     <button
                       type="button"
                       onClick={() => applyPreset("tomorrow")}
-                      className="px-3 py-1.5 bg-gray-100 hover:bg-green-50 hover:text-[#0a3d24] hover:border-green-200 border border-gray-200 rounded-xl text-xs font-bold transition cursor-pointer"
+                      className="px-3 py-1.5 bg-gray-100 hover:bg-emerald-50 hover:text-[#0a3d24] hover:border-emerald-200 border border-gray-200 rounded-xl text-xs font-bold transition cursor-pointer"
                     >
                       ☀️ Tomorrow Midnight
                     </button>

@@ -197,13 +197,13 @@ export default function AdminDashboardPage() {
                 {/* Total Revenue */}
                 <Link
                   href="/admin/manageorder"
-                  className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 lg:p-6 border border-gray-200/80 shadow-2xs hover:shadow-md hover:border-green-300 hover:scale-[1.02] transition-all flex flex-col justify-between cursor-pointer group"
+                  className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 lg:p-6 border border-gray-200/80 shadow-2xs hover:shadow-md hover:border-emerald-300 hover:scale-[1.02] transition-all flex flex-col justify-between cursor-pointer group"
                 >
                   <div className="flex items-center justify-between mb-2 sm:mb-4">
                     <span className="text-[10px] sm:text-xs font-extrabold uppercase text-gray-400 tracking-wider group-hover:text-[#0a3d24] transition">
                       Total Sales
                     </span>
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-green-50 text-[#0a3d24] flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-emerald-50 text-[#0a3d24] flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
                       <TrendingUp size={16} className="sm:w-5 sm:h-5" />
                     </div>
                   </div>
@@ -211,7 +211,7 @@ export default function AdminDashboardPage() {
                     <span className="text-xl sm:text-2xl lg:text-3xl font-black text-gray-900 block truncate">
                       ₹{summary?.totalSales || 0}
                     </span>
-                    <span className="text-[10px] sm:text-[11px] text-green-700 font-bold mt-1 block truncate">
+                    <span className="text-[10px] sm:text-[11px] text-emerald-700 font-bold mt-1 block truncate">
                       ✓ Completed orders →
                     </span>
                   </div>
@@ -335,17 +335,17 @@ export default function AdminDashboardPage() {
 
                 <Link
                   href="/admin/manageorder"
-                  className="bg-green-50/80 hover:bg-green-100/90 border border-green-200/80 rounded-2xl p-4 flex items-center justify-between transition cursor-pointer group"
+                  className="bg-emerald-50/80 hover:bg-emerald-100/90 border border-emerald-200/80 rounded-2xl p-4 flex items-center justify-between transition cursor-pointer group"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-green-200/60 text-[#0a3d24] flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-200/60 text-[#0a3d24] flex items-center justify-center group-hover:scale-110 transition-transform">
                       <CheckCircle2 size={20} />
                     </div>
                     <div>
-                      <span className="text-xs text-green-800 font-bold block">
+                      <span className="text-xs text-emerald-800 font-bold block">
                         Delivered & Completed
                       </span>
-                      <span className="text-xl font-black text-green-950">
+                      <span className="text-xl font-black text-emerald-950">
                         {summary?.deliveredOrders || 0} Orders
                       </span>
                     </div>
@@ -473,7 +473,7 @@ export default function AdminDashboardPage() {
                     </div>
                   </div>
 
-                  <span className="text-[11px] font-black bg-green-50 text-[#0a3d24] border border-green-200 px-3 py-1 rounded-xl">
+                  <span className="text-[11px] font-black bg-emerald-50 text-[#0a3d24] border border-emerald-200 px-3 py-1 rounded-xl">
                     🌿 Bagsewaniya Store (Amrai): Active
                   </span>
                 </div>
@@ -485,7 +485,7 @@ export default function AdminDashboardPage() {
                     return (
                       <div
                         key={idx}
-                        className="bg-gray-50/70 border border-gray-100 rounded-2xl p-4 flex flex-col justify-between gap-2 hover:bg-green-50/50 transition"
+                        className="bg-gray-50/70 border border-gray-100 rounded-2xl p-4 flex flex-col justify-between gap-2 hover:bg-emerald-50/50 transition"
                       >
                         <div className="flex items-center justify-between">
                           <span className="font-black text-xs text-gray-900 flex items-center gap-1.5">
@@ -523,7 +523,7 @@ export default function AdminDashboardPage() {
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-4">
                   <Link
                     href="/admin/manageorder"
-                    className="p-3 sm:p-4 rounded-2xl bg-gray-50/80 hover:bg-green-50 border border-gray-100 hover:border-green-200 transition text-center flex flex-col items-center gap-1.5 sm:gap-2 group"
+                    className="p-3 sm:p-4 rounded-2xl bg-gray-50/80 hover:bg-emerald-50 border border-gray-100 hover:border-emerald-200 transition text-center flex flex-col items-center gap-1.5 sm:gap-2 group"
                   >
                     <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white text-[#0a3d24] flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
                       <ShoppingBag size={18} />
@@ -559,7 +559,7 @@ export default function AdminDashboardPage() {
 
                   <Link
                     href="/admin/viewgrocery"
-                    className="p-3 sm:p-4 rounded-2xl bg-gray-50/80 hover:bg-green-50 border border-gray-100 hover:border-green-200 transition text-center flex flex-col items-center gap-1.5 sm:gap-2 group"
+                    className="p-3 sm:p-4 rounded-2xl bg-gray-50/80 hover:bg-emerald-50 border border-gray-100 hover:border-emerald-200 transition text-center flex flex-col items-center gap-1.5 sm:gap-2 group"
                   >
                     <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white text-[#0a3d24] flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
                       <Package size={18} />
@@ -571,7 +571,7 @@ export default function AdminDashboardPage() {
 
                   <Link
                     href="/admin/managecoupons"
-                    className="p-3 sm:p-4 rounded-2xl bg-gray-50/80 hover:bg-green-50 border border-gray-100 hover:border-green-200 transition text-center flex flex-col items-center gap-1.5 sm:gap-2 group"
+                    className="p-3 sm:p-4 rounded-2xl bg-gray-50/80 hover:bg-emerald-50 border border-gray-100 hover:border-emerald-200 transition text-center flex flex-col items-center gap-1.5 sm:gap-2 group"
                   >
                     <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white text-[#0a3d24] flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
                       <Tag size={18} />
@@ -583,7 +583,7 @@ export default function AdminDashboardPage() {
 
                   <Link
                     href="/admin/manageinquiries"
-                    className="p-3 sm:p-4 rounded-2xl bg-gray-50/80 hover:bg-green-50 border border-gray-100 hover:border-green-200 transition text-center flex flex-col items-center gap-1.5 sm:gap-2 group"
+                    className="p-3 sm:p-4 rounded-2xl bg-gray-50/80 hover:bg-emerald-50 border border-gray-100 hover:border-emerald-200 transition text-center flex flex-col items-center gap-1.5 sm:gap-2 group"
                   >
                     <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white text-[#0a3d24] flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
                       <MessageSquare size={18} />
@@ -646,7 +646,7 @@ export default function AdminDashboardPage() {
                               <span
                                 className={`px-2 py-0.5 rounded-full text-[9px] font-black uppercase ${
                                   currentStatus === "delivered" || currentStatus === "completed"
-                                    ? "bg-green-100 text-green-800"
+                                    ? "bg-emerald-100 text-emerald-800"
                                     : currentStatus === "out of delivery"
                                     ? "bg-blue-100 text-blue-800 animate-pulse"
                                     : "bg-amber-100 text-amber-800"
@@ -724,7 +724,7 @@ export default function AdminDashboardPage() {
                                   <span
                                     className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase ${
                                       currentStatus === "delivered" || currentStatus === "completed"
-                                        ? "bg-green-100 text-green-800"
+                                        ? "bg-emerald-100 text-emerald-800"
                                         : currentStatus === "out of delivery"
                                         ? "bg-blue-100 text-blue-800 animate-pulse"
                                         : "bg-amber-100 text-amber-800"

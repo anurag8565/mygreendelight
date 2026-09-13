@@ -37,7 +37,7 @@ export default function DeliveryBoyPerformance() {
                         {d.name}
                     </span>
 
-                    <span className="text-green-700 font-bold">
+                    <span className="text-[#0a3d24] font-black">
                         {d.deliveries} deliveries
                     </span>
                 </div>

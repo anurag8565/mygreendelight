@@ -202,7 +202,7 @@ export default function OrderPackingSlipModal({
           {/* Payment Directive Banner */}
           <div className="mb-3">
             {isPrepaid ? (
-              <div className="bg-green-100 border-2 border-green-500 rounded-xl p-2.5 text-center font-black text-green-900 text-xs">
+              <div className="bg-emerald-100 border-2 border-emerald-500 rounded-xl p-2.5 text-center font-black text-emerald-900 text-xs">
                 ✓ PREPAID ORDER ({order.paymentmethod?.toUpperCase() || "ONLINE"}) — DO NOT COLLECT CASH
               </div>
             ) : (

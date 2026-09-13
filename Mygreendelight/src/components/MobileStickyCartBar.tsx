@@ -58,7 +58,7 @@ export default function MobileStickyCartBar() {
                 <span className="text-xs font-black text-white">
                   {totalItems} {totalItems === 1 ? "Item" : "Items"}
                 </span>
-                <span className="text-[10px] font-bold text-green-200 bg-white/15 px-1.5 py-0.2 rounded-md">
+                <span className="text-[10px] font-bold text-emerald-200 bg-white/15 px-1.5 py-0.2 rounded-md">
                   Express 10m
                 </span>
               </div>

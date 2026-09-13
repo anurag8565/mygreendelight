@@ -132,7 +132,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                   <p className="font-semibold text-lg">Your cart is empty</p>
                   <button 
                     onClick={() => { onClose(); router.push('/shop'); }}
-                    className="text-[#0a3d24] font-bold border border-[#0a3d24] px-6 py-2 rounded-lg hover:bg-green-50 cursor-pointer"
+                    className="text-[#0a3d24] font-bold border border-[#0a3d24] px-6 py-2 rounded-lg hover:bg-emerald-50 cursor-pointer"
                   >
                     Start Shopping
                   </button>
@@ -159,10 +159,10 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                         <div className="flex items-center justify-between mt-2">
                           <span className="font-extrabold text-[#0a3d24]">₹{item.price * item.quantity}</span>
                           
-                          <div className="flex items-center bg-green-50 rounded-lg border border-green-200">
+                          <div className="flex items-center bg-emerald-50 rounded-lg border border-emerald-200">
                             <button
                               onClick={() => dispatch(decreaseQuantity(safeKey))}
-                              className="w-7 h-7 flex items-center justify-center text-[#0a3d24] hover:bg-green-100 rounded-l-lg transition cursor-pointer"
+                              className="w-7 h-7 flex items-center justify-center text-[#0a3d24] hover:bg-emerald-100 rounded-l-lg transition cursor-pointer"
                             >
                               <Minus size={14} />
                             </button>
@@ -171,7 +171,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                             </span>
                             <button
                               onClick={() => dispatch(increaseQuantity(safeKey))}
-                              className="w-7 h-7 flex items-center justify-center text-[#0a3d24] hover:bg-green-100 rounded-r-lg transition cursor-pointer"
+                              className="w-7 h-7 flex items-center justify-center text-[#0a3d24] hover:bg-emerald-100 rounded-r-lg transition cursor-pointer"
                             >
                               <Plus size={14} />
                             </button>

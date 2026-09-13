@@ -44,21 +44,21 @@ function EditMobile() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center flex-col bg-gradient-to-br from-green-50 via-white to-emerald-50 px-4 py-8 font-sans">
+    <div className="min-h-screen flex items-center justify-center flex-col bg-gradient-to-br from-emerald-50 via-white to-[#f7f5ef] px-4 py-8 font-sans">
       <motion.div
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 border border-green-100 shadow-xl"
+        className="w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 border border-emerald-100 shadow-xl"
       >
         {/* Header Icon */}
-        <div className="w-16 h-16 rounded-2xl bg-green-100 text-[#0a3d24] flex items-center justify-center mx-auto mb-5 shadow-xs">
+        <div className="w-16 h-16 rounded-2xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center mx-auto mb-5 shadow-xs">
           <Phone size={30} />
         </div>
 
         {/* Title */}
         <div className="text-center mb-6">
-          <span className="text-[10px] font-black uppercase tracking-wider text-[#0a3d24] bg-green-50 px-3 py-1 rounded-full border border-green-200 inline-flex items-center gap-1 mb-2">
+          <span className="text-[10px] font-black uppercase tracking-wider text-[#0a3d24] bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 inline-flex items-center gap-1 mb-2">
             <Sparkles size={11} /> 1-Step Quick Setup
           </span>
           <h1 className="text-2xl sm:text-3xl font-black text-gray-900 leading-tight">

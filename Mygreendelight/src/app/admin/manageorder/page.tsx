@@ -627,7 +627,7 @@ export default function ManageOrder() {
             <button
               type="button"
               onClick={() => audioAlert.playNewOrderAlert()}
-              className="bg-green-50 hover:bg-green-100 text-[#0a3d24] border border-green-200 px-3 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
+              className="bg-emerald-50 hover:bg-emerald-100 text-[#0a3d24] border border-emerald-200 px-3 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
               title="Test Order Alert Sound"
             >
               <Bell size={14} className="text-[#0a3d24]" />
@@ -790,7 +790,7 @@ export default function ManageOrder() {
                           <span
                             className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider ${
                               isDelivered
-                                ? "bg-green-100 text-green-800"
+                                ? "bg-emerald-100 text-emerald-800"
                                 : isOutForDelivery
                                 ? "bg-blue-100 text-blue-800 animate-pulse"
                                 : "bg-amber-100 text-amber-800"
@@ -909,7 +909,7 @@ export default function ManageOrder() {
                                   ? "bg-amber-50 text-amber-900 border-amber-300"
                                   : isOutForDelivery
                                   ? "bg-blue-50 text-blue-900 border-blue-300"
-                                  : "bg-green-50 text-green-900 border-green-300"
+                                  : "bg-emerald-50 text-emerald-900 border-emerald-300"
                               }`}
                             >
                               <option value="pending">⏳ Pending</option>
