@@ -205,46 +205,46 @@ function ShopContent() {
   };
 
   return (
-    <div className="bg-[#f8f9fa] min-h-screen flex flex-col justify-between font-sans">
+    <div className="bg-[#faf9f5] min-h-screen flex flex-col justify-between font-sans">
       <Nav user={(userdata as any) || { role: "user" }} />
 
       <main className="flex-1 max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-5 sm:py-8 pb-28 sm:pb-16 w-full">
         
         {/* 1. Clean Breadcrumb Navigation */}
-        <div className="flex items-center gap-1.5 text-[11px] sm:text-xs text-gray-500 mb-2">
-          <Link href="/" className="hover:text-[#0c831f] transition font-semibold">
+        <div className="flex items-center gap-1.5 text-[11px] sm:text-xs text-stone-500 mb-2.5">
+          <Link href="/" className="hover:text-[#0a3d24] transition font-semibold">
             Home
           </Link>
-          <ChevronRight size={11} className="text-gray-400" />
-          <Link href="/shop" className="hover:text-[#0c831f] transition font-semibold">
+          <ChevronRight size={11} className="text-stone-400" />
+          <Link href="/shop" className="hover:text-[#0a3d24] transition font-semibold">
             Fresh Produce
           </Link>
           {categoryParam && (
             <>
-              <ChevronRight size={11} className="text-gray-400" />
-              <span className="text-emerald-800 font-bold capitalize">{categoryParam}</span>
+              <ChevronRight size={11} className="text-stone-400" />
+              <span className="text-[#0a3d24] font-bold capitalize">{categoryParam}</span>
             </>
           )}
           {searchParam && (
             <>
-              <ChevronRight size={11} className="text-gray-400" />
-              <span className="text-gray-900 font-bold">&ldquo;{searchParam}&rdquo;</span>
+              <ChevronRight size={11} className="text-stone-400" />
+              <span className="text-stone-900 font-bold">&ldquo;{searchParam}&rdquo;</span>
             </>
           )}
         </div>
 
         {/* 2. Top Banner & Page Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-3 bg-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-gray-100 shadow-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-4 bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-stone-200/80 shadow-2xs">
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h1 className="text-lg sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
+              <h1 className="text-lg sm:text-2xl md:text-3xl font-bold text-stone-900 tracking-tight font-heading">
                 {searchParam
                   ? `Search: "${searchParam}"`
                   : categoryParam
                   ? `Fresh ${categoryParam} in Bhopal`
                   : "Buy Fresh Vegetables & Fruits in Bhopal"}
               </h1>
-              <span className="text-[10px] font-black uppercase text-[#0c831f] bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-full inline-flex items-center gap-1">
+              <span className="text-[10px] font-bold uppercase text-[#0a3d24] bg-emerald-50 border border-emerald-200/80 px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">
                 <Zap size={11} className="text-amber-500 fill-amber-500" />
                 10-15 Min Express
               </span>
@@ -416,8 +416,8 @@ function ShopContent() {
           <aside className="hidden lg:flex flex-col w-64 shrink-0 gap-4">
             
             {/* Categories Filter Box */}
-            <div className="bg-white rounded-3xl shadow-2xs border border-gray-100 p-4">
-              <h3 className="font-black text-gray-900 mb-3 text-xs uppercase tracking-wider flex items-center gap-1.5">
+            <div className="bg-white rounded-3xl shadow-2xs border border-stone-200/80 p-4">
+              <h3 className="font-bold text-stone-900 mb-3 text-xs uppercase tracking-wider flex items-center gap-1.5 font-heading">
                 <span className="w-4 h-4 rounded-full overflow-hidden border border-black/10 inline-block shrink-0">
                   <img src="/categories/vegetables.jpg" alt="Produce" className="w-full h-full object-cover" />
                 </span>
@@ -427,14 +427,14 @@ function ShopContent() {
                 <button
                   type="button"
                   onClick={() => handleCategoryClick("all")}
-                  className={`text-left text-xs font-black p-2.5 rounded-xl flex justify-between items-center transition cursor-pointer ${
+                  className={`text-left text-xs font-bold p-2.5 rounded-xl flex justify-between items-center transition cursor-pointer ${
                     !categoryParam
-                      ? "bg-emerald-50 text-[#0c831f] border border-emerald-200"
-                      : "text-gray-700 hover:bg-gray-50"
+                      ? "bg-emerald-50 text-[#0a3d24] border border-emerald-200"
+                      : "text-stone-700 hover:bg-stone-50"
                   }`}
                 >
                   <span className="flex items-center gap-2.5">
-                    <span className="w-5 h-5 rounded-md overflow-hidden bg-white border border-gray-200 shrink-0">
+                    <span className="w-5 h-5 rounded-md overflow-hidden bg-white border border-stone-200 shrink-0">
                       <img src="/categories/vegetables.jpg" alt="All" className="w-full h-full object-cover" />
                     </span>
                     <span>All Products</span>
@@ -447,10 +447,10 @@ function ShopContent() {
                     type="button"
                     key={cat._id}
                     onClick={() => handleCategoryClick(cat.name)}
-                    className={`text-left text-xs font-black p-2.5 rounded-xl flex justify-between items-center transition cursor-pointer ${
+                    className={`text-left text-xs font-bold p-2.5 rounded-xl flex justify-between items-center transition cursor-pointer ${
                       categoryParam === cat.name
-                        ? "bg-emerald-50 text-[#0c831f] border border-emerald-200"
-                        : "text-gray-700 hover:bg-gray-50"
+                        ? "bg-emerald-50 text-[#0a3d24] border border-emerald-200"
+                        : "text-stone-700 hover:bg-stone-50"
                     }`}
                   >
                     <span className="flex items-center gap-2.5 truncate">
@@ -582,8 +582,8 @@ function ShopContent() {
               <div
                 className={
                   viewMode === "grid"
-                    ? "grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4"
-                    : "flex flex-col space-y-2.5"
+                    ? "grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3.5 sm:gap-5 md:gap-6"
+                    : "flex flex-col space-y-3.5"
                 }
               >
                 {filteredGroceries.map((item) => (

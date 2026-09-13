@@ -249,7 +249,7 @@ export default function ProductDetailsClient({
             
             {/* Left 5 Cols: Product Image Frame */}
             <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
-              <div className="w-full aspect-square max-h-[340px] sm:max-h-[420px] rounded-2xl sm:rounded-3xl bg-gradient-to-b from-emerald-50/50 via-white to-gray-50/30 border border-gray-100 p-4 sm:p-6 flex items-center justify-center relative overflow-hidden group shadow-2xs">
+              <div className="w-full aspect-square max-h-[340px] sm:max-h-[420px] rounded-2xl sm:rounded-3xl bg-stone-50/80 border border-stone-200/80 p-5 sm:p-8 flex items-center justify-center relative overflow-hidden group shadow-2xs">
                 
                 <img
                   src={product.image}
@@ -258,27 +258,21 @@ export default function ProductDetailsClient({
                     (e.target as HTMLImageElement).src =
                       "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=500&q=80";
                   }}
-                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-sm"
+                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-sm p-2"
                 />
 
                 {/* Top Badges */}
-                <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5 flex-wrap">
-                  <span className="bg-[#0c831f] text-white text-[9.5px] sm:text-[10px] font-black px-2 py-0.5 rounded-full shadow-2xs flex items-center gap-1">
-                    <Leaf size={10} />
-                    <span>100% Farm Fresh</span>
-                  </span>
+                <div className="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap">
                   {discountPercent > 0 && (
-                    <span className="bg-rose-600 text-white text-[9.5px] sm:text-[10px] font-black px-2 py-0.5 rounded-full shadow-2xs">
+                    <span className="bg-[#0a3d24] text-white text-[9.5px] sm:text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-2xs">
                       {discountPercent}% OFF
                     </span>
                   )}
+                  <span className="bg-white/90 border border-stone-200 text-stone-700 text-[9.5px] sm:text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-2xs flex items-center gap-1">
+                    <Sparkles size={10} className="text-[#0a3d24]" />
+                    <span>Graded Taaza</span>
+                  </span>
                 </div>
-
-                {/* Farm Fresh Tag */}
-                <span className="absolute bottom-2.5 left-2.5 bg-white/95 backdrop-blur-xs text-emerald-900 text-[9px] sm:text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-2xs flex items-center gap-1 border border-emerald-200/80">
-                  <span>🌿</span>
-                  <span>Farm Fresh • Same-Day</span>
-                </span>
 
                 {/* Out of Stock Overlay */}
                 {currentStock <= 0 && (
@@ -410,7 +404,7 @@ export default function ProductDetailsClient({
               {/* Action Buttons Row (Desktop & Main View) */}
               <div className="flex items-center gap-3 pt-1 w-full">
                 {quantity > 0 ? (
-                  <div className="flex items-center bg-[#0c831f] text-white rounded-2xl h-12 sm:h-13 w-full sm:w-52 overflow-hidden shadow-md">
+                  <div className="flex items-center bg-[#0a3d24] text-white rounded-2xl h-12 sm:h-13 w-full sm:w-52 overflow-hidden shadow-md">
                     <button
                       type="button"
                       onClick={() => dispatch(decreaseQuantity(cartItemId))}
@@ -441,10 +435,10 @@ export default function ProductDetailsClient({
                     type="button"
                     onClick={handleAddToCart}
                     disabled={currentStock <= 0}
-                    className={`w-full h-12 sm:h-13 rounded-2xl font-black text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 ${
+                    className={`w-full h-12 sm:h-13 rounded-2xl font-bold text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 ${
                       currentStock > 0
-                        ? "bg-[#0c831f] hover:bg-[#0a6c1a] text-white shadow-emerald-700/20"
-                        : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                        ? "bg-[#0a3d24] hover:bg-[#072817] text-white shadow-emerald-950/20"
+                        : "bg-stone-200 text-stone-400 cursor-not-allowed"
                     }`}
                   >
                     <ShoppingBag size={16} />
@@ -737,15 +731,15 @@ export default function ProductDetailsClient({
 
           <div className="flex-1 max-w-[200px]">
             {quantity > 0 ? (
-              <div className="flex items-center bg-[#0c831f] text-white rounded-xl h-10 w-full overflow-hidden shadow-xs">
+              <div className="flex items-center bg-[#0a3d24] text-white rounded-xl h-10 w-full overflow-hidden shadow-xs">
                 <button
                   type="button"
                   onClick={() => dispatch(decreaseQuantity(cartItemId))}
-                  className="w-10 h-full flex items-center justify-center font-black text-base active:scale-90"
+                  className="w-10 h-full flex items-center justify-center font-black text-base active:scale-90 cursor-pointer"
                 >
                   <Minus size={14} className="stroke-[3]" />
                 </button>
-                <span className="flex-1 text-center font-black text-xs text-white">
+                <span className="flex-1 text-center font-bold text-xs text-white">
                   {quantity} in Cart
                 </span>
                 <button
@@ -754,7 +748,7 @@ export default function ProductDetailsClient({
                     if (quantity < currentStock) dispatch(increaseQuantity(cartItemId));
                   }}
                   disabled={quantity >= currentStock}
-                  className="w-10 h-full flex items-center justify-center font-black text-base active:scale-90 disabled:opacity-50"
+                  className="w-10 h-full flex items-center justify-center font-black text-base active:scale-90 disabled:opacity-50 cursor-pointer"
                 >
                   <Plus size={14} className="stroke-[3]" />
                 </button>
@@ -764,10 +758,10 @@ export default function ProductDetailsClient({
                 type="button"
                 onClick={handleAddToCart}
                 disabled={currentStock <= 0}
-                className={`w-full h-10 rounded-xl font-bold text-xs shadow-xs transition flex items-center justify-center gap-1.5 active:scale-95 ${
+                className={`w-full h-10 rounded-xl font-bold text-xs shadow-xs transition flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer ${
                   currentStock > 0
-                    ? "bg-[#0c831f] text-white"
-                    : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                    ? "bg-[#0a3d24] hover:bg-[#072817] text-white"
+                    : "bg-stone-200 text-stone-400 cursor-not-allowed"
                 }`}
               >
                 <ShoppingBag size={14} />
