@@ -138,24 +138,48 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
     }
 
-    const { riderId, newRole } = await req.json();
+    const { riderId, newRole, name, mobile, email, password, isonline } = await req.json();
     if (!riderId) {
       return NextResponse.json({ success: false, message: "Rider ID is required" }, { status: 400 });
     }
 
+    const rider = await User.findById(riderId);
+    if (!rider) {
+      return NextResponse.json({ success: false, message: "Delivery partner not found" }, { status: 404 });
+    }
+
+    const updateFields: any = {};
+    if (newRole) updateFields.role = newRole;
+    if (name && name.trim()) updateFields.name = name.trim();
+    if (mobile) {
+      const cleanMobile = mobile.trim().replace(/[^0-9]/g, "").slice(-10);
+      if (cleanMobile.length === 10) {
+        updateFields.mobile = cleanMobile;
+      }
+    }
+    if (email && email.trim()) {
+      updateFields.email = email.trim().toLowerCase();
+    }
+    if (password && password.trim()) {
+      updateFields.password = await bcrypt.hash(password.trim(), 10);
+    }
+    if (typeof isonline === "boolean") {
+      updateFields.isonline = isonline;
+    }
+
     const updated = await User.findByIdAndUpdate(
       riderId,
-      { $set: { role: newRole || "user" } },
+      { $set: updateFields },
       { new: true }
     );
 
     return NextResponse.json({
       success: true,
-      message: `Rider role changed to ${newRole || "user"} successfully!`,
-      user: updated,
+      message: `Delivery partner ${updated?.name || ''} updated successfully!`,
+      rider: updated,
     });
   } catch (error: any) {
     console.error("Admin Fleet PUT Error:", error);
-    return NextResponse.json({ success: false, message: "Server error" }, { status: 500 });
+    return NextResponse.json({ success: false, message: error.message || "Server error" }, { status: 500 });
   }
 }

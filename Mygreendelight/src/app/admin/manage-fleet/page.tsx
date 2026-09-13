@@ -20,6 +20,8 @@ import {
   Package,
   Eye,
   EyeOff,
+  Pencil,
+  Key,
 } from "lucide-react";
 import AdminSidebar from "@/components/AdminSidebar";
 
@@ -38,8 +40,11 @@ export default function ManageFleetPage() {
   const [riders, setRiders] = useState<Rider[]>([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingRiderId, setEditingRiderId] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showEditPassword, setShowEditPassword] = useState(false);
   const [toast, setToast] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   const [form, setForm] = useState({
@@ -47,6 +52,14 @@ export default function ManageFleetPage() {
     email: "",
     mobile: "",
     password: "",
+  });
+
+  const [editForm, setEditForm] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+    password: "",
+    isonline: true,
   });
 
   const fetchFleet = async () => {
@@ -95,6 +108,51 @@ export default function ManageFleetPage() {
       setToast({
         type: "error",
         text: error.response?.data?.message || "Error creating delivery partner",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const openEditModal = (rider: Rider) => {
+    setEditingRiderId(rider._id);
+    setEditForm({
+      name: rider.name || "",
+      email: rider.email || "",
+      mobile: rider.mobile || "",
+      password: "",
+      isonline: rider.isonline !== false,
+    });
+    setIsEditModalOpen(true);
+  };
+
+  const handleUpdateRider = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingRiderId) return;
+    setIsSubmitting(true);
+    setToast(null);
+
+    try {
+      const res = await axios.put("/api/admin/fleet", {
+        riderId: editingRiderId,
+        name: editForm.name,
+        email: editForm.email,
+        mobile: editForm.mobile,
+        password: editForm.password || undefined,
+        isonline: editForm.isonline,
+      });
+
+      if (res.data.success) {
+        setToast({ type: "success", text: res.data.message || "Delivery partner updated successfully!" });
+        setIsEditModalOpen(false);
+        fetchFleet();
+      } else {
+        setToast({ type: "error", text: res.data.message || "Failed to update rider" });
+      }
+    } catch (error: any) {
+      setToast({
+        type: "error",
+        text: error.response?.data?.message || "Error updating delivery partner",
       });
     } finally {
       setIsSubmitting(false);
@@ -316,12 +374,22 @@ export default function ManageFleetPage() {
                         </span>
                       </td>
                       <td className="p-4 text-right">
-                        <button
-                          onClick={() => handleRevokeRider(rider._id, rider.name)}
-                          className="text-rose-600 hover:text-rose-800 font-bold text-xs bg-rose-50 hover:bg-rose-100 px-3 py-1.5 rounded-xl border border-rose-200 transition cursor-pointer"
-                        >
-                          Revoke Access
-                        </button>
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={() => openEditModal(rider)}
+                            className="text-[#0f8646] hover:text-[#0c6a38] font-bold text-xs bg-emerald-50 hover:bg-emerald-100 px-2.5 py-1.5 rounded-xl border border-emerald-200 transition cursor-pointer flex items-center gap-1 shadow-2xs"
+                            title="Edit Delivery Partner Details"
+                          >
+                            <Pencil size={11} />
+                            <span>Edit</span>
+                          </button>
+                          <button
+                            onClick={() => handleRevokeRider(rider._id, rider.name)}
+                            className="text-rose-600 hover:text-rose-800 font-bold text-xs bg-rose-50 hover:bg-rose-100 px-2.5 py-1.5 rounded-xl border border-rose-200 transition cursor-pointer"
+                          >
+                            Revoke
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -447,6 +515,144 @@ export default function ManageFleetPage() {
                       </>
                     ) : (
                       <span>Create Partner Account</span>
+                    )}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Modal: Edit Delivery Partner */}
+        {isEditModalOpen && (
+          <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-gray-100 animate-in fade-in zoom-in-95 duration-200">
+              <div className="flex items-center justify-between mb-5">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-[#0f8646] flex items-center justify-center">
+                    <Pencil size={18} />
+                  </div>
+                  <div>
+                    <h3 className="font-black text-base text-gray-900">
+                      Edit Delivery Partner
+                    </h3>
+                    <p className="text-[11px] text-gray-400">
+                      Update contact, password, or duty status
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setIsEditModalOpen(false)}
+                  className="p-1.5 rounded-xl hover:bg-gray-100 text-gray-400 hover:text-gray-700 transition"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              <form onSubmit={handleUpdateRider} className="space-y-3.5">
+                <div>
+                  <label className="block text-[11px] font-black text-gray-700 uppercase tracking-wider mb-1">
+                    Full Name *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={editForm.name}
+                    onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
+                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0f8646] transition"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-black text-gray-700 uppercase tracking-wider mb-1">
+                    Mobile Number (10 Digits) *
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    maxLength={10}
+                    value={editForm.mobile}
+                    onChange={(e) =>
+                      setEditForm({ ...editForm, mobile: e.target.value.replace(/[^0-9]/g, "") })
+                    }
+                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0f8646] transition"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-black text-gray-700 uppercase tracking-wider mb-1">
+                    Login Email *
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={editForm.email}
+                    onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
+                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0f8646] transition"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-black text-gray-700 uppercase tracking-wider mb-1">
+                    Reset Password (Optional)
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showEditPassword ? "text" : "password"}
+                      placeholder="Leave blank to keep existing password"
+                      value={editForm.password}
+                      onChange={(e) => setEditForm({ ...editForm, password: e.target.value })}
+                      className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0f8646] transition pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowEditPassword(!showEditPassword)}
+                      className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600 cursor-pointer"
+                    >
+                      {showEditPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+                    </button>
+                  </div>
+                  <p className="text-[10px] text-gray-400 mt-1">
+                    Enter new password only if the delivery partner needs a password reset.
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-black text-gray-700 uppercase tracking-wider mb-1">
+                    Duty Status
+                  </label>
+                  <select
+                    value={editForm.isonline ? "online" : "offline"}
+                    onChange={(e) =>
+                      setEditForm({ ...editForm, isonline: e.target.value === "online" })
+                    }
+                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0f8646] transition"
+                  >
+                    <option value="online">🟢 Online (Available for deliveries)</option>
+                    <option value="offline">⚪ Offline (Off-duty)</option>
+                  </select>
+                </div>
+
+                <div className="pt-3 flex items-center justify-end gap-2.5">
+                  <button
+                    type="button"
+                    onClick={() => setIsEditModalOpen(false)}
+                    className="px-4 py-2.5 rounded-xl border border-gray-200 text-xs font-bold text-gray-600 hover:bg-gray-50 transition cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2.5 rounded-xl text-xs font-black transition shadow-md disabled:opacity-50 cursor-pointer flex items-center gap-1.5"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        <span>Saving...</span>
+                      </>
+                    ) : (
+                      <span>Save Changes</span>
                     )}
                   </button>
                 </div>
