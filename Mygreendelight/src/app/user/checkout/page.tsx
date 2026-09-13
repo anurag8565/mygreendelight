@@ -36,6 +36,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { clearCart, hydrateCart } from "@/redux/CartSlice";
+import { useCartSync } from "@/hooks/useCartSync";
 import axios from "axios";
 import {
   selectSubtotal,
@@ -77,12 +78,15 @@ export default function Checkout() {
   useGetMe();
   const dispatch = useDispatch();
   const { userdata } = useSelector((state: RootState) => state.user);
-  const { cartdata } = useSelector((state: RootState) => state.cart);
+  const { cartdata, isCloudHydrated } = useSelector((state: RootState) => state.cart);
   const router = useRouter();
   const { data: session, status } = useSession();
 
   const rawUserId = userdata?._id || (userdata as any)?.id || (session?.user as any)?._id || (session?.user as any)?.id || null;
   const cleanUserId = rawUserId ? String(rawUserId) : null;
+
+  // Real-time live cart sync across devices (WebSocket, focus, tabs, heartbeat)
+  useCartSync(cleanUserId);
 
   useEffect(() => {
     dispatch(hydrateCart({ userId: cleanUserId }));
@@ -397,13 +401,13 @@ export default function Checkout() {
     }
   };
 
-  if (status === "loading") {
+  if (status === "loading" || (!isCloudHydrated && (!cartdata || cartdata.length === 0))) {
     return (
       <div className="bg-[#fcfdfc] min-h-screen flex flex-col justify-between font-sans">
         <Nav user={(userdata as any) || null} />
         <main className="max-w-md mx-auto px-4 py-24 text-center flex-1 flex flex-col items-center justify-center">
           <Loader2 className="w-9 h-9 text-[#0a3d24] animate-spin mb-3" />
-          <h2 className="text-sm font-semibold text-gray-700">Connecting securely...</h2>
+          <h2 className="text-sm font-semibold text-gray-700">Loading your basket...</h2>
         </main>
         <Footer />
       </div>

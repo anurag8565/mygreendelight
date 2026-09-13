@@ -1,16 +1,23 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useRef, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from '@/redux/store';
 import { setCartFromCloud, getCleanUserId } from '@/redux/CartSlice';
 import { socket } from '@/lib/socket';
+import { useSession } from 'next-auth/react';
 import axios from 'axios';
 
 export function useCartSync(userIdProp?: any) {
   const dispatch = useDispatch<AppDispatch>();
   const { currentUserId } = useSelector((state: RootState) => state.cart);
-  const cleanUserId = getCleanUserId(userIdProp !== undefined ? userIdProp : currentUserId);
+  const { userdata } = useSelector((state: RootState) => state.user);
+  const { data: session, status: authStatus } = useSession();
+
+  const rawUserId = userIdProp !== undefined 
+    ? userIdProp 
+    : (userdata?._id || (userdata as any)?.id || (session?.user as any)?._id || session?.user?.id || currentUserId);
+  const cleanUserId = getCleanUserId(rawUserId);
   const lastFetchRef = useRef<number>(0);
 
   // Authoritative helper to format raw items from cloud/socket

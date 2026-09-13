@@ -206,7 +206,11 @@ const cartSlice = createSlice({
                     const guestCart = getSavedCart(null);
                     const userCart = getSavedCart(cleanId);
 
-                    let merged = [...userCart.cartdata];
+                    // Prefer saved userCart, fallback to existing in-memory items
+                    let merged = userCart.cartdata.length > 0
+                        ? [...userCart.cartdata]
+                        : (state.cartdata.length > 0 ? [...state.cartdata] : []);
+
                     if (guestCart.cartdata.length > 0) {
                         for (const gItem of guestCart.cartdata) {
                             const gKey = gItem.cartItemId || String(gItem._id);
@@ -223,16 +227,32 @@ const cartSlice = createSlice({
                         // Sync this explicit guest migration to backend
                         syncCartToBackend(merged, userCart.couponCode || guestCart.couponCode, userCart.discountAmount || guestCart.discountAmount, cleanId);
                     }
+
+                    // Also preserve in-memory items if they weren't in userCart yet
+                    if (state.cartdata.length > 0) {
+                        for (const memItem of state.cartdata) {
+                            const mKey = memItem.cartItemId || String(memItem._id);
+                            const existing = merged.find(i => (i.cartItemId && i.cartItemId === mKey) || String(i._id) === String(memItem._id));
+                            if (!existing) {
+                                merged.push(memItem);
+                            }
+                        }
+                    }
+
                     state.cartdata = merged;
-                    state.couponCode = userCart.couponCode || guestCart.couponCode;
-                    state.discountAmount = userCart.discountAmount || guestCart.discountAmount;
+                    state.couponCode = userCart.couponCode || guestCart.couponCode || state.couponCode;
+                    state.discountAmount = userCart.discountAmount || guestCart.discountAmount || state.discountAmount;
                     // Cache locally for offline fast startup without pushing to backend
                     saveCartToStorage(state.cartdata, state.couponCode, state.discountAmount, cleanId);
                 } else {
                     const guestCart = getSavedCart(null);
-                    state.cartdata = guestCart.cartdata;
-                    state.couponCode = guestCart.couponCode;
-                    state.discountAmount = guestCart.discountAmount;
+                    if (guestCart.cartdata.length > 0) {
+                        state.cartdata = guestCart.cartdata;
+                        state.couponCode = guestCart.couponCode;
+                        state.discountAmount = guestCart.discountAmount;
+                    } else if (state.cartdata.length === 0) {
+                        state.cartdata = [];
+                    }
                     state.isCloudHydrated = true;
                 }
             } catch (e) {
