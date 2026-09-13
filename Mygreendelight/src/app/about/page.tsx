@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import {
   Heart,
   Sparkles,
@@ -14,9 +13,7 @@ import {
   Quote,
   Clock,
   CheckCircle2,
-  Store,
   MapPin,
-  Tractor,
   RotateCcw,
   ShoppingBag,
 } from "lucide-react";
@@ -99,20 +96,20 @@ export default function AboutPage() {
       <Nav user={(userdata as any) || { role: "user" }} />
 
       <main className="flex-1 w-full max-w-full overflow-x-clip">
-        {/* ================= 1. LUXURY HERO BANNER CARD (HOMEPAGE STRUCTURED) ================= */}
+        {/* ================= 1. LUXURY HERO BANNER CARD (CUSTOM THELA-TO-ONLINE HERO) ================= */}
         <section className="w-full bg-gradient-to-b from-emerald-50/40 via-white to-white pt-2.5 sm:pt-4 pb-3 font-sans">
           <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
-            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.12)] bg-gray-950 min-h-[300px] sm:min-h-[360px] md:min-h-[400px] border border-gray-100 flex items-center">
+            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.12)] bg-gray-950 min-h-[340px] sm:min-h-[400px] md:min-h-[440px] border border-gray-100 flex items-center">
               
-              {/* Background 4K Produce Imagery */}
+              {/* Custom Story Hero Image (Thela to Online Bag) */}
               <img
-                src="/banners/veggies_clean_4k.jpg"
-                alt="SubziQuick Fresh Produce Farm Delivery Bhopal"
-                className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none opacity-40 scale-105"
+                src="/thela_story_hero.jpg"
+                alt="SubziQuick Story - Ek Thele Se Shuru Hui Kahani"
+                className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none opacity-45 scale-105"
               />
 
               {/* Multi-layer Dark Gradient for High-Contrast Readability */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/85 to-black/50 z-10" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/85 to-black/40 z-10" />
 
               {/* Ambient Emerald Spotlight */}
               <div className="absolute top-0 left-0 w-96 h-96 bg-[#10b981]/25 rounded-full blur-3xl pointer-events-none z-10" />
@@ -250,7 +247,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ================= 4. EMOTIONAL FOUNDER QUOTE CALLOUT (HOMEPAGE TONE) ================= */}
+        {/* ================= 4. EMOTIONAL FOUNDER QUOTE CALLOUT ================= */}
         <section className="w-full py-6 sm:py-8 bg-[#f8faf8] border-b border-gray-100 font-sans">
           <div className="max-w-5xl mx-auto px-3.5 sm:px-6 md:px-8">
             <div className="bg-white rounded-3xl border border-gray-100 p-6 sm:p-8 shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col md:flex-row items-center gap-6 relative overflow-hidden">
@@ -314,7 +311,7 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              {/* 4 Promises Grid (Like FarmFreshPromise) */}
+              {/* 4 Promises Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                 {corePromises.map((item, idx) => {
                   const Icon = item.icon;
@@ -366,25 +363,25 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ================= 6. GROUND REALITY & BHOPAL OPERATIONS (DIRECT MANDI SOURCING) ================= */}
+        {/* ================= 6. GROUND REALITY & BHOPAL OPERATIONS (DIRECT MANDI PACKING VISUAL) ================= */}
         <section className="w-full py-8 sm:py-12 bg-white border-b border-gray-100 font-sans">
           <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
             <div className="bg-[#fcfdfc] border border-gray-200/80 rounded-3xl p-5 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
               
-              {/* Left Column: Direct Farm & Mandi Sourcing Photo */}
+              {/* Left Column: Direct Mandi Packing Photo */}
               <div className="lg:col-span-5 relative rounded-2xl overflow-hidden border border-gray-200 shadow-sm aspect-4/3 group">
                 <img
-                  src="/hero_fresh_farm.jpg"
-                  alt="SubziQuick Fresh Farm and Mandi Direct Sourcing"
+                  src="/mandi_packing_fresh.jpg"
+                  alt="SubziQuick Fresh Mandi Sorting and Packing Bhopal"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
                 <div className="absolute bottom-3 left-3 right-3 text-white">
                   <span className="inline-block bg-[#0f8646] text-white text-[10px] font-black px-2.5 py-0.5 rounded-md mb-1 uppercase tracking-wide">
-                    Direct Mandi Model
+                    Pure Direct Model
                   </span>
                   <p className="text-xs sm:text-sm font-bold leading-tight">
-                    Subah Mandi Se Khareedi, Seedha Aapke Kitchen Tak
+                    Subah Mandi Se Fresh Sorting, Seedha Ghar Tak
                   </p>
                 </div>
               </div>
@@ -447,7 +444,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ================= 7. CLOSING LUXURY BANNER (IDENTICAL HOMEPAGE FINALE) ================= */}
+        {/* ================= 7. CLOSING LUXURY BANNER ================= */}
         <section className="w-full py-8 sm:py-12 bg-[#f8faf8] font-sans">
           <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
             <div className="bg-gradient-to-r from-[#072815] via-[#0b4d24] to-[#0f8646] rounded-3xl p-6 sm:p-10 md:p-12 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
