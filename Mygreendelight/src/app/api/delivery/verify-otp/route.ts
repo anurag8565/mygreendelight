@@ -92,6 +92,7 @@ export async function POST(req: Request) {
     order.deliveryOtp.verified = true;
     order.status = "delivered";
     order.ispaid = true; // Auto-mark paid on verified delivery (both COD & Online)
+    order.paymentStatus = "completed";
     order.bagsReturned = returnedCount;
     order.bagReturnCashback = bagCashback;
 
@@ -107,6 +108,7 @@ export async function POST(req: Request) {
           orderId: order._id.toString(),
           status: "delivered",
           ispaid: true,
+          paymentStatus: "completed",
         }),
         signal: AbortSignal.timeout(2000),
       });

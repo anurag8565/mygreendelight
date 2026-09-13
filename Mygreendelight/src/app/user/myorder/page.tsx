@@ -107,6 +107,35 @@ export default function MyOrder() {
 
   useEffect(() => {
     fetchOrders();
+
+    // ⚡ Auto-sync active orders in real-time when customer has pending/in-transit deliveries
+    const interval = setInterval(() => {
+      if (document.visibilityState === "visible") {
+        setOrders((prev) => {
+          const hasActive = prev.some(
+            (o) => o.status !== "delivered" && o.status !== "completed" && o.status !== "cancelled"
+          );
+          if (hasActive) {
+            axios
+              .get(`/api/user/myorder?_t=${Date.now()}`, {
+                headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+              })
+              .then((res) => {
+                const list = Array.isArray(res.data) ? res.data : res.data?.orders || [res.data];
+                list.sort(
+                  (a: any, b: any) =>
+                    new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                );
+                setOrders(list.filter(Boolean));
+              })
+              .catch(() => {});
+          }
+          return prev;
+        });
+      }
+    }, 6000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const fetchOrders = async () => {
@@ -560,37 +589,53 @@ export default function MyOrder() {
 
                   </div>
 
-                  {/* 3. Rider Dock (Visible only if assigned & active) */}
-                  {order.assigneddelliveryboy && !isDelivered && !isCancelled && (
+                  {/* 3. Rider Dock & Doorstep OTP (Visible if rider assigned or out for delivery) */}
+                  {!isDelivered && !isCancelled && (order.assigneddelliveryboy || (isOutForDelivery && order.deliveryOtp?.code)) && (
                     <div className="mx-4 sm:mx-5 my-3 bg-emerald-50/90 border border-emerald-200/80 rounded-2xl p-3 flex items-center justify-between gap-3 shadow-2xs">
-                      <div className="flex items-center gap-2.5">
+                      <div className="flex items-center gap-2.5 min-w-0">
                         <div className="w-9 h-9 rounded-xl bg-[#0f8646] text-white flex items-center justify-center shrink-0 shadow-xs">
                           <Truck size={17} />
                         </div>
-                        <div>
+                        <div className="min-w-0 truncate">
                           <span className="text-[9.5px] font-black text-[#0f8646] uppercase tracking-wider block">
                             SubziQuick Express Rider
                           </span>
-                          <span className="font-extrabold text-xs text-gray-900">
-                            {order.assigneddelliveryboy.name}
+                          <span className="font-extrabold text-xs text-gray-900 truncate block">
+                            {order.assigneddelliveryboy?.name || "Driver Assigned"}
                           </span>
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 shrink-0">
                         {order.deliveryOtp?.code && !order.deliveryOtp?.verified && (
-                          <div className="bg-white border-2 border-emerald-500 text-emerald-950 px-3 py-1 rounded-xl shadow-2xs flex items-center gap-1.5" title="Doorstep Verification OTP">
+                          <div
+                            onClick={() => {
+                              if (order.deliveryOtp?.code) {
+                                navigator.clipboard.writeText(order.deliveryOtp.code);
+                                showToast(`✓ OTP ${order.deliveryOtp.code} copied! Share with rider.`);
+                              }
+                            }}
+                            className="bg-white border-2 border-emerald-500 hover:bg-emerald-50 text-emerald-950 px-3 py-1 rounded-xl shadow-2xs flex items-center gap-1.5 cursor-pointer transition active:scale-95 group"
+                            title="Click to copy Doorstep Verification OTP"
+                          >
                             <span className="text-[9px] font-black uppercase text-emerald-700">OTP</span>
-                            <span className="font-mono text-sm font-black tracking-widest text-[#0f8646]">{order.deliveryOtp.code}</span>
+                            <span className="font-mono text-sm font-black tracking-widest text-[#0f8646]">
+                              {order.deliveryOtp.code}
+                            </span>
+                            <span className="text-[8px] bg-emerald-100 text-emerald-800 px-1 py-0.2 rounded font-bold hidden sm:inline">
+                              Copy
+                            </span>
                           </div>
                         )}
-                        <a
-                          href={`tel:${order.assigneddelliveryboy.mobile}`}
-                          className="bg-white border border-emerald-300 text-[#0f8646] hover:bg-emerald-50 px-3 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 transition shadow-2xs cursor-pointer"
-                        >
-                          <Phone size={12} />
-                          <span>Call</span>
-                        </a>
+                        {order.assigneddelliveryboy?.mobile && (
+                          <a
+                            href={`tel:${order.assigneddelliveryboy.mobile}`}
+                            className="bg-white border border-emerald-300 text-[#0f8646] hover:bg-emerald-50 px-3 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 transition shadow-2xs cursor-pointer active:scale-95"
+                          >
+                            <Phone size={12} />
+                            <span>Call</span>
+                          </a>
+                        )}
                       </div>
                     </div>
                   )}
