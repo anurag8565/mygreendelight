@@ -265,9 +265,9 @@ export default function ProductDetailsClient({
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-10 items-start">
             
-            {/* Left 5 Cols: Product Image Frame with Floating Wishlist */}
-            <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
-              <div className="w-full aspect-square max-h-[350px] sm:max-h-[420px] rounded-2xl sm:rounded-3xl bg-gradient-to-b from-stone-50 to-white border border-stone-200/80 p-5 sm:p-8 flex items-center justify-center relative overflow-hidden group shadow-2xs">
+            {/* Left 5 Cols: Product Image Frame with Floating Wishlist & Live Dispatch Banner */}
+            <div className="lg:col-span-5 flex flex-col items-center justify-center relative lg:sticky lg:top-24">
+              <div className="w-full aspect-square max-h-[350px] sm:max-h-[440px] rounded-3xl bg-gradient-to-b from-stone-50 via-white to-emerald-50/20 border border-stone-200/90 p-6 sm:p-9 flex items-center justify-center relative overflow-hidden group shadow-[0_4px_24px_rgba(0,0,0,0.04)]">
                 
                 <img
                   src={product.image}
@@ -276,16 +276,17 @@ export default function ProductDetailsClient({
                     (e.target as HTMLImageElement).src =
                       "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=500&q=80";
                   }}
-                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-sm p-2"
+                  className="w-full h-full object-contain group-hover:scale-108 transition-transform duration-500 drop-shadow-sm p-1"
                 />
 
-                {/* Top Badges */}
-                <div className="absolute top-3 left-3 flex flex-col gap-1.5 items-start">
-                  <span className="bg-[#0a3d24] text-white text-[9.5px] sm:text-[10.5px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-2xs">
-                    BEST SELLER
+                {/* Top Luxury Badges */}
+                <div className="absolute top-3.5 left-3.5 flex flex-col gap-1.5 items-start z-10">
+                  <span className="bg-[#0a3d24] text-white text-[9px] sm:text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-xs flex items-center gap-1">
+                    <Sparkles size={11} className="text-emerald-300" />
+                    <span>Best Seller</span>
                   </span>
                   {discountPercent > 0 && (
-                    <span className="bg-amber-400 text-stone-950 text-[9.5px] sm:text-[10px] font-black px-2 py-0.5 rounded-full shadow-2xs">
+                    <span className="bg-amber-400 text-stone-950 text-[9px] sm:text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-xs">
                       {discountPercent}% OFF
                     </span>
                   )}
@@ -318,18 +319,26 @@ export default function ProductDetailsClient({
                       }
                     } catch (error) {}
                   }}
-                  className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/95 backdrop-blur-xs border border-stone-200 shadow-sm flex items-center justify-center transition cursor-pointer active:scale-90 hover:bg-rose-50"
+                  className="absolute top-3.5 right-3.5 w-9.5 h-9.5 rounded-full bg-white/95 backdrop-blur-md border border-stone-200 shadow-xs flex items-center justify-center transition cursor-pointer active:scale-90 hover:bg-rose-50 z-10"
                   title="Wishlist"
                 >
                   <Heart
-                    size={16}
+                    size={17}
                     className={isWishlisted ? "text-rose-500 fill-rose-500" : "text-stone-400 hover:text-rose-500"}
                   />
                 </button>
 
+                {/* Bottom Center Freshness Guarantee Pill */}
+                <div className="absolute bottom-3 inset-x-4 flex items-center justify-center pointer-events-none">
+                  <span className="bg-white/90 backdrop-blur-md border border-stone-200/90 text-stone-700 text-[10px] sm:text-[11px] font-bold px-3 py-1 rounded-full shadow-2xs flex items-center gap-1.5">
+                    <Leaf size={12} className="text-[#0a3d24]" />
+                    <span>Harvested at 5:00 AM • Bhopal Mandi</span>
+                  </span>
+                </div>
+
                 {/* Out of Stock Overlay */}
                 {currentStock <= 0 && (
-                  <div className="absolute inset-0 bg-white/85 backdrop-blur-2xs flex items-center justify-center z-10">
+                  <div className="absolute inset-0 bg-white/85 backdrop-blur-2xs flex items-center justify-center z-20">
                     <span className="bg-red-600 text-white font-black text-xs uppercase px-4 py-1.5 rounded-full shadow-md">
                       Out of Stock
                     </span>
@@ -370,23 +379,36 @@ export default function ProductDetailsClient({
                 </span>
               </div>
 
-              {/* Price Block */}
-              <div className="mb-4 bg-emerald-50/50 border border-emerald-200/70 rounded-2xl p-3 sm:p-4 flex items-center justify-between gap-3 flex-wrap">
-                <div>
-                  <div className="flex items-baseline gap-2.5 flex-wrap">
-                    <span className="text-2xl sm:text-3xl font-black text-stone-900">
-                      ₹{currentPrice}
+              {/* Price & Live Express Status Block */}
+              <div className="mb-4 bg-emerald-50/50 border border-emerald-200/70 rounded-2xl p-3 sm:p-4 flex flex-col gap-2.5">
+                <div className="flex items-center justify-between gap-3 flex-wrap">
+                  <div>
+                    <div className="flex items-baseline gap-2.5 flex-wrap">
+                      <span className="text-2xl sm:text-3xl font-black text-stone-900">
+                        ₹{currentPrice}
+                      </span>
+                      <span className="text-sm sm:text-base text-stone-400 line-through font-medium">
+                        ₹{activeMRP}
+                      </span>
+                      <span className="bg-[#0a3d24] text-white text-[10.5px] font-black px-2.5 py-0.5 rounded-full shadow-2xs">
+                        SAVE ₹{activeMRP - currentPrice} ({discountPercent}% OFF)
+                      </span>
+                    </div>
+                    <p className="text-[10px] sm:text-[11px] text-stone-500 font-medium mt-1">
+                      Tax included • Free shipping on orders over ₹199 in Bhopal
+                    </p>
+                  </div>
+
+                  {/* Live Dispatch Timer Pill */}
+                  <div className="flex items-center gap-1.5 bg-white border border-emerald-200 px-3 py-1.5 rounded-xl shadow-2xs">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
                     </span>
-                    <span className="text-sm sm:text-base text-stone-400 line-through font-medium">
-                      ₹{activeMRP}
-                    </span>
-                    <span className="bg-[#0a3d24] text-white text-[10.5px] font-black px-2.5 py-0.5 rounded-full shadow-2xs">
-                      SAVE ₹{activeMRP - currentPrice} ({discountPercent}% OFF)
+                    <span className="text-[11px] font-black text-[#0a3d24]">
+                      ⚡ In Stock • Dispatches in 10-15m
                     </span>
                   </div>
-                  <p className="text-[10px] sm:text-[11px] text-stone-500 font-medium mt-1">
-                    Tax included • Free shipping on orders over ₹199 in Bhopal
-                  </p>
                 </div>
               </div>
 
