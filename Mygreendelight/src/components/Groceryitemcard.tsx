@@ -208,7 +208,7 @@ export default function Groceryitemcard({
                 ))}
               </select>
             ) : (
-              <p className="text-[11px] text-gray-400 font-medium truncate h-[22px] flex items-center">
+              <p className="text-[11.5px] text-gray-500 font-semibold truncate h-[22px] flex items-center">
                 {displayUnit}
               </p>
             )}

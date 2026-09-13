@@ -113,7 +113,7 @@ export default async function Userdashbord() {
   const plainGoogleSettings = storeSetting ? JSON.parse(JSON.stringify(storeSetting)) : null;
 
   return (
-    <div className="bg-white w-full max-w-full overflow-x-clip font-sans">
+    <div className="bg-[#f5f6f5] w-full max-w-full overflow-x-clip font-sans">
       {/* 1. Hero Banner */}
       <Hero banners={plainBanners} />
 
