@@ -32,7 +32,7 @@ export default function WhatsAppWidget() {
 
   return (
     <div
-      className="fixed bottom-[4.8rem] right-3.5 z-40 md:bottom-7 md:right-7 flex flex-col items-end pointer-events-auto font-sans transition-all duration-300"
+      className="fixed bottom-[4.8rem] right-3.5 z-40 lg:bottom-7 lg:right-7 flex flex-col items-end pointer-events-auto font-sans transition-all duration-300"
     >
       {/* 🚀 Main Interactive Pulsing Button - Clean FAB (Floating Action Button) */}
       <motion.a
