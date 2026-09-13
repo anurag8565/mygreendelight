@@ -27,10 +27,11 @@ export default function MobileBottomNav() {
     setMounted(true);
   }, []);
 
-  // Hide bottom nav on admin and delivery boy pages or login/register
+  // Hide bottom nav on admin, delivery, checkout, and auth pages to avoid overlapping checkout bars
   if (
     pathname.startsWith("/admin") ||
     pathname.startsWith("/delivery") ||
+    pathname === "/user/checkout" ||
     pathname === "/login" ||
     pathname === "/register"
   ) {

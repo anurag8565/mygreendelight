@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "@/redux/store";
 import {
@@ -27,6 +27,8 @@ import {
   Lock,
   Gift,
   CheckCircle2,
+  Zap,
+  BadgeCheck,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -222,40 +224,85 @@ export default function CartPage() {
     window.open(whatsappUrl, "_blank");
   };
 
+  const totalMRP = useMemo(() => {
+    return cartdata.reduce((acc, item) => {
+      const itemPrice = item.price || 0;
+      const mrp = (item as any).mrp && (item as any).mrp > itemPrice 
+        ? (item as any).mrp 
+        : Math.round(itemPrice * 1.25);
+      return acc + mrp * (item.quantity || 1);
+    }, 0);
+  }, [cartdata]);
+
+  const totalSavings = Math.max(0, (totalMRP - subtotal) + discountAmount + (isFreeDelivery && subtotal > 0 ? (deliverySettings.deliveryFee || 30) : 0));
 
   return (
-    <div className="bg-[#fafafa] min-h-screen flex flex-col justify-between font-sans text-slate-900 selection:bg-emerald-500 selection:text-white">
+    <div className="bg-[#f8f9fa] min-h-screen flex flex-col justify-between font-sans text-stone-900 selection:bg-emerald-500 selection:text-white">
       <Nav user={(userdata as any) || { role: "user" }} />
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-32 lg:pb-12 w-full flex-1">
-        {/* Minimalist Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 pb-5 border-b border-slate-200/80 mb-6">
-          <div>
-            <div className="flex items-center gap-1.5 text-xs text-slate-400 font-medium mb-1">
-              <Link href="/" className="hover:text-emerald-700 transition">
-                Home
-              </Link>
-              <ChevronRight size={12} />
-              <Link href="/shop" className="hover:text-emerald-700 transition">
-                Shop
-              </Link>
-              <ChevronRight size={12} />
-              <span className="text-slate-800 font-bold">Cart</span>
+      <main className="max-w-6xl mx-auto px-3.5 sm:px-6 py-5 sm:py-8 pb-32 lg:pb-12 w-full flex-1">
+        {/* Luxury Checkout Step Bar & Header */}
+        <div className="bg-white border border-stone-200/90 rounded-3xl p-4 sm:p-6 shadow-xs mb-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-stone-100">
+            <div>
+              <div className="flex items-center gap-1.5 text-[11px] text-stone-400 font-semibold mb-1">
+                <Link href="/" className="hover:text-[#0a3d24] transition">
+                  Home
+                </Link>
+                <ChevronRight size={11} />
+                <Link href="/shop" className="hover:text-[#0a3d24] transition">
+                  Shop
+                </Link>
+                <ChevronRight size={11} />
+                <span className="text-[#0a3d24] font-bold">Shopping Basket</span>
+              </div>
+              <h1 className="text-xl sm:text-3xl font-black text-stone-900 tracking-tight font-heading flex items-center gap-2">
+                <span>Review Your Fresh Basket</span>
+                {totalItemCount > 0 && (
+                  <span className="text-xs bg-emerald-50 text-[#0a3d24] px-2.5 py-0.5 rounded-full border border-emerald-200 font-bold">
+                    {totalItemCount} {totalItemCount === 1 ? "Item" : "Items"}
+                  </span>
+                )}
+              </h1>
+              <p className="text-xs text-stone-500 font-medium mt-1 flex items-center gap-2">
+                <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span>Harvested at 5:00 AM • 10-15 Min Express Delivery across Bhopal</span>
+              </p>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
-              Review Your Basket
-            </h1>
-            <p className="text-xs text-slate-500 font-medium mt-0.5">
-              {cartdata.length} distinct item{cartdata.length !== 1 ? "s" : ""} • 10-15 Min Express Delivery across Bhopal
-            </p>
+
+            <div className="flex items-center gap-2 self-start md:self-auto">
+              <Link
+                href="/shop"
+                className="text-[#0a3d24] hover:bg-emerald-50 font-bold text-xs flex items-center gap-1.5 py-2 px-3.5 rounded-xl border border-emerald-200/80 transition active:scale-95 shadow-2xs"
+              >
+                <span>+ Add More Produce</span>
+              </Link>
+            </div>
           </div>
 
-          <Link
-            href="/shop"
-            className="text-emerald-800 hover:text-emerald-900 font-bold text-xs flex items-center gap-1 transition self-start sm:self-auto py-1 px-3 rounded-full bg-emerald-50 hover:bg-emerald-100/70 border border-emerald-200/70"
-          >
-            <span>+ Add More Produce</span>
-          </Link>
+          {/* 3-Step Checkout Progress Indicators */}
+          <div className="pt-3.5 flex items-center justify-between max-w-xl mx-auto text-xs font-bold">
+            <div className="flex items-center gap-2 text-[#0a3d24]">
+              <span className="w-6 h-6 rounded-full bg-[#0a3d24] text-white flex items-center justify-center text-[11px] font-black shadow-2xs">
+                1
+              </span>
+              <span>Basket</span>
+            </div>
+            <div className="flex-1 h-0.5 mx-3 bg-emerald-200 rounded-full" />
+            <div className="flex items-center gap-2 text-stone-400">
+              <span className="w-6 h-6 rounded-full bg-stone-100 text-stone-500 border border-stone-200 flex items-center justify-center text-[11px] font-black">
+                2
+              </span>
+              <span>Address & Slot</span>
+            </div>
+            <div className="flex-1 h-0.5 mx-3 bg-stone-200 rounded-full" />
+            <div className="flex items-center gap-2 text-stone-400">
+              <span className="w-6 h-6 rounded-full bg-stone-100 text-stone-500 border border-stone-200 flex items-center justify-center text-[11px] font-black">
+                3
+              </span>
+              <span>Payment</span>
+            </div>
+          </div>
         </div>
 
         {/* Guest Login Hint (Minimal Banner) */}
@@ -320,40 +367,51 @@ export default function CartPage() {
                   </div>
                   <Link
                     href="/shop"
-                    className="bg-amber-600 hover:bg-amber-700 text-white text-[11px] font-black px-3 py-1.5 rounded-xl transition shrink-0"
+                    className="bg-amber-600 hover:bg-amber-700 text-white text-[11px] font-black px-3 py-1.5 rounded-xl transition shrink-0 shadow-2xs"
                   >
                     + Add Items
                   </Link>
                 </div>
               )}
 
-              {/* Free Delivery Status Strip */}
-              <div className={`border rounded-2xl p-3.5 shadow-2xs transition-all duration-300 ${
+              {/* Free Delivery Status & Mandi Direct Strip */}
+              <div className={`border rounded-3xl p-4 shadow-xs transition-all duration-300 ${
                 isFreeDelivery 
-                  ? "bg-emerald-50/80 border-emerald-300/80 shadow-[0_4px_16px_rgba(10,61,36,0.12)]" 
-                  : "bg-white border-slate-200/80"
+                  ? "bg-gradient-to-r from-emerald-50 via-white to-emerald-50 border-emerald-300" 
+                  : "bg-white border-stone-200/90"
               }`}>
-
-                <div className="flex items-center justify-between text-xs mb-2">
-                  <div className="flex items-center gap-2 font-bold text-slate-800">
-                    <Truck size={15} className="text-[#0a3d24] shrink-0" />
+                <div className="flex items-center justify-between text-xs mb-2.5">
+                  <div className="flex items-center gap-2 font-bold text-stone-800">
+                    <div className="w-7 h-7 rounded-xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center shrink-0">
+                      <Truck size={15} />
+                    </div>
                     {isFreeDelivery ? (
-                      <span className="text-[#0a3d24] font-black flex items-center gap-1">
-                        🎉 FREE Delivery Unlocked!
-                      </span>
+                      <div>
+                        <span className="text-[#0a3d24] font-black text-xs sm:text-sm block">
+                          🎉 FREE Express Delivery Unlocked!
+                        </span>
+                        <span className="text-[10.5px] text-stone-500 font-medium">
+                          Your order qualifies for free doorstep delivery across Bhopal.
+                        </span>
+                      </div>
                     ) : (
-                      <span>
-                        Add <strong className="text-[#0a3d24]">₹{remainingForFreeDelivery}</strong> more for FREE Delivery
-                      </span>
+                      <div>
+                        <span className="text-stone-900 font-bold text-xs sm:text-sm block">
+                          Add <strong className="text-[#0a3d24]">₹{remainingForFreeDelivery}</strong> more for FREE Delivery
+                        </span>
+                        <span className="text-[10.5px] text-stone-500 font-medium">
+                          Standard Bhopal delivery fee is ₹{deliverySettings.deliveryFee || 30}
+                        </span>
+                      </div>
                     )}
                   </div>
-                  <span className="text-[11px] font-mono text-slate-500 font-bold">
+                  <span className="text-xs font-mono text-[#0a3d24] font-black bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-200">
                     {Math.min(100, Math.round((subtotal / freeDeliveryThreshold) * 100))}%
                   </span>
                 </div>
-                <div className="w-full bg-slate-200/60 rounded-full h-2 overflow-hidden">
+                <div className="w-full bg-stone-100 rounded-full h-2.5 overflow-hidden p-0.5 border border-stone-200/60">
                   <div
-                    className="bg-[#0a3d24] h-full rounded-full transition-all duration-500"
+                    className="bg-gradient-to-r from-emerald-600 to-[#0a3d24] h-full rounded-full transition-all duration-500 shadow-2xs"
                     style={{
                       width: `${Math.min(100, (subtotal / freeDeliveryThreshold) * 100)}%`,
                     }}
@@ -361,49 +419,90 @@ export default function CartPage() {
                 </div>
               </div>
 
-              {/* Items Card List */}
-              <div className="bg-white rounded-3xl border border-slate-200/80 p-4 sm:p-5 divide-y divide-slate-100 shadow-2xs">
+              {/* Total Mandi Direct Savings Banner */}
+              {totalSavings > 0 && (
+                <div className="bg-gradient-to-r from-emerald-900 via-[#0a3d24] to-emerald-950 text-white rounded-2xl p-3 px-4 flex items-center justify-between shadow-xs">
+                  <div className="flex items-center gap-2">
+                    <Sparkles size={16} className="text-amber-300 shrink-0" />
+                    <div>
+                      <span className="font-black text-xs block text-white">
+                        You are saving ₹{totalSavings} on this Mandi direct order!
+                      </span>
+                      <span className="text-[10.5px] text-emerald-200/80 font-medium">
+                        Direct farmer sourcing beats local market rates with zero middleman margin.
+                      </span>
+                    </div>
+                  </div>
+                  <span className="bg-amber-400 text-stone-950 font-black text-[10px] px-2 py-0.5 rounded-full shadow-2xs shrink-0">
+                    SAVER
+                  </span>
+                </div>
+              )}
+
+              {/* Items Card List with Luxury Border & Shadow */}
+              <div className="bg-white rounded-3xl border border-stone-200/90 p-4 sm:p-5 divide-y divide-stone-100 shadow-xs">
                 {cartdata.map((item) => {
                   const itemId = item.cartItemId || item._id?.toString();
                   const itemWeight = item.variation?.weight || item.unit;
+                  const itemMRP = (item as any).mrp && (item as any).mrp > item.price
+                    ? (item as any).mrp
+                    : Math.round(item.price * 1.25);
 
                   return (
                     <div
                       key={itemId}
-                      className="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5 sm:gap-4 justify-between"
+                      className="py-3.5 first:pt-0 last:pb-0 flex items-center gap-3.5 sm:gap-4 justify-between"
                     >
                       {/* Thumbnail */}
-                      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-slate-50 border border-slate-100 p-1 shrink-0 flex items-center justify-center overflow-hidden">
+                      <Link
+                        href={`/product/${item._id}`}
+                        className="w-16 h-16 sm:w-18 sm:h-18 rounded-2xl bg-gradient-to-b from-stone-50 to-white border border-stone-200/80 p-1.5 shrink-0 flex items-center justify-center overflow-hidden hover:border-emerald-300 transition group"
+                      >
                         <img
                           src={item.image}
                           alt={item.name}
-                          className="w-full h-full object-contain"
+                          className="w-full h-full object-contain group-hover:scale-105 transition-transform"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src =
+                              "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=500&q=80";
+                          }}
                         />
-                      </div>
+                      </Link>
 
                       {/* Info */}
                       <div className="min-w-0 flex-1">
-                        <h3 className="font-extrabold text-xs sm:text-sm text-slate-900 leading-tight truncate">
-                          {item.name}
-                        </h3>
-                        <span className="text-[11px] text-slate-400 font-medium block mt-0.5">
-                          {itemWeight}
-                        </span>
+                        <Link href={`/product/${item._id}`} className="hover:text-[#0a3d24] transition">
+                          <h3 className="font-extrabold text-xs sm:text-sm text-stone-900 leading-tight truncate">
+                            {item.name}
+                          </h3>
+                        </Link>
+                        <div className="flex items-center gap-2 mt-0.5">
+                          <span className="text-[11px] text-stone-500 font-medium">
+                            {itemWeight}
+                          </span>
+                          <span className="text-stone-300">•</span>
+                          <span className="text-[10px] text-emerald-800 font-bold bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">
+                            Grade A
+                          </span>
+                        </div>
 
-                        <div className="flex items-center gap-1.5 mt-1">
+                        <div className="flex items-center gap-2 mt-1.5 flex-wrap">
                           {item.price === 0 ? (
-                            <span className="bg-emerald-100/70 text-[#0a3d24] font-extrabold text-[10px] uppercase px-2 py-0.5 rounded-md flex items-center gap-1">
+                            <span className="bg-emerald-100 text-[#0a3d24] font-black text-[10px] uppercase px-2 py-0.5 rounded-md flex items-center gap-1">
                               <Gift size={11} />
                               <span>Free Gift</span>
                             </span>
                           ) : (
                             <>
-                              <span className="text-xs sm:text-sm font-black text-slate-900">
+                              <span className="text-xs sm:text-sm font-black text-stone-900">
                                 ₹{item.price * item.quantity}
                               </span>
+                              <span className="text-[11px] text-stone-400 line-through font-medium">
+                                ₹{itemMRP * item.quantity}
+                              </span>
                               {item.quantity > 1 && (
-                                <span className="text-[10px] text-slate-400">
-                                  (₹{item.price} each)
+                                <span className="text-[10px] text-stone-500 font-medium">
+                                  (₹{item.price}/{itemWeight})
                                 </span>
                               )}
                             </>
@@ -413,35 +512,35 @@ export default function CartPage() {
 
                       {/* Stepper + Delete */}
                       <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-                        <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl overflow-hidden h-7 sm:h-8">
+                        <div className="flex items-center bg-stone-50 border border-stone-200 rounded-xl overflow-hidden h-8 sm:h-9 shadow-2xs">
                           <button
                             type="button"
                             onClick={() => dispatch(decreaseQuantity(itemId))}
-                            className="w-7 h-full flex items-center justify-center text-slate-600 hover:text-red-600 hover:bg-slate-100 transition cursor-pointer"
+                            className="w-8 h-full flex items-center justify-center text-stone-600 hover:text-red-600 hover:bg-stone-100 transition cursor-pointer active:scale-90"
                             aria-label="Decrease quantity"
                           >
-                            <Minus size={12} />
+                            <Minus size={12} className="stroke-[2.5]" />
                           </button>
-                          <span className="w-6 text-center font-bold text-xs text-slate-900">
+                          <span className="w-7 text-center font-black text-xs text-stone-900">
                             {item.quantity}
                           </span>
                           <button
                             type="button"
                             onClick={() => dispatch(increaseQuantity(itemId))}
-                            className="w-7 h-full flex items-center justify-center text-[#0a3d24] hover:bg-emerald-50 transition cursor-pointer"
+                            className="w-8 h-full flex items-center justify-center text-[#0a3d24] hover:bg-emerald-50 transition cursor-pointer active:scale-90"
                             aria-label="Increase quantity"
                           >
-                            <Plus size={12} />
+                            <Plus size={12} className="stroke-[2.5]" />
                           </button>
                         </div>
 
                         <button
                           type="button"
                           onClick={() => dispatch(removeFromCart(itemId))}
-                          className="text-slate-300 hover:text-red-500 p-1 transition cursor-pointer"
+                          className="text-stone-300 hover:text-red-500 p-1.5 transition cursor-pointer active:scale-90"
                           title="Remove item"
                         >
-                          <Trash2 size={15} />
+                          <Trash2 size={16} />
                         </button>
                       </div>
                     </div>
@@ -465,33 +564,36 @@ export default function CartPage() {
                 if (suggestedAddons.length === 0) return null;
 
                 return (
-                  <div className="bg-white rounded-3xl border border-slate-200/80 p-4 shadow-2xs">
-                    <span className="text-[11px] font-black text-slate-700 uppercase tracking-wider block mb-3 flex items-center gap-1.5">
-                      <Sparkles size={13} className="text-[#0a3d24]" />
-                      <span>Recommended Add-ons</span>
-                    </span>
+                  <div className="bg-white rounded-3xl border border-stone-200/90 p-4 sm:p-5 shadow-xs">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-xs font-black text-stone-900 uppercase tracking-wider flex items-center gap-1.5">
+                        <Sparkles size={14} className="text-[#0a3d24]" />
+                        <span>Frequently Added With Fresh Produce</span>
+                      </span>
+                      <span className="text-[10px] text-stone-400 font-bold">10-15 Min</span>
+                    </div>
 
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                       {suggestedAddons.map((product) => (
                         <div
                           key={product._id}
-                          className="bg-slate-50/70 rounded-2xl p-2.5 border border-slate-100 flex flex-col justify-between items-center text-center hover:border-emerald-200 transition"
+                          className="bg-stone-50/80 rounded-2xl p-2.5 border border-stone-200/70 flex flex-col justify-between items-center text-center hover:border-emerald-300 transition group"
                         >
-                          <div className="w-12 h-12 relative flex items-center justify-center mb-1 bg-white rounded-xl overflow-hidden border border-slate-100">
+                          <div className="w-14 h-14 relative flex items-center justify-center mb-1.5 bg-white rounded-xl overflow-hidden border border-stone-200/60 p-1">
                             <img
                               src={product.image || "/placeholder.png"}
                               alt={product.name}
-                              className="w-full h-full object-contain p-0.5"
+                              className="w-full h-full object-contain group-hover:scale-105 transition-transform"
                               onError={(e: any) => {
                                 e.currentTarget.src =
                                   "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=200&q=80";
                               }}
                             />
                           </div>
-                          <span className="font-bold text-[11px] text-slate-900 line-clamp-1">
+                          <span className="font-extrabold text-xs text-stone-900 line-clamp-1">
                             {product.name}
                           </span>
-                          <span className="text-[10px] text-slate-400 font-medium">
+                          <span className="text-[10px] text-stone-500 font-medium">
                             {product.unit} • ₹{product.price}
                           </span>
                           <button
@@ -505,7 +607,7 @@ export default function CartPage() {
                                 })
                               );
                             }}
-                            className="mt-2 w-full py-1 rounded-lg font-bold text-[10px] bg-white text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white border border-emerald-200 transition cursor-pointer shadow-2xs active:scale-95"
+                            className="mt-2 w-full py-1.5 rounded-xl font-black text-[11px] bg-white text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white border border-emerald-200 transition cursor-pointer shadow-2xs active:scale-95"
                           >
                             + ADD
                           </button>
@@ -516,10 +618,19 @@ export default function CartPage() {
                 );
               })()}
 
-              {/* Trust Badge */}
-              <div className="flex items-center gap-2.5 px-2 text-xs text-slate-500 font-medium">
-                <ShieldCheck size={16} className="text-[#0a3d24] shrink-0" />
-                <span>100% Quality & Freshness Guaranteed. Instant return or replacement at doorstep.</span>
+              {/* Bhopal Doorstep Freshness Guarantee Card */}
+              <div className="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-3.5 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-xl bg-[#0a3d24] text-white flex items-center justify-center shrink-0 shadow-2xs">
+                  <ShieldCheck size={17} />
+                </div>
+                <div>
+                  <span className="text-xs font-black text-stone-900 block">
+                    100% Quality & Freshness Guarantee at Doorstep
+                  </span>
+                  <span className="text-[11px] text-stone-600 font-medium">
+                    Inspect your produce upon delivery in Bhopal. If not 100% satisfied, get an instant replacement or refund.
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -527,25 +638,31 @@ export default function CartPage() {
             <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-4">
               
               {/* Promo Code Input Card */}
-              <div className="bg-white rounded-3xl border border-slate-200/80 p-4 shadow-2xs">
-                <h3 className="font-extrabold text-[11px] uppercase text-slate-400 tracking-wider mb-2 flex items-center gap-1.5">
-                  <Tag size={12} className="text-[#0a3d24]" />
-                  <span>Promo Code & Coupons</span>
+              <div className="bg-white rounded-3xl border border-stone-200/90 p-4 sm:p-5 shadow-xs">
+                <h3 className="font-black text-[11px] uppercase text-stone-500 tracking-wider mb-2.5 flex items-center justify-between">
+                  <span className="flex items-center gap-1.5">
+                    <Tag size={13} className="text-[#0a3d24]" />
+                    <span>Apply Coupon / Voucher</span>
+                  </span>
+                  <span className="text-[10px] text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full font-bold border border-amber-200">
+                    Offers Available
+                  </span>
                 </h3>
 
                 {couponCode ? (
-                  <div className="flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-xl p-2.5">
+                  <div className="flex items-center justify-between bg-emerald-50/80 border border-emerald-300 rounded-2xl p-3 shadow-2xs">
                     <div>
-                      <span className="font-black text-xs text-[#0a3d24] block uppercase tracking-wider">
-                        {couponCode} APPLIED
+                      <span className="font-black text-xs text-[#0a3d24] block uppercase tracking-wider flex items-center gap-1">
+                        <CheckCircle2 size={13} />
+                        <span>{couponCode} APPLIED</span>
                       </span>
-                      <span className="text-[11px] text-emerald-800 font-medium">
-                        You saved ₹{discountAmount} on this order
+                      <span className="text-[11px] text-emerald-800 font-bold mt-0.5 block">
+                        You saved ₹{discountAmount} on this order!
                       </span>
                     </div>
                     <button
                       onClick={handleRemoveCoupon}
-                      className="p-1 rounded-full hover:bg-emerald-200/50 text-slate-500 hover:text-red-600 transition"
+                      className="p-1.5 rounded-full hover:bg-emerald-200/60 text-stone-500 hover:text-red-600 transition cursor-pointer active:scale-90"
                       title="Remove coupon"
                     >
                       <X size={15} />
@@ -556,23 +673,23 @@ export default function CartPage() {
                     <div className="flex gap-2">
                       <input
                         type="text"
-                        placeholder="COUPON CODE"
+                        placeholder="ENTER COUPON CODE"
                         value={couponInput}
                         onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
-                        className="flex-1 border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold uppercase tracking-wider outline-none focus:border-[#0a3d24] bg-slate-50"
+                        className="flex-1 border border-stone-200 rounded-xl px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider outline-none focus:border-[#0a3d24] bg-stone-50/70 focus:bg-white transition"
                       />
                       <button
                         onClick={() => handleApplyCoupon()}
                         disabled={couponLoading || !couponInput.trim()}
-                        className="bg-slate-900 hover:bg-black text-white px-4 rounded-xl text-xs font-bold disabled:opacity-50 transition cursor-pointer"
+                        className="bg-[#0a3d24] hover:bg-[#072817] text-white px-5 rounded-xl text-xs font-black disabled:opacity-50 transition cursor-pointer active:scale-95 shadow-2xs"
                       >
                         {couponLoading ? "..." : "Apply"}
                       </button>
                     </div>
 
                     {couponError && (
-                      <p className="text-[11px] font-bold text-red-500 mt-1.5">
-                        {couponError}
+                      <p className="text-[11px] font-bold text-red-500 mt-2 flex items-center gap-1">
+                        <span>•</span> {couponError}
                       </p>
                     )}
                   </div>
@@ -580,25 +697,32 @@ export default function CartPage() {
               </div>
 
               {/* Bill Details Summary Card */}
-              <div className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-2xs">
-                <h3 className="font-extrabold text-xs text-slate-900 mb-3 pb-2 border-b border-slate-100 flex items-center justify-between">
-                  <span>Bill Summary</span>
-                  <span className="text-[10px] text-slate-400 font-bold uppercase">
-                    {totalItemCount} Items
+              <div className="bg-white rounded-3xl border border-stone-200/90 p-5 sm:p-6 shadow-xs">
+                <h3 className="font-black text-xs sm:text-sm text-stone-900 mb-3.5 pb-2.5 border-b border-stone-100 flex items-center justify-between">
+                  <span>Bill Breakdown</span>
+                  <span className="text-[10.5px] text-stone-500 font-bold bg-stone-100 px-2.5 py-0.5 rounded-full">
+                    {totalItemCount} Items in Basket
                   </span>
                 </h3>
 
-                <div className="space-y-2 text-xs">
-                  <div className="flex justify-between text-slate-600">
-                    <span>Items Subtotal</span>
-                    <span className="font-bold text-slate-900">₹{subtotal}</span>
+                <div className="space-y-2.5 text-xs">
+                  <div className="flex justify-between text-stone-600">
+                    <span>Produce Total (MRP)</span>
+                    <span className="font-medium text-stone-400 line-through">₹{totalMRP}</span>
                   </div>
 
-                  <div className="flex justify-between text-slate-600">
-                    <span>Delivery Partner Fee</span>
-                    <span className="font-bold text-slate-900">
+                  <div className="flex justify-between text-stone-600">
+                    <span>SubziQuick Mandi Price</span>
+                    <span className="font-bold text-stone-900">₹{subtotal}</span>
+                  </div>
+
+                  <div className="flex justify-between text-stone-600 items-center">
+                    <span>Bhopal Express Delivery Fee</span>
+                    <span className="font-bold">
                       {deliveryFee === 0 ? (
-                        <span className="text-[#0a3d24] font-bold">FREE</span>
+                        <span className="text-[#0a3d24] bg-emerald-50 px-2 py-0.5 rounded-md font-black border border-emerald-200">
+                          FREE
+                        </span>
                       ) : (
                         `₹${deliveryFee}`
                       )}
@@ -606,22 +730,29 @@ export default function CartPage() {
                   </div>
 
                   {discountAmount > 0 && (
-                    <div className="flex justify-between text-[#0a3d24] font-bold bg-emerald-50 p-2 rounded-xl text-xs">
+                    <div className="flex justify-between text-[#0a3d24] font-bold bg-emerald-50 p-2.5 rounded-xl text-xs border border-emerald-200">
                       <span>Promo Discount ({couponCode})</span>
-                      <span>-₹{discountAmount}</span>
+                      <span className="font-black">-₹{discountAmount}</span>
                     </div>
                   )}
 
-                  <div className="border-t border-slate-100 pt-3 flex justify-between items-baseline">
+                  {totalSavings > 0 && (
+                    <div className="flex justify-between text-emerald-800 font-bold bg-emerald-50/50 p-2 rounded-xl text-[11px]">
+                      <span>Total Savings Today</span>
+                      <span className="font-black text-emerald-900">₹{totalSavings}</span>
+                    </div>
+                  )}
+
+                  <div className="border-t border-stone-100 pt-3.5 flex justify-between items-baseline">
                     <div>
-                      <span className="text-sm font-black text-slate-950 block">
+                      <span className="text-sm font-black text-stone-950 block">
                         To Pay
                       </span>
-                      <span className="text-[10px] text-slate-400 font-medium">
-                        Inclusive of all taxes
+                      <span className="text-[10px] text-stone-400 font-medium">
+                        Inclusive of all Mandi taxes
                       </span>
                     </div>
-                    <span className="text-2xl font-black text-[#0a3d24]">
+                    <span className="text-2xl sm:text-3xl font-black text-[#0a3d24]">
                       ₹{total}
                     </span>
                   </div>
@@ -630,18 +761,18 @@ export default function CartPage() {
                 {/* Primary Proceed CTA */}
                 <button
                   onClick={handleProceed}
-                  className="w-full mt-5 bg-[#0a3d24] hover:bg-[#072817] text-white py-3.5 rounded-2xl font-black text-xs sm:text-sm shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                  className="w-full mt-5 bg-[#0a3d24] hover:bg-[#072817] text-white py-3.5 sm:py-4 rounded-2xl font-black text-xs sm:text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
                 >
                   {Boolean(session?.user || userdata?._id) ? (
                     <>
                       <span>Proceed to Checkout</span>
-                      <ArrowRight size={15} />
+                      <ArrowRight size={16} />
                     </>
                   ) : (
                     <>
-                      <Lock size={14} />
+                      <Lock size={15} />
                       <span>Sign In & Order (₹{total})</span>
-                      <ArrowRight size={14} />
+                      <ArrowRight size={15} />
                     </>
                   )}
                 </button>
@@ -656,6 +787,19 @@ export default function CartPage() {
                   <FaWhatsapp size={18} className="text-[#25D366]" />
                   <span>Order via WhatsApp (1-Click)</span>
                 </button>
+
+                {/* Trust Badges */}
+                <div className="mt-4 pt-3.5 border-t border-stone-100 flex items-center justify-center gap-4 text-[10px] text-stone-400 font-bold uppercase tracking-wider">
+                  <span className="flex items-center gap-1">
+                    <ShieldCheck size={13} className="text-[#0a3d24]" /> 100% Safe
+                  </span>
+                  <span>•</span>
+                  <span>UPI / COD Accepted</span>
+                  <span>•</span>
+                  <span className="flex items-center gap-1">
+                    <Zap size={13} className="text-amber-500 fill-amber-500" /> 10-15 Min
+                  </span>
+                </div>
               </div>
 
             </div>
@@ -663,33 +807,40 @@ export default function CartPage() {
           </div>
         )}
 
-        {/* Mobile Sticky Floating Bar */}
+        {/* Mobile Sticky Floating Bar with Safe Area Insets */}
         {cartdata.length > 0 && (
-          <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3.5 py-2.5 shadow-xl flex items-center justify-between gap-2.5">
+          <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-stone-200 px-4 py-2.5 pb-[max(0.7rem,env(safe-area-inset-bottom))] shadow-[0_-8px_30px_rgba(0,0,0,0.12)] flex items-center justify-between gap-3">
             <div>
-              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">
+              <span className="text-[10px] text-stone-400 font-bold uppercase tracking-wider block">
                 {totalItemCount} Items • Total
               </span>
-              <span className="text-lg font-black text-[#0a3d24]">
-                ₹{total}
-              </span>
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-xl font-black text-[#0a3d24]">
+                  ₹{total}
+                </span>
+                {totalMRP > total && (
+                  <span className="text-xs text-stone-400 line-through">
+                    ₹{totalMRP}
+                  </span>
+                )}
+              </div>
             </div>
             <div className="flex items-center gap-2 flex-1 justify-end">
               <button
                 type="button"
                 onClick={handleWhatsAppOrder}
-                className="bg-[#25D366] active:scale-95 text-white p-2.5 rounded-xl font-black text-xs shadow-sm flex items-center justify-center cursor-pointer shrink-0"
+                className="bg-[#25D366] active:scale-90 text-white p-2.5 rounded-xl font-black text-xs shadow-xs flex items-center justify-center cursor-pointer shrink-0"
                 title="Order on WhatsApp"
                 aria-label="Order on WhatsApp"
               >
-                <FaWhatsapp size={18} />
+                <FaWhatsapp size={19} />
               </button>
               <button
                 onClick={handleProceed}
-                className="flex-1 max-w-[200px] bg-[#0a3d24] active:scale-98 hover:bg-[#072817] text-white py-2.5 px-3.5 rounded-xl font-black text-xs shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                className="flex-1 max-w-[210px] bg-[#0a3d24] active:scale-95 hover:bg-[#072817] text-white py-3 px-4 rounded-xl font-black text-xs shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <span>Checkout</span>
-                <ArrowRight size={13} />
+                <ArrowRight size={14} />
               </button>
             </div>
           </div>
