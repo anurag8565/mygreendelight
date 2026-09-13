@@ -101,33 +101,11 @@ export default function MobileBottomNav() {
               animate={{ y: 0, opacity: 1, scale: 1 }}
               exit={{ y: 50, opacity: 0, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 450, damping: 28 }}
-              className="mx-3 mb-2 flex flex-col gap-1"
+              className="mx-3 mb-2"
             >
-              {/* Live Free Delivery Micro Strip */}
-              <div className="bg-emerald-900/90 text-white backdrop-blur-md rounded-lg px-2.5 py-1 text-[10px] font-bold flex items-center justify-between border border-emerald-500/30 shadow-sm">
-                <div className="flex items-center gap-1">
-                  <Truck size={12} className="text-emerald-300 shrink-0" />
-                  {isFreeDelivery ? (
-                    <span className="text-emerald-300 font-black">
-                      🎉 FREE Delivery Unlocked!
-                    </span>
-                  ) : (
-                    <span>
-                      Add <strong className="text-yellow-300 font-black">₹{remainingForFreeDelivery}</strong> more for FREE Delivery
-                    </span>
-                  )}
-                </div>
-                <div className="w-16 bg-white/20 rounded-full h-1.5 overflow-hidden ml-2">
-                  <div
-                    className="bg-emerald-400 h-full rounded-full transition-all duration-300"
-                    style={{ width: `${progressPercent}%` }}
-                  />
-                </div>
-              </div>
-
               <Link
                 href="/user/cart"
-                className="relative overflow-hidden w-full bg-gradient-to-r from-[#0c831f] via-[#0e771e] to-[#064e13] text-white rounded-xl px-3 py-2 flex items-center justify-between shadow-[0_6px_20px_-3px_rgba(12,131,31,0.45)] border border-emerald-400/30 cursor-pointer active:scale-[0.98] transition-all"
+                className="relative overflow-hidden w-full bg-gradient-to-r from-[#0f8646] via-[#0c6a38] to-[#093e21] text-white rounded-xl px-3 py-2 flex items-center justify-between shadow-[0_6px_20px_-3px_rgba(15,134,70,0.4)] border border-emerald-400/30 cursor-pointer active:scale-[0.98] transition-all"
               >
                 {/* Subtle Shimmer Sweep */}
                 <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/20 to-transparent" />
