@@ -36,6 +36,7 @@ import Footer from "@/components/Footer";
 import useGetMe from "@/hooks/useGetMe";
 import { useSession } from "next-auth/react";
 import { FaWhatsapp } from "react-icons/fa6";
+import { triggerFreeDeliveryConfetti } from "@/lib/confetti";
 
 export default function CartPage() {
   const dispatch = useDispatch<AppDispatch>();
@@ -123,6 +124,19 @@ export default function CartPage() {
   const minOrderAmount = deliverySettings.minOrderAmount || 99;
   const isSubMinimum = subtotal > 0 && subtotal < minOrderAmount;
   const remainingForMinOrder = Math.max(0, minOrderAmount - subtotal);
+
+  const hasCelebratedRef = React.useRef(false);
+
+  useEffect(() => {
+    if (isFreeDelivery && subtotal > 0 && cartdata.length > 0) {
+      if (!hasCelebratedRef.current) {
+        hasCelebratedRef.current = true;
+        triggerFreeDeliveryConfetti();
+      }
+    } else if (!isFreeDelivery) {
+      hasCelebratedRef.current = false;
+    }
+  }, [isFreeDelivery, subtotal, cartdata.length]);
 
   const handleApplyCoupon = async (codeToApply?: string) => {
     const code = (codeToApply || couponInput).trim().toUpperCase();
@@ -314,14 +328,18 @@ export default function CartPage() {
               )}
 
               {/* Free Delivery Status Strip */}
-              <div className="bg-white border border-slate-200/80 rounded-2xl p-3.5 shadow-2xs">
+              <div className={`border rounded-2xl p-3.5 shadow-2xs transition-all duration-300 ${
+                isFreeDelivery 
+                  ? "bg-emerald-50/80 border-emerald-300/80 shadow-[0_4px_16px_rgba(15,134,70,0.12)]" 
+                  : "bg-white border-slate-200/80"
+              }`}>
 
                 <div className="flex items-center justify-between text-xs mb-2">
                   <div className="flex items-center gap-2 font-bold text-slate-800">
                     <Truck size={15} className="text-[#0f8646] shrink-0" />
                     {isFreeDelivery ? (
-                      <span className="text-[#0f8646]">
-                        FREE Delivery Unlocked!
+                      <span className="text-[#0f8646] font-black flex items-center gap-1">
+                        🎉 FREE Delivery Unlocked!
                       </span>
                     ) : (
                       <span>
@@ -329,11 +347,11 @@ export default function CartPage() {
                       </span>
                     )}
                   </div>
-                  <span className="text-[11px] font-mono text-slate-400">
-                    Target: ₹{freeDeliveryThreshold}
+                  <span className="text-[11px] font-mono text-slate-500 font-bold">
+                    {Math.min(100, Math.round((subtotal / freeDeliveryThreshold) * 100))}%
                   </span>
                 </div>
-                <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                <div className="w-full bg-slate-200/60 rounded-full h-2 overflow-hidden">
                   <div
                     className="bg-[#0f8646] h-full rounded-full transition-all duration-500"
                     style={{

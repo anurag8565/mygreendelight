@@ -10,6 +10,8 @@ import { increaseQuantity, decreaseQuantity, removeFromCart } from "@/redux/Cart
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
+import { triggerFreeDeliveryConfetti } from "@/lib/confetti";
+
 interface MiniCartProps {
   isOpen: boolean;
   onClose: () => void;
@@ -24,6 +26,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
 
   const [mounted, setMounted] = useState(false);
   const [freeDeliveryThreshold, setFreeDeliveryThreshold] = useState<number>(199);
+  const hasCelebratedRef = React.useRef(false);
 
   useEffect(() => {
     setMounted(true);
@@ -37,11 +40,22 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
       .catch(() => {});
   }, []);
 
-  if (!mounted) return null;
-
   const isFreeDelivery = cartTotal >= freeDeliveryThreshold;
   const remainingForFreeDelivery = Math.max(0, freeDeliveryThreshold - cartTotal);
   const progressPercent = Math.min(100, Math.round((cartTotal / freeDeliveryThreshold) * 100));
+
+  useEffect(() => {
+    if (isFreeDelivery && isOpen && cartdata.length > 0) {
+      if (!hasCelebratedRef.current) {
+        hasCelebratedRef.current = true;
+        triggerFreeDeliveryConfetti();
+      }
+    } else if (!isFreeDelivery) {
+      hasCelebratedRef.current = false;
+    }
+  }, [isFreeDelivery, isOpen, cartdata.length]);
+
+  if (!mounted) return null;
 
   return createPortal(
     <AnimatePresence>
