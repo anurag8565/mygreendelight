@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, Outfit } from "next/font/google";
+import { Plus_Jakarta_Sans, Outfit, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import Provider from "@/Provider";
 import StoreProviders from "@/redux/StoreProviders";
@@ -23,6 +23,13 @@ const headingFont = Outfit({
   subsets: ["latin"],
   weight: ["500", "600", "700", "800"],
   variable: "--font-heading",
+  display: "swap",
+});
+
+const brandSerif = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-brand-serif",
   display: "swap",
 });
 
@@ -409,7 +416,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${sansFont.variable} ${headingFont.variable} w-full min-h-screen bg-[#faf9f5] text-stone-900 overflow-x-hidden antialiased font-sans`}>
+      <body className={`${sansFont.variable} ${headingFont.variable} ${brandSerif.variable} w-full min-h-screen bg-[#faf9f5] text-stone-900 overflow-x-hidden antialiased font-sans`}>
         <ContentProtection />
         <Provider>
           <StoreProviders>
