@@ -142,12 +142,12 @@ export default function CartPage() {
     };
     window.addEventListener("focus", handleWindowFocus);
 
-    // Gentle 30s background sync when visible and idle
-    const gentleInterval = setInterval(() => {
+    // ⚡ Fast 2.5s background sync so updates on mobile reflect on laptop automatically
+    const syncInterval = setInterval(() => {
       if (typeof document !== "undefined" && document.visibilityState === "visible") {
         syncCartFromCloud();
       }
-    }, 30000);
+    }, 2500);
 
     axios
       .get("/api/groceries?limit=12&sort=price_asc")
@@ -176,7 +176,7 @@ export default function CartPage() {
     return () => {
       isMounted = false;
       window.removeEventListener("focus", handleWindowFocus);
-      clearInterval(gentleInterval);
+      clearInterval(syncInterval);
       if (channel) {
         channel.close();
       }

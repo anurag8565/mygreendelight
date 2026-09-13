@@ -45,13 +45,16 @@ const getCouponStorageKey = (userId?: any) => {
 };
 
 let syncTimer: any = null;
+let isSyncingToBackend = false;
+let lastLocalActionTimestamp = 0;
 
-const syncCartToBackend = (cartdata: IGrocery[], couponCode: string | null, discountAmount: number, userId?: any) => {
+export const syncCartToBackend = (cartdata: IGrocery[], couponCode: string | null, discountAmount: number, userId?: any) => {
     if (typeof window === "undefined") return;
 
     if (syncTimer) clearTimeout(syncTimer);
     // Debounced sync to MongoDB cloud so multi-device updates save cleanly
     syncTimer = setTimeout(async () => {
+        isSyncingToBackend = true;
         try {
             await fetch("/api/user/cart", {
                 method: "POST",
@@ -64,8 +67,11 @@ const syncCartToBackend = (cartdata: IGrocery[], couponCode: string | null, disc
             });
         } catch (e) {
             // Silently swallow network glitches
+        } finally {
+            isSyncingToBackend = false;
+            syncTimer = null;
         }
-    }, 200);
+    }, 250);
 };
 
 // Broadcast changes instantly across tabs on the same device
@@ -205,7 +211,8 @@ const cartSlice = createSlice({
         },
 
         addToCart: (state, action: PayloadAction<IGrocery>) => {
-            state.lastLocalActionAt = Date.now();
+            lastLocalActionTimestamp = Date.now();
+            state.lastLocalActionAt = lastLocalActionTimestamp;
             const newItem = action.payload;
             const targetKey = newItem.cartItemId || (newItem.variation ? `${newItem._id}-${newItem.variation.weight}` : String(newItem._id));
 
@@ -234,12 +241,13 @@ const cartSlice = createSlice({
         },
 
         increaseQuantity: (state, action: PayloadAction<string>) => {
-            state.lastLocalActionAt = Date.now();
-            const target = action.payload;
+            lastLocalActionTimestamp = Date.now();
+            state.lastLocalActionAt = lastLocalActionTimestamp;
+            const target = String(action.payload || "");
             const item = state.cartdata.find(
                 item => (item.cartItemId && item.cartItemId === target) ||
-                        (!item.cartItemId && String(item._id) === String(target)) ||
-                        (String(item._id) === String(target))
+                        (!item.cartItemId && String(item._id) === target) ||
+                        (String(item._id) === target)
             );
 
             if (item) {
@@ -252,12 +260,13 @@ const cartSlice = createSlice({
         },
 
         decreaseQuantity: (state, action: PayloadAction<string>) => {
-            state.lastLocalActionAt = Date.now();
-            const target = action.payload;
+            lastLocalActionTimestamp = Date.now();
+            state.lastLocalActionAt = lastLocalActionTimestamp;
+            const target = String(action.payload || "");
             const itemIndex = state.cartdata.findIndex(
                 item => (item.cartItemId && item.cartItemId === target) ||
-                        (!item.cartItemId && String(item._id) === String(target)) ||
-                        (String(item._id) === String(target))
+                        (!item.cartItemId && String(item._id) === target) ||
+                        (String(item._id) === target)
             );
 
             if (itemIndex > -1) {
@@ -271,30 +280,35 @@ const cartSlice = createSlice({
         },
 
         removeFromCart: (state, action: PayloadAction<string>) => {
-            state.lastLocalActionAt = Date.now();
-            const target = action.payload;
+            lastLocalActionTimestamp = Date.now();
+            state.lastLocalActionAt = lastLocalActionTimestamp;
+            const target = String(action.payload || "");
             state.cartdata = state.cartdata.filter(
-                (item) => (item.cartItemId ? item.cartItemId !== target : String(item._id) !== String(target))
+                (item) => (item.cartItemId ? item.cartItemId !== target : String(item._id) !== target) &&
+                          String(item._id) !== target
             );
             saveCart(state.cartdata, state.couponCode, state.discountAmount, state.currentUserId);
         },
 
         applyCoupon: (state, action: PayloadAction<{ couponCode: string; discountAmount: number }>) => {
-            state.lastLocalActionAt = Date.now();
+            lastLocalActionTimestamp = Date.now();
+            state.lastLocalActionAt = lastLocalActionTimestamp;
             state.couponCode = action.payload.couponCode;
             state.discountAmount = action.payload.discountAmount;
             saveCart(state.cartdata, state.couponCode, state.discountAmount, state.currentUserId);
         },
 
         removeCoupon: (state) => {
-            state.lastLocalActionAt = Date.now();
+            lastLocalActionTimestamp = Date.now();
+            state.lastLocalActionAt = lastLocalActionTimestamp;
             state.couponCode = null;
             state.discountAmount = 0;
             saveCart(state.cartdata, state.couponCode, state.discountAmount, state.currentUserId);
         },
 
         addMultipleToCart: (state, action: PayloadAction<IGrocery[]>) => {
-            state.lastLocalActionAt = Date.now();
+            lastLocalActionTimestamp = Date.now();
+            state.lastLocalActionAt = lastLocalActionTimestamp;
             for (const newItem of action.payload) {
                 const targetKey = newItem.cartItemId || (newItem.variation ? `${newItem._id}-${newItem.variation.weight}` : String(newItem._id));
                 const existingItem = state.cartdata.find(
@@ -328,39 +342,21 @@ const cartSlice = createSlice({
                 discountAmount?: number;
                 userId?: any;
                 serverUpdatedAt?: string | number | Date;
+                force?: boolean;
             }>
         ) => {
             const cleanId = getCleanUserId(action.payload.userId || state.currentUserId);
             state.currentUserId = cleanId;
 
-            const now = Date.now();
-            const timeSinceLastLocalAction = now - (state.lastLocalActionAt || 0);
-
-            // 🛡️ RACE CONDITION PROTECTION:
-            // If the user actively clicked + or - on this device within the last 4 seconds,
-            // never allow an in-flight or older cloud response to decrease or wipe out local user changes!
-            if (timeSinceLastLocalAction < 4000) {
-                const incomingCloudItems = action.payload.cartdata || [];
-                let localItemsUpdated = [...state.cartdata];
-                for (const cItem of incomingCloudItems) {
-                    const cKey = cItem.cartItemId || String(cItem._id);
-                    const localExists = localItemsUpdated.find(
-                        l => (l.cartItemId && l.cartItemId === cKey) || String(l._id) === String(cItem._id)
-                    );
-                    if (!localExists) {
-                        localItemsUpdated.push(cItem);
-                    }
-                }
-                state.cartdata = localItemsUpdated;
-                if (action.payload.couponCode !== undefined && !state.couponCode) {
-                    state.couponCode = action.payload.couponCode;
-                    state.discountAmount = action.payload.discountAmount || 0;
-                }
-                saveCartToStorage(state.cartdata, state.couponCode, state.discountAmount, cleanId);
+            // 🛡️ RACE CONDITION SHIELD:
+            // If the user on THIS device is actively clicking (+ / - / delete within 800ms)
+            // or an outgoing POST sync is pending or in-flight, IGNORE incoming GET reads.
+            // This device already has the freshest state in memory!
+            if (!action.payload.force && (isSyncingToBackend || syncTimer !== null || Date.now() - lastLocalActionTimestamp < 800)) {
                 return;
             }
 
-            // Otherwise, cloud is the single source of truth
+            // Otherwise, apply authoritative cloud cart state
             state.cartdata = action.payload.cartdata || [];
             state.couponCode = action.payload.couponCode || null;
             state.discountAmount = action.payload.discountAmount || 0;
@@ -370,7 +366,8 @@ const cartSlice = createSlice({
         },
 
         clearCart: (state) => {
-            state.lastLocalActionAt = Date.now();
+            lastLocalActionTimestamp = Date.now();
+            state.lastLocalActionAt = lastLocalActionTimestamp;
             state.cartdata = [];
             state.couponCode = null;
             state.discountAmount = 0;
