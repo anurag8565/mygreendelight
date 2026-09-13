@@ -635,10 +635,9 @@ export default function Nav({ user }: { user?: iUser | null }) {
             </div>
           </div>
 
-            {/* Search Bar (Modern iOS Figma Pill Design) */}
+            {/* Search Bar */}
             <div ref={searchRef} className="hidden md:flex flex-1 max-w-xl relative ml-4 lg:ml-8 h-11 z-[60]">
-              <form onSubmit={handleSearch} className="w-full h-full flex items-center bg-[#f4f5f7] border border-transparent rounded-full px-3.5 focus-within:bg-white focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100 transition-all shadow-2xs">
-                <Search size={18} className="text-slate-400 shrink-0 mr-2.5" />
+              <form onSubmit={handleSearch} className="w-full h-full flex items-center bg-gray-50 border border-gray-200 rounded-lg overflow-hidden focus-within:border-[#0f8646] focus-within:ring-1 focus-within:ring-[#0f8646] transition-all">
                 <input
                   type="text"
                   value={search}
@@ -646,8 +645,8 @@ export default function Nav({ user }: { user?: iUser | null }) {
                   onFocus={() => {
                     setIsSearchFocused(true);
                   }}
-                  placeholder="Would you like to eat fresh vegetables or fruits today?..."
-                  className="w-full h-full bg-transparent outline-none text-sm text-slate-800 placeholder-slate-400"
+                  placeholder="Search for fresh vegetables, fruits, groceries..."
+                  className="w-full h-full bg-transparent outline-none px-4 text-sm text-gray-700"
                 />
 
                 {/* Voice Search Button */}
@@ -655,15 +654,12 @@ export default function Nav({ user }: { user?: iUser | null }) {
                   type="button"
                   onClick={handleVoiceSearch}
                   title="Search by voice in Hindi or English"
-                  className="p-1.5 mr-1 rounded-full transition-all flex items-center justify-center shrink-0 cursor-pointer text-slate-400 hover:text-[#0f8646] hover:bg-emerald-50"
+                  className="p-2 mr-1.5 rounded-full transition-all flex items-center justify-center shrink-0 cursor-pointer text-gray-400 hover:text-[#0f8646] hover:bg-green-50"
                 >
-                  <Mic size={17} />
+                  <Mic size={18} />
                 </button>
 
-                <button
-                  type="submit"
-                  className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-1.5 rounded-full font-black transition-colors text-xs shrink-0 shadow-xs cursor-pointer"
-                >
+                <button type="submit" className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-6 font-semibold transition-colors text-sm h-full shrink-0">
                   Search
                 </button>
               </form>
@@ -1146,10 +1142,10 @@ export default function Nav({ user }: { user?: iUser | null }) {
           </div>
         </div>
 
-        {/* Mobile Search Bar (Modern iOS Figma Pill Design) */}
+        {/* Mobile Search Bar (Only visible on small screens below md) */}
         <div ref={mobileSearchRef} className="md:hidden pb-2.5 px-3.5 pt-0 relative z-[60]">
-          <form onSubmit={handleSearch} className="flex items-center bg-[#f4f5f7] rounded-full border border-transparent focus-within:border-emerald-500 focus-within:bg-white focus-within:ring-2 focus-within:ring-emerald-100 transition-all h-10 px-3.5 shadow-2xs">
-            <Search size={16} className="text-slate-400 shrink-0 mr-2" />
+          <form onSubmit={handleSearch} className="flex items-center bg-gray-50/90 rounded-xl border border-gray-200/90 focus-within:border-[#0f8646] focus-within:bg-white focus-within:ring-2 focus-within:ring-green-100 transition-all h-10 px-3 shadow-2xs">
+            <Search size={16} className="text-gray-400 shrink-0 mr-2" />
             <input
               type="text"
               value={search}
@@ -1157,8 +1153,8 @@ export default function Nav({ user }: { user?: iUser | null }) {
               onFocus={() => {
                 setIsMobileSearchFocused(true);
               }}
-              placeholder="Search 'tomato', 'potato', 'mango'..."
-              className="flex-1 bg-transparent outline-none text-xs sm:text-sm text-slate-800 placeholder-slate-400 font-normal"
+              placeholder="Search 'tomato', 'milk', 'mango'..."
+              className="flex-1 bg-transparent outline-none text-xs sm:text-sm text-gray-800 placeholder-gray-400"
             />
 
             {/* Mobile Voice Search */}
@@ -1166,7 +1162,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
               type="button"
               onClick={handleVoiceSearch}
               title="Search by voice in Hindi or English"
-              className="p-1 rounded-full transition-all flex items-center justify-center shrink-0 cursor-pointer text-slate-400 hover:text-[#0f8646]"
+              className="p-1.5 rounded-full transition-all flex items-center justify-center shrink-0 cursor-pointer text-gray-400 hover:text-[#0f8646]"
             >
               <Mic size={16} />
             </button>
