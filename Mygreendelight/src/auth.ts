@@ -43,8 +43,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     const email = rawEmail ? rawEmail.trim().toLowerCase() : ""
                     const password = credentials?.password as string
 
+                    const escapedEmail = email.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
                     const user = await User.findOne({ 
-                        email: { $regex: new RegExp(`^${email}$`, "i") } 
+                        email: { $regex: new RegExp(`^${escapedEmail}$`, "i") } 
                     })
 
                     if (!user) return null
@@ -78,9 +79,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 try {
                     await connectDb();
                     const cleanEmail = (user.email || "").trim().toLowerCase();
-
+                    const escapedEmail = cleanEmail.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
                     let existingUser = await User.findOne({
-                        email: { $regex: new RegExp(`^${cleanEmail}$`, "i") }
+                        email: { $regex: new RegExp(`^${escapedEmail}$`, "i") }
                     });
 
                     if (!existingUser) {
