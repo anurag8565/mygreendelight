@@ -124,6 +124,12 @@ export default function Groceryitemcard({
           )}
         </div>
 
+        {/* Fresh Farm Produce Tag */}
+        <span className="absolute bottom-1.5 left-2 bg-white/95 backdrop-blur-xs text-emerald-800 text-[8.5px] font-black px-1.5 py-0.5 rounded-md shadow-2xs flex items-center gap-0.5 border border-emerald-200/60 group-hover:border-emerald-400 group-hover:text-[#0c831f] transition-colors">
+          <span className="text-[9px]">🌿</span>
+          <span>FARM FRESH</span>
+        </span>
+
         {/* Wishlist Button */}
         <motion.button
           whileTap={{ scale: 0.8 }}
@@ -202,7 +208,7 @@ export default function Groceryitemcard({
                 ))}
               </select>
             ) : (
-              <p className="text-[11.5px] text-gray-500 font-semibold truncate h-[22px] flex items-center">
+              <p className="text-[11px] text-gray-400 font-medium truncate h-[22px] flex items-center">
                 {displayUnit}
               </p>
             )}
