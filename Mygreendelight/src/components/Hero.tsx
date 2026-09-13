@@ -66,7 +66,7 @@ export default function Hero({ banners = [] }: HeroProps) {
     if (!banners || banners.length === 0) return defaultSlides;
     return banners.map((b: any, idx: number) => ({
       _id: b._id || `db-${idx}`,
-      badge: b.badge || "🌿 Sunrise Farm Harvest • Express",
+      badge: b.badge ? b.badge.replace(/[🌿🌱✨⭐🔥🎉]/gu, "").trim() : "Sunrise Farm Harvest • 10-15 Min Express",
       title: b.title,
       subtitle: b.subtitle || "Handpicked & Fresh produce delivered to your doorstep.",
       btnText: b.btnText || "Shop Now",
@@ -217,17 +217,23 @@ export default function Hero({ banners = [] }: HeroProps) {
                   transition={{ delay: 0.1, duration: 0.4 }}
                   className="flex items-center gap-2 flex-wrap mb-1.5 xs:mb-2 sm:mb-3"
                 >
-                  <div className="relative overflow-hidden inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md text-white text-[9px] xs:text-[9.5px] sm:text-xs font-black px-2.5 xs:px-3 py-0.5 xs:py-1 rounded-full uppercase tracking-wider border border-white/30 shadow-xs">
+                  <div className="relative overflow-hidden inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md text-white text-[9px] xs:text-[9.5px] sm:text-xs font-bold px-2.5 xs:px-3 py-0.5 xs:py-1 rounded-full uppercase tracking-wider border border-white/30 shadow-xs">
                     <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-                    <Sparkles size={12} className="text-yellow-300 fill-yellow-300 animate-pulse relative z-10" />
-                    <span className="relative z-10">{slide.badge || "🌿 Farm Fresh • Express Delivery"}</span>
+                    <Sparkles size={12} className="text-emerald-300 relative z-10" />
+                    <span className="relative z-10">
+                      {(slide.badge || "Sunrise Farm Harvest • Express")
+                        .replace(/[🌿🌱✨⭐🔥🎉]/gu, "")
+                        .trim()}
+                    </span>
                   </div>
 
                   {slide.offerPill && (
-                    <span className="relative overflow-hidden hidden xs:inline-flex items-center gap-1 bg-gradient-to-r from-amber-400 to-yellow-400 text-gray-950 text-[9px] sm:text-[10.5px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm">
+                    <span className="relative overflow-hidden hidden xs:inline-flex items-center gap-1 bg-gradient-to-r from-amber-400 to-yellow-400 text-stone-950 text-[9px] sm:text-[10.5px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm">
                       <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/50 to-transparent" />
                       <Flame size={11} className="fill-amber-950 relative z-10" />
-                      <span className="relative z-10">{slide.offerPill}</span>
+                      <span className="relative z-10">
+                        {slide.offerPill.replace(/[🌿🌱✨⭐🔥🎉]/gu, "").trim()}
+                      </span>
                     </span>
                   )}
                 </motion.div>
