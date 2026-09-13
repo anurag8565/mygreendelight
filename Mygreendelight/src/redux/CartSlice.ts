@@ -47,8 +47,6 @@ let syncTimer: any = null;
 
 const syncCartToBackend = (cartdata: IGrocery[], couponCode: string | null, discountAmount: number, userId?: any) => {
     if (typeof window === "undefined") return;
-    const cleanId = getCleanUserId(userId);
-    if (!cleanId) return; // Only sync to database for authenticated users
 
     if (syncTimer) clearTimeout(syncTimer);
     syncTimer = setTimeout(async () => {
@@ -63,7 +61,7 @@ const syncCartToBackend = (cartdata: IGrocery[], couponCode: string | null, disc
                 }),
             });
         } catch (e) {
-            // Silently swallow sync network glitch, local storage retains data
+            // Silently swallow network glitches
         }
     }, 400);
 };
