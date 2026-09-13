@@ -107,49 +107,59 @@ export default function MobileBottomNav() {
               );
             })()}
 
-            {/* 3. Center Cart: Seamless Highlighted Hero Action */}
+            {/* 3. Center Cart: Elevated Circular FAB Button with Live Pulsing Animation */}
             {(() => {
               const isActive = pathname === "/user/cart";
               return (
-                <Link
-                  href="/user/cart"
-                  className="relative py-1 px-1 flex flex-col items-center justify-center focus:outline-none"
-                >
-                  <motion.div
-                    whileTap={{ scale: 0.92 }}
-                    className={`relative w-full py-1.5 px-1.5 rounded-2xl flex flex-col items-center justify-center transition-all ${
-                      cartCount > 0
-                        ? "bg-[#0a3d24] text-white shadow-[0_4px_16px_rgba(10,61,36,0.35)]"
-                        : isActive
-                        ? "bg-emerald-50 text-[#0a3d24] border border-emerald-200/80"
-                        : "text-stone-500 hover:text-stone-800"
-                    }`}
+                <div className="relative -top-4 flex flex-col items-center justify-center shrink-0 px-0.5 z-20">
+                  <Link
+                    href="/user/cart"
+                    className="group relative flex flex-col items-center focus:outline-none"
                   >
-                    <div className="relative">
-                      <ShoppingCart
-                        size={19}
-                        className={cartCount > 0 || isActive ? "stroke-[2.4]" : "stroke-[1.8]"}
-                      />
-                      {/* Crisp Badge Indicator */}
+                    {/* Pulsing Animated Glow Ring when items are in cart */}
+                    {cartCount > 0 && (
+                      <span className="absolute -inset-1 rounded-full bg-[#0a3d24]/30 animate-ping pointer-events-none" />
+                    )}
+
+                    {/* Circular Elevated FAB */}
+                    <motion.div
+                      whileTap={{ scale: 0.9 }}
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                      className={`relative w-12 h-12 rounded-full flex flex-col items-center justify-center border-2 border-white shadow-[0_6px_20px_rgba(10,61,36,0.4)] transition-all ${
+                        cartCount > 0
+                          ? "bg-gradient-to-tr from-[#072817] via-[#0a3d24] to-[#072817] text-white ring-2 ring-[#0a3d24]/20"
+                          : isActive
+                          ? "bg-[#0a3d24] text-white ring-2 ring-emerald-300"
+                          : "bg-[#0a3d24] text-white"
+                      }`}
+                    >
+                      <ShoppingCart size={19} className="stroke-[2.4]" />
                       {cartCount > 0 && (
-                        <span className="absolute -top-1.5 -right-2.5 bg-amber-400 text-stone-950 text-[9.5px] font-black min-w-[17px] h-[17px] px-1 rounded-full flex items-center justify-center border border-[#0a3d24] shadow-xs">
+                        <span className="text-[8.5px] font-black leading-none mt-0.5 tracking-tighter">
+                          ₹{Math.round(cartTotal)}
+                        </span>
+                      )}
+
+                      {/* Golden Count Badge */}
+                      {cartCount > 0 && (
+                        <span className="absolute -top-1 -right-1 bg-amber-400 text-stone-950 font-black text-[9.5px] min-w-[18px] h-[18px] px-1 rounded-full flex items-center justify-center border-2 border-white shadow-xs">
                           {cartCount}
                         </span>
                       )}
-                    </div>
+                    </motion.div>
+
                     <span
-                      className={`text-[10px] mt-1 tracking-tight leading-none ${
-                        cartCount > 0
-                          ? "font-black text-white"
-                          : isActive
+                      className={`text-[9.5px] mt-0.5 tracking-tight leading-none ${
+                        cartCount > 0 || isActive
                           ? "font-black text-[#0a3d24]"
-                          : "font-semibold"
+                          : "font-bold text-stone-600"
                       }`}
                     >
-                      {cartCount > 0 ? `₹${Math.round(cartTotal)}` : "Cart"}
+                      Cart
                     </span>
-                  </motion.div>
-                </Link>
+                  </Link>
+                </div>
               );
             })()}
 
