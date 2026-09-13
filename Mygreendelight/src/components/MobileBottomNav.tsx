@@ -59,22 +59,30 @@ export default function MobileBottomNav() {
               return (
                 <Link
                   href="/"
-                  className={`relative py-1.5 px-0.5 rounded-2xl flex flex-col items-center justify-center transition-all active:scale-95 ${
+                  className={`relative py-1 px-0.5 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95 ${
                     isActive ? "text-[#0a3d24]" : "text-stone-400 hover:text-stone-700"
                   }`}
                 >
-                  {isActive && (
+                  <div className="relative flex flex-col items-center">
                     <motion.div
-                      layoutId="mobileActivePill"
-                      transition={{ type: "spring", stiffness: 450, damping: 32 }}
-                      className="absolute inset-0 bg-emerald-50 rounded-2xl border border-emerald-200/80 z-0"
-                    />
-                  )}
-                  <div className="relative z-10 flex flex-col items-center">
-                    <Home size={20} className={isActive ? "stroke-[2.5]" : "stroke-[1.8]"} />
-                    <span className={`text-[10px] sm:text-[10.5px] mt-1 tracking-tight leading-none ${isActive ? "font-black" : "font-semibold"}`}>
+                      animate={{ scale: isActive ? 1.08 : 1 }}
+                      transition={{ type: "spring", stiffness: 450, damping: 25 }}
+                    >
+                      <Home size={20} className={isActive ? "stroke-[2.5]" : "stroke-[1.8]"} />
+                    </motion.div>
+                    <span className={`text-[10px] sm:text-[10.5px] mt-0.5 tracking-tight leading-none ${isActive ? "font-black" : "font-semibold"}`}>
                       Home
                     </span>
+                    {/* Modern iOS Active Dot Indicator */}
+                    <div className="h-1 mt-1 flex items-center justify-center">
+                      {isActive && (
+                        <motion.div
+                          layoutId="mobileActiveDot"
+                          transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                          className="w-1.5 h-1.5 rounded-full bg-[#0a3d24]"
+                        />
+                      )}
+                    </div>
                   </div>
                 </Link>
               );
@@ -86,22 +94,30 @@ export default function MobileBottomNav() {
               return (
                 <Link
                   href="/shop"
-                  className={`relative py-1.5 px-0.5 rounded-2xl flex flex-col items-center justify-center transition-all active:scale-95 ${
+                  className={`relative py-1 px-0.5 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95 ${
                     isActive ? "text-[#0a3d24]" : "text-stone-400 hover:text-stone-700"
                   }`}
                 >
-                  {isActive && (
+                  <div className="relative flex flex-col items-center">
                     <motion.div
-                      layoutId="mobileActivePill"
-                      transition={{ type: "spring", stiffness: 450, damping: 32 }}
-                      className="absolute inset-0 bg-emerald-50 rounded-2xl border border-emerald-200/80 z-0"
-                    />
-                  )}
-                  <div className="relative z-10 flex flex-col items-center">
-                    <ShoppingBag size={20} className={isActive ? "stroke-[2.5]" : "stroke-[1.8]"} />
-                    <span className={`text-[10px] sm:text-[10.5px] mt-1 tracking-tight leading-none ${isActive ? "font-black" : "font-semibold"}`}>
+                      animate={{ scale: isActive ? 1.08 : 1 }}
+                      transition={{ type: "spring", stiffness: 450, damping: 25 }}
+                    >
+                      <ShoppingBag size={20} className={isActive ? "stroke-[2.5]" : "stroke-[1.8]"} />
+                    </motion.div>
+                    <span className={`text-[10px] sm:text-[10.5px] mt-0.5 tracking-tight leading-none ${isActive ? "font-black" : "font-semibold"}`}>
                       Shop
                     </span>
+                    {/* Modern iOS Active Dot Indicator */}
+                    <div className="h-1 mt-1 flex items-center justify-center">
+                      {isActive && (
+                        <motion.div
+                          layoutId="mobileActiveDot"
+                          transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                          className="w-1.5 h-1.5 rounded-full bg-[#0a3d24]"
+                        />
+                      )}
+                    </div>
                   </div>
                 </Link>
               );
@@ -111,7 +127,7 @@ export default function MobileBottomNav() {
             {(() => {
               const isActive = pathname === "/user/cart";
               return (
-                <div className="relative -top-1.5 flex flex-col items-center justify-center shrink-0 px-0.5 z-20">
+                <div className="relative -top-1 flex flex-col items-center justify-center shrink-0 px-0.5 z-20">
                   <Link
                     href="/user/cart"
                     className="group relative flex flex-col items-center focus:outline-none"
@@ -162,6 +178,17 @@ export default function MobileBottomNav() {
                     >
                       {cartCount > 0 ? `₹${Math.round(cartTotal)}` : "Cart"}
                     </span>
+
+                    {/* Active Dot for Cart when on cart page and cart is empty */}
+                    <div className="h-1 mt-1 flex items-center justify-center">
+                      {isActive && cartCount === 0 && (
+                        <motion.div
+                          layoutId="mobileActiveDot"
+                          transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                          className="w-1.5 h-1.5 rounded-full bg-[#0a3d24]"
+                        />
+                      )}
+                    </div>
                   </Link>
                 </div>
               );
@@ -173,22 +200,30 @@ export default function MobileBottomNav() {
               return (
                 <Link
                   href="/user/search"
-                  className={`relative py-1.5 px-0.5 rounded-2xl flex flex-col items-center justify-center transition-all active:scale-95 ${
+                  className={`relative py-1 px-0.5 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95 ${
                     isActive ? "text-[#0a3d24]" : "text-stone-400 hover:text-stone-700"
                   }`}
                 >
-                  {isActive && (
+                  <div className="relative flex flex-col items-center">
                     <motion.div
-                      layoutId="mobileActivePill"
-                      transition={{ type: "spring", stiffness: 450, damping: 32 }}
-                      className="absolute inset-0 bg-emerald-50 rounded-2xl border border-emerald-200/80 z-0"
-                    />
-                  )}
-                  <div className="relative z-10 flex flex-col items-center">
-                    <Search size={20} className={isActive ? "stroke-[2.5]" : "stroke-[1.8]"} />
-                    <span className={`text-[10px] sm:text-[10.5px] mt-1 tracking-tight leading-none ${isActive ? "font-black" : "font-semibold"}`}>
+                      animate={{ scale: isActive ? 1.08 : 1 }}
+                      transition={{ type: "spring", stiffness: 450, damping: 25 }}
+                    >
+                      <Search size={20} className={isActive ? "stroke-[2.5]" : "stroke-[1.8]"} />
+                    </motion.div>
+                    <span className={`text-[10px] sm:text-[10.5px] mt-0.5 tracking-tight leading-none ${isActive ? "font-black" : "font-semibold"}`}>
                       Search
                     </span>
+                    {/* Modern iOS Active Dot Indicator */}
+                    <div className="h-1 mt-1 flex items-center justify-center">
+                      {isActive && (
+                        <motion.div
+                          layoutId="mobileActiveDot"
+                          transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                          className="w-1.5 h-1.5 rounded-full bg-[#0a3d24]"
+                        />
+                      )}
+                    </div>
                   </div>
                 </Link>
               );
@@ -208,32 +243,40 @@ export default function MobileBottomNav() {
               return (
                 <Link
                   href={targetHref}
-                  className={`relative py-1.5 px-0.5 rounded-2xl flex flex-col items-center justify-center transition-all active:scale-95 ${
+                  className={`relative py-1 px-0.5 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95 ${
                     isActive ? "text-[#0a3d24]" : "text-stone-400 hover:text-stone-700"
                   }`}
                 >
-                  {isActive && (
+                  <div className="relative flex flex-col items-center">
                     <motion.div
-                      layoutId="mobileActivePill"
-                      transition={{ type: "spring", stiffness: 450, damping: 32 }}
-                      className="absolute inset-0 bg-emerald-50 rounded-2xl border border-emerald-200/80 z-0"
-                    />
-                  )}
-                  <div className="relative z-10 flex flex-col items-center">
-                    {isLoggedIn && activeUser?.image ? (
-                      <img
-                        src={activeUser.image}
-                        alt="User"
-                        className={`w-5 h-5 rounded-full object-cover border ${
-                          isActive ? "border-[#0a3d24]" : "border-stone-300"
-                        }`}
-                      />
-                    ) : (
-                      <Icon size={20} className={isActive ? "stroke-[2.5]" : "stroke-[1.8]"} />
-                    )}
-                    <span className={`text-[10px] sm:text-[10.5px] mt-1 tracking-tight leading-none ${isActive ? "font-black" : "font-semibold"}`}>
+                      animate={{ scale: isActive ? 1.08 : 1 }}
+                      transition={{ type: "spring", stiffness: 450, damping: 25 }}
+                    >
+                      {isLoggedIn && activeUser?.image ? (
+                        <img
+                          src={activeUser.image}
+                          alt="User"
+                          className={`w-5 h-5 rounded-full object-cover border ${
+                            isActive ? "border-[#0a3d24]" : "border-stone-300"
+                          }`}
+                        />
+                      ) : (
+                        <Icon size={20} className={isActive ? "stroke-[2.5]" : "stroke-[1.8]"} />
+                      )}
+                    </motion.div>
+                    <span className={`text-[10px] sm:text-[10.5px] mt-0.5 tracking-tight leading-none ${isActive ? "font-black" : "font-semibold"}`}>
                       {labelText}
                     </span>
+                    {/* Modern iOS Active Dot Indicator */}
+                    <div className="h-1 mt-1 flex items-center justify-center">
+                      {isActive && (
+                        <motion.div
+                          layoutId="mobileActiveDot"
+                          transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                          className="w-1.5 h-1.5 rounded-full bg-[#0a3d24]"
+                        />
+                      )}
+                    </div>
                   </div>
                 </Link>
               );
