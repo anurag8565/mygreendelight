@@ -304,7 +304,7 @@ export default function AboutPage() {
                   {/* Story Content */}
                   <div className="p-4 sm:p-6">
                     <h3 className="text-base sm:text-xl font-black text-gray-950 mb-2.5 tracking-tight">
-                      Ek Beta, Ek Idea — Ek Thele Se Online Platform
+                      The Turning Point — Ek Thele Se Online Platform
                     </h3>
                     <div className="text-xs sm:text-sm text-gray-700 leading-relaxed space-y-2.5 font-normal">
                       <p>
