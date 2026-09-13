@@ -105,7 +105,7 @@ export default function MobileBottomNav() {
             >
               <Link
                 href="/user/cart"
-                className="relative overflow-hidden w-full bg-gradient-to-r from-[#0f8646] via-[#0c6a38] to-[#093e21] text-white rounded-xl px-3 py-2 flex items-center justify-between shadow-[0_6px_20px_-3px_rgba(15,134,70,0.4)] border border-emerald-400/30 cursor-pointer active:scale-[0.98] transition-all"
+                className="relative overflow-hidden w-full bg-gradient-to-r from-[#0a3d24] via-[#0d4f2f] to-[#072817] text-white rounded-xl px-3 py-2 flex items-center justify-between shadow-[0_6px_20px_-3px_rgba(10,61,36,0.35)] border border-emerald-500/30 cursor-pointer active:scale-[0.98] transition-all"
               >
                 {/* Subtle Shimmer Sweep */}
                 <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/20 to-transparent" />
@@ -131,7 +131,7 @@ export default function MobileBottomNav() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1 text-[11px] font-black bg-white text-[#0c831f] px-3 py-1.5 rounded-lg shadow-xs shrink-0 hover:bg-emerald-50 transition relative z-10">
+                <div className="flex items-center gap-1 text-[11px] font-black bg-white text-[#0a3d24] px-3 py-1.5 rounded-lg shadow-xs shrink-0 hover:bg-emerald-50 transition relative z-10">
                   <span>View Cart</span>
                   <ArrowRight size={12} className="stroke-[2.5]" />
                 </div>
@@ -154,7 +154,7 @@ export default function MobileBottomNav() {
                 key={item.label}
                 href={item.href}
                 className={`flex-1 py-1 flex flex-col items-center justify-center transition-all relative rounded-xl ${
-                  isActive ? "text-[#0f8646]" : "text-gray-400 hover:text-gray-600"
+                  isActive ? "text-[#0a3d24]" : "text-stone-400 hover:text-stone-600"
                 }`}
               >
                 <div className="relative flex items-center justify-center">
@@ -163,7 +163,7 @@ export default function MobileBottomNav() {
                       src={activeUser.image}
                       alt="User"
                       className={`w-5.5 h-5.5 rounded-full object-cover border transition-all ${
-                        isActive ? "border-[#0f8646] scale-110" : "border-gray-300"
+                        isActive ? "border-[#0a3d24] scale-110" : "border-stone-300"
                       }`}
                     />
                   ) : (
@@ -175,17 +175,17 @@ export default function MobileBottomNav() {
                     />
                   )}
                   {item.isUserTab && isLoggedIn && !activeUser?.image && (
-                    <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-[#0f8646] rounded-full ring-2 ring-white" />
+                    <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-[#0a3d24] rounded-full ring-2 ring-white" />
                   )}
                   {item.badge && (
-                    <span className="absolute -top-1.5 -right-2.5 bg-red-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
+                    <span className="absolute -top-1.5 -right-2.5 bg-rose-600 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
                       {item.badge}
                     </span>
                   )}
                 </div>
                 <span
                   className={`text-[10px] mt-1 tracking-tight ${
-                    isActive ? "font-extrabold text-[#0f8646]" : "font-semibold"
+                    isActive ? "font-bold text-[#0a3d24]" : "font-medium"
                   }`}
                 >
                   {item.label}
@@ -194,7 +194,7 @@ export default function MobileBottomNav() {
                 {isActive && (
                   <motion.div
                     layoutId="activeTabIndicator"
-                    className="absolute -bottom-1 w-4 h-1 bg-[#0f8646] rounded-full"
+                    className="absolute -bottom-1 w-4 h-1 bg-[#0a3d24] rounded-full"
                   />
                 )}
               </Link>

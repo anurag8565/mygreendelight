@@ -113,7 +113,7 @@ export default async function Userdashbord() {
   const plainGoogleSettings = storeSetting ? JSON.parse(JSON.stringify(storeSetting)) : null;
 
   return (
-    <div className="bg-white w-full max-w-full overflow-x-clip font-sans">
+    <div className="bg-[#faf9f5] w-full max-w-full overflow-x-clip font-sans">
       {/* 1. Hero Banner */}
       <Hero banners={plainBanners} />
 
@@ -139,14 +139,14 @@ export default async function Userdashbord() {
       {/* 7. Tone 1: Daily Lucky Scratch Card & Rewards (Pure White) */}
       <DailyRewardWidget />
 
-      {/* 9. Tone 2: Order Again Carousel (Soft Luxury Gray #f8f9fa) */}
+      {/* 9. Tone 2: Order Again Carousel (Soft Warm Stone #f7f6f2) */}
       {plainOrderAgain && plainOrderAgain.length > 0 && (
-        <div className="w-full py-6 sm:py-8 bg-[#f8f9fa] border-b border-gray-100 font-sans">
+        <div className="w-full py-8 sm:py-10 bg-[#f7f6f2] border-b border-stone-200/70 font-sans">
           <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
-             <div className="flex items-center justify-between mb-3.5 sm:mb-5">
+             <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <div className="flex items-center gap-2">
-                   <RotateCcw size={18} className="text-[#0c831f]" />
-                   <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
+                   <RotateCcw size={18} className="text-[#0a3d24]" />
+                   <h2 className="text-base sm:text-xl md:text-2xl font-extrabold text-stone-900 tracking-tight">
                       Order Again
                    </h2>
                 </div>
@@ -154,7 +154,7 @@ export default async function Userdashbord() {
 
              <ProductCarousel>
                {plainOrderAgain.map((item: any) => (
-                  <div key={item._id} className="w-[155px] sm:w-[200px] md:w-[210px] snap-start shrink-0 flex flex-col h-[320px] sm:h-[340px]">
+                  <div key={item._id} className="w-[170px] sm:w-[210px] md:w-[225px] snap-start shrink-0 flex flex-col h-[330px] sm:h-[350px]">
                      <Groceryitemcard item={item} />
                   </div>
                ))}

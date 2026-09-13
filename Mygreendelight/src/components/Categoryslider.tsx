@@ -124,20 +124,20 @@ export default function CategorySlider({
         ];
 
   return (
-    <section className="w-full py-5 sm:py-7 bg-white font-sans border-b border-gray-100">
+    <section className="w-full py-8 sm:py-10 bg-white font-sans border-b border-stone-200/70">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Header Row */}
-        <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">
+        <div className="flex items-center justify-between gap-2 mb-4 sm:mb-6">
           <div className="flex items-center gap-2">
-            <LayoutGrid size={20} className="text-[#0c831f]" />
-            <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight">
+            <LayoutGrid size={20} className="text-[#0a3d24]" />
+            <h2 className="text-base sm:text-xl md:text-2xl font-extrabold text-stone-900 tracking-tight">
               Shop by Category
             </h2>
           </div>
 
           <Link
             href="/shop"
-            className="text-[#0c831f] hover:text-[#096618] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition"
+            className="text-[#0a3d24] hover:text-[#072a18] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition"
           >
             <span>See all</span>
             <ChevronRight
@@ -148,7 +148,7 @@ export default function CategorySlider({
         </div>
 
         {/* Perfectly Balanced 3-Column Grid for the 3 Core Categories */}
-        <div className="grid grid-cols-3 gap-2.5 sm:gap-5 md:gap-6">
+        <div className="grid grid-cols-3 gap-3 sm:gap-5 md:gap-6">
           {displayList.map((item, idx) => {
             const rawKey = (item.name || "").toLowerCase().trim();
             const matchedKey =
@@ -165,20 +165,20 @@ export default function CategorySlider({
             return (
               <motion.div
                 key={item._id || item.name || idx}
-                whileTap={{ scale: 0.96 }}
+                whileTap={{ scale: 0.97 }}
                 whileHover={{ y: -4 }}
                 transition={{ type: "spring", stiffness: 350, damping: 24 }}
                 onClick={() =>
                   router.push(`/shop?category=${encodeURIComponent(config.path)}`)
                 }
-                className="group cursor-pointer bg-white hover:bg-[#fafdfa] rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 border border-gray-200/80 hover:border-emerald-400/90 shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_rgba(12,131,31,0.11)] transition-all duration-300 select-none flex flex-col justify-between"
+                className="group cursor-pointer bg-white hover:bg-stone-50/50 rounded-2xl sm:rounded-3xl p-3 sm:p-4 border border-stone-200/80 hover:border-[#0a3d24]/50 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-[0_12px_28px_rgba(10,61,36,0.08)] transition-all duration-300 select-none flex flex-col justify-between"
               >
                 {/* Clean Photo Container (Pure 4K Photography) */}
-                <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-gray-50/80 ring-1 ring-black/[0.04]">
+                <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-stone-50/90 ring-1 ring-black/[0.03]">
                   <img
                     src={imageSrc}
                     alt={config.title}
-                    className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-500 ease-out"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                     onError={(e: any) => {
                       e.target.src = "/categories/vegetables_4k.jpg?v=4";
                     }}
@@ -186,11 +186,11 @@ export default function CategorySlider({
                 </div>
 
                 {/* Typography */}
-                <div className="mt-2 sm:mt-3 text-center flex flex-col items-center">
-                  <h3 className="font-black text-xs sm:text-base md:text-lg text-gray-900 group-hover:text-[#0c831f] transition-colors duration-200 leading-tight tracking-tight truncate w-full">
+                <div className="mt-2.5 sm:mt-3.5 text-center flex flex-col items-center">
+                  <h3 className="font-extrabold text-xs sm:text-base md:text-lg text-stone-900 group-hover:text-[#0a3d24] transition-colors duration-200 leading-tight tracking-tight truncate w-full">
                     {config.title}
                   </h3>
-                  <p className="text-[10px] sm:text-xs text-gray-500 font-medium truncate mt-0.5 sm:mt-1 w-full">
+                  <p className="text-[10px] sm:text-xs text-stone-500 font-medium truncate mt-0.5 sm:mt-1 w-full">
                     {config.subtitle}
                   </p>
                 </div>

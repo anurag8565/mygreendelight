@@ -210,7 +210,7 @@ export default function Testimonials({
   };
 
   return (
-    <div className="w-full bg-white py-6 sm:py-8 border-b border-gray-100 font-sans">
+    <div className="w-full bg-[#faf9f5] py-6 sm:py-8 border-b border-stone-200/70 font-sans">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         
         {/* Section Header: Google My Business Focused */}
@@ -218,10 +218,10 @@ export default function Testimonials({
           <div>
             {/* Google Rating Pill (Controllable from Admin Panel) */}
             {googleSettings.showGoogleRatingPill && (
-              <div className="inline-flex items-center gap-2 bg-white border border-gray-200/90 px-3 py-1 rounded-full shadow-2xs mb-2">
+              <div className="inline-flex items-center gap-2 bg-white border border-stone-200/90 px-3 py-1 rounded-full shadow-2xs mb-2">
                 <GoogleGIcon className="w-4 h-4 shrink-0" />
                 <div className="flex items-center gap-1 text-xs">
-                  <span className="font-black text-gray-900">
+                  <span className="font-black text-stone-900">
                     {Number(googleSettings.googleRating || 4.9).toFixed(1)}
                   </span>
                   <div className="flex items-center text-amber-400">
@@ -229,17 +229,17 @@ export default function Testimonials({
                       <Star key={i} size={12} className="fill-amber-400 text-amber-400" />
                     ))}
                   </div>
-                  <span className="text-[11px] text-gray-500 font-medium ml-0.5">
+                  <span className="text-[11px] text-stone-500 font-medium ml-0.5">
                     {googleSettings.googleReviewsCount || "on Google Reviews"}
                   </span>
                 </div>
               </div>
             )}
 
-            <h2 className="text-lg sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
+            <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-stone-900 tracking-tight font-heading">
               {googleSettings.googleReviewsHeading || "Customer Reviews on Google"}
             </h2>
-            <p className="text-[11px] sm:text-xs text-gray-500 font-medium mt-0.5">
+            <p className="text-[11px] sm:text-xs text-stone-500 font-medium mt-0.5">
               100% verified farm-to-table feedback from Bhopal residents
             </p>
           </div>

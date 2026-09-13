@@ -114,31 +114,31 @@ export default function FilteredProduceSection({
   const activeTabMeta = tabs.find((t) => t.id === activeTab) || tabs[0];
 
   return (
-    <section className="w-full py-6 sm:py-8 bg-[#f8f9fa] font-sans border-b border-gray-100">
+    <section className="w-full py-8 sm:py-12 bg-[#f7f6f2] font-sans border-b border-stone-200/70">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         
         {/* Section Header */}
-        <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">
+        <div className="flex items-center justify-between gap-2 mb-4 sm:mb-6">
           <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <Leaf size={18} className="text-[#0c831f] shrink-0 sm:w-5 sm:h-5" />
-              <h2 className="text-sm sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight truncate">
+            <div className="flex items-center gap-2">
+              <Leaf size={20} className="text-[#0a3d24] shrink-0" />
+              <h2 className="text-base sm:text-xl md:text-2xl font-extrabold text-stone-900 tracking-tight truncate">
                 Fresh Farm Vegetables & Fruits
               </h2>
             </div>
           </div>
 
           {/* Controls: Grid/List Toggle & View All */}
-          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {/* View Mode Switcher */}
-            <div className="flex items-center bg-white p-0.5 sm:p-1 rounded-xl border border-gray-200/80 shadow-2xs">
+            <div className="flex items-center bg-white p-1 rounded-xl border border-stone-200/80 shadow-2xs">
               <button
                 type="button"
                 onClick={() => setViewMode("grid")}
-                className={`p-1 sm:px-2.5 sm:py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1 text-xs font-black ${
+                className={`px-2.5 py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1.5 text-xs font-bold ${
                   viewMode === "grid"
-                    ? "bg-[#0c831f] text-white shadow-xs"
-                    : "text-gray-500 hover:text-gray-800 hover:bg-gray-50"
+                    ? "bg-[#0a3d24] text-white shadow-xs"
+                    : "text-stone-500 hover:text-stone-900 hover:bg-stone-50"
                 }`}
                 title="Grid View"
                 aria-label="Grid View"
@@ -149,10 +149,10 @@ export default function FilteredProduceSection({
               <button
                 type="button"
                 onClick={() => setViewMode("list")}
-                className={`p-1 sm:px-2.5 sm:py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1 text-xs font-black ${
+                className={`px-2.5 py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1.5 text-xs font-bold ${
                   viewMode === "list"
-                    ? "bg-[#0c831f] text-white shadow-xs"
-                    : "text-gray-500 hover:text-gray-800 hover:bg-gray-50"
+                    ? "bg-[#0a3d24] text-white shadow-xs"
+                    : "text-stone-500 hover:text-stone-900 hover:bg-stone-50"
                 }`}
                 title="List View"
                 aria-label="List View"
@@ -171,7 +171,7 @@ export default function FilteredProduceSection({
                   ? "/shop?category=Fruits"
                   : "/shop?category=Exotics"
               }
-              className="bg-white hover:bg-emerald-50 text-[#0c831f] border border-emerald-200/80 hover:border-emerald-300 font-bold text-[11px] sm:text-xs px-2.5 sm:px-3 py-1.5 rounded-xl flex items-center gap-0.5 transition shadow-2xs shrink-0 group whitespace-nowrap"
+              className="bg-white hover:bg-stone-50 text-[#0a3d24] border border-stone-200/90 hover:border-[#0a3d24]/40 font-bold text-xs px-3 sm:px-3.5 py-2 rounded-xl flex items-center gap-1 transition shadow-2xs shrink-0 group whitespace-nowrap"
             >
               <span>View All</span>
               <ChevronRight
@@ -183,10 +183,10 @@ export default function FilteredProduceSection({
         </div>
 
         {/* 
-          🌟 3 DEDICATED PRODUCE CATEGORY TABS (Vegetables, Fruits, Exotics)
+          3 DEDICATED PRODUCE CATEGORY TABS (Vegetables, Fruits, Exotics)
           Symmetrical 3-column cards with balanced photo, label, hindi text, and count badge
         */}
-        <div className="grid grid-cols-3 gap-2 sm:gap-3.5 mb-5 sm:mb-6 select-none">
+        <div className="grid grid-cols-3 gap-2.5 sm:gap-4 mb-6 sm:mb-8 select-none">
           {tabs.map((tab) => {
             const isSelected = activeTab === tab.id;
             return (
@@ -197,22 +197,22 @@ export default function FilteredProduceSection({
                 whileHover={{ y: -2 }}
                 transition={{ type: "spring", stiffness: 350, damping: 22 }}
                 onClick={() => setActiveTab(tab.id)}
-                className={`group relative p-2.5 sm:p-3.5 rounded-2xl sm:rounded-3xl transition-all duration-300 flex flex-col sm:flex-row items-center gap-2 sm:gap-3 cursor-pointer border text-center sm:text-left overflow-hidden ${
+                className={`group relative p-3 sm:p-4 rounded-2xl sm:rounded-3xl transition-all duration-300 flex flex-col sm:flex-row items-center gap-2.5 sm:gap-3.5 cursor-pointer border text-center sm:text-left overflow-hidden ${
                   isSelected
-                    ? "bg-white border-[#0c831f] shadow-[0_6px_20px_rgba(12,131,31,0.12)] ring-2 ring-[#0c831f]/20"
-                    : "bg-white hover:bg-[#fafdfa] border-gray-200/80 hover:border-emerald-300 shadow-2xs"
+                    ? "bg-white border-[#0a3d24] shadow-[0_6px_20px_rgba(10,61,36,0.1)] ring-2 ring-[#0a3d24]/15"
+                    : "bg-white/80 hover:bg-white border-stone-200/80 hover:border-stone-300 shadow-2xs"
                 }`}
               >
                 {/* Active Indicator Top Accent */}
                 {isSelected && (
                   <motion.div
                     layoutId="activeTabAccent"
-                    className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#0c831f] via-emerald-400 to-green-500"
+                    className="absolute top-0 inset-x-0 h-1 bg-[#0a3d24]"
                   />
                 )}
 
                 {/* Produce Photo Thumbnail */}
-                <div className="relative w-11 h-11 sm:w-13 sm:h-13 rounded-xl sm:rounded-2xl overflow-hidden shrink-0 bg-gray-50 border border-gray-100 shadow-2xs">
+                <div className="relative w-11 h-11 sm:w-13 sm:h-13 rounded-xl sm:rounded-2xl overflow-hidden shrink-0 bg-stone-50 border border-stone-100 shadow-2xs">
                   <img
                     src={tab.imgUrl}
                     alt={tab.label}
@@ -220,15 +220,15 @@ export default function FilteredProduceSection({
                     loading="lazy"
                   />
                   {isSelected && (
-                    <div className="absolute inset-0 bg-[#0c831f]/10" />
+                    <div className="absolute inset-0 bg-[#0a3d24]/10" />
                   )}
                 </div>
 
                 {/* Text Details */}
                 <div className="flex flex-col items-center sm:items-start min-w-0 flex-1 w-full">
                   <span
-                    className={`text-xs sm:text-sm md:text-base font-black tracking-tight leading-tight truncate w-full ${
-                      isSelected ? "text-[#0c831f]" : "text-gray-900 group-hover:text-gray-950"
+                    className={`text-xs sm:text-sm md:text-base font-extrabold tracking-tight leading-tight truncate w-full ${
+                      isSelected ? "text-[#0a3d24]" : "text-stone-900 group-hover:text-stone-950"
                     }`}
                   >
                     {tab.label}
@@ -236,7 +236,7 @@ export default function FilteredProduceSection({
 
                   <span
                     className={`text-[10px] sm:text-xs font-semibold leading-tight mt-0.5 truncate w-full ${
-                      isSelected ? "text-emerald-700 font-bold" : "text-gray-500"
+                      isSelected ? "text-[#0a3d24]/80 font-bold" : "text-stone-500"
                     }`}
                   >
                     {tab.hindi}
@@ -244,13 +244,13 @@ export default function FilteredProduceSection({
 
                   {/* Product Count Pill */}
                   <span
-                    className={`text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full font-black mt-1 sm:mt-1.5 inline-block transition-colors shrink-0 ${
+                    className={`text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full font-bold mt-1 sm:mt-1.5 inline-block transition-colors shrink-0 ${
                       isSelected
-                        ? "bg-emerald-100 text-[#0c831f]"
-                        : "bg-gray-100 text-gray-600 group-hover:bg-emerald-50 group-hover:text-emerald-700"
+                        ? "bg-[#0a3d24] text-white"
+                        : "bg-stone-100 text-stone-600 group-hover:bg-stone-200/70"
                     }`}
                   >
-                    {tab.count} Fresh Items
+                    {tab.count} Items
                   </span>
                 </div>
               </motion.button>
@@ -275,21 +275,21 @@ export default function FilteredProduceSection({
                 <button
                   type="button"
                   onClick={() => setActiveTab("vegetables")}
-                  className="mt-2 text-xs font-black text-[#0c831f] hover:underline cursor-pointer"
+                  className="mt-2 text-xs font-bold text-[#0a3d24] hover:underline cursor-pointer"
                 >
                   View All Fresh Vegetables
                 </button>
               </div>
             ) : viewMode === "grid" ? (
-              /* Grid Mode: 2 Columns on Mobile / 3 on sm / 4 on md / 5 on lg */
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 sm:gap-4">
+              /* Grid Mode: Relaxed breathing whitespace - 2 Cols Mobile / 3 sm / 4 md & lg */
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-3.5 sm:gap-5 md:gap-6">
                 {currentVisibleItems.map((item: any) => (
                   <Groceryitemcard key={item._id} item={item} />
                 ))}
               </div>
             ) : (
               /* List Mode: Full-width row cards (Shop style) */
-              <div className="flex flex-col gap-2.5 sm:gap-3">
+              <div className="flex flex-col gap-3 sm:gap-4">
                 {currentVisibleItems.map((item: any) => (
                   <Groceryitemcard key={item._id} item={item} isList={true} />
                 ))}
@@ -300,11 +300,11 @@ export default function FilteredProduceSection({
 
         {/* Load More / Explore Full Shop Button */}
         {filteredList.length > visibleCount && (
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-5 sm:mt-7">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-6 sm:mt-8">
             <button
               type="button"
               onClick={() => setVisibleCount((prev) => prev + 8)}
-              className="w-full sm:w-auto bg-white hover:bg-emerald-50 active:scale-95 text-[#0c831f] border-2 border-emerald-500/30 hover:border-emerald-500 px-6 py-2.5 rounded-2xl font-black text-xs sm:text-sm shadow-2xs transition inline-flex items-center justify-center gap-2 cursor-pointer group"
+              className="w-full sm:w-auto bg-white hover:bg-[#0a3d24] hover:text-white active:scale-95 text-[#0a3d24] border-1.5 border-[#0a3d24]/40 hover:border-[#0a3d24] px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-2xs transition inline-flex items-center justify-center gap-2 cursor-pointer group"
             >
               <span>
                 Show More {activeTabMeta.label} (+{Math.min(8, filteredList.length - visibleCount)} more)
@@ -323,7 +323,7 @@ export default function FilteredProduceSection({
                   ? "/shop?category=Fruits"
                   : "/shop?category=Exotics"
               }
-              className="w-full sm:w-auto text-gray-600 hover:text-[#0c831f] font-bold text-xs sm:text-sm px-4 py-2 text-center transition flex items-center justify-center gap-1"
+              className="w-full sm:w-auto text-stone-600 hover:text-[#0a3d24] font-bold text-xs sm:text-sm px-4 py-2 text-center transition flex items-center justify-center gap-1"
             >
               <span>Explore All {filteredList.length} {activeTabMeta.label} in Shop</span>
               <ChevronRight size={14} className="stroke-[2.5]" />

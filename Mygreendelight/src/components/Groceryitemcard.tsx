@@ -3,7 +3,7 @@
 import { addToCart, decreaseQuantity, increaseQuantity } from "@/redux/CartSlice";
 import { toggleWishlist, setWishlist } from "@/redux/WishlistSlice";
 import { AppDispatch, RootState } from "@/redux/store";
-import { Heart, Plus, Minus, Bell, Zap } from "lucide-react";
+import { Heart, Plus, Minus, Bell, Zap, Sparkles } from "lucide-react";
 import mongoose from "mongoose";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -82,20 +82,20 @@ export default function Groceryitemcard({
   return (
     <motion.div
       whileHover={{ y: -4 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className={`w-full bg-white rounded-2xl sm:rounded-3xl border border-gray-100 hover:border-emerald-400/90 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_28px_rgba(12,131,31,0.1)] transition-all duration-300 flex flex-col justify-between relative group font-sans ${
+      transition={{ type: "spring", stiffness: 320, damping: 22 }}
+      className={`w-full bg-white rounded-2xl sm:rounded-3xl border border-stone-200/80 hover:border-[#0a3d24]/50 shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_rgba(10,61,36,0.08)] transition-all duration-300 flex flex-col justify-between relative group font-sans ${
         isList
-          ? "flex-row max-w-full gap-4 p-3.5 min-h-[135px]"
-          : "h-[320px] sm:h-[340px] p-2.5 sm:p-3"
+          ? "flex-row max-w-full gap-4 p-3.5 min-h-[140px]"
+          : "h-[330px] sm:h-[350px] p-3 sm:p-3.5"
       }`}
     >
       {/* 1. TOP IMAGE BOX */}
       <Link
         href={`/product/${item._id}`}
-        className={`relative bg-[#f8f9fa] group-hover:bg-emerald-50/30 transition-colors duration-300 rounded-xl sm:rounded-2xl flex items-center justify-center cursor-pointer overflow-hidden shrink-0 border border-gray-100/80 ${
+        className={`relative bg-stone-50/80 group-hover:bg-emerald-50/20 transition-colors duration-300 rounded-xl sm:rounded-2xl flex items-center justify-center cursor-pointer overflow-hidden shrink-0 border border-stone-100 ${
           isList
-            ? "w-[110px] h-[110px] sm:w-[130px] sm:h-[130px]"
-            : "w-full h-[130px] sm:h-[145px]"
+            ? "w-[115px] h-[115px] sm:w-[135px] sm:h-[135px]"
+            : "w-full h-[140px] sm:h-[155px]"
         }`}
       >
         <img
@@ -106,29 +106,23 @@ export default function Groceryitemcard({
             (e.target as HTMLImageElement).src =
               "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=500&q=80";
           }}
-          className="w-full h-full max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500 ease-out p-1.5"
+          className="w-full h-full max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500 ease-out p-2"
         />
 
-        {/* Badges Container */}
-        <div className="absolute top-2 left-2 flex flex-col gap-1 z-10">
+        {/* Minimalist Consistent Pill Badges */}
+        <div className="absolute top-2 left-2 flex flex-col gap-1.5 z-10">
           {item.isFeatured && (
-            <span className="bg-amber-500 text-white text-[8.5px] font-black px-1.5 py-0.5 rounded-md shadow-xs flex items-center gap-0.5 tracking-tight animate-pulse">
-              <span>⭐</span>
-              <span>FEATURED</span>
+            <span className="bg-amber-50/90 border border-amber-200/90 text-amber-900 text-[8.5px] font-bold px-2 py-0.5 rounded-full shadow-2xs flex items-center gap-1 tracking-wide">
+              <Sparkles size={9} className="text-amber-600" />
+              <span>Featured</span>
             </span>
           )}
           {discountPercent > 0 && (
-            <span className="bg-[#0c831f] text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded-md shadow-xs">
+            <span className="bg-[#0a3d24] text-white text-[9.5px] font-bold px-2 py-0.5 rounded-full shadow-2xs tracking-wide">
               {discountPercent}% OFF
             </span>
           )}
         </div>
-
-        {/* Fresh Farm Produce Tag */}
-        <span className="absolute bottom-1.5 left-2 bg-white/95 backdrop-blur-xs text-emerald-800 text-[8.5px] font-black px-1.5 py-0.5 rounded-md shadow-2xs flex items-center gap-0.5 border border-emerald-200/60 group-hover:border-emerald-400 group-hover:text-[#0c831f] transition-colors">
-          <span className="text-[9px]">🌿</span>
-          <span>FARM FRESH</span>
-        </span>
 
         {/* Wishlist Button */}
         <motion.button
@@ -185,7 +179,7 @@ export default function Groceryitemcard({
         <div>
           {/* TITLE (Strict 2-line clamp) */}
           <Link href={`/product/${item._id}`}>
-            <h3 className="text-xs sm:text-[13px] font-bold text-gray-900 leading-snug line-clamp-2 h-[34px] sm:h-[36px] group-hover:text-[#0c831f] transition-colors">
+            <h3 className="text-xs sm:text-[13.5px] font-bold text-stone-900 leading-snug line-clamp-2 h-[34px] sm:h-[38px] group-hover:text-[#0a3d24] transition-colors">
               {item.name}
             </h3>
           </Link>
@@ -194,7 +188,7 @@ export default function Groceryitemcard({
           <div className="mt-1 min-h-[24px]">
             {item.variations && item.variations.length > 1 ? (
               <select
-                className="w-full text-[10px] font-semibold py-0.5 px-2 border border-gray-200 hover:border-emerald-300 rounded-lg outline-none focus:border-[#0c831f] bg-gray-50 text-gray-700 h-[22px] cursor-pointer shadow-2xs transition-colors"
+                className="w-full text-[10px] font-semibold py-0.5 px-2 border border-stone-200 hover:border-[#0a3d24]/50 rounded-lg outline-none focus:border-[#0a3d24] bg-stone-50 text-stone-700 h-[22px] cursor-pointer shadow-2xs transition-colors"
                 value={selectedVariation?.weight || item.variations[0]?.weight}
                 onChange={(e) => {
                   const v = item.variations?.find((varItem) => varItem.weight === e.target.value);
@@ -208,22 +202,22 @@ export default function Groceryitemcard({
                 ))}
               </select>
             ) : (
-              <p className="text-[11px] text-gray-400 font-medium truncate h-[22px] flex items-center">
+              <p className="text-[11px] text-stone-400 font-medium truncate h-[22px] flex items-center">
                 {displayUnit}
               </p>
             )}
           </div>
 
           {/* PRICE ROW & SAVINGS */}
-          <div className="flex items-center gap-1.5 mt-1 h-[22px]">
-            <span className="text-sm sm:text-base font-black text-gray-950 group-hover:text-[#0c831f] transition-colors shrink-0">
+          <div className="flex items-center gap-1.5 mt-1.5 h-[22px]">
+            <span className="text-sm sm:text-base font-extrabold text-stone-950 group-hover:text-[#0a3d24] transition-colors shrink-0">
               ₹{displayPrice}
             </span>
-            <span className="text-[11px] text-gray-400 line-through font-normal shrink-0">
+            <span className="text-[11px] text-stone-400 line-through font-normal shrink-0">
               ₹{activeMRP}
             </span>
             {activeMRP > displayPrice && (
-              <span className="text-[9px] font-black text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-1.5 py-0.5 rounded-md ml-auto shrink-0 truncate max-w-[70px]">
+              <span className="text-[9.5px] font-bold text-[#0a3d24] bg-emerald-50/90 border border-emerald-200/70 px-1.5 py-0.5 rounded-md ml-auto shrink-0 truncate max-w-[75px]">
                 Save ₹{activeMRP - displayPrice}
               </span>
             )}
@@ -231,19 +225,19 @@ export default function Groceryitemcard({
         </div>
 
         {/* 3. BOTTOM BUTTON (SubziQuick 1-Click ADD vs Counter) */}
-        <div className="mt-auto pt-2">
+        <div className="mt-auto pt-2.5">
           {displayStock <= 0 ? (
             <button
               type="button"
               onClick={() => setShowAlertModal(true)}
-              className="w-full h-[36px] rounded-xl flex items-center justify-center gap-1.5 font-bold text-[11px] transition-all bg-amber-50 text-amber-800 border border-amber-200 hover:bg-amber-100 shadow-2xs cursor-pointer active:scale-95"
+              className="w-full h-[38px] rounded-xl flex items-center justify-center gap-1.5 font-bold text-[11px] transition-all bg-amber-50 text-amber-900 border border-amber-200 hover:bg-amber-100 shadow-2xs cursor-pointer active:scale-95"
             >
-              <Bell size={12} className="stroke-[2.5]" />
+              <Bell size={12} className="stroke-[2]" />
               <span>Notify Me</span>
             </button>
           ) : !cartitem ? (
             <motion.button
-              whileTap={{ scale: 0.94 }}
+              whileTap={{ scale: 0.95 }}
               type="button"
               onClick={() => {
                 if (typeof window !== "undefined" && navigator.vibrate) {
@@ -266,17 +260,17 @@ export default function Groceryitemcard({
                   })
                 );
               }}
-              className="w-full h-[36px] rounded-xl flex items-center justify-center gap-1.5 font-black text-xs transition-all duration-200 border-2 border-[#0c831f] cursor-pointer bg-white text-[#0c831f] hover:bg-[#0c831f] hover:text-white hover:shadow-[0_4px_12px_rgba(12,131,31,0.25)] shadow-2xs active:scale-95"
+              className="w-full h-[38px] rounded-xl flex items-center justify-center gap-1.5 font-bold text-xs transition-all duration-200 border-1.5 border-[#0a3d24] cursor-pointer bg-white text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white hover:shadow-[0_4px_14px_rgba(10,61,36,0.2)] shadow-2xs active:scale-95"
             >
-              <Plus size={14} className="stroke-[3]" />
+              <Plus size={14} className="stroke-[2.5]" />
               <span>ADD</span>
             </motion.button>
           ) : (
-            <div className="flex items-center justify-between bg-[#0c831f] text-white rounded-xl overflow-hidden h-[36px] shadow-xs ring-2 ring-[#0c831f]/20">
+            <div className="flex items-center justify-between bg-[#0a3d24] text-white rounded-xl overflow-hidden h-[38px] shadow-xs ring-1 ring-[#0a3d24]/20">
               <motion.button
                 whileTap={{ scale: 0.85 }}
                 type="button"
-                className="w-10 h-full flex items-center justify-center hover:bg-black/20 active:bg-black/30 transition-colors font-black text-sm cursor-pointer"
+                className="w-10 h-full flex items-center justify-center hover:bg-black/20 active:bg-black/30 transition-colors font-bold text-sm cursor-pointer"
                 onClick={() => {
                   if (typeof window !== "undefined" && navigator.vibrate) {
                     try { navigator.vibrate(15); } catch (e) {}
@@ -284,16 +278,16 @@ export default function Groceryitemcard({
                   dispatch(decreaseQuantity(currentCartItemId));
                 }}
               >
-                <Minus size={14} className="stroke-[3]" />
+                <Minus size={14} className="stroke-[2.5]" />
               </motion.button>
-              <span className="flex-1 text-center font-black text-xs sm:text-sm text-white select-none">
+              <span className="flex-1 text-center font-extrabold text-xs sm:text-sm text-white select-none">
                 {cartitem.quantity}
               </span>
               <motion.button
                 whileTap={{ scale: 0.85 }}
                 type="button"
                 disabled={cartitem.quantity >= displayStock}
-                className={`w-10 h-full flex items-center justify-center transition-colors font-black text-sm ${
+                className={`w-10 h-full flex items-center justify-center transition-colors font-bold text-sm ${
                   cartitem.quantity >= displayStock
                     ? "bg-black/25 text-white/50 cursor-not-allowed"
                     : "hover:bg-black/20 active:bg-black/30 cursor-pointer text-white"
@@ -305,7 +299,7 @@ export default function Groceryitemcard({
                   dispatch(increaseQuantity(currentCartItemId));
                 }}
               >
-                <Plus size={14} className="stroke-[3]" />
+                <Plus size={14} className="stroke-[2.5]" />
               </motion.button>
             </div>
           )}

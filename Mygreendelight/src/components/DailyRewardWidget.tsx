@@ -89,30 +89,30 @@ export default function DailyRewardWidget() {
                 </span>
               </div>
 
-              <h3 className="text-gray-950 font-black text-xs sm:text-sm mt-1 truncate tracking-tight">
+              <h3 className="text-stone-900 font-bold text-xs sm:text-sm mt-1 truncate tracking-tight font-heading">
                 {reward?.isScratched
-                  ? `🎉 You Won FLAT ₹${reward.discountAmount} OFF On Your Order!`
+                  ? `You Won FLAT ₹${reward.discountAmount} OFF On Your Order!`
                   : "Scratch Today's Golden Card & Win Instant Discount!"}
               </h3>
             </div>
           </div>
 
-          {/* Right: Interactive CTA Button with Golden Accent Glow */}
+          {/* Right: Interactive CTA Button with Refined Forest Accent Glow */}
           <div className="flex items-center gap-2 shrink-0 relative z-10">
             {reward?.isScratched ? (
               <button
                 type="button"
                 onClick={handleCopy}
-                className="bg-white hover:bg-amber-50 text-amber-900 border-2 border-amber-400 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl font-black text-xs flex items-center gap-1.5 transition cursor-pointer shadow-xs whitespace-nowrap active:scale-95"
+                className="bg-white hover:bg-amber-50 text-amber-950 border border-amber-300 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl font-bold text-xs flex items-center gap-1.5 transition cursor-pointer shadow-xs whitespace-nowrap active:scale-95"
               >
-                {copied ? <Check size={13} className="text-emerald-600" /> : <Copy size={13} />}
+                {copied ? <Check size={13} className="text-emerald-700" /> : <Copy size={13} />}
                 <span>{copied ? "Copied Code!" : reward.couponCode}</span>
               </button>
             ) : (
               <button
                 type="button"
                 onClick={handleStartScratch}
-                className="relative overflow-hidden bg-gradient-to-r from-[#0c831f] via-[#0f8646] to-[#0a6d19] hover:from-[#096618] hover:to-[#0c831f] text-white px-3.5 sm:px-5 py-2 rounded-xl font-black text-xs sm:text-xs flex items-center gap-1.5 transition-all shadow-[0_4px_16px_rgba(12,131,31,0.35)] hover:shadow-[0_6px_20px_rgba(12,131,31,0.5)] cursor-pointer whitespace-nowrap active:scale-95"
+                className="relative overflow-hidden bg-[#0a3d24] hover:bg-[#072817] text-white px-3.5 sm:px-5 py-2 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all shadow-[0_4px_16px_rgba(10,61,36,0.25)] hover:shadow-[0_6px_20px_rgba(10,61,36,0.35)] cursor-pointer whitespace-nowrap active:scale-95"
               >
                 <Gift size={13} className="animate-pulse" />
                 <span>Scratch & Win</span>

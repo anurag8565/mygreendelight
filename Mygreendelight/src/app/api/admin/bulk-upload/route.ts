@@ -127,7 +127,7 @@ export async function POST(req: NextRequest) {
               { weight: "500g", price: Math.max(15, Math.round(basePrice * 0.55)), stock: 60 },
               { weight: "1 kg", price: basePrice, stock: 80 },
               { weight: "2 kg (Bulk Saver)", price: Math.round(basePrice * 1.9), stock: 40 },
-              { weight: "5 kg (Society Sack)", price: Math.round(basePrice * 4.6), stock: 25 },
+              { weight: "5 kg (Family Bulk Pack)", price: Math.round(basePrice * 4.6), stock: 25 },
             ];
           }
         }

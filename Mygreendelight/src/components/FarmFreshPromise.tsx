@@ -50,23 +50,23 @@ export default function FarmFreshPromise() {
   ];
 
   return (
-    <section className="w-full py-6 sm:py-8 bg-white border-b border-gray-100 font-sans">
+    <section className="w-full py-6 sm:py-8 bg-[#faf9f5] border-b border-stone-200/70 font-sans">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         
         {/* Main Card */}
-        <div className="bg-white rounded-3xl border border-gray-100 p-4 sm:p-6 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-4 sm:space-y-5">
+        <div className="bg-white rounded-3xl border border-stone-200/80 p-4 sm:p-6 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-4 sm:space-y-5">
           
           {/* Header Row: Title & Live Dispatch Status */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-gray-100/80">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-stone-100">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-emerald-500 text-white flex items-center justify-center shadow-xs">
+              <div className="w-8 h-8 rounded-xl bg-[#0a3d24] text-white flex items-center justify-center shadow-xs">
                 <Leaf size={16} />
               </div>
               <div>
-                <h2 className="text-sm sm:text-base md:text-lg font-bold text-gray-900 tracking-tight">
+                <h2 className="text-sm sm:text-base md:text-lg font-bold text-stone-900 tracking-tight font-heading">
                   Farm to Kitchen Freshness Promise
                 </h2>
-                <p className="text-[11px] sm:text-xs text-gray-500 font-medium">
+                <p className="text-[11px] sm:text-xs text-stone-500 font-medium">
                   Direct Mandi wholesale pricing with 100% no-questions replacement
                 </p>
               </div>
@@ -74,8 +74,8 @@ export default function FarmFreshPromise() {
 
             {/* Live Status Pill & WhatsApp Link */}
             <div className="flex items-center gap-2 self-start sm:self-auto">
-              <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#0f8646] bg-emerald-50 border border-emerald-200/70 px-2.5 py-1 rounded-full">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#0f8646] animate-pulse" />
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#0a3d24] bg-emerald-50 border border-emerald-200/70 px-2.5 py-1 rounded-full">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0a3d24] animate-pulse" />
                 <span>Bhopal Fleet Active</span>
               </span>
 

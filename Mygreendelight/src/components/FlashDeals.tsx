@@ -85,39 +85,37 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
   }
 
   return (
-    <div className="w-full py-6 sm:py-8 bg-white font-sans border-b border-gray-100">
+    <div className="w-full py-8 sm:py-10 bg-white font-sans border-b border-stone-200/70">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Flash Deals Header Row */}
-        <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4">
+        <div className="flex items-center justify-between gap-2 mb-4 sm:mb-6">
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-            <h2 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight flex items-center gap-2">
-              <Flame size={20} className="text-amber-500 fill-amber-500" />
+            <h2 className="text-base sm:text-xl md:text-2xl font-extrabold text-stone-900 tracking-tight flex items-center gap-2">
+              <Flame size={20} className="text-amber-600 stroke-[2.2]" />
               <span>Flash Deals</span>
             </h2>
 
             {/* Real-time Reverse Countdown Badge */}
             {!isExpired && (
-              <div className="relative overflow-hidden flex items-center gap-1.5 bg-gradient-to-r from-rose-50 via-rose-100/60 to-rose-50 text-rose-600 border border-rose-300/80 px-2.5 py-0.5 rounded-full text-[11px] font-bold shadow-2xs">
-                <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/70 to-transparent" />
-                <Clock size={12} className="stroke-[2.5] text-rose-600 animate-pulse relative z-10" />
-                <span className="tabular-nums font-mono text-[11px] font-black relative z-10">
+              <div className="flex items-center gap-1.5 bg-rose-50 text-rose-800 border border-rose-200/90 px-3 py-1 rounded-full text-[11px] font-bold shadow-2xs">
+                <Clock size={12} className="stroke-[2.2] text-rose-700" />
+                <span className="tabular-nums font-mono text-[11px] font-extrabold">
                   {timeLeft.hours}:{timeLeft.minutes}:{timeLeft.seconds} left
                 </span>
               </div>
             )}
 
             {badgeText && (
-              <span className="relative overflow-hidden hidden md:inline-flex items-center gap-1 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md shadow-2xs tracking-wider">
-                <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/40 to-transparent" />
-                <Flame size={10} className="fill-white relative z-10" />
-                <span className="relative z-10">{badgeText}</span>
+              <span className="hidden md:inline-flex items-center gap-1 bg-[#0a3d24] text-white text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full shadow-2xs tracking-wider">
+                <Flame size={11} className="stroke-[2]" />
+                <span>{badgeText}</span>
               </span>
             )}
           </div>
 
           <Link
             href="/shop"
-            className="text-[#0c831f] hover:text-[#096618] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition"
+            className="text-[#0a3d24] hover:text-[#072a18] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition"
           >
             <span>See All</span>
             <ChevronRight
@@ -132,7 +130,7 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
           {products.map((item: any) => (
             <div
               key={item._id}
-              className="w-[155px] sm:w-[200px] md:w-[210px] snap-start shrink-0 flex flex-col h-[320px] sm:h-[340px]"
+              className="w-[170px] sm:w-[210px] md:w-[225px] snap-start shrink-0 flex flex-col h-[330px] sm:h-[350px]"
             >
               <Groceryitemcard item={item} />
             </div>

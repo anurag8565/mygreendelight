@@ -578,17 +578,17 @@ export default function Nav({ user }: { user?: iUser | null }) {
   return (
     <>
       <header className="w-full flex flex-col z-50 bg-white sticky top-0 shadow-2xs">
-        {/* Tier 1: Top Bar (Green) */}
-        <div className="bg-[#0f8646] text-white py-1.5 px-4 md:px-8 text-xs font-medium flex justify-between items-center hidden sm:flex">
-          <div className="flex items-center gap-2">
-            <Truck size={14} />
+        {/* Tier 1: Top Bar (Deep Forest Green) */}
+        <div className="bg-[#0a3d24] text-white py-1.5 px-4 md:px-8 text-xs font-medium flex justify-between items-center hidden sm:flex">
+          <div className="flex items-center gap-2 tracking-tight">
+            <Truck size={14} className="text-emerald-300" />
             <span>FREE DELIVERY on orders above ₹199 in Bhopal</span>
           </div>
-          <div className="flex items-center gap-6">
-            <Link href="/user/myorder" className="cursor-pointer hover:text-green-200">Track Order</Link>
-            <Link href="/contact" className="cursor-pointer hover:text-green-200">Help & Support</Link>
+          <div className="flex items-center gap-6 text-[11.5px]">
+            <Link href="/user/myorder" className="cursor-pointer hover:text-emerald-200 transition-colors">Track Order</Link>
+            <Link href="/contact" className="cursor-pointer hover:text-emerald-200 transition-colors">Help & Support</Link>
             {activeUser?.role === "admin" && (
-              <Link href="/admin" className="cursor-pointer font-bold text-yellow-300 hover:underline">Admin Center</Link>
+              <Link href="/admin" className="cursor-pointer font-bold text-amber-300 hover:underline">Admin Center</Link>
             )}
           </div>
         </div>
@@ -654,12 +654,12 @@ export default function Nav({ user }: { user?: iUser | null }) {
                   type="button"
                   onClick={handleVoiceSearch}
                   title="Search by voice in Hindi or English"
-                  className="p-2 mr-1.5 rounded-full transition-all flex items-center justify-center shrink-0 cursor-pointer text-gray-400 hover:text-[#0f8646] hover:bg-green-50"
+                  className="p-2 mr-1.5 rounded-full transition-all flex items-center justify-center shrink-0 cursor-pointer text-stone-400 hover:text-[#0a3d24] hover:bg-stone-50"
                 >
                   <Mic size={18} />
                 </button>
 
-                <button type="submit" className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-6 font-semibold transition-colors text-sm h-full shrink-0">
+                <button type="submit" className="bg-[#0a3d24] hover:bg-[#072817] text-white px-6 font-semibold transition-colors text-sm h-full shrink-0 cursor-pointer">
                   Search
                 </button>
               </form>
@@ -1123,20 +1123,20 @@ export default function Nav({ user }: { user?: iUser | null }) {
               onClick={() => setIsMiniCartOpen(true)}
               className="flex items-center gap-1.5 cursor-pointer hover:opacity-80 transition-opacity shrink-0 select-none"
             >
-              <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-green-50 flex items-center justify-center text-[#0f8646] border border-green-200/60 shadow-2xs">
+              <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-emerald-50/80 flex items-center justify-center text-[#0a3d24] border border-emerald-200/70 shadow-2xs">
                 <ShoppingCart size={19} className="stroke-[2.2]" />
                 {mounted && cartdata.length > 0 && (
                   <motion.span
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="absolute -top-1 -right-1 bg-[#0f8646] text-white text-[9px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center shadow-xs"
+                    className="absolute -top-1 -right-1 bg-[#0a3d24] text-white text-[9px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center shadow-xs"
                   >
                     {cartdata.length}
                   </motion.span>
                 )}
               </div>
               <div className="hidden sm:flex flex-col">
-                <span className="text-[12px] font-extrabold text-gray-900">₹{mounted ? cartTotal.toFixed(2) : "0.00"}</span>
+                <span className="text-[12px] font-extrabold text-stone-900">₹{mounted ? cartTotal.toFixed(2) : "0.00"}</span>
               </div>
             </motion.div>
           </div>
@@ -1144,7 +1144,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
 
         {/* Mobile Search Bar (Only visible on small screens below md) */}
         <div ref={mobileSearchRef} className="md:hidden pb-2.5 px-3.5 pt-0 relative z-[60]">
-          <form onSubmit={handleSearch} className="flex items-center bg-gray-50/90 rounded-xl border border-gray-200/90 focus-within:border-[#0f8646] focus-within:bg-white focus-within:ring-2 focus-within:ring-green-100 transition-all h-10 px-3 shadow-2xs">
+          <form onSubmit={handleSearch} className="flex items-center bg-stone-50 rounded-xl border border-stone-200/90 focus-within:border-[#0a3d24] focus-within:bg-white focus-within:ring-2 focus-within:ring-emerald-900/10 transition-all h-10 px-3 shadow-2xs">
             <Search size={16} className="text-gray-400 shrink-0 mr-2" />
             <input
               type="text"

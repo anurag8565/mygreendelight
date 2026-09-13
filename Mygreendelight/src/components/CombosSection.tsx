@@ -62,24 +62,24 @@ export default function CombosSection({
   };
 
   return (
-    <div className="w-full py-6 sm:py-8 bg-[#f8f9fa] border-b border-gray-100 font-sans">
+    <div className="w-full py-8 sm:py-12 bg-[#f7f6f2] border-b border-stone-200/70 font-sans">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Section Header */}
-        <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">
-          <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0 flex-1">
-            <h2 className="text-xs sm:text-lg md:text-xl font-black text-gray-900 tracking-tight flex items-center gap-1.5 truncate">
-              <ShoppingBag size={17} className="text-[#0c831f] shrink-0 sm:w-5 sm:h-5" />
+        <div className="flex items-center justify-between gap-2 mb-4 sm:mb-6">
+          <div className="flex items-center gap-2 min-w-0 flex-1">
+            <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-stone-900 tracking-tight flex items-center gap-2 truncate">
+              <ShoppingBag size={18} className="text-[#0a3d24] shrink-0 sm:w-5 sm:h-5" />
               <span className="truncate">Fresh Produce Combos</span>
               <span className="hidden xs:inline truncate">& Family Bundles</span>
             </h2>
-            <span className="bg-amber-100 text-amber-950 border border-amber-300/80 text-[10px] sm:text-[10.5px] font-black px-2 sm:px-2.5 py-0.5 rounded-full whitespace-nowrap shrink-0 shadow-2xs">
+            <span className="bg-amber-50 text-amber-900 border border-amber-200/80 text-[10px] sm:text-[10.5px] font-bold px-2.5 py-0.5 rounded-full whitespace-nowrap shrink-0 shadow-2xs">
               Up to 25% Off
             </span>
           </div>
 
           <Link
             href="/shop"
-            className="text-[#0c831f] hover:text-[#096618] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition whitespace-nowrap shrink-0"
+            className="text-[#0a3d24] hover:text-[#072a18] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition whitespace-nowrap shrink-0"
           >
             <span>See All</span>
             <ChevronRight
@@ -90,7 +90,7 @@ export default function CombosSection({
         </div>
 
         {/* 1. DESKTOP / TABLET VIEW: Full Width 4-Column Grid (Zero empty side space) */}
-        <div className="hidden md:grid md:grid-cols-4 gap-4 w-full">
+        <div className="hidden md:grid md:grid-cols-4 gap-4 sm:gap-5 w-full">
           {combos.map((combo) => {
             const isAdded = addedIds[combo._id];
             const discount =
@@ -105,37 +105,36 @@ export default function CombosSection({
             return (
               <div
                 key={combo._id}
-                className="w-full bg-white rounded-3xl border border-gray-100 hover:border-emerald-300 shadow-[0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] transition-all flex flex-col justify-between p-3 relative group"
+                className="w-full bg-white rounded-3xl border border-stone-200/80 hover:border-[#0a3d24]/50 shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_rgba(10,61,36,0.08)] transition-all flex flex-col justify-between p-3.5 relative group"
               >
                 <div>
                   {/* Full-Bleed HD Produce Combo Photo */}
-                  <div className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden bg-gray-100 mb-2.5">
+                  <div className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden bg-stone-100 mb-2.5">
                     <img
                       src={combo.image}
                       alt={combo.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     {discount > 0 && (
-                      <span className="relative overflow-hidden absolute top-2 left-2 bg-[#0c831f] text-white text-[9.5px] font-extrabold px-2 py-0.5 rounded-md shadow-xs">
-                        <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-                        <span className="relative z-10">{discount}% OFF</span>
+                      <span className="absolute top-2 left-2 bg-[#0a3d24] text-white text-[9px] font-bold px-2 py-0.5 rounded-full shadow-xs">
+                        {discount}% OFF
                       </span>
                     )}
                   </div>
 
                   {/* Combo Title */}
-                  <h3 className="font-bold text-sm text-gray-900 leading-snug line-clamp-1 group-hover:text-[#0c831f] transition-colors">
+                  <h3 className="font-bold text-sm text-stone-900 leading-snug line-clamp-1 group-hover:text-[#0a3d24] transition-colors">
                     {combo.title}
                   </h3>
-                  <p className="text-[11px] text-gray-400 line-clamp-2 mt-1 min-h-[32px] font-medium leading-tight">
+                  <p className="text-[11px] text-stone-500 line-clamp-2 mt-1 min-h-[32px] font-medium leading-tight">
                     {combo.subtitle || combo.description || "Curated fresh farm produce bundle"}
                   </p>
                 </div>
 
                 {/* Price & Add Button */}
-                <div className="pt-2.5 border-t border-gray-100 flex items-center justify-between gap-2 mt-2">
+                <div className="pt-2.5 border-t border-stone-100 flex items-center justify-between gap-2 mt-2">
                   <div>
-                    <span className="text-base font-black text-gray-950">
+                    <span className="text-base font-extrabold text-stone-950">
                       ₹{combo.comboPrice}
                     </span>
                     {combo.originalPrice && combo.originalPrice > combo.comboPrice && (

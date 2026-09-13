@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond } from "next/font/google";
+import { Plus_Jakarta_Sans, Outfit } from "next/font/google";
 import "./globals.css";
 import Provider from "@/Provider";
 import StoreProviders from "@/redux/StoreProviders";
@@ -12,10 +12,17 @@ import BroadcastBar from "@/components/BroadcastBar";
 import ContentProtection from "@/components/ContentProtection";
 import InstallAppPrompt from "@/components/InstallAppPrompt";
 
-const brandSerif = Cormorant_Garamond({
+const sansFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  variable: "--font-brand-serif",
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const headingFont = Outfit({
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-heading",
   display: "swap",
 });
 
@@ -25,7 +32,7 @@ export const viewport: Viewport = {
   maximumScale: 1,
   userScalable: false,
   viewportFit: "cover",
-  themeColor: "#0f8646",
+  themeColor: "#0a3d24",
 };
 
 export const metadata: Metadata = {
@@ -402,7 +409,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${brandSerif.variable} w-full min-h-screen bg-linear-to-b from-green-50 to-white text-gray-900 overflow-x-hidden font-sans`}>
+      <body className={`${sansFont.variable} ${headingFont.variable} w-full min-h-screen bg-[#faf9f5] text-stone-900 overflow-x-hidden antialiased font-sans`}>
         <ContentProtection />
         <Provider>
           <StoreProviders>
