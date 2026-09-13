@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { X, Plus, Minus, ShoppingBag, ArrowRight } from "lucide-react";
+import { X, Plus, Minus, ShoppingBag, ArrowRight, Truck, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/redux/store";
 import { increaseQuantity, decreaseQuantity, removeFromCart } from "@/redux/CartSlice";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 interface MiniCartProps {
   isOpen: boolean;
@@ -22,11 +23,25 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   const cartTotal = cartdata.reduce((total, item) => total + item.price * item.quantity, 0);
 
   const [mounted, setMounted] = useState(false);
+  const [freeDeliveryThreshold, setFreeDeliveryThreshold] = useState<number>(199);
+
   useEffect(() => {
     setMounted(true);
+    axios
+      .get("/api/settings")
+      .then((res) => {
+        if (res.data?.success && res.data.freeDeliveryThreshold) {
+          setFreeDeliveryThreshold(res.data.freeDeliveryThreshold);
+        }
+      })
+      .catch(() => {});
   }, []);
 
   if (!mounted) return null;
+
+  const isFreeDelivery = cartTotal >= freeDeliveryThreshold;
+  const remainingForFreeDelivery = Math.max(0, freeDeliveryThreshold - cartTotal);
+  const progressPercent = Math.min(100, Math.round((cartTotal / freeDeliveryThreshold) * 100));
 
   return createPortal(
     <AnimatePresence>
@@ -49,25 +64,47 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
             className="fixed top-0 right-0 h-screen w-full sm:w-[400px] bg-white z-[1001] shadow-2xl flex flex-col"
           >
             {/* Header */}
-            <div className="p-4 border-b flex items-center justify-between bg-green-50/50">
-              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+            <div className="p-4 border-b flex items-center justify-between bg-emerald-50/50">
+              <h2 className="text-xl font-black text-gray-900 flex items-center gap-2">
                 <ShoppingBag className="text-[#0f8646]" />
-                My Cart <span className="text-sm font-medium text-gray-500">({cartdata.length} items)</span>
+                <span>My Basket</span>
+                <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
+                  {cartdata.length} items
+                </span>
               </h2>
-              <button onClick={onClose} className="p-2 bg-white rounded-full hover:bg-gray-100 shadow-sm">
-                <X size={20} className="text-gray-600" />
+              <button onClick={onClose} className="p-2 bg-white rounded-full hover:bg-gray-100 shadow-sm cursor-pointer">
+                <X size={18} className="text-gray-600" />
               </button>
             </div>
 
-            {/* Smart Cart Health & Freshness Meter */}
+            {/* 🚚 LIVE DYNAMIC FREE DELIVERY METER (Real-time Calculation) */}
             {cartdata.length > 0 && (
-              <div className="bg-gradient-to-r from-emerald-800 to-green-700 text-white px-4 py-2 text-xs flex items-center justify-between shadow-inner">
-                <span className="flex items-center gap-1 font-bold">
-                  <span>🥗 Farm Freshness Meter</span>
-                </span>
-                <span className="bg-yellow-300 text-gray-950 font-black text-[10px] px-2 py-0.5 rounded-full uppercase">
-                  100% Farm Fresh
-                </span>
+              <div className="bg-emerald-50/90 border-b border-emerald-100 px-4 py-3 text-xs">
+                <div className="flex items-center justify-between font-bold mb-1.5">
+                  <div className="flex items-center gap-1.5">
+                    <Truck size={15} className="text-[#0f8646] shrink-0" />
+                    {isFreeDelivery ? (
+                      <span className="text-[#0f8646] font-black">
+                        🎉 FREE Delivery Unlocked!
+                      </span>
+                    ) : (
+                      <span className="text-slate-800">
+                        Add <strong className="text-[#0f8646] font-black">₹{remainingForFreeDelivery}</strong> more for FREE Delivery
+                      </span>
+                    )}
+                  </div>
+                  <span className="text-[10.5px] font-black text-slate-500">
+                    {progressPercent}%
+                  </span>
+                </div>
+
+                {/* Animated Progress Track */}
+                <div className="w-full bg-emerald-200/60 rounded-full h-2 overflow-hidden">
+                  <div
+                    className="bg-[#0f8646] h-full rounded-full transition-all duration-500 ease-out"
+                    style={{ width: `${progressPercent}%` }}
+                  />
+                </div>
               </div>
             )}
 

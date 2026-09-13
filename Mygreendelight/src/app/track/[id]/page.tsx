@@ -486,24 +486,24 @@ export default function TrackOrderPage() {
             </div>
 
             {/* Live Distance & ETA Radar Badge */}
-            {data?.customerLocation && deliveryBoy?.location?.coordinates && (
-              (() => {
-                // Support both object { latitude, longitude } and array [lat, lng] / [lng, lat]
-                const rawCust = data.customerLocation;
-                const custLat = Number(rawCust?.latitude ?? (Array.isArray(rawCust) ? rawCust[0] : null));
-                const custLng = Number(rawCust?.longitude ?? (Array.isArray(rawCust) ? rawCust[1] : null));
+            {(() => {
+              // Support both object { latitude, longitude } and array [lat, lng] / [lng, lat]
+              const rawCust = data?.customerLocation;
+              const custLat = Number(rawCust?.latitude ?? (Array.isArray(rawCust) ? rawCust[0] : null));
+              const custLng = Number(rawCust?.longitude ?? (Array.isArray(rawCust) ? rawCust[1] : null));
 
-                const riderCoords = deliveryBoy.location.coordinates;
-                const riderLng = Number(Array.isArray(riderCoords) ? riderCoords[0] : (deliveryBoy.location as any)?.longitude);
-                const riderLat = Number(Array.isArray(riderCoords) ? riderCoords[1] : (deliveryBoy.location as any)?.latitude);
+              const riderCoords = deliveryBoy?.location?.coordinates;
+              const riderLng = Number(Array.isArray(riderCoords) ? riderCoords[0] : (deliveryBoy?.location as any)?.longitude);
+              const riderLat = Number(Array.isArray(riderCoords) ? riderCoords[1] : (deliveryBoy?.location as any)?.latitude);
 
-                if (
-                  isNaN(custLat) || isNaN(custLng) || !custLat || !custLng ||
-                  isNaN(riderLat) || isNaN(riderLng) || !riderLat || !riderLng
-                ) {
-                  return null;
-                }
+              let distKm = 1.2;
+              let etaMins = 8;
+              let hasExactGPS = false;
 
+              if (
+                !isNaN(custLat) && !isNaN(custLng) && custLat && custLng &&
+                !isNaN(riderLat) && !isNaN(riderLng) && riderLat && riderLng
+              ) {
                 const dLat = ((riderLat - custLat) * Math.PI) / 180;
                 const dLon = ((riderLng - custLng) * Math.PI) / 180;
                 const a =
@@ -514,33 +514,34 @@ export default function TrackOrderPage() {
                     Math.sin(dLon / 2);
                 const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
                 const calcDist = 6371 * c;
-                const distKm = isNaN(calcDist) ? 1.5 : Math.max(0.3, Number(calcDist.toFixed(1)));
-                const etaMins = Math.max(2, Math.round(distKm * 2.8 + 2));
+                distKm = isNaN(calcDist) ? 1.2 : Math.max(0.2, Number(calcDist.toFixed(1)));
+                etaMins = Math.max(3, Math.round(distKm * 2.8 + 2));
+                hasExactGPS = true;
+              }
 
-                return (
-                  <div className="bg-emerald-50/90 border border-emerald-200 rounded-2xl p-3 sm:p-3.5 mb-4 flex items-center justify-between gap-3 shadow-2xs">
-                    <div className="flex items-center gap-2.5 min-w-0">
-                      <div className="w-8 h-8 rounded-xl bg-[#0f8646] text-white flex items-center justify-center shrink-0">
-                        <Navigation size={15} />
-                      </div>
-                      <div className="min-w-0">
-                        <p className="font-black text-xs sm:text-sm text-gray-900 truncate">
-                          Rider is <span className="text-[#0f8646] font-black">{distKm} km away</span>
-                        </p>
-                        <span className="text-[10.5px] text-gray-500 font-medium block">
-                          Estimated Arrival: ~{etaMins} Mins • 10-15 Min Express Route
-                        </span>
-                      </div>
+              return (
+                <div className="bg-emerald-50/90 border border-emerald-200 rounded-2xl p-3 sm:p-3.5 mb-4 flex items-center justify-between gap-3 shadow-2xs">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="w-8 h-8 rounded-xl bg-[#0f8646] text-white flex items-center justify-center shrink-0">
+                      <Navigation size={15} />
                     </div>
-
-                    <div className="shrink-0 flex items-center gap-1.5 text-[10.5px] font-black text-emerald-900 bg-white border border-emerald-200 px-3 py-1 rounded-full shadow-2xs">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-                      <span>Live GPS</span>
+                    <div className="min-w-0">
+                      <p className="font-black text-xs sm:text-sm text-gray-900 truncate">
+                        Rider is <span className="text-[#0f8646] font-black">{hasExactGPS ? `${distKm} km away` : "On the way in Bhopal"}</span>
+                      </p>
+                      <span className="text-[10.5px] text-gray-500 font-medium block">
+                        Estimated Arrival: ~{etaMins} Mins • 10-15 Min Express Route
+                      </span>
                     </div>
                   </div>
-                );
-              })()
-            )}
+
+                  <div className="shrink-0 flex items-center gap-1.5 text-[10.5px] font-black text-emerald-900 bg-white border border-emerald-200 px-3 py-1 rounded-full shadow-2xs">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+                    <span>{hasExactGPS ? "Live GPS" : "Assigned"}</span>
+                  </div>
+                </div>
+              );
+            })()}
 
             {/* Live Interactive Map */}
             {data?.customerLocation && deliveryBoy?.location?.coordinates && (
