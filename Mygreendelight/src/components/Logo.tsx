@@ -38,32 +38,37 @@ export default function Logo({
         />
       </div>
 
-      {/* 🏷️ SubziQuick Serif Brand Wordmark */}
-      <div className="flex flex-col leading-none font-[family-name:var(--font-brand-serif),serif] antialiased">
+      {/* 🏷️ SubziQuick Original Brand Wordmark */}
+      <div className="flex flex-col leading-none font-sans">
         <div className="flex items-baseline tracking-tight">
           <span
-            className={`font-semibold tracking-[-0.01em] ${
-              isCompact ? "text-xl" : "text-2xl sm:text-[25px]"
-            } ${
-              isWhite
-                ? "text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.25)]"
-                : isInvoice
-                ? "text-gray-950"
-                : "text-[#083621]"
-            }`}
+            className={`font-black tracking-[-0.03em] ${
+              isCompact ? "text-lg" : "text-xl sm:text-[22px]"
+            } ${isWhite ? "text-white" : isInvoice ? "text-gray-950" : "text-[#052e16]"}`}
           >
-            SubziQuick
+            Subzi
           </span>
           <span
-            className={`font-bold tracking-wider uppercase ml-0.5 ${
-              isCompact ? "text-sm" : "text-base sm:text-lg"
+            className={`font-black tracking-[-0.03em] ${
+              isCompact ? "text-lg" : "text-xl sm:text-[22px]"
             } ${
-              isInvoice
-                ? "text-amber-700"
-                : "bg-gradient-to-b from-[#e5be7a] via-[#c49335] to-[#805710] bg-clip-text text-transparent drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]"
+              isWhite
+                ? "text-yellow-300"
+                : isInvoice
+                ? "text-gray-700"
+                : "text-[#0f8646]"
             }`}
           >
-            .IN
+            Quick
+          </span>
+          <span
+            className={`font-black text-[9px] sm:text-[10px] px-1 py-0.5 ml-1 rounded-md tracking-wider uppercase ${
+              isWhite
+                ? "bg-white/20 text-emerald-100 border border-white/20"
+                : "bg-emerald-100 text-[#075225] border border-emerald-200"
+            }`}
+          >
+            .in
           </span>
         </div>
 
