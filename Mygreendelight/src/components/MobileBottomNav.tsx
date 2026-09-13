@@ -107,49 +107,44 @@ export default function MobileBottomNav() {
               );
             })()}
 
-            {/* 3. Center Cart: Elevated Circular FAB Button with Live Pulsing Animation & Bounce */}
+            {/* 3. Center Cart: Compact, Flush-Elevated Circular Action */}
             {(() => {
               const isActive = pathname === "/user/cart";
               return (
-                <div className="relative -top-4 flex flex-col items-center justify-center shrink-0 px-0.5 z-20">
+                <div className="relative -top-1.5 flex flex-col items-center justify-center shrink-0 px-0.5 z-20">
                   <Link
                     href="/user/cart"
                     className="group relative flex flex-col items-center focus:outline-none"
                   >
-                    {/* Pulsing Animated Glow Ring when items are in cart */}
+                    {/* Subtle Pulsing Ring when items are in cart */}
                     {cartCount > 0 && (
-                      <span className="absolute -inset-1 rounded-full bg-[#0a3d24]/30 animate-ping pointer-events-none" />
+                      <span className="absolute -inset-0.5 rounded-full bg-[#0a3d24]/25 animate-ping pointer-events-none" />
                     )}
 
-                    {/* Circular Elevated FAB with Cart Count Bounce Animation */}
+                    {/* Perfectly Proportioned Circular Cart Button */}
                     <motion.div
                       key={cartCount}
                       initial={{ scale: 0.95 }}
                       animate={{ scale: 1 }}
                       whileTap={{ scale: 0.88 }}
-                      whileHover={{ scale: 1.06 }}
+                      whileHover={{ scale: 1.05 }}
                       transition={{ type: "spring", stiffness: 450, damping: 24 }}
-                      className={`relative w-12.5 h-12.5 sm:w-13 sm:h-13 rounded-full flex flex-col items-center justify-center border-2 border-white shadow-[0_8px_22px_rgba(10,61,36,0.45)] transition-colors ${
+                      className={`relative w-10.5 h-10.5 sm:w-11 sm:h-11 rounded-full flex flex-col items-center justify-center border-2 border-white shadow-[0_4px_14px_rgba(10,61,36,0.35)] transition-colors ${
                         cartCount > 0
-                          ? "bg-gradient-to-tr from-[#072817] via-[#0a3d24] to-[#072817] text-white ring-2 ring-[#0a3d24]/25"
+                          ? "bg-gradient-to-tr from-[#072817] via-[#0a3d24] to-[#072817] text-white ring-1 ring-[#0a3d24]/20"
                           : isActive
-                          ? "bg-[#072817] text-white ring-2 ring-emerald-400"
+                          ? "bg-[#072817] text-white ring-1.5 ring-emerald-400"
                           : "bg-[#0a3d24] text-white"
                       }`}
                     >
-                      <ShoppingCart size={19} className="stroke-[2.4]" />
-                      {cartCount > 0 && (
-                        <span className="text-[8.5px] font-black leading-none mt-0.5 tracking-tighter">
-                          ₹{Math.round(cartTotal)}
-                        </span>
-                      )}
+                      <ShoppingCart size={17} className="stroke-[2.4]" />
 
                       {/* Golden Count Badge */}
                       {cartCount > 0 && (
                         <motion.span
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
-                          className="absolute -top-1 -right-1 bg-amber-400 text-stone-950 font-black text-[9.5px] min-w-[18px] h-[18px] px-1 rounded-full flex items-center justify-center border-2 border-white shadow-xs"
+                          className="absolute -top-1 -right-1 bg-amber-400 text-stone-950 font-black text-[9px] min-w-[16px] h-[16px] px-0.5 rounded-full flex items-center justify-center border border-white shadow-xs"
                         >
                           {cartCount}
                         </motion.span>
@@ -157,13 +152,15 @@ export default function MobileBottomNav() {
                     </motion.div>
 
                     <span
-                      className={`text-[9px] sm:text-[9.5px] mt-0.5 tracking-tight leading-none ${
-                        cartCount > 0 || isActive
+                      className={`text-[9.5px] sm:text-[10px] mt-0.5 tracking-tight leading-none ${
+                        cartCount > 0
                           ? "font-black text-[#0a3d24]"
-                          : "font-bold text-stone-600"
+                          : isActive
+                          ? "font-black text-[#0a3d24]"
+                          : "font-semibold text-stone-500"
                       }`}
                     >
-                      Cart
+                      {cartCount > 0 ? `₹${Math.round(cartTotal)}` : "Cart"}
                     </span>
                   </Link>
                 </div>
