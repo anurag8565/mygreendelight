@@ -62,7 +62,7 @@ export default function CombosSection({
   };
 
   return (
-    <div className="w-full py-6 sm:py-8 bg-[#f8f9fa] border-b border-gray-100 font-sans">
+    <div className="w-full py-6 sm:py-8 bg-[#f5f6f5] border-b border-gray-200/60 font-sans">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Section Header */}
         <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">
@@ -72,9 +72,8 @@ export default function CombosSection({
               <span className="truncate">Fresh Produce Combos</span>
               <span className="hidden xs:inline truncate">& Family Bundles</span>
             </h2>
-            <span className="relative overflow-hidden bg-gradient-to-r from-amber-100/90 via-amber-50 to-amber-100/90 text-amber-900 border border-amber-300/80 text-[10px] sm:text-[10.5px] font-black px-2 sm:px-2.5 py-0.5 rounded-full whitespace-nowrap shrink-0 shadow-2xs">
-              <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/70 to-transparent" />
-              <span className="relative z-10">Up to 25% Off</span>
+            <span className="bg-emerald-100 text-emerald-900 border border-emerald-300/80 text-[10px] sm:text-[10.5px] font-black px-2 sm:px-2.5 py-0.5 rounded-full whitespace-nowrap shrink-0 shadow-2xs">
+              Up to 25% Off
             </span>
           </div>
 

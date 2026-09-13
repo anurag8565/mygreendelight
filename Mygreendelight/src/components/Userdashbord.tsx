@@ -139,9 +139,9 @@ export default async function Userdashbord() {
       {/* 7. Tone 1: Daily Lucky Scratch Card & Rewards (Pure White) */}
       <DailyRewardWidget />
 
-      {/* 9. Tone 2: Order Again Carousel (Soft Luxury Gray #f8f9fa) */}
+      {/* 9. Tone 2: Order Again Carousel (Soft Organic Canvas) */}
       {plainOrderAgain && plainOrderAgain.length > 0 && (
-        <div className="w-full py-6 sm:py-8 bg-[#f8f9fa] border-b border-gray-100 font-sans">
+        <div className="w-full py-6 sm:py-8 bg-[#f5f6f5] border-b border-gray-200/60 font-sans">
           <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
              <div className="flex items-center justify-between mb-3.5 sm:mb-5">
                 <div className="flex items-center gap-2">

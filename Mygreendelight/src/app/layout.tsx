@@ -402,7 +402,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${brandSerif.variable} w-full min-h-screen bg-linear-to-b from-green-50 to-white text-gray-900 overflow-x-hidden font-sans`}>
+      <body className={`${brandSerif.variable} w-full min-h-screen bg-[#f5f6f5] text-gray-900 overflow-x-hidden font-sans`}>
         <ContentProtection />
         <Provider>
           <StoreProviders>

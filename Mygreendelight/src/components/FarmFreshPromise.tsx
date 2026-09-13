@@ -50,7 +50,7 @@ export default function FarmFreshPromise() {
   ];
 
   return (
-    <section className="w-full py-6 sm:py-8 bg-[#f8faf8] border-b border-gray-100 font-sans">
+    <section className="w-full py-6 sm:py-8 bg-[#f5f6f5] border-b border-gray-200/60 font-sans">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         
         {/* Main Card */}

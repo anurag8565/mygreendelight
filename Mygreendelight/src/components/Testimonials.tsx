@@ -210,7 +210,7 @@ export default function Testimonials({
   };
 
   return (
-    <div className="w-full bg-white py-6 sm:py-8 border-b border-gray-100 font-sans">
+    <div className="w-full bg-[#f5f6f5] py-6 sm:py-8 border-b border-gray-200/60 font-sans">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         
         {/* Section Header: Google My Business Focused */}
