@@ -29,39 +29,37 @@ io.on("connection", (socket) => {
   socket.on(
     "register-user",
     (userId) => {
+      if (!userId) return;
+      const cleanId = String(userId);
+      onlineUsers[cleanId] = socket.id;
+      socket.userId = cleanId;
 
-      onlineUsers[userId] =
-        socket.id;
+      // Join personal user room so all devices (mobile, laptop, tablet) of this user receive broadcasts
+      socket.join(`user:${cleanId}`);
 
-      socket.userId =
-        userId;
-
-      console.log(
-        "REGISTERED USER"
-      );
-
-      console.log(
-        userId
-      );
-
-      console.log(
-        "SOCKET"
-      );
-
-      console.log(
-        socket.id
-      );
-
-      console.log(
-        "ONLINE USERS"
-      );
-
-      console.log(
-        onlineUsers
-      );
-
+      console.log(`[SOCKET] User ${cleanId} registered and joined room user:${cleanId} on socket ${socket.id}`);
     }
   );
+
+  // Real-time live cart sync across devices of the same user
+  socket.on("cart-changed", (data) => {
+    try {
+      const { userId, cart, timestamp } = data || {};
+      const targetUserId = userId || socket.userId;
+      if (!targetUserId) return;
+      const cleanId = String(targetUserId);
+
+      // Broadcast to all other devices/windows of this user (excluding the sender)
+      socket.to(`user:${cleanId}`).emit("cart-updated", {
+        cart,
+        timestamp: timestamp || Date.now(),
+        fromSocketId: socket.id,
+      });
+      console.log(`[SOCKET] Cart sync broadcasted to user:${cleanId}`);
+    } catch (err) {
+      console.error("[SOCKET] cart-changed error:", err);
+    }
+  });
 
   // PUT DISCONNECT HERE
   socket.on(
@@ -89,6 +87,26 @@ io.on("connection", (socket) => {
     }
   );
 
+});
+
+// HTTP Webhook for Next.js server to push live cart updates via Socket.io
+app.post("/cart-sync", (req, res) => {
+  try {
+    const { userId, cart, timestamp } = req.body || {};
+    if (!userId) {
+      return res.status(400).json({ success: false, message: "userId required" });
+    }
+    const cleanId = String(userId);
+    io.to(`user:${cleanId}`).emit("cart-updated", {
+      cart,
+      timestamp: timestamp || Date.now(),
+    });
+    console.log(`[SOCKET HTTP] Pushed cart-updated to room user:${cleanId}`);
+    return res.json({ success: true });
+  } catch (err) {
+    console.error("[SOCKET HTTP] /cart-sync error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
 });
 
 app.post(

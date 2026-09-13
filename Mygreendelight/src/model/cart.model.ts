@@ -19,6 +19,7 @@ export interface ICart {
   items: ICartItem[];
   couponCode?: string | null;
   discountAmount?: number;
+  version?: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -68,6 +69,10 @@ const CartSchema = new mongoose.Schema<ICart>(
       default: null,
     },
     discountAmount: {
+      type: Number,
+      default: 0,
+    },
+    version: {
       type: Number,
       default: 0,
     },

@@ -42,6 +42,7 @@ import { signOut } from "next-auth/react";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart, increaseQuantity, decreaseQuantity, hydrateCart, setCartFromCloud } from "@/redux/CartSlice";
 import { hydrateWishlist } from "@/redux/WishlistSlice";
+import { useCartSync } from "@/hooks/useCartSync";
 import type { RootState, AppDispatch } from "@/redux/store";
 import { AnimatePresence, motion } from "framer-motion";
 import { createPortal } from "react-dom";
@@ -86,6 +87,9 @@ export default function Nav({ user }: { user?: iUser | null }) {
   const searchRef = useRef<HTMLDivElement>(null);
   const mobileSearchRef = useRef<HTMLDivElement>(null);
 
+  // Real-time live cart sync across devices (WebSocket, focus, tabs, heartbeat)
+  useCartSync(cleanUserId);
+
   useEffect(() => {
     setMounted(true);
     dispatch(hydrateCart({ userId: cleanUserId }));
@@ -94,71 +98,6 @@ export default function Nav({ user }: { user?: iUser | null }) {
       const savedLoc = localStorage.getItem("mgd_user_location");
       if (savedLoc) setLocation(savedLoc);
     }
-
-    const fetchLatestCloudCart = async () => {
-      try {
-        const cRes = await axios.get("/api/user/cart");
-        if (cRes.data?.success && cRes.data?.cart) {
-          const cloudItems = cRes.data.cart.items || [];
-          if (Array.isArray(cloudItems)) {
-            const formatted = cloudItems.map((item: any) => ({
-              _id: item.product?._id ? String(item.product._id) : (item.product ? String(item.product) : String(item._id || "")),
-              cartItemId: item.cartItemId || (item.variation ? `${item.product?._id || item._id}-${item.variation.weight}` : String(item.product?._id || item.product || item._id)),
-              name: item.name || item.product?.name || "Item",
-              price: item.price ?? item.product?.price ?? 0,
-              unit: item.unit || item.product?.unit || "kg",
-              image: item.image || item.product?.image || "",
-              quantity: item.quantity || 1,
-              stock: item.stock ?? item.product?.stock ?? 50,
-              category: item.category || item.product?.category || "Produce",
-              variation: item.variation || undefined,
-            }));
-            dispatch(
-              setCartFromCloud({
-                cartdata: formatted,
-                couponCode: cRes.data.cart.couponCode || null,
-                discountAmount: cRes.data.cart.discountAmount || 0,
-                userId: cleanUserId,
-                serverUpdatedAt: cRes.data.cart.updatedAt || cRes.data.serverTimestamp,
-              })
-            );
-          }
-        }
-      } catch (_) {}
-    };
-
-    fetchLatestCloudCart();
-
-    // Multi-tab instant sync via BroadcastChannel (0ms delay across tabs)
-    let channel: BroadcastChannel | null = null;
-    if (typeof window !== "undefined" && typeof BroadcastChannel !== "undefined") {
-      try {
-        channel = new BroadcastChannel("subziquick_cart_sync");
-        channel.onmessage = (event) => {
-          if (event.data?.type === "CART_MUTATED" && Array.isArray(event.data.cartdata)) {
-            dispatch(
-              setCartFromCloud({
-                cartdata: event.data.cartdata,
-                couponCode: event.data.couponCode,
-                discountAmount: event.data.discountAmount,
-                userId: cleanUserId,
-                serverUpdatedAt: event.data.timestamp,
-              })
-            );
-          }
-        };
-      } catch (_) {}
-    }
-
-    // Auto-sync when window gains focus (user switches tabs or clicks laptop)
-    const handleFocus = () => {
-      fetchLatestCloudCart();
-    };
-    window.addEventListener("focus", handleFocus);
-    return () => {
-      window.removeEventListener("focus", handleFocus);
-      if (channel) channel.close();
-    };
   }, [dispatch, cleanUserId]);
 
   const [searchResults, setSearchResults] = useState<any[]>([]);

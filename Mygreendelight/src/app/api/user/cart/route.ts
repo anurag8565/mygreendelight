@@ -29,18 +29,56 @@ export async function GET() {
     const userId = await getUserIdFromSession(session);
 
     if (!userId) {
-      return NextResponse.json({ success: false, items: [] }, { status: 401 });
+      return NextResponse.json(
+        { success: false, items: [], message: "Unauthorized" },
+        {
+          status: 401,
+          headers: {
+            "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+            "Pragma": "no-cache",
+            "Expires": "0",
+          },
+        }
+      );
     }
 
     const cart = await Cart.findOne({ user: new mongoose.Types.ObjectId(userId) });
-    return NextResponse.json({
-      success: true,
-      cart: cart || { items: [], couponCode: null, discountAmount: 0, updatedAt: new Date() },
-      serverTimestamp: Date.now(),
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        cart: cart || { items: [], couponCode: null, discountAmount: 0, version: 0, updatedAt: new Date() },
+        serverTimestamp: Date.now(),
+        version: cart?.version || 0,
+      },
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+          "Pragma": "no-cache",
+          "Expires": "0",
+        },
+      }
+    );
   } catch (error: any) {
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
+}
+
+// Asynchronously notify socket server so connected devices (Mobile, Laptop, etc.) receive live push instantly
+async function notifySocketCartUpdate(userId: string, cart: any) {
+  try {
+    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:5000";
+    fetch(`${socketUrl}/cart-sync`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId,
+        cart,
+        timestamp: Date.now(),
+      }),
+      // 1.5s timeout so Next.js response is never delayed if socket server is offline
+      signal: AbortSignal.timeout(1500),
+    }).catch(() => {});
+  } catch (_) {}
 }
 
 export async function POST(req: Request) {
@@ -93,16 +131,28 @@ export async function POST(req: Request) {
             discountAmount: Number(body.discountAmount) || 0,
             updatedAt: new Date(),
           },
+          $inc: { version: 1 },
         },
         { upsert: true, new: true, setDefaultsOnInsert: true }
       );
 
-      return NextResponse.json({
-        success: true,
-        message: "Cart synced successfully",
-        cart: updated,
-        serverTimestamp: Date.now(),
-      });
+      // Notify socket server for instant cross-device broadcast
+      notifySocketCartUpdate(userId, updated);
+
+      return NextResponse.json(
+        {
+          success: true,
+          message: "Cart synced successfully",
+          cart: updated,
+          version: updated.version || 0,
+          serverTimestamp: Date.now(),
+        },
+        {
+          headers: {
+            "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+          },
+        }
+      );
     }
 
     // Case 2: Single item add / update
@@ -113,6 +163,7 @@ export async function POST(req: Request) {
       cart = await Cart.create({
         user: userObjId,
         items: [],
+        version: 0,
       });
     }
 
@@ -140,15 +191,27 @@ export async function POST(req: Request) {
       });
     }
 
+    cart.version = (cart.version || 0) + 1;
     cart.updatedAt = new Date();
     await cart.save();
 
-    return NextResponse.json({
-      success: true,
-      message: "Item updated in cart",
-      cart,
-      serverTimestamp: Date.now(),
-    });
+    // Notify socket server for instant cross-device broadcast
+    notifySocketCartUpdate(userId, cart);
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Item updated in cart",
+        cart,
+        version: cart.version,
+        serverTimestamp: Date.now(),
+      },
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+        },
+      }
+    );
   } catch (error: any) {
     console.error("Cart API POST error:", error);
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
@@ -166,11 +229,26 @@ export async function DELETE() {
     }
 
     const userObjId = new mongoose.Types.ObjectId(userId);
-    await Cart.findOneAndUpdate(
+    const cleared = await Cart.findOneAndUpdate(
       { user: userObjId },
-      { $set: { items: [], couponCode: null, discountAmount: 0, updatedAt: new Date() } }
+      {
+        $set: { items: [], couponCode: null, discountAmount: 0, updatedAt: new Date() },
+        $inc: { version: 1 },
+      },
+      { new: true }
     );
-    return NextResponse.json({ success: true, message: "Cart cleared" });
+
+    // Notify socket server of cart clear
+    notifySocketCartUpdate(userId, cleared || { items: [], couponCode: null, discountAmount: 0 });
+
+    return NextResponse.json(
+      { success: true, message: "Cart cleared" },
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+        },
+      }
+    );
   } catch (error: any) {
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import mongoose from "mongoose";
+import { socket } from "@/lib/socket";
 
 export interface IGrocery {
     _id: mongoose.Types.ObjectId | string;
@@ -22,9 +23,11 @@ interface CartState {
     discountAmount: number;
     currentUserId: string | null;
     lastLocalActionAt: number;
+    isCloudHydrated: boolean;
+    pendingSyncCount: number;
 }
 
-const getCleanUserId = (userId?: any): string | null => {
+export const getCleanUserId = (userId?: any): string | null => {
     if (!userId) return null;
     const raw = typeof userId === "object" ? (userId._id || userId.id || userId) : userId;
     const str = String(raw).trim();
@@ -48,8 +51,48 @@ let syncTimer: any = null;
 let isSyncingToBackend = false;
 let lastLocalActionTimestamp = 0;
 
+// Broadcast changes instantly across both same-device tabs (BroadcastChannel) and other devices (WebSocket)
+export const emitLiveCartUpdate = (cartdata: IGrocery[], couponCode: string | null, discountAmount: number, userId?: any) => {
+    const cleanId = getCleanUserId(userId);
+
+    // 1. Same-device multi-tab instant broadcast (0ms delay)
+    if (typeof window !== "undefined" && typeof BroadcastChannel !== "undefined") {
+        try {
+            const channel = new BroadcastChannel("subziquick_cart_sync");
+            channel.postMessage({
+                type: "CART_MUTATED",
+                cartdata,
+                couponCode,
+                discountAmount,
+                timestamp: Date.now(),
+            });
+            channel.close();
+        } catch (_) {}
+    }
+
+    // 2. Cross-device WebSocket live broadcast (<20ms delay)
+    if (cleanId && socket && socket.connected) {
+        try {
+            socket.emit("cart-changed", {
+                userId: cleanId,
+                cart: {
+                    items: cartdata,
+                    couponCode,
+                    discountAmount,
+                },
+                timestamp: Date.now(),
+            });
+        } catch (_) {}
+    }
+};
+
 export const syncCartToBackend = (cartdata: IGrocery[], couponCode: string | null, discountAmount: number, userId?: any) => {
     if (typeof window === "undefined") return;
+
+    const cleanId = getCleanUserId(userId);
+
+    // Immediately push live update via WebSocket and BroadcastChannel
+    emitLiveCartUpdate(cartdata, couponCode, discountAmount, cleanId);
 
     if (syncTimer) clearTimeout(syncTimer);
     // Debounced sync to MongoDB cloud so multi-device updates save cleanly
@@ -63,6 +106,7 @@ export const syncCartToBackend = (cartdata: IGrocery[], couponCode: string | nul
                     items: cartdata,
                     couponCode,
                     discountAmount,
+                    clientTimestamp: Date.now(),
                 }),
             });
         } catch (e) {
@@ -71,23 +115,7 @@ export const syncCartToBackend = (cartdata: IGrocery[], couponCode: string | nul
             isSyncingToBackend = false;
             syncTimer = null;
         }
-    }, 250);
-};
-
-// Broadcast changes instantly across tabs on the same device
-const broadcastCart = (cartdata: IGrocery[], couponCode: string | null, discountAmount: number) => {
-    if (typeof window === "undefined" || typeof BroadcastChannel === "undefined") return;
-    try {
-        const channel = new BroadcastChannel("subziquick_cart_sync");
-        channel.postMessage({
-            type: "CART_MUTATED",
-            cartdata,
-            couponCode,
-            discountAmount,
-            timestamp: Date.now(),
-        });
-        channel.close();
-    } catch (_) {}
+    }, 200);
 };
 
 // Pure local storage update without network side effects
@@ -108,7 +136,6 @@ const saveCartToStorage = (cartdata: IGrocery[], couponCode: string | null, disc
 // Full save: updates local storage, broadcasts to other tabs, and syncs to MongoDB
 const saveCart = (cartdata: IGrocery[], couponCode: string | null, discountAmount: number, userId?: any) => {
     saveCartToStorage(cartdata, couponCode, discountAmount, userId);
-    broadcastCart(cartdata, couponCode, discountAmount);
     syncCartToBackend(cartdata, couponCode, discountAmount, userId);
 };
 
@@ -158,6 +185,8 @@ const initialState: CartState = {
     discountAmount: 0,
     currentUserId: null,
     lastLocalActionAt: 0,
+    isCloudHydrated: false,
+    pendingSyncCount: 0,
 };
 
 const cartSlice = createSlice({
@@ -197,13 +226,14 @@ const cartSlice = createSlice({
                     state.cartdata = merged;
                     state.couponCode = userCart.couponCode || guestCart.couponCode;
                     state.discountAmount = userCart.discountAmount || guestCart.discountAmount;
-                    // Do NOT sync to backend on mere page load / hydration - only write local storage cache!
+                    // Cache locally for offline fast startup without pushing to backend
                     saveCartToStorage(state.cartdata, state.couponCode, state.discountAmount, cleanId);
                 } else {
                     const guestCart = getSavedCart(null);
                     state.cartdata = guestCart.cartdata;
                     state.couponCode = guestCart.couponCode;
                     state.discountAmount = guestCart.discountAmount;
+                    state.isCloudHydrated = true;
                 }
             } catch (e) {
                 console.error("Cart hydrate error:", e);
@@ -342,17 +372,25 @@ const cartSlice = createSlice({
                 discountAmount?: number;
                 userId?: any;
                 serverUpdatedAt?: string | number | Date;
+                requestStartedAt?: number;
                 force?: boolean;
             }>
         ) => {
             const cleanId = getCleanUserId(action.payload.userId || state.currentUserId);
             state.currentUserId = cleanId;
 
-            // 🛡️ RACE CONDITION SHIELD:
-            // If the user on THIS device is actively clicking (+ / - / delete within 800ms)
-            // or an outgoing POST sync is pending or in-flight, IGNORE incoming GET reads.
-            // This device already has the freshest state in memory!
-            if (!action.payload.force && (isSyncingToBackend || syncTimer !== null || Date.now() - lastLocalActionTimestamp < 800)) {
+            const reqTime = action.payload.requestStartedAt || 0;
+
+            // 🛡️ IN-FLIGHT RACE CONDITION SHIELD:
+            // 1. If this GET request was started BEFORE the user made their latest local click,
+            // it contains stale data! DISCARD IT!
+            if (!action.payload.force && reqTime > 0 && reqTime < state.lastLocalActionAt) {
+                return;
+            }
+
+            // 2. If the user on THIS device has an in-flight sync or pending debounce or clicked within the last 600ms,
+            // don't let external reads overwrite the local optimistic state!
+            if (!action.payload.force && (isSyncingToBackend || syncTimer !== null || Date.now() - lastLocalActionTimestamp < 600)) {
                 return;
             }
 
@@ -360,6 +398,7 @@ const cartSlice = createSlice({
             state.cartdata = action.payload.cartdata || [];
             state.couponCode = action.payload.couponCode || null;
             state.discountAmount = action.payload.discountAmount || 0;
+            state.isCloudHydrated = true;
 
             // Persist locally for immediate offline cache without triggering recursive cloud sync
             saveCartToStorage(state.cartdata, state.couponCode, state.discountAmount, cleanId);

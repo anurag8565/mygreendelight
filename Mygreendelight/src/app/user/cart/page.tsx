@@ -11,8 +11,8 @@ import {
   applyCoupon,
   removeCoupon,
   hydrateCart,
-  setCartFromCloud,
 } from "@/redux/CartSlice";
+import { useCartSync } from "@/hooks/useCartSync";
 import {
   Trash2,
   ShoppingBag,
@@ -74,80 +74,10 @@ export default function CartPage() {
     null;
   const cleanUserId = rawUserId ? String(rawUserId) : null;
 
+  // Real-time live cart sync across devices (WebSocket, focus, tabs, heartbeat)
+  useCartSync(cleanUserId);
+
   useEffect(() => {
-    let isMounted = true;
-
-    const syncCartFromCloud = () => {
-      axios
-        .get(`/api/user/cart?_t=${Date.now()}`)
-        .then((cRes) => {
-          if (!isMounted) return;
-          if (cRes.data?.success && cRes.data?.cart) {
-            const cloudItems = cRes.data.cart.items || [];
-            if (Array.isArray(cloudItems)) {
-              const formatted = cloudItems.map((item: any) => ({
-                _id: item.product?._id ? String(item.product._id) : (item.product ? String(item.product) : String(item._id || "")),
-                cartItemId: item.cartItemId || (item.variation ? `${item.product?._id || item._id}-${item.variation.weight}` : String(item.product?._id || item.product || item._id)),
-                name: item.name || item.product?.name || "Item",
-                price: item.price ?? item.product?.price ?? 0,
-                unit: item.unit || item.product?.unit || "kg",
-                image: item.image || item.product?.image || "",
-                quantity: item.quantity || 1,
-                stock: item.stock ?? item.product?.stock ?? 50,
-                category: item.category || item.product?.category || "Produce",
-                variation: item.variation || undefined,
-              }));
-              dispatch(
-                setCartFromCloud({
-                  cartdata: formatted,
-                  couponCode: cRes.data.cart.couponCode || null,
-                  discountAmount: cRes.data.cart.discountAmount || 0,
-                  userId: cleanUserId,
-                  serverUpdatedAt: cRes.data.cart.updatedAt,
-                })
-              );
-            }
-          }
-        })
-        .catch(() => {});
-    };
-
-    // Initial load sync from MongoDB
-    syncCartFromCloud();
-
-    // Multi-tab instant sync via BroadcastChannel (0ms delay across tabs)
-    let channel: BroadcastChannel | null = null;
-    if (typeof window !== "undefined" && typeof BroadcastChannel !== "undefined") {
-      try {
-        channel = new BroadcastChannel("subziquick_cart_sync");
-        channel.onmessage = (event) => {
-          if (event.data?.type === "CART_MUTATED" && Array.isArray(event.data.cartdata)) {
-            dispatch(
-              setCartFromCloud({
-                cartdata: event.data.cartdata,
-                couponCode: event.data.couponCode,
-                discountAmount: event.data.discountAmount,
-                userId: cleanUserId,
-                serverUpdatedAt: event.data.timestamp,
-              })
-            );
-          }
-        };
-      } catch (_) {}
-    }
-
-    // Gentle sync when user focuses the tab / comes back from another device
-    const handleWindowFocus = () => {
-      syncCartFromCloud();
-    };
-    window.addEventListener("focus", handleWindowFocus);
-
-    // ⚡ Fast 2.5s background sync so updates on mobile reflect on laptop automatically
-    const syncInterval = setInterval(() => {
-      if (typeof document !== "undefined" && document.visibilityState === "visible") {
-        syncCartFromCloud();
-      }
-    }, 2500);
 
     axios
       .get("/api/groceries?limit=12&sort=price_asc")
@@ -172,15 +102,6 @@ export default function CartPage() {
         }
       })
       .catch(() => {});
-
-    return () => {
-      isMounted = false;
-      window.removeEventListener("focus", handleWindowFocus);
-      clearInterval(syncInterval);
-      if (channel) {
-        channel.close();
-      }
-    };
   }, [dispatch, cleanUserId]);
 
   const { cartdata, couponCode, discountAmount } = useSelector(
