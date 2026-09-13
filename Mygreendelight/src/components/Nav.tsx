@@ -599,7 +599,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 sm:flex-initial">
             <button 
               onClick={() => setmenuopen(true)} 
-              className="lg:hidden p-1 text-gray-700 hover:text-[#0f8646] shrink-0"
+              className="lg:hidden p-1 text-stone-700 hover:text-[#0a3d24] shrink-0 cursor-pointer"
               aria-label="Open navigation menu"
             >
               <Menu size={22} />
@@ -608,12 +608,12 @@ export default function Nav({ user }: { user?: iUser | null }) {
               <Logo className="shrink-0" />
               <button 
                 onClick={() => setShowLocationPopup(true)} 
-                className="lg:hidden flex items-center gap-1 text-[11px] font-bold text-gray-600 hover:text-[#0f8646] transition text-left mt-0.5"
+                className="lg:hidden flex items-center gap-1 text-[11px] font-bold text-stone-600 hover:text-[#0a3d24] transition text-left mt-0.5 cursor-pointer"
                 title="Change delivery location"
               >
-                <MapPin size={11} className="text-[#0f8646] shrink-0" />
-                <span className="truncate max-w-[130px] sm:max-w-[170px] font-semibold text-gray-800">{location}</span>
-                <ChevronDown size={11} className="shrink-0 text-gray-400" />
+                <MapPin size={11} className="text-[#0a3d24] shrink-0" />
+                <span className="truncate max-w-[130px] sm:max-w-[170px] font-semibold text-stone-800">{location}</span>
+                <ChevronDown size={11} className="shrink-0 text-stone-400" />
               </button>
             </div>
           </div>
@@ -623,14 +623,14 @@ export default function Nav({ user }: { user?: iUser | null }) {
             className="hidden lg:flex items-center gap-2 shrink-0 cursor-pointer group relative hover:opacity-90 transition"
             onClick={() => setShowLocationPopup(true)}
           >
-            <div className="w-9 h-9 rounded-xl bg-green-50 flex items-center justify-center text-[#0f8646] group-hover:bg-[#0f8646] group-hover:text-white transition-colors">
+            <div className="w-9 h-9 rounded-xl bg-emerald-50 text-[#0a3d24] flex items-center justify-center group-hover:bg-[#0a3d24] group-hover:text-white transition-colors">
               <MapPin size={18} />
             </div>
             <div className="flex flex-col">
-              <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Deliver to</span>
-              <div className="text-xs sm:text-sm font-black text-gray-800 flex items-center gap-1 group-hover:text-[#0f8646] transition-colors">
+              <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider">Deliver to</span>
+              <div className="text-xs sm:text-sm font-black text-stone-800 flex items-center gap-1 group-hover:text-[#0a3d24] transition-colors">
                 <span className="truncate max-w-[160px]">{location}</span>
-                <ChevronDown size={14} className="shrink-0 text-gray-400" />
+                <ChevronDown size={14} className="shrink-0 text-stone-400" />
               </div>
             </div>
           </div>
@@ -958,17 +958,17 @@ export default function Nav({ user }: { user?: iUser | null }) {
                 )}
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-extrabold text-[#0f8646]">
+                <span className="text-[10px] font-extrabold text-[#0a3d24]">
                   {activeUser?.email
                     ? `Hi, ${activeUser?.name ? activeUser.name.split(" ")[0] : "Shopper"}`
                     : "Welcome"}
                 </span>
-                <div className="text-sm font-black text-gray-800 flex items-center gap-1 group-hover:text-[#0f8646] transition-colors">
+                <div className="text-sm font-black text-stone-800 flex items-center gap-1 group-hover:text-[#0a3d24] transition-colors">
                   {activeUser?.email ? "My Profile" : "Login / Signup"}{" "}
                   <ChevronDown
                     size={14}
                     className={`transition-transform duration-200 ${
-                      open ? "rotate-180 text-[#0f8646]" : ""
+                      open ? "rotate-180 text-[#0a3d24]" : ""
                     }`}
                   />
                 </div>
@@ -987,7 +987,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                     className="absolute top-full right-0 mt-3 w-60 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-[999] text-gray-900"
                   >
                     <div className="p-4 border-b bg-emerald-50/60 flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-emerald-100 text-[#0f8646] flex items-center justify-center font-black text-base shrink-0 border border-emerald-200">
+                      <div className="w-10 h-10 rounded-full bg-emerald-100 text-[#0a3d24] flex items-center justify-center font-black text-base shrink-0 border border-emerald-200">
                         {activeUser?.name ? activeUser.name.charAt(0).toUpperCase() : "U"}
                       </div>
                       <div className="min-w-0">
@@ -1439,15 +1439,15 @@ export default function Nav({ user }: { user?: iUser | null }) {
         <div className="hidden lg:flex px-8 border-b border-gray-100 items-center justify-center gap-8 h-12 bg-white relative">
           {/* Categories Dropdown */}
           <div className="absolute left-8 h-full group">
-            <div className="bg-[#0f8646] text-white h-full px-6 flex items-center gap-3 cursor-pointer hover:bg-[#0c6a38] transition-colors rounded-t-md font-semibold text-sm">
+            <div className="bg-[#0a3d24] text-white h-full px-6 flex items-center gap-3 cursor-pointer hover:bg-[#072817] transition-colors rounded-t-md font-semibold text-sm">
               <Menu size={18} />
               All Categories
               <ChevronDown size={16} className="ml-4" />
             </div>
-            <div className="absolute top-full left-0 w-64 bg-white shadow-xl rounded-b-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 flex flex-col py-2">
-               <Link href="/shop" className="px-4 py-2 text-sm text-gray-700 hover:text-[#0f8646] hover:bg-green-50 font-medium">All Products</Link>
+            <div className="absolute top-full left-0 w-64 bg-white shadow-xl rounded-b-lg border border-stone-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 flex flex-col py-2">
+               <Link href="/shop" className="px-4 py-2 text-sm text-stone-700 hover:text-[#0a3d24] hover:bg-emerald-50/60 font-medium">All Products</Link>
                {navCategories.map((cat: any) => (
-                 <Link key={cat._id} href={`/shop?category=${encodeURIComponent(cat.name)}`} className="px-4 py-2 text-sm text-gray-700 hover:text-[#0f8646] hover:bg-green-50 font-medium">
+                 <Link key={cat._id} href={`/shop?category=${encodeURIComponent(cat.name)}`} className="px-4 py-2 text-sm text-stone-700 hover:text-[#0a3d24] hover:bg-emerald-50/60 font-medium">
                    {cat.name}
                  </Link>
                ))}
@@ -1456,10 +1456,10 @@ export default function Nav({ user }: { user?: iUser | null }) {
 
           {/* Links */}
           <nav className="flex items-center gap-8 text-sm font-semibold pl-[240px]">
-            <Link href="/" className={`transition-colors ${pathname === "/" ? "text-[#0f8646] font-bold" : "text-gray-700 hover:text-[#0f8646]"}`}>Home</Link>
-            <Link href="/shop" className={`transition-colors ${pathname === "/shop" ? "text-[#0f8646] font-bold" : "text-gray-700 hover:text-[#0f8646]"}`}>Shop</Link>
-            <Link href="/about" className={`transition-colors ${pathname === "/about" ? "text-[#0f8646] font-bold" : "text-gray-700 hover:text-[#0f8646]"}`}>About Us</Link>
-            <Link href="/contact" className={`transition-colors ${pathname === "/contact" ? "text-[#0f8646] font-bold" : "text-gray-700 hover:text-[#0f8646]"}`}>Contact Us</Link>
+            <Link href="/" className={`transition-colors ${pathname === "/" ? "text-[#0a3d24] font-bold" : "text-stone-700 hover:text-[#0a3d24]"}`}>Home</Link>
+            <Link href="/shop" className={`transition-colors ${pathname === "/shop" ? "text-[#0a3d24] font-bold" : "text-stone-700 hover:text-[#0a3d24]"}`}>Shop</Link>
+            <Link href="/about" className={`transition-colors ${pathname === "/about" ? "text-[#0a3d24] font-bold" : "text-stone-700 hover:text-[#0a3d24]"}`}>About Us</Link>
+            <Link href="/contact" className={`transition-colors ${pathname === "/contact" ? "text-[#0a3d24] font-bold" : "text-stone-700 hover:text-[#0a3d24]"}`}>Contact Us</Link>
           </nav>
         </div>
       </header>
