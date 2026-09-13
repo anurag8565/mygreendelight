@@ -10,6 +10,7 @@ import WhatsAppWidget from "@/components/WhatsAppWidget";
 import MobileBottomNav from "@/components/MobileBottomNav";
 import BroadcastBar from "@/components/BroadcastBar";
 import ContentProtection from "@/components/ContentProtection";
+import InstallAppPrompt from "@/components/InstallAppPrompt";
 
 const brandSerif = Cormorant_Garamond({
   subsets: ["latin"],
@@ -411,6 +412,7 @@ export default function RootLayout({
             {children}
             <WhatsAppWidget />
             <MobileBottomNav />
+            <InstallAppPrompt />
           </StoreProviders>
         </Provider>
       </body>

@@ -493,6 +493,30 @@ export default function Nav({ user }: { user?: iUser | null }) {
                 </div>
                 <ArrowRight size={14} className="text-gray-300 group-hover:text-[#0c831f] group-hover:translate-x-0.5 transition" />
               </Link>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setmenuopen(false);
+                  if (typeof window !== "undefined") {
+                    window.dispatchEvent(new CustomEvent("trigger-pwa-install"));
+                  }
+                }}
+                className="w-full flex items-center justify-between p-2.5 rounded-xl text-emerald-950 bg-emerald-50/80 hover:bg-emerald-100 transition group cursor-pointer text-left"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-xl bg-[#0f8646] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+                    <Smartphone size={15} />
+                  </div>
+                  <div>
+                    <span className="font-bold text-xs text-[#0f8646] block">Install SubziQuick App</span>
+                    <span className="text-[10px] text-gray-500 font-medium">1-Tap Fast Mobile Access</span>
+                  </div>
+                </div>
+                <span className="bg-[#0f8646] text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase">
+                  Install
+                </span>
+              </button>
             </div>
           </div>
 
@@ -1030,6 +1054,25 @@ export default function Nav({ user }: { user?: iUser | null }) {
                     </Link>
 
 
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setOpen(false);
+                        if (typeof window !== "undefined") {
+                          window.dispatchEvent(new CustomEvent("trigger-pwa-install"));
+                        }
+                      }}
+                      className="w-full text-left px-4 py-2.5 text-xs text-emerald-950 bg-emerald-50 hover:bg-emerald-100 font-bold border-b flex items-center justify-between transition cursor-pointer"
+                    >
+                      <span className="flex items-center gap-2">
+                        <Smartphone size={14} className="text-[#0f8646]" />
+                        <span>📲 Install SubziQuick App</span>
+                      </span>
+                      <span className="bg-[#0f8646] text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase">
+                        Install
+                      </span>
+                    </button>
 
                     <Link
                       href="/wishlist"
