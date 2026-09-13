@@ -124,7 +124,7 @@ export default function Registerform({ onBack }: RegisterformProps) {
                 Farm Fresh Living Starts Here.
               </h2>
               <p className="text-xs text-emerald-100/80 leading-relaxed font-medium">
-                Create a free account to enjoy instant Bhopal deliveries, cashback points, and zero-plastic eco packaging.
+                Create a free account to enjoy instant Bhopal deliveries, exclusive discounts, and farm-fresh produce.
               </p>
             </div>
           </div>
@@ -136,8 +136,8 @@ export default function Registerform({ onBack }: RegisterformProps) {
                 <Gift size={16} />
               </div>
               <div>
-                <span className="font-bold text-xs text-white block leading-tight">Instant Welcome Cashback</span>
-                <span className="text-[10.5px] text-emerald-200/70">Automatic cashback rewards on your 1st order</span>
+                <span className="font-bold text-xs text-white block leading-tight">Welcome Offers</span>
+                <span className="text-[10.5px] text-emerald-200/70">Save instantly on your fresh harvest orders</span>
               </div>
             </div>
 

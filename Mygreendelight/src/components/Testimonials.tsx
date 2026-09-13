@@ -73,7 +73,7 @@ export const DEFAULT_GOOGLE_REVIEWS = [
     rating: 5,
     timeAgo: "2 weeks ago",
     comment:
-      "Zero plastic mission is commendable! Returned 3 eco-bags to the delivery rider and got instant cashback. Truly 5-star customer service!",
+      "Zero plastic mission is commendable! Fresh vegetables delivered neatly in eco-friendly packaging right on time. Truly 5-star customer service!",
     source: "google",
     tag: "Google Review",
   },

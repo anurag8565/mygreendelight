@@ -315,45 +315,6 @@ export async function POST(req: NextRequest) {
             }
         }
 
-        // 💰 Deduct GreenPoints Wallet atomically if redeemed
-        if (walletDiscountCalc > 0) {
-            await User.findOneAndUpdate(
-                { _id: userid, walletBalance: { $gte: walletDiscountCalc } },
-                {
-                    $inc: { walletBalance: -walletDiscountCalc },
-                    $push: {
-                        walletHistory: {
-                            amount: walletDiscountCalc,
-                            type: "debit",
-                            description: `Redeemed GreenPoints on Order #${neworder._id.toString().slice(-6).toUpperCase()}`,
-                            date: new Date(),
-                        },
-                    },
-                }
-            );
-
-            try {
-                const UserWallet = (await import("@/model/wallet.model")).default;
-                await UserWallet.findOneAndUpdate(
-                    { user: userid, balance: { $gte: walletDiscountCalc } },
-                    {
-                        $inc: { balance: -walletDiscountCalc },
-                        $push: {
-                            transactions: {
-                                type: "debit",
-                                amount: walletDiscountCalc,
-                                description: `Redeemed on Order #${neworder._id.toString().slice(-6).toUpperCase()}`,
-                                orderId: neworder._id.toString(),
-                                createdAt: new Date(),
-                            },
-                        },
-                    }
-                );
-            } catch (wErr) {
-                console.warn("Wallet ledger sync warning:", wErr);
-            }
-        }
-
         // 🎟️ Mark Scratch Reward Coupon as Used if applied
         if (couponCode) {
             try {

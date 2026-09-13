@@ -2,10 +2,7 @@
 
 import React from "react";
 import {
-  Wallet,
-  TrendingUp,
   PackageCheck,
-  Zap,
   Sparkles,
   ArrowUpRight,
   ShieldCheck,
@@ -19,7 +16,6 @@ interface Props {
   todayEarnings?: number;
   earningPerDelivery?: number;
   todayCodCash?: number;
-  todayBagsCollected?: number;
   salaryType?: string;
 }
 
@@ -27,13 +23,12 @@ export default function DeliveryDashboardStats({
   totalDeliveries,
   todayDeliveries = 0,
   todayCodCash = 0,
-  todayBagsCollected = 0,
   salaryType = "Monthly Fixed Salary",
 }: Props) {
   return (
     <div className="space-y-4 font-sans">
       {/* Bento Grid Top Performance Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4">
         {/* Today's Completed Deliveries */}
         <div className="relative overflow-hidden bg-gradient-to-br from-emerald-600 via-emerald-700 to-green-800 text-white rounded-3xl p-5 shadow-lg shadow-emerald-900/10 border border-emerald-500/30 flex flex-col justify-between group hover:scale-[1.01] transition-transform duration-200">
           <div className="flex items-center justify-between">
@@ -83,7 +78,7 @@ export default function DeliveryDashboardStats({
               Compensation
             </span>
             <div className="w-8 h-8 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center font-black">
-              <Wallet size={16} />
+              <ShieldCheck size={16} />
             </div>
           </div>
           <div className="mt-4">
@@ -92,27 +87,6 @@ export default function DeliveryDashboardStats({
             </h3>
             <p className="text-[11px] text-purple-700 font-bold mt-0.5">
               SubziQuick On-Payroll Fleet
-            </p>
-          </div>
-        </div>
-
-        {/* Reusable Eco-Bags Collected */}
-        <div className="bg-gradient-to-br from-gray-900 to-zinc-800 text-white rounded-3xl p-5 shadow-lg shadow-black/5 flex flex-col justify-between group hover:scale-[1.01] transition-transform duration-200">
-          <div className="flex items-center justify-between">
-            <span className="text-[11px] font-black uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
-              <ShieldCheck size={13} className="text-emerald-400" />
-              <span>Eco-Bags Returned</span>
-            </span>
-            <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-emerald-400">
-              <TrendingUp size={16} />
-            </div>
-          </div>
-          <div className="mt-4">
-            <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
-              {todayBagsCollected} <span className="text-sm font-semibold text-emerald-300">Bags</span>
-            </h3>
-            <p className="text-[11px] text-emerald-300 font-semibold mt-0.5 flex items-center gap-1">
-              <span>Zero-Plastic Green Mission</span>
             </p>
           </div>
         </div>

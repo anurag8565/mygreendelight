@@ -115,7 +115,7 @@ export async function POST(req: Request) {
           name: "Vikram Saxena",
           location: "MP Nagar Zone 2, Bhopal",
           rating: 5,
-          comment: "Zero plastic mission is commendable! Returned 3 eco-bags to the delivery rider and got instant cashback credited. Truly five star service!",
+          comment: "Zero plastic mission is commendable! Fresh vegetables delivered neatly in eco-friendly packaging right on time. Truly five star service!",
           tag: "Google Review",
           source: "google",
           timeAgo: "2 weeks ago",

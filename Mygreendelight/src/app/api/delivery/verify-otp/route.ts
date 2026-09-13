@@ -2,7 +2,6 @@ import connectDb from "@/lib/db";
 import Order from "@/model/order";
 import DeliveryAssignment from "@/model/Deliveryassigment.model";
 import User from "@/model/user.model";
-import UserWallet from "@/model/wallet.model";
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 
@@ -18,7 +17,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const { orderId, otp, bagsReturned } = await req.json();
+    const { orderId, otp } = await req.json();
 
     if (!orderId || !otp) {
       return NextResponse.json(
@@ -36,42 +35,44 @@ export async function POST(req: Request) {
       );
     }
 
-    if (!order.deliveryOtp?.code) {
+    // Rate-limiting on verification attempts to prevent brute-force attacks
+    const attempts = (order.deliveryOtp?.attempts || 0) + 1;
+    if (attempts > 5) {
       return NextResponse.json(
-        { message: "OTP not generated yet. Please click Send OTP." },
-        { status: 400 }
-      );
-    }
-
-    const currentAttempts = order.deliveryOtp.attempts || 0;
-    if (currentAttempts >= 5) {
-      return NextResponse.json(
-        { message: "Too many failed OTP attempts. Please click 'Send OTP' to request a new code." },
+        { 
+          message: "Too many incorrect attempts. Please report to the dispatcher.",
+          isLocked: true 
+        },
         { status: 429 }
       );
     }
 
-    const isAdmin = (session.user as any).role === "admin";
-    const isMasterBypass = isAdmin && (otp.trim() === "ADMIN_BYPASS" || otp.trim() === order.deliveryOtp.code);
+    if (!order.deliveryOtp?.code) {
+      return NextResponse.json(
+        { message: "OTP not generated for this order" },
+        { status: 400 }
+      );
+    }
 
-    if (!isMasterBypass) {
-      if (
-        order.deliveryOtp.expiresAt &&
-        new Date() > new Date(order.deliveryOtp.expiresAt)
-      ) {
+    if (order.deliveryOtp.code !== otp.trim()) {
+      await Order.findByIdAndUpdate(orderId, {
+        $inc: { "deliveryOtp.attempts": 1 },
+      });
+
+      return NextResponse.json(
+        { 
+          message: `Invalid OTP. ${Math.max(0, 5 - attempts)} attempt(s) remaining.`,
+          attemptsRemaining: Math.max(0, 5 - attempts)
+        },
+        { status: 400 }
+      );
+    }
+
+    if (order.deliveryOtp.expiresAt) {
+      const now = new Date();
+      if (now > new Date(order.deliveryOtp.expiresAt)) {
         return NextResponse.json(
-          { message: "OTP has expired. Please request a new OTP." },
-          { status: 400 }
-        );
-      }
-
-      if (order.deliveryOtp.code !== otp.trim()) {
-        order.deliveryOtp.attempts = currentAttempts + 1;
-        await order.save();
-
-        const remaining = 5 - (currentAttempts + 1);
-        return NextResponse.json(
-          { message: `Invalid OTP code. ${remaining > 0 ? `${remaining} attempts remaining.` : 'Please request a new OTP.'}` },
+          { message: "OTP has expired. Please request customer to refresh." },
           { status: 400 }
         );
       }
@@ -84,17 +85,11 @@ export async function POST(req: Request) {
       );
     }
 
-    // Process Zero-Plastic Eco-Bag Return (₹10 per bag returned, max 10)
-    const returnedCount = Math.max(0, Math.min(10, parseInt(bagsReturned) || 0));
-    const bagCashback = returnedCount * 10;
-
     // Mark verified & delivered
     order.deliveryOtp.verified = true;
     order.status = "delivered";
     order.ispaid = true; // Auto-mark paid on verified delivery (both COD & Online)
     order.paymentStatus = "completed";
-    order.bagsReturned = returnedCount;
-    order.bagReturnCashback = bagCashback;
 
     await order.save();
 
@@ -124,7 +119,7 @@ export async function POST(req: Request) {
       });
     }
 
-    // Update rider stats & earnings
+    // Update rider stats
     if (order.assigneddelliveryboy) {
       const deliveryBoy = await User.findById(order.assigneddelliveryboy);
 
@@ -132,87 +127,9 @@ export async function POST(req: Request) {
         if (!deliveryBoy.deliveryStats) {
           deliveryBoy.deliveryStats = { totalDeliveries: 0, totalEarnings: 0 };
         }
-        const basePayout = 35; // Standard quick-commerce delivery payout per drop
-        const riderTip = Number(order.farmerTip) || 0;
-        const totalOrderPayout = basePayout + riderTip;
-
         deliveryBoy.deliveryStats.totalDeliveries = (deliveryBoy.deliveryStats.totalDeliveries || 0) + 1;
-        deliveryBoy.deliveryStats.totalEarnings = (deliveryBoy.deliveryStats.totalEarnings || 0) + totalOrderPayout;
-
         await deliveryBoy.save();
-
       }
-    }
-
-    // Award Cashback to Customer Wallet
-    try {
-      const orderCashback = Math.max(15, Math.round((order.totalamount || 0) * 0.03));
-      const totalCredit = orderCashback + bagCashback;
-
-      // 1. Sync UserWallet model
-      let wallet = await UserWallet.findOne({ user: order.user });
-      if (!wallet) {
-        wallet = await UserWallet.create({
-          user: order.user,
-          balance: 0,
-          totalCashback: 0,
-          transactions: [],
-        });
-      }
-
-      wallet.balance += totalCredit;
-      wallet.totalCashback += totalCredit;
-
-      // Log Order Cashback transaction
-      wallet.transactions.push({
-        type: "credit",
-        amount: orderCashback,
-        description: `🌿 Order Delivery Cashback (#${order._id.toString().slice(-6).toUpperCase()})`,
-        orderId: order._id.toString(),
-        createdAt: new Date(),
-      });
-
-      // Log Eco-Bag Return Cashback if bags were collected
-      if (returnedCount > 0) {
-        wallet.transactions.push({
-          type: "credit",
-          amount: bagCashback,
-          description: `♻️ Eco-Bag Return Cashback (${returnedCount} bag${returnedCount > 1 ? "s" : ""} @ ₹10/bag)`,
-          orderId: order._id.toString(),
-          createdAt: new Date(),
-        });
-      }
-      await wallet.save();
-
-      // 2. Sync User model
-      const userUpdates: any = {
-        $inc: { walletBalance: totalCredit },
-        $push: {
-          walletHistory: {
-            $each: [
-              {
-                amount: orderCashback,
-                type: "credit",
-                description: `🌿 Order Delivery Cashback (#${order._id.toString().slice(-6).toUpperCase()})`,
-                date: new Date(),
-              },
-              ...(returnedCount > 0
-                ? [
-                    {
-                      amount: bagCashback,
-                      type: "credit",
-                      description: `♻️ Eco-Bag Return Cashback (${returnedCount} bag${returnedCount > 1 ? "s" : ""} @ ₹10/bag)`,
-                      date: new Date(),
-                    },
-                  ]
-                : []),
-            ],
-          },
-        },
-      };
-      await User.findByIdAndUpdate(order.user, userUpdates);
-    } catch (e) {
-      console.error("Wallet credit error:", e);
     }
 
     // 🔔 Dispatch Delivered Push Notification to Customer via OneSignal
@@ -225,15 +142,9 @@ export async function POST(req: Request) {
       console.warn("Delivery push dispatch warning:", pushErr);
     }
 
-    const returnMsg = returnedCount > 0
-      ? `Order Delivered! ₹${bagCashback} Eco-Bag Cashback + Delivery Points credited to customer wallet!`
-      : "Order Delivered Successfully & Payment Verified!";
-
     return NextResponse.json({
       success: true,
-      message: returnMsg,
-      bagsReturned: returnedCount,
-      bagReturnCashback: bagCashback,
+      message: "Order Delivered Successfully & Verified!",
     });
   } catch (error) {
     console.error("VERIFY OTP ERROR:", error);

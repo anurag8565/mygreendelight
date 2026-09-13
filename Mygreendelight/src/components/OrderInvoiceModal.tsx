@@ -393,20 +393,6 @@ export default function OrderInvoiceModal({
                 </div>
               )}
 
-              {(order.walletDiscount || 0) > 0 && (
-                <div className="flex justify-between text-emerald-700 font-bold">
-                  <span>Wallet Discount:</span>
-                  <span>-₹{order.walletDiscount}</span>
-                </div>
-              )}
-
-              {order.bagReturnCashback > 0 && (
-                <div className="flex justify-between text-emerald-800 font-bold bg-emerald-100/70 p-1.5 rounded-lg border border-emerald-200 text-[10px]">
-                  <span>♻️ Eco-Bag Cashback:</span>
-                  <span>-₹{order.bagReturnCashback}</span>
-                </div>
-              )}
-
               <div className="flex justify-between text-sm sm:text-base font-black text-gray-900 pt-2 border-t-2 border-gray-900">
                 <span>Grand Total:</span>
                 <span className="text-[#0f8646] text-lg font-black">

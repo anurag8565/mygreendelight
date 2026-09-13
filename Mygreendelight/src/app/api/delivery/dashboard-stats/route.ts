@@ -46,18 +46,12 @@ export async function GET() {
     const todayEarnings = todayOrders.reduce((sum: number, o: any) => {
       const base = 35;
       const tip = Number(o.farmerTip) || 0;
-      const bagsBonus = (Number(o.bagsReturned) || 0) * 10;
-      return sum + base + tip + bagsBonus;
+      return sum + base + tip;
     }, 0);
 
     const todayCodCash = todayOrders
       .filter((o: any) => o.paymentmethod === "cod")
       .reduce((sum: number, o: any) => sum + (Number(o.totalamount) || 0), 0);
-
-    const todayBagsCollected = todayOrders.reduce(
-      (sum: number, o: any) => sum + (Number(o.bagsReturned) || 0),
-      0
-    );
 
     const totalDeliveries = user.deliveryStats?.totalDeliveries || (user.role === "admin" ? await Order.countDocuments({ status: "delivered" }) : 0);
     const totalEarnings = user.deliveryStats?.totalEarnings || (totalDeliveries * 35);
@@ -69,7 +63,6 @@ export async function GET() {
         totalEarnings,
         todayEarnings,
         todayCodCash,
-        todayBagsCollected,
         earningPerDelivery: 35,
         salaryType: "Monthly Fixed Salary",
       },
@@ -86,7 +79,6 @@ export async function GET() {
           totalEarnings: 0,
           todayEarnings: 0,
           todayCodCash: 0,
-          todayBagsCollected: 0,
           earningPerDelivery: 35,
           salaryType: "Monthly Fixed Salary",
         }

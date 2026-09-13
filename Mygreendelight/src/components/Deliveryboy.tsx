@@ -103,7 +103,6 @@ export default function Deliveryboy({ initialUser }: Props) {
   const [refreshing, setRefreshing] = useState(false)
   const [verifyingOtp, setVerifyingOtp] = useState(false)
   const [sendingOtpEmail, setSendingOtpEmail] = useState(false)
-  const [bagsReturned, setBagsReturned] = useState<number>(0)
   const [gpsActive, setGpsActive] = useState(false)
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [showItemsList, setShowItemsList] = useState(false)
@@ -147,7 +146,6 @@ export default function Deliveryboy({ initialUser }: Props) {
     todayEarnings: 0,
     earningPerDelivery: 35,
     todayCodCash: 0,
-    todayBagsCollected: 0,
     salaryType: 'Monthly Fixed Salary',
   })
 
@@ -445,7 +443,6 @@ export default function Deliveryboy({ initialUser }: Props) {
       const result = await axios.post('/api/delivery/verify-otp', {
         orderId: activeOrderObj._id,
         otp: fullPin,
-        bagsReturned: bagsReturned || 0,
       })
 
       if (result.data?.success) {
@@ -454,7 +451,6 @@ export default function Deliveryboy({ initialUser }: Props) {
           'success'
         )
         setPin(['', '', '', ''])
-        setBagsReturned(0)
 
         // Optimistically remove from active list
         setActiveAssignments((prev) =>
@@ -650,7 +646,7 @@ export default function Deliveryboy({ initialUser }: Props) {
 
           <div className="bg-amber-50/80 border border-amber-200/70 rounded-2xl p-2 sm:p-2.5 flex items-center gap-2">
             <div className="w-7 h-7 rounded-xl bg-amber-600 text-white flex items-center justify-center shrink-0">
-              <Wallet size={13} />
+              <IndianRupee size={13} />
             </div>
             <div className="min-w-0">
               <span className="text-[10px] uppercase font-bold text-amber-800 block leading-tight truncate">COD in Hand</span>
@@ -707,17 +703,11 @@ export default function Deliveryboy({ initialUser }: Props) {
 
     let paymentStatusMsg = ''
     if (isPaid) {
-      paymentStatusMsg = `✅ *Paid Online* — Bill amount *₹${totalAmount}* already paid (Doorstep par ₹0 cash dena hai).`
-    } else if (isUpiMethod) {
-      if (hasUpiProof) {
-        paymentStatusMsg = `📱 *Online UPI Payment* (Ref/Proof: ${activeOrderObj.paymentId || 'Screenshot Attached'})\n_(Agar aapne checkout par online UPI pay kar diya hai, toh ₹0 cash dein, rider ko sirf 4-digit OTP share karein)_`
-      } else {
-        paymentStatusMsg = `📱 *UPI Payment Pending* — Total Bill: *₹${totalAmount}* (Doorstep par scan karke ya cash pay karein)`
-      }
+      paymentStatusMsg = `✅ *PAID ONLINE* — Bill amount *₹${totalAmount}* already paid (Doorstep par ₹0 cash dena hai).`
     } else if (isCodMethod) {
-      paymentStatusMsg = `💵 *Cash on Delivery (COD)* — Delivery lene par rider ko *₹${totalAmount}* pay karein.`
+      paymentStatusMsg = `💵 *Cash on Delivery (UNPAID)* — Total Bill: *₹${totalAmount}* (Kripya delivery lene par rider ko ₹${totalAmount} cash ya UPI pay karein).`
     } else {
-      paymentStatusMsg = `💵 *Pay at Doorstep:* *₹${totalAmount}* (Cash ya UPI)`
+      paymentStatusMsg = `📱 *Payment Status: UNPAID / PENDING* — Total Bill: *₹${totalAmount}* (Kripya delivery lene par rider ko ₹${totalAmount} QR scan karke ya cash me pay karein).`
     }
 
     const itemsSummary = (activeOrderObj.items || [])
@@ -1010,33 +1000,6 @@ export default function Deliveryboy({ initialUser }: Props) {
                 }`}
               />
             ))}
-          </div>
-
-          {/* Eco-Bag Return Counter */}
-          <div className="bg-white border border-emerald-200/80 rounded-2xl p-2.5 flex items-center justify-between text-xs">
-            <div>
-              <span className="font-black text-emerald-950 block text-[11px]">♻️ Eco-Bags Collected</span>
-              <span className="text-[10px] text-emerald-700 font-semibold">+₹10 reward/bag to customer</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setBagsReturned((p) => Math.max(0, p - 1))}
-                className="w-7 h-7 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-black text-xs flex items-center justify-center transition cursor-pointer"
-              >
-                -
-              </button>
-              <span className="font-mono font-black text-sm text-emerald-800 w-4 text-center">
-                {bagsReturned}
-              </span>
-              <button
-                type="button"
-                onClick={() => setBagsReturned((p) => p + 1)}
-                className="w-7 h-7 rounded-xl bg-[#0f8646] text-white font-black text-xs flex items-center justify-center transition cursor-pointer"
-              >
-                +
-              </button>
-            </div>
           </div>
 
           {/* Complete Delivery Button */}
@@ -1348,7 +1311,6 @@ export default function Deliveryboy({ initialUser }: Props) {
               totalDeliveries={dashboardStats.totalDeliveries}
               todayDeliveries={dashboardStats.todayDeliveries}
               todayCodCash={dashboardStats.todayCodCash}
-              todayBagsCollected={dashboardStats.todayBagsCollected}
               salaryType={dashboardStats.salaryType || "Monthly Fixed Salary"}
             />
             <DeliveriesChart data={deliveriesData} />

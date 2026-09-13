@@ -7,7 +7,7 @@ import {
   Phone,
   User,
   CreditCard,
-  Wallet,
+  Banknote,
   ShieldCheck,
   Zap,
   CheckCircle2,
@@ -843,7 +843,7 @@ export default function Checkout() {
                 >
                   <div className="flex items-center gap-2.5">
                     <div className="w-7 h-7 rounded-lg bg-emerald-100 text-[#0f8646] flex items-center justify-center shrink-0">
-                      <Wallet size={15} />
+                      <Banknote size={15} />
                     </div>
                     <div>
                       <span className="font-bold text-xs text-gray-900 block">

@@ -116,11 +116,6 @@ export function generateOrderHtmlEmail(payload: OrderNotificationPayload, isAdmi
                     : ""
                 }
                 ${
-                  (payload.walletDiscount || 0) > 0
-                    ? `<tr><td style="color: #16a34a;">GreenPoints Wallet:</td><td style="text-align: right; color: #16a34a; font-weight: 600;">-₹${payload.walletDiscount}</td></tr>`
-                    : ""
-                }
-                ${
                   (payload.farmerTip || 0) > 0
                     ? `<tr><td>Farmer Tip:</td><td style="text-align: right; font-weight: 600;">+₹${payload.farmerTip}</td></tr>`
                     : ""
@@ -425,7 +420,7 @@ export async function sendOrderStatusPushNotification(
     message = `Hi ${customerName}, your SubziQuick fresh harvest order has been delivered! Enjoy farm-fresh health.`;
   } else if (cleanStatus === "cancelled") {
     title = `❌ Order Cancelled #${shortId}`;
-    message = `Hi ${customerName}, your order #${shortId} has been cancelled. Any paid amount has been refunded to your wallet.`;
+    message = `Hi ${customerName}, your order #${shortId} has been cancelled. Any online payment will be refunded to your original payment source.`;
   }
 
   const filters: any[] = [];
