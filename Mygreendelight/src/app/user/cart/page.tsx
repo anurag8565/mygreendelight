@@ -75,16 +75,19 @@ export default function CartPage() {
   const cleanUserId = rawUserId ? String(rawUserId) : null;
 
   useEffect(() => {
+    let isMounted = true;
+
     const syncCartFromCloud = () => {
       axios
         .get(`/api/user/cart?_t=${Date.now()}`)
         .then((cRes) => {
+          if (!isMounted) return;
           if (cRes.data?.success && cRes.data?.cart) {
             const cloudItems = cRes.data.cart.items || [];
             if (Array.isArray(cloudItems)) {
               const formatted = cloudItems.map((item: any) => ({
                 _id: item.product?._id ? String(item.product._id) : (item.product ? String(item.product) : String(item._id || "")),
-                cartItemId: item.cartItemId || String(item.product?._id || item.product || item._id),
+                cartItemId: item.cartItemId || (item.variation ? `${item.product?._id || item._id}-${item.variation.weight}` : String(item.product?._id || item.product || item._id)),
                 name: item.name || item.product?.name || "Item",
                 price: item.price ?? item.product?.price ?? 0,
                 unit: item.unit || item.product?.unit || "kg",
@@ -100,6 +103,7 @@ export default function CartPage() {
                   couponCode: cRes.data.cart.couponCode || null,
                   discountAmount: cRes.data.cart.discountAmount || 0,
                   userId: cleanUserId,
+                  serverUpdatedAt: cRes.data.cart.updatedAt,
                 })
               );
             }
@@ -108,20 +112,42 @@ export default function CartPage() {
         .catch(() => {});
     };
 
+    // Initial load sync from MongoDB
     syncCartFromCloud();
 
-    // ⚡ Real-time Multi-Device Sync: Fetch latest quantities when switching tabs or window focus
+    // Multi-tab instant sync via BroadcastChannel (0ms delay across tabs)
+    let channel: BroadcastChannel | null = null;
+    if (typeof window !== "undefined" && typeof BroadcastChannel !== "undefined") {
+      try {
+        channel = new BroadcastChannel("subziquick_cart_sync");
+        channel.onmessage = (event) => {
+          if (event.data?.type === "CART_MUTATED" && Array.isArray(event.data.cartdata)) {
+            dispatch(
+              setCartFromCloud({
+                cartdata: event.data.cartdata,
+                couponCode: event.data.couponCode,
+                discountAmount: event.data.discountAmount,
+                userId: cleanUserId,
+                serverUpdatedAt: event.data.timestamp,
+              })
+            );
+          }
+        };
+      } catch (_) {}
+    }
+
+    // Gentle sync when user focuses the tab / comes back from another device
     const handleWindowFocus = () => {
       syncCartFromCloud();
     };
     window.addEventListener("focus", handleWindowFocus);
 
-    // Background interval sync while customer is viewing cart page
-    const syncInterval = setInterval(() => {
+    // Gentle 30s background sync when visible and idle
+    const gentleInterval = setInterval(() => {
       if (typeof document !== "undefined" && document.visibilityState === "visible") {
         syncCartFromCloud();
       }
-    }, 3500);
+    }, 30000);
 
     axios
       .get("/api/groceries?limit=12&sort=price_asc")
@@ -148,8 +174,12 @@ export default function CartPage() {
       .catch(() => {});
 
     return () => {
+      isMounted = false;
       window.removeEventListener("focus", handleWindowFocus);
-      clearInterval(syncInterval);
+      clearInterval(gentleInterval);
+      if (channel) {
+        channel.close();
+      }
     };
   }, [dispatch, cleanUserId]);
 

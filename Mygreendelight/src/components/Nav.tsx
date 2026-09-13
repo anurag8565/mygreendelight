@@ -98,10 +98,10 @@ export default function Nav({ user }: { user?: iUser | null }) {
         const cRes = await axios.get("/api/user/cart");
         if (cRes.data?.success && cRes.data?.cart) {
           const cloudItems = cRes.data.cart.items || [];
-          if (Array.isArray(cloudItems) && cloudItems.length > 0) {
+          if (Array.isArray(cloudItems)) {
             const formatted = cloudItems.map((item: any) => ({
               _id: item.product?._id ? String(item.product._id) : (item.product ? String(item.product) : String(item._id || "")),
-              cartItemId: item.cartItemId || String(item.product?._id || item.product || item._id),
+              cartItemId: item.cartItemId || (item.variation ? `${item.product?._id || item._id}-${item.variation.weight}` : String(item.product?._id || item.product || item._id)),
               name: item.name || item.product?.name || "Item",
               price: item.price ?? item.product?.price ?? 0,
               unit: item.unit || item.product?.unit || "kg",
@@ -117,6 +117,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                 couponCode: cRes.data.cart.couponCode || null,
                 discountAmount: cRes.data.cart.discountAmount || 0,
                 userId: cleanUserId,
+                serverUpdatedAt: cRes.data.cart.updatedAt || cRes.data.serverTimestamp,
               })
             );
           }
@@ -126,12 +127,36 @@ export default function Nav({ user }: { user?: iUser | null }) {
 
     fetchLatestCloudCart();
 
+    // Multi-tab instant sync via BroadcastChannel (0ms delay across tabs)
+    let channel: BroadcastChannel | null = null;
+    if (typeof window !== "undefined" && typeof BroadcastChannel !== "undefined") {
+      try {
+        channel = new BroadcastChannel("subziquick_cart_sync");
+        channel.onmessage = (event) => {
+          if (event.data?.type === "CART_MUTATED" && Array.isArray(event.data.cartdata)) {
+            dispatch(
+              setCartFromCloud({
+                cartdata: event.data.cartdata,
+                couponCode: event.data.couponCode,
+                discountAmount: event.data.discountAmount,
+                userId: cleanUserId,
+                serverUpdatedAt: event.data.timestamp,
+              })
+            );
+          }
+        };
+      } catch (_) {}
+    }
+
     // Auto-sync when window gains focus (user switches tabs or clicks laptop)
     const handleFocus = () => {
       fetchLatestCloudCart();
     };
     window.addEventListener("focus", handleFocus);
-    return () => window.removeEventListener("focus", handleFocus);
+    return () => {
+      window.removeEventListener("focus", handleFocus);
+      if (channel) channel.close();
+    };
   }, [dispatch, cleanUserId]);
 
   const [searchResults, setSearchResults] = useState<any[]>([]);

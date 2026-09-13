@@ -89,14 +89,16 @@ export default function ProductDetailsClient({
   );
 
   // Cart item identification
+  const safeProdId = String(product._id || "");
   const cartItemId = hasVariations
-    ? `${product._id}-${product.variations[selectedVarIndex].weight}`
-    : product._id;
+    ? `${safeProdId}-${product.variations[selectedVarIndex].weight}`
+    : safeProdId;
 
   const cartItem = cartdata.find(
     (item: any) =>
       item.cartItemId === cartItemId ||
-      (!item.cartItemId && item._id?.toString() === product._id?.toString())
+      (!item.cartItemId && String(item._id) === safeProdId) ||
+      String(item._id) === safeProdId
   );
   const quantity = cartItem ? cartItem.quantity : 0;
   const totalCartCount = cartdata.reduce((acc, curr) => acc + (curr.quantity || 1), 0);

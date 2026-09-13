@@ -21,6 +21,7 @@ interface CartState {
     couponCode: string | null;
     discountAmount: number;
     currentUserId: string | null;
+    lastLocalActionAt: number;
 }
 
 const getCleanUserId = (userId?: any): string | null => {
@@ -49,7 +50,7 @@ const syncCartToBackend = (cartdata: IGrocery[], couponCode: string | null, disc
     if (typeof window === "undefined") return;
 
     if (syncTimer) clearTimeout(syncTimer);
-    // ⚡ Fast 150ms sync to MongoDB cloud so multi-device updates feel instantaneous
+    // Debounced sync to MongoDB cloud so multi-device updates save cleanly
     syncTimer = setTimeout(async () => {
         try {
             await fetch("/api/user/cart", {
@@ -64,25 +65,45 @@ const syncCartToBackend = (cartdata: IGrocery[], couponCode: string | null, disc
         } catch (e) {
             // Silently swallow network glitches
         }
-    }, 150);
+    }, 200);
 };
 
-const saveCart = (cartdata: IGrocery[], couponCode: string | null, discountAmount: number, userId?: any) => {
+// Broadcast changes instantly across tabs on the same device
+const broadcastCart = (cartdata: IGrocery[], couponCode: string | null, discountAmount: number) => {
+    if (typeof window === "undefined" || typeof BroadcastChannel === "undefined") return;
+    try {
+        const channel = new BroadcastChannel("subziquick_cart_sync");
+        channel.postMessage({
+            type: "CART_MUTATED",
+            cartdata,
+            couponCode,
+            discountAmount,
+            timestamp: Date.now(),
+        });
+        channel.close();
+    } catch (_) {}
+};
+
+// Pure local storage update without network side effects
+const saveCartToStorage = (cartdata: IGrocery[], couponCode: string | null, discountAmount: number, userId?: any) => {
     if (typeof window === "undefined") return;
     try {
         const cartKey = getCartStorageKey(userId);
         const couponKey = getCouponStorageKey(userId);
         localStorage.setItem(cartKey, JSON.stringify(cartdata));
         localStorage.setItem(couponKey, JSON.stringify({ couponCode, discountAmount }));
-        // Clean up legacy global key so different accounts never collide
         localStorage.removeItem("mgd_cart_data");
         localStorage.removeItem("mgd_cart_coupon");
-
-        // Sync to MongoDB database so laptop & mobile share identical cart
-        syncCartToBackend(cartdata, couponCode, discountAmount, userId);
     } catch (e) {
-        console.error("Cart save error:", e);
+        console.error("Cart storage save error:", e);
     }
+};
+
+// Full save: updates local storage, broadcasts to other tabs, and syncs to MongoDB
+const saveCart = (cartdata: IGrocery[], couponCode: string | null, discountAmount: number, userId?: any) => {
+    saveCartToStorage(cartdata, couponCode, discountAmount, userId);
+    broadcastCart(cartdata, couponCode, discountAmount);
+    syncCartToBackend(cartdata, couponCode, discountAmount, userId);
 };
 
 const getSavedCart = (userId?: any): { cartdata: IGrocery[]; couponCode: string | null; discountAmount: number } => {
@@ -105,6 +126,7 @@ const getSavedCart = (userId?: any): { cartdata: IGrocery[]; couponCode: string 
                     .map((item) => ({
                         ...item,
                         _id: item._id ? String(item._id) : "",
+                        cartItemId: item.cartItemId || (item.variation ? `${item._id}-${item.variation.weight}` : String(item._id || "")),
                         name: String(item.name || "Item"),
                         price: Number(item.price) || 0,
                         quantity: Number(item.quantity) || 1,
@@ -129,6 +151,7 @@ const initialState: CartState = {
     couponCode: null,
     discountAmount: 0,
     currentUserId: null,
+    lastLocalActionAt: 0,
 };
 
 const cartSlice = createSlice({
@@ -151,7 +174,8 @@ const cartSlice = createSlice({
                     let merged = [...userCart.cartdata];
                     if (guestCart.cartdata.length > 0) {
                         for (const gItem of guestCart.cartdata) {
-                            const existing = merged.find(i => i.cartItemId === gItem.cartItemId);
+                            const gKey = gItem.cartItemId || String(gItem._id);
+                            const existing = merged.find(i => (i.cartItemId && i.cartItemId === gKey) || String(i._id) === String(gItem._id));
                             if (existing) {
                                 const maxStock = existing.variation ? existing.variation.stock : existing.stock;
                                 existing.quantity = Math.min(existing.quantity + gItem.quantity, maxStock);
@@ -160,12 +184,15 @@ const cartSlice = createSlice({
                             }
                         }
                         // Clear guest cart once merged into user account
-                        saveCart([], null, 0, null);
+                        saveCartToStorage([], null, 0, null);
+                        // Sync this explicit guest migration to backend
+                        syncCartToBackend(merged, userCart.couponCode || guestCart.couponCode, userCart.discountAmount || guestCart.discountAmount, cleanId);
                     }
                     state.cartdata = merged;
                     state.couponCode = userCart.couponCode || guestCart.couponCode;
                     state.discountAmount = userCart.discountAmount || guestCart.discountAmount;
-                    saveCart(state.cartdata, state.couponCode, state.discountAmount, cleanId);
+                    // Do NOT sync to backend on mere page load / hydration - only write local storage cache!
+                    saveCartToStorage(state.cartdata, state.couponCode, state.discountAmount, cleanId);
                 } else {
                     const guestCart = getSavedCart(null);
                     state.cartdata = guestCart.cartdata;
@@ -176,31 +203,47 @@ const cartSlice = createSlice({
                 console.error("Cart hydrate error:", e);
             }
         },
+
         addToCart: (state, action: PayloadAction<IGrocery>) => {
+            state.lastLocalActionAt = Date.now();
             const newItem = action.payload;
-            const existingItem = state.cartdata.find(i => i.cartItemId === newItem.cartItemId);
+            const targetKey = newItem.cartItemId || (newItem.variation ? `${newItem._id}-${newItem.variation.weight}` : String(newItem._id));
+
+            const existingItem = state.cartdata.find(
+                i => (i.cartItemId && i.cartItemId === targetKey) ||
+                     (!i.cartItemId && String(i._id) === String(newItem._id))
+            );
             
-            const currentStock = newItem.variation ? newItem.variation.stock : newItem.stock;
+            const currentStock = newItem.variation ? newItem.variation.stock : (newItem.stock || 50);
 
             if (existingItem) {
-                if (existingItem.quantity + newItem.quantity <= currentStock) {
-                    existingItem.quantity += newItem.quantity;
+                if (existingItem.quantity + (newItem.quantity || 1) <= currentStock) {
+                    existingItem.quantity += (newItem.quantity || 1);
                 } else {
                     existingItem.quantity = currentStock;
                 }
             } else {
-                if (newItem.quantity > currentStock) newItem.quantity = currentStock;
-                state.cartdata.push(newItem);
+                const q = Math.min(newItem.quantity || 1, currentStock);
+                state.cartdata.push({
+                    ...newItem,
+                    cartItemId: targetKey,
+                    quantity: Math.max(1, q),
+                });
             }
             saveCart(state.cartdata, state.couponCode, state.discountAmount, state.currentUserId);
         },
+
         increaseQuantity: (state, action: PayloadAction<string>) => {
+            state.lastLocalActionAt = Date.now();
+            const target = action.payload;
             const item = state.cartdata.find(
-                item => item.cartItemId === action.payload
+                item => (item.cartItemId && item.cartItemId === target) ||
+                        (!item.cartItemId && String(item._id) === String(target)) ||
+                        (String(item._id) === String(target))
             );
 
             if (item) {
-                const currentStock = item.variation ? item.variation.stock : item.stock;
+                const currentStock = item.variation ? item.variation.stock : (item.stock || 50);
                 if (item.quantity < currentStock) {
                     item.quantity += 1;
                 }
@@ -209,50 +252,69 @@ const cartSlice = createSlice({
         },
 
         decreaseQuantity: (state, action: PayloadAction<string>) => {
-            const item = state.cartdata.find(
-                item => item.cartItemId === action.payload
+            state.lastLocalActionAt = Date.now();
+            const target = action.payload;
+            const itemIndex = state.cartdata.findIndex(
+                item => (item.cartItemId && item.cartItemId === target) ||
+                        (!item.cartItemId && String(item._id) === String(target)) ||
+                        (String(item._id) === String(target))
             );
 
-            if (item) {
+            if (itemIndex > -1) {
+                const item = state.cartdata[itemIndex];
                 item.quantity -= 1;
-
                 if (item.quantity <= 0) {
-                    state.cartdata = state.cartdata.filter(
-                        i => i.cartItemId !== action.payload
-                    );
+                    state.cartdata.splice(itemIndex, 1);
                 }
             }
             saveCart(state.cartdata, state.couponCode, state.discountAmount, state.currentUserId);
         },
+
         removeFromCart: (state, action: PayloadAction<string>) => {
+            state.lastLocalActionAt = Date.now();
+            const target = action.payload;
             state.cartdata = state.cartdata.filter(
-                (item) => item.cartItemId !== action.payload
+                (item) => (item.cartItemId ? item.cartItemId !== target : String(item._id) !== String(target))
             );
             saveCart(state.cartdata, state.couponCode, state.discountAmount, state.currentUserId);
         },
+
         applyCoupon: (state, action: PayloadAction<{ couponCode: string; discountAmount: number }>) => {
+            state.lastLocalActionAt = Date.now();
             state.couponCode = action.payload.couponCode;
             state.discountAmount = action.payload.discountAmount;
             saveCart(state.cartdata, state.couponCode, state.discountAmount, state.currentUserId);
         },
+
         removeCoupon: (state) => {
+            state.lastLocalActionAt = Date.now();
             state.couponCode = null;
             state.discountAmount = 0;
             saveCart(state.cartdata, state.couponCode, state.discountAmount, state.currentUserId);
         },
+
         addMultipleToCart: (state, action: PayloadAction<IGrocery[]>) => {
+            state.lastLocalActionAt = Date.now();
             for (const newItem of action.payload) {
-                const existingItem = state.cartdata.find(i => i.cartItemId === newItem.cartItemId);
-                const currentStock = newItem.variation ? newItem.variation.stock : newItem.stock;
+                const targetKey = newItem.cartItemId || (newItem.variation ? `${newItem._id}-${newItem.variation.weight}` : String(newItem._id));
+                const existingItem = state.cartdata.find(
+                    i => (i.cartItemId && i.cartItemId === targetKey) ||
+                         (!i.cartItemId && String(i._id) === String(newItem._id))
+                );
+                const currentStock = newItem.variation ? newItem.variation.stock : (newItem.stock || 50);
                 if (existingItem) {
-                    if (existingItem.quantity + newItem.quantity <= currentStock) {
-                        existingItem.quantity += newItem.quantity;
+                    if (existingItem.quantity + (newItem.quantity || 1) <= currentStock) {
+                        existingItem.quantity += (newItem.quantity || 1);
                     } else {
                         existingItem.quantity = currentStock;
                     }
                 } else {
-                    if (newItem.quantity > currentStock) newItem.quantity = currentStock;
-                    state.cartdata.push(newItem);
+                    const q = Math.min(newItem.quantity || 1, currentStock);
+                    state.cartdata.push({
+                        ...newItem,
+                        cartItemId: targetKey,
+                        quantity: Math.max(1, q),
+                    });
                 }
             }
             saveCart(state.cartdata, state.couponCode, state.discountAmount, state.currentUserId);
@@ -265,26 +327,50 @@ const cartSlice = createSlice({
                 couponCode?: string | null;
                 discountAmount?: number;
                 userId?: any;
+                serverUpdatedAt?: string | number | Date;
             }>
         ) => {
             const cleanId = getCleanUserId(action.payload.userId || state.currentUserId);
             state.currentUserId = cleanId;
+
+            const now = Date.now();
+            const timeSinceLastLocalAction = now - (state.lastLocalActionAt || 0);
+
+            // 🛡️ RACE CONDITION PROTECTION:
+            // If the user actively clicked + or - on this device within the last 4 seconds,
+            // never allow an in-flight or older cloud response to decrease or wipe out local user changes!
+            if (timeSinceLastLocalAction < 4000) {
+                const incomingCloudItems = action.payload.cartdata || [];
+                let localItemsUpdated = [...state.cartdata];
+                for (const cItem of incomingCloudItems) {
+                    const cKey = cItem.cartItemId || String(cItem._id);
+                    const localExists = localItemsUpdated.find(
+                        l => (l.cartItemId && l.cartItemId === cKey) || String(l._id) === String(cItem._id)
+                    );
+                    if (!localExists) {
+                        localItemsUpdated.push(cItem);
+                    }
+                }
+                state.cartdata = localItemsUpdated;
+                if (action.payload.couponCode !== undefined && !state.couponCode) {
+                    state.couponCode = action.payload.couponCode;
+                    state.discountAmount = action.payload.discountAmount || 0;
+                }
+                saveCartToStorage(state.cartdata, state.couponCode, state.discountAmount, cleanId);
+                return;
+            }
+
+            // Otherwise, cloud is the single source of truth
             state.cartdata = action.payload.cartdata || [];
             state.couponCode = action.payload.couponCode || null;
             state.discountAmount = action.payload.discountAmount || 0;
+
             // Persist locally for immediate offline cache without triggering recursive cloud sync
-            if (typeof window !== "undefined" && cleanId) {
-                const cartKey = getCartStorageKey(cleanId);
-                const couponKey = getCouponStorageKey(cleanId);
-                localStorage.setItem(cartKey, JSON.stringify(state.cartdata));
-                localStorage.setItem(
-                    couponKey,
-                    JSON.stringify({ couponCode: state.couponCode, discountAmount: state.discountAmount })
-                );
-            }
+            saveCartToStorage(state.cartdata, state.couponCode, state.discountAmount, cleanId);
         },
 
         clearCart: (state) => {
+            state.lastLocalActionAt = Date.now();
             state.cartdata = [];
             state.couponCode = null;
             state.discountAmount = 0;

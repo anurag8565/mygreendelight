@@ -6,13 +6,18 @@ import User from "@/model/user.model";
 import mongoose from "mongoose";
 
 async function getUserIdFromSession(session: any): Promise<string | null> {
-  if (session?.user?.id) return String(session.user.id);
+  // 1. First priority: look up by verified account email in MongoDB
   if (session?.user?.email) {
     const cleanEmail = session.user.email.trim().toLowerCase();
+    const escaped = cleanEmail.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const user = await User.findOne({
-      email: { $regex: new RegExp(`^${cleanEmail}$`, "i") },
+      email: { $regex: new RegExp(`^${escaped}$`, "i") },
     }).select("_id");
     if (user?._id) return String(user._id);
+  }
+  // 2. Fallback: only if session.user.id is a valid 24-character hexadecimal ObjectId
+  if (session?.user?.id && mongoose.Types.ObjectId.isValid(session.user.id)) {
+    return String(session.user.id);
   }
   return null;
 }
@@ -27,10 +32,11 @@ export async function GET() {
       return NextResponse.json({ success: false, items: [] }, { status: 401 });
     }
 
-    const cart = await Cart.findOne({ user: userId });
+    const cart = await Cart.findOne({ user: new mongoose.Types.ObjectId(userId) });
     return NextResponse.json({
       success: true,
-      cart: cart || { items: [], couponCode: null, discountAmount: 0 },
+      cart: cart || { items: [], couponCode: null, discountAmount: 0, updatedAt: new Date() },
+      serverTimestamp: Date.now(),
     });
   } catch (error: any) {
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
@@ -47,6 +53,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
+    const userObjId = new mongoose.Types.ObjectId(userId);
     const body = await req.json();
 
     // Case 1: Bulk Sync of entire cart (from Redux / local storage across devices)
@@ -58,7 +65,7 @@ export async function POST(req: Request) {
           const isObjId = mongoose.Types.ObjectId.isValid(rawProdId);
           return {
             product: isObjId ? new mongoose.Types.ObjectId(String(rawProdId)) : new mongoose.Types.ObjectId(),
-            cartItemId: item.cartItemId || String(rawProdId),
+            cartItemId: item.cartItemId || (item.variation ? `${rawProdId}-${item.variation.weight}` : String(rawProdId)),
             name: String(item.name || "Item"),
             price: Number(item.price) || 0,
             unit: String(item.unit || "kg"),
@@ -77,35 +84,39 @@ export async function POST(req: Request) {
         });
 
       const updated = await Cart.findOneAndUpdate(
-        { user: userId },
+        { user: userObjId },
         {
-          user: userId,
-          items: sanitizedItems,
-          couponCode: body.couponCode || null,
-          discountAmount: Number(body.discountAmount) || 0,
+          $set: {
+            user: userObjId,
+            items: sanitizedItems,
+            couponCode: body.couponCode || null,
+            discountAmount: Number(body.discountAmount) || 0,
+            updatedAt: new Date(),
+          },
         },
-        { upsert: true, new: true }
+        { upsert: true, new: true, setDefaultsOnInsert: true }
       );
 
       return NextResponse.json({
         success: true,
         message: "Cart synced successfully",
         cart: updated,
+        serverTimestamp: Date.now(),
       });
     }
 
     // Case 2: Single item add / update
     const { productId, quantity, cartItemId, name, price, unit, image, stock, category, variation } = body;
 
-    let cart = await Cart.findOne({ user: userId });
+    let cart = await Cart.findOne({ user: userObjId });
     if (!cart) {
       cart = await Cart.create({
-        user: userId,
+        user: userObjId,
         items: [],
       });
     }
 
-    const targetKey = cartItemId || String(productId);
+    const targetKey = cartItemId || (variation ? `${productId}-${variation.weight}` : String(productId));
     const existing = cart.items.find(
       (i: any) => (i.cartItemId && i.cartItemId === targetKey) || (i.product?.toString() === String(productId))
     );
@@ -129,12 +140,14 @@ export async function POST(req: Request) {
       });
     }
 
+    cart.updatedAt = new Date();
     await cart.save();
 
     return NextResponse.json({
       success: true,
       message: "Item updated in cart",
       cart,
+      serverTimestamp: Date.now(),
     });
   } catch (error: any) {
     console.error("Cart API POST error:", error);
@@ -152,9 +165,10 @@ export async function DELETE() {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
     }
 
+    const userObjId = new mongoose.Types.ObjectId(userId);
     await Cart.findOneAndUpdate(
-      { user: userId },
-      { items: [], couponCode: null, discountAmount: 0 }
+      { user: userObjId },
+      { $set: { items: [], couponCode: null, discountAmount: 0, updatedAt: new Date() } }
     );
     return NextResponse.json({ success: true, message: "Cart cleared" });
   } catch (error: any) {

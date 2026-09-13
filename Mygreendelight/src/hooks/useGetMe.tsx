@@ -30,11 +30,10 @@ function useGetMe() {
         const cRes = await axios.get("/api/user/cart");
         if (cRes.data?.success && cRes.data?.cart) {
           const cloudItems = cRes.data.cart.items || [];
-          // If cloud has items, populate them into Redux & LocalStorage cache
-          if (Array.isArray(cloudItems) && cloudItems.length > 0) {
+          if (Array.isArray(cloudItems)) {
             const formatted = cloudItems.map((item: any) => ({
               _id: item.product?._id ? String(item.product._id) : (item.product ? String(item.product) : String(item._id || "")),
-              cartItemId: item.cartItemId || String(item.product?._id || item.product || item._id),
+              cartItemId: item.cartItemId || (item.variation ? `${item.product?._id || item._id}-${item.variation.weight}` : String(item.product?._id || item.product || item._id)),
               name: item.name || item.product?.name || "Item",
               price: item.price ?? item.product?.price ?? 0,
               unit: item.unit || item.product?.unit || "kg",
@@ -50,6 +49,7 @@ function useGetMe() {
                 couponCode: cRes.data.cart.couponCode || null,
                 discountAmount: cRes.data.cart.discountAmount || 0,
                 userId,
+                serverUpdatedAt: cRes.data.cart.updatedAt || cRes.data.serverTimestamp,
               })
             );
           }

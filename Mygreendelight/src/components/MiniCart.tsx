@@ -138,46 +138,49 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                   </button>
                 </div>
               ) : (
-                cartdata.map((item) => (
-                  <div key={item.cartItemId} className="flex gap-3 p-3 bg-white border border-gray-100 rounded-xl shadow-sm relative">
-                    <button 
-                      onClick={() => dispatch(removeFromCart(item.cartItemId!))}
-                      className="absolute -top-2 -right-2 bg-red-100 text-red-600 p-1 rounded-full hover:bg-red-200 cursor-pointer"
-                    >
-                      <X size={12} />
-                    </button>
-                    <div className="w-20 h-20 bg-gray-50 rounded-lg overflow-hidden shrink-0 border border-gray-100">
-                      <img src={item.image} alt={item.name} className="w-full h-full object-contain p-2" />
-                    </div>
-                    <div className="flex flex-col flex-1 py-1 justify-between">
-                      <div>
-                        <h4 className="font-bold text-gray-900 text-sm line-clamp-2 leading-tight">{item.name}</h4>
-                        <p className="text-xs text-gray-500 mt-1">{item.variation?.weight || item.unit}</p>
+                cartdata.map((item) => {
+                  const safeKey = item.cartItemId || String(item._id);
+                  return (
+                    <div key={safeKey} className="flex gap-3 p-3 bg-white border border-gray-100 rounded-xl shadow-sm relative">
+                      <button 
+                        onClick={() => dispatch(removeFromCart(safeKey))}
+                        className="absolute -top-2 -right-2 bg-red-100 text-red-600 p-1 rounded-full hover:bg-red-200 cursor-pointer"
+                      >
+                        <X size={12} />
+                      </button>
+                      <div className="w-20 h-20 bg-gray-50 rounded-lg overflow-hidden shrink-0 border border-gray-100">
+                        <img src={item.image} alt={item.name} className="w-full h-full object-contain p-2" />
                       </div>
-                      <div className="flex items-center justify-between mt-2">
-                        <span className="font-extrabold text-[#0a3d24]">₹{item.price * item.quantity}</span>
-                        
-                        <div className="flex items-center bg-green-50 rounded-lg border border-green-200">
-                          <button
-                            onClick={() => dispatch(decreaseQuantity(item.cartItemId!))}
-                            className="w-7 h-7 flex items-center justify-center text-[#0a3d24] hover:bg-green-100 rounded-l-lg transition cursor-pointer"
-                          >
-                            <Minus size={14} />
-                          </button>
-                          <span className="w-8 text-center text-xs font-bold text-[#0a3d24]">
-                            {item.quantity}
-                          </span>
-                          <button
-                            onClick={() => dispatch(increaseQuantity(item.cartItemId!))}
-                            className="w-7 h-7 flex items-center justify-center text-[#0a3d24] hover:bg-green-100 rounded-r-lg transition cursor-pointer"
-                          >
-                            <Plus size={14} />
-                          </button>
+                      <div className="flex flex-col flex-1 py-1 justify-between">
+                        <div>
+                          <h4 className="font-bold text-gray-900 text-sm line-clamp-2 leading-tight">{item.name}</h4>
+                          <p className="text-xs text-gray-500 mt-1">{item.variation?.weight || item.unit}</p>
+                        </div>
+                        <div className="flex items-center justify-between mt-2">
+                          <span className="font-extrabold text-[#0a3d24]">₹{item.price * item.quantity}</span>
+                          
+                          <div className="flex items-center bg-green-50 rounded-lg border border-green-200">
+                            <button
+                              onClick={() => dispatch(decreaseQuantity(safeKey))}
+                              className="w-7 h-7 flex items-center justify-center text-[#0a3d24] hover:bg-green-100 rounded-l-lg transition cursor-pointer"
+                            >
+                              <Minus size={14} />
+                            </button>
+                            <span className="w-8 text-center text-xs font-bold text-[#0a3d24]">
+                              {item.quantity}
+                            </span>
+                            <button
+                              onClick={() => dispatch(increaseQuantity(safeKey))}
+                              className="w-7 h-7 flex items-center justify-center text-[#0a3d24] hover:bg-green-100 rounded-r-lg transition cursor-pointer"
+                            >
+                              <Plus size={14} />
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
 
