@@ -19,12 +19,42 @@ import { motion } from "framer-motion";
 export default function MobileBottomNav() {
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const { data: session } = useSession();
   const { cartdata } = useSelector((state: RootState) => state.cart);
   const { userdata } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
     setMounted(true);
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          const scrollDelta = currentScrollY - lastScrollY;
+
+          // Always visible near the top
+          if (currentScrollY < 40) {
+            setIsVisible(true);
+          } else if (scrollDelta > 10) {
+            // Scrolling down -> hide
+            setIsVisible(false);
+          } else if (scrollDelta < -10) {
+            // Scrolling up -> reveal
+            setIsVisible(true);
+          }
+
+          lastScrollY = currentScrollY;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Hide bottom nav on admin, delivery, cart, checkout, and auth pages to avoid overlapping floating action bars
@@ -50,8 +80,13 @@ export default function MobileBottomNav() {
   const cartCount = cartdata.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 pointer-events-none select-none">
-      <div className="pointer-events-auto px-2.5 sm:px-6 pb-[max(0.6rem,env(safe-area-inset-bottom))] pt-1">
+    <motion.div
+      initial={false}
+      animate={{ y: isVisible ? 0 : 90, opacity: isVisible ? 1 : 0 }}
+      transition={{ duration: 0.25, ease: "easeInOut" }}
+      className="lg:hidden fixed bottom-0 left-0 right-0 z-50 pointer-events-none select-none"
+    >
+      <div className="pointer-events-auto px-2.5 sm:px-6 pb-[max(0.35rem,env(safe-area-inset-bottom))] pt-0.5">
         {/* Style 11 (iOS Floating Dock) + Smooth Pill Highlight + Responsive Tablet Scaling */}
         <nav className="relative max-w-sm sm:max-w-md md:max-w-lg mx-auto bg-white/95 backdrop-blur-2xl border border-stone-200/90 rounded-[28px] p-1.5 sm:p-2 shadow-[0_12px_36px_-6px_rgba(0,0,0,0.18)] ring-1 ring-black/5">
           <div className="grid grid-cols-5 items-center gap-0.5 sm:gap-1.5">
@@ -286,6 +321,6 @@ export default function MobileBottomNav() {
           </div>
         </nav>
       </div>
-    </div>
+    </motion.div>
   );
 }
