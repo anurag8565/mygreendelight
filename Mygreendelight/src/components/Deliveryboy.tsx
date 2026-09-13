@@ -44,6 +44,7 @@ import {
   Bike,
   Eye,
   Wallet,
+  ShieldCheck,
 } from 'lucide-react'
 import { FaWhatsapp } from 'react-icons/fa6'
 import { useSelector } from 'react-redux'
@@ -140,12 +141,14 @@ export default function Deliveryboy({ initialUser }: Props) {
   const [deliveriesData, setDeliveriesData] = useState([])
   const [recentDeliveries, setRecentDeliveries] = useState([])
   const [dashboardStats, setDashboardStats] = useState({
+    todayDeliveries: 0,
     totalDeliveries: 0,
     totalEarnings: 0,
     todayEarnings: 0,
     earningPerDelivery: 35,
     todayCodCash: 0,
     todayBagsCollected: 0,
+    salaryType: 'Monthly Fixed Salary',
   })
 
   const { userdata } = useSelector((state: RootState) => state.user)
@@ -631,16 +634,16 @@ export default function Deliveryboy({ initialUser }: Props) {
           </div>
         </div>
 
-        {/* Shift Quick Metrics Bar */}
+        {/* Shift Quick Metrics Bar (Salaried Fleet Model) */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3 pt-2.5 border-t border-slate-100">
           <div className="bg-emerald-50/80 border border-emerald-200/70 rounded-2xl p-2 sm:p-2.5 flex items-center gap-2">
             <div className="w-7 h-7 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
-              <IndianRupee size={13} />
+              <Package size={13} />
             </div>
             <div className="min-w-0">
-              <span className="text-[10px] uppercase font-bold text-slate-500 block leading-tight truncate">Today's Pay</span>
+              <span className="text-[10px] uppercase font-bold text-slate-500 block leading-tight truncate">Today's Drops</span>
               <span className="text-xs font-black text-slate-900 truncate block">
-                ₹{dashboardStats.todayEarnings || 0}
+                {dashboardStats.todayDeliveries || 0} Order(s)
               </span>
             </div>
           </div>
@@ -662,18 +665,18 @@ export default function Deliveryboy({ initialUser }: Props) {
               <CheckCircle2 size={13} />
             </div>
             <div className="min-w-0">
-              <span className="text-[10px] uppercase font-bold text-slate-500 block leading-tight truncate">Trips</span>
-              <span className="text-xs font-black text-slate-900 truncate block">{dashboardStats.totalDeliveries || 0} Drop(s)</span>
+              <span className="text-[10px] uppercase font-bold text-slate-500 block leading-tight truncate">Total Completed</span>
+              <span className="text-xs font-black text-slate-900 truncate block">{dashboardStats.totalDeliveries || 0} Drops</span>
             </div>
           </div>
 
           <div className="bg-purple-50/80 border border-purple-200/70 rounded-2xl p-2 sm:p-2.5 flex items-center gap-2">
             <div className="w-7 h-7 rounded-xl bg-purple-600 text-white flex items-center justify-center shrink-0">
-              <Zap size={13} />
+              <ShieldCheck size={13} />
             </div>
             <div className="min-w-0">
-              <span className="text-[10px] uppercase font-bold text-slate-500 block leading-tight truncate">Base Pay</span>
-              <span className="text-xs font-black text-slate-900 truncate block">₹{dashboardStats.earningPerDelivery || 35} / Drop</span>
+              <span className="text-[10px] uppercase font-bold text-slate-500 block leading-tight truncate">Role</span>
+              <span className="text-xs font-black text-slate-900 truncate block">Monthly Staff</span>
             </div>
           </div>
         </div>
@@ -1132,7 +1135,7 @@ export default function Deliveryboy({ initialUser }: Props) {
             }`}
           >
             <BarChart3 size={14} className={activeTab === 'earnings' ? 'text-[#0f8646]' : ''} />
-            <span>Earnings & Stats</span>
+            <span>Performance & Shifts</span>
           </button>
 
           <button
@@ -1338,18 +1341,16 @@ export default function Deliveryboy({ initialUser }: Props) {
           </div>
         )}
 
-        {/* TAB 2: EARNINGS & PERFORMANCE STATS */}
+        {/* TAB 2: SHIFT PERFORMANCE & CASH SETTLEMENT */}
         {!loading && activeTab === 'earnings' && (
           <div className="space-y-4">
             <DeliveryDashboardStats
               totalDeliveries={dashboardStats.totalDeliveries}
-              totalEarnings={dashboardStats.totalEarnings}
-              todayEarnings={dashboardStats.todayEarnings}
-              earningPerDelivery={dashboardStats.earningPerDelivery}
+              todayDeliveries={dashboardStats.todayDeliveries}
               todayCodCash={dashboardStats.todayCodCash}
               todayBagsCollected={dashboardStats.todayBagsCollected}
+              salaryType={dashboardStats.salaryType || "Monthly Fixed Salary"}
             />
-            <EarningsChart data={earningsData} />
             <DeliveriesChart data={deliveriesData} />
           </div>
         )}

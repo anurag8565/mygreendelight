@@ -85,8 +85,16 @@ export default function RecentDeliveries({ deliveries }: Props) {
                   <div className="font-black text-sm text-gray-900">
                     ₹{order.totalamount}
                   </div>
-                  <div className="text-[11px] font-extrabold text-[#0f8646]">
-                    +₹{(order as any).payout || 35} Payout
+                  <div className="text-[10px] font-bold mt-0.5">
+                    {(order as any).paymentmethod === "cod" ? (
+                      <span className="text-amber-800 bg-amber-50 border border-amber-200/80 px-1.5 py-0.5 rounded-md">
+                        💵 COD Cash
+                      </span>
+                    ) : (
+                      <span className="text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-1.5 py-0.5 rounded-md">
+                        ✅ Paid Online
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>

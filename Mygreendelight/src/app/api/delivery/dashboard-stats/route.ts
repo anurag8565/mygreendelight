@@ -64,12 +64,14 @@ export async function GET() {
 
     return NextResponse.json({
       stats: {
+        todayDeliveries: completedToday,
         totalDeliveries,
         totalEarnings,
         todayEarnings,
         todayCodCash,
         todayBagsCollected,
         earningPerDelivery: 35,
+        salaryType: "Monthly Fixed Salary",
       },
     });
 
@@ -79,12 +81,14 @@ export async function GET() {
     return NextResponse.json(
       {
         stats: {
+          todayDeliveries: 0,
           totalDeliveries: 0,
           totalEarnings: 0,
           todayEarnings: 0,
           todayCodCash: 0,
           todayBagsCollected: 0,
           earningPerDelivery: 35,
+          salaryType: "Monthly Fixed Salary",
         }
       },
       { status: 200 }
