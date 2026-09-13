@@ -43,6 +43,7 @@ import {
   ChevronLeft,
   Bike,
   Eye,
+  Wallet,
 } from 'lucide-react'
 import { FaWhatsapp } from 'react-icons/fa6'
 import { useSelector } from 'react-redux'
@@ -108,6 +109,12 @@ export default function Deliveryboy({ initialUser }: Props) {
   const [showMapPreview, setShowMapPreview] = useState(true)
   const [previewProof, setPreviewProof] = useState<string | null>(null)
 
+  // Report Incomplete Delivery Issue State
+  const [showReportIssueModal, setShowReportIssueModal] = useState(false)
+  const [selectedIssueReason, setSelectedIssueReason] = useState('Customer Unreachable / Phone Switched Off')
+  const [issueNotes, setIssueNotes] = useState('')
+  const [submittingIssue, setSubmittingIssue] = useState(false)
+
   // Real Database-backed Online/Offline Duty State
   const [isOnline, setIsOnline] = useState<boolean>(true)
   const [togglingDuty, setTogglingDuty] = useState(false)
@@ -136,7 +143,9 @@ export default function Deliveryboy({ initialUser }: Props) {
     totalDeliveries: 0,
     totalEarnings: 0,
     todayEarnings: 0,
-    earningPerDelivery: 100,
+    earningPerDelivery: 35,
+    todayCodCash: 0,
+    todayBagsCollected: 0,
   })
 
   const { userdata } = useSelector((state: RootState) => state.user)
@@ -484,6 +493,32 @@ export default function Deliveryboy({ initialUser }: Props) {
     showToast('Delivery request passed', 'info')
   }
 
+  const handleReportIssue = async () => {
+    if (!activeOrderObj?._id) return
+    setSubmittingIssue(true)
+    try {
+      const res = await axios.post('/api/delivery/report-issue', {
+        orderId: activeOrderObj._id,
+        issueReason: selectedIssueReason,
+        notes: issueNotes,
+      })
+      if (res.data?.success) {
+        showToast(res.data.message || 'Issue reported to dispatcher', 'info')
+        setShowReportIssueModal(false)
+        setIssueNotes('')
+        fetchCurrentOrder()
+        fetchAssignments()
+        fetchDashboardData()
+      } else {
+        showToast(res.data?.message || 'Failed to report issue', 'error')
+      }
+    } catch (err: any) {
+      showToast(err.response?.data?.message || 'Error reporting delivery issue', 'error')
+    } finally {
+      setSubmittingIssue(false)
+    }
+  }
+
   // Toast Notification Renderer
   const renderToast = () => {
     if (!toast) return null
@@ -548,7 +583,16 @@ export default function Deliveryboy({ initialUser }: Props) {
           </div>
 
           {/* Duty Switcher & Quick Actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <a
+              href="tel:9981418565"
+              className="flex items-center gap-1 px-2.5 py-2 rounded-2xl font-black text-xs transition-all duration-200 cursor-pointer border bg-amber-50 text-amber-900 border-amber-300 hover:bg-amber-100 active:scale-95 shadow-2xs"
+              title="Call Bhopal Hub Dispatcher / Store Helpline (9981418565)"
+            >
+              <Headphones size={13} className="text-amber-700" />
+              <span className="hidden sm:inline">Hub Help</span>
+            </a>
+
             <button
               onClick={handleToggleDuty}
               disabled={togglingDuty}
@@ -588,7 +632,7 @@ export default function Deliveryboy({ initialUser }: Props) {
         </div>
 
         {/* Shift Quick Metrics Bar */}
-        <div className="grid grid-cols-3 gap-2 mt-3 pt-2.5 border-t border-slate-100">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3 pt-2.5 border-t border-slate-100">
           <div className="bg-emerald-50/80 border border-emerald-200/70 rounded-2xl p-2 sm:p-2.5 flex items-center gap-2">
             <div className="w-7 h-7 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
               <IndianRupee size={13} />
@@ -596,7 +640,19 @@ export default function Deliveryboy({ initialUser }: Props) {
             <div className="min-w-0">
               <span className="text-[10px] uppercase font-bold text-slate-500 block leading-tight truncate">Today's Pay</span>
               <span className="text-xs font-black text-slate-900 truncate block">
-                ₹{dashboardStats.todayEarnings || dashboardStats.totalDeliveries * (dashboardStats.earningPerDelivery || 35)}
+                ₹{dashboardStats.todayEarnings || 0}
+              </span>
+            </div>
+          </div>
+
+          <div className="bg-amber-50/80 border border-amber-200/70 rounded-2xl p-2 sm:p-2.5 flex items-center gap-2">
+            <div className="w-7 h-7 rounded-xl bg-amber-600 text-white flex items-center justify-center shrink-0">
+              <Wallet size={13} />
+            </div>
+            <div className="min-w-0">
+              <span className="text-[10px] uppercase font-bold text-amber-800 block leading-tight truncate">COD in Hand</span>
+              <span className="text-xs font-black text-slate-900 truncate block">
+                ₹{dashboardStats.todayCodCash || 0}
               </span>
             </div>
           </div>
@@ -668,12 +724,19 @@ export default function Deliveryboy({ initialUser }: Props) {
       )
       .join('\n')
 
+    const specialReqs = [
+      activeOrderObj.isSilentDelivery ? '🔕 *Silent Delivery Request:* (Do not ring doorbell / knock softly)' : '',
+      activeOrderObj.deliveryInstructions ? `📝 *Your Delivery Note:* "${activeOrderObj.deliveryInstructions}"` : '',
+      activeOrderObj.deliverySlot ? `⏰ *Delivery Slot:* ${activeOrderObj.deliverySlot}` : '',
+    ].filter(Boolean).join('\n')
+
     const arrivalWhatsappMsg = encodeURIComponent(
       `*🌿 SubziQuick Farm Fresh Express Delivery*\n` +
       `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
       `Namaste *${customerName}*! 🙏\n\n` +
       `Main aapka *SubziQuick Delivery Partner* aapke doorstep par taaza grocery leke pahunch gaya hoon.\n\n` +
       `📦 *Order ID:* #${orderShortId}\n` +
+      (specialReqs ? `\n${specialReqs}\n\n` : '') +
       (itemsSummary ? `🛒 *Items Ordered (${(activeOrderObj.items || []).length}):*\n${itemsSummary}\n\n` : '') +
       `💰 *Total Order Bill:* *₹${totalAmount}*\n` +
       `💳 *Payment Status:* ${paymentStatusMsg}\n\n` +
@@ -737,28 +800,43 @@ export default function Deliveryboy({ initialUser }: Props) {
 
         {/* Customer & Address Details */}
         <div className="space-y-1">
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-            {customerName}
-          </h2>
+          <div className="flex items-center justify-between gap-2 flex-wrap">
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+              {customerName}
+            </h2>
+            {activeOrderObj.deliverySlot && (
+              <div className="flex items-center gap-1 bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-xl text-[11px] font-bold text-emerald-900">
+                <Clock size={12} className="text-emerald-600 shrink-0" />
+                <span>Slot: <strong className="font-black text-emerald-950">{activeOrderObj.deliverySlot}</strong></span>
+              </div>
+            )}
+          </div>
           <p className="text-xs text-slate-600 flex items-start gap-1.5 leading-relaxed">
             <MapPin size={14} className="text-[#0f8646] shrink-0 mt-0.5" />
             <span>{customerAddress}</span>
           </p>
         </div>
 
-        {/* Silent Delivery Instructions Banner (If Specified) */}
-        {activeOrderObj.isSilentDelivery && (
-          <div className="bg-amber-500 text-white p-3.5 rounded-2xl shadow-xs flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-black/20 flex items-center justify-center font-black text-base shrink-0">
-              🔕
+        {/* Special Instructions & Silent Delivery Banner (If Specified) */}
+        {(activeOrderObj.isSilentDelivery || activeOrderObj.deliveryInstructions) && (
+          <div className="bg-amber-500 text-white p-3.5 rounded-2xl shadow-xs flex items-start gap-3">
+            <div className="w-8 h-8 rounded-xl bg-black/20 flex items-center justify-center font-black text-base shrink-0 mt-0.5">
+              {activeOrderObj.isSilentDelivery ? '🔕' : '📝'}
             </div>
-            <div className="text-xs">
-              <span className="font-black block uppercase">Silent Delivery — Do Not Ring Bell</span>
-              <span className="text-amber-100">Drop produce safely at doorstep.</span>
+            <div className="text-xs space-y-1 flex-1">
+              {activeOrderObj.isSilentDelivery && (
+                <div>
+                  <span className="font-black uppercase tracking-wide block">Silent Delivery — Do Not Ring Doorbell</span>
+                  <span className="text-amber-100 block">Please drop produce safely at doorstep or knock gently.</span>
+                </div>
+              )}
               {activeOrderObj.deliveryInstructions && (
-                <span className="block font-bold text-white mt-0.5">
-                  "{activeOrderObj.deliveryInstructions}"
-                </span>
+                <div className={activeOrderObj.isSilentDelivery ? 'mt-1 pt-1.5 border-t border-amber-400/50' : ''}>
+                  <span className="font-bold text-amber-100 text-[10px] uppercase block">Customer Delivery Note:</span>
+                  <span className="font-black text-white text-xs block">
+                    "{activeOrderObj.deliveryInstructions}"
+                  </span>
+                </div>
               )}
             </div>
           </div>
@@ -975,6 +1053,16 @@ export default function Deliveryboy({ initialUser }: Props) {
                 <span>Verify OTP & Mark Delivered</span>
               </>
             )}
+          </button>
+
+          {/* Can't Deliver? Report Issue to Dispatcher */}
+          <button
+            type="button"
+            onClick={() => setShowReportIssueModal(true)}
+            className="w-full bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200 font-bold py-2.5 px-3 rounded-2xl text-xs transition active:scale-98 flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs mt-2"
+          >
+            <AlertCircle size={14} className="text-rose-600" />
+            <span>Can't Deliver? Report Issue to Dispatcher</span>
           </button>
         </div>
       </div>
@@ -1258,6 +1346,8 @@ export default function Deliveryboy({ initialUser }: Props) {
               totalEarnings={dashboardStats.totalEarnings}
               todayEarnings={dashboardStats.todayEarnings}
               earningPerDelivery={dashboardStats.earningPerDelivery}
+              todayCodCash={dashboardStats.todayCodCash}
+              todayBagsCollected={dashboardStats.todayBagsCollected}
             />
             <EarningsChart data={earningsData} />
             <DeliveriesChart data={deliveriesData} />
@@ -1314,6 +1404,102 @@ export default function Deliveryboy({ initialUser }: Props) {
             <p className="text-[11px] text-slate-500 text-center">
               Agar customer ka UPI screenshot match hota hai toh cash collect na karein. Bas 4-digit OTP lekar delivery verify karein.
             </p>
+          </div>
+        </div>
+      )}
+
+      {/* Report Delivery Issue Modal */}
+      {showReportIssueModal && activeOrderObj && (
+        <div
+          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in"
+          onClick={() => setShowReportIssueModal(false)}
+        >
+          <div
+            className="bg-white rounded-3xl max-w-md w-full p-5 sm:p-6 space-y-4 shadow-2xl border border-slate-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-2xl bg-rose-100 text-rose-700 flex items-center justify-center font-black">
+                  <AlertCircle size={18} />
+                </div>
+                <div>
+                  <h3 className="font-black text-slate-900 text-sm">Report Delivery Issue</h3>
+                  <p className="text-[11px] text-slate-500 font-semibold">
+                    Order #{String(activeOrderObj._id || '').slice(-6).toUpperCase()}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowReportIssueModal(false)}
+                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 cursor-pointer"
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs font-black text-slate-700 block">
+                Select Reason for Issue:
+              </label>
+              {[
+                'Customer Unreachable / Phone Switched Off',
+                'Incorrect / Incomplete Customer Address',
+                'Customer Refused to Accept Delivery',
+                'Door Locked / Nobody Home',
+                'Customer Requested Later Time Slot',
+              ].map((reason) => (
+                <label
+                  key={reason}
+                  onClick={() => setSelectedIssueReason(reason)}
+                  className={`flex items-center gap-2.5 p-2.5 rounded-2xl border text-xs font-bold cursor-pointer transition ${
+                    selectedIssueReason === reason
+                      ? 'border-rose-500 bg-rose-50 text-rose-900 ring-1 ring-rose-500/20'
+                      : 'border-slate-200 hover:bg-slate-50 text-slate-700'
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="deliveryIssueReason"
+                    checked={selectedIssueReason === reason}
+                    onChange={() => setSelectedIssueReason(reason)}
+                    className="accent-rose-600"
+                  />
+                  <span>{reason}</span>
+                </label>
+              ))}
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-black text-slate-700 block">
+                Additional Notes (Optional):
+              </label>
+              <textarea
+                value={issueNotes}
+                onChange={(e) => setIssueNotes(e.target.value)}
+                placeholder="e.g. Rang bell 3 times, phone out of reach..."
+                className="w-full text-xs p-3 rounded-2xl border border-slate-200 outline-none focus:border-rose-500 resize-none h-20"
+              />
+            </div>
+
+            <div className="flex items-center gap-2 pt-1">
+              <button
+                type="button"
+                onClick={() => setShowReportIssueModal(false)}
+                className="flex-1 py-2.5 rounded-2xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 cursor-pointer transition"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleReportIssue}
+                disabled={submittingIssue}
+                className="flex-1 py-2.5 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-black shadow-md shadow-rose-900/10 flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 transition"
+              >
+                {submittingIssue ? <Loader2 size={14} className="animate-spin" /> : <AlertCircle size={14} />}
+                <span>Submit to Hub</span>
+              </button>
+            </div>
           </div>
         </div>
       )}

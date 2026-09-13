@@ -17,13 +17,17 @@ interface Props {
   totalEarnings: number;
   todayEarnings: number;
   earningPerDelivery: number;
+  todayCodCash?: number;
+  todayBagsCollected?: number;
 }
 
 export default function DeliveryDashboardStats({
   totalDeliveries,
   totalEarnings,
   todayEarnings,
-  earningPerDelivery
+  earningPerDelivery,
+  todayCodCash = 0,
+  todayBagsCollected = 0,
 }: Props) {
   return (
     <div className="space-y-4 font-sans">
@@ -111,6 +115,43 @@ export default function DeliveryDashboardStats({
               <ShieldCheck size={12} />
               <span>+₹10 per eco-bag bonus</span>
             </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Real COD Settlement & Green Bag Return Bar */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
+        <div className="bg-amber-50/80 border border-amber-200/80 rounded-3xl p-4 sm:p-5 flex items-center justify-between">
+          <div>
+            <span className="text-[11px] font-black uppercase tracking-wider text-amber-800 block">
+              💵 COD Cash In Hand
+            </span>
+            <h4 className="text-xl sm:text-2xl font-black text-amber-950 mt-1">
+              ₹{todayCodCash.toLocaleString("en-IN")}
+            </h4>
+            <p className="text-[11px] font-semibold text-amber-700 mt-0.5">
+              Cash collected today — to deposit at hub counter
+            </p>
+          </div>
+          <div className="w-10 h-10 rounded-2xl bg-amber-200/80 text-amber-900 flex items-center justify-center font-black shrink-0">
+            <IndianRupee size={18} />
+          </div>
+        </div>
+
+        <div className="bg-emerald-50/80 border border-emerald-200/80 rounded-3xl p-4 sm:p-5 flex items-center justify-between">
+          <div>
+            <span className="text-[11px] font-black uppercase tracking-wider text-emerald-800 block">
+              ♻️ Eco-Bags Collected
+            </span>
+            <h4 className="text-xl sm:text-2xl font-black text-emerald-950 mt-1">
+              {todayBagsCollected} Bag{todayBagsCollected === 1 ? '' : 's'}
+            </h4>
+            <p className="text-[11px] font-semibold text-emerald-700 mt-0.5">
+              +₹{todayBagsCollected * 10} extra bonus earned today
+            </p>
+          </div>
+          <div className="w-10 h-10 rounded-2xl bg-emerald-200/80 text-emerald-900 flex items-center justify-center font-black shrink-0">
+            <ShieldCheck size={18} />
           </div>
         </div>
       </div>

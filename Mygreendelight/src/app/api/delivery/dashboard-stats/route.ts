@@ -39,7 +39,26 @@ export async function GET() {
       orderFilter.assigneddelliveryboy = user._id;
     }
 
-    const completedToday = await Order.countDocuments(orderFilter);
+    const todayOrders = await Order.find(orderFilter);
+    const completedToday = todayOrders.length;
+
+    // Real dynamic calculations from database orders
+    const todayEarnings = todayOrders.reduce((sum: number, o: any) => {
+      const base = 35;
+      const tip = Number(o.farmerTip) || 0;
+      const bagsBonus = (Number(o.bagsReturned) || 0) * 10;
+      return sum + base + tip + bagsBonus;
+    }, 0);
+
+    const todayCodCash = todayOrders
+      .filter((o: any) => o.paymentmethod === "cod")
+      .reduce((sum: number, o: any) => sum + (Number(o.totalamount) || 0), 0);
+
+    const todayBagsCollected = todayOrders.reduce(
+      (sum: number, o: any) => sum + (Number(o.bagsReturned) || 0),
+      0
+    );
+
     const totalDeliveries = user.deliveryStats?.totalDeliveries || (user.role === "admin" ? await Order.countDocuments({ status: "delivered" }) : 0);
     const totalEarnings = user.deliveryStats?.totalEarnings || (totalDeliveries * 35);
 
@@ -47,7 +66,9 @@ export async function GET() {
       stats: {
         totalDeliveries,
         totalEarnings,
-        todayEarnings: completedToday * 35,
+        todayEarnings,
+        todayCodCash,
+        todayBagsCollected,
         earningPerDelivery: 35,
       },
     });
@@ -61,7 +82,9 @@ export async function GET() {
           totalDeliveries: 0,
           totalEarnings: 0,
           todayEarnings: 0,
-          earningPerDelivery: 100,
+          todayCodCash: 0,
+          todayBagsCollected: 0,
+          earningPerDelivery: 35,
         }
       },
       { status: 200 }
