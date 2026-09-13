@@ -281,23 +281,23 @@ export default function CartPage() {
           </div>
 
           {/* 3-Step Checkout Progress Indicators */}
-          <div className="pt-3.5 flex items-center justify-between max-w-xl mx-auto text-xs font-bold">
-            <div className="flex items-center gap-2 text-[#0a3d24]">
-              <span className="w-6 h-6 rounded-full bg-[#0a3d24] text-white flex items-center justify-center text-[11px] font-black shadow-2xs">
+          <div className="pt-3.5 flex items-center justify-between max-w-xl mx-auto text-[11px] sm:text-xs font-bold overflow-x-auto no-scrollbar">
+            <div className="flex items-center gap-1.5 sm:gap-2 text-[#0a3d24] shrink-0">
+              <span className="w-5.5 h-5.5 sm:w-6 sm:h-6 rounded-full bg-[#0a3d24] text-white flex items-center justify-center text-[10px] sm:text-[11px] font-black shadow-2xs">
                 1
               </span>
               <span>Basket</span>
             </div>
-            <div className="flex-1 h-0.5 mx-3 bg-emerald-200 rounded-full" />
-            <div className="flex items-center gap-2 text-stone-400">
-              <span className="w-6 h-6 rounded-full bg-stone-100 text-stone-500 border border-stone-200 flex items-center justify-center text-[11px] font-black">
+            <div className="flex-1 min-w-[20px] h-0.5 mx-2 sm:mx-3 bg-emerald-200 rounded-full" />
+            <div className="flex items-center gap-1.5 sm:gap-2 text-stone-400 shrink-0">
+              <span className="w-5.5 h-5.5 sm:w-6 sm:h-6 rounded-full bg-stone-100 text-stone-500 border border-stone-200 flex items-center justify-center text-[10px] sm:text-[11px] font-black">
                 2
               </span>
-              <span>Address & Slot</span>
+              <span>Address</span>
             </div>
-            <div className="flex-1 h-0.5 mx-3 bg-stone-200 rounded-full" />
-            <div className="flex items-center gap-2 text-stone-400">
-              <span className="w-6 h-6 rounded-full bg-stone-100 text-stone-500 border border-stone-200 flex items-center justify-center text-[11px] font-black">
+            <div className="flex-1 min-w-[20px] h-0.5 mx-2 sm:mx-3 bg-stone-200 rounded-full" />
+            <div className="flex items-center gap-1.5 sm:gap-2 text-stone-400 shrink-0">
+              <span className="w-5.5 h-5.5 sm:w-6 sm:h-6 rounded-full bg-stone-100 text-stone-500 border border-stone-200 flex items-center justify-center text-[10px] sm:text-[11px] font-black">
                 3
               </span>
               <span>Payment</span>
@@ -307,23 +307,23 @@ export default function CartPage() {
 
         {/* Guest Login Hint (Minimal Banner) */}
         {cartdata.length > 0 && !Boolean(session?.user || userdata?._id) && (
-          <div className="bg-white border border-slate-200/80 p-3.5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-2xs mb-6">
-            <div className="flex items-center gap-3">
+          <div className="bg-white border border-stone-200/90 p-3 sm:p-3.5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-2xs mb-5">
+            <div className="flex items-center gap-2.5 sm:gap-3">
               <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-700 border border-amber-200/80 flex items-center justify-center shrink-0">
                 <Lock size={15} />
               </div>
               <div>
-                <p className="text-xs font-bold text-slate-900">
+                <p className="text-xs font-bold text-stone-900">
                   Logged out? Quick sign-in saves your delivery address & order history.
                 </p>
-                <p className="text-[11px] text-slate-400 font-medium">
+                <p className="text-[10.5px] sm:text-[11px] text-stone-400 font-medium">
                   Instant Google 1-Tap or mobile OTP login.
                 </p>
               </div>
             </div>
             <Link
               href="/login?callbackUrl=/user/checkout"
-              className="bg-slate-900 hover:bg-black text-white px-3.5 py-1.5 rounded-xl font-bold text-xs transition shadow-2xs shrink-0 flex items-center gap-1.5"
+              className="bg-stone-900 hover:bg-black text-white px-3.5 py-1.5 rounded-xl font-bold text-xs transition shadow-2xs shrink-0 flex items-center gap-1.5 self-end sm:self-auto"
             >
               <span>Sign In</span>
               <ArrowRight size={13} />
@@ -333,14 +333,14 @@ export default function CartPage() {
 
         {/* Empty State */}
         {cartdata.length === 0 ? (
-          <div className="bg-white rounded-3xl border border-slate-200/80 p-10 sm:p-14 text-center max-w-md mx-auto shadow-2xs my-8">
+          <div className="bg-white rounded-3xl border border-stone-200/90 p-8 sm:p-14 text-center max-w-md mx-auto shadow-2xs my-8">
             <div className="w-16 h-16 bg-emerald-50 text-[#0a3d24] rounded-2xl flex items-center justify-center mx-auto mb-4 border border-emerald-100">
               <ShoppingBag size={28} />
             </div>
-            <h2 className="text-xl font-black text-slate-900 mb-1.5">
+            <h2 className="text-xl font-black text-stone-900 mb-1.5">
               Your basket is empty
             </h2>
-            <p className="text-xs text-slate-500 mb-6 leading-relaxed max-w-xs mx-auto">
+            <p className="text-xs text-stone-500 mb-6 leading-relaxed max-w-xs mx-auto">
               Fresh 5:00 AM mandi harvest, exotic herbs, and daily saver combos are waiting for you.
             </p>
             <Link
@@ -351,23 +351,23 @@ export default function CartPage() {
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-7 items-start">
             
             {/* Left Column: Items & Addons (7 Cols) */}
             <div className="lg:col-span-7 space-y-4">
               
               {/* Minimum Order Alert Strip */}
               {isSubMinimum && (
-                <div className="bg-amber-50 border border-amber-200/80 rounded-2xl p-3.5 shadow-2xs flex items-center justify-between gap-3 text-xs font-bold text-amber-900">
+                <div className="bg-amber-50 border border-amber-200/80 rounded-2xl p-3 sm:p-3.5 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs font-bold text-amber-900">
                   <div className="flex items-center gap-2">
-                    <span className="text-base">⚠️</span>
+                    <span className="text-base shrink-0">⚠️</span>
                     <span>
                       Minimum order for delivery is <strong>₹{minOrderAmount}</strong>. Add <strong>₹{remainingForMinOrder}</strong> more produce to checkout.
                     </span>
                   </div>
                   <Link
                     href="/shop"
-                    className="bg-amber-600 hover:bg-amber-700 text-white text-[11px] font-black px-3 py-1.5 rounded-xl transition shrink-0 shadow-2xs"
+                    className="bg-amber-600 hover:bg-amber-700 text-white text-[11px] font-black px-3 py-1.5 rounded-xl transition self-end sm:self-auto shrink-0 shadow-2xs"
                   >
                     + Add Items
                   </Link>
@@ -375,41 +375,43 @@ export default function CartPage() {
               )}
 
               {/* Free Delivery Status & Mandi Direct Strip */}
-              <div className={`border rounded-3xl p-4 shadow-xs transition-all duration-300 ${
+              <div className={`border rounded-3xl p-3.5 sm:p-4 shadow-xs transition-all duration-300 ${
                 isFreeDelivery 
                   ? "bg-gradient-to-r from-emerald-50 via-white to-emerald-50 border-emerald-300" 
                   : "bg-white border-stone-200/90"
               }`}>
-                <div className="flex items-center justify-between text-xs mb-2.5">
-                  <div className="flex items-center gap-2 font-bold text-stone-800">
+                <div className="flex items-center justify-between text-xs mb-2.5 gap-2">
+                  <div className="flex items-center gap-2 font-bold text-stone-800 min-w-0">
                     <div className="w-7 h-7 rounded-xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center shrink-0">
                       <Truck size={15} />
                     </div>
-                    {isFreeDelivery ? (
-                      <div>
-                        <span className="text-[#0a3d24] font-black text-xs sm:text-sm block">
-                          🎉 FREE Express Delivery Unlocked!
-                        </span>
-                        <span className="text-[10.5px] text-stone-500 font-medium">
-                          Your order qualifies for free doorstep delivery across Bhopal.
-                        </span>
-                      </div>
-                    ) : (
-                      <div>
-                        <span className="text-stone-900 font-bold text-xs sm:text-sm block">
-                          Add <strong className="text-[#0a3d24]">₹{remainingForFreeDelivery}</strong> more for FREE Delivery
-                        </span>
-                        <span className="text-[10.5px] text-stone-500 font-medium">
-                          Standard Bhopal delivery fee is ₹{deliverySettings.deliveryFee || 30}
-                        </span>
-                      </div>
-                    )}
+                    <div className="min-w-0 truncate">
+                      {isFreeDelivery ? (
+                        <>
+                          <span className="text-[#0a3d24] font-black text-xs sm:text-sm block truncate">
+                            🎉 FREE Express Delivery Unlocked!
+                          </span>
+                          <span className="text-[10px] sm:text-[10.5px] text-stone-500 font-medium block truncate">
+                            Your order qualifies for free delivery across Bhopal.
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="text-stone-900 font-bold text-xs sm:text-sm block truncate">
+                            Add <strong className="text-[#0a3d24]">₹{remainingForFreeDelivery}</strong> more for FREE Delivery
+                          </span>
+                          <span className="text-[10px] sm:text-[10.5px] text-stone-500 font-medium block truncate">
+                            Standard Bhopal delivery fee is ₹{deliverySettings.deliveryFee || 30}
+                          </span>
+                        </>
+                      )}
+                    </div>
                   </div>
-                  <span className="text-xs font-mono text-[#0a3d24] font-black bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-200">
+                  <span className="text-xs font-mono text-[#0a3d24] font-black bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-200 shrink-0">
                     {Math.min(100, Math.round((subtotal / freeDeliveryThreshold) * 100))}%
                   </span>
                 </div>
-                <div className="w-full bg-stone-100 rounded-full h-2.5 overflow-hidden p-0.5 border border-stone-200/60">
+                <div className="w-full bg-stone-100 rounded-full h-2 sm:h-2.5 overflow-hidden p-0.5 border border-stone-200/60">
                   <div
                     className="bg-gradient-to-r from-emerald-600 to-[#0a3d24] h-full rounded-full transition-all duration-500 shadow-2xs"
                     style={{
@@ -421,26 +423,26 @@ export default function CartPage() {
 
               {/* Total Mandi Direct Savings Banner */}
               {totalSavings > 0 && (
-                <div className="bg-gradient-to-r from-emerald-900 via-[#0a3d24] to-emerald-950 text-white rounded-2xl p-3 px-4 flex items-center justify-between shadow-xs">
-                  <div className="flex items-center gap-2">
+                <div className="bg-gradient-to-r from-emerald-900 via-[#0a3d24] to-emerald-950 text-white rounded-2xl p-3 px-3.5 sm:px-4 flex items-center justify-between shadow-xs gap-2">
+                  <div className="flex items-center gap-2 min-w-0">
                     <Sparkles size={16} className="text-amber-300 shrink-0" />
-                    <div>
-                      <span className="font-black text-xs block text-white">
+                    <div className="min-w-0">
+                      <span className="font-black text-xs block text-white truncate sm:text-clip">
                         You are saving ₹{totalSavings} on this Mandi direct order!
                       </span>
-                      <span className="text-[10.5px] text-emerald-200/80 font-medium">
+                      <span className="text-[10px] sm:text-[10.5px] text-emerald-200/80 font-medium block truncate sm:text-clip">
                         Direct farmer sourcing beats local market rates with zero middleman margin.
                       </span>
                     </div>
                   </div>
-                  <span className="bg-amber-400 text-stone-950 font-black text-[10px] px-2 py-0.5 rounded-full shadow-2xs shrink-0">
+                  <span className="bg-amber-400 text-stone-950 font-black text-[9.5px] sm:text-[10px] px-2 py-0.5 rounded-full shadow-2xs shrink-0">
                     SAVER
                   </span>
                 </div>
               )}
 
               {/* Items Card List with Luxury Border & Shadow */}
-              <div className="bg-white rounded-3xl border border-stone-200/90 p-4 sm:p-5 divide-y divide-stone-100 shadow-xs">
+              <div className="bg-white rounded-3xl border border-stone-200/90 p-3.5 sm:p-5 divide-y divide-stone-100 shadow-xs">
                 {cartdata.map((item) => {
                   const itemId = item.cartItemId || item._id?.toString();
                   const itemWeight = item.variation?.weight || item.unit;
@@ -451,12 +453,12 @@ export default function CartPage() {
                   return (
                     <div
                       key={itemId}
-                      className="py-3.5 first:pt-0 last:pb-0 flex items-center gap-3.5 sm:gap-4 justify-between"
+                      className="py-3 sm:py-3.5 first:pt-0 last:pb-0 flex items-center gap-2.5 sm:gap-4 justify-between"
                     >
                       {/* Thumbnail */}
                       <Link
                         href={`/product/${item._id}`}
-                        className="w-16 h-16 sm:w-18 sm:h-18 rounded-2xl bg-gradient-to-b from-stone-50 to-white border border-stone-200/80 p-1.5 shrink-0 flex items-center justify-center overflow-hidden hover:border-emerald-300 transition group"
+                        className="w-14 h-14 sm:w-18 sm:h-18 rounded-2xl bg-gradient-to-b from-stone-50 to-white border border-stone-200/80 p-1 shrink-0 flex items-center justify-center overflow-hidden hover:border-emerald-300 transition group"
                       >
                         <img
                           src={item.image}
@@ -471,24 +473,24 @@ export default function CartPage() {
 
                       {/* Info */}
                       <div className="min-w-0 flex-1">
-                        <Link href={`/product/${item._id}`} className="hover:text-[#0a3d24] transition">
+                        <Link href={`/product/${item._id}`} className="hover:text-[#0a3d24] transition block">
                           <h3 className="font-extrabold text-xs sm:text-sm text-stone-900 leading-tight truncate">
                             {item.name}
                           </h3>
                         </Link>
-                        <div className="flex items-center gap-2 mt-0.5">
-                          <span className="text-[11px] text-stone-500 font-medium">
+                        <div className="flex items-center gap-1.5 mt-0.5">
+                          <span className="text-[10.5px] sm:text-[11px] text-stone-500 font-medium">
                             {itemWeight}
                           </span>
                           <span className="text-stone-300">•</span>
-                          <span className="text-[10px] text-emerald-800 font-bold bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">
+                          <span className="text-[9.5px] sm:text-[10px] text-emerald-800 font-bold bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">
                             Grade A
                           </span>
                         </div>
 
-                        <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+                        <div className="flex items-center gap-1.5 sm:gap-2 mt-1 flex-wrap">
                           {item.price === 0 ? (
-                            <span className="bg-emerald-100 text-[#0a3d24] font-black text-[10px] uppercase px-2 py-0.5 rounded-md flex items-center gap-1">
+                            <span className="bg-emerald-100 text-[#0a3d24] font-black text-[9.5px] uppercase px-2 py-0.5 rounded-md flex items-center gap-1">
                               <Gift size={11} />
                               <span>Free Gift</span>
                             </span>
@@ -497,11 +499,11 @@ export default function CartPage() {
                               <span className="text-xs sm:text-sm font-black text-stone-900">
                                 ₹{item.price * item.quantity}
                               </span>
-                              <span className="text-[11px] text-stone-400 line-through font-medium">
+                              <span className="text-[10px] sm:text-[11px] text-stone-400 line-through font-medium">
                                 ₹{itemMRP * item.quantity}
                               </span>
                               {item.quantity > 1 && (
-                                <span className="text-[10px] text-stone-500 font-medium">
+                                <span className="text-[9.5px] sm:text-[10px] text-stone-500 font-medium hidden xs:inline">
                                   (₹{item.price}/{itemWeight})
                                 </span>
                               )}
@@ -511,36 +513,36 @@ export default function CartPage() {
                       </div>
 
                       {/* Stepper + Delete */}
-                      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-                        <div className="flex items-center bg-stone-50 border border-stone-200 rounded-xl overflow-hidden h-8 sm:h-9 shadow-2xs">
+                      <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+                        <div className="flex items-center bg-stone-50 border border-stone-200 rounded-xl overflow-hidden h-7.5 sm:h-9 shadow-2xs">
                           <button
                             type="button"
                             onClick={() => dispatch(decreaseQuantity(itemId))}
-                            className="w-8 h-full flex items-center justify-center text-stone-600 hover:text-red-600 hover:bg-stone-100 transition cursor-pointer active:scale-90"
+                            className="w-7 sm:w-8 h-full flex items-center justify-center text-stone-600 hover:text-red-600 hover:bg-stone-100 transition cursor-pointer active:scale-90"
                             aria-label="Decrease quantity"
                           >
-                            <Minus size={12} className="stroke-[2.5]" />
+                            <Minus size={11} className="stroke-[2.5]" />
                           </button>
-                          <span className="w-7 text-center font-black text-xs text-stone-900">
+                          <span className="w-5.5 sm:w-7 text-center font-black text-xs text-stone-900">
                             {item.quantity}
                           </span>
                           <button
                             type="button"
                             onClick={() => dispatch(increaseQuantity(itemId))}
-                            className="w-8 h-full flex items-center justify-center text-[#0a3d24] hover:bg-emerald-50 transition cursor-pointer active:scale-90"
+                            className="w-7 sm:w-8 h-full flex items-center justify-center text-[#0a3d24] hover:bg-emerald-50 transition cursor-pointer active:scale-90"
                             aria-label="Increase quantity"
                           >
-                            <Plus size={12} className="stroke-[2.5]" />
+                            <Plus size={11} className="stroke-[2.5]" />
                           </button>
                         </div>
 
                         <button
                           type="button"
                           onClick={() => dispatch(removeFromCart(itemId))}
-                          className="text-stone-300 hover:text-red-500 p-1.5 transition cursor-pointer active:scale-90"
+                          className="text-stone-300 hover:text-red-500 p-1 sm:p-1.5 transition cursor-pointer active:scale-90"
                           title="Remove item"
                         >
-                          <Trash2 size={16} />
+                          <Trash2 size={15} />
                         </button>
                       </div>
                     </div>
