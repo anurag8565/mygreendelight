@@ -176,14 +176,18 @@ export default async function ProductPage(props: { params: Promise<{ id: string 
         },
       },
     },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: product.rating && product.rating > 0 ? Number(product.rating).toFixed(1) : "4.8",
-      bestRating: "5",
-      worstRating: "1",
-      ratingCount: product.numReviews && product.numReviews > 0 ? Number(product.numReviews) : 89,
-      reviewCount: product.numReviews && product.numReviews > 0 ? Number(product.numReviews) : 89,
-    },
+    ...(product.numReviews && product.numReviews > 0
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: Number(product.rating || 0).toFixed(1),
+            bestRating: "5",
+            worstRating: "1",
+            ratingCount: Number(product.numReviews),
+            reviewCount: Number(product.numReviews),
+          },
+        }
+      : {}),
   };
 
   const breadcrumbJsonLd = {

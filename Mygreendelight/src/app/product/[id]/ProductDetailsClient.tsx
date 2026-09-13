@@ -730,78 +730,81 @@ export default function ProductDetailsClient({
           </div>
         </div>
 
-        {/* Customer Ratings & Reviews (Enriched with Real Review Highlights) */}
+        {/* Customer Ratings & Reviews (Directly from Database) */}
         <div className="bg-white border border-stone-200/90 rounded-3xl p-4 sm:p-6 shadow-xs mb-5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 pb-3 border-b border-stone-100">
             <div>
               <h3 className="text-sm sm:text-base font-black text-stone-900 font-heading">
-                Customer Ratings & Feedback
+                Customer Ratings & Reviews
               </h3>
               <p className="text-xs text-stone-500 font-medium mt-0.5">
-                Verified reviews from Bhopal households
+                Verified feedback from real buyers
               </p>
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1.5 bg-amber-50 border border-amber-200/80 px-3 py-1 rounded-xl">
-                <Star size={15} className="fill-amber-400 text-amber-400" />
-                <span className="text-sm font-black text-stone-900">
-                  {product.rating ? product.rating.toFixed(1) : "4.8"}
+              {product.numReviews > 0 ? (
+                <>
+                  <div className="flex items-center gap-1.5 bg-amber-50 border border-amber-200/80 px-3 py-1 rounded-xl">
+                    <Star size={15} className="fill-amber-400 text-amber-400" />
+                    <span className="text-sm font-black text-stone-900">
+                      {Number(product.rating || 0).toFixed(1)}
+                    </span>
+                    <span className="text-xs text-stone-400 font-bold">/ 5.0</span>
+                  </div>
+                  <span className="text-xs font-bold text-stone-500">
+                    ({product.numReviews} {product.numReviews === 1 ? "review" : "reviews"})
+                  </span>
+                </>
+              ) : (
+                <span className="text-xs font-semibold text-stone-400 bg-stone-100 px-3 py-1 rounded-xl">
+                  No ratings yet
                 </span>
-                <span className="text-xs text-stone-400 font-bold">/ 5.0</span>
-              </div>
-              <span className="text-xs font-bold text-stone-500">
-                ({product.numReviews || "124"} ratings)
-              </span>
+              )}
             </div>
           </div>
 
-          {/* Verified Customer Testimonial Preview Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
-            <div className="bg-stone-50/70 border border-stone-200/80 rounded-2xl p-3.5">
-              <div className="flex items-center justify-between mb-1.5">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-full bg-[#0a3d24] text-white flex items-center justify-center font-bold text-xs">
-                    R
+          {/* Real Customer Reviews List from Database */}
+          {product.reviews && product.reviews.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
+              {product.reviews.map((rev: any, index: number) => (
+                <div key={index} className="bg-stone-50/70 border border-stone-200/80 rounded-2xl p-3.5">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <div className="flex items-center gap-2">
+                      <div className="w-7 h-7 rounded-full bg-[#0a3d24] text-white flex items-center justify-center font-bold text-xs uppercase">
+                        {(rev.name || "U")[0]}
+                      </div>
+                      <div>
+                        <span className="font-black text-xs text-stone-900 block leading-tight">
+                          {rev.name || "Customer"}
+                        </span>
+                        <span className="text-[10px] text-stone-400">
+                          {rev.date ? new Date(rev.date).toLocaleDateString("en-IN", { month: "short", day: "numeric", year: "numeric" }) : "Verified Buyer"}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-0.5 text-amber-400">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          size={11}
+                          className={i < (rev.rating || 5) ? "fill-amber-400 text-amber-400" : "text-stone-300"}
+                        />
+                      ))}
+                    </div>
                   </div>
-                  <div>
-                    <span className="font-black text-xs text-stone-900 block leading-tight">Rohit Sharma</span>
-                    <span className="text-[10px] text-stone-400">Arera Colony • Verified Buyer</span>
-                  </div>
+                  <p className="text-xs text-stone-600 leading-relaxed font-medium">
+                    &ldquo;{rev.comment}&rdquo;
+                  </p>
                 </div>
-                <div className="flex items-center gap-0.5 text-amber-400">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={11} className="fill-amber-400" />
-                  ))}
-                </div>
-              </div>
-              <p className="text-xs text-stone-600 leading-relaxed font-medium">
-                &ldquo;Sabzi bohot taaza aayi thi, bilkul subah ki mandi jaisi. Packaging bhi clean aur delivery 12 min me ho gayi.&rdquo;
-              </p>
+              ))}
             </div>
-
-            <div className="bg-stone-50/70 border border-stone-200/80 rounded-2xl p-3.5">
-              <div className="flex items-center justify-between mb-1.5">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold text-xs">
-                    P
-                  </div>
-                  <div>
-                    <span className="font-black text-xs text-stone-900 block leading-tight">Pooja Verma</span>
-                    <span className="text-[10px] text-stone-400">Kolar Road • Verified Buyer</span>
-                  </div>
-                </div>
-                <div className="flex items-center gap-0.5 text-amber-400">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={11} className="fill-amber-400" />
-                  ))}
-                </div>
-              </div>
-              <p className="text-xs text-stone-600 leading-relaxed font-medium">
-                &ldquo;Weight exact tha aur quality perfect. Super convenient service for fresh daily vegetables in Bhopal.&rdquo;
-              </p>
+          ) : (
+            <div className="text-center py-6 px-4 bg-stone-50/50 rounded-2xl border border-dashed border-stone-200 mb-5">
+              <p className="text-xs font-bold text-stone-600">Abhi tak is product par koi customer review nahi aaya hai.</p>
+              <p className="text-[11px] text-stone-400 mt-1">Pehle khareedkar apna taaza anubhav niche share karein!</p>
             </div>
-          </div>
+          )}
 
           {/* Write a Review Form */}
           <div className="bg-stone-50 border border-stone-200/80 rounded-2xl p-3.5 sm:p-4">
