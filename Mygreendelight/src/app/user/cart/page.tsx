@@ -75,39 +75,53 @@ export default function CartPage() {
   const cleanUserId = rawUserId ? String(rawUserId) : null;
 
   useEffect(() => {
-    dispatch(hydrateCart({ userId: cleanUserId }));
-
-    // Real-time Cloud Cart Sync: Fetch cloud database cart immediately if customer is logged in
-    axios
-      .get("/api/user/cart")
-      .then((cRes) => {
-        if (cRes.data?.success && cRes.data?.cart) {
-          const cloudItems = cRes.data.cart.items || [];
-          if (Array.isArray(cloudItems) && cloudItems.length > 0) {
-            const formatted = cloudItems.map((item: any) => ({
-              _id: item.product?._id ? String(item.product._id) : (item.product ? String(item.product) : String(item._id || "")),
-              cartItemId: item.cartItemId || String(item.product?._id || item.product || item._id),
-              name: item.name || item.product?.name || "Item",
-              price: item.price ?? item.product?.price ?? 0,
-              unit: item.unit || item.product?.unit || "kg",
-              image: item.image || item.product?.image || "",
-              quantity: item.quantity || 1,
-              stock: item.stock ?? item.product?.stock ?? 50,
-              category: item.category || item.product?.category || "Produce",
-              variation: item.variation || undefined,
-            }));
-            dispatch(
-              setCartFromCloud({
-                cartdata: formatted,
-                couponCode: cRes.data.cart.couponCode || null,
-                discountAmount: cRes.data.cart.discountAmount || 0,
-                userId: cleanUserId,
-              })
-            );
+    const syncCartFromCloud = () => {
+      axios
+        .get(`/api/user/cart?_t=${Date.now()}`)
+        .then((cRes) => {
+          if (cRes.data?.success && cRes.data?.cart) {
+            const cloudItems = cRes.data.cart.items || [];
+            if (Array.isArray(cloudItems)) {
+              const formatted = cloudItems.map((item: any) => ({
+                _id: item.product?._id ? String(item.product._id) : (item.product ? String(item.product) : String(item._id || "")),
+                cartItemId: item.cartItemId || String(item.product?._id || item.product || item._id),
+                name: item.name || item.product?.name || "Item",
+                price: item.price ?? item.product?.price ?? 0,
+                unit: item.unit || item.product?.unit || "kg",
+                image: item.image || item.product?.image || "",
+                quantity: item.quantity || 1,
+                stock: item.stock ?? item.product?.stock ?? 50,
+                category: item.category || item.product?.category || "Produce",
+                variation: item.variation || undefined,
+              }));
+              dispatch(
+                setCartFromCloud({
+                  cartdata: formatted,
+                  couponCode: cRes.data.cart.couponCode || null,
+                  discountAmount: cRes.data.cart.discountAmount || 0,
+                  userId: cleanUserId,
+                })
+              );
+            }
           }
-        }
-      })
-      .catch(() => {});
+        })
+        .catch(() => {});
+    };
+
+    syncCartFromCloud();
+
+    // ⚡ Real-time Multi-Device Sync: Fetch latest quantities when switching tabs or window focus
+    const handleWindowFocus = () => {
+      syncCartFromCloud();
+    };
+    window.addEventListener("focus", handleWindowFocus);
+
+    // Background interval sync while customer is viewing cart page
+    const syncInterval = setInterval(() => {
+      if (typeof document !== "undefined" && document.visibilityState === "visible") {
+        syncCartFromCloud();
+      }
+    }, 3500);
 
     axios
       .get("/api/groceries?limit=12&sort=price_asc")
@@ -132,6 +146,11 @@ export default function CartPage() {
         }
       })
       .catch(() => {});
+
+    return () => {
+      window.removeEventListener("focus", handleWindowFocus);
+      clearInterval(syncInterval);
+    };
   }, [dispatch, cleanUserId]);
 
   const { cartdata, couponCode, discountAmount } = useSelector(

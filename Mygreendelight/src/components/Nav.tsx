@@ -38,7 +38,7 @@ import {
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart, increaseQuantity, decreaseQuantity, hydrateCart } from "@/redux/CartSlice";
+import { addToCart, increaseQuantity, decreaseQuantity, hydrateCart, setCartFromCloud } from "@/redux/CartSlice";
 import { hydrateWishlist } from "@/redux/WishlistSlice";
 import type { RootState, AppDispatch } from "@/redux/store";
 import { AnimatePresence, motion } from "framer-motion";
@@ -92,6 +92,46 @@ export default function Nav({ user }: { user?: iUser | null }) {
       const savedLoc = localStorage.getItem("mgd_user_location");
       if (savedLoc) setLocation(savedLoc);
     }
+
+    const fetchLatestCloudCart = async () => {
+      try {
+        const cRes = await axios.get("/api/user/cart");
+        if (cRes.data?.success && cRes.data?.cart) {
+          const cloudItems = cRes.data.cart.items || [];
+          if (Array.isArray(cloudItems) && cloudItems.length > 0) {
+            const formatted = cloudItems.map((item: any) => ({
+              _id: item.product?._id ? String(item.product._id) : (item.product ? String(item.product) : String(item._id || "")),
+              cartItemId: item.cartItemId || String(item.product?._id || item.product || item._id),
+              name: item.name || item.product?.name || "Item",
+              price: item.price ?? item.product?.price ?? 0,
+              unit: item.unit || item.product?.unit || "kg",
+              image: item.image || item.product?.image || "",
+              quantity: item.quantity || 1,
+              stock: item.stock ?? item.product?.stock ?? 50,
+              category: item.category || item.product?.category || "Produce",
+              variation: item.variation || undefined,
+            }));
+            dispatch(
+              setCartFromCloud({
+                cartdata: formatted,
+                couponCode: cRes.data.cart.couponCode || null,
+                discountAmount: cRes.data.cart.discountAmount || 0,
+                userId: cleanUserId,
+              })
+            );
+          }
+        }
+      } catch (_) {}
+    };
+
+    fetchLatestCloudCart();
+
+    // Auto-sync when window gains focus (user switches tabs or clicks laptop)
+    const handleFocus = () => {
+      fetchLatestCloudCart();
+    };
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
   }, [dispatch, cleanUserId]);
 
   const [searchResults, setSearchResults] = useState<any[]>([]);

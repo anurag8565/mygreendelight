@@ -49,6 +49,7 @@ const syncCartToBackend = (cartdata: IGrocery[], couponCode: string | null, disc
     if (typeof window === "undefined") return;
 
     if (syncTimer) clearTimeout(syncTimer);
+    // ⚡ Fast 150ms sync to MongoDB cloud so multi-device updates feel instantaneous
     syncTimer = setTimeout(async () => {
         try {
             await fetch("/api/user/cart", {
@@ -63,7 +64,7 @@ const syncCartToBackend = (cartdata: IGrocery[], couponCode: string | null, disc
         } catch (e) {
             // Silently swallow network glitches
         }
-    }, 400);
+    }, 150);
 };
 
 const saveCart = (cartdata: IGrocery[], couponCode: string | null, discountAmount: number, userId?: any) => {
