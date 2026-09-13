@@ -74,7 +74,7 @@ export default function AboutPage() {
       step: "02",
       icon: Zap,
       title: "Fast 10-15 Min Delivery",
-      desc: "Bagsewaniya dark store se seedha aapke kitchen counter tak express dispatch, bina kisi jhanjhat ke.",
+      desc: "Seedha subah ki mandi se pack hokar aapke kitchen counter tak express dispatch, bina kisi jhanjhat ke.",
       tag: "Express Fleet",
     },
     {
@@ -366,25 +366,25 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ================= 6. GROUND REALITY & BHOPAL OPERATIONS (STOREFRONT SHOWCASE) ================= */}
+        {/* ================= 6. GROUND REALITY & BHOPAL OPERATIONS (DIRECT MANDI SOURCING) ================= */}
         <section className="w-full py-8 sm:py-12 bg-white border-b border-gray-100 font-sans">
           <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
             <div className="bg-[#fcfdfc] border border-gray-200/80 rounded-3xl p-5 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
               
-              {/* Left Column: Real Storefront Photo */}
+              {/* Left Column: Direct Farm & Mandi Sourcing Photo */}
               <div className="lg:col-span-5 relative rounded-2xl overflow-hidden border border-gray-200 shadow-sm aspect-4/3 group">
                 <img
-                  src="/storefront.jpg"
-                  alt="SubziQuick Store Bhopal Bagsewaniya"
+                  src="/hero_fresh_farm.jpg"
+                  alt="SubziQuick Fresh Farm and Mandi Direct Sourcing"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
                 <div className="absolute bottom-3 left-3 right-3 text-white">
-                  <span className="inline-block bg-[#0f8646] text-white text-[10px] font-black px-2 py-0.5 rounded-md mb-1 uppercase tracking-wide">
-                    Live Storefront
+                  <span className="inline-block bg-[#0f8646] text-white text-[10px] font-black px-2.5 py-0.5 rounded-md mb-1 uppercase tracking-wide">
+                    Direct Mandi Model
                   </span>
                   <p className="text-xs sm:text-sm font-bold leading-tight">
-                    SubziQuick Express Hub, Bagsewaniya, Bhopal
+                    Subah Mandi Se Khareedi, Seedha Aapke Kitchen Tak
                   </p>
                 </div>
               </div>
@@ -392,20 +392,24 @@ export default function AboutPage() {
               {/* Right Column: Local Roots & Trust */}
               <div className="lg:col-span-7 flex flex-col justify-center">
                 <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0f8646] bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200/60 w-fit mb-3">
-                  <Store size={13} />
-                  <span>Bhopal Ka Apna Quick Commerce</span>
+                  <Sparkles size={13} />
+                  <span>100% Online Direct Model • Zero Retail Markup</span>
                 </div>
 
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight leading-tight mb-3">
-                  Zameen Se Juda Kaam, <br />
-                  <span className="text-[#0f8646]">Ghar Jaisi Imaandari.</span>
+                  Bina Showroom Ya Bicholiye Ke, <br />
+                  <span className="text-[#0f8646]">Seedha Saste Mandi Daam Mein.</span>
                 </h2>
 
                 <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal mb-5">
-                  Bina kisi multinational corporate dikhaave ke, hum ek local Bhopal family hain jo har subah mandi jaati hai, taaza samaan chunti hai, aur poori imaandari se aapke ghar tak deliver karti hai.
+                  Hamara koi bada retail showroom nahi hai jiska kharcha customer ke bill mein joda jaaye. Hum har subah mandi jaate hain, taazi sabzi khud chunte hain, aur seedha online orders ke zariye Bhopal ke gharon tak deliver karte hain.
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+                  <div className="flex items-center gap-2 text-xs font-bold text-gray-800 bg-white p-3 rounded-xl border border-gray-200/80 shadow-2xs">
+                    <CheckCircle2 size={15} className="text-[#0c831f] shrink-0" />
+                    <span>Daily Sunrise Mandi Harvest</span>
+                  </div>
                   <div className="flex items-center gap-2 text-xs font-bold text-gray-800 bg-white p-3 rounded-xl border border-gray-200/80 shadow-2xs">
                     <CheckCircle2 size={15} className="text-[#0c831f] shrink-0" />
                     <span>Certified Electronic Weighing</span>
@@ -413,10 +417,6 @@ export default function AboutPage() {
                   <div className="flex items-center gap-2 text-xs font-bold text-gray-800 bg-white p-3 rounded-xl border border-gray-200/80 shadow-2xs">
                     <CheckCircle2 size={15} className="text-[#0c831f] shrink-0" />
                     <span>Breathable Kraft Paper Bagging</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs font-bold text-gray-800 bg-white p-3 rounded-xl border border-gray-200/80 shadow-2xs">
-                    <CheckCircle2 size={15} className="text-[#0c831f] shrink-0" />
-                    <span>Fair Rates for Local Farmers</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs font-bold text-gray-800 bg-white p-3 rounded-xl border border-gray-200/80 shadow-2xs">
                     <CheckCircle2 size={15} className="text-[#0c831f] shrink-0" />
@@ -438,7 +438,7 @@ export default function AboutPage() {
                     href="/contact"
                     className="text-gray-700 hover:text-[#0f8646] border border-gray-300 hover:border-emerald-300 bg-white px-4 sm:px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm transition cursor-pointer"
                   >
-                    Visit Store / Contact
+                    Contact Support
                   </Link>
                 </div>
               </div>
