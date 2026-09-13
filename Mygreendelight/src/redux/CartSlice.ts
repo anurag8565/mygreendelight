@@ -43,6 +43,31 @@ const getCouponStorageKey = (userId?: any) => {
     return cleanId ? `subziquick_coupon_user_${cleanId}` : "subziquick_coupon_guest";
 };
 
+let syncTimer: any = null;
+
+const syncCartToBackend = (cartdata: IGrocery[], couponCode: string | null, discountAmount: number, userId?: any) => {
+    if (typeof window === "undefined") return;
+    const cleanId = getCleanUserId(userId);
+    if (!cleanId) return; // Only sync to database for authenticated users
+
+    if (syncTimer) clearTimeout(syncTimer);
+    syncTimer = setTimeout(async () => {
+        try {
+            await fetch("/api/user/cart", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    items: cartdata,
+                    couponCode,
+                    discountAmount,
+                }),
+            });
+        } catch (e) {
+            // Silently swallow sync network glitch, local storage retains data
+        }
+    }, 400);
+};
+
 const saveCart = (cartdata: IGrocery[], couponCode: string | null, discountAmount: number, userId?: any) => {
     if (typeof window === "undefined") return;
     try {
@@ -53,6 +78,9 @@ const saveCart = (cartdata: IGrocery[], couponCode: string | null, discountAmoun
         // Clean up legacy global key so different accounts never collide
         localStorage.removeItem("mgd_cart_data");
         localStorage.removeItem("mgd_cart_coupon");
+
+        // Sync to MongoDB database so laptop & mobile share identical cart
+        syncCartToBackend(cartdata, couponCode, discountAmount, userId);
     } catch (e) {
         console.error("Cart save error:", e);
     }
@@ -231,6 +259,32 @@ const cartSlice = createSlice({
             saveCart(state.cartdata, state.couponCode, state.discountAmount, state.currentUserId);
         },
 
+        setCartFromCloud: (
+            state,
+            action: PayloadAction<{
+                cartdata: IGrocery[];
+                couponCode?: string | null;
+                discountAmount?: number;
+                userId?: any;
+            }>
+        ) => {
+            const cleanId = getCleanUserId(action.payload.userId || state.currentUserId);
+            state.currentUserId = cleanId;
+            state.cartdata = action.payload.cartdata || [];
+            state.couponCode = action.payload.couponCode || null;
+            state.discountAmount = action.payload.discountAmount || 0;
+            // Persist locally for immediate offline cache without triggering recursive cloud sync
+            if (typeof window !== "undefined" && cleanId) {
+                const cartKey = getCartStorageKey(cleanId);
+                const couponKey = getCouponStorageKey(cleanId);
+                localStorage.setItem(cartKey, JSON.stringify(state.cartdata));
+                localStorage.setItem(
+                    couponKey,
+                    JSON.stringify({ couponCode: state.couponCode, discountAmount: state.discountAmount })
+                );
+            }
+        },
+
         clearCart: (state) => {
             state.cartdata = [];
             state.couponCode = null;
@@ -242,6 +296,7 @@ const cartSlice = createSlice({
 
 export const {
     hydrateCart,
+    setCartFromCloud,
     addToCart,
     increaseQuantity,
     removeFromCart,

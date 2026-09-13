@@ -2,7 +2,7 @@
 
 import { setUserdata } from '@/redux/userSlice'
 import { setWishlist, hydrateWishlist } from '@/redux/WishlistSlice'
-import { hydrateCart } from '@/redux/CartSlice'
+import { hydrateCart, setCartFromCloud } from '@/redux/CartSlice'
 import axios from 'axios'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
@@ -25,6 +25,38 @@ function useGetMe() {
       return
     }
 
+    const syncCloudCart = async (userId: string | null) => {
+      try {
+        const cRes = await axios.get("/api/user/cart");
+        if (cRes.data?.success && cRes.data?.cart) {
+          const cloudItems = cRes.data.cart.items || [];
+          // If cloud has items, populate them into Redux & LocalStorage cache
+          if (Array.isArray(cloudItems) && cloudItems.length > 0) {
+            const formatted = cloudItems.map((item: any) => ({
+              _id: item.product?._id ? String(item.product._id) : (item.product ? String(item.product) : String(item._id || "")),
+              cartItemId: item.cartItemId || String(item.product?._id || item.product || item._id),
+              name: item.name || item.product?.name || "Item",
+              price: item.price ?? item.product?.price ?? 0,
+              unit: item.unit || item.product?.unit || "kg",
+              image: item.image || item.product?.image || "",
+              quantity: item.quantity || 1,
+              stock: item.stock ?? item.product?.stock ?? 50,
+              category: item.category || item.product?.category || "Produce",
+              variation: item.variation || undefined,
+            }));
+            dispatch(
+              setCartFromCloud({
+                cartdata: formatted,
+                couponCode: cRes.data.cart.couponCode || null,
+                discountAmount: cRes.data.cart.discountAmount || 0,
+                userId,
+              })
+            );
+          }
+        }
+      } catch (_) {}
+    };
+
     const getme = async () => {
       try {
         const result = await axios.get("/api/me")
@@ -33,6 +65,8 @@ function useGetMe() {
           dispatch(setUserdata(result.data))
           const userId = result.data._id ? String(result.data._id) : null
           dispatch(hydrateCart({ userId }))
+          // Also fetch cloud database cart to sync across laptop and mobile
+          syncCloudCart(userId)
           const validWishlist = Array.isArray(result.data.wishlist)
             ? result.data.wishlist.filter((w: any) => w && typeof w === 'object' && w.name)
             : []
@@ -60,6 +94,7 @@ function useGetMe() {
           const rawId = (session.user as any)?._id || (session.user as any)?.id || null
           const userId = rawId ? String(rawId) : null
           dispatch(hydrateCart({ userId }))
+          syncCloudCart(userId)
 
           // Sync session identity with OneSignal
           if (typeof window !== "undefined" && (window as any).OneSignalDeferred) {
@@ -92,6 +127,7 @@ function useGetMe() {
           const rawId = (session.user as any)?._id || (session.user as any)?.id || null
           const userId = rawId ? String(rawId) : null
           dispatch(hydrateCart({ userId }))
+          syncCloudCart(userId)
           dispatch(hydrateWishlist({ userId }))
 
           if (typeof window !== "undefined" && (window as any).OneSignalDeferred) {
