@@ -171,14 +171,14 @@ export default function CategorySlider({
                 onClick={() =>
                   router.push(`/shop?category=${encodeURIComponent(config.path)}`)
                 }
-                className="group cursor-pointer bg-white hover:bg-[#fafdfa] rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 border border-gray-200/80 hover:border-emerald-400/90 shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_rgba(12,131,31,0.11)] transition-all duration-300 select-none flex flex-col justify-between"
+                className="group cursor-pointer bg-white hover:bg-slate-50/70 rounded-3xl p-3 sm:p-4 border border-slate-100/90 hover:border-emerald-300 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_24px_rgba(15,134,70,0.08)] transition-all duration-300 select-none flex flex-col items-center text-center"
               >
-                {/* Clean Photo Container (Pure 4K Photography) */}
-                <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-gray-50/80 ring-1 ring-black/[0.04]">
+                {/* Clean Photo Container (Isolated Cutout Feel) */}
+                <div className="relative w-full aspect-square max-w-[140px] rounded-2xl overflow-hidden bg-[#f8f9fa] flex items-center justify-center p-2">
                   <img
                     src={imageSrc}
                     alt={config.title}
-                    className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-500 ease-out"
+                    className="w-full h-full object-contain group-hover:scale-108 transition-transform duration-500 ease-out"
                     onError={(e: any) => {
                       e.target.src = "/categories/vegetables_4k.jpg?v=4";
                     }}
@@ -186,11 +186,11 @@ export default function CategorySlider({
                 </div>
 
                 {/* Typography */}
-                <div className="mt-2 sm:mt-3 text-center flex flex-col items-center">
-                  <h3 className="font-black text-xs sm:text-base md:text-lg text-gray-900 group-hover:text-[#0c831f] transition-colors duration-200 leading-tight tracking-tight truncate w-full">
+                <div className="mt-2.5 sm:mt-3 text-center flex flex-col items-center w-full">
+                  <h3 className="font-extrabold text-xs sm:text-base text-slate-900 group-hover:text-[#0f8646] transition-colors duration-200 leading-tight tracking-tight truncate w-full">
                     {config.title}
                   </h3>
-                  <p className="text-[10px] sm:text-xs text-gray-500 font-medium truncate mt-0.5 sm:mt-1 w-full">
+                  <p className="text-[10px] sm:text-xs text-slate-400 font-medium truncate mt-0.5 w-full">
                     {config.subtitle}
                   </p>
                 </div>

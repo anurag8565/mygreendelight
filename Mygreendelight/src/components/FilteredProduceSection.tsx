@@ -197,46 +197,38 @@ export default function FilteredProduceSection({
                 whileHover={{ y: -2 }}
                 transition={{ type: "spring", stiffness: 350, damping: 22 }}
                 onClick={() => setActiveTab(tab.id)}
-                className={`group relative p-2.5 sm:p-3.5 rounded-2xl sm:rounded-3xl transition-all duration-300 flex flex-col sm:flex-row items-center gap-2 sm:gap-3 cursor-pointer border text-center sm:text-left overflow-hidden ${
+                className={`group relative p-2 sm:p-3 rounded-2xl sm:rounded-3xl transition-all duration-300 flex flex-col sm:flex-row items-center gap-2 sm:gap-3 cursor-pointer border text-center sm:text-left overflow-hidden ${
                   isSelected
-                    ? "bg-white border-[#0c831f] shadow-[0_6px_20px_rgba(12,131,31,0.12)] ring-2 ring-[#0c831f]/20"
-                    : "bg-white hover:bg-[#fafdfa] border-gray-200/80 hover:border-emerald-300 shadow-2xs"
+                    ? "bg-white border-emerald-500 shadow-[0_6px_20px_rgba(15,134,70,0.1)] ring-2 ring-emerald-500/20"
+                    : "bg-white hover:bg-slate-50 border-slate-100 shadow-2xs"
                 }`}
               >
-                {/* Active Indicator Top Accent */}
-                {isSelected && (
-                  <motion.div
-                    layoutId="activeTabAccent"
-                    className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#0c831f] via-emerald-400 to-green-500"
-                  />
-                )}
-
                 {/* Produce Photo Thumbnail */}
-                <div className="relative w-11 h-11 sm:w-13 sm:h-13 rounded-xl sm:rounded-2xl overflow-hidden shrink-0 bg-gray-50 border border-gray-100 shadow-2xs">
+                <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl overflow-hidden shrink-0 bg-[#f8f9fa] flex items-center justify-center p-1 border border-slate-100">
                   <img
                     src={tab.imgUrl}
                     alt={tab.label}
-                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-300 ease-out"
+                    className="w-full h-full object-contain group-hover:scale-108 transition-transform duration-300 ease-out"
                     loading="lazy"
                   />
                   {isSelected && (
-                    <div className="absolute inset-0 bg-[#0c831f]/10" />
+                    <div className="absolute inset-0 bg-[#0f8646]/10" />
                   )}
                 </div>
 
                 {/* Text Details */}
                 <div className="flex flex-col items-center sm:items-start min-w-0 flex-1 w-full">
                   <span
-                    className={`text-xs sm:text-sm md:text-base font-black tracking-tight leading-tight truncate w-full ${
-                      isSelected ? "text-[#0c831f]" : "text-gray-900 group-hover:text-gray-950"
+                    className={`text-xs sm:text-sm font-black tracking-tight leading-tight truncate w-full ${
+                      isSelected ? "text-[#0f8646]" : "text-slate-900 group-hover:text-slate-950"
                     }`}
                   >
                     {tab.label}
                   </span>
 
                   <span
-                    className={`text-[10px] sm:text-xs font-semibold leading-tight mt-0.5 truncate w-full ${
-                      isSelected ? "text-emerald-700 font-bold" : "text-gray-500"
+                    className={`text-[9.5px] sm:text-xs font-semibold leading-tight mt-0.5 truncate w-full ${
+                      isSelected ? "text-emerald-700 font-bold" : "text-slate-400"
                     }`}
                   >
                     {tab.hindi}
@@ -244,13 +236,13 @@ export default function FilteredProduceSection({
 
                   {/* Product Count Pill */}
                   <span
-                    className={`text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full font-black mt-1 sm:mt-1.5 inline-block transition-colors shrink-0 ${
+                    className={`text-[9px] px-2 py-0.5 rounded-full font-extrabold mt-1 inline-block transition-colors shrink-0 ${
                       isSelected
-                        ? "bg-emerald-100 text-[#0c831f]"
-                        : "bg-gray-100 text-gray-600 group-hover:bg-emerald-50 group-hover:text-emerald-700"
+                        ? "bg-emerald-50 text-[#0f8646]"
+                        : "bg-slate-100 text-slate-500"
                     }`}
                   >
-                    {tab.count} Fresh Items
+                    {tab.count} Items
                   </span>
                 </div>
               </motion.button>
