@@ -114,7 +114,7 @@ export default function ManageMandiPage() {
               className="bg-white hover:bg-gray-50 text-gray-700 border border-gray-200/90 px-3.5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-xs transition cursor-pointer disabled:opacity-50"
               title="Refresh mandi rates"
             >
-              <RefreshCw size={15} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+              <RefreshCw size={15} className={loading ? "animate-spin text-[#0a3d24]" : ""} />
               <span>Refresh</span>
             </button>
 
@@ -124,7 +124,7 @@ export default function ManageMandiPage() {
                 setForm({ itemName: "", currentRate: 20, unit: "1 kg", priceChange: "down", percentageChange: 20, isActive: true });
                 setIsModalOpen(true);
               }}
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-md transition-all cursor-pointer"
+              className="bg-[#0a3d24] hover:bg-[#072817] text-white px-5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-md transition-all cursor-pointer"
             >
               <Plus size={16} />
               <span>Add Farm Rate Item</span>
@@ -164,7 +164,7 @@ export default function ManageMandiPage() {
                 {rates.map((item) => (
                   <tr key={item._id} className="hover:bg-gray-50/80 transition">
                     <td className="py-3 px-3 font-bold text-gray-900">{item.itemName}</td>
-                    <td className="py-3 px-3 font-black text-[#0f8646]">₹{item.currentRate}</td>
+                    <td className="py-3 px-3 font-black text-[#0a3d24]">₹{item.currentRate}</td>
                     <td className="py-3 px-3">{item.unit}</td>
                     <td className="py-3 px-3">
                       <span
@@ -191,7 +191,7 @@ export default function ManageMandiPage() {
                       <div className="flex items-center justify-end gap-1">
                         <button
                           onClick={() => handleEdit(item)}
-                          className="text-gray-600 hover:text-[#0f8646] p-1.5 rounded-lg hover:bg-gray-100 transition cursor-pointer"
+                          className="text-gray-600 hover:text-[#0a3d24] p-1.5 rounded-lg hover:bg-gray-100 transition cursor-pointer"
                           title="Edit Rate"
                         >
                           <Edit2 size={15} />
@@ -234,7 +234,7 @@ export default function ManageMandiPage() {
                     value={form.itemName}
                     onChange={(e) => setForm({ ...form, itemName: e.target.value })}
                     placeholder="e.g. Desi Tamatar"
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-bold text-gray-900 outline-none focus:border-[#0f8646]"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-bold text-gray-900 outline-none focus:border-[#0a3d24]"
                   />
                 </div>
 
@@ -246,7 +246,7 @@ export default function ManageMandiPage() {
                       type="number"
                       value={form.currentRate}
                       onChange={(e) => setForm({ ...form, currentRate: Number(e.target.value) })}
-                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-bold text-gray-900 outline-none focus:border-[#0f8646]"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-bold text-gray-900 outline-none focus:border-[#0a3d24]"
                     />
                   </div>
                   <div>
@@ -256,7 +256,7 @@ export default function ManageMandiPage() {
                       value={form.unit}
                       onChange={(e) => setForm({ ...form, unit: e.target.value })}
                       placeholder="e.g. 1 kg"
-                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-bold text-gray-900 outline-none focus:border-[#0f8646]"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-bold text-gray-900 outline-none focus:border-[#0a3d24]"
                     />
                   </div>
                 </div>
@@ -267,7 +267,7 @@ export default function ManageMandiPage() {
                     <select
                       value={form.priceChange}
                       onChange={(e: any) => setForm({ ...form, priceChange: e.target.value })}
-                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-bold text-gray-900 outline-none focus:border-[#0f8646]"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-bold text-gray-900 outline-none focus:border-[#0a3d24]"
                     >
                       <option value="down">Price Drop (Discount)</option>
                       <option value="stable">Stable Rate</option>
@@ -280,7 +280,7 @@ export default function ManageMandiPage() {
                       type="number"
                       value={form.percentageChange}
                       onChange={(e) => setForm({ ...form, percentageChange: Number(e.target.value) })}
-                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-bold text-gray-900 outline-none focus:border-[#0f8646]"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-bold text-gray-900 outline-none focus:border-[#0a3d24]"
                     />
                   </div>
                 </div>
@@ -291,7 +291,7 @@ export default function ManageMandiPage() {
                     id="activeToggle"
                     checked={form.isActive}
                     onChange={(e) => setForm({ ...form, isActive: e.target.checked })}
-                    className="w-4 h-4 accent-[#0f8646]"
+                    className="w-4 h-4 accent-[#0a3d24]"
                   />
                   <label htmlFor="activeToggle" className="text-xs font-bold text-gray-700 cursor-pointer">
                     Show on Homepage Farm Rates Ticker
@@ -308,7 +308,7 @@ export default function ManageMandiPage() {
                   </button>
                   <button
                     type="submit"
-                    className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2 rounded-xl text-xs font-black shadow-sm cursor-pointer"
+                    className="bg-[#0a3d24] hover:bg-[#072817] text-white px-5 py-2 rounded-xl text-xs font-black shadow-sm cursor-pointer"
                   >
                     {editingId ? "Update Rate" : "Save Item"}
                   </button>

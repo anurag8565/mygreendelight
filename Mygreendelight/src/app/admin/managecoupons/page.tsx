@@ -143,13 +143,13 @@ export default function ManageCoupons() {
                 disabled={loading}
                 className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
-                <RefreshCw size={14} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+                <RefreshCw size={14} className={loading ? "animate-spin text-[#0a3d24]" : ""} />
                 <span>Refresh</span>
               </button>
 
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-black shadow-sm transition flex items-center gap-1.5 cursor-pointer"
+                className="bg-[#0a3d24] hover:bg-[#072817] text-white px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-black shadow-sm transition flex items-center gap-1.5 cursor-pointer"
               >
                 <Plus size={16} />
                 <span>Create Coupon</span>
@@ -161,7 +161,7 @@ export default function ManageCoupons() {
           <div className="p-3.5 sm:p-6 lg:p-8 space-y-6 flex-1">
             {loading ? (
               <div className="py-24 flex flex-col items-center justify-center">
-                <Loader2 size={36} className="animate-spin text-[#0f8646] mb-3" />
+                <Loader2 size={36} className="animate-spin text-[#0a3d24] mb-3" />
                 <p className="text-xs font-bold text-gray-500">Loading Promo Coupons...</p>
               </div>
             ) : coupons.length === 0 ? (
@@ -175,7 +175,7 @@ export default function ManageCoupons() {
                 </p>
                 <button
                   onClick={() => setIsModalOpen(true)}
-                  className="bg-[#0f8646] text-white px-5 py-2.5 rounded-xl font-bold text-xs"
+                  className="bg-[#0a3d24] text-white px-5 py-2.5 rounded-xl font-bold text-xs"
                 >
                   + Create Promo Code
                 </button>
@@ -193,7 +193,7 @@ export default function ManageCoupons() {
                       <div>
                         {/* Top Code Pill & Toggle */}
                         <div className="flex items-center justify-between mb-4">
-                          <span className="bg-green-50 border border-green-300 text-[#0f8646] px-3 py-1 rounded-xl font-black text-sm tracking-wider uppercase">
+                          <span className="bg-green-50 border border-green-300 text-[#0a3d24] px-3 py-1 rounded-xl font-black text-sm tracking-wider uppercase">
                             {coupon.code}
                           </span>
 
@@ -202,8 +202,8 @@ export default function ManageCoupons() {
                             className="flex items-center gap-1.5 cursor-pointer text-xs font-extrabold"
                           >
                             {coupon.isActive ? (
-                              <span className="text-[#0f8646] flex items-center gap-1">
-                                <ToggleRight size={24} className="fill-[#0f8646]" /> Active
+                              <span className="text-[#0a3d24] flex items-center gap-1">
+                                <ToggleRight size={24} className="fill-[#0a3d24]" /> Active
                               </span>
                             ) : (
                               <span className="text-gray-400 flex items-center gap-1">
@@ -230,7 +230,7 @@ export default function ManageCoupons() {
                       {/* Expiry Date & Delete */}
                       <div className="pt-4 border-t border-gray-100 flex items-center justify-between text-xs">
                         <div className="flex items-center gap-1.5 text-gray-500 font-medium">
-                          <Calendar size={13} className="text-[#0f8646]" />
+                          <Calendar size={13} className="text-[#0a3d24]" />
                           <span>
                             {new Date(coupon.expiryDate).toLocaleDateString("en-IN")}
                           </span>
@@ -283,7 +283,7 @@ export default function ManageCoupons() {
                   placeholder="e.g. WELCOME20"
                   value={form.code}
                   onChange={(e) => setForm({ ...form, code: e.target.value })}
-                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] uppercase font-black bg-gray-50/60"
+                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] uppercase font-black bg-gray-50/60"
                 />
               </div>
 
@@ -295,7 +295,7 @@ export default function ManageCoupons() {
                   <select
                     value={form.discountType}
                     onChange={(e) => setForm({ ...form, discountType: e.target.value })}
-                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 cursor-pointer"
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 cursor-pointer"
                   >
                     <option value="percentage">Percentage (%)</option>
                     <option value="fixed">Flat Amount (₹)</option>
@@ -314,7 +314,7 @@ export default function ManageCoupons() {
                     onChange={(e) =>
                       setForm({ ...form, discountValue: e.target.value })
                     }
-                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium"
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium"
                   />
                 </div>
               </div>
@@ -331,7 +331,7 @@ export default function ManageCoupons() {
                     onChange={(e) =>
                       setForm({ ...form, minOrderValue: e.target.value })
                     }
-                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium"
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium"
                   />
                 </div>
 
@@ -346,7 +346,7 @@ export default function ManageCoupons() {
                     onChange={(e) =>
                       setForm({ ...form, maxDiscount: e.target.value })
                     }
-                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium"
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium"
                   />
                 </div>
               </div>
@@ -360,7 +360,7 @@ export default function ManageCoupons() {
                   required
                   value={form.expiryDate}
                   onChange={(e) => setForm({ ...form, expiryDate: e.target.value })}
-                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium"
+                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium"
                 />
               </div>
 
@@ -375,7 +375,7 @@ export default function ManageCoupons() {
                 <button
                   type="submit"
                   disabled={isCreating}
-                  className="px-6 py-2.5 rounded-xl bg-[#0f8646] hover:bg-[#0c6a38] text-white font-extrabold shadow-md disabled:opacity-50 cursor-pointer"
+                  className="px-6 py-2.5 rounded-xl bg-[#0a3d24] hover:bg-[#072817] text-white font-extrabold shadow-md disabled:opacity-50 cursor-pointer"
                 >
                   {isCreating ? "Creating..." : "Save Coupon"}
                 </button>

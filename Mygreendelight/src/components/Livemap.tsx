@@ -199,7 +199,7 @@ export default function Livemap({
               target="_blank"
               rel="noopener noreferrer"
               href={`https://www.google.com/maps/dir/?api=1&destination=${customerLocation.latitude},${customerLocation.longitude}`}
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-3.5 py-1.5 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1"
+              className="bg-[#0a3d24] hover:bg-[#072817] text-white px-3.5 py-1.5 rounded-xl text-xs font-black shadow-2xs transition flex items-center gap-1"
             >
               Open in Maps 🗺️
             </a>

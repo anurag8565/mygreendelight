@@ -43,7 +43,7 @@ const DinnerRecipeSchema = new Schema<IDinnerRecipe>(
     image: { type: String, required: true },
     comboPrice: { type: Number, required: true },
     mrp: { type: Number, required: true },
-    sliceColor: { type: String, default: "#0f8646" },
+    sliceColor: { type: String, default: "#0a3d24" },
     isActive: { type: Boolean, default: true },
     ingredients: [DinnerIngredientSchema],
   },

@@ -24,7 +24,7 @@ export default function RecentDeliveries({ deliveries }: Props) {
     <div className="bg-white rounded-3xl shadow-xs border border-gray-200/80 p-5 sm:p-6 space-y-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-2xl bg-emerald-50 text-[#0f8646] flex items-center justify-center font-black">
+          <div className="w-9 h-9 rounded-2xl bg-emerald-50 text-[#0a3d24] flex items-center justify-center font-black">
             <PackageCheck size={18} />
           </div>
           <div>
@@ -62,7 +62,7 @@ export default function RecentDeliveries({ deliveries }: Props) {
                 className="py-3.5 flex items-center justify-between hover:bg-gray-50/80 px-2 rounded-2xl transition group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-emerald-100/70 text-[#0f8646] flex items-center justify-center font-black shrink-0 text-xs">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-100/70 text-[#0a3d24] flex items-center justify-center font-black shrink-0 text-xs">
                     <CheckCircle2 size={16} />
                   </div>
                   <div>

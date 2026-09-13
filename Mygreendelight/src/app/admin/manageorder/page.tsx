@@ -627,16 +627,16 @@ export default function ManageOrder() {
             <button
               type="button"
               onClick={() => audioAlert.playNewOrderAlert()}
-              className="bg-green-50 hover:bg-green-100 text-[#0f8646] border border-green-200 px-3 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
+              className="bg-green-50 hover:bg-green-100 text-[#0a3d24] border border-green-200 px-3 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
               title="Test Order Alert Sound"
             >
-              <Bell size={14} className="text-[#0f8646]" />
+              <Bell size={14} className="text-[#0a3d24]" />
               <span>Test Ting 🔔</span>
             </button>
 
             <button
               onClick={exportOrdersCSV}
-              className="bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-[#0f8646] px-3.5 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
+              className="bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-[#0a3d24] px-3.5 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
               title="Export Current Orders View to CSV / Excel"
             >
               <Download size={14} />
@@ -650,7 +650,7 @@ export default function ManageOrder() {
             >
               <RefreshCw
                 size={14}
-                className={refreshing ? "animate-spin text-[#0f8646]" : ""}
+                className={refreshing ? "animate-spin text-[#0a3d24]" : ""}
               />
               <span>Refresh</span>
             </button>
@@ -675,7 +675,7 @@ export default function ManageOrder() {
         {/* Toast Notification */}
         {toastMsg && (
           <div className="fixed top-20 right-6 z-50 bg-gray-900 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-2.5 text-xs font-bold animate-fade-in border border-gray-700">
-            <Sparkles size={16} className="text-[#0f8646]" />
+            <Sparkles size={16} className="text-[#0a3d24]" />
             <span>{toastMsg}</span>
           </div>
         )}
@@ -715,7 +715,7 @@ export default function ManageOrder() {
                     onClick={() => setFilterTab(tab.id)}
                     className={`px-3.5 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 shrink-0 cursor-pointer ${
                       isActive
-                        ? "bg-[#0f8646] text-white shadow-xs"
+                        ? "bg-[#0a3d24] text-white shadow-xs"
                         : "text-gray-600 hover:bg-gray-100"
                     }`}
                   >
@@ -743,7 +743,7 @@ export default function ManageOrder() {
                 placeholder="Search by ID, name or phone..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 text-xs font-bold border border-gray-200 rounded-xl outline-none focus:border-[#0f8646] bg-gray-50/60"
+                className="w-full pl-10 pr-4 py-2 text-xs font-bold border border-gray-200 rounded-xl outline-none focus:border-[#0a3d24] bg-gray-50/60"
               />
             </div>
           </div>
@@ -751,7 +751,7 @@ export default function ManageOrder() {
           {/* Orders List */}
           {loading ? (
             <div className="py-24 flex flex-col items-center justify-center">
-              <Loader2 size={36} className="animate-spin text-[#0f8646] mb-3" />
+              <Loader2 size={36} className="animate-spin text-[#0a3d24] mb-3" />
               <p className="text-xs font-bold text-gray-500">Loading Orders...</p>
             </div>
           ) : filteredOrders.length === 0 ? (
@@ -862,7 +862,7 @@ export default function ManageOrder() {
 
                         <button
                           onClick={() => openWhatsApp(order)}
-                          className="bg-emerald-50 hover:bg-emerald-100 text-[#0f8646] border border-emerald-300 px-3 py-1.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition cursor-pointer shadow-2xs"
+                          className="bg-emerald-50 hover:bg-emerald-100 text-[#0a3d24] border border-emerald-300 px-3 py-1.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition cursor-pointer shadow-2xs"
                           title="Send instant WhatsApp order status update to customer"
                         >
                           <FaWhatsapp size={13} className="text-[#25D366]" />
@@ -874,7 +874,7 @@ export default function ManageOrder() {
                           className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-2.5 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 transition cursor-pointer border border-gray-200"
                           title="Print 3-inch Bag Packing & Dispatch Slip"
                         >
-                          <Package size={13} className="text-[#0f8646]" />
+                          <Package size={13} className="text-[#0a3d24]" />
                           <span>Bag Slip</span>
                         </button>
 
@@ -883,7 +883,7 @@ export default function ManageOrder() {
                           className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-2.5 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 transition cursor-pointer border border-gray-200"
                           title="Print Customer Bill / Receipt"
                         >
-                          <Printer size={13} className="text-[#0f8646]" />
+                          <Printer size={13} className="text-[#0a3d24]" />
                           <span>Invoice</span>
                         </button>
 
@@ -896,7 +896,7 @@ export default function ManageOrder() {
                               className="bg-emerald-100 text-emerald-900 border border-emerald-300 px-3 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 shadow-2xs cursor-default"
                               title="Delivered order status is permanently locked and cannot be changed"
                             >
-                              <CheckCircle2 size={13} className="text-[#0f8646]" />
+                              <CheckCircle2 size={13} className="text-[#0a3d24]" />
                               <span>✓ Delivered (Locked)</span>
                             </span>
                           ) : (
@@ -940,24 +940,24 @@ export default function ManageOrder() {
                     {/* Customer & Address Details */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 bg-gray-50/70 rounded-2xl p-4 border border-gray-100 text-xs text-gray-700 mb-4">
                       <div className="flex items-center gap-2">
-                        <User size={15} className="text-[#0f8646] shrink-0" />
+                        <User size={15} className="text-[#0a3d24] shrink-0" />
                         <span className="font-bold truncate">
                           {order.address?.fullname || order.user?.name || "Customer"}
                         </span>
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <Phone size={15} className="text-[#0f8646] shrink-0" />
+                        <Phone size={15} className="text-[#0a3d24] shrink-0" />
                         <a
                           href={`tel:${order.address?.mobile}`}
-                          className="font-bold hover:text-[#0f8646] transition"
+                          className="font-bold hover:text-[#0a3d24] transition"
                         >
                           {order.address?.mobile || "N/A"}
                         </a>
                       </div>
 
                       <div className="flex items-start gap-2 sm:col-span-2">
-                        <MapPin size={15} className="text-[#0f8646] shrink-0 mt-0.5" />
+                        <MapPin size={15} className="text-[#0a3d24] shrink-0 mt-0.5" />
                         <span className="line-clamp-2">
                           {order.address?.fulladress || "Bhopal Location"}
                         </span>
@@ -969,12 +969,12 @@ export default function ManageOrder() {
                       <div className="bg-emerald-50/90 border border-emerald-200 rounded-2xl p-4 mb-4 shadow-2xs space-y-3">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-2xl bg-[#0f8646] text-white flex items-center justify-center shadow-xs shrink-0">
+                            <div className="w-10 h-10 rounded-2xl bg-[#0a3d24] text-white flex items-center justify-center shadow-xs shrink-0">
                               <Truck size={20} />
                             </div>
                             <div>
                               <div className="flex items-center gap-2">
-                                <span className="text-[10px] font-black text-[#0f8646] uppercase tracking-wider bg-emerald-100 px-2 py-0.5 rounded-md">
+                                <span className="text-[10px] font-black text-[#0a3d24] uppercase tracking-wider bg-emerald-100 px-2 py-0.5 rounded-md">
                                   Assigned Rider Active
                                 </span>
                               </div>
@@ -988,7 +988,7 @@ export default function ManageOrder() {
                             {order.assigneddelliveryboy?.mobile && (
                               <a
                                 href={`tel:${order.assigneddelliveryboy.mobile}`}
-                                className="bg-white border border-emerald-300 text-[#0f8646] hover:bg-emerald-100 px-3.5 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 transition shadow-2xs"
+                                className="bg-white border border-emerald-300 text-[#0a3d24] hover:bg-emerald-100 px-3.5 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 transition shadow-2xs"
                               >
                                 <Phone size={13} />
                                 <span>Call Rider</span>
@@ -998,7 +998,7 @@ export default function ManageOrder() {
                             {/* Reassign Dropdown */}
                             {isDelivered ? (
                               <span className="text-[11px] font-bold text-emerald-800 bg-emerald-100/70 border border-emerald-300 px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-2xs">
-                                <Check size={13} className="text-[#0f8646]" />
+                                <Check size={13} className="text-[#0a3d24]" />
                                 <span>Delivered by {order.assigneddelliveryboy?.name}</span>
                               </span>
                             ) : (
@@ -1006,7 +1006,7 @@ export default function ManageOrder() {
                                 onChange={(e) => assignDriver(order._id, e.target.value)}
                                 defaultValue=""
                                 disabled={assigningId === order._id}
-                                className="bg-white border border-gray-200 text-gray-700 text-xs font-bold px-3 py-2 rounded-xl outline-none cursor-pointer hover:border-[#0f8646] transition"
+                                className="bg-white border border-gray-200 text-gray-700 text-xs font-bold px-3 py-2 rounded-xl outline-none cursor-pointer hover:border-[#0a3d24] transition"
                               >
                                 <option value="" disabled>Change Rider</option>
                                 {deliveryBoys.map((db) => (
@@ -1026,10 +1026,10 @@ export default function ManageOrder() {
                           return (
                             <div className="flex items-center justify-between gap-2 pt-2 border-t border-emerald-200/80 text-xs font-bold text-emerald-950 flex-wrap">
                               <div className="flex items-center gap-1.5 bg-white/90 px-3 py-1.5 rounded-xl border border-emerald-300 shadow-2xs">
-                                <Navigation size={13} className="text-[#0f8646] animate-pulse" />
+                                <Navigation size={13} className="text-[#0a3d24] animate-pulse" />
                                 <span>
                                   {gpsInfo.hasRiderGPS ? "Live Fleet Radar:" : "Store to Customer:"}{" "}
-                                  <strong className="text-[#0f8646] font-black">
+                                  <strong className="text-[#0a3d24] font-black">
                                     {gpsInfo.distKm} km away
                                   </strong>{" "}
                                   (~{gpsInfo.etaMins} mins ETA)
@@ -1040,7 +1040,7 @@ export default function ManageOrder() {
                                 href={gpsInfo.mapsUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-3 py-1.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition shadow-2xs"
+                                className="bg-[#0a3d24] hover:bg-[#072817] text-white px-3 py-1.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition shadow-2xs"
                               >
                                 <Navigation size={12} />
                                 <span>Track on Google Maps 🗺️</span>
@@ -1075,7 +1075,7 @@ export default function ManageOrder() {
                               onChange={(e) => assignDriver(order._id, e.target.value)}
                               defaultValue=""
                               disabled={assigningId === order._id}
-                              className="bg-white border border-amber-300 text-amber-950 text-xs font-black px-3.5 py-2 rounded-xl outline-none cursor-pointer shadow-2xs hover:border-[#0f8646] transition"
+                              className="bg-white border border-amber-300 text-amber-950 text-xs font-black px-3.5 py-2 rounded-xl outline-none cursor-pointer shadow-2xs hover:border-[#0a3d24] transition"
                             >
                               <option value="" disabled>
                                 ⚡ Direct Assign Driver ({deliveryBoys.length} Available)
@@ -1100,7 +1100,7 @@ export default function ManageOrder() {
                             className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-950 border border-emerald-200/90 px-2.5 py-1 rounded-xl text-xs font-bold shadow-2xs"
                           >
                             <span className="font-black text-gray-900">{item.name}</span>
-                            <span className="bg-[#0f8646] text-white text-[10px] font-black px-1.5 py-0.5 rounded shadow-2xs">
+                            <span className="bg-[#0a3d24] text-white text-[10px] font-black px-1.5 py-0.5 rounded shadow-2xs">
                               ⚖️ {item.variationWeight || item.unit || "1 unit"}
                             </span>
                             <span className="font-black text-emerald-700 bg-white px-1.5 py-0.5 rounded border border-emerald-200 text-[11px]">
@@ -1114,7 +1114,7 @@ export default function ManageOrder() {
                     {/* Items Dropdown Button */}
                     <button
                       onClick={() => setOpenOrder(isExpanded ? null : order._id)}
-                      className="w-full flex items-center justify-between text-xs font-bold text-gray-600 hover:text-[#0f8646] pt-1 transition cursor-pointer"
+                      className="w-full flex items-center justify-between text-xs font-bold text-gray-600 hover:text-[#0a3d24] pt-1 transition cursor-pointer"
                     >
                       <span>
                         {isExpanded
@@ -1145,7 +1145,7 @@ export default function ManageOrder() {
                                   {item.name}
                                 </h4>
                                 <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
-                                  <span className="bg-[#0f8646]/10 text-[#0f8646] border border-emerald-200 text-[11px] font-black px-1.5 py-0.5 rounded-md">
+                                  <span className="bg-[#0a3d24]/10 text-[#0a3d24] border border-emerald-200 text-[11px] font-black px-1.5 py-0.5 rounded-md">
                                     ⚖️ {item.variationWeight || item.unit || "1 unit"}
                                   </span>
                                   <span className="text-[11px] font-bold text-gray-600">
@@ -1184,7 +1184,7 @@ export default function ManageOrder() {
                           </span>
                         )}
                       </div>
-                      <span className="text-base font-black text-[#0f8646]">
+                      <span className="text-base font-black text-[#0a3d24]">
                         Total: ₹{order.totalamount}
                       </span>
                     </div>
@@ -1275,7 +1275,7 @@ export default function ManageOrder() {
                 href={previewProofOrder.paymentProofImage}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs font-bold text-[#0f8646] hover:underline flex items-center gap-1"
+                className="text-xs font-bold text-[#0a3d24] hover:underline flex items-center gap-1"
               >
                 <ExternalLink size={13} /> Open Full Size
               </a>
@@ -1303,7 +1303,7 @@ export default function ManageOrder() {
                       togglePaymentStatus(previewProofOrder._id, false);
                       setPreviewProofOrder((prev) => (prev ? { ...prev, ispaid: true } : null));
                     }}
-                    className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 shadow-sm transition cursor-pointer"
+                    className="bg-[#0a3d24] hover:bg-[#072817] text-white px-4 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 shadow-sm transition cursor-pointer"
                   >
                     <Check size={14} strokeWidth={3} />
                     <span>Verify & Mark as Paid</span>

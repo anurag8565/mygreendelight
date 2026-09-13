@@ -97,7 +97,7 @@ export default function ReviewProductModal({
 
           {success ? (
             <div className="text-center py-6">
-              <div className="w-16 h-16 bg-green-100 text-[#0f8646] rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
+              <div className="w-16 h-16 bg-green-100 text-[#0a3d24] rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
                 <CheckCircle2 size={36} />
               </div>
               <h3 className="text-xl font-black text-gray-900 mb-2">
@@ -111,7 +111,7 @@ export default function ReviewProductModal({
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Header */}
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-green-50 text-[#0f8646] flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-2xl bg-green-50 text-[#0a3d24] flex items-center justify-center shrink-0">
                   <MessageSquareHeart size={20} />
                 </div>
                 <div>
@@ -176,7 +176,7 @@ export default function ReviewProductModal({
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
                   placeholder="Share details about freshness, taste, packing, or delivery speed..."
-                  className="w-full border border-gray-200 rounded-2xl p-3.5 text-xs sm:text-sm font-medium text-gray-800 outline-none focus:border-[#0f8646] bg-gray-50 focus:bg-white transition resize-none"
+                  className="w-full border border-gray-200 rounded-2xl p-3.5 text-xs sm:text-sm font-medium text-gray-800 outline-none focus:border-[#0a3d24] bg-gray-50 focus:bg-white transition resize-none"
                   required
                 />
               </div>
@@ -191,7 +191,7 @@ export default function ReviewProductModal({
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full py-3.5 bg-[#0f8646] hover:bg-[#0c6a38] text-white rounded-2xl font-black text-xs sm:text-sm shadow-md hover:shadow-lg transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                className="w-full py-3.5 bg-[#0a3d24] hover:bg-[#072817] text-white rounded-2xl font-black text-xs sm:text-sm shadow-md hover:shadow-lg transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
               >
                 {submitting ? (
                   <>

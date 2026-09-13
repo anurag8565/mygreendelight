@@ -19,10 +19,10 @@ export default function RefundPolicyPage() {
       <main className="max-w-4xl mx-auto px-4 md:px-8 py-10 w-full flex-1">
         {/* Header */}
         <div className="bg-white rounded-3xl p-8 sm:p-10 border border-gray-200/80 shadow-xs mb-8">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-[#0f8646] flex items-center justify-center mb-4">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center mb-4">
             <RotateCcw size={24} />
           </div>
-          <span className="text-xs font-black uppercase text-[#0f8646] tracking-wider block mb-1">
+          <span className="text-xs font-black uppercase text-[#0a3d24] tracking-wider block mb-1">
             Customer Guarantee
           </span>
           <h1 className="text-2xl sm:text-3xl font-black text-gray-900">
@@ -37,7 +37,7 @@ export default function RefundPolicyPage() {
         <div className="bg-white rounded-3xl p-8 sm:p-10 border border-gray-200/80 shadow-xs space-y-8 text-sm text-gray-700 leading-relaxed">
           <section className="space-y-3">
             <h2 className="text-lg font-black text-gray-900 flex items-center gap-2">
-              <Clock size={18} className="text-[#0f8646]" />
+              <Clock size={18} className="text-[#0a3d24]" />
               <span>1. Order Cancellation Policy</span>
             </h2>
             <p>
@@ -52,7 +52,7 @@ export default function RefundPolicyPage() {
 
           <section className="space-y-3">
             <h2 className="text-lg font-black text-gray-900 flex items-center gap-2">
-              <RotateCcw size={18} className="text-[#0f8646]" />
+              <RotateCcw size={18} className="text-[#0a3d24]" />
               <span>2. Return & Doorstep Quality Check</span>
             </h2>
             <p>
@@ -66,7 +66,7 @@ export default function RefundPolicyPage() {
 
           <section className="space-y-3">
             <h2 className="text-lg font-black text-gray-900 flex items-center gap-2">
-              <Coins size={18} className="text-[#0f8646]" />
+              <Coins size={18} className="text-[#0a3d24]" />
               <span>3. Refund Processing Timelines</span>
             </h2>
             <p>
@@ -85,7 +85,7 @@ export default function RefundPolicyPage() {
                   <tr>
                     <td className="p-3 font-bold text-gray-900">GreenPoints Wallet</td>
                     <td className="p-3">SubziQuick Wallet Balance</td>
-                    <td className="p-3 font-bold text-[#0f8646]">Instant (0 seconds)</td>
+                    <td className="p-3 font-bold text-[#0a3d24]">Instant (0 seconds)</td>
                   </tr>
                   <tr>
                     <td className="p-3 font-bold text-gray-900">Online UPI / GPay / Paytm</td>
@@ -104,7 +104,7 @@ export default function RefundPolicyPage() {
 
           <section className="space-y-3">
             <h2 className="text-lg font-black text-gray-900 flex items-center gap-2">
-              <AlertCircle size={18} className="text-[#0f8646]" />
+              <AlertCircle size={18} className="text-[#0a3d24]" />
               <span>4. Quick WhatsApp Support</span>
             </h2>
             <p>

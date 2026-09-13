@@ -4,25 +4,25 @@ import { Lock, ThumbsUp, Headset, Banknote, ShieldCheck } from 'lucide-react';
 export default function PreFooter() {
   const services = [
     {
-      icon: <Lock className="text-[#0f8646]" size={18} />,
+      icon: <Lock className="text-[#0a3d24]" size={18} />,
       title: "Secure UPI & Cards",
       desc: "100% encrypted checkout",
       bg: "bg-emerald-50/80 border-emerald-100"
     },
     {
-      icon: <ThumbsUp className="text-[#0f8646]" size={18} />,
+      icon: <ThumbsUp className="text-[#0a3d24]" size={18} />,
       title: "Fresh or Refund",
       desc: "Instant doorstep replacement",
       bg: "bg-green-50/80 border-green-100"
     },
     {
-      icon: <Headset className="text-[#0f8646]" size={18} />,
+      icon: <Headset className="text-[#0a3d24]" size={18} />,
       title: "24/7 Bhopal Help",
       desc: "Call or WhatsApp support",
       bg: "bg-teal-50/80 border-teal-100"
     },
     {
-      icon: <Banknote className="text-[#0f8646]" size={18} />,
+      icon: <Banknote className="text-[#0a3d24]" size={18} />,
       title: "Pay on Delivery",
       desc: "Cash or UPI at doorstep",
       bg: "bg-amber-50/80 border-amber-100"

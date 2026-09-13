@@ -200,7 +200,7 @@ export default function Login() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full pl-11 pr-4 py-3 bg-slate-50/70 border border-slate-200 rounded-2xl text-xs font-bold text-slate-900 outline-none focus:bg-white focus:border-[#0f8646] focus:ring-2 focus:ring-[#0f8646]/15 transition placeholder:text-slate-400"
+                  className="w-full pl-11 pr-4 py-3 bg-slate-50/70 border border-slate-200 rounded-2xl text-xs font-bold text-slate-900 outline-none focus:bg-white focus:border-[#0a3d24] focus:ring-2 focus:ring-[#0a3d24]/15 transition placeholder:text-slate-400"
                 />
               </div>
             </div>
@@ -220,7 +220,7 @@ export default function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full pl-11 pr-11 py-3 bg-slate-50/70 border border-slate-200 rounded-2xl text-xs font-bold text-slate-900 outline-none focus:bg-white focus:border-[#0f8646] focus:ring-2 focus:ring-[#0f8646]/15 transition placeholder:text-slate-400"
+                  className="w-full pl-11 pr-11 py-3 bg-slate-50/70 border border-slate-200 rounded-2xl text-xs font-bold text-slate-900 outline-none focus:bg-white focus:border-[#0a3d24] focus:ring-2 focus:ring-[#0a3d24]/15 transition placeholder:text-slate-400"
                 />
                 <button
                   type="button"
@@ -237,7 +237,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-2 py-3.5 rounded-2xl bg-gradient-to-r from-[#0f8646] to-emerald-600 hover:from-[#0c6a38] hover:to-emerald-700 text-white font-black text-xs sm:text-sm shadow-md shadow-emerald-900/10 transition-all active:scale-98 disabled:opacity-70 flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full mt-2 py-3.5 rounded-2xl bg-[#0a3d24] hover:bg-[#072817] text-white font-black text-xs sm:text-sm shadow-md transition-all active:scale-98 disabled:opacity-70 flex items-center justify-center gap-2 cursor-pointer"
             >
               {loading ? (
                 <>
@@ -277,7 +277,7 @@ export default function Login() {
           >
             {googleLoading ? (
               <>
-                <Loader2 size={16} className="animate-spin text-[#0f8646]" />
+                <Loader2 size={16} className="animate-spin text-[#0a3d24]" />
                 <span>Redirecting to Google...</span>
               </>
             ) : (
@@ -293,7 +293,7 @@ export default function Login() {
             New to SubziQuick?{" "}
             <Link
               href="/register"
-              className="text-[#0f8646] font-black hover:text-emerald-700 transition underline underline-offset-2"
+              className="text-[#0a3d24] font-black hover:text-emerald-700 transition underline underline-offset-2"
             >
               Create an Account
             </Link>

@@ -87,7 +87,7 @@ export default function StockAlertModal({ grocery, isOpen, onClose }: StockAlert
 
         {successMsg ? (
           <div className="p-4 bg-green-50 border border-green-200 rounded-2xl text-center">
-            <div className="w-8 h-8 bg-[#0f8646] text-white rounded-full flex items-center justify-center mx-auto mb-2">
+            <div className="w-8 h-8 bg-[#0a3d24] text-white rounded-full flex items-center justify-center mx-auto mb-2">
               <Check size={16} />
             </div>
             <p className="text-xs font-bold text-green-900">{successMsg}</p>
@@ -109,7 +109,7 @@ export default function StockAlertModal({ grocery, isOpen, onClose }: StockAlert
                 placeholder="10-digit mobile number"
                 value={mobile}
                 onChange={(e) => setMobile(e.target.value.replace(/\D/g, ""))}
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs font-bold text-gray-900 outline-none focus:border-[#0f8646] focus:bg-white"
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs font-bold text-gray-900 outline-none focus:border-[#0a3d24] focus:bg-white"
               />
             </div>
 
@@ -120,7 +120,7 @@ export default function StockAlertModal({ grocery, isOpen, onClose }: StockAlert
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm transition disabled:opacity-50 cursor-pointer"
+              className="w-full bg-[#0a3d24] hover:bg-[#072817] text-white font-black py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm transition disabled:opacity-50 cursor-pointer"
             >
               {loading ? (
                 <Loader2 size={15} className="animate-spin" />

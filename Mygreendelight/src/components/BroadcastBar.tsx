@@ -46,7 +46,7 @@ export default function BroadcastBar() {
       badge: "Store Notice",
     },
     promo: {
-      bg: "bg-gradient-to-r from-[#0f8646] via-emerald-600 to-teal-700 text-white",
+      bg: "bg-gradient-to-r from-[#072817] via-[#0a3d24] to-[#072817] text-white",
       icon: <Sparkles size={16} className="shrink-0 text-yellow-300" />,
       badge: "Special Offer",
     },

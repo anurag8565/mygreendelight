@@ -245,14 +245,14 @@ function OrderSuccessContent() {
             ) : (
               <div className="relative w-20 h-20 mx-auto mb-4">
                 <div className="absolute inset-0 bg-emerald-300 rounded-full animate-ping opacity-30" />
-                <div className="relative w-20 h-20 bg-gradient-to-tr from-[#0f8646] to-emerald-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-emerald-700/25">
+                <div className="relative w-20 h-20 bg-gradient-to-tr from-[#0a3d24] to-emerald-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-emerald-700/25">
                   <CheckCircle2 size={40} className="stroke-[2.5]" />
                 </div>
               </div>
             )}
 
             {/* Status Pill */}
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black tracking-wider uppercase mb-2.5 bg-emerald-50 text-[#0f8646] border border-emerald-200/80">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black tracking-wider uppercase mb-2.5 bg-emerald-50 text-[#0a3d24] border border-emerald-200/80">
               <Sparkles size={12} />
               <span>{isPendingUpi ? "Payment Under Review" : "Order Confirmed"}</span>
             </div>
@@ -271,8 +271,8 @@ function OrderSuccessContent() {
             {/* Minimalist 3-Step Timeline */}
             <div className="bg-gray-50/80 rounded-2xl p-3 sm:p-3.5 mb-6 border border-gray-100">
               <div className="flex items-center justify-between text-[11px] font-bold">
-                <div className="flex items-center gap-1.5 text-[#0f8646]">
-                  <span className="w-5 h-5 rounded-full bg-emerald-100 text-[#0f8646] flex items-center justify-center text-[10px] font-black">
+                <div className="flex items-center gap-1.5 text-[#0a3d24]">
+                  <span className="w-5 h-5 rounded-full bg-emerald-100 text-[#0a3d24] flex items-center justify-center text-[10px] font-black">
                     ✓
                   </span>
                   <span>Placed</span>
@@ -299,7 +299,7 @@ function OrderSuccessContent() {
               {/* Header: ID + Method */}
               <div className="flex items-center justify-between gap-2 pb-3.5 border-b border-gray-100">
                 <div className="flex items-center gap-2">
-                  <Receipt size={16} className="text-[#0f8646]" />
+                  <Receipt size={16} className="text-[#0a3d24]" />
                   <span className="text-xs font-black text-gray-900 font-mono tracking-wide">
                     {formattedOrderId}
                   </span>
@@ -321,7 +321,7 @@ function OrderSuccessContent() {
                     orderDetails?.paymentmethod === "cod" || searchParams.get("method") === "cod"
                       ? "bg-gray-50 text-gray-700 border-gray-200"
                       : isPaid
-                      ? "bg-emerald-50 text-[#0f8646] border-emerald-200"
+                      ? "bg-emerald-50 text-[#0a3d24] border-emerald-200"
                       : "bg-amber-50 text-amber-800 border-amber-200"
                   }`}
                 >
@@ -382,7 +382,7 @@ function OrderSuccessContent() {
               {/* Delivery Info */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-0.5">
                 <div className="flex items-start gap-2">
-                  <MapPin size={15} className="text-[#0f8646] shrink-0 mt-0.5" />
+                  <MapPin size={15} className="text-[#0a3d24] shrink-0 mt-0.5" />
                   <div className="min-w-0">
                     <span className="text-[10px] font-bold text-gray-400 uppercase block">
                       Deliver To
@@ -424,7 +424,7 @@ function OrderSuccessContent() {
                   </span>
                 </div>
                 <div className="text-right">
-                  <span className="text-2xl sm:text-3xl font-black text-[#0f8646]">
+                  <span className="text-2xl sm:text-3xl font-black text-[#0a3d24]">
                     ₹{displayTotal}
                   </span>
                 </div>
@@ -479,7 +479,7 @@ function OrderSuccessContent() {
                 <button
                   type="button"
                   onClick={() => setShowRewardModal(true)}
-                  className="px-3.5 py-2 bg-[#0f8646] hover:bg-[#0c6a38] text-white rounded-xl text-xs font-black shadow-xs transition cursor-pointer shrink-0"
+                  className="px-3.5 py-2 bg-[#0a3d24] hover:bg-[#072817] text-white rounded-xl text-xs font-black shadow-xs transition cursor-pointer shrink-0"
                 >
                   {reward.isScratched ? "View" : "Scratch & Win"}
                 </button>
@@ -490,7 +490,7 @@ function OrderSuccessContent() {
             <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full">
               <Link
                 href={orderId ? `/track/${orderId}` : "/user/myorder"}
-                className="w-full sm:flex-1 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3.5 px-5 rounded-2xl font-black text-xs sm:text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:flex-1 bg-[#0a3d24] hover:bg-[#072817] text-white py-3.5 px-5 rounded-2xl font-black text-xs sm:text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Truck size={16} />
                 <span>Track Live Delivery</span>
@@ -499,7 +499,7 @@ function OrderSuccessContent() {
 
               <Link
                 href="/shop"
-                className="w-full sm:flex-1 bg-white border border-gray-200 hover:border-[#0f8646] text-gray-700 hover:text-[#0f8646] py-3.5 px-5 rounded-2xl font-black text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-2xs"
+                className="w-full sm:flex-1 bg-white border border-gray-200 hover:border-[#0a3d24] text-gray-700 hover:text-[#0a3d24] py-3.5 px-5 rounded-2xl font-black text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-2xs"
               >
                 <ShoppingBag size={16} />
                 <span>Continue Shopping</span>
@@ -509,11 +509,11 @@ function OrderSuccessContent() {
             {/* Minimal SubziQuick Guarantee Tagline */}
             <div className="mt-6 pt-5 border-t border-gray-100 flex items-center justify-center gap-4 text-[11px] text-gray-400 font-bold">
               <span className="flex items-center gap-1">
-                <ShieldCheck size={13} className="text-[#0f8646]" /> 100% Quality Guarantee
+                <ShieldCheck size={13} className="text-[#0a3d24]" /> 100% Quality Guarantee
               </span>
               <span>•</span>
               <span className="flex items-center gap-1">
-                <Leaf size={13} className="text-[#0f8646]" /> Farm Direct Bhopal
+                <Leaf size={13} className="text-[#0a3d24]" /> Farm Direct Bhopal
               </span>
             </div>
           </motion.div>
@@ -542,7 +542,7 @@ export default function OrderSuccess() {
     <Suspense
       fallback={
         <div className="min-h-screen flex items-center justify-center bg-[#f8f9fa]">
-          <div className="w-10 h-10 border-4 border-[#0f8646] border-t-transparent rounded-full animate-spin" />
+          <div className="w-10 h-10 border-4 border-[#0a3d24] border-t-transparent rounded-full animate-spin" />
         </div>
       }
     >

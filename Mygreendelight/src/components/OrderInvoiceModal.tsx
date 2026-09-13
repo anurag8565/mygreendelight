@@ -152,7 +152,7 @@ export default function OrderInvoiceModal({
         {/* Top Control Bar (Hidden during Print) */}
         <div className="px-5 py-3.5 sm:px-6 sm:py-4 bg-gray-900 text-white flex items-center justify-between print:hidden shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-[#0f8646] flex items-center justify-center text-white">
+            <div className="w-8 h-8 rounded-xl bg-[#0a3d24] flex items-center justify-center text-white">
               <FileText size={16} />
             </div>
             <div>
@@ -164,7 +164,7 @@ export default function OrderInvoiceModal({
           <div className="flex items-center gap-2">
             <button
               onClick={handlePrint}
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 transition shadow-sm cursor-pointer hover:shadow-md"
+              className="bg-[#0a3d24] hover:bg-[#072817] text-white px-4 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 transition shadow-sm cursor-pointer hover:shadow-md"
             >
               <Printer size={14} />
               <span>Print / Download PDF</span>
@@ -202,7 +202,7 @@ export default function OrderInvoiceModal({
             </div>
 
             <div className="flex flex-row sm:flex-col items-start sm:items-end justify-between w-full sm:w-auto gap-2">
-              <span className="bg-emerald-50 text-[#0f8646] border border-emerald-300 font-black text-xs uppercase tracking-widest px-3.5 py-1 rounded-xl shadow-2xs">
+              <span className="bg-emerald-50 text-[#0a3d24] border border-emerald-300 font-black text-xs uppercase tracking-widest px-3.5 py-1 rounded-xl shadow-2xs">
                 RETAIL INVOICE
               </span>
               <div className="text-left sm:text-right space-y-0.5">
@@ -238,15 +238,15 @@ export default function OrderInvoiceModal({
                 BILLED & DELIVERED TO:
               </span>
               <p className="font-extrabold text-gray-900 text-sm flex items-center gap-1.5">
-                <User size={14} className="text-[#0f8646]" />
+                <User size={14} className="text-[#0a3d24]" />
                 <span>{order.address?.fullname || order.user?.name || "Valued Customer"}</span>
               </p>
               <p className="font-bold text-gray-700 flex items-center gap-1.5">
-                <Phone size={13} className="text-[#0f8646]" />
+                <Phone size={13} className="text-[#0a3d24]" />
                 <span>+91 {order.address?.mobile || order.user?.mobile || "N/A"}</span>
               </p>
               <div className="flex items-start gap-1.5 pt-0.5 text-gray-600 leading-relaxed">
-                <MapPin size={13} className="text-[#0f8646] shrink-0 mt-0.5" />
+                <MapPin size={13} className="text-[#0a3d24] shrink-0 mt-0.5" />
                 <span>
                   {order.address?.fulladress || "Bhopal, Madhya Pradesh - 462xxx"}
                 </span>
@@ -261,7 +261,7 @@ export default function OrderInvoiceModal({
                 </span>
                 <p className="text-gray-700 mt-1">
                   <strong>Slot:</strong>{" "}
-                  <span className="text-[#0f8646] font-bold">
+                  <span className="text-[#0a3d24] font-bold">
                     {order.deliverySlot || "Instant Farm Fresh Express"}
                   </span>
                 </p>
@@ -348,7 +348,7 @@ export default function OrderInvoiceModal({
             {/* Guarantee & Notes (7 Cols) */}
             <div className="sm:col-span-7 space-y-3">
               <div className="bg-emerald-50/60 rounded-2xl p-4 border border-emerald-200/90 text-xs">
-                <div className="flex items-center gap-1.5 font-black text-[#0f8646] uppercase text-[10px] tracking-wider mb-1">
+                <div className="flex items-center gap-1.5 font-black text-[#0a3d24] uppercase text-[10px] tracking-wider mb-1">
                   <ShieldCheck size={14} />
                   <span>100% FARM FRESH HARVEST GUARANTEE</span>
                 </div>
@@ -377,7 +377,7 @@ export default function OrderInvoiceModal({
                 <span>Delivery Partner Fee:</span>
                 <span className="font-bold">
                   {deliveryFee === 0 ? (
-                    <span className="text-[#0f8646] font-bold bg-green-100 px-1.5 py-0.5 rounded text-[10px]">
+                    <span className="text-[#0a3d24] font-bold bg-green-100 px-1.5 py-0.5 rounded text-[10px]">
                       FREE
                     </span>
                   ) : (
@@ -395,7 +395,7 @@ export default function OrderInvoiceModal({
 
               <div className="flex justify-between text-sm sm:text-base font-black text-gray-900 pt-2 border-t-2 border-gray-900">
                 <span>Grand Total:</span>
-                <span className="text-[#0f8646] text-lg font-black">
+                <span className="text-[#0a3d24] text-lg font-black">
                   ₹{finalTotal}
                 </span>
               </div>

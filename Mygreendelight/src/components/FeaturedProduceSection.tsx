@@ -30,7 +30,7 @@ export default function FeaturedProduceSection({
 
           <Link
             href="/shop"
-            className="text-[#0c831f] hover:text-[#096618] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition"
+            className="text-[#0a3d24] hover:text-[#072817] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition"
           >
             <span>See All</span>
             <ChevronRight

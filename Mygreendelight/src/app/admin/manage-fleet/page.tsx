@@ -190,13 +190,13 @@ export default function ManageFleetPage() {
             <div className="flex items-center gap-2 mb-1">
               <Link
                 href="/admin"
-                className="text-xs font-bold text-gray-500 hover:text-[#0f8646] flex items-center gap-1 transition"
+                className="text-xs font-bold text-gray-500 hover:text-[#0a3d24] flex items-center gap-1 transition"
               >
                 <ArrowLeft size={14} /> Back to Dashboard
               </Link>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-gray-900 flex items-center gap-2.5">
-              <span className="w-10 h-10 rounded-2xl bg-[#0f8646] text-white flex items-center justify-center shadow-md">
+              <span className="w-10 h-10 rounded-2xl bg-[#0a3d24] text-white flex items-center justify-center shadow-md">
                 <Truck size={22} />
               </span>
               <span>Delivery Fleet & Partners</span>
@@ -210,15 +210,15 @@ export default function ManageFleetPage() {
             <button
               onClick={fetchFleet}
               disabled={loading}
-              className="bg-white border border-gray-200 text-gray-700 hover:text-[#0f8646] hover:border-[#0f8646] px-3.5 py-2.5 rounded-xl text-xs font-black transition flex items-center gap-1.5 shadow-2xs cursor-pointer"
+              className="bg-white border border-gray-200 text-gray-700 hover:text-[#0a3d24] hover:border-[#0a3d24] px-3.5 py-2.5 rounded-xl text-xs font-black transition flex items-center gap-1.5 shadow-2xs cursor-pointer"
             >
-              <RefreshCw size={14} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+              <RefreshCw size={14} className={loading ? "animate-spin text-[#0a3d24]" : ""} />
               <span>Refresh</span>
             </button>
 
             <button
               onClick={() => setIsModalOpen(true)}
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2.5 rounded-xl text-xs font-black transition flex items-center gap-1.5 shadow-md shadow-emerald-900/15 cursor-pointer"
+              className="bg-[#0a3d24] hover:bg-[#072817] text-white px-4 py-2.5 rounded-xl text-xs font-black transition flex items-center gap-1.5 shadow-md shadow-emerald-900/15 cursor-pointer"
             >
               <Plus size={16} />
               <span>Add Delivery Partner</span>
@@ -252,7 +252,7 @@ export default function ManageFleetPage() {
               </span>
               <span className="text-2xl font-black text-gray-900">{riders.length}</span>
             </div>
-            <div className="w-11 h-11 rounded-xl bg-green-50 text-[#0f8646] flex items-center justify-center">
+            <div className="w-11 h-11 rounded-xl bg-green-50 text-[#0a3d24] flex items-center justify-center">
               <Truck size={22} />
             </div>
           </div>
@@ -297,19 +297,19 @@ export default function ManageFleetPage() {
 
           {loading ? (
             <div className="p-12 text-center text-gray-400 flex flex-col items-center justify-center">
-              <Loader2 className="w-8 h-8 text-[#0f8646] animate-spin mb-3" />
+              <Loader2 className="w-8 h-8 text-[#0a3d24] animate-spin mb-3" />
               <p className="text-xs font-bold">Loading delivery partners...</p>
             </div>
           ) : riders.length === 0 ? (
             <div className="p-12 text-center text-gray-400">
-              <Truck size={36} className="mx-auto mb-2 opacity-50 text-[#0f8646]" />
+              <Truck size={36} className="mx-auto mb-2 opacity-50 text-[#0a3d24]" />
               <p className="text-sm font-black text-gray-900 mb-1">No Delivery Partners Added Yet</p>
               <p className="text-xs text-gray-400 mb-4">
                 Click "Add Delivery Partner" to create a login for your delivery riders.
               </p>
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-xl text-xs font-black transition"
+                className="bg-[#0a3d24] hover:bg-[#072817] text-white px-4 py-2 rounded-xl text-xs font-black transition"
               >
                 + Add First Rider
               </button>
@@ -332,7 +332,7 @@ export default function ManageFleetPage() {
                     <tr key={rider._id} className="hover:bg-green-50/40 transition">
                       <td className="p-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-xl bg-emerald-100 text-[#0f8646] font-black flex items-center justify-center text-sm shadow-2xs">
+                          <div className="w-9 h-9 rounded-xl bg-emerald-100 text-[#0a3d24] font-black flex items-center justify-center text-sm shadow-2xs">
                             {rider.name ? rider.name.charAt(0).toUpperCase() : "D"}
                           </div>
                           <div>
@@ -348,7 +348,7 @@ export default function ManageFleetPage() {
                       <td className="p-4">
                         <div className="space-y-0.5">
                           <div className="flex items-center gap-1.5 text-xs font-bold text-gray-900">
-                            <Phone size={12} className="text-[#0f8646]" />
+                            <Phone size={12} className="text-[#0a3d24]" />
                             <span>{rider.mobile || "No Mobile"}</span>
                           </div>
                           <div className="flex items-center gap-1.5 text-[11px] text-gray-400">
@@ -377,7 +377,7 @@ export default function ManageFleetPage() {
                         <div className="flex items-center justify-end gap-2">
                           <button
                             onClick={() => openEditModal(rider)}
-                            className="text-[#0f8646] hover:text-[#0c6a38] font-bold text-xs bg-emerald-50 hover:bg-emerald-100 px-2.5 py-1.5 rounded-xl border border-emerald-200 transition cursor-pointer flex items-center gap-1 shadow-2xs"
+                            className="text-[#0a3d24] hover:text-[#072817] font-bold text-xs bg-emerald-50 hover:bg-emerald-100 px-2.5 py-1.5 rounded-xl border border-emerald-200 transition cursor-pointer flex items-center gap-1 shadow-2xs"
                             title="Edit Delivery Partner Details"
                           >
                             <Pencil size={11} />
@@ -405,7 +405,7 @@ export default function ManageFleetPage() {
             <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-gray-100 animate-in fade-in zoom-in-95 duration-200">
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 rounded-2xl bg-green-100 text-[#0f8646] flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-2xl bg-green-100 text-[#0a3d24] flex items-center justify-center">
                     <Truck size={20} />
                   </div>
                   <div>
@@ -436,7 +436,7 @@ export default function ManageFleetPage() {
                     placeholder="e.g. Ramesh Verma"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0f8646] transition"
+                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0a3d24] transition"
                   />
                 </div>
 
@@ -453,7 +453,7 @@ export default function ManageFleetPage() {
                     onChange={(e) =>
                       setForm({ ...form, mobile: e.target.value.replace(/[^0-9]/g, "") })
                     }
-                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0f8646] transition"
+                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0a3d24] transition"
                   />
                 </div>
 
@@ -467,7 +467,7 @@ export default function ManageFleetPage() {
                     placeholder="e.g. ramesh.delivery@subziquick.in"
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0f8646] transition"
+                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0a3d24] transition"
                   />
                 </div>
 
@@ -483,7 +483,7 @@ export default function ManageFleetPage() {
                       placeholder="Min 6 characters password"
                       value={form.password}
                       onChange={(e) => setForm({ ...form, password: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0f8646] transition pr-10"
+                      className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0a3d24] transition pr-10"
                     />
                     <button
                       type="button"
@@ -506,7 +506,7 @@ export default function ManageFleetPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2.5 rounded-xl text-xs font-black transition shadow-md disabled:opacity-50 cursor-pointer flex items-center gap-1.5"
+                    className="bg-[#0a3d24] hover:bg-[#072817] text-white px-5 py-2.5 rounded-xl text-xs font-black transition shadow-md disabled:opacity-50 cursor-pointer flex items-center gap-1.5"
                   >
                     {isSubmitting ? (
                       <>
@@ -529,7 +529,7 @@ export default function ManageFleetPage() {
             <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-gray-100 animate-in fade-in zoom-in-95 duration-200">
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-[#0f8646] flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center">
                     <Pencil size={18} />
                   </div>
                   <div>
@@ -559,7 +559,7 @@ export default function ManageFleetPage() {
                     required
                     value={editForm.name}
                     onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0f8646] transition"
+                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0a3d24] transition"
                   />
                 </div>
 
@@ -575,7 +575,7 @@ export default function ManageFleetPage() {
                     onChange={(e) =>
                       setEditForm({ ...editForm, mobile: e.target.value.replace(/[^0-9]/g, "") })
                     }
-                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0f8646] transition"
+                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0a3d24] transition"
                   />
                 </div>
 
@@ -588,7 +588,7 @@ export default function ManageFleetPage() {
                     required
                     value={editForm.email}
                     onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0f8646] transition"
+                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0a3d24] transition"
                   />
                 </div>
 
@@ -602,7 +602,7 @@ export default function ManageFleetPage() {
                       placeholder="Leave blank to keep existing password"
                       value={editForm.password}
                       onChange={(e) => setEditForm({ ...editForm, password: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0f8646] transition pr-10"
+                      className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0a3d24] transition pr-10"
                     />
                     <button
                       type="button"
@@ -626,7 +626,7 @@ export default function ManageFleetPage() {
                     onChange={(e) =>
                       setEditForm({ ...editForm, isonline: e.target.value === "online" })
                     }
-                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0f8646] transition"
+                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0a3d24] transition"
                   >
                     <option value="online">🟢 Online (Available for deliveries)</option>
                     <option value="offline">⚪ Offline (Off-duty)</option>
@@ -644,7 +644,7 @@ export default function ManageFleetPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2.5 rounded-xl text-xs font-black transition shadow-md disabled:opacity-50 cursor-pointer flex items-center gap-1.5"
+                    className="bg-[#0a3d24] hover:bg-[#072817] text-white px-5 py-2.5 rounded-xl text-xs font-black transition shadow-md disabled:opacity-50 cursor-pointer flex items-center gap-1.5"
                   >
                     {isSubmitting ? (
                       <>

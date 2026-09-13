@@ -250,10 +250,10 @@ function SearchContent() {
               Store
             </Link>
             <span className="text-gray-300">/</span>
-            <span className="text-[#0f8646] font-bold">Search</span>
+            <span className="text-[#0a3d24] font-bold">Search</span>
           </div>
 
-          <span className="text-[11px] font-bold text-[#0f8646] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200/60">
+          <span className="text-[11px] font-bold text-[#0a3d24] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200/60">
             Live Mandi Stock
           </span>
         </div>
@@ -272,7 +272,7 @@ function SearchContent() {
               value={inputQuery}
               onChange={(e) => setInputQuery(e.target.value)}
               autoFocus
-              className="w-full pl-10 pr-24 sm:pr-28 py-2.5 rounded-xl border border-transparent focus:border-emerald-500 focus:bg-white outline-none text-xs sm:text-sm bg-gray-50/80 font-semibold text-gray-900 transition placeholder:text-gray-400 placeholder:font-normal"
+              className="w-full pl-10 pr-24 sm:pr-28 py-2.5 rounded-xl border border-transparent focus:border-[#0a3d24] focus:bg-white outline-none text-xs sm:text-sm bg-gray-50/80 font-semibold text-gray-900 transition placeholder:text-gray-400 placeholder:font-normal"
             />
 
             {/* Clear (X) Button */}
@@ -298,7 +298,7 @@ function SearchContent() {
               className={`absolute right-9 sm:right-13 p-1.5 rounded-lg transition cursor-pointer ${
                 isListening
                   ? "bg-rose-500 text-white animate-pulse"
-                  : "text-gray-400 hover:text-[#0f8646] hover:bg-gray-100"
+                  : "text-gray-400 hover:text-[#0a3d24] hover:bg-gray-100"
               }`}
               title="Voice Search"
             >
@@ -308,7 +308,7 @@ function SearchContent() {
             {/* Search Submit Button */}
             <button
               type="submit"
-              className="absolute right-1 bg-[#0f8646] hover:bg-[#0c6a38] text-white px-3 sm:px-3.5 py-1.5 rounded-lg font-bold text-xs shadow-2xs transition cursor-pointer active:scale-95"
+              className="absolute right-1 bg-[#0a3d24] hover:bg-[#072817] text-white px-3 sm:px-3.5 py-1.5 rounded-lg font-bold text-xs shadow-2xs transition cursor-pointer active:scale-95"
             >
               Search
             </button>
@@ -340,7 +340,7 @@ function SearchContent() {
                       key={idx}
                       type="button"
                       onClick={() => executeSearch(s)}
-                      className="px-2.5 py-1 bg-gray-50 hover:bg-emerald-50 text-gray-700 hover:text-[#0f8646] border border-gray-200/70 hover:border-emerald-300 rounded-lg text-xs font-medium transition flex items-center gap-1.5 cursor-pointer"
+                      className="px-2.5 py-1 bg-gray-50 hover:bg-emerald-50 text-gray-700 hover:text-[#0a3d24] border border-gray-200/70 hover:border-emerald-300 rounded-lg text-xs font-medium transition flex items-center gap-1.5 cursor-pointer"
                     >
                       <span>{s}</span>
                       <span
@@ -366,7 +366,7 @@ function SearchContent() {
                     key={idx}
                     type="button"
                     onClick={() => executeSearch(item)}
-                    className="px-2.5 py-1 bg-gray-50 hover:bg-emerald-50 text-gray-700 hover:text-[#0f8646] border border-gray-200/70 hover:border-emerald-300 rounded-lg text-xs font-semibold transition cursor-pointer"
+                    className="px-2.5 py-1 bg-gray-50 hover:bg-emerald-50 text-gray-700 hover:text-[#0a3d24] border border-gray-200/70 hover:border-emerald-300 rounded-lg text-xs font-semibold transition cursor-pointer"
                   >
                     {item}
                   </button>
@@ -393,7 +393,7 @@ function SearchContent() {
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <span className="font-bold text-xs text-gray-900 group-hover:text-[#0f8646] transition">
+                    <span className="font-bold text-xs text-gray-900 group-hover:text-[#0a3d24] transition">
                       {cat.name}
                     </span>
                     <span className="text-[10px] text-gray-400 font-medium hidden sm:block mt-0.5">
@@ -413,7 +413,7 @@ function SearchContent() {
                   </h2>
                   <Link
                     href="/shop"
-                    className="text-[#0f8646] hover:underline font-bold text-xs flex items-center gap-0.5"
+                    className="text-[#0a3d24] hover:underline font-bold text-xs flex items-center gap-0.5"
                   >
                     <span>View All</span>
                     <ChevronRight size={13} />
@@ -435,7 +435,7 @@ function SearchContent() {
           <div>
             {loading ? (
               <div className="py-16 flex flex-col items-center justify-center bg-white rounded-2xl border border-gray-100">
-                <Loader2 size={24} className="animate-spin text-[#0f8646] mb-2" />
+                <Loader2 size={24} className="animate-spin text-[#0a3d24] mb-2" />
                 <p className="text-xs font-semibold text-gray-500">
                   Searching for &ldquo;{query}&rdquo;...
                 </p>
@@ -453,7 +453,7 @@ function SearchContent() {
                 </p>
                 <Link
                   href="/shop"
-                  className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-xl font-bold text-xs shadow-xs transition inline-flex items-center gap-1 cursor-pointer"
+                  className="bg-[#0a3d24] hover:bg-[#072817] text-white px-4 py-2 rounded-xl font-bold text-xs shadow-xs transition inline-flex items-center gap-1 cursor-pointer"
                 >
                   <span>Explore Store</span>
                   <ArrowRight size={12} />
@@ -465,7 +465,7 @@ function SearchContent() {
                   <h2 className="text-xs font-medium text-gray-600">
                     Results for <span className="font-bold text-gray-900">&ldquo;{query}&rdquo;</span>
                   </h2>
-                  <span className="text-[11px] font-bold text-[#0f8646] bg-emerald-50 px-2 py-0.5 rounded-md">
+                  <span className="text-[11px] font-bold text-[#0a3d24] bg-emerald-50 px-2 py-0.5 rounded-md">
                     {results.length} items
                   </span>
                 </div>
@@ -492,7 +492,7 @@ export default function SearchPage() {
       fallback={
         <div className="min-h-screen bg-[#f8faf9] flex items-center justify-center font-sans">
           <div className="flex flex-col items-center gap-3">
-            <div className="w-10 h-10 border-4 border-[#0f8646] border-t-transparent rounded-full animate-spin" />
+            <div className="w-10 h-10 border-4 border-[#0a3d24] border-t-transparent rounded-full animate-spin" />
             <span className="text-xs font-bold text-gray-500">Searching fresh produce...</span>
           </div>
         </div>

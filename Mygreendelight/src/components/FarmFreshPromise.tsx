@@ -83,7 +83,7 @@ export default function FarmFreshPromise() {
                 href="https://wa.me/919981418565?text=Hello%20SubziQuick,%20I%20have%20a%20question%20about%20today's%20fresh%20harvest"
                 target="_blank"
                 rel="noreferrer"
-                className="text-[11px] font-bold text-gray-700 hover:text-[#0f8646] bg-gray-50 hover:bg-emerald-50/60 px-2.5 py-1 rounded-full border border-gray-200/70 transition flex items-center gap-1.5"
+                className="text-[11px] font-bold text-gray-700 hover:text-[#0a3d24] bg-gray-50 hover:bg-emerald-50/60 px-2.5 py-1 rounded-full border border-gray-200/70 transition flex items-center gap-1.5"
               >
                 <FaWhatsapp className="text-[#25D366] text-xs shrink-0" />
                 <span>Help Desk</span>
@@ -111,7 +111,7 @@ export default function FarmFreshPromise() {
                   </div>
 
                   <div className="flex items-start gap-2">
-                    <div className="w-7 h-7 rounded-lg bg-white border border-gray-100 text-[#0f8646] flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition-transform mt-0.5">
+                    <div className="w-7 h-7 rounded-lg bg-white border border-gray-100 text-[#0a3d24] flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition-transform mt-0.5">
                       <Icon size={14} />
                     </div>
                     <div className="min-w-0 flex-1">
@@ -131,7 +131,7 @@ export default function FarmFreshPromise() {
           {/* Bottom Trust Micro-Bar */}
           <div className="pt-2 flex flex-wrap items-center justify-between gap-2 text-[11px] text-gray-500 font-medium">
             <div className="flex items-center gap-1">
-              <MapPin size={12} className="text-[#0f8646]" />
+              <MapPin size={12} className="text-[#0a3d24]" />
               <span>Fulfilled from SubziQuick Store, Amrai, Bagsewaniya (462043)</span>
             </div>
             <div className="flex items-center gap-1 text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded-md">

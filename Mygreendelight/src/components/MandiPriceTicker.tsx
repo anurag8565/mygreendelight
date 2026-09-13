@@ -30,7 +30,7 @@ export default function MandiPriceTicker({ initialRates = [] }: { initialRates?:
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 text-xs">
         {/* Left Badge */}
         <div className="flex items-center gap-1.5 shrink-0 bg-white border border-gray-200 text-gray-800 px-2.5 py-1 rounded-full font-bold text-[10.5px]">
-          <TrendingDown size={13} className="text-[#0c831f]" />
+          <TrendingDown size={13} className="text-[#0a3d24]" />
           <span>Daily Wholesale Rates</span>
         </div>
 
@@ -45,11 +45,11 @@ export default function MandiPriceTicker({ initialRates = [] }: { initialRates?:
               <span className="font-semibold text-gray-700 group-hover:text-black">
                 {item.itemName}
               </span>
-              <span className="font-bold text-[#0c831f]">
+              <span className="font-bold text-[#0a3d24]">
                 ₹{item.currentRate}/{item.unit}
               </span>
               {item.percentageChange > 0 && item.priceChange === "down" && (
-                <span className="bg-emerald-50 text-[#0c831f] text-[9.5px] font-bold px-1 rounded">
+                <span className="bg-emerald-50 text-[#0a3d24] text-[9.5px] font-bold px-1 rounded">
                   ↓{item.percentageChange}%
                 </span>
               )}
@@ -60,7 +60,7 @@ export default function MandiPriceTicker({ initialRates = [] }: { initialRates?:
         {/* Right CTA */}
         <Link
           href="/shop"
-          className="hidden md:flex items-center gap-1 text-[11px] font-bold text-[#0c831f] hover:text-[#096618] shrink-0"
+          className="hidden md:flex items-center gap-1 text-[11px] font-bold text-[#0a3d24] hover:text-[#072817] shrink-0"
         >
           <span>Shop Fresh</span>
           <ArrowRight size={12} />

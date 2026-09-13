@@ -49,7 +49,7 @@ export default function Logo({
                 ? "text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.25)]"
                 : isInvoice
                 ? "text-gray-950"
-                : "text-[#083621]"
+                : "text-[#0a3d24]"
             }`}
           >
             SubziQuick

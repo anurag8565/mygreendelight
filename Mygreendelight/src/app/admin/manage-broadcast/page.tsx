@@ -114,7 +114,7 @@ export default function ManageBroadcastPage() {
             className="bg-white hover:bg-gray-50 text-gray-700 border border-gray-200/90 px-3.5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-xs transition cursor-pointer disabled:opacity-50"
             title="Refresh broadcast"
           >
-            <RefreshCw size={15} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+            <RefreshCw size={15} className={loading ? "animate-spin text-[#0a3d24]" : ""} />
             <span>Refresh</span>
           </button>
         </div>
@@ -123,7 +123,7 @@ export default function ManageBroadcastPage() {
           <div
             className={`p-4 rounded-2xl mb-6 text-xs font-bold flex items-center gap-2 ${
               msg.type === "success"
-                ? "bg-green-50 text-[#0f8646] border border-green-200"
+                ? "bg-green-50 text-[#0a3d24] border border-green-200"
                 : "bg-red-50 text-red-600 border border-red-200"
             }`}
           >
@@ -146,7 +146,7 @@ export default function ManageBroadcastPage() {
                 ? "bg-gradient-to-r from-amber-600 via-orange-600 to-red-600"
                 : form.type === "info"
                 ? "bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600"
-                : "bg-gradient-to-r from-[#0f8646] via-emerald-600 to-teal-700"
+                : "bg-gradient-to-r from-[#0a3d24] via-emerald-600 to-teal-700"
             }`}
           >
             <div className="flex items-center gap-2.5 min-w-0 flex-1">
@@ -192,7 +192,7 @@ export default function ManageBroadcastPage() {
               type="button"
               onClick={() => setForm({ ...form, isActive: !form.isActive })}
               className={`px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer ${
-                form.isActive ? "bg-[#0f8646] text-white shadow-xs" : "bg-gray-200 text-gray-600"
+                form.isActive ? "bg-[#0a3d24] text-white shadow-xs" : "bg-gray-200 text-gray-600"
               }`}
             >
               <Power size={14} />
@@ -234,7 +234,7 @@ export default function ManageBroadcastPage() {
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               placeholder="e.g. 🌧️ Bhopal Rain Update: 100% orders delivered with waterproof eco-bag seal..."
-              className="w-full bg-gray-50 border border-gray-200 rounded-2xl p-4 text-xs sm:text-sm font-medium text-gray-800 focus:bg-white focus:border-[#0f8646] outline-none transition resize-none"
+              className="w-full bg-gray-50 border border-gray-200 rounded-2xl p-4 text-xs sm:text-sm font-medium text-gray-800 focus:bg-white focus:border-[#0a3d24] outline-none transition resize-none"
             />
           </div>
 
@@ -249,7 +249,7 @@ export default function ManageBroadcastPage() {
                 value={form.linkText}
                 onChange={(e) => setForm({ ...form, linkText: e.target.value })}
                 placeholder="e.g. Track Order / View Offers"
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-800 focus:bg-white focus:border-[#0f8646] outline-none transition"
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-800 focus:bg-white focus:border-[#0a3d24] outline-none transition"
               />
             </div>
 
@@ -262,7 +262,7 @@ export default function ManageBroadcastPage() {
                 value={form.linkUrl}
                 onChange={(e) => setForm({ ...form, linkUrl: e.target.value })}
                 placeholder="e.g. /shop or /user/myorder"
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-800 focus:bg-white focus:border-[#0f8646] outline-none transition"
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-800 focus:bg-white focus:border-[#0a3d24] outline-none transition"
               />
             </div>
           </div>
@@ -272,7 +272,7 @@ export default function ManageBroadcastPage() {
             <button
               type="submit"
               disabled={saving}
-              className="w-full sm:w-auto bg-[#0f8646] hover:bg-[#0c6a38] text-white px-8 py-3 rounded-2xl font-black text-xs transition shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+              className="w-full sm:w-auto bg-[#0a3d24] hover:bg-[#072817] text-white px-8 py-3 rounded-2xl font-black text-xs transition shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
             >
               <Save size={16} />
               <span>{saving ? "Publishing Broadcast..." : "Save & Publish Announcement"}</span>

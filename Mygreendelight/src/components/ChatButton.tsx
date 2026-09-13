@@ -18,7 +18,7 @@ export default function ChatButton({
           onClick={() => setOpen(true)}
           className="
           fixed bottom-5 right-5 z-[999]
-          bg-green-600 hover:bg-green-700
+          bg-[#0a3d24] hover:bg-[#072817]
           text-white
           shadow-2xl
           rounded-full

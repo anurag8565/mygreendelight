@@ -140,7 +140,7 @@ export default function VoiceSearchModal({ isOpen, onClose }: VoiceSearchModalPr
               setTimeout(startListening, 200);
             }}
             className={`px-3.5 py-1 text-xs font-bold rounded-xl transition ${
-              language === "hi-IN" ? "bg-white text-[#0f8646] shadow-xs" : "text-gray-600"
+              language === "hi-IN" ? "bg-white text-[#0a3d24] shadow-xs" : "text-gray-600"
             }`}
           >
             🇮🇳 हिन्दी (Hindi)
@@ -152,7 +152,7 @@ export default function VoiceSearchModal({ isOpen, onClose }: VoiceSearchModalPr
               setTimeout(startListening, 200);
             }}
             className={`px-3.5 py-1 text-xs font-bold rounded-xl transition ${
-              language === "en-IN" ? "bg-white text-[#0f8646] shadow-xs" : "text-gray-600"
+              language === "en-IN" ? "bg-white text-[#0a3d24] shadow-xs" : "text-gray-600"
             }`}
           >
             English
@@ -181,7 +181,7 @@ export default function VoiceSearchModal({ isOpen, onClose }: VoiceSearchModalPr
             onClick={isListening ? stopListening : startListening}
             className={`relative z-10 w-20 h-20 rounded-full flex items-center justify-center shadow-xl transition-transform active:scale-95 cursor-pointer ${
               isListening
-                ? "bg-[#0f8646] text-white shadow-emerald-500/40"
+                ? "bg-[#0a3d24] text-white shadow-emerald-500/40"
                 : "bg-gray-200 text-gray-600 hover:bg-gray-300"
             }`}
           >
@@ -214,7 +214,7 @@ export default function VoiceSearchModal({ isOpen, onClose }: VoiceSearchModalPr
           <button
             type="button"
             onClick={() => handleSearch()}
-            className="w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black py-3 rounded-2xl text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition cursor-pointer"
+            className="w-full bg-[#0a3d24] hover:bg-[#072817] text-white font-black py-3 rounded-2xl text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition cursor-pointer"
           >
             <span>Search Produce</span>
             <ArrowRight size={16} />

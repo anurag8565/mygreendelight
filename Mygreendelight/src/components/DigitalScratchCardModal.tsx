@@ -204,7 +204,7 @@ export default function DigitalScratchCardModal({
           <div className="relative w-full h-48 rounded-2xl overflow-hidden shadow-inner border-2 border-dashed border-amber-300 bg-gradient-to-br from-amber-50 via-green-50 to-emerald-100 flex flex-col items-center justify-center p-4 mb-5">
             {/* Hidden Prize underneath */}
             <div className="flex flex-col items-center justify-center text-center select-none">
-              <span className="text-3xl font-black text-[#0f8646] tracking-tight">
+              <span className="text-3xl font-black text-[#0a3d24] tracking-tight">
                 FLAT ₹{reward.discountAmount} OFF
               </span>
               <span className="text-xs text-gray-600 font-bold mt-1">
@@ -213,13 +213,13 @@ export default function DigitalScratchCardModal({
 
               {/* Revealed Coupon Pill */}
               <div className="mt-3 bg-white border border-green-300 rounded-xl px-3 py-1.5 flex items-center gap-2 shadow-xs">
-                <span className="font-mono font-black text-sm text-[#0f8646] tracking-wider">
+                <span className="font-mono font-black text-sm text-[#0a3d24] tracking-wider">
                   {reward.couponCode}
                 </span>
                 <button
                   type="button"
                   onClick={copyCoupon}
-                  className="p-1 text-gray-500 hover:text-[#0f8646] transition cursor-pointer"
+                  className="p-1 text-gray-500 hover:text-[#0a3d24] transition cursor-pointer"
                   title="Copy Coupon"
                 >
                   {copied ? <Check size={14} className="text-green-600" /> : <Copy size={14} />}
@@ -248,7 +248,7 @@ export default function DigitalScratchCardModal({
               <button
                 type="button"
                 onClick={copyCoupon}
-                className="w-full py-3.5 bg-[#0f8646] hover:bg-[#0c6a38] text-white rounded-xl font-black text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3.5 bg-[#0a3d24] hover:bg-[#072817] text-white rounded-xl font-black text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2 cursor-pointer"
               >
                 {copied ? <Check size={16} /> : <Copy size={16} />}
                 <span>{copied ? "Coupon Code Copied!" : `Copy Code: ${reward.couponCode}`}</span>

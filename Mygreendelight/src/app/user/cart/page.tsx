@@ -287,7 +287,7 @@ export default function CartPage() {
         {/* Empty State */}
         {cartdata.length === 0 ? (
           <div className="bg-white rounded-3xl border border-slate-200/80 p-10 sm:p-14 text-center max-w-md mx-auto shadow-2xs my-8">
-            <div className="w-16 h-16 bg-emerald-50 text-[#0f8646] rounded-2xl flex items-center justify-center mx-auto mb-4 border border-emerald-100">
+            <div className="w-16 h-16 bg-emerald-50 text-[#0a3d24] rounded-2xl flex items-center justify-center mx-auto mb-4 border border-emerald-100">
               <ShoppingBag size={28} />
             </div>
             <h2 className="text-xl font-black text-slate-900 mb-1.5">
@@ -298,7 +298,7 @@ export default function CartPage() {
             </p>
             <Link
               href="/shop"
-              className="inline-flex items-center justify-center bg-[#0f8646] hover:bg-[#0c6a38] text-white px-6 py-2.5 rounded-xl font-bold text-xs shadow-2xs transition active:scale-95"
+              className="inline-flex items-center justify-center bg-[#0a3d24] hover:bg-[#072817] text-white px-6 py-2.5 rounded-xl font-bold text-xs shadow-2xs transition active:scale-95"
             >
               Explore Fresh Produce
             </Link>
@@ -330,20 +330,20 @@ export default function CartPage() {
               {/* Free Delivery Status Strip */}
               <div className={`border rounded-2xl p-3.5 shadow-2xs transition-all duration-300 ${
                 isFreeDelivery 
-                  ? "bg-emerald-50/80 border-emerald-300/80 shadow-[0_4px_16px_rgba(15,134,70,0.12)]" 
+                  ? "bg-emerald-50/80 border-emerald-300/80 shadow-[0_4px_16px_rgba(10,61,36,0.12)]" 
                   : "bg-white border-slate-200/80"
               }`}>
 
                 <div className="flex items-center justify-between text-xs mb-2">
                   <div className="flex items-center gap-2 font-bold text-slate-800">
-                    <Truck size={15} className="text-[#0f8646] shrink-0" />
+                    <Truck size={15} className="text-[#0a3d24] shrink-0" />
                     {isFreeDelivery ? (
-                      <span className="text-[#0f8646] font-black flex items-center gap-1">
+                      <span className="text-[#0a3d24] font-black flex items-center gap-1">
                         🎉 FREE Delivery Unlocked!
                       </span>
                     ) : (
                       <span>
-                        Add <strong className="text-[#0f8646]">₹{remainingForFreeDelivery}</strong> more for FREE Delivery
+                        Add <strong className="text-[#0a3d24]">₹{remainingForFreeDelivery}</strong> more for FREE Delivery
                       </span>
                     )}
                   </div>
@@ -353,7 +353,7 @@ export default function CartPage() {
                 </div>
                 <div className="w-full bg-slate-200/60 rounded-full h-2 overflow-hidden">
                   <div
-                    className="bg-[#0f8646] h-full rounded-full transition-all duration-500"
+                    className="bg-[#0a3d24] h-full rounded-full transition-all duration-500"
                     style={{
                       width: `${Math.min(100, (subtotal / freeDeliveryThreshold) * 100)}%`,
                     }}
@@ -392,7 +392,7 @@ export default function CartPage() {
 
                         <div className="flex items-center gap-1.5 mt-1">
                           {item.price === 0 ? (
-                            <span className="bg-emerald-100/70 text-[#0f8646] font-extrabold text-[10px] uppercase px-2 py-0.5 rounded-md flex items-center gap-1">
+                            <span className="bg-emerald-100/70 text-[#0a3d24] font-extrabold text-[10px] uppercase px-2 py-0.5 rounded-md flex items-center gap-1">
                               <Gift size={11} />
                               <span>Free Gift</span>
                             </span>
@@ -428,7 +428,7 @@ export default function CartPage() {
                           <button
                             type="button"
                             onClick={() => dispatch(increaseQuantity(itemId))}
-                            className="w-7 h-full flex items-center justify-center text-[#0f8646] hover:bg-emerald-50 transition cursor-pointer"
+                            className="w-7 h-full flex items-center justify-center text-[#0a3d24] hover:bg-emerald-50 transition cursor-pointer"
                             aria-label="Increase quantity"
                           >
                             <Plus size={12} />
@@ -467,7 +467,7 @@ export default function CartPage() {
                 return (
                   <div className="bg-white rounded-3xl border border-slate-200/80 p-4 shadow-2xs">
                     <span className="text-[11px] font-black text-slate-700 uppercase tracking-wider block mb-3 flex items-center gap-1.5">
-                      <Sparkles size={13} className="text-[#0f8646]" />
+                      <Sparkles size={13} className="text-[#0a3d24]" />
                       <span>Recommended Add-ons</span>
                     </span>
 
@@ -505,7 +505,7 @@ export default function CartPage() {
                                 })
                               );
                             }}
-                            className="mt-2 w-full py-1 rounded-lg font-bold text-[10px] bg-white text-[#0f8646] hover:bg-[#0f8646] hover:text-white border border-emerald-200 transition cursor-pointer shadow-2xs active:scale-95"
+                            className="mt-2 w-full py-1 rounded-lg font-bold text-[10px] bg-white text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white border border-emerald-200 transition cursor-pointer shadow-2xs active:scale-95"
                           >
                             + ADD
                           </button>
@@ -518,7 +518,7 @@ export default function CartPage() {
 
               {/* Trust Badge */}
               <div className="flex items-center gap-2.5 px-2 text-xs text-slate-500 font-medium">
-                <ShieldCheck size={16} className="text-[#0f8646] shrink-0" />
+                <ShieldCheck size={16} className="text-[#0a3d24] shrink-0" />
                 <span>100% Quality & Freshness Guaranteed. Instant return or replacement at doorstep.</span>
               </div>
             </div>
@@ -529,14 +529,14 @@ export default function CartPage() {
               {/* Promo Code Input Card */}
               <div className="bg-white rounded-3xl border border-slate-200/80 p-4 shadow-2xs">
                 <h3 className="font-extrabold text-[11px] uppercase text-slate-400 tracking-wider mb-2 flex items-center gap-1.5">
-                  <Tag size={12} className="text-[#0f8646]" />
+                  <Tag size={12} className="text-[#0a3d24]" />
                   <span>Promo Code & Coupons</span>
                 </h3>
 
                 {couponCode ? (
                   <div className="flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-xl p-2.5">
                     <div>
-                      <span className="font-black text-xs text-[#0f8646] block uppercase tracking-wider">
+                      <span className="font-black text-xs text-[#0a3d24] block uppercase tracking-wider">
                         {couponCode} APPLIED
                       </span>
                       <span className="text-[11px] text-emerald-800 font-medium">
@@ -559,7 +559,7 @@ export default function CartPage() {
                         placeholder="COUPON CODE"
                         value={couponInput}
                         onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
-                        className="flex-1 border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold uppercase tracking-wider outline-none focus:border-[#0f8646] bg-slate-50"
+                        className="flex-1 border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold uppercase tracking-wider outline-none focus:border-[#0a3d24] bg-slate-50"
                       />
                       <button
                         onClick={() => handleApplyCoupon()}
@@ -598,7 +598,7 @@ export default function CartPage() {
                     <span>Delivery Partner Fee</span>
                     <span className="font-bold text-slate-900">
                       {deliveryFee === 0 ? (
-                        <span className="text-[#0f8646] font-bold">FREE</span>
+                        <span className="text-[#0a3d24] font-bold">FREE</span>
                       ) : (
                         `₹${deliveryFee}`
                       )}
@@ -606,7 +606,7 @@ export default function CartPage() {
                   </div>
 
                   {discountAmount > 0 && (
-                    <div className="flex justify-between text-[#0f8646] font-bold bg-emerald-50 p-2 rounded-xl text-xs">
+                    <div className="flex justify-between text-[#0a3d24] font-bold bg-emerald-50 p-2 rounded-xl text-xs">
                       <span>Promo Discount ({couponCode})</span>
                       <span>-₹{discountAmount}</span>
                     </div>
@@ -621,7 +621,7 @@ export default function CartPage() {
                         Inclusive of all taxes
                       </span>
                     </div>
-                    <span className="text-2xl font-black text-[#0f8646]">
+                    <span className="text-2xl font-black text-[#0a3d24]">
                       ₹{total}
                     </span>
                   </div>
@@ -630,7 +630,7 @@ export default function CartPage() {
                 {/* Primary Proceed CTA */}
                 <button
                   onClick={handleProceed}
-                  className="w-full mt-5 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3.5 rounded-2xl font-black text-xs sm:text-sm shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                  className="w-full mt-5 bg-[#0a3d24] hover:bg-[#072817] text-white py-3.5 rounded-2xl font-black text-xs sm:text-sm shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
                 >
                   {Boolean(session?.user || userdata?._id) ? (
                     <>
@@ -670,7 +670,7 @@ export default function CartPage() {
               <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">
                 {totalItemCount} Items • Total
               </span>
-              <span className="text-lg font-black text-[#0f8646]">
+              <span className="text-lg font-black text-[#0a3d24]">
                 ₹{total}
               </span>
             </div>
@@ -686,7 +686,7 @@ export default function CartPage() {
               </button>
               <button
                 onClick={handleProceed}
-                className="flex-1 max-w-[200px] bg-[#0f8646] active:scale-98 hover:bg-[#0c6a38] text-white py-2.5 px-3.5 rounded-xl font-black text-xs shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                className="flex-1 max-w-[200px] bg-[#0a3d24] active:scale-98 hover:bg-[#072817] text-white py-2.5 px-3.5 rounded-xl font-black text-xs shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <span>Checkout</span>
                 <ArrowRight size={13} />

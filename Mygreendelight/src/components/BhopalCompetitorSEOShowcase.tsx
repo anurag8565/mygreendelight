@@ -184,8 +184,8 @@ export default function BhopalCompetitorSEOShowcase() {
         
         {/* Top SEO Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-          <div className="inline-flex items-center gap-2 bg-emerald-100/80 text-[#0c831f] text-xs font-black px-3.5 py-1 rounded-full mb-3 border border-emerald-300/60">
-            <Award size={14} className="text-[#0c831f]" />
+          <div className="inline-flex items-center gap-2 bg-emerald-50 text-[#0a3d24] text-xs font-black px-3.5 py-1 rounded-full mb-3 border border-emerald-200">
+            <Award size={14} className="text-[#0a3d24]" />
             <span>BHOPAL&apos;S #1 RATED ONLINE PRODUCE PLATFORM</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-black text-gray-950 tracking-tight leading-tight">
@@ -207,7 +207,7 @@ export default function BhopalCompetitorSEOShowcase() {
                 <div className="w-10 h-10 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center mb-3">
                   {card.icon}
                 </div>
-                <span className="text-[10px] font-black uppercase text-[#0c831f] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 inline-block mb-1.5">
+                <span className="text-[10px] font-black uppercase text-[#0a3d24] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 inline-block mb-1.5">
                   {card.badge}
                 </span>
                 <h3 className="font-extrabold text-sm sm:text-base text-gray-900 leading-snug">
@@ -221,7 +221,7 @@ export default function BhopalCompetitorSEOShowcase() {
                 </p>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-gray-100 flex items-center gap-1 text-[11px] font-bold text-[#0c831f]">
+              <div className="mt-4 pt-3 border-t border-gray-100 flex items-center gap-1 text-[11px] font-bold text-[#0a3d24]">
                 <Check size={14} className="stroke-[3]" />
                 <span>SubziQuick Advantage</span>
               </div>
@@ -262,12 +262,12 @@ export default function BhopalCompetitorSEOShowcase() {
                 {comparisonData.map((row, idx) => (
                   <tr key={idx} className="hover:bg-gray-50/80 transition-colors">
                     <td className="py-3.5 px-4 sm:px-6 font-bold text-gray-900 flex items-center gap-1.5">
-                      <Scale size={13} className="text-[#0c831f] shrink-0" />
+                      <Scale size={13} className="text-[#0a3d24] shrink-0" />
                       <span>{row.feature}</span>
                     </td>
                     <td className="py-3.5 px-4 sm:px-6 bg-emerald-50/60 text-emerald-950 font-bold border-x border-emerald-100">
                       <div className="flex items-start gap-1.5">
-                        <CheckCircle2 size={15} className="text-[#0c831f] shrink-0 mt-0.5" />
+                        <CheckCircle2 size={15} className="text-[#0a3d24] shrink-0 mt-0.5" />
                         <span>{row.subziquick}</span>
                       </div>
                     </td>
@@ -300,7 +300,7 @@ export default function BhopalCompetitorSEOShowcase() {
         <div className="mb-12 sm:mb-16 bg-white p-5 sm:p-8 rounded-3xl border border-gray-200/80 shadow-sm">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
             <div>
-              <div className="flex items-center gap-1.5 text-xs font-bold text-[#0c831f] mb-1">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-[#0a3d24] mb-1">
                 <Sparkles size={14} />
                 <span>POPULAR PRODUCE SEARCHES IN BHOPAL</span>
               </div>
@@ -310,7 +310,7 @@ export default function BhopalCompetitorSEOShowcase() {
             </div>
             <Link
               href="/shop"
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0c831f] hover:text-[#085a15] bg-emerald-50 px-3.5 py-1.5 rounded-full border border-emerald-200 self-start sm:self-auto"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0a3d24] hover:text-[#072817] bg-emerald-50 px-3.5 py-1.5 rounded-full border border-emerald-200 self-start sm:self-auto"
             >
               <span>Explore All 250+ Items</span>
               <ArrowRight size={13} />
@@ -322,7 +322,7 @@ export default function BhopalCompetitorSEOShowcase() {
               <Link
                 key={idx}
                 href={`/shop?search=${encodeURIComponent(item.query)}`}
-                className="bg-gray-50 hover:bg-emerald-600 text-gray-800 hover:text-white border border-gray-200 hover:border-emerald-600 px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-2xs hover:shadow-sm flex items-center gap-1 group"
+                className="bg-gray-50 hover:bg-[#0a3d24] text-gray-800 hover:text-white border border-gray-200 hover:border-[#0a3d24] px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-2xs hover:shadow-sm flex items-center gap-1 group"
               >
                 <span>{item.label}</span>
                 <span className="text-[10px] text-gray-400 group-hover:text-emerald-100 font-medium">
@@ -334,7 +334,7 @@ export default function BhopalCompetitorSEOShowcase() {
         </div>
 
         {/* 4. Bhopal Locality Delivery Hubs */}
-        <div className="mb-12 sm:mb-16 bg-gradient-to-br from-[#0c831f] to-[#095a16] text-white p-6 sm:p-10 rounded-3xl shadow-lg relative overflow-hidden">
+        <div className="mb-12 sm:mb-16 bg-gradient-to-br from-[#0a3d24] to-[#072817] text-white p-6 sm:p-10 rounded-3xl shadow-lg relative overflow-hidden">
           <div className="relative z-10">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
               <div>
@@ -379,7 +379,7 @@ export default function BhopalCompetitorSEOShowcase() {
         {/* 5. Google FAQ Schema Rich Snippets */}
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-8">
-            <span className="text-xs font-bold text-[#0c831f] uppercase tracking-wider">
+            <span className="text-xs font-bold text-[#0a3d24] uppercase tracking-wider">
               Frequently Asked Questions
             </span>
             <h3 className="text-xl sm:text-3xl font-black text-gray-900 tracking-tight mt-1">
@@ -395,13 +395,13 @@ export default function BhopalCompetitorSEOShowcase() {
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                  className="w-full text-left p-4 sm:p-5 flex items-center justify-between gap-3 font-bold text-xs sm:text-sm text-gray-900 hover:text-[#0c831f] transition-colors cursor-pointer"
+                  className="w-full text-left p-4 sm:p-5 flex items-center justify-between gap-3 font-bold text-xs sm:text-sm text-gray-900 hover:text-[#0a3d24] transition-colors cursor-pointer"
                 >
                   <span className="leading-snug">{faq.q}</span>
                   <ChevronDown
                     size={16}
                     className={`shrink-0 text-gray-400 transition-transform duration-200 ${
-                      openFaq === idx ? "rotate-180 text-[#0c831f]" : ""
+                      openFaq === idx ? "rotate-180 text-[#0a3d24]" : ""
                     }`}
                   />
                 </button>

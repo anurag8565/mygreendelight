@@ -29,7 +29,7 @@ export default function SocietyGroupOrderWidget() {
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-2xl bg-emerald-100 text-[#0f8646] flex items-center justify-center font-black">
+            <div className="w-9 h-9 rounded-2xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center font-black">
               <Users size={20} />
             </div>
             <div>
@@ -49,7 +49,7 @@ export default function SocietyGroupOrderWidget() {
 
           <Link
             href="/shop"
-            className="text-[#0f8646] hover:text-[#0c6a38] font-black text-xs sm:text-sm flex items-center gap-1 transition self-start sm:self-auto"
+            className="text-[#0a3d24] hover:text-[#072817] font-black text-xs sm:text-sm flex items-center gap-1 transition self-start sm:self-auto"
           >
             <span>Order with Society</span>
             <ArrowRight size={14} />
@@ -79,7 +79,7 @@ export default function SocietyGroupOrderWidget() {
                       </h3>
                     </div>
                     {isUnlocked ? (
-                      <span className="bg-emerald-100 text-[#0f8646] text-[10px] font-black uppercase px-2 py-0.5 rounded-full shrink-0">
+                      <span className="bg-emerald-100 text-[#0a3d24] text-[10px] font-black uppercase px-2 py-0.5 rounded-full shrink-0">
                         🎉 5% OFF UNLOCKED
                       </span>
                     ) : (
@@ -98,7 +98,7 @@ export default function SocietyGroupOrderWidget() {
                   <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden mb-2">
                     <div
                       className={`h-full rounded-full transition-all duration-500 ${
-                        isUnlocked ? "bg-[#0f8646]" : "bg-amber-500"
+                        isUnlocked ? "bg-[#0a3d24]" : "bg-amber-500"
                       }`}
                       style={{
                         width: `${Math.min(100, (soc.currentOrders / soc.targetOrders) * 100)}%`,
@@ -110,7 +110,7 @@ export default function SocietyGroupOrderWidget() {
                     <span>
                       {soc.currentOrders} of {soc.targetOrders} orders pooled today
                     </span>
-                    <span className={isUnlocked ? "text-[#0f8646]" : "text-amber-700"}>
+                    <span className={isUnlocked ? "text-[#0a3d24]" : "text-amber-700"}>
                       {isUnlocked ? "Discount Active" : `${soc.ordersNeeded} to unlock`}
                     </span>
                   </div>
@@ -120,7 +120,7 @@ export default function SocietyGroupOrderWidget() {
                   href="/shop"
                   className={`w-full py-2 rounded-xl text-xs font-black transition text-center flex items-center justify-center gap-1.5 cursor-pointer ${
                     isUnlocked
-                      ? "bg-[#0f8646] hover:bg-[#0c6a38] text-white shadow-xs"
+                      ? "bg-[#0a3d24] hover:bg-[#072817] text-white shadow-xs"
                       : "bg-gray-100 hover:bg-gray-200 text-gray-800"
                   }`}
                 >

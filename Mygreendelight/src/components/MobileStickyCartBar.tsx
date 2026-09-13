@@ -46,7 +46,7 @@ export default function MobileStickyCartBar() {
       >
         <div
           onClick={() => router.push("/user/cart")}
-          className="bg-gradient-to-r from-[#032412] via-[#073b1d] to-[#0f8646] text-white px-4 py-3 rounded-2xl shadow-xl border border-emerald-400/40 flex items-center justify-between cursor-pointer active:scale-98 transition-transform backdrop-blur-md"
+          className="bg-gradient-to-r from-[#051f12] via-[#0a3d24] to-[#072817] text-white px-4 py-3 rounded-2xl shadow-xl border border-emerald-500/30 flex items-center justify-between cursor-pointer active:scale-98 transition-transform backdrop-blur-md"
         >
           {/* Left: Item count & Price */}
           <div className="flex items-center gap-2.5">
@@ -69,7 +69,7 @@ export default function MobileStickyCartBar() {
           </div>
 
           {/* Right: CTA View Cart */}
-          <div className="flex items-center gap-1 bg-white text-[#0f8646] px-3.5 py-1.5 rounded-xl font-black text-xs shadow-xs hover:bg-green-50 transition">
+          <div className="flex items-center gap-1 bg-white text-[#0a3d24] px-3.5 py-1.5 rounded-xl font-black text-xs shadow-xs hover:bg-emerald-50 transition">
             <span>View Cart</span>
             <ArrowRight size={13} className="stroke-[3]" />
           </div>

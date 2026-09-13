@@ -245,7 +245,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
         className="fixed top-0 left-0 w-[300px] xs:w-[320px] h-screen bg-white z-[1000] shadow-2xl flex flex-col font-sans"
       >
         {/* Top Header & User Card */}
-        <div className="p-4 bg-gradient-to-br from-[#072815] to-[#0f8646] text-white relative">
+        <div className="p-4 bg-gradient-to-br from-[#051f12] to-[#0a3d24] text-white relative">
           <button
             onClick={() => setmenuopen(false)}
             className="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center transition cursor-pointer"
@@ -302,7 +302,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
               <Link
                 href="/login"
                 onClick={() => setmenuopen(false)}
-                className="inline-flex items-center gap-2 bg-white text-[#0f8646] font-black text-xs px-4 py-2 rounded-xl shadow-xs hover:bg-emerald-50 transition"
+                className="inline-flex items-center gap-2 bg-white text-[#0a3d24] font-black text-xs px-4 py-2 rounded-xl shadow-xs hover:bg-emerald-50 transition"
               >
                 <UserIcon size={14} />
                 <span>Login or Sign Up</span>
@@ -323,7 +323,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
               <Link
                 href="/shop?category=Vegetables"
                 onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-emerald-50 hover:text-[#0c831f] transition group"
+                className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-emerald-50 hover:text-[#0a3d24] transition group"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-xl overflow-hidden bg-emerald-50 border border-emerald-100/80 flex-shrink-0 shadow-xs">
@@ -338,7 +338,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                     <span className="text-[10px] text-gray-400 font-medium">ताज़ी सब्जियां</span>
                   </div>
                 </div>
-                <ArrowRight size={14} className="text-gray-300 group-hover:text-[#0c831f] group-hover:translate-x-0.5 transition" />
+                <ArrowRight size={14} className="text-gray-300 group-hover:text-[#0a3d24] group-hover:translate-x-0.5 transition" />
               </Link>
 
               <Link
@@ -386,18 +386,18 @@ export default function Nav({ user }: { user?: iUser | null }) {
               <Link
                 href="/shop"
                 onClick={() => setmenuopen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-50/70 text-[#0c831f] hover:bg-emerald-100/80 transition font-black group"
+                className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-50/70 text-[#0a3d24] hover:bg-emerald-100/80 transition font-black group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-[#0c831f] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+                  <div className="w-8 h-8 rounded-xl bg-[#0a3d24] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
                     <LayoutGrid size={15} />
                   </div>
                   <div className="flex flex-col">
                     <span className="font-black text-xs">All Produce Catalog</span>
-                    <span className="text-[10px] text-emerald-600/80 font-medium">पूरी दुकान देखें</span>
+                    <span className="text-[10px] text-emerald-800/80 font-medium">पूरी दुकान देखें</span>
                   </div>
                 </div>
-                <ArrowRight size={14} className="text-[#0c831f] group-hover:translate-x-0.5 transition" />
+                <ArrowRight size={14} className="text-[#0a3d24] group-hover:translate-x-0.5 transition" />
               </Link>
             </div>
           </div>
@@ -474,7 +474,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                   <span className="font-bold text-xs">My Wishlist</span>
                 </div>
                 {wishlistItems.length > 0 && (
-                  <span className="bg-[#0c831f] text-white text-[9.5px] px-2 py-0.2 rounded-full font-black">
+                  <span className="bg-[#0a3d24] text-white text-[9.5px] px-2 py-0.2 rounded-full font-black">
                     {wishlistItems.length}
                   </span>
                 )}
@@ -486,12 +486,12 @@ export default function Nav({ user }: { user?: iUser | null }) {
                 className="flex items-center justify-between p-2.5 rounded-xl text-gray-800 hover:bg-emerald-50/60 transition group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-emerald-100 text-[#0c831f] flex items-center justify-center flex-shrink-0 shadow-xs">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center flex-shrink-0 shadow-xs">
                     <MessageCircle size={15} />
                   </div>
                   <span className="font-bold text-xs">Help & Support</span>
                 </div>
-                <ArrowRight size={14} className="text-gray-300 group-hover:text-[#0c831f] group-hover:translate-x-0.5 transition" />
+                <ArrowRight size={14} className="text-gray-300 group-hover:text-[#0a3d24] group-hover:translate-x-0.5 transition" />
               </Link>
 
               <button
@@ -505,15 +505,15 @@ export default function Nav({ user }: { user?: iUser | null }) {
                 className="w-full flex items-center justify-between p-2.5 rounded-xl text-emerald-950 bg-emerald-50/80 hover:bg-emerald-100 transition group cursor-pointer text-left"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-[#0f8646] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+                  <div className="w-8 h-8 rounded-xl bg-[#0a3d24] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
                     <Smartphone size={15} />
                   </div>
                   <div>
-                    <span className="font-bold text-xs text-[#0f8646] block">Install SubziQuick App</span>
+                    <span className="font-bold text-xs text-[#0a3d24] block">Install SubziQuick App</span>
                     <span className="text-[10px] text-gray-500 font-medium">1-Tap Fast Mobile Access</span>
                   </div>
                 </div>
-                <span className="bg-[#0f8646] text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase">
+                <span className="bg-[#0a3d24] text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase">
                   Install
                 </span>
               </button>
@@ -528,15 +528,15 @@ export default function Nav({ user }: { user?: iUser | null }) {
               </span>
               <div className="space-y-1">
                 <Link href="/admin" onClick={() => setmenuopen(false)} className="flex items-center gap-2.5 p-2 rounded-xl text-gray-700 hover:bg-amber-50">
-                  <PlusCircle size={15} className="text-[#0f8646]" />
+                  <PlusCircle size={15} className="text-[#0a3d24]" />
                   <span>Dashboard Overview</span>
                 </Link>
                 <Link href="/admin/manageorder" onClick={() => setmenuopen(false)} className="flex items-center gap-2.5 p-2 rounded-xl text-gray-700 hover:bg-amber-50">
-                  <ClipboardCheck size={15} className="text-[#0f8646]" />
+                  <ClipboardCheck size={15} className="text-[#0a3d24]" />
                   <span>Manage Orders</span>
                 </Link>
                 <Link href="/admin/viewgrocery" onClick={() => setmenuopen(false)} className="flex items-center gap-2.5 p-2 rounded-xl text-gray-700 hover:bg-amber-50">
-                  <Box size={15} className="text-[#0f8646]" />
+                  <Box size={15} className="text-[#0a3d24]" />
                   <span>Inventory Stock</span>
                 </Link>
               </div>
@@ -563,7 +563,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
             <Link
               href="/login"
               onClick={() => setmenuopen(false)}
-              className="w-full flex items-center justify-center gap-2 bg-[#0c831f] text-white font-black py-2.5 rounded-xl hover:bg-[#096618] transition text-xs shadow-xs"
+              className="w-full flex items-center justify-center gap-2 bg-[#0a3d24] text-white font-black py-2.5 rounded-xl hover:bg-[#072817] transition text-xs shadow-xs"
             >
               <UserIcon size={15} />
               <span>Login / Register</span>
@@ -637,7 +637,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
 
             {/* Search Bar */}
             <div ref={searchRef} className="hidden md:flex flex-1 max-w-xl relative ml-4 lg:ml-8 h-11 z-[60]">
-              <form onSubmit={handleSearch} className="w-full h-full flex items-center bg-gray-50 border border-gray-200 rounded-lg overflow-hidden focus-within:border-[#0f8646] focus-within:ring-1 focus-within:ring-[#0f8646] transition-all">
+              <form onSubmit={handleSearch} className="w-full h-full flex items-center bg-gray-50 border border-gray-200 rounded-lg overflow-hidden focus-within:border-[#0a3d24] focus-within:ring-1 focus-within:ring-[#0a3d24] transition-all">
                 <input
                   type="text"
                   value={search}
@@ -678,10 +678,10 @@ export default function Nav({ user }: { user?: iUser | null }) {
                       <div className="mb-3.5">
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-[11px] font-black uppercase text-gray-500 tracking-wider flex items-center gap-1.5">
-                            <LayoutGrid size={12} className="text-[#0c831f]" />
+                            <LayoutGrid size={12} className="text-[#0a3d24]" />
                             Explore Categories
                           </span>
-                          <span className="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80 inline-flex items-center gap-1">
+                          <span className="text-[10px] text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80 inline-flex items-center gap-1">
                             <Zap size={10} className="text-amber-500 fill-amber-500" />
                             10-15 Min Delivery
                           </span>
@@ -697,7 +697,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                                 router.push(`/user/search?query=${encodeURIComponent(c.name)}`);
                                 setIsSearchFocused(false);
                               }}
-                              className="bg-gray-50 hover:bg-emerald-50 text-gray-800 hover:text-[#0c831f] border border-gray-200/80 hover:border-emerald-300 px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-2xs"
+                              className="bg-gray-50 hover:bg-emerald-50 text-gray-800 hover:text-[#0a3d24] border border-gray-200/80 hover:border-emerald-300 px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-2xs"
                             >
                               <span>🌿</span>
                               <span>{c.name}</span>
@@ -736,14 +736,14 @@ export default function Nav({ user }: { user?: iUser | null }) {
                                     className="w-10 h-10 rounded-xl object-contain border border-gray-100 p-1 bg-white shrink-0"
                                   />
                                   <div className="min-w-0 flex-1">
-                                    <p className="text-xs font-bold text-gray-900 group-hover:text-[#0c831f] truncate">
+                                    <p className="text-xs font-bold text-gray-900 group-hover:text-[#0a3d24] truncate">
                                       {item.name}
                                     </p>
                                     <div className="flex items-center gap-2 text-[11px]">
                                       <span className="text-gray-400 font-medium">
                                         {item.unit || item.category}
                                       </span>
-                                      <span className="font-black text-[#0c831f]">
+                                      <span className="font-black text-[#0a3d24]">
                                         ₹{item.price}
                                       </span>
                                     </div>
@@ -765,7 +765,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                                         })
                                       );
                                     }}
-                                    className="bg-emerald-50 hover:bg-[#0c831f] text-[#0c831f] hover:text-white border border-emerald-300 px-3 py-1 rounded-xl text-xs font-black transition flex items-center gap-1 shadow-2xs shrink-0 cursor-pointer"
+                                    className="bg-emerald-50 hover:bg-[#0a3d24] text-[#0a3d24] hover:text-white border border-emerald-300 px-3 py-1 rounded-xl text-xs font-black transition flex items-center gap-1 shadow-2xs shrink-0 cursor-pointer"
                                   >
                                     <Plus size={12} className="stroke-[3]" />
                                     <span>ADD</span>
@@ -773,11 +773,11 @@ export default function Nav({ user }: { user?: iUser | null }) {
                                 ) : (
                                   <div
                                     onClick={(e) => e.stopPropagation()}
-                                    className="flex items-center bg-white border border-[#0c831f] rounded-xl overflow-hidden h-6.5 shadow-2xs shrink-0"
+                                    className="flex items-center bg-white border border-[#0a3d24] rounded-xl overflow-hidden h-6.5 shadow-2xs shrink-0"
                                   >
                                     <button
                                       type="button"
-                                      className="w-5.5 h-full flex items-center justify-center bg-green-50 text-[#0c831f] hover:bg-[#0c831f] hover:text-white transition font-black text-xs cursor-pointer"
+                                      className="w-5.5 h-full flex items-center justify-center bg-green-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-xs cursor-pointer"
                                       onClick={() =>
                                         dispatch(
                                           decreaseQuantity(cartItem.cartItemId || item._id)
@@ -791,7 +791,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                                     </span>
                                     <button
                                       type="button"
-                                      className="w-5.5 h-full flex items-center justify-center bg-green-50 text-[#0c831f] hover:bg-[#0c831f] hover:text-white transition font-black text-xs cursor-pointer"
+                                      className="w-5.5 h-full flex items-center justify-center bg-green-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-xs cursor-pointer"
                                       onClick={() =>
                                         dispatch(
                                           increaseQuantity(cartItem.cartItemId || item._id)
@@ -823,7 +823,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                   >
                     {isSearching ? (
                       <div className="p-4 text-center text-sm text-gray-500 flex items-center justify-center gap-2">
-                        <Loader2 size={16} className="animate-spin text-[#0f8646]" /> Searching...
+                        <Loader2 size={16} className="animate-spin text-[#0a3d24]" /> Searching...
                       </div>
                     ) : (
                       <>
@@ -839,7 +839,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                                 setSearchResults([]);
                                 router.push(`/product/${item._id}`);
                               }}
-                              className="flex items-center justify-between gap-3 p-3 hover:bg-green-50 cursor-pointer border-b border-gray-50 last:border-0 transition"
+                              className="flex items-center justify-between gap-3 p-3 hover:bg-emerald-50/50 cursor-pointer border-b border-gray-50 last:border-0 transition"
                             >
                               <div className="flex items-center gap-3 min-w-0 flex-1">
                                 <img
@@ -855,7 +855,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                                     <span className="text-gray-400 font-medium">
                                       {item.unit || item.category}
                                     </span>
-                                    <span className="font-extrabold text-[#0f8646]">
+                                    <span className="font-extrabold text-[#0a3d24]">
                                       ₹{item.price}
                                     </span>
                                   </div>
@@ -878,7 +878,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                                       })
                                     );
                                   }}
-                                  className="bg-emerald-50 hover:bg-[#0f8646] text-[#0f8646] hover:text-white border border-emerald-300 px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1 shadow-2xs shrink-0 cursor-pointer"
+                                  className="bg-emerald-50 hover:bg-[#0a3d24] text-[#0a3d24] hover:text-white border border-emerald-300 px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1 shadow-2xs shrink-0 cursor-pointer"
                                 >
                                   <Plus size={13} className="stroke-[3]" />
                                   <span>ADD</span>
@@ -886,11 +886,11 @@ export default function Nav({ user }: { user?: iUser | null }) {
                               ) : (
                                 <div
                                   onClick={(e) => e.stopPropagation()}
-                                  className="flex items-center bg-white border border-[#0f8646] rounded-xl overflow-hidden h-7 shadow-2xs shrink-0"
+                                  className="flex items-center bg-white border border-[#0a3d24] rounded-xl overflow-hidden h-7 shadow-2xs shrink-0"
                                 >
                                   <button
                                     type="button"
-                                    className="w-6 h-full flex items-center justify-center bg-green-50 text-[#0f8646] hover:bg-[#0f8646] hover:text-white transition font-black text-xs cursor-pointer"
+                                    className="w-6 h-full flex items-center justify-center bg-green-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-xs cursor-pointer"
                                     onClick={() =>
                                       dispatch(
                                         decreaseQuantity(cartItem.cartItemId || item._id)
@@ -904,7 +904,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                                   </span>
                                   <button
                                     type="button"
-                                    className="w-6 h-full flex items-center justify-center bg-green-50 text-[#0f8646] hover:bg-[#0f8646] hover:text-white transition font-black text-xs cursor-pointer"
+                                    className="w-6 h-full flex items-center justify-center bg-green-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-xs cursor-pointer"
                                     onClick={() =>
                                       dispatch(
                                         increaseQuantity(cartItem.cartItemId || item._id)
@@ -920,7 +920,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                         })}
                         <div 
                           onClick={() => handleSearch()}
-                          className="p-3 text-center text-sm text-[#0f8646] font-bold bg-green-50/50 hover:bg-green-100 cursor-pointer"
+                          className="p-3 text-center text-sm text-[#0a3d24] font-bold bg-green-50/50 hover:bg-green-100 cursor-pointer"
                         >
                           View all results for "{search.trim()}"
                         </div>
@@ -1004,7 +1004,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                       <Link
                         href="/admin"
                         onClick={() => setOpen(false)}
-                        className="block px-4 py-2.5 text-xs font-black bg-[#0f8646] text-white hover:bg-[#0c6a38] transition flex items-center justify-between border-b"
+                        className="block px-4 py-2.5 text-xs font-black bg-[#0a3d24] text-white hover:bg-[#072817] transition flex items-center justify-between border-b"
                       >
                         <span>👑 Open Admin Center</span>
                         <span className="bg-yellow-300 text-gray-950 text-[9px] px-1.5 py-0.5 rounded font-black">
@@ -1029,7 +1029,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                     <Link
                       href="/user"
                       onClick={() => setOpen(false)}
-                      className="block px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-[#0f8646] font-bold border-b transition"
+                      className="block px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-[#0a3d24] font-bold border-b transition"
                     >
                       👤 Account Dashboard
                     </Link>
@@ -1037,7 +1037,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                     <Link
                       href="/user/myorder"
                       onClick={() => setOpen(false)}
-                      className="block px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-[#0f8646] font-bold border-b transition"
+                      className="block px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-[#0a3d24] font-bold border-b transition"
                     >
                       📦 My Orders & Tracking
                     </Link>
@@ -1066,10 +1066,10 @@ export default function Nav({ user }: { user?: iUser | null }) {
                       className="w-full text-left px-4 py-2.5 text-xs text-emerald-950 bg-emerald-50 hover:bg-emerald-100 font-bold border-b flex items-center justify-between transition cursor-pointer"
                     >
                       <span className="flex items-center gap-2">
-                        <Smartphone size={14} className="text-[#0f8646]" />
+                        <Smartphone size={14} className="text-[#0a3d24]" />
                         <span>📲 Install SubziQuick App</span>
                       </span>
-                      <span className="bg-[#0f8646] text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase">
+                      <span className="bg-[#0a3d24] text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase">
                         Install
                       </span>
                     </button>
@@ -1081,7 +1081,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                     >
                       <span>❤️ Saved Wishlist</span>
                       {wishlistItems.length > 0 && (
-                        <span className="bg-[#0f8646] text-white text-[10px] px-2 rounded-full font-black">
+                        <span className="bg-[#0a3d24] text-white text-[10px] px-2 rounded-full font-black">
                           {wishlistItems.length}
                         </span>
                       )}
@@ -1162,7 +1162,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
               type="button"
               onClick={handleVoiceSearch}
               title="Search by voice in Hindi or English"
-              className="p-1.5 rounded-full transition-all flex items-center justify-center shrink-0 cursor-pointer text-gray-400 hover:text-[#0f8646]"
+              className="p-1.5 rounded-full transition-all flex items-center justify-center shrink-0 cursor-pointer text-gray-400 hover:text-[#0a3d24]"
             >
               <Mic size={16} />
             </button>
@@ -1182,10 +1182,10 @@ export default function Nav({ user }: { user?: iUser | null }) {
                   <div className="mb-3">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-[11px] font-black uppercase text-gray-500 tracking-wider flex items-center gap-1.5">
-                        <LayoutGrid size={12} className="text-[#0c831f]" />
+                        <LayoutGrid size={12} className="text-[#0a3d24]" />
                         Explore Categories
                       </span>
-                      <span className="text-[9.5px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80 inline-flex items-center gap-1">
+                      <span className="text-[9.5px] text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80 inline-flex items-center gap-1">
                         <Zap size={10} className="text-amber-500 fill-amber-500" />
                         10-15 Min
                       </span>
@@ -1201,7 +1201,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                             router.push(`/user/search?query=${encodeURIComponent(c.name)}`);
                             setIsMobileSearchFocused(false);
                           }}
-                          className="bg-gray-50 hover:bg-emerald-50 text-gray-800 hover:text-[#0c831f] border border-gray-200/80 hover:border-emerald-300 px-2.5 py-1 rounded-xl text-[11px] font-bold transition flex items-center gap-1 cursor-pointer active:scale-95 shadow-2xs"
+                          className="bg-gray-50 hover:bg-emerald-50 text-gray-800 hover:text-[#0a3d24] border border-gray-200/80 hover:border-emerald-300 px-2.5 py-1 rounded-xl text-[11px] font-bold transition flex items-center gap-1 cursor-pointer active:scale-95 shadow-2xs"
                         >
                           <span>🌿</span>
                           <span>{c.name}</span>
@@ -1240,14 +1240,14 @@ export default function Nav({ user }: { user?: iUser | null }) {
                                 className="w-8.5 h-8.5 rounded-lg object-contain border border-gray-100 p-0.5 bg-white shrink-0"
                               />
                               <div className="min-w-0 flex-1">
-                                <p className="text-[11.5px] font-bold text-gray-900 group-hover:text-[#0c831f] truncate">
+                                <p className="text-[11.5px] font-bold text-gray-900 group-hover:text-[#0a3d24] truncate">
                                   {item.name}
                                 </p>
                                 <div className="flex items-center gap-1.5 text-[10px]">
                                   <span className="text-gray-400 font-medium">
                                     {item.unit || item.category}
                                   </span>
-                                  <span className="font-black text-[#0c831f]">
+                                  <span className="font-black text-[#0a3d24]">
                                     ₹{item.price}
                                   </span>
                                 </div>
@@ -1269,7 +1269,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                                     })
                                   );
                                 }}
-                                className="bg-emerald-50 hover:bg-[#0c831f] text-[#0c831f] hover:text-white border border-emerald-300 px-2.5 py-1 rounded-lg text-[10px] font-black transition flex items-center gap-1 shadow-2xs shrink-0 cursor-pointer"
+                                className="bg-emerald-50 hover:bg-[#0a3d24] text-[#0a3d24] hover:text-white border border-emerald-300 px-2.5 py-1 rounded-lg text-[10px] font-black transition flex items-center gap-1 shadow-2xs shrink-0 cursor-pointer"
                               >
                                 <Plus size={11} className="stroke-[3]" />
                                 <span>ADD</span>
@@ -1277,11 +1277,11 @@ export default function Nav({ user }: { user?: iUser | null }) {
                             ) : (
                               <div
                                 onClick={(e) => e.stopPropagation()}
-                                className="flex items-center bg-white border border-[#0c831f] rounded-lg overflow-hidden h-6 shadow-2xs shrink-0"
+                                className="flex items-center bg-white border border-[#0a3d24] rounded-lg overflow-hidden h-6 shadow-2xs shrink-0"
                               >
                                 <button
                                   type="button"
-                                  className="w-5 h-full flex items-center justify-center bg-green-50 text-[#0c831f] hover:bg-[#0c831f] hover:text-white transition font-black text-[10px] cursor-pointer"
+                                  className="w-5 h-full flex items-center justify-center bg-green-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-[10px] cursor-pointer"
                                   onClick={() =>
                                     dispatch(
                                       decreaseQuantity(cartItem.cartItemId || item._id)
@@ -1295,7 +1295,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                                 </span>
                                 <button
                                   type="button"
-                                  className="w-5 h-full flex items-center justify-center bg-green-50 text-[#0c831f] hover:bg-[#0c831f] hover:text-white transition font-black text-[10px] cursor-pointer"
+                                  className="w-5 h-full flex items-center justify-center bg-green-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-[10px] cursor-pointer"
                                   onClick={() =>
                                     dispatch(
                                       increaseQuantity(cartItem.cartItemId || item._id)
@@ -1327,7 +1327,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
               >
                 {isSearching ? (
                   <div className="p-4 text-center text-sm text-gray-500 flex items-center justify-center gap-2">
-                    <Loader2 size={16} className="animate-spin text-[#0f8646]" /> Searching...
+                    <Loader2 size={16} className="animate-spin text-[#0a3d24]" /> Searching...
                   </div>
                 ) : (
                   <>
@@ -1359,7 +1359,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                                 <span className="text-gray-400 font-medium">
                                   {item.unit || item.category}
                                 </span>
-                                <span className="font-extrabold text-[#0f8646]">
+                                <span className="font-extrabold text-[#0a3d24]">
                                   ₹{item.price}
                                 </span>
                               </div>
@@ -1382,7 +1382,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                                   })
                                 );
                               }}
-                              className="bg-emerald-50 hover:bg-[#0f8646] text-[#0f8646] hover:text-white border border-emerald-300 px-2.5 py-1 rounded-xl text-xs font-black transition-all flex items-center gap-1 shadow-2xs shrink-0 cursor-pointer"
+                              className="bg-emerald-50 hover:bg-[#0a3d24] text-[#0a3d24] hover:text-white border border-emerald-300 px-2.5 py-1 rounded-xl text-xs font-black transition-all flex items-center gap-1 shadow-2xs shrink-0 cursor-pointer"
                             >
                               <Plus size={12} className="stroke-[3]" />
                               <span>ADD</span>
@@ -1390,11 +1390,11 @@ export default function Nav({ user }: { user?: iUser | null }) {
                           ) : (
                             <div
                               onClick={(e) => e.stopPropagation()}
-                              className="flex items-center bg-white border border-[#0f8646] rounded-xl overflow-hidden h-7 shadow-2xs shrink-0"
+                              className="flex items-center bg-white border border-[#0a3d24] rounded-xl overflow-hidden h-7 shadow-2xs shrink-0"
                             >
                               <button
                                 type="button"
-                                className="w-6 h-full flex items-center justify-center bg-green-50 text-[#0f8646] hover:bg-[#0f8646] hover:text-white transition font-black text-xs cursor-pointer"
+                                className="w-6 h-full flex items-center justify-center bg-green-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-xs cursor-pointer"
                                 onClick={() =>
                                   dispatch(
                                     decreaseQuantity(cartItem.cartItemId || item._id)
@@ -1408,7 +1408,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                               </span>
                               <button
                                 type="button"
-                                className="w-6 h-full flex items-center justify-center bg-green-50 text-[#0f8646] hover:bg-[#0f8646] hover:text-white transition font-black text-xs cursor-pointer"
+                                className="w-6 h-full flex items-center justify-center bg-green-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-xs cursor-pointer"
                                 onClick={() =>
                                   dispatch(
                                     increaseQuantity(cartItem.cartItemId || item._id)
@@ -1424,7 +1424,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                     })}
                     <div 
                       onClick={() => handleSearch()}
-                      className="p-3 text-center text-sm text-[#0f8646] font-bold bg-green-50/50 hover:bg-green-100 cursor-pointer"
+                      className="p-3 text-center text-sm text-[#0a3d24] font-bold bg-green-50/50 hover:bg-green-100 cursor-pointer"
                     >
                       View all results
                     </div>

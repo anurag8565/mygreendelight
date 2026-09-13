@@ -19,10 +19,10 @@ export default function TermsConditionsPage() {
       <main className="max-w-4xl mx-auto px-4 md:px-8 py-10 w-full flex-1">
         {/* Header */}
         <div className="bg-white rounded-3xl p-8 sm:p-10 border border-gray-200/80 shadow-xs mb-8">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-[#0f8646] flex items-center justify-center mb-4">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center mb-4">
             <Scale size={24} />
           </div>
-          <span className="text-xs font-black uppercase text-[#0f8646] tracking-wider block mb-1">
+          <span className="text-xs font-black uppercase text-[#0a3d24] tracking-wider block mb-1">
             Terms of Service
           </span>
           <h1 className="text-2xl sm:text-3xl font-black text-gray-900">
@@ -37,7 +37,7 @@ export default function TermsConditionsPage() {
         <div className="bg-white rounded-3xl p-8 sm:p-10 border border-gray-200/80 shadow-xs space-y-8 text-sm text-gray-700 leading-relaxed">
           <section className="space-y-3">
             <h2 className="text-lg font-black text-gray-900 flex items-center gap-2">
-              <CheckCircle2 size={18} className="text-[#0f8646]" />
+              <CheckCircle2 size={18} className="text-[#0a3d24]" />
               <span>1. Agreement to Terms</span>
             </h2>
             <p>
@@ -47,7 +47,7 @@ export default function TermsConditionsPage() {
 
           <section className="space-y-3">
             <h2 className="text-lg font-black text-gray-900 flex items-center gap-2">
-              <Truck size={18} className="text-[#0f8646]" />
+              <Truck size={18} className="text-[#0a3d24]" />
               <span>2. Delivery & Fair Pricing</span>
             </h2>
             <ul className="list-disc pl-5 space-y-1.5 text-xs text-gray-600">
@@ -59,7 +59,7 @@ export default function TermsConditionsPage() {
 
           <section className="space-y-3">
             <h2 className="text-lg font-black text-gray-900 flex items-center gap-2">
-              <Clock size={18} className="text-[#0f8646]" />
+              <Clock size={18} className="text-[#0a3d24]" />
               <span>3. Order Acceptance & OTP Verification</span>
             </h2>
             <p>
@@ -69,7 +69,7 @@ export default function TermsConditionsPage() {
 
           <section className="space-y-3">
             <h2 className="text-lg font-black text-gray-900 flex items-center gap-2">
-              <ShieldAlert size={18} className="text-[#0f8646]" />
+              <ShieldAlert size={18} className="text-[#0a3d24]" />
               <span>4. User Account & Wallet Balance</span>
             </h2>
             <p>

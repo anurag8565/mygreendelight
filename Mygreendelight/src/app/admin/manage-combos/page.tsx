@@ -117,7 +117,7 @@ export default function ManageCombosPage() {
               className="bg-white hover:bg-gray-50 text-gray-700 border border-gray-200/90 px-3.5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-xs transition cursor-pointer disabled:opacity-50"
               title="Refresh combos"
             >
-              <RefreshCw size={15} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+              <RefreshCw size={15} className={loading ? "animate-spin text-[#0a3d24]" : ""} />
               <span>Refresh</span>
             </button>
 
@@ -136,7 +136,7 @@ export default function ManageCombosPage() {
                 });
                 setIsModalOpen(true);
               }}
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-md transition cursor-pointer"
+              className="bg-[#0a3d24] hover:bg-[#072817] text-white px-5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-md transition cursor-pointer"
             >
               <Plus size={16} />
               <span>Add Combo Bundle</span>
@@ -174,14 +174,14 @@ export default function ManageCombosPage() {
 
               <div className="pt-3 mt-3 border-t border-gray-100 flex items-center justify-between">
                 <div>
-                  <span className="text-base font-black text-[#0f8646]">₹{c.comboPrice}</span>
+                  <span className="text-base font-black text-[#0a3d24]">₹{c.comboPrice}</span>
                   <span className="text-xs text-gray-400 line-through ml-1.5">₹{c.originalPrice}</span>
                 </div>
 
                 <div className="flex items-center gap-1">
                   <button
                     onClick={() => handleEdit(c)}
-                    className="text-gray-600 hover:text-[#0f8646] p-1.5 rounded-lg hover:bg-gray-100 transition cursor-pointer"
+                    className="text-gray-600 hover:text-[#0a3d24] p-1.5 rounded-lg hover:bg-gray-100 transition cursor-pointer"
                     title="Edit Combo"
                   >
                     <Edit2 size={16} />
@@ -290,7 +290,7 @@ export default function ManageCombosPage() {
                   </button>
                   <button
                     type="submit"
-                    className="bg-[#0f8646] text-white px-5 py-2 text-xs font-black rounded-xl shadow-sm"
+                    className="bg-[#0a3d24] text-white px-5 py-2 text-xs font-black rounded-xl shadow-sm"
                   >
                     Save Combo
                   </button>

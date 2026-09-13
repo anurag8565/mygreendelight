@@ -129,7 +129,7 @@ export default function AboutPage() {
           <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center">
             
             {/* Top Pill Badge */}
-            <div className="inline-flex items-center gap-2 bg-white border border-emerald-200/80 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#0c6a38] mb-4 sm:mb-5 shadow-xs">
+            <div className="inline-flex items-center gap-2 bg-white border border-emerald-200/80 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#0a3d24] mb-4 sm:mb-5 shadow-xs">
               <Heart size={14} className="text-red-500 fill-red-500 animate-pulse" />
               <span>Bhopal Ki Apni Kahani • Founded 2020</span>
             </div>
@@ -137,7 +137,7 @@ export default function AboutPage() {
             {/* Main Headline */}
             <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-black text-gray-950 tracking-tight leading-[1.18] mb-3 sm:mb-4">
               Ek Thele Se Shuru Hui Kahani, <br />
-              <span className="text-[#0f8646]">Ab Aapke Ghar Tak.</span>
+              <span className="text-[#0a3d24]">Ab Aapke Ghar Tak.</span>
             </h1>
 
             {/* Subtitle */}
@@ -150,7 +150,7 @@ export default function AboutPage() {
               <Link href="/shop">
                 <button
                   type="button"
-                  className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-6 sm:px-8 py-3 rounded-full font-black text-xs sm:text-sm shadow-md hover:shadow-lg transition-all flex items-center gap-2 cursor-pointer active:scale-95"
+                  className="bg-[#0a3d24] hover:bg-[#072817] text-white px-6 sm:px-8 py-3 rounded-full font-black text-xs sm:text-sm shadow-md hover:shadow-lg transition-all flex items-center gap-2 cursor-pointer active:scale-95"
                 >
                   <ShoppingBag size={16} />
                   <span>Order Fresh Produce</span>
@@ -178,7 +178,7 @@ export default function AboutPage() {
               />
               <div className="p-3 sm:p-4 bg-white border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-2 text-left">
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#0f8646]" />
+                  <span className="w-2 h-2 rounded-full bg-[#0a3d24]" />
                   <span className="text-xs sm:text-sm font-bold text-gray-900">
                     Ek Thele Se Nikalkar Ek Modern Online Platform Tak Ka Safar
                   </span>
@@ -201,7 +201,7 @@ export default function AboutPage() {
                   key={idx}
                   className="bg-white rounded-2xl p-3.5 sm:p-4 text-center border border-gray-200/70 shadow-2xs hover:border-emerald-200 transition-colors"
                 >
-                  <div className="text-lg sm:text-2xl md:text-3xl font-black text-[#0f8646]">
+                  <div className="text-lg sm:text-2xl md:text-3xl font-black text-[#0a3d24]">
                     {s.value}
                   </div>
                   <div className="text-xs sm:text-sm font-bold text-gray-900 mt-0.5">
@@ -225,7 +225,7 @@ export default function AboutPage() {
             
             {/* Section Header */}
             <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10">
-              <span className="text-[11px] font-black uppercase tracking-wider text-[#0f8646] bg-emerald-50 border border-emerald-200/80 px-3 py-1 rounded-full shadow-2xs inline-block mb-2">
+              <span className="text-[11px] font-black uppercase tracking-wider text-[#0a3d24] bg-emerald-50 border border-emerald-200/80 px-3 py-1 rounded-full shadow-2xs inline-block mb-2">
                 Real Founder Story • Asli Sangharsh
               </span>
               <h2 className="text-xl sm:text-3xl md:text-4xl font-black text-gray-950 tracking-tight leading-tight">
@@ -295,7 +295,7 @@ export default function AboutPage() {
                       className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500"
                     />
                     <div className="absolute top-3 left-3">
-                      <span className="bg-[#0f8646] text-white text-[10px] sm:text-xs font-black px-3 py-1 rounded-full shadow-xs uppercase tracking-wider">
+                      <span className="bg-[#0a3d24] text-white text-[10px] sm:text-xs font-black px-3 py-1 rounded-full shadow-xs uppercase tracking-wider">
                         Phase 02 • Quick Commerce
                       </span>
                     </div>
@@ -308,7 +308,7 @@ export default function AboutPage() {
                     </h3>
                     <div className="text-xs sm:text-sm text-gray-700 leading-relaxed space-y-2.5 font-normal">
                       <p>
-                        Main unhe roz mehnat karte dekhta tha. Ek din socha — <strong className="text-[#0f8646]">&ldquo;Kyun na isse online le jaayein?&rdquo;</strong>
+                        Main unhe roz mehnat karte dekhta tha. Ek din socha — <strong className="text-[#0a3d24]">&ldquo;Kyun na isse online le jaayein?&rdquo;</strong>
                       </p>
                       <p className="bg-emerald-50/80 p-3 rounded-2xl border border-emerald-200/60 font-medium text-gray-900">
                         Bas wahin se shuru hui <strong>Subzi Quick</strong> ki kahani — ek thele se nikalkar ek online platform tak ka safar. Jo kabhi ek chhota thela tha, aaj Bhopal ke hazaron parivaaron tak 10-15 minutes mein taazi sabzi deliver karta hai. Lekin values wahi hain: <strong>Taazgi, Imaandari, aur Mehnat</strong>.
@@ -320,7 +320,7 @@ export default function AboutPage() {
                 {/* Bottom Highlight */}
                 <div className="px-4 sm:px-6 pb-4 pt-2 border-t border-emerald-100 flex items-center justify-between text-xs font-bold text-emerald-900">
                   <span className="flex items-center gap-1.5">
-                    <Bike size={14} className="text-[#0f8646]" />
+                    <Bike size={14} className="text-[#0a3d24]" />
                     <span>MP-04 Bhopal Fleet (10-15 Min)</span>
                   </span>
                   <span className="text-[10px] sm:text-[11px] font-mono text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded">
@@ -340,7 +340,7 @@ export default function AboutPage() {
             <div className="bg-white rounded-3xl border border-gray-200/90 p-5 sm:p-8 shadow-xs flex flex-col md:flex-row items-center gap-4 sm:gap-6 relative overflow-hidden">
               
               {/* Soft Quote Icon */}
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50 border border-emerald-200/80 text-[#0f8646] flex items-center justify-center shrink-0 shadow-2xs">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50 border border-emerald-200/80 text-[#0a3d24] flex items-center justify-center shrink-0 shadow-2xs">
                 <Quote size={24} />
               </div>
 
@@ -350,7 +350,7 @@ export default function AboutPage() {
                   &ldquo;Har order jo aap dete hain, woh sirf ek transaction nahi — yeh ek family ki mehnat aur ek naye sapne ka hissa hai.&rdquo;
                 </p>
                 <div className="mt-2 flex items-center justify-center md:justify-start gap-2 text-xs font-bold text-gray-600">
-                  <span className="text-[#0f8646]">Anurag & Family</span>
+                  <span className="text-[#0a3d24]">Anurag & Family</span>
                   <span>•</span>
                   <span>Founders of SubziQuick Bhopal</span>
                 </div>
@@ -375,7 +375,7 @@ export default function AboutPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             
             <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10">
-              <span className="text-[11px] font-black uppercase tracking-wider text-[#0f8646] bg-emerald-50 border border-emerald-200/80 px-3 py-1 rounded-full shadow-2xs inline-block mb-2">
+              <span className="text-[11px] font-black uppercase tracking-wider text-[#0a3d24] bg-emerald-50 border border-emerald-200/80 px-3 py-1 rounded-full shadow-2xs inline-block mb-2">
                 Uncompromising Values
               </span>
               <h2 className="text-xl sm:text-3xl font-black text-gray-950 tracking-tight">
@@ -405,7 +405,7 @@ export default function AboutPage() {
                         </span>
                       </div>
 
-                      <div className="w-9 h-9 rounded-xl bg-white border border-gray-100 text-[#0f8646] flex items-center justify-center shadow-2xs group-hover:scale-105 transition-transform mb-3">
+                      <div className="w-9 h-9 rounded-xl bg-white border border-gray-100 text-[#0a3d24] flex items-center justify-center shadow-2xs group-hover:scale-105 transition-transform mb-3">
                         <Icon size={18} />
                       </div>
 
@@ -438,7 +438,7 @@ export default function AboutPage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
                 <div className="absolute bottom-3 left-3 right-3 text-white">
-                  <span className="inline-block bg-[#0f8646] text-white text-[10px] font-black px-2.5 py-0.5 rounded-md mb-1 uppercase tracking-wide">
+                  <span className="inline-block bg-[#0a3d24] text-white text-[10px] font-black px-2.5 py-0.5 rounded-md mb-1 uppercase tracking-wide">
                     Pure Online Direct Model
                   </span>
                   <p className="text-xs sm:text-sm font-bold leading-tight">
@@ -449,13 +449,13 @@ export default function AboutPage() {
 
               {/* Right Column: SEO Keywords & Local Credibility */}
               <div className="lg:col-span-7 flex flex-col justify-center">
-                <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0f8646] bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200/60 w-fit mb-3">
+                <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0a3d24] bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200/60 w-fit mb-3">
                   <Sparkles size={13} />
                   <span>Bhopal&apos;s #1 Local Farm-to-Home Platform</span>
                 </div>
 
                 <h2 className="text-lg sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight leading-tight mb-2.5">
-                  Online Fresh Vegetable & Fruit Delivery in Bhopal — <span className="text-[#0f8646]">Seedha Mandi Daam Mein.</span>
+                  Online Fresh Vegetable & Fruit Delivery in Bhopal — <span className="text-[#0a3d24]">Seedha Mandi Daam Mein.</span>
                 </h2>
 
                 <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal mb-4">
@@ -471,7 +471,7 @@ export default function AboutPage() {
                     {localities.map((loc, idx) => (
                       <span
                         key={idx}
-                        className="text-[10.5px] sm:text-[11px] font-bold text-gray-700 bg-gray-50 border border-gray-200/80 px-2.5 py-1 rounded-lg shadow-2xs hover:border-emerald-300 hover:text-[#0f8646] transition-colors"
+                        className="text-[10.5px] sm:text-[11px] font-bold text-gray-700 bg-gray-50 border border-gray-200/80 px-2.5 py-1 rounded-lg shadow-2xs hover:border-emerald-300 hover:text-[#0a3d24] transition-colors"
                       >
                         {loc}
                       </span>
@@ -483,7 +483,7 @@ export default function AboutPage() {
                   <Link href="/shop">
                     <button
                       type="button"
-                      className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 sm:px-6 py-2.5 rounded-full font-bold text-xs sm:text-sm transition flex items-center gap-2 shadow-xs cursor-pointer"
+                      className="bg-[#0a3d24] hover:bg-[#072817] text-white px-5 sm:px-6 py-2.5 rounded-full font-bold text-xs sm:text-sm transition flex items-center gap-2 shadow-xs cursor-pointer"
                     >
                       <span>Order Fresh Vegetables</span>
                       <ArrowRight size={14} />
@@ -491,7 +491,7 @@ export default function AboutPage() {
                   </Link>
                   <Link
                     href="/contact"
-                    className="text-gray-700 hover:text-[#0f8646] border border-gray-300 hover:border-emerald-300 bg-white px-4 sm:px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm transition cursor-pointer"
+                    className="text-gray-700 hover:text-[#0a3d24] border border-gray-300 hover:border-emerald-300 bg-white px-4 sm:px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm transition cursor-pointer"
                   >
                     Contact Support
                   </Link>
@@ -505,7 +505,7 @@ export default function AboutPage() {
         {/* ================= 8. LUXURY CLOSING BANNER ================= */}
         <section className="w-full py-8 sm:py-12 bg-white font-sans">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <div className="bg-gradient-to-r from-[#072815] via-[#0b4d24] to-[#0f8646] rounded-3xl p-6 sm:p-10 text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+            <div className="bg-gradient-to-r from-[#051f12] via-[#0a3d24] to-[#072817] rounded-3xl p-6 sm:p-10 text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
               
               {/* Ambient Glow */}
               <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-400/15 rounded-full blur-3xl pointer-events-none" />
@@ -525,7 +525,7 @@ export default function AboutPage() {
                   <Link href="/shop">
                     <button
                       type="button"
-                      className="relative overflow-hidden bg-white text-[#0f8646] hover:bg-emerald-50 px-6 sm:px-8 py-3 rounded-full font-black text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center gap-2 group/btn"
+                      className="relative overflow-hidden bg-white text-[#0a3d24] hover:bg-emerald-50 px-6 sm:px-8 py-3 rounded-full font-black text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center gap-2 group/btn"
                     >
                       <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-emerald-200/50 to-transparent" />
                       <span className="relative z-10">Shop Fresh Harvest</span>

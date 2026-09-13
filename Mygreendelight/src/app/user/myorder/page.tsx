@@ -296,8 +296,8 @@ export default function MyOrder() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="bg-emerald-50 text-[#0f8646] text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full border border-emerald-200/80 flex items-center gap-1">
-                  <Zap size={11} className="fill-[#0f8646]" /> 10-15 Min Express Delivery
+                <span className="bg-emerald-50 text-[#0a3d24] text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full border border-emerald-200/80 flex items-center gap-1">
+                  <Zap size={11} className="fill-[#0a3d24]" /> 10-15 Min Express Delivery
                 </span>
                 <span className="text-gray-300">•</span>
                 <span className="text-[11px] font-bold text-gray-500">
@@ -315,7 +315,7 @@ export default function MyOrder() {
             <div className="flex items-center gap-2.5">
               <Link
                 href="/shop"
-                className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4.5 py-2.5 rounded-2xl font-black text-xs shadow-xs hover:shadow-md transition flex items-center gap-1.5 cursor-pointer shrink-0"
+                className="bg-[#0a3d24] hover:bg-[#072817] text-white px-4.5 py-2.5 rounded-2xl font-black text-xs shadow-xs hover:shadow-md transition flex items-center gap-1.5 cursor-pointer shrink-0"
               >
                 <ShoppingBag size={14} />
                 <span>Shop Fresh Produce</span>
@@ -344,8 +344,8 @@ export default function MyOrder() {
                 onClick={() => setActiveFilter("active")}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition cursor-pointer shrink-0 flex items-center gap-1.5 ${
                   activeFilter === "active"
-                    ? "bg-[#0f8646] text-white shadow-2xs"
-                    : "bg-emerald-50 hover:bg-emerald-100 text-[#0f8646]"
+                    ? "bg-[#0a3d24] text-white shadow-2xs"
+                    : "bg-emerald-50 hover:bg-emerald-100 text-[#0a3d24]"
                 }`}
               >
                 <span className="w-2 h-2 rounded-full bg-emerald-300 animate-ping inline-block" />
@@ -391,7 +391,7 @@ export default function MyOrder() {
                 placeholder="Search order # or produce..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-8.5 pr-3 py-1.5 bg-gray-50 hover:bg-gray-100/80 focus:bg-white border border-gray-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-[#0f8646]/20 focus:border-[#0f8646] transition"
+                className="w-full pl-8.5 pr-3 py-1.5 bg-gray-50 hover:bg-gray-100/80 focus:bg-white border border-gray-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-[#0a3d24]/20 focus:border-[#0a3d24] transition"
               />
               {searchQuery && (
                 <button
@@ -409,12 +409,12 @@ export default function MyOrder() {
         {/* Orders State Content */}
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 bg-white rounded-3xl border border-gray-200/80 shadow-2xs">
-            <Loader2 size={32} className="animate-spin text-[#0f8646] mb-3" />
+            <Loader2 size={32} className="animate-spin text-[#0a3d24] mb-3" />
             <p className="text-xs font-bold text-gray-500">Loading your farm harvest orders...</p>
           </div>
         ) : filteredOrders.length === 0 ? (
           <div className="text-center py-16 bg-white rounded-3xl border border-gray-200/80 p-8 shadow-2xs max-w-md mx-auto">
-            <div className="w-14 h-14 bg-emerald-50 text-[#0f8646] rounded-2xl flex items-center justify-center mx-auto mb-3.5 border border-emerald-100 shadow-2xs">
+            <div className="w-14 h-14 bg-emerald-50 text-[#0a3d24] rounded-2xl flex items-center justify-center mx-auto mb-3.5 border border-emerald-100 shadow-2xs">
               <Package size={26} />
             </div>
             <h3 className="text-base font-black text-gray-900 mb-1">
@@ -427,7 +427,7 @@ export default function MyOrder() {
             </p>
             <Link
               href="/shop"
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2.5 rounded-xl font-black text-xs shadow-xs transition inline-flex items-center gap-1.5 cursor-pointer"
+              className="bg-[#0a3d24] hover:bg-[#072817] text-white px-5 py-2.5 rounded-xl font-black text-xs shadow-xs transition inline-flex items-center gap-1.5 cursor-pointer"
             >
               <ShoppingBag size={14} />
               <span>Explore Farm Produce</span>
@@ -476,7 +476,7 @@ export default function MyOrder() {
                               isDelivered
                                 ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
                                 : isOutForDelivery
-                                ? "bg-emerald-600 text-white shadow-2xs animate-pulse"
+                                ? "bg-[#0a3d24] text-white shadow-2xs animate-pulse"
                                 : isCancelled
                                 ? "bg-rose-50 text-rose-700 border border-rose-200"
                                 : "bg-amber-50 text-amber-900 border border-amber-200"
@@ -529,7 +529,7 @@ export default function MyOrder() {
                         <span className="text-[10px] uppercase font-black tracking-wider text-gray-400 block">
                           Total Bill
                         </span>
-                        <span className="text-lg sm:text-xl font-black text-[#0f8646] tracking-tight">
+                        <span className="text-lg sm:text-xl font-black text-[#0a3d24] tracking-tight">
                           ₹{order.totalamount}
                         </span>
                       </div>
@@ -581,7 +581,7 @@ export default function MyOrder() {
                     {/* View Details Accordion Toggle */}
                     <button
                       onClick={() => setOpenOrder(isExpanded ? null : order._id)}
-                      className="text-xs font-black text-gray-500 hover:text-[#0f8646] flex items-center gap-1 shrink-0 py-1 px-2 rounded-lg hover:bg-white transition cursor-pointer"
+                      className="text-xs font-black text-gray-500 hover:text-[#0a3d24] flex items-center gap-1 shrink-0 py-1 px-2 rounded-lg hover:bg-white transition cursor-pointer"
                     >
                       <span className="hidden sm:inline">{isExpanded ? "Hide" : "Details"}</span>
                       {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -593,11 +593,11 @@ export default function MyOrder() {
                   {!isDelivered && !isCancelled && (order.assigneddelliveryboy || (isOutForDelivery && order.deliveryOtp?.code)) && (
                     <div className="mx-4 sm:mx-5 my-3 bg-emerald-50/90 border border-emerald-200/80 rounded-2xl p-3 flex items-center justify-between gap-3 shadow-2xs">
                       <div className="flex items-center gap-2.5 min-w-0">
-                        <div className="w-9 h-9 rounded-xl bg-[#0f8646] text-white flex items-center justify-center shrink-0 shadow-xs">
+                        <div className="w-9 h-9 rounded-xl bg-[#0a3d24] text-white flex items-center justify-center shrink-0 shadow-xs">
                           <Truck size={17} />
                         </div>
                         <div className="min-w-0 truncate">
-                          <span className="text-[9.5px] font-black text-[#0f8646] uppercase tracking-wider block">
+                          <span className="text-[9.5px] font-black text-[#0a3d24] uppercase tracking-wider block">
                             SubziQuick Express Rider
                           </span>
                           <span className="font-extrabold text-xs text-gray-900 truncate block">
@@ -619,7 +619,7 @@ export default function MyOrder() {
                             title="Click to copy Doorstep Verification OTP"
                           >
                             <span className="text-[9px] font-black uppercase text-emerald-700">OTP</span>
-                            <span className="font-mono text-sm font-black tracking-widest text-[#0f8646]">
+                            <span className="font-mono text-sm font-black tracking-widest text-[#0a3d24]">
                               {order.deliveryOtp.code}
                             </span>
                             <span className="text-[8px] bg-emerald-100 text-emerald-800 px-1 py-0.2 rounded font-bold hidden sm:inline">
@@ -630,7 +630,7 @@ export default function MyOrder() {
                         {order.assigneddelliveryboy?.mobile && (
                           <a
                             href={`tel:${order.assigneddelliveryboy.mobile}`}
-                            className="bg-white border border-emerald-300 text-[#0f8646] hover:bg-emerald-50 px-3 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 transition shadow-2xs cursor-pointer active:scale-95"
+                            className="bg-white border border-emerald-300 text-[#0a3d24] hover:bg-emerald-50 px-3 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 transition shadow-2xs cursor-pointer active:scale-95"
                           >
                             <Phone size={12} />
                             <span>Call</span>
@@ -647,7 +647,7 @@ export default function MyOrder() {
                     {!isDelivered && !isCancelled ? (
                       <Link
                         href={`/track/${order._id}`}
-                        className="flex-1 bg-[#0f8646] hover:bg-[#0c6a38] active:scale-98 text-white py-2.5 px-4 rounded-xl text-xs font-black shadow-xs hover:shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer text-center"
+                        className="flex-1 bg-[#0a3d24] hover:bg-[#072817] active:scale-98 text-white py-2.5 px-4 rounded-xl text-xs font-black shadow-xs hover:shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer text-center"
                       >
                         <Truck size={14} />
                         <span>Track Live Delivery</span>
@@ -669,7 +669,7 @@ export default function MyOrder() {
                     {/* Secondary 1: Quick Repeat Basket */}
                     <button
                       onClick={() => handleRepeatOrder(order)}
-                      className="bg-emerald-50 hover:bg-emerald-100 active:scale-95 text-[#0f8646] border border-emerald-200 py-2.5 px-3.5 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shrink-0"
+                      className="bg-emerald-50 hover:bg-emerald-100 active:scale-95 text-[#0a3d24] border border-emerald-200 py-2.5 px-3.5 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shrink-0"
                       title="Reorder fresh basket"
                     >
                       <RotateCw size={13} />
@@ -682,7 +682,7 @@ export default function MyOrder() {
                       className="bg-gray-100 hover:bg-gray-200 active:scale-95 text-gray-700 border border-gray-200 py-2.5 px-3.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shrink-0"
                       title="View Invoice"
                     >
-                      <Printer size={13} className="text-[#0f8646]" />
+                      <Printer size={13} className="text-[#0a3d24]" />
                       <span className="hidden sm:inline">Receipt</span>
                     </button>
 
@@ -722,7 +722,7 @@ export default function MyOrder() {
                       >
                         {/* Address Pill */}
                         <div className="text-[11px] text-gray-600 bg-white rounded-xl p-3 flex items-start gap-2.5 border border-gray-200/80 shadow-2xs">
-                          <MapPin size={14} className="text-[#0f8646] shrink-0 mt-0.5" />
+                          <MapPin size={14} className="text-[#0a3d24] shrink-0 mt-0.5" />
                           <div className="min-w-0 flex-1">
                             <span className="font-bold text-gray-900 block mb-0.5">
                               Delivery Destination:
@@ -890,7 +890,7 @@ export default function MyOrder() {
           >
             <div className="flex items-center justify-between pb-3 border-b border-gray-100 mb-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-[#0f8646] flex items-center justify-center font-black">
+                <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center font-black">
                   <HelpCircle size={20} />
                 </div>
                 <div>
@@ -930,7 +930,7 @@ export default function MyOrder() {
                   onClick={() => setHelpIssueType(item.label)}
                   className={`p-3 rounded-2xl border text-xs font-bold text-left flex items-center gap-2.5 transition cursor-pointer ${
                     helpIssueType === item.label
-                      ? "border-[#0f8646] bg-emerald-50 text-[#0f8646] shadow-2xs font-extrabold"
+                      ? "border-[#0a3d24] bg-emerald-50 text-[#0a3d24] shadow-2xs font-extrabold"
                       : "border-gray-200 text-gray-700 hover:bg-gray-50"
                   }`}
                 >
@@ -949,7 +949,7 @@ export default function MyOrder() {
                 onChange={(e) => setHelpDetails(e.target.value)}
                 placeholder="E.g., 500g tomatoes were squashed, or rider arrived late..."
                 rows={3}
-                className="w-full text-xs p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] focus:ring-1 focus:ring-[#0f8646] transition resize-none text-gray-800"
+                className="w-full text-xs p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] focus:ring-1 focus:ring-[#0a3d24] transition resize-none text-gray-800"
               />
             </div>
 
@@ -973,12 +973,12 @@ export default function MyOrder() {
               >
                 {submittingHelp ? (
                   <>
-                    <Loader2 size={14} className="animate-spin text-[#0f8646]" />
+                    <Loader2 size={14} className="animate-spin text-[#0a3d24]" />
                     <span>Submitting Ticket...</span>
                   </>
                 ) : (
                   <>
-                    <MessageSquare size={14} className="text-[#0f8646]" />
+                    <MessageSquare size={14} className="text-[#0a3d24]" />
                     <span>Submit Formal Support Ticket</span>
                   </>
                 )}

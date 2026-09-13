@@ -83,7 +83,7 @@ export default function UserProfileHub() {
       <div className="min-h-screen bg-[#f8f9fa] flex flex-col font-sans text-gray-900">
         <Nav />
         <main className="flex-1 max-w-md w-full mx-auto px-4 py-16 flex flex-col items-center justify-center text-center">
-          <div className="w-20 h-20 rounded-3xl bg-emerald-100/80 text-[#0f8646] flex items-center justify-center mb-5 shadow-xs border border-emerald-200">
+          <div className="w-20 h-20 rounded-3xl bg-emerald-100/80 text-[#0a3d24] flex items-center justify-center mb-5 shadow-xs border border-emerald-200">
             <UserIcon size={38} className="stroke-[2.2]" />
           </div>
           <h1 className="text-2xl font-black text-gray-900 tracking-tight mb-2">
@@ -94,7 +94,7 @@ export default function UserProfileHub() {
           </p>
           <Link
             href="/login"
-            className="w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black py-4 px-6 rounded-2xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer text-sm"
+            className="w-full bg-[#0a3d24] hover:bg-[#072817] text-white font-black py-4 px-6 rounded-2xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer text-sm"
           >
             <UserIcon size={18} />
             <span>Login or Create Account</span>
@@ -115,7 +115,7 @@ export default function UserProfileHub() {
         <div className="flex items-center justify-between">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-600 hover:text-[#0c831f] transition bg-white px-3 py-1.5 rounded-xl border border-gray-200/80 shadow-2xs hover:shadow-xs group"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-600 hover:text-[#0a3d24] transition bg-white px-3 py-1.5 rounded-xl border border-gray-200/80 shadow-2xs hover:shadow-xs group"
           >
             <ArrowLeft size={13} className="group-hover:-translate-x-0.5 transition-transform" />
             <span>Store</span>
@@ -128,7 +128,7 @@ export default function UserProfileHub() {
               className="bg-white hover:bg-gray-50 text-gray-600 border border-gray-200/80 px-2.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1 cursor-pointer disabled:opacity-50 shadow-2xs"
               title="Refresh Data"
             >
-              <RefreshCw size={12} className={loading ? "animate-spin text-[#0c831f]" : ""} />
+              <RefreshCw size={12} className={loading ? "animate-spin text-[#0a3d24]" : ""} />
               <span className="hidden sm:inline">Refresh</span>
             </button>
 
@@ -156,7 +156,7 @@ export default function UserProfileHub() {
             <div className="flex flex-col sm:flex-row items-center gap-4">
               
               {/* Avatar Box */}
-              <div className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-2xl bg-gradient-to-tr from-[#0c831f] via-emerald-600 to-green-500 text-white flex items-center justify-center font-black text-2xl shadow-sm shrink-0 overflow-hidden ring-4 ring-emerald-50">
+              <div className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-2xl bg-gradient-to-tr from-[#051f12] via-[#0a3d24] to-[#072817] text-white flex items-center justify-center font-black text-2xl shadow-sm shrink-0 overflow-hidden ring-4 ring-emerald-50">
                 {activeUser?.image ? (
                   <img
                     src={activeUser.image}
@@ -189,7 +189,7 @@ export default function UserProfileHub() {
                       <Truck size={11} /> Delivery Partner
                     </span>
                   ) : (
-                    <span className="bg-emerald-50 text-[#0c831f] border border-emerald-200/90 font-bold text-[10px] px-2 py-0.5 rounded-full inline-flex items-center gap-1">
+                    <span className="bg-emerald-50 text-[#0a3d24] border border-emerald-200/90 font-bold text-[10px] px-2 py-0.5 rounded-full inline-flex items-center gap-1">
                       <Sparkles size={10} /> Verified Member
                     </span>
                   )}
@@ -201,7 +201,7 @@ export default function UserProfileHub() {
 
                 <div className="flex items-center justify-center sm:justify-start gap-2 mt-2 text-[11px] text-gray-500 font-medium">
                   <span className="inline-flex items-center gap-1 text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-100">
-                    <MapPin size={11} className="text-[#0c831f]" /> Bhopal, MP
+                    <MapPin size={11} className="text-[#0a3d24]" /> Bhopal, MP
                   </span>
                   <span>•</span>
                   <span>10-15 Min Express Delivery</span>
@@ -215,7 +215,7 @@ export default function UserProfileHub() {
         {(activeUser?.role === "deliveryboy" || activeUser?.role === "admin") && (
           <Link
             href="/deliveryboy"
-            className="bg-gradient-to-r from-emerald-600 via-[#0c831f] to-green-700 text-white rounded-3xl p-4 sm:p-5 shadow-sm border border-emerald-500/30 flex items-center justify-between group hover:shadow-md transition-all"
+            className="bg-gradient-to-r from-[#051f12] via-[#0a3d24] to-[#072817] text-white rounded-3xl p-4 sm:p-5 shadow-sm border border-emerald-500/30 flex items-center justify-between group hover:shadow-md transition-all"
           >
             <div className="flex items-center gap-3.5 min-w-0">
               <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center text-white shrink-0 border border-white/20 shadow-inner">
@@ -231,7 +231,7 @@ export default function UserProfileHub() {
               </div>
             </div>
 
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-white text-[#0c831f] flex items-center justify-center font-black shrink-0 group-hover:translate-x-0.5 transition-transform shadow-xs">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-white text-[#0a3d24] flex items-center justify-center font-black shrink-0 group-hover:translate-x-0.5 transition-transform shadow-xs">
               <ChevronRight size={17} className="stroke-[2.5]" />
             </div>
           </Link>
@@ -288,10 +288,10 @@ export default function UserProfileHub() {
             className="bg-white rounded-2xl p-3 sm:p-4 border border-gray-200/70 shadow-2xs hover:border-emerald-400 hover:shadow-xs transition-all flex flex-col justify-between group text-center sm:text-left"
           >
             <div className="flex items-center justify-between mb-2">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-50 text-[#0c831f] flex items-center justify-center font-black mx-auto sm:mx-0 border border-emerald-100">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-50 text-[#0a3d24] flex items-center justify-center font-black mx-auto sm:mx-0 border border-emerald-100">
                 <ShoppingCart size={18} />
               </div>
-              <ChevronRight size={14} className="hidden sm:block text-gray-300 group-hover:text-[#0c831f] group-hover:translate-x-0.5 transition-transform" />
+              <ChevronRight size={14} className="hidden sm:block text-gray-300 group-hover:text-[#0a3d24] group-hover:translate-x-0.5 transition-transform" />
             </div>
             <div>
               <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 block">
@@ -309,7 +309,7 @@ export default function UserProfileHub() {
           <motion.div
             initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-gradient-to-r from-[#0c831f] via-emerald-600 to-[#0c831f] text-white rounded-3xl p-4 sm:p-5 shadow-sm border border-emerald-500/40 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3.5"
+            className="bg-gradient-to-r from-[#051f12] via-[#0a3d24] to-[#072817] text-white rounded-3xl p-4 sm:p-5 shadow-sm border border-emerald-500/40 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3.5"
           >
             {/* Left: Icon & Info */}
             <div className="flex items-center gap-3.5 min-w-0">
@@ -342,7 +342,7 @@ export default function UserProfileHub() {
             {/* Right: Track Button */}
             <Link
               href={`/track/${activeOrder._id}`}
-              className="bg-white hover:bg-emerald-50 active:scale-98 text-[#0c831f] px-5 py-2.5 rounded-xl font-black text-xs shadow-xs transition-all flex items-center justify-center gap-1.5 shrink-0 group self-stretch sm:self-auto"
+              className="bg-white hover:bg-emerald-50 active:scale-98 text-[#0a3d24] px-5 py-2.5 rounded-xl font-black text-xs shadow-xs transition-all flex items-center justify-center gap-1.5 shrink-0 group self-stretch sm:self-auto"
             >
               <span>Track Live Delivery</span>
               <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]" />
@@ -362,11 +362,11 @@ export default function UserProfileHub() {
               className="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50/70 hover:bg-emerald-50/50 border border-gray-100 hover:border-emerald-300 transition group"
             >
               <div className="flex items-center gap-3 min-w-0">
-                <div className="w-9 h-9 rounded-xl bg-white text-[#0c831f] flex items-center justify-center border border-gray-200/80 shadow-2xs shrink-0">
+                <div className="w-9 h-9 rounded-xl bg-white text-[#0a3d24] flex items-center justify-center border border-gray-200/80 shadow-2xs shrink-0">
                   <Package size={17} />
                 </div>
                 <div className="min-w-0">
-                  <h3 className="text-xs font-bold text-gray-900 group-hover:text-[#0c831f] transition truncate">
+                  <h3 className="text-xs font-bold text-gray-900 group-hover:text-[#0a3d24] transition truncate">
                     My Orders & Invoices
                   </h3>
                   <p className="text-[10.5px] text-gray-500 truncate">
@@ -374,7 +374,7 @@ export default function UserProfileHub() {
                   </p>
                 </div>
               </div>
-              <ChevronRight size={15} className="text-gray-400 group-hover:text-[#0c831f] group-hover:translate-x-0.5 transition-transform shrink-0" />
+              <ChevronRight size={15} className="text-gray-400 group-hover:text-[#0a3d24] group-hover:translate-x-0.5 transition-transform shrink-0" />
             </Link>
 
             <Link
@@ -405,7 +405,7 @@ export default function UserProfileHub() {
             <h2 className="text-[11px] font-black uppercase tracking-wider text-gray-400">
               Shop Fresh Produce
             </h2>
-            <Link href="/shop" className="text-xs font-bold text-[#0c831f] hover:underline">
+            <Link href="/shop" className="text-xs font-bold text-[#0a3d24] hover:underline">
               All Produce
             </Link>
           </div>
@@ -422,7 +422,7 @@ export default function UserProfileHub() {
                   className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-300"
                 />
               </div>
-              <span className="text-xs font-black text-gray-900 group-hover:text-[#0c831f] truncate w-full">
+              <span className="text-xs font-black text-gray-900 group-hover:text-[#0a3d24] truncate w-full">
                 Vegetables
               </span>
               <span className="text-[10px] text-gray-400 truncate w-full mt-0.5">Farm Fresh</span>
@@ -495,7 +495,7 @@ export default function UserProfileHub() {
         {/* 7. Minimal 24/7 Bhopal Support Card */}
         <div className="bg-white rounded-3xl p-4 sm:p-5 border border-gray-200/70 shadow-2xs flex flex-col sm:flex-row items-center justify-between gap-3.5">
           <div className="flex items-center gap-3 text-center sm:text-left">
-            <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#0c831f] flex items-center justify-center shrink-0 border border-emerald-100 shadow-2xs">
+            <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#0a3d24] flex items-center justify-center shrink-0 border border-emerald-100 shadow-2xs">
               <Phone size={18} />
             </div>
             <div>

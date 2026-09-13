@@ -216,7 +216,7 @@ export default function LocationModal({
             {/* Header */}
             <div className="p-4 sm:p-5 border-b border-gray-100 flex items-center justify-between bg-green-50/50">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-[#0f8646] text-white flex items-center justify-center shadow-xs">
+                <div className="w-9 h-9 rounded-xl bg-[#0a3d24] text-white flex items-center justify-center shadow-xs">
                   <MapPin size={18} />
                 </div>
                 <div>
@@ -255,10 +255,10 @@ export default function LocationModal({
                 type="button"
                 onClick={handleGPSDetect}
                 disabled={isDetecting}
-                className="w-full flex items-center justify-between p-3.5 bg-green-50/80 hover:bg-green-100/80 border border-green-200 rounded-2xl text-[#0f8646] transition group cursor-pointer shadow-2xs"
+                className="w-full flex items-center justify-between p-3.5 bg-green-50/80 hover:bg-green-100/80 border border-green-200 rounded-2xl text-[#0a3d24] transition group cursor-pointer shadow-2xs"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-[#0f8646] text-white flex items-center justify-center shrink-0 shadow-2xs">
+                  <div className="w-8 h-8 rounded-xl bg-[#0a3d24] text-white flex items-center justify-center shrink-0 shadow-2xs">
                     {isDetecting ? (
                       <Loader2 size={16} className="animate-spin" />
                     ) : (
@@ -274,7 +274,7 @@ export default function LocationModal({
                     </span>
                   </div>
                 </div>
-                <ChevronRight size={16} className="text-[#0f8646] group-hover:translate-x-1 transition-transform" />
+                <ChevronRight size={16} className="text-[#0a3d24] group-hover:translate-x-1 transition-transform" />
               </button>
 
               {/* 2. Live Real-Time Search Bar */}
@@ -282,7 +282,7 @@ export default function LocationModal({
                 <label className="text-xs font-black text-gray-700 uppercase tracking-wider block">
                   Search Colony / Landmark / Street Name
                 </label>
-                <div className="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 focus-within:border-[#0f8646] focus-within:bg-white focus-within:ring-1 focus-within:ring-[#0f8646] transition">
+                <div className="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 focus-within:border-[#0a3d24] focus-within:bg-white focus-within:ring-1 focus-within:ring-[#0a3d24] transition">
                   <Search size={16} className="text-gray-400 mr-2 shrink-0" />
                   <input
                     type="text"
@@ -292,7 +292,7 @@ export default function LocationModal({
                     className="w-full bg-transparent outline-none text-xs sm:text-sm text-gray-800 placeholder-gray-400"
                   />
                   {isSearchingLive ? (
-                    <Loader2 size={15} className="animate-spin text-[#0f8646] shrink-0" />
+                    <Loader2 size={15} className="animate-spin text-[#0a3d24] shrink-0" />
                   ) : searchQuery ? (
                     <button
                       type="button"
@@ -308,12 +308,12 @@ export default function LocationModal({
               {/* Live Real Results from OSM Map API */}
               {searchQuery.trim().length >= 2 && (
                 <div className="space-y-2 border border-green-200 bg-green-50/40 rounded-2xl p-3">
-                  <span className="text-[11px] font-black text-[#0f8646] uppercase tracking-wider block">
+                  <span className="text-[11px] font-black text-[#0a3d24] uppercase tracking-wider block">
                     Live Verified Places ({liveSuggestions.length} found)
                   </span>
                   {isSearchingLive ? (
                     <div className="flex items-center justify-center py-4 gap-2 text-xs text-gray-500">
-                      <Loader2 size={14} className="animate-spin text-[#0f8646]" /> Searching live map database...
+                      <Loader2 size={14} className="animate-spin text-[#0a3d24]" /> Searching live map database...
                     </div>
                   ) : liveSuggestions.length === 0 ? (
                     <div className="text-center py-3 text-xs text-gray-500">
@@ -330,10 +330,10 @@ export default function LocationModal({
                           <div
                             key={idx}
                             onClick={() => saveLocationChoice(title)}
-                            className="p-2.5 rounded-xl bg-white border border-gray-100 hover:border-[#0f8646] flex items-center justify-between cursor-pointer transition"
+                            className="p-2.5 rounded-xl bg-white border border-gray-100 hover:border-[#0a3d24] flex items-center justify-between cursor-pointer transition"
                           >
                             <div className="flex items-center gap-2.5 min-w-0">
-                              <div className="w-7 h-7 rounded-lg bg-green-100 text-[#0f8646] flex items-center justify-center shrink-0">
+                              <div className="w-7 h-7 rounded-lg bg-green-100 text-[#0a3d24] flex items-center justify-center shrink-0">
                                 <MapPin size={13} />
                               </div>
                               <div className="min-w-0">
@@ -345,7 +345,7 @@ export default function LocationModal({
                                 </span>
                               </div>
                             </div>
-                            <span className="text-[10px] font-extrabold text-[#0f8646] bg-green-50 px-2 py-0.5 rounded shrink-0">
+                            <span className="text-[10px] font-extrabold text-[#0a3d24] bg-green-50 px-2 py-0.5 rounded shrink-0">
                               Select
                             </span>
                           </div>
@@ -359,7 +359,7 @@ export default function LocationModal({
               {/* 3. Popular Bhopal Delivery Localities */}
               <div className="space-y-1.5 pt-1">
                 <span className="text-xs font-black text-gray-700 uppercase tracking-wider flex items-center gap-1">
-                  <MapPin size={12} className="text-[#0f8646]" />
+                  <MapPin size={12} className="text-[#0a3d24]" />
                   Popular Bhopal Localities (1-Tap Select)
                 </span>
                 <div className="grid grid-cols-2 gap-1.5">
@@ -369,8 +369,8 @@ export default function LocationModal({
                       onClick={() => saveLocationChoice(`${area.name}, Bhopal`)}
                       className={`p-2 rounded-xl border text-left transition cursor-pointer flex items-center justify-between ${
                         currentLocation.includes(area.name)
-                          ? "bg-green-50 border-[#0f8646] text-[#0f8646] font-black"
-                          : "bg-gray-50/70 border-gray-100 hover:border-[#0f8646] text-gray-700 font-bold"
+                          ? "bg-green-50 border-[#0a3d24] text-[#0a3d24] font-black"
+                          : "bg-gray-50/70 border-gray-100 hover:border-[#0a3d24] text-gray-700 font-bold"
                       }`}
                     >
                       <span className="text-[11px] truncate">{area.name}</span>
@@ -388,7 +388,7 @@ export default function LocationModal({
                   Or Type Complete Doorstep Address
                 </label>
                 <div className="flex items-center gap-2">
-                  <div className="flex-1 flex items-center bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 focus-within:border-[#0f8646] focus-within:bg-white focus-within:ring-1 focus-within:ring-[#0f8646] transition">
+                  <div className="flex-1 flex items-center bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 focus-within:border-[#0a3d24] focus-within:bg-white focus-within:ring-1 focus-within:ring-[#0a3d24] transition">
                     <Building size={16} className="text-gray-400 mr-2 shrink-0" />
                     <input
                       type="text"
@@ -403,7 +403,7 @@ export default function LocationModal({
                     disabled={!customAddress.trim()}
                     className={`px-4 py-2.5 rounded-xl font-black text-xs transition cursor-pointer shrink-0 ${
                       customAddress.trim()
-                        ? "bg-[#0f8646] text-white hover:bg-[#0c6a38] shadow-xs"
+                        ? "bg-[#0a3d24] text-white hover:bg-[#072817] shadow-xs"
                         : "bg-gray-100 text-gray-400 cursor-not-allowed"
                     }`}
                   >
@@ -424,7 +424,7 @@ export default function LocationModal({
                       <div
                         key={i}
                         onClick={() => saveLocationChoice(loc)}
-                        className="p-2.5 rounded-xl border border-gray-100 bg-gray-50/60 hover:border-[#0f8646] hover:bg-green-50/50 flex items-center justify-between cursor-pointer transition"
+                        className="p-2.5 rounded-xl border border-gray-100 bg-gray-50/60 hover:border-[#0a3d24] hover:bg-green-50/50 flex items-center justify-between cursor-pointer transition"
                       >
                         <div className="flex items-center gap-2 min-w-0">
                           <MapPin size={13} className="text-gray-400 shrink-0" />
@@ -433,7 +433,7 @@ export default function LocationModal({
                           </span>
                         </div>
                         {currentLocation === loc && (
-                          <Check size={14} className="text-[#0f8646] stroke-[3]" />
+                          <Check size={14} className="text-[#0a3d24] stroke-[3]" />
                         )}
                       </div>
                     ))}

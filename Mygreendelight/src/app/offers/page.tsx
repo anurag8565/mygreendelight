@@ -58,7 +58,7 @@ export default function OffersPage() {
       <main className="flex-1 max-w-7xl w-full mx-auto px-3.5 sm:px-6 md:px-8 py-5 sm:py-8">
         
         {/* Top Header Banner */}
-        <div className="bg-gradient-to-r from-[#032412] via-[#073b1d] to-[#0f8646] text-white rounded-3xl p-6 sm:p-8 shadow-lg relative overflow-hidden mb-6 sm:mb-8">
+        <div className="bg-gradient-to-r from-[#072817] via-[#0a3d24] to-[#072817] text-white rounded-3xl p-6 sm:p-8 shadow-lg relative overflow-hidden mb-6 sm:mb-8">
           <div className="absolute right-0 top-0 w-80 h-80 bg-amber-400/15 rounded-full blur-3xl pointer-events-none" />
           
           <div className="relative z-10 max-w-2xl">
@@ -84,7 +84,7 @@ export default function OffersPage() {
         <div className="mb-10">
           <div className="flex items-center justify-between mb-4 sm:mb-6">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-emerald-100 text-[#0f8646] flex items-center justify-center font-black">
+              <div className="w-8 h-8 rounded-xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center font-black">
                 <Tag size={18} />
               </div>
               <div>
@@ -99,7 +99,7 @@ export default function OffersPage() {
 
             <Link
               href="/shop"
-              className="text-xs sm:text-sm font-black text-[#0f8646] hover:text-[#0c6a38] flex items-center gap-1 transition"
+              className="text-xs sm:text-sm font-black text-[#0a3d24] hover:text-[#072817] flex items-center gap-1 transition"
             >
               <span>Shop All Produce</span>
               <ArrowRight size={14} />
@@ -129,7 +129,7 @@ export default function OffersPage() {
                     className="bg-white rounded-3xl border-2 border-dashed border-emerald-300/80 p-5 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between relative overflow-hidden group"
                   >
                     {/* Corner Tag */}
-                    <div className="absolute top-0 right-0 bg-emerald-50 text-[#0f8646] text-[10px] font-black uppercase px-3 py-1 rounded-bl-2xl border-l border-b border-emerald-200">
+                    <div className="absolute top-0 right-0 bg-emerald-50 text-[#0a3d24] text-[10px] font-black uppercase px-3 py-1 rounded-bl-2xl border-l border-b border-emerald-200">
                       Verified
                     </div>
 
@@ -160,8 +160,8 @@ export default function OffersPage() {
                         onClick={() => handleCopy(coupon.code)}
                         className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-2xs ${
                           isCopied
-                            ? "bg-[#0f8646] text-white"
-                            : "bg-gray-100 hover:bg-emerald-100 text-gray-800 hover:text-[#0f8646]"
+                            ? "bg-[#0a3d24] text-white"
+                            : "bg-gray-100 hover:bg-emerald-100 text-gray-800 hover:text-[#0a3d24]"
                         }`}
                       >
                         {isCopied ? (
@@ -187,7 +187,7 @@ export default function OffersPage() {
         {/* 3. How to Use Promo Codes Banner */}
         <div className="bg-emerald-50/70 rounded-3xl p-5 sm:p-6 border border-emerald-200 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3.5 text-center sm:text-left">
-            <div className="w-11 h-11 rounded-2xl bg-white text-[#0f8646] flex items-center justify-center font-black shadow-2xs shrink-0 border border-emerald-200">
+            <div className="w-11 h-11 rounded-2xl bg-white text-[#0a3d24] flex items-center justify-center font-black shadow-2xs shrink-0 border border-emerald-200">
               <Zap size={22} className="text-amber-500 fill-amber-500" />
             </div>
             <div>
@@ -202,7 +202,7 @@ export default function OffersPage() {
 
           <Link
             href="/shop"
-            className="w-full sm:w-auto bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2.5 rounded-xl font-black text-xs shadow-xs transition text-center flex items-center justify-center gap-1.5 cursor-pointer"
+            className="w-full sm:w-auto bg-[#0a3d24] hover:bg-[#072817] text-white px-5 py-2.5 rounded-xl font-black text-xs shadow-xs transition text-center flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <ShoppingBag size={14} />
             <span>Start Shopping</span>

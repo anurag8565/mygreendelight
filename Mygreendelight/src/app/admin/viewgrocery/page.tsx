@@ -467,14 +467,14 @@ export default function ViewGrocery() {
             >
               <RefreshCw
                 size={14}
-                className={refreshing ? "animate-spin text-[#0f8646]" : ""}
+                className={refreshing ? "animate-spin text-[#0a3d24]" : ""}
               />
               <span>Refresh</span>
             </button>
 
             <Link
               href="/admin/bulk-upload"
-              className="bg-green-50 hover:bg-green-100 border border-green-300 text-[#0f8646] px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5"
+              className="bg-green-50 hover:bg-green-100 border border-green-300 text-[#0a3d24] px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5"
             >
               <FileSpreadsheet size={15} />
               <span>Bulk CSV</span>
@@ -495,7 +495,7 @@ export default function ViewGrocery() {
 
             <Link
               href="/admin/addgrocery"
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-black shadow-sm transition flex items-center gap-1.5"
+              className="bg-[#0a3d24] hover:bg-[#072817] text-white px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-black shadow-sm transition flex items-center gap-1.5"
             >
               <Plus size={16} />
               <span>Add Produce</span>
@@ -591,7 +591,7 @@ export default function ViewGrocery() {
                   onClick={() => setSelectedCategory("all")}
                   className={`px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer ${
                     selectedCategory === "all"
-                      ? "bg-[#0f8646] text-white shadow-xs"
+                      ? "bg-[#0a3d24] text-white shadow-xs"
                       : "bg-gray-50 text-gray-600 hover:bg-gray-100"
                   }`}
                 >
@@ -631,7 +631,7 @@ export default function ViewGrocery() {
                     onClick={() => setSelectedCategory(cat.name)}
                     className={`px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer ${
                       selectedCategory.toLowerCase() === cat.name.toLowerCase()
-                        ? "bg-[#0f8646] text-white shadow-xs"
+                        ? "bg-[#0a3d24] text-white shadow-xs"
                         : "bg-gray-50 text-gray-600 hover:bg-gray-100"
                     }`}
                   >
@@ -651,7 +651,7 @@ export default function ViewGrocery() {
                   placeholder="Search produce by name..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 text-xs font-bold border border-gray-200 rounded-xl outline-none focus:border-[#0f8646] bg-gray-50/60"
+                  className="w-full pl-10 pr-4 py-2 text-xs font-bold border border-gray-200 rounded-xl outline-none focus:border-[#0a3d24] bg-gray-50/60"
                 />
               </div>
             </div>
@@ -661,7 +661,7 @@ export default function ViewGrocery() {
           {selectedIds.length > 0 && (
             <div className="bg-gray-900 text-white rounded-3xl p-4 sm:p-5 shadow-2xl border border-gray-700 flex flex-col lg:flex-row lg:items-center justify-between gap-4 animate-fade-in sticky top-20 z-40">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-[#0f8646] text-white flex items-center justify-center font-black text-sm shrink-0">
+                <div className="w-9 h-9 rounded-xl bg-[#0a3d24] text-white flex items-center justify-center font-black text-sm shrink-0">
                   {selectedIds.length}
                 </div>
                 <div>
@@ -731,7 +731,7 @@ export default function ViewGrocery() {
                   <button
                     disabled={bulkLoading}
                     onClick={() => handleBulkAction("discount", bulkDiscountInput)}
-                    className="bg-[#0f8646] hover:bg-[#0c6a38] text-white text-xs font-black px-2 py-1 rounded-lg transition disabled:opacity-50 cursor-pointer"
+                    className="bg-[#0a3d24] hover:bg-[#072817] text-white text-xs font-black px-2 py-1 rounded-lg transition disabled:opacity-50 cursor-pointer"
                   >
                     Apply
                   </button>
@@ -806,7 +806,7 @@ export default function ViewGrocery() {
           {/* Groceries Table */}
           {loading ? (
             <div className="py-24 flex flex-col items-center justify-center">
-              <Loader2 size={36} className="animate-spin text-[#0f8646] mb-3" />
+              <Loader2 size={36} className="animate-spin text-[#0a3d24] mb-3" />
               <p className="text-xs font-bold text-gray-500">Loading Produce Items...</p>
             </div>
           ) : filteredGroceries.length === 0 ? (
@@ -820,7 +820,7 @@ export default function ViewGrocery() {
               </p>
               <Link
                 href="/admin/addgrocery"
-                className="bg-[#0f8646] text-white px-5 py-2.5 rounded-xl font-bold text-xs"
+                className="bg-[#0a3d24] text-white px-5 py-2.5 rounded-xl font-bold text-xs"
               >
                 + Add Produce Item
               </Link>
@@ -839,7 +839,7 @@ export default function ViewGrocery() {
                             filteredGroceries.length > 0
                           }
                           onChange={toggleSelectAll}
-                          className="w-4 h-4 rounded text-[#0f8646] focus:ring-[#0f8646] cursor-pointer"
+                          className="w-4 h-4 rounded text-[#0a3d24] focus:ring-[#0a3d24] cursor-pointer"
                           title="Select / Deselect All"
                         />
                       </th>
@@ -876,7 +876,7 @@ export default function ViewGrocery() {
                               type="checkbox"
                               checked={isSelected}
                               onChange={() => toggleSelectItem(item._id)}
-                              className="w-4 h-4 rounded text-[#0f8646] focus:ring-[#0f8646] cursor-pointer"
+                              className="w-4 h-4 rounded text-[#0a3d24] focus:ring-[#0a3d24] cursor-pointer"
                             />
                           </td>
                           <td className="py-3.5 px-4">
@@ -954,7 +954,7 @@ export default function ViewGrocery() {
                           </td>
 
                           <td className="py-3.5 px-4">
-                            <span className="bg-green-50 text-[#0f8646] font-bold text-[11px] px-2.5 py-1 rounded-lg border border-green-200">
+                            <span className="bg-green-50 text-[#0a3d24] font-bold text-[11px] px-2.5 py-1 rounded-lg border border-green-200">
                               {item.category || "General"}
                             </span>
                           </td>
@@ -990,7 +990,7 @@ export default function ViewGrocery() {
                                   <span>Low: {stockCount} left</span>
                                 </span>
                               ) : (
-                                <span className="bg-green-100 text-[#0f8646] font-extrabold text-[10px] px-2.5 py-0.5 rounded-md uppercase">
+                                <span className="bg-green-100 text-[#0a3d24] font-extrabold text-[10px] px-2.5 py-0.5 rounded-md uppercase">
                                   In Stock ({stockCount})
                                 </span>
                               )}
@@ -998,7 +998,7 @@ export default function ViewGrocery() {
                               {stockCount < 10 && (
                                 <button
                                   onClick={() => quickRestock(item, 25)}
-                                  className="bg-emerald-50 hover:bg-emerald-100 text-[#0f8646] border border-emerald-300 px-2 py-0.5 rounded-md text-[10px] font-black transition cursor-pointer flex items-center gap-1"
+                                  className="bg-emerald-50 hover:bg-emerald-100 text-[#0a3d24] border border-emerald-300 px-2 py-0.5 rounded-md text-[10px] font-black transition cursor-pointer flex items-center gap-1"
                                   title="Add +25 Fresh Farm Units"
                                 >
                                   <Plus size={10} />
@@ -1022,7 +1022,7 @@ export default function ViewGrocery() {
                             <div className="flex items-center justify-end gap-2">
                               <button
                                 onClick={() => openEdit(item)}
-                                className="p-2 rounded-xl bg-gray-100 hover:bg-[#0f8646] text-gray-600 hover:text-white transition"
+                                className="p-2 rounded-xl bg-gray-100 hover:bg-[#0a3d24] text-gray-600 hover:text-white transition"
                                 title="Edit Item"
                               >
                                 <Edit size={14} />
@@ -1072,7 +1072,7 @@ export default function ViewGrocery() {
                   <select
                     value={editForm.status}
                     onChange={(e) => setEditForm({ ...editForm, status: e.target.value as "published" | "draft" })}
-                    className="w-full p-2 rounded-xl border border-gray-300 outline-none focus:border-[#0f8646] bg-white font-bold text-xs"
+                    className="w-full p-2 rounded-xl border border-gray-300 outline-none focus:border-[#0a3d24] bg-white font-bold text-xs"
                   >
                     <option value="published">🟢 Published (Live on Storefront)</option>
                     <option value="draft">🟡 Draft (Hidden from Customers)</option>
@@ -1103,7 +1103,7 @@ export default function ViewGrocery() {
                     required
                     value={editForm.name}
                     onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60"
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60"
                   />
                 </div>
 
@@ -1114,7 +1114,7 @@ export default function ViewGrocery() {
                     onChange={(e) =>
                       setEditForm({ ...editForm, category: e.target.value })
                     }
-                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60"
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60"
                   >
                     <option value="">Select Category</option>
                     {categories.map((c) => (
@@ -1136,7 +1136,7 @@ export default function ViewGrocery() {
                     onChange={(e) =>
                       setEditForm({ ...editForm, price: Number(e.target.value) })
                     }
-                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-bold"
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-bold"
                   />
                 </div>
 
@@ -1149,7 +1149,7 @@ export default function ViewGrocery() {
                     onChange={(e) =>
                       setEditForm({ ...editForm, mrp: Number(e.target.value) })
                     }
-                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60"
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60"
                   />
                 </div>
 
@@ -1161,7 +1161,7 @@ export default function ViewGrocery() {
                     placeholder="e.g. 500g, 1 kg"
                     value={editForm.unit}
                     onChange={(e) => setEditForm({ ...editForm, unit: e.target.value })}
-                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60"
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60"
                   />
                 </div>
 
@@ -1174,7 +1174,7 @@ export default function ViewGrocery() {
                     onChange={(e) =>
                       setEditForm({ ...editForm, stock: Number(e.target.value) })
                     }
-                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-bold"
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-bold"
                   />
                 </div>
               </div>
@@ -1192,7 +1192,7 @@ export default function ViewGrocery() {
                     onChange={(e) =>
                       setEditForm({ ...editForm, rating: Number(e.target.value) })
                     }
-                    className="w-full p-2 rounded-xl border border-emerald-200 outline-none focus:border-[#0f8646] bg-white font-bold"
+                    className="w-full p-2 rounded-xl border border-emerald-200 outline-none focus:border-[#0a3d24] bg-white font-bold"
                   />
                 </div>
 
@@ -1204,7 +1204,7 @@ export default function ViewGrocery() {
                     onChange={(e) =>
                       setEditForm({ ...editForm, isTopRated: e.target.checked })
                     }
-                    className="w-4 h-4 accent-[#0f8646] rounded cursor-pointer"
+                    className="w-4 h-4 accent-[#0a3d24] rounded cursor-pointer"
                   />
                   <label htmlFor="edit-top-rated-check" className="cursor-pointer text-gray-800 font-extrabold text-xs">
                     🌟 Feature in &quot;Top Rated Farm Products&quot;
@@ -1219,7 +1219,7 @@ export default function ViewGrocery() {
                   required
                   value={editForm.image}
                   onChange={(e) => setEditForm({ ...editForm, image: e.target.value })}
-                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-mono text-[11px]"
+                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-mono text-[11px]"
                 />
               </div>
 
@@ -1231,7 +1231,7 @@ export default function ViewGrocery() {
                   onChange={(e) =>
                     setEditForm({ ...editForm, description: e.target.value })
                   }
-                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 resize-none"
+                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 resize-none"
                 />
               </div>
 
@@ -1249,7 +1249,7 @@ export default function ViewGrocery() {
                         { weight: "1 kg", price: editForm.price, stock: 20 },
                       ])
                     }
-                    className="text-xs text-[#0f8646] hover:underline"
+                    className="text-xs text-[#0a3d24] hover:underline"
                   >
                     + Add Size Variation
                   </button>
@@ -1315,7 +1315,7 @@ export default function ViewGrocery() {
                 <button
                   type="submit"
                   disabled={updating}
-                  className="px-6 py-2.5 rounded-xl bg-[#0f8646] hover:bg-[#0c6a38] text-white font-extrabold shadow-md disabled:opacity-50"
+                  className="px-6 py-2.5 rounded-xl bg-[#0a3d24] hover:bg-[#072817] text-white font-extrabold shadow-md disabled:opacity-50"
                 >
                   {updating ? "Saving Changes..." : "Save Produce Details"}
                 </button>

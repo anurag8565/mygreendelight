@@ -66,7 +66,7 @@ export default function FilteredProduceSection({
         count: vegItems.length,
         badge: "Daily Fresh",
         themeColor: "from-emerald-600 to-green-700",
-        activeBorder: "border-[#0c831f]",
+        activeBorder: "border-[#0a3d24]",
       },
       {
         id: "fruits",

@@ -139,7 +139,7 @@ export default function OrderPackingSlipModal({
         {/* Top Controls (Hidden on Print) */}
         <div className="bg-gray-900 text-white px-5 py-3.5 flex items-center justify-between print:hidden shrink-0">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-[#0f8646] flex items-center justify-center text-white">
+            <div className="w-8 h-8 rounded-xl bg-[#0a3d24] flex items-center justify-center text-white">
               <Package size={16} />
             </div>
             <div>
@@ -151,7 +151,7 @@ export default function OrderPackingSlipModal({
           <div className="flex items-center gap-2">
             <button
               onClick={handlePrint}
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 transition cursor-pointer shadow-xs hover:shadow-md"
+              className="bg-[#0a3d24] hover:bg-[#072817] text-white px-4 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 transition cursor-pointer shadow-xs hover:shadow-md"
             >
               <Printer size={14} />
               <span>Print Slip</span>
@@ -175,7 +175,7 @@ export default function OrderPackingSlipModal({
           {/* Brand & Order ID Header */}
           <div className="text-center border-b-2 border-dashed border-gray-300 pb-3 mb-3">
             <div className="flex items-center justify-center gap-1.5 mb-0.5">
-              <div className="w-5 h-5 rounded-md bg-[#0f8646] flex items-center justify-center text-white text-[11px] font-black">
+              <div className="w-5 h-5 rounded-md bg-[#0a3d24] flex items-center justify-center text-white text-[11px] font-black">
                 SQ
               </div>
               <h2 className="text-lg font-black tracking-tight text-gray-900">
@@ -190,7 +190,7 @@ export default function OrderPackingSlipModal({
               <span className="bg-gray-900 text-white font-mono text-xs font-black px-3 py-1 rounded-lg">
                 ORDER #{orderShortId}
               </span>
-              <span className="bg-emerald-50 text-[#0f8646] border border-emerald-300 text-[10px] font-black uppercase px-2.5 py-1 rounded-lg">
+              <span className="bg-emerald-50 text-[#0a3d24] border border-emerald-300 text-[10px] font-black uppercase px-2.5 py-1 rounded-lg">
                 {order.deliverySlot || "Instant Fresh Dispatch"}
               </span>
             </div>
@@ -223,7 +223,7 @@ export default function OrderPackingSlipModal({
 
             <div className="flex items-center justify-between">
               <span className="text-gray-500 font-bold text-[11px]">Contact No:</span>
-              <span className="font-mono font-black text-[#0f8646] text-xs sm:text-sm">
+              <span className="font-mono font-black text-[#0a3d24] text-xs sm:text-sm">
                 +91 {order.address?.mobile || order.user?.mobile || "N/A"}
               </span>
             </div>
@@ -288,7 +288,7 @@ export default function OrderPackingSlipModal({
           <div className="bg-emerald-50/70 p-3.5 rounded-2xl border border-emerald-200 space-y-2.5">
             <div className="flex justify-between items-center text-[11px]">
               <span className="text-emerald-900 font-bold flex items-center gap-1">
-                <Truck size={13} className="text-[#0f8646]" />
+                <Truck size={13} className="text-[#0a3d24]" />
                 <span>Assigned Fleet Rider:</span>
               </span>
               <span className="font-black text-gray-900">

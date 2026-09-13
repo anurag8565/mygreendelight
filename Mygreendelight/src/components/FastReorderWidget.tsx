@@ -73,8 +73,8 @@ export default function FastReorderWidget() {
           {/* Left / Top Info Area */}
           <div className="flex-1 min-w-0 overflow-hidden">
             <div className="flex items-center justify-between sm:justify-start gap-2 mb-1.5 flex-wrap">
-              <span className="bg-emerald-100 text-[#0f8646] font-black text-[10px] sm:text-xs px-2.5 py-0.5 rounded-full uppercase tracking-wide flex items-center gap-1 shadow-2xs">
-                <Zap size={12} className="fill-[#0f8646]" />
+              <span className="bg-emerald-100 text-[#0a3d24] font-black text-[10px] sm:text-xs px-2.5 py-0.5 rounded-full uppercase tracking-wide flex items-center gap-1 shadow-2xs">
+                <Zap size={12} className="fill-[#0a3d24]" />
                 <span>1-Click Fast Reorder</span>
               </span>
               <span className="text-[10.5px] sm:text-[11px] text-gray-400 font-medium">
@@ -107,7 +107,7 @@ export default function FastReorderWidget() {
                       {item.name}
                     </span>
                     <span className="text-[9.5px] text-gray-500 font-medium block mt-0.5">
-                      {item.orderedQuantity}x • <span className="text-[#0f8646] font-black">₹{item.currentPrice}</span>
+                      {item.orderedQuantity}x • <span className="text-[#0a3d24] font-black">₹{item.currentPrice}</span>
                     </span>
                   </div>
                 </div>
@@ -121,7 +121,7 @@ export default function FastReorderWidget() {
               <span className="text-[9.5px] sm:text-[10px] text-gray-400 font-black uppercase tracking-wider block">
                 Basket Total
               </span>
-              <span className="text-lg sm:text-2xl font-black text-[#0f8646] leading-none">
+              <span className="text-lg sm:text-2xl font-black text-[#0a3d24] leading-none">
                 ₹{data.totalCurrentPrice}
               </span>
             </div>
@@ -133,7 +133,7 @@ export default function FastReorderWidget() {
               className={`flex-1 sm:flex-initial px-4 sm:px-6 py-2.5 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-sm hover:shadow-md transition-all cursor-pointer active:scale-95 shrink-0 ${
                 isAdded
                   ? "bg-emerald-800 text-white"
-                  : "bg-[#0f8646] hover:bg-[#0c6a38] text-white"
+                  : "bg-[#0a3d24] hover:bg-[#072817] text-white"
               }`}
             >
               {isAdded ? (

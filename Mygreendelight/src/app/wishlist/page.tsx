@@ -132,12 +132,12 @@ export default function WishlistPage() {
               Home
             </Link>
             <span className="text-gray-300">/</span>
-            <span className="text-[#0f8646] font-bold">Wishlist ({items.length})</span>
+            <span className="text-[#0a3d24] font-bold">Wishlist ({items.length})</span>
           </div>
 
           <Link
             href="/shop"
-            className="text-xs font-semibold text-[#0f8646] hover:underline flex items-center gap-1"
+            className="text-xs font-semibold text-[#0a3d24] hover:underline flex items-center gap-1"
           >
             <span>Explore Store</span>
             <ChevronRight size={13} />
@@ -151,7 +151,7 @@ export default function WishlistPage() {
               initial={{ opacity: 0, y: -6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
-              className="p-3 bg-[#0f8646] text-white rounded-xl shadow-xs flex items-center justify-between text-xs sm:text-sm font-semibold"
+              className="p-3 bg-[#0a3d24] text-white rounded-xl shadow-xs flex items-center justify-between text-xs sm:text-sm font-semibold"
             >
               <div className="flex items-center gap-2">
                 <CheckCircle2 size={16} className="shrink-0" />
@@ -159,7 +159,7 @@ export default function WishlistPage() {
               </div>
               <Link
                 href="/user/cart"
-                className="bg-white text-[#0f8646] px-3 py-1 rounded-lg text-xs font-bold hover:bg-emerald-50 transition"
+                className="bg-white text-[#0a3d24] px-3 py-1 rounded-lg text-xs font-bold hover:bg-emerald-50 transition"
               >
                 Go to Cart →
               </Link>
@@ -174,7 +174,7 @@ export default function WishlistPage() {
               <div>
                 <h1 className="text-sm sm:text-base font-bold text-gray-900 flex items-center gap-2">
                   <span>Saved Items</span>
-                  <span className="text-xs font-semibold bg-emerald-50 text-[#0f8646] px-2 py-0.5 rounded-full border border-emerald-200/60">
+                  <span className="text-xs font-semibold bg-emerald-50 text-[#0a3d24] px-2 py-0.5 rounded-full border border-emerald-200/60">
                     {items.length}
                   </span>
                 </h1>
@@ -188,7 +188,7 @@ export default function WishlistPage() {
                 <button
                   type="button"
                   onClick={handleAddAllToCart}
-                  className="flex-1 sm:flex-none bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-xl font-bold text-xs shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="flex-1 sm:flex-none bg-[#0a3d24] hover:bg-[#072817] text-white px-4 py-2 rounded-xl font-bold text-xs shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <ShoppingBag size={14} />
                   <span>Add All to Cart</span>
@@ -249,7 +249,7 @@ export default function WishlistPage() {
 
               <Link
                 href="/shop"
-                className="w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white py-2.5 px-4 rounded-xl font-bold text-xs shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer"
+                className="w-full bg-[#0a3d24] hover:bg-[#072817] text-white py-2.5 px-4 rounded-xl font-bold text-xs shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <span>Explore Produce</span>
                 <ArrowRight size={13} />
@@ -270,7 +270,7 @@ export default function WishlistPage() {
           >
             <Link
               href="/user/cart"
-              className="bg-[#0f8646] text-white rounded-2xl p-3 shadow-lg flex items-center justify-between font-sans border border-emerald-400/30"
+              className="bg-[#0a3d24] text-white rounded-2xl p-3 shadow-lg flex items-center justify-between font-sans border border-emerald-400/30"
             >
               <div className="flex items-center gap-2">
                 <div className="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center font-bold text-xs">
@@ -283,7 +283,7 @@ export default function WishlistPage() {
                   <p className="text-xs font-extrabold">₹{totalCartAmount}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-1 bg-white text-[#0f8646] px-3 py-1 rounded-xl font-bold text-xs shadow-2xs">
+              <div className="flex items-center gap-1 bg-white text-[#0a3d24] px-3 py-1 rounded-xl font-bold text-xs shadow-2xs">
                 <span>View Cart</span>
                 <ChevronRight size={13} />
               </div>

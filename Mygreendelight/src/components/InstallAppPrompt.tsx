@@ -127,7 +127,7 @@ export default function InstallAppPrompt() {
             transition={{ type: "spring", stiffness: 380, damping: 28 }}
             className="fixed bottom-20 md:bottom-6 left-3 right-3 sm:left-auto sm:right-6 sm:w-[380px] z-50 font-sans"
           >
-            <div className="bg-gradient-to-br from-[#063318] via-[#094721] to-[#0f8646] text-white p-4 sm:p-5 rounded-3xl shadow-[0_12px_45px_rgba(0,0,0,0.35)] border border-emerald-400/30 relative overflow-hidden backdrop-blur-xl">
+            <div className="bg-gradient-to-br from-[#051f12] via-[#0a3d24] to-[#072817] text-white p-4 sm:p-5 rounded-3xl shadow-[0_12px_45px_rgba(0,0,0,0.35)] border border-emerald-500/30 relative overflow-hidden backdrop-blur-xl">
               
               {/* Ambient Glow */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-400/20 rounded-full blur-2xl pointer-events-none" />
@@ -183,7 +183,7 @@ export default function InstallAppPrompt() {
                 <button
                   type="button"
                   onClick={handleInstallClick}
-                  className="flex-1 relative overflow-hidden bg-white hover:bg-emerald-50 text-[#0f8646] py-2.5 px-4 rounded-xl font-black text-xs sm:text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 group"
+                  className="flex-1 relative overflow-hidden bg-white hover:bg-emerald-50 text-[#0a3d24] py-2.5 px-4 rounded-xl font-black text-xs sm:text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 group"
                 >
                   <div className="pointer-events-none absolute inset-0 -translate-x-full group-hover:animate-shimmer bg-gradient-to-r from-transparent via-emerald-200/50 to-transparent" />
                   <Download size={15} className="stroke-[2.5]" />
@@ -243,12 +243,12 @@ export default function InstallAppPrompt() {
                 </div>
 
                 <div className="flex items-start gap-3 bg-gray-50 p-3 rounded-2xl border border-gray-100">
-                  <div className="w-7 h-7 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 font-bold text-xs">
+                  <div className="w-7 h-7 rounded-xl bg-[#0a3d24] text-white flex items-center justify-center shrink-0 font-bold text-xs">
                     2
                   </div>
                   <div>
                     <span className="font-bold text-gray-900 block mb-0.5">&quot;Add to Home Screen&quot; Chuney</span>
-                    Menu me thoda neeche scroll karein aur <PlusSquare size={13} className="inline mx-1 text-emerald-600" /> <strong>Add to Home Screen</strong> select karein.
+                    Menu me thoda neeche scroll karein aur <PlusSquare size={13} className="inline mx-1 text-[#0a3d24]" /> <strong>Add to Home Screen</strong> select karein.
                   </div>
                 </div>
 
@@ -266,7 +266,7 @@ export default function InstallAppPrompt() {
               <button
                 type="button"
                 onClick={() => setShowIOSGuide(false)}
-                className="mt-5 w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white py-2.5 rounded-xl font-bold text-xs shadow-md transition-colors"
+                className="mt-5 w-full bg-[#0a3d24] hover:bg-[#072817] text-white py-2.5 rounded-xl font-bold text-xs shadow-md transition-colors"
               >
                 Samajh Gaya (Done)
               </button>

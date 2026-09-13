@@ -355,7 +355,7 @@ export default function BulkUploadPage() {
           <header className="bg-white border-b border-gray-200/80 px-4 sm:px-6 py-3.5 sm:py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sticky top-0 z-30 shadow-2xs">
           <div>
             <h1 className="text-xl sm:text-2xl font-black text-gray-900 flex items-center gap-2">
-              <FileSpreadsheet size={24} className="text-[#0f8646]" />
+              <FileSpreadsheet size={24} className="text-[#0a3d24]" />
               <span>Bulk Produce Import & CSV Center</span>
             </h1>
             <p className="text-xs text-gray-500 mt-0.5">
@@ -386,7 +386,7 @@ export default function BulkUploadPage() {
 
             <Link
               href="/admin/viewgrocery"
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5"
+              className="bg-[#0a3d24] hover:bg-[#072817] text-white px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5"
             >
               <ArrowLeft size={14} />
               <span>Live Inventory</span>
@@ -399,12 +399,12 @@ export default function BulkUploadPage() {
           {/* Ready-Made Datasets Banner Cards */}
           <div className="grid md:grid-cols-2 gap-4">
             {/* HERO CARD: Ultimate Consolidated Master Dataset (471 Products) */}
-            <div className="bg-gradient-to-br from-[#0c5c30] via-[#0f8646] to-[#084824] text-white rounded-3xl p-6 sm:p-7 shadow-lg border-2 border-emerald-400/40 flex flex-col justify-between relative overflow-hidden md:col-span-2">
+            <div className="bg-gradient-to-br from-[#0c5c30] via-[#0a3d24] to-[#084824] text-white rounded-3xl p-6 sm:p-7 shadow-lg border-2 border-emerald-400/40 flex flex-col justify-between relative overflow-hidden md:col-span-2">
               <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-emerald-300/15 rounded-full blur-2xl pointer-events-none" />
               <div>
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                  <span className="bg-white text-[#0f8646] text-xs font-black uppercase tracking-wider px-3.5 py-1.2 rounded-full shadow-xs flex items-center gap-1.5">
-                    <Sparkles size={14} className="text-[#0f8646]" />
+                  <span className="bg-white text-[#0a3d24] text-xs font-black uppercase tracking-wider px-3.5 py-1.2 rounded-full shadow-xs flex items-center gap-1.5">
+                    <Sparkles size={14} className="text-[#0a3d24]" />
                     <span>👑 Ultimate SubziQuick Master Catalog (100% Brand Clean)</span>
                   </span>
                   <span className="text-xs bg-emerald-950/60 border border-emerald-400/30 px-3 py-1 rounded-full font-black text-emerald-200">
@@ -425,7 +425,7 @@ export default function BulkUploadPage() {
                   download="subziquick_fresh_produce_master.xlsx"
                   className="bg-white hover:bg-emerald-50 text-[#0c5c30] px-4 py-2.5 rounded-xl text-xs font-black shadow-md transition flex items-center gap-2 cursor-pointer"
                 >
-                  <Download size={15} className="text-[#0f8646]" />
+                  <Download size={15} className="text-[#0a3d24]" />
                   <span>Download Master Excel (.xlsx)</span>
                 </a>
 
@@ -682,7 +682,7 @@ export default function BulkUploadPage() {
             <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl p-6 shadow-xs border border-green-200/90 flex flex-col justify-between md:col-span-2">
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="bg-[#0f8646] text-white text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-2xs flex items-center gap-1.5">
+                  <span className="bg-[#0a3d24] text-white text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-2xs flex items-center gap-1.5">
                     <Sparkles size={12} />
                     <span>Regional Produce Catalog</span>
                   </span>
@@ -700,7 +700,7 @@ export default function BulkUploadPage() {
                 <a
                   href="/cut_veggies_products_master.xlsx"
                   download="cut_veggies_products_master.xlsx"
-                  className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-3.5 py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5 cursor-pointer"
+                  className="bg-[#0a3d24] hover:bg-[#072817] text-white px-3.5 py-2 rounded-xl text-xs font-black shadow-xs transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <Download size={14} />
                   <span>Download Excel (.xlsx)</span>
@@ -917,7 +917,7 @@ export default function BulkUploadPage() {
               }`}
             >
               {resultMsg.type === "success" ? (
-                <CheckCircle2 size={20} className="text-[#0f8646] shrink-0 mt-0.5" />
+                <CheckCircle2 size={20} className="text-[#0a3d24] shrink-0 mt-0.5" />
               ) : (
                 <AlertCircle size={20} className="text-red-600 shrink-0 mt-0.5" />
               )}
@@ -935,7 +935,7 @@ export default function BulkUploadPage() {
           {/* Custom File Upload Dropzone Box */}
           <div className="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-xs text-center">
             <div className="max-w-xl mx-auto flex flex-col items-center">
-              <div className="w-16 h-16 rounded-3xl bg-green-50 text-[#0f8646] flex items-center justify-center mb-4 shadow-inner">
+              <div className="w-16 h-16 rounded-3xl bg-green-50 text-[#0a3d24] flex items-center justify-center mb-4 shadow-inner">
                 <UploadCloud size={32} />
               </div>
 
@@ -955,7 +955,7 @@ export default function BulkUploadPage() {
               />
               <label
                 htmlFor="bulk-file"
-                className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-8 py-3.5 rounded-2xl font-black text-xs sm:text-sm cursor-pointer shadow-md hover:shadow-lg transition-all inline-flex items-center gap-2"
+                className="bg-[#0a3d24] hover:bg-[#072817] text-white px-8 py-3.5 rounded-2xl font-black text-xs sm:text-sm cursor-pointer shadow-md hover:shadow-lg transition-all inline-flex items-center gap-2"
               >
                 <FileSpreadsheet size={16} />
                 <span>Select File from Computer</span>
@@ -963,7 +963,7 @@ export default function BulkUploadPage() {
 
               {file && (
                 <div className="mt-4 flex items-center gap-2 text-xs font-bold text-gray-700 bg-gray-50 px-4 py-2 rounded-xl border border-gray-200">
-                  <FileText size={14} className="text-[#0f8646]" />
+                  <FileText size={14} className="text-[#0a3d24]" />
                   <span>Selected: {file.name} ({(file.size / 1024).toFixed(1)} KB)</span>
                 </div>
               )}
@@ -977,7 +977,7 @@ export default function BulkUploadPage() {
                 <div>
                   <h3 className="font-black text-lg text-gray-900 flex items-center gap-2">
                     <span>Parsed Dataset Preview</span>
-                    <span className="bg-green-100 text-[#0f8646] text-xs font-bold px-2.5 py-0.5 rounded-full">
+                    <span className="bg-green-100 text-[#0a3d24] text-xs font-bold px-2.5 py-0.5 rounded-full">
                       {parsedProducts.length} items loaded
                     </span>
                   </h3>
@@ -997,7 +997,7 @@ export default function BulkUploadPage() {
                   <button
                     onClick={handleBulkUploadSubmit}
                     disabled={loading}
-                    className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-7 py-3 rounded-2xl font-black text-xs sm:text-sm shadow-md transition flex items-center gap-2 cursor-pointer disabled:opacity-50"
+                    className="bg-[#0a3d24] hover:bg-[#072817] text-white px-7 py-3 rounded-2xl font-black text-xs sm:text-sm shadow-md transition flex items-center gap-2 cursor-pointer disabled:opacity-50"
                   >
                     {loading ? (
                       <>

@@ -178,7 +178,7 @@ if (
 
         <div
           className="
-          bg-green-600
+          bg-[#0a3d24]
           text-white
           p-4
           flex
@@ -249,14 +249,14 @@ if (
                   rounded-2xl
                   shadow
                   ${mine
-                      ? "bg-green-600 text-white rounded-br-sm"
+                      ? "bg-[#0a3d24] text-white rounded-br-sm"
                       : "bg-white text-black rounded-bl-sm"
                     }
                   `}
                 >
 
                   {!mine && (
-                    <p className="text-xs text-green-600 font-semibold mb-1">
+                    <p className="text-xs text-[#0a3d24] font-semibold mb-1">
                       {m.sender?.name}
                     </p>
                   )}
@@ -375,15 +375,16 @@ if (
             py-3
             outline-none
             focus:ring-2
-            focus:ring-green-500
+            focus:ring-[#0a3d24]/20
+            focus:border-[#0a3d24]
             "
           />
 
           <button
             onClick={sendMessage}
             className="
-            bg-green-600
-            hover:bg-green-700
+            bg-[#0a3d24]
+            hover:bg-[#072817]
             text-white
             p-3
             rounded-full

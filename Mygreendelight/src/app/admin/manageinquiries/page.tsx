@@ -102,7 +102,7 @@ export default function ManageInquiriesPage() {
               disabled={loading}
               className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
             >
-              <RefreshCw size={14} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+              <RefreshCw size={14} className={loading ? "animate-spin text-[#0a3d24]" : ""} />
               <span>Refresh</span>
             </button>
           </div>
@@ -125,7 +125,7 @@ export default function ManageInquiriesPage() {
                   onClick={() => setFilterStatus(st)}
                   className={`px-4 py-2 rounded-xl text-xs font-black capitalize transition flex items-center gap-1.5 shrink-0 cursor-pointer ${
                     isActive
-                      ? "bg-[#0f8646] text-white shadow-xs"
+                      ? "bg-[#0a3d24] text-white shadow-xs"
                       : "bg-gray-50 text-gray-600 hover:bg-gray-100"
                   }`}
                 >
@@ -145,7 +145,7 @@ export default function ManageInquiriesPage() {
           {/* Messages List */}
           {loading ? (
             <div className="py-24 flex flex-col items-center justify-center">
-              <Loader2 size={36} className="animate-spin text-[#0f8646] mb-3" />
+              <Loader2 size={36} className="animate-spin text-[#0a3d24] mb-3" />
               <p className="text-xs font-bold text-gray-500">Loading Support Tickets...</p>
             </div>
           ) : filtered.length === 0 ? (
@@ -167,7 +167,7 @@ export default function ManageInquiriesPage() {
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-100 pb-4 mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-2xl bg-green-50 text-[#0f8646] flex items-center justify-center font-black text-sm">
+                      <div className="w-10 h-10 rounded-2xl bg-green-50 text-[#0a3d24] flex items-center justify-center font-black text-sm">
                         {msg.name.slice(0, 1).toUpperCase()}
                       </div>
                       <div>
@@ -212,7 +212,7 @@ export default function ManageInquiriesPage() {
 
                   {/* Subject Tag */}
                   <div className="mb-3">
-                    <span className="bg-green-100 text-[#0f8646] font-bold text-[10px] uppercase px-2.5 py-0.5 rounded-full">
+                    <span className="bg-green-100 text-[#0a3d24] font-bold text-[10px] uppercase px-2.5 py-0.5 rounded-full">
                       Subject: {msg.subject || "General Inquiry"}
                     </span>
                   </div>
@@ -229,7 +229,7 @@ export default function ManageInquiriesPage() {
                         href={`https://wa.me/91${String(msg.phone).replace(/\D/g, "").slice(-10)}?text=Hello%20${encodeURIComponent(msg.name)}!%20SubziQuick%20Support%20here%20regarding%20your%20inquiry:%20${encodeURIComponent(msg.subject || "Order Help")}`}
                         target="_blank"
                         rel="noreferrer"
-                        className="flex items-center gap-1.5 bg-[#25D366]/10 text-[#0f8646] hover:bg-[#25D366]/20 px-3 py-1.5 rounded-xl transition border border-[#25D366]/30 cursor-pointer shadow-2xs font-extrabold"
+                        className="flex items-center gap-1.5 bg-[#25D366]/10 text-[#0a3d24] hover:bg-[#25D366]/20 px-3 py-1.5 rounded-xl transition border border-[#25D366]/30 cursor-pointer shadow-2xs font-extrabold"
                       >
                         <FaWhatsapp size={15} className="text-[#25D366]" />
                         <span>Reply on WhatsApp</span>
@@ -238,18 +238,18 @@ export default function ManageInquiriesPage() {
                     {msg.email && (
                       <a
                         href={`mailto:${msg.email}`}
-                        className="flex items-center gap-1.5 hover:text-[#0f8646] transition bg-gray-50 hover:bg-gray-100 px-3 py-1.5 rounded-xl border border-gray-200 cursor-pointer"
+                        className="flex items-center gap-1.5 hover:text-[#0a3d24] transition bg-gray-50 hover:bg-gray-100 px-3 py-1.5 rounded-xl border border-gray-200 cursor-pointer"
                       >
-                        <Mail size={14} className="text-[#0f8646]" />
+                        <Mail size={14} className="text-[#0a3d24]" />
                         <span>{msg.email}</span>
                       </a>
                     )}
                     {msg.phone && (
                       <a
                         href={`tel:${msg.phone}`}
-                        className="flex items-center gap-1.5 hover:text-[#0f8646] transition bg-gray-50 hover:bg-gray-100 px-3 py-1.5 rounded-xl border border-gray-200 cursor-pointer"
+                        className="flex items-center gap-1.5 hover:text-[#0a3d24] transition bg-gray-50 hover:bg-gray-100 px-3 py-1.5 rounded-xl border border-gray-200 cursor-pointer"
                       >
-                        <Phone size={14} className="text-[#0f8646]" />
+                        <Phone size={14} className="text-[#0a3d24]" />
                         <span>{msg.phone}</span>
                       </a>
                     )}

@@ -105,7 +105,7 @@ export default function MobileBottomNav() {
             >
               <Link
                 href="/user/cart"
-                className="relative overflow-hidden w-full bg-gradient-to-r from-[#0a3d24] via-[#0d4f2f] to-[#072817] text-white rounded-xl px-3 py-2 flex items-center justify-between shadow-[0_6px_20px_-3px_rgba(10,61,36,0.35)] border border-emerald-500/30 cursor-pointer active:scale-[0.98] transition-all"
+                className="relative overflow-hidden w-full bg-[#0a3d24] hover:bg-[#072817] text-white rounded-xl px-3 py-2 flex items-center justify-between shadow-[0_6px_20px_-3px_rgba(10,61,36,0.35)] border border-emerald-900/60 cursor-pointer active:scale-[0.98] transition-all"
               >
                 {/* Subtle Shimmer Sweep */}
                 <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/20 to-transparent" />

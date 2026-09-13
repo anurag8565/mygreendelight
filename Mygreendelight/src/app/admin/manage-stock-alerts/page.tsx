@@ -79,7 +79,7 @@ export default function ManageStockAlertsPage() {
             className="bg-white hover:bg-gray-50 text-gray-700 border border-gray-200/90 px-3.5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-xs transition cursor-pointer disabled:opacity-50"
             title="Refresh stock alerts"
           >
-            <RefreshCw size={15} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+            <RefreshCw size={15} className={loading ? "animate-spin text-[#0a3d24]" : ""} />
             <span>Refresh</span>
           </button>
         </div>
@@ -134,7 +134,7 @@ export default function ManageStockAlertsPage() {
                 <button
                   type="button"
                   onClick={() => handleSendAlerts(group.grocery._id)}
-                  className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 shadow-xs transition cursor-pointer"
+                  className="bg-[#0a3d24] hover:bg-[#072817] text-white px-4 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 shadow-xs transition cursor-pointer"
                 >
                   <Send size={14} />
                   <span>Send Restock WhatsApp/SMS</span>

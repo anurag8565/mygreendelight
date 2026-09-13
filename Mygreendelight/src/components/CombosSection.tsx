@@ -149,8 +149,8 @@ export default function CombosSection({
                     onClick={() => handleAddCombo(combo)}
                     className={`h-[34px] px-3.5 rounded-xl font-bold text-xs flex items-center gap-1 transition-all cursor-pointer ${
                       isAdded
-                        ? "bg-[#0c831f] text-white"
-                        : "bg-white text-[#0c831f] border border-[#0c831f] hover:bg-[#0c831f] hover:text-white shadow-2xs active:scale-95"
+                        ? "bg-[#0a3d24] text-white"
+                        : "bg-white text-[#0a3d24] border border-[#0a3d24] hover:bg-[#0a3d24] hover:text-white shadow-2xs active:scale-95"
                     }`}
                   >
                     {isAdded ? (
@@ -213,7 +213,7 @@ export default function CombosSection({
                         className="w-full h-full object-cover"
                       />
                       {discount > 0 && (
-                        <span className="relative overflow-hidden absolute top-2 left-2 bg-[#0c831f] text-white text-[10px] font-extrabold px-2 py-0.5 rounded-md shadow-xs">
+                        <span className="relative overflow-hidden absolute top-2 left-2 bg-[#0a3d24] text-white text-[10px] font-extrabold px-2 py-0.5 rounded-md shadow-xs">
                           <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent" />
                           <span className="relative z-10">{discount}% OFF</span>
                         </span>
@@ -247,8 +247,8 @@ export default function CombosSection({
                       onClick={() => handleAddCombo(combo)}
                       className={`h-[36px] px-4 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer ${
                         isAdded
-                          ? "bg-[#0c831f] text-white"
-                          : "bg-white text-[#0c831f] border border-[#0c831f] hover:bg-[#0c831f] hover:text-white shadow-2xs active:scale-95"
+                          ? "bg-[#0a3d24] text-white"
+                          : "bg-white text-[#0a3d24] border border-[#0a3d24] hover:bg-[#0a3d24] hover:text-white shadow-2xs active:scale-95"
                       }`}
                     >
                       {isAdded ? (

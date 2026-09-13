@@ -20,10 +20,10 @@ export default function PrivacyPolicyPage() {
       <main className="max-w-4xl mx-auto px-4 md:px-8 py-10 w-full flex-1">
         {/* Header */}
         <div className="bg-white rounded-3xl p-8 sm:p-10 border border-gray-200/80 shadow-xs mb-8">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-[#0f8646] flex items-center justify-center mb-4">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center mb-4">
             <Lock size={24} />
           </div>
-          <span className="text-xs font-black uppercase text-[#0f8646] tracking-wider block mb-1">
+          <span className="text-xs font-black uppercase text-[#0a3d24] tracking-wider block mb-1">
             Trust & Compliance
           </span>
           <h1 className="text-2xl sm:text-3xl font-black text-gray-900">
@@ -38,7 +38,7 @@ export default function PrivacyPolicyPage() {
         <div className="bg-white rounded-3xl p-8 sm:p-10 border border-gray-200/80 shadow-xs space-y-8 text-sm text-gray-700 leading-relaxed">
           <section className="space-y-3">
             <h2 className="text-lg font-black text-gray-900 flex items-center gap-2">
-              <ShieldCheck size={18} className="text-[#0f8646]" />
+              <ShieldCheck size={18} className="text-[#0a3d24]" />
               <span>1. Information We Collect</span>
             </h2>
             <p>
@@ -53,7 +53,7 @@ export default function PrivacyPolicyPage() {
 
           <section className="space-y-3">
             <h2 className="text-lg font-black text-gray-900 flex items-center gap-2">
-              <Eye size={18} className="text-[#0f8646]" />
+              <Eye size={18} className="text-[#0a3d24]" />
               <span>2. How We Use Your Data</span>
             </h2>
             <p>
@@ -69,7 +69,7 @@ export default function PrivacyPolicyPage() {
 
           <section className="space-y-3">
             <h2 className="text-lg font-black text-gray-900 flex items-center gap-2">
-              <FileText size={18} className="text-[#0f8646]" />
+              <FileText size={18} className="text-[#0a3d24]" />
               <span>3. Payment & Security</span>
             </h2>
             <p>
@@ -79,7 +79,7 @@ export default function PrivacyPolicyPage() {
 
           <section className="space-y-3">
             <h2 className="text-lg font-black text-gray-900 flex items-center gap-2">
-              <CheckCircle2 size={18} className="text-[#0f8646]" />
+              <CheckCircle2 size={18} className="text-[#0a3d24]" />
               <span>4. Contact Our Bhopal Support Desk</span>
             </h2>
             <p>

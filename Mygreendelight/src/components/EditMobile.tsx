@@ -52,13 +52,13 @@ function EditMobile() {
         className="w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 border border-green-100 shadow-xl"
       >
         {/* Header Icon */}
-        <div className="w-16 h-16 rounded-2xl bg-green-100 text-[#0f8646] flex items-center justify-center mx-auto mb-5 shadow-xs">
+        <div className="w-16 h-16 rounded-2xl bg-green-100 text-[#0a3d24] flex items-center justify-center mx-auto mb-5 shadow-xs">
           <Phone size={30} />
         </div>
 
         {/* Title */}
         <div className="text-center mb-6">
-          <span className="text-[10px] font-black uppercase tracking-wider text-[#0f8646] bg-green-50 px-3 py-1 rounded-full border border-green-200 inline-flex items-center gap-1 mb-2">
+          <span className="text-[10px] font-black uppercase tracking-wider text-[#0a3d24] bg-green-50 px-3 py-1 rounded-full border border-green-200 inline-flex items-center gap-1 mb-2">
             <Sparkles size={11} /> 1-Step Quick Setup
           </span>
           <h1 className="text-2xl sm:text-3xl font-black text-gray-900 leading-tight">
@@ -96,7 +96,7 @@ function EditMobile() {
                   setErrorMsg("");
                   setMobile(e.target.value.replace(/[^0-9]/g, ""));
                 }}
-                className="w-full pl-24 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-base font-black text-gray-900 outline-none focus:border-[#0f8646] focus:bg-white tracking-wider transition"
+                className="w-full pl-24 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-base font-black text-gray-900 outline-none focus:border-[#0a3d24] focus:bg-white tracking-wider transition"
               />
             </div>
             {!isValidMobile && cleanMobile.length > 0 && (
@@ -107,7 +107,7 @@ function EditMobile() {
           </div>
 
           <div className="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-3.5 flex items-center gap-2.5 text-xs text-emerald-900 font-medium">
-            <ShieldCheck size={18} className="text-[#0f8646] shrink-0" />
+            <ShieldCheck size={18} className="text-[#0a3d24] shrink-0" />
             <span>100% Private & Safe. Used strictly for grocery delivery.</span>
           </div>
 
@@ -117,7 +117,7 @@ function EditMobile() {
             disabled={!canSave}
             className={`w-full py-3.5 rounded-2xl font-black text-xs sm:text-sm transition-all shadow-md flex items-center justify-center gap-2 ${
               canSave
-                ? "bg-[#0f8646] hover:bg-[#0c6a38] text-white shadow-emerald-900/15 hover:scale-[1.01] cursor-pointer"
+                ? "bg-[#0a3d24] hover:bg-[#072817] text-white shadow-emerald-900/15 hover:scale-[1.01] cursor-pointer"
                 : "bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200"
             }`}
           >

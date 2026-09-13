@@ -18,7 +18,7 @@ export default function InteractiveFarmFeatures() {
       btnText: "Build Custom Box",
       badge: "Popular in Bhopal",
       gradient: "from-emerald-50 to-green-50/70 border-emerald-200/90",
-      btnColor: "bg-[#0f8646] hover:bg-[#0c6a38] text-white",
+      btnColor: "bg-[#0a3d24] hover:bg-[#072817] text-white",
     },
     {
       icon: <ChefHat size={22} className="text-amber-600" />,
@@ -65,7 +65,7 @@ export default function InteractiveFarmFeatures() {
         {/* Header */}
         <div className="flex items-center justify-between gap-2 mb-4 sm:mb-6">
           <div>
-            <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-[#0f8646] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 mb-1">
+            <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-[#0a3d24] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 mb-1">
               <Sparkles size={11} /> Specialized Experiences
             </span>
             <h2 className="text-base sm:text-2xl font-black text-gray-900 tracking-tight">
@@ -84,7 +84,7 @@ export default function InteractiveFarmFeatures() {
             type="button"
             onClick={() => scroll("left")}
             aria-label="Scroll left"
-            className="flex absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0f8646] w-8 h-8 sm:w-11 sm:h-11 rounded-full items-center justify-center transition-all shadow-md hover:shadow-xl border border-gray-200 active:scale-95 cursor-pointer backdrop-blur-xs"
+            className="flex absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0a3d24] w-8 h-8 sm:w-11 sm:h-11 rounded-full items-center justify-center transition-all shadow-md hover:shadow-xl border border-gray-200 active:scale-95 cursor-pointer backdrop-blur-xs"
           >
             <ChevronLeft size={20} className="stroke-[2.5]" />
           </button>
@@ -141,7 +141,7 @@ export default function InteractiveFarmFeatures() {
             type="button"
             onClick={() => scroll("right")}
             aria-label="Scroll right"
-            className="flex absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0f8646] w-8 h-8 sm:w-11 sm:h-11 rounded-full items-center justify-center transition-all shadow-md hover:shadow-xl border border-gray-200 active:scale-95 cursor-pointer backdrop-blur-xs"
+            className="flex absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0a3d24] w-8 h-8 sm:w-11 sm:h-11 rounded-full items-center justify-center transition-all shadow-md hover:shadow-xl border border-gray-200 active:scale-95 cursor-pointer backdrop-blur-xs"
           >
             <ChevronRight size={20} className="stroke-[2.5]" />
           </button>

@@ -402,7 +402,7 @@ export default function Checkout() {
       <div className="bg-[#fcfdfc] min-h-screen flex flex-col justify-between font-sans">
         <Nav user={(userdata as any) || null} />
         <main className="max-w-md mx-auto px-4 py-24 text-center flex-1 flex flex-col items-center justify-center">
-          <Loader2 className="w-9 h-9 text-[#0f8646] animate-spin mb-3" />
+          <Loader2 className="w-9 h-9 text-[#0a3d24] animate-spin mb-3" />
           <h2 className="text-sm font-semibold text-gray-700">Connecting securely...</h2>
         </main>
         <Footer />
@@ -424,7 +424,7 @@ export default function Checkout() {
           </p>
           <Link
             href="/login?callbackUrl=/user/checkout"
-            className="w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white py-2.5 px-4 rounded-xl font-bold text-xs shadow-xs transition flex items-center justify-center gap-1.5"
+            className="w-full bg-[#0a3d24] hover:bg-[#072817] text-white py-2.5 px-4 rounded-xl font-bold text-xs shadow-xs transition flex items-center justify-center gap-1.5"
           >
             <span>Login / Create Account</span>
             <ArrowRight size={13} />
@@ -440,7 +440,7 @@ export default function Checkout() {
       <div className="bg-[#fcfdfc] min-h-screen flex flex-col justify-between font-sans">
         <Nav user={(userdata as any) || { role: "user" }} />
         <main className="max-w-md mx-auto px-4 py-24 text-center flex-1 flex flex-col items-center justify-center">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-[#0f8646] flex items-center justify-center mb-3 animate-bounce shadow-xs">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center mb-3 animate-bounce shadow-xs">
             <Truck size={24} />
           </div>
           <h2 className="text-base font-extrabold text-gray-900 mb-1">
@@ -460,7 +460,7 @@ export default function Checkout() {
       <div className="bg-[#fcfdfc] min-h-screen flex flex-col justify-between font-sans">
         <Nav user={(userdata as any) || { role: "user" }} />
         <main className="max-w-sm mx-auto px-4 py-20 text-center flex-1 flex flex-col items-center justify-center">
-          <div className="w-14 h-14 rounded-2xl bg-emerald-50 text-[#0f8646] flex items-center justify-center mb-3 mx-auto border border-emerald-100">
+          <div className="w-14 h-14 rounded-2xl bg-emerald-50 text-[#0a3d24] flex items-center justify-center mb-3 mx-auto border border-emerald-100">
             <ShoppingBag size={26} />
           </div>
           <h2 className="text-base font-extrabold text-gray-900 mb-1">
@@ -472,14 +472,14 @@ export default function Checkout() {
           <div className="flex gap-2 w-full">
             <Link
               href="/shop"
-              className="flex-1 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-2.5 px-3 rounded-xl font-bold text-xs shadow-xs transition flex items-center justify-center gap-1"
+              className="flex-1 bg-[#0a3d24] hover:bg-[#072817] text-white py-2.5 px-3 rounded-xl font-bold text-xs shadow-xs transition flex items-center justify-center gap-1"
             >
               <span>Explore Farm Produce</span>
               <ArrowRight size={13} />
             </Link>
             <Link
               href="/user/myorder"
-              className="flex-1 bg-white border border-gray-200 text-gray-700 py-2.5 px-3 rounded-xl font-bold text-xs text-center transition hover:border-[#0f8646]"
+              className="flex-1 bg-white border border-gray-200 text-gray-700 py-2.5 px-3 rounded-xl font-bold text-xs text-center transition hover:border-[#0a3d24]"
             >
               My Orders
             </Link>
@@ -503,11 +503,11 @@ export default function Checkout() {
             <span className="text-gray-300">/</span>
             <Link href="/user/cart" className="hover:text-gray-700 transition">Cart</Link>
             <span className="text-gray-300">/</span>
-            <span className="text-[#0f8646] font-bold">Checkout</span>
+            <span className="text-[#0a3d24] font-bold">Checkout</span>
           </div>
 
-          <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#0f8646] bg-emerald-50/80 border border-emerald-200/60 px-2.5 py-1 rounded-full">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0f8646] animate-pulse" />
+          <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#0a3d24] bg-emerald-50/80 border border-emerald-200/60 px-2.5 py-1 rounded-full">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0a3d24] animate-pulse" />
             <span>Bhopal Express • 100% Farm Fresh</span>
           </div>
         </div>
@@ -532,7 +532,7 @@ export default function Checkout() {
         {insideBhopalSuccess && (
           <div className="mb-4 bg-emerald-50/90 border border-emerald-200 rounded-2xl p-3 flex items-center justify-between gap-2 text-emerald-900 text-xs font-semibold">
             <div className="flex items-center gap-2">
-              <CheckCircle2 size={16} className="text-[#0f8646] shrink-0" />
+              <CheckCircle2 size={16} className="text-[#0a3d24] shrink-0" />
               <span>{insideBhopalSuccess}</span>
             </div>
             <button
@@ -575,7 +575,7 @@ export default function Checkout() {
                         onClick={() => setAddressType(type)}
                         className={`px-2 py-0.5 rounded-md transition ${
                           addressType === type
-                            ? "bg-white text-[#0f8646] shadow-xs"
+                            ? "bg-white text-[#0a3d24] shadow-xs"
                             : "text-gray-400 hover:text-gray-700"
                         }`}
                       >
@@ -588,7 +588,7 @@ export default function Checkout() {
                     type="button"
                     onClick={handleGPSDetect}
                     disabled={isLocating}
-                    className="inline-flex items-center gap-1 text-[11px] font-bold text-[#0f8646] bg-emerald-50 hover:bg-emerald-100 px-2.5 py-1 rounded-lg transition disabled:opacity-50 cursor-pointer"
+                    className="inline-flex items-center gap-1 text-[11px] font-bold text-[#0a3d24] bg-emerald-50 hover:bg-emerald-100 px-2.5 py-1 rounded-lg transition disabled:opacity-50 cursor-pointer"
                   >
                     <Navigation size={11} className={isLocating ? "animate-spin" : ""} />
                     <span>{isLocating ? "Locating..." : "GPS Detect"}</span>
@@ -607,7 +607,7 @@ export default function Checkout() {
                       placeholder="Receiver's Name *"
                       value={fullname}
                       onChange={(e) => setFullname(e.target.value)}
-                      className="w-full bg-gray-50/80 border border-gray-200/80 rounded-xl py-2 pl-8.5 pr-3 text-xs font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] transition placeholder:text-gray-400 placeholder:font-normal"
+                      className="w-full bg-gray-50/80 border border-gray-200/80 rounded-xl py-2 pl-8.5 pr-3 text-xs font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0a3d24] transition placeholder:text-gray-400 placeholder:font-normal"
                     />
                   </div>
 
@@ -619,7 +619,7 @@ export default function Checkout() {
                       placeholder="10-Digit Mobile *"
                       value={mobile}
                       onChange={(e) => setMobile(e.target.value.replace(/\D/g, "").slice(0, 10))}
-                      className="w-full bg-gray-50/80 border border-gray-200/80 rounded-xl py-2 pl-8.5 pr-3 text-xs font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] transition placeholder:text-gray-400 placeholder:font-normal tracking-wide"
+                      className="w-full bg-gray-50/80 border border-gray-200/80 rounded-xl py-2 pl-8.5 pr-3 text-xs font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0a3d24] transition placeholder:text-gray-400 placeholder:font-normal tracking-wide"
                     />
                   </div>
                 </div>
@@ -633,7 +633,7 @@ export default function Checkout() {
                       placeholder="House / Flat No., Floor *"
                       value={flatHouse}
                       onChange={(e) => setFlatHouse(e.target.value)}
-                      className="w-full bg-gray-50/80 border border-gray-200/80 rounded-xl py-2 pl-8.5 pr-3 text-xs font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] transition placeholder:text-gray-400 placeholder:font-normal"
+                      className="w-full bg-gray-50/80 border border-gray-200/80 rounded-xl py-2 pl-8.5 pr-3 text-xs font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0a3d24] transition placeholder:text-gray-400 placeholder:font-normal"
                     />
                   </div>
 
@@ -642,18 +642,18 @@ export default function Checkout() {
                     placeholder="Society / Colony / Street *"
                     value={streetSociety}
                     onChange={(e) => setStreetSociety(e.target.value)}
-                    className="w-full bg-gray-50/80 border border-gray-200/80 rounded-xl py-2 px-3 text-xs font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] transition placeholder:text-gray-400 placeholder:font-normal"
+                    className="w-full bg-gray-50/80 border border-gray-200/80 rounded-xl py-2 px-3 text-xs font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0a3d24] transition placeholder:text-gray-400 placeholder:font-normal"
                   />
                 </div>
 
                 {/* Bhopal Locality & Landmark */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <div className="relative">
-                    <MapPin size={13} className="absolute left-3 top-2.5 text-[#0f8646]" />
+                    <MapPin size={13} className="absolute left-3 top-2.5 text-[#0a3d24]" />
                     <select
                       value={selectedAreaIndex}
                       onChange={(e) => handleAreaChange(Number(e.target.value))}
-                      className="w-full bg-emerald-50/50 border border-emerald-200/70 rounded-xl py-2 pl-8 pr-7 text-xs font-bold text-gray-900 outline-none focus:border-[#0f8646] cursor-pointer appearance-none truncate"
+                      className="w-full bg-emerald-50/50 border border-emerald-200/70 rounded-xl py-2 pl-8 pr-7 text-xs font-bold text-gray-900 outline-none focus:border-[#0a3d24] cursor-pointer appearance-none truncate"
                     >
                       {BHOPAL_AREAS.map((area, idx) => (
                         <option key={area.name} value={idx}>
@@ -669,7 +669,7 @@ export default function Checkout() {
                     placeholder="Nearby Landmark (Optional)"
                     value={landmark}
                     onChange={(e) => setLandmark(e.target.value)}
-                    className="w-full bg-gray-50/80 border border-gray-200/80 rounded-xl py-2 px-3 text-xs font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0f8646] transition placeholder:text-gray-400 placeholder:font-normal"
+                    className="w-full bg-gray-50/80 border border-gray-200/80 rounded-xl py-2 px-3 text-xs font-semibold text-gray-900 outline-none focus:bg-white focus:border-[#0a3d24] transition placeholder:text-gray-400 placeholder:font-normal"
                   />
                 </div>
 
@@ -677,13 +677,13 @@ export default function Checkout() {
                 <div className="pt-0.5">
                   <div className="flex items-center justify-between text-xs bg-gray-50 px-3 py-1.5 rounded-xl border border-gray-100">
                     <div className="flex items-center gap-1.5 text-gray-500 font-medium truncate">
-                      <MapPin size={12} className="text-[#0f8646] shrink-0" />
+                      <MapPin size={12} className="text-[#0a3d24] shrink-0" />
                       <span className="truncate">Pin: <strong className="text-gray-800 font-semibold">{currentArea.name}</strong></span>
                     </div>
                     <button
                       type="button"
                       onClick={() => setShowMap(!showMap)}
-                      className="text-[#0f8646] hover:underline font-bold text-[11px] flex items-center gap-1 cursor-pointer shrink-0 ml-2"
+                      className="text-[#0a3d24] hover:underline font-bold text-[11px] flex items-center gap-1 cursor-pointer shrink-0 ml-2"
                     >
                       <span>{showMap ? "Hide Map" : "Adjust Pin"}</span>
                       <ChevronDown size={11} className={`transition-transform duration-200 ${showMap ? "rotate-180" : ""}`} />
@@ -750,7 +750,7 @@ export default function Checkout() {
                       onClick={() => setDeliverySlot(slot.id)}
                       className={`p-2.5 sm:p-3 rounded-xl border cursor-pointer transition flex flex-col justify-between ${
                         isSelected
-                          ? "border-[#0f8646] bg-emerald-50/40 shadow-xs"
+                          ? "border-[#0a3d24] bg-emerald-50/40 shadow-xs"
                           : "border-gray-200/80 hover:border-gray-300 bg-white"
                       }`}
                     >
@@ -758,7 +758,7 @@ export default function Checkout() {
                         <span
                           className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded ${
                             isSelected
-                              ? "bg-emerald-600 text-white"
+                              ? "bg-[#0a3d24] text-white"
                               : "bg-gray-100 text-gray-500"
                           }`}
                         >
@@ -767,7 +767,7 @@ export default function Checkout() {
                         <div
                           className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${
                             isSelected
-                              ? "border-[#0f8646] bg-[#0f8646] text-white"
+                              ? "border-[#0a3d24] bg-[#0a3d24] text-white"
                               : "border-gray-300"
                           }`}
                         >
@@ -777,7 +777,7 @@ export default function Checkout() {
 
                       <div>
                         <div className="flex items-center gap-1">
-                          <Icon size={13} className={isSelected ? "text-[#0f8646]" : "text-gray-400"} />
+                          <Icon size={13} className={isSelected ? "text-[#0a3d24]" : "text-gray-400"} />
                           <span className="font-bold text-xs text-gray-900">{slot.title}</span>
                         </div>
                         <span className="text-[10px] text-gray-500 block mt-0.5">
@@ -801,7 +801,7 @@ export default function Checkout() {
                     onChange={(e) => setIsSilentDelivery(e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-8 h-4.5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:bg-[#0f8646]"></div>
+                  <div className="w-8 h-4.5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:bg-[#0a3d24]"></div>
                 </label>
               </div>
 
@@ -811,7 +811,7 @@ export default function Checkout() {
                   placeholder="Drop instruction (e.g. Leave on shoe rack / table)"
                   value={deliveryInstructions}
                   onChange={(e) => setDeliveryInstructions(e.target.value)}
-                  className="mt-2 w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-1.5 text-xs font-semibold text-gray-900 outline-none focus:border-[#0f8646]"
+                  className="mt-2 w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-1.5 text-xs font-semibold text-gray-900 outline-none focus:border-[#0a3d24]"
                 />
               )}
             </div>
@@ -837,12 +837,12 @@ export default function Checkout() {
                   onClick={() => setPaymentMethod("cod")}
                   className={`p-3 rounded-xl border cursor-pointer transition flex items-center justify-between ${
                     paymentMethod === "cod"
-                      ? "border-[#0f8646] bg-emerald-50/40 shadow-xs"
+                      ? "border-[#0a3d24] bg-emerald-50/40 shadow-xs"
                       : "border-gray-200/80 hover:border-gray-300 bg-white"
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
-                    <div className="w-7 h-7 rounded-lg bg-emerald-100 text-[#0f8646] flex items-center justify-center shrink-0">
+                    <div className="w-7 h-7 rounded-lg bg-emerald-100 text-[#0a3d24] flex items-center justify-center shrink-0">
                       <Banknote size={15} />
                     </div>
                     <div>
@@ -858,7 +858,7 @@ export default function Checkout() {
                   <div
                     className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center shrink-0 ${
                       paymentMethod === "cod"
-                        ? "border-[#0f8646] bg-[#0f8646] text-white"
+                        ? "border-[#0a3d24] bg-[#0a3d24] text-white"
                         : "border-gray-300"
                     }`}
                   >
@@ -871,12 +871,12 @@ export default function Checkout() {
                   onClick={() => setPaymentMethod("upi")}
                   className={`p-3 rounded-xl border cursor-pointer transition flex items-center justify-between ${
                     paymentMethod === "upi"
-                      ? "border-[#0f8646] bg-emerald-50/40 shadow-xs"
+                      ? "border-[#0a3d24] bg-emerald-50/40 shadow-xs"
                       : "border-gray-200/80 hover:border-gray-300 bg-white"
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
-                    <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-purple-600 to-[#0f8646] text-white flex items-center justify-center shrink-0 shadow-2xs">
+                    <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-purple-600 to-[#0a3d24] text-white flex items-center justify-center shrink-0 shadow-2xs">
                       <Zap size={15} />
                     </div>
                     <div>
@@ -897,7 +897,7 @@ export default function Checkout() {
                   <div
                     className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center shrink-0 ${
                       paymentMethod === "upi"
-                        ? "border-[#0f8646] bg-[#0f8646] text-white"
+                        ? "border-[#0a3d24] bg-[#0a3d24] text-white"
                         : "border-gray-300"
                     }`}
                   >
@@ -936,7 +936,7 @@ export default function Checkout() {
                         setCopiedUpi(true);
                         setTimeout(() => setCopiedUpi(false), 2000);
                       }}
-                      className="bg-white border border-gray-300 hover:border-[#0f8646] text-gray-700 hover:text-[#0f8646] py-1.5 px-2 rounded-lg text-[10px] font-bold text-center transition"
+                      className="bg-white border border-gray-300 hover:border-[#0a3d24] text-gray-700 hover:text-[#0a3d24] py-1.5 px-2 rounded-lg text-[10px] font-bold text-center transition"
                     >
                       {copiedUpi ? "✓ Copied" : "Copy ID"}
                     </button>
@@ -956,7 +956,7 @@ export default function Checkout() {
                       <div className="min-w-0">
                         <span className="text-[11px] font-bold text-gray-900 block">Scan to Pay</span>
                         <code className="text-[10px] text-gray-500 font-mono block">9981418565@ybl</code>
-                        <span className="text-[10px] text-[#0f8646] font-bold block mt-0.5">₹{finalPayableTotal}</span>
+                        <span className="text-[10px] text-[#0a3d24] font-bold block mt-0.5">₹{finalPayableTotal}</span>
                       </div>
                     </div>
 
@@ -968,13 +968,13 @@ export default function Checkout() {
                         placeholder="UPI Ref / 12-digit UTR No. (Optional)"
                         value={upiRefNumber}
                         onChange={(e) => setUpiRefNumber(e.target.value.replace(/[^a-zA-Z0-9]/g, ""))}
-                        className="w-full bg-white border border-gray-200/80 rounded-xl py-1.5 px-2.5 text-xs font-semibold text-gray-900 outline-none focus:border-[#0f8646] transition placeholder:text-gray-400 placeholder:font-normal"
+                        className="w-full bg-white border border-gray-200/80 rounded-xl py-1.5 px-2.5 text-xs font-semibold text-gray-900 outline-none focus:border-[#0a3d24] transition placeholder:text-gray-400 placeholder:font-normal"
                       />
 
                       <div>
                         {paymentProofPreview ? (
                           <div className="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-xl border-2 border-emerald-400 text-xs shadow-2xs">
-                            <span className="text-[#0f8646] font-black flex items-center gap-1.5">
+                            <span className="text-[#0a3d24] font-black flex items-center gap-1.5">
                               <Check size={14} className="stroke-[3]" /> Screenshot Attached ✅
                             </span>
                             <button
@@ -989,7 +989,7 @@ export default function Checkout() {
                             </button>
                           </div>
                         ) : (
-                          <label className="flex items-center justify-center gap-1.5 py-2.5 px-3 bg-amber-50/70 border-2 border-dashed border-amber-300 hover:border-[#0f8646] hover:bg-emerald-50/50 rounded-xl cursor-pointer text-xs font-bold text-amber-900 transition shadow-2xs">
+                          <label className="flex items-center justify-center gap-1.5 py-2.5 px-3 bg-amber-50/70 border-2 border-dashed border-amber-300 hover:border-[#0a3d24] hover:bg-emerald-50/50 rounded-xl cursor-pointer text-xs font-bold text-amber-900 transition shadow-2xs">
                             <Upload size={14} className="text-amber-700" />
                             <span>Upload Payment Screenshot <span className="text-red-600 font-black">*Required</span></span>
                             <input
@@ -1029,7 +1029,7 @@ export default function Checkout() {
                 <span className="font-bold text-xs sm:text-sm text-gray-900">
                   Order Summary ({cartdata.length} {cartdata.length === 1 ? "item" : "items"})
                 </span>
-                <Link href="/user/cart" className="text-[11px] text-[#0f8646] font-bold hover:underline">
+                <Link href="/user/cart" className="text-[11px] text-[#0a3d24] font-bold hover:underline">
                   Edit Cart
                 </Link>
               </div>
@@ -1069,7 +1069,7 @@ export default function Checkout() {
                   <span>Delivery Fee</span>
                   <span className="font-bold text-gray-900">
                     {deliveryFee === 0 ? (
-                      <span className="text-[#0f8646] font-bold bg-emerald-50 px-1.5 py-0.5 rounded text-[11px]">FREE</span>
+                      <span className="text-[#0a3d24] font-bold bg-emerald-50 px-1.5 py-0.5 rounded text-[11px]">FREE</span>
                     ) : (
                       `₹${deliveryFee}`
                     )}
@@ -1100,7 +1100,7 @@ export default function Checkout() {
                         onClick={() => setRiderTip(riderTip === amt ? 0 : amt)}
                         className={`py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
                           riderTip === amt
-                            ? "bg-[#0f8646] text-white"
+                            ? "bg-[#0a3d24] text-white"
                             : "bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200/80"
                         }`}
                       >
@@ -1111,7 +1111,7 @@ export default function Checkout() {
                 </div>
 
                 {discount > 0 && (
-                  <div className="flex justify-between text-[#0f8646] font-bold bg-emerald-50/70 p-2 rounded-lg text-xs">
+                  <div className="flex justify-between text-[#0a3d24] font-bold bg-emerald-50/70 p-2 rounded-lg text-xs">
                     <span>Coupon ({couponCode})</span>
                     <span>-₹{discount}</span>
                   </div>
@@ -1123,7 +1123,7 @@ export default function Checkout() {
                     <span className="text-xs font-bold text-gray-800 block">Total Payable</span>
                     <span className="text-[10px] text-gray-400">Incl. all taxes</span>
                   </div>
-                  <span className="text-xl font-black text-[#0f8646]">
+                  <span className="text-xl font-black text-[#0a3d24]">
                     ₹{finalPayableTotal}
                   </span>
                 </div>
@@ -1137,7 +1137,7 @@ export default function Checkout() {
                 className={`w-full mt-4 py-3 rounded-xl font-bold text-xs sm:text-sm shadow-xs hover:shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 ${
                   paymentMethod === "upi" && !paymentProofFile
                     ? "bg-amber-600 hover:bg-amber-700 text-white animate-pulse"
-                    : "bg-[#0f8646] hover:bg-[#0c6a38] text-white"
+                    : "bg-[#0a3d24] hover:bg-[#072817] text-white"
                 }`}
               >
                 <CheckCircle2 size={16} />
@@ -1151,7 +1151,7 @@ export default function Checkout() {
               </button>
 
               <div className="mt-2.5 flex items-center justify-center gap-1 text-[10px] text-gray-400">
-                <ShieldCheck size={12} className="text-[#0f8646]" />
+                <ShieldCheck size={12} className="text-[#0a3d24]" />
                 <span>Safe & Contactless Delivery in Bhopal</span>
               </div>
             </div>
@@ -1165,7 +1165,7 @@ export default function Checkout() {
           <span className="text-[10px] text-gray-400 font-bold block uppercase tracking-wider">
             Total
           </span>
-          <span className="text-lg font-black text-[#0f8646]">
+          <span className="text-lg font-black text-[#0a3d24]">
             ₹{finalPayableTotal}
           </span>
         </div>
@@ -1177,7 +1177,7 @@ export default function Checkout() {
           className={`flex-1 py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 ${
             paymentMethod === "upi" && !paymentProofFile
               ? "bg-amber-600 hover:bg-amber-700 text-white animate-pulse"
-              : "bg-[#0f8646] hover:bg-[#0c6a38] text-white"
+              : "bg-[#0a3d24] hover:bg-[#072817] text-white"
           }`}
         >
           <CheckCircle2 size={15} />

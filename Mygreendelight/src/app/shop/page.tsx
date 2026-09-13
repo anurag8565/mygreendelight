@@ -286,7 +286,7 @@ function ShopContent() {
               onClick={() => handleCategoryClick("all")}
               className={`flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-2xl shrink-0 transition-all font-black text-xs cursor-pointer shadow-2xs border ${
                 !categoryParam
-                  ? "bg-[#0c831f] text-white border-[#0c831f] shadow-xs scale-100 ring-2 ring-emerald-600/30"
+                  ? "bg-[#0a3d24] text-white border-[#0a3d24] shadow-xs scale-100 ring-2 ring-[#0a3d24]/20"
                   : "bg-white text-gray-700 border-gray-200 hover:border-emerald-300 hover:bg-emerald-50/50"
               }`}
             >
@@ -312,7 +312,7 @@ function ShopContent() {
                   onClick={() => handleCategoryClick(cat.name)}
                   className={`flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-2xl shrink-0 transition-all font-black text-xs cursor-pointer shadow-2xs border ${
                     isActive
-                      ? "bg-[#0c831f] text-white border-[#0c831f] shadow-xs scale-100 ring-2 ring-emerald-600/30"
+                      ? "bg-[#0a3d24] text-white border-[#0a3d24] shadow-xs scale-100 ring-2 ring-[#0a3d24]/20"
                       : "bg-white text-gray-700 border-gray-200 hover:border-emerald-300 hover:bg-emerald-50/50"
                   }`}
                 >
@@ -341,7 +341,7 @@ function ShopContent() {
             onClick={() => setUnder50Only(!under50Only)}
             className={`px-3 py-1 rounded-full text-[11px] font-bold transition-all flex items-center gap-1 shrink-0 border cursor-pointer ${
               under50Only
-                ? "bg-emerald-600 text-white border-emerald-600 shadow-2xs"
+                ? "bg-[#0a3d24] text-white border-[#0a3d24] shadow-2xs"
                 : "bg-white text-gray-700 border-gray-200 hover:border-gray-300"
             }`}
           >
@@ -493,7 +493,7 @@ function ShopContent() {
               <div className="mb-4">
                 <div className="flex justify-between items-center mb-1">
                   <span className="text-xs font-bold text-gray-600">Max Budget:</span>
-                  <span className="text-xs font-black text-[#0c831f]">₹{priceRange}</span>
+                  <span className="text-xs font-black text-[#0a3d24]">₹{priceRange}</span>
                 </div>
                 <input
                   type="range"
@@ -502,7 +502,7 @@ function ShopContent() {
                   step="20"
                   value={priceRange}
                   onChange={(e) => setPriceRange(Number(e.target.value))}
-                  className="w-full accent-[#0c831f] cursor-pointer"
+                  className="w-full accent-[#0a3d24] cursor-pointer"
                 />
                 <div className="flex justify-between text-[10px] text-gray-400 font-bold mt-1">
                   <span>₹30</span>
@@ -530,7 +530,7 @@ function ShopContent() {
                     onClick={() => setViewMode("grid")}
                     className={`p-1 rounded-md transition cursor-pointer ${
                       viewMode === "grid"
-                        ? "bg-white text-[#0c831f] shadow-2xs"
+                        ? "bg-white text-[#0a3d24] shadow-2xs"
                         : "text-gray-500 hover:text-gray-800"
                     }`}
                     title="Grid View"
@@ -542,7 +542,7 @@ function ShopContent() {
                     onClick={() => setViewMode("list")}
                     className={`p-1 rounded-md transition cursor-pointer ${
                       viewMode === "list"
-                        ? "bg-white text-[#0c831f] shadow-2xs"
+                        ? "bg-white text-[#0a3d24] shadow-2xs"
                         : "text-gray-500 hover:text-gray-800"
                     }`}
                     title="List View"
@@ -556,12 +556,12 @@ function ShopContent() {
             {/* Product Grid Area */}
             {loading && groceries.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-20 bg-white rounded-3xl border border-gray-100 shadow-2xs">
-                <Loader2 size={32} className="animate-spin text-[#0c831f] mb-2" />
+                <Loader2 size={32} className="animate-spin text-[#0a3d24] mb-2" />
                 <p className="text-xs font-bold text-gray-500">Loading fresh harvest...</p>
               </div>
             ) : filteredGroceries.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-14 px-4 bg-white rounded-3xl border border-gray-100 shadow-2xs text-center max-w-md mx-auto">
-                <div className="w-14 h-14 rounded-full bg-emerald-50 text-[#0c831f] flex items-center justify-center text-2xl mb-2.5">
+                <div className="w-14 h-14 rounded-full bg-emerald-50 text-[#0a3d24] flex items-center justify-center text-2xl mb-2.5">
                   🥬
                 </div>
                 <h3 className="text-sm sm:text-base font-black text-gray-900 mb-1">
@@ -573,7 +573,7 @@ function ShopContent() {
                 <button
                   type="button"
                   onClick={resetAllFilters}
-                  className="bg-[#0c831f] hover:bg-[#0a6c1a] text-white px-4 py-2 rounded-xl font-black text-xs shadow-xs transition cursor-pointer"
+                  className="bg-[#0a3d24] hover:bg-[#072817] text-white px-4 py-2 rounded-xl font-black text-xs shadow-xs transition cursor-pointer"
                 >
                   Clear All Filters
                 </button>
@@ -599,11 +599,11 @@ function ShopContent() {
                   type="button"
                   disabled={loading}
                   onClick={loadMore}
-                  className="bg-white hover:bg-emerald-50 text-gray-900 hover:text-[#0c831f] border border-gray-200 hover:border-[#0c831f] font-black text-xs px-5 py-2.5 rounded-xl shadow-2xs transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
+                  className="bg-white hover:bg-emerald-50 text-gray-900 hover:text-[#0a3d24] border border-gray-200 hover:border-[#0a3d24] font-black text-xs px-5 py-2.5 rounded-xl shadow-2xs transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
                 >
                   {loading ? (
                     <>
-                      <Loader2 size={13} className="animate-spin text-[#0c831f]" />
+                      <Loader2 size={13} className="animate-spin text-[#0a3d24]" />
                       <span>Loading more...</span>
                     </>
                   ) : (
@@ -636,7 +636,7 @@ function ShopContent() {
             >
               <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-3.5">
                 <h3 className="text-base font-black text-gray-900 flex items-center gap-1.5">
-                  <SlidersHorizontal size={15} className="text-[#0c831f]" />
+                  <SlidersHorizontal size={15} className="text-[#0a3d24]" />
                   <span>Refine Produce Filters</span>
                 </h3>
                 <button
@@ -659,7 +659,7 @@ function ShopContent() {
                     onClick={() => handleCategoryClick("all")}
                     className={`p-2.5 rounded-xl text-xs font-black text-left flex items-center justify-between border ${
                       !categoryParam
-                        ? "bg-emerald-50 text-[#0c831f] border-emerald-300"
+                        ? "bg-emerald-50 text-[#0a3d24] border-emerald-300"
                         : "bg-gray-50 border-gray-200 text-gray-700"
                     }`}
                   >
@@ -678,7 +678,7 @@ function ShopContent() {
                       onClick={() => handleCategoryClick(cat.name)}
                       className={`p-2.5 rounded-xl text-xs font-black text-left flex items-center justify-between border ${
                         categoryParam === cat.name
-                          ? "bg-emerald-50 text-[#0c831f] border-emerald-300"
+                          ? "bg-emerald-50 text-[#0a3d24] border-emerald-300"
                           : "bg-gray-50 border-gray-200 text-gray-700"
                       }`}
                     >
@@ -705,7 +705,7 @@ function ShopContent() {
               <div className="mb-4">
                 <div className="flex justify-between items-center mb-1">
                   <span className="text-[11px] font-black uppercase text-gray-400">Max Budget</span>
-                  <span className="text-xs font-black text-[#0c831f]">₹{priceRange}</span>
+                  <span className="text-xs font-black text-[#0a3d24]">₹{priceRange}</span>
                 </div>
                 <input
                   type="range"
@@ -714,7 +714,7 @@ function ShopContent() {
                   step="20"
                   value={priceRange}
                   onChange={(e) => setPriceRange(Number(e.target.value))}
-                  className="w-full accent-[#0c831f]"
+                  className="w-full accent-[#0a3d24]"
                 />
               </div>
 
@@ -729,7 +729,7 @@ function ShopContent() {
                 <button
                   type="button"
                   onClick={() => setIsMobileFilterOpen(false)}
-                  className="flex-1 py-2.5 bg-[#0c831f] hover:bg-[#0a6c1a] text-white font-bold text-xs rounded-xl shadow-xs transition"
+                  className="flex-1 py-2.5 bg-[#0a3d24] hover:bg-[#072817] text-white font-bold text-xs rounded-xl shadow-xs transition"
                 >
                   Apply Filters
                 </button>

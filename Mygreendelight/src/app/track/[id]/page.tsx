@@ -44,7 +44,7 @@ const Livemap = dynamic(() => import("@/components/Livemap"), {
   ssr: false,
   loading: () => (
     <div className="h-64 sm:h-72 w-full bg-emerald-50/50 rounded-2xl flex flex-col items-center justify-center text-emerald-800 font-bold text-xs gap-2 border border-emerald-100">
-      <Loader2 size={24} className="animate-spin text-[#0f8646]" />
+      <Loader2 size={24} className="animate-spin text-[#0a3d24]" />
       <span>Connecting to Live Bhopal GPS...</span>
     </div>
   ),
@@ -128,7 +128,7 @@ export default function TrackOrderPage() {
       <div className="min-h-screen bg-[#f8faf9] flex flex-col font-sans">
         <Nav user={(userdata as any) || { role: "user" }} />
         <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
-          <div className="w-14 h-14 rounded-2xl bg-emerald-100/80 text-[#0f8646] flex items-center justify-center mb-4 shadow-2xs border border-emerald-200">
+          <div className="w-14 h-14 rounded-2xl bg-emerald-100/80 text-[#0a3d24] flex items-center justify-center mb-4 shadow-2xs border border-emerald-200">
             <Loader2 size={28} className="animate-spin stroke-[2.5]" />
           </div>
           <h2 className="text-base font-black text-gray-900">Connecting to Bhopal Live Transit...</h2>
@@ -186,7 +186,7 @@ export default function TrackOrderPage() {
         <div className="flex items-center justify-between gap-3 mb-4">
           <Link
             href="/user/myorder"
-            className="inline-flex items-center gap-1.5 text-xs font-black text-gray-600 hover:text-[#0f8646] bg-white hover:bg-emerald-50/60 px-3 py-1.5 rounded-xl border border-gray-200/80 transition shadow-2xs cursor-pointer"
+            className="inline-flex items-center gap-1.5 text-xs font-black text-gray-600 hover:text-[#0a3d24] bg-white hover:bg-emerald-50/60 px-3 py-1.5 rounded-xl border border-gray-200/80 transition shadow-2xs cursor-pointer"
           >
             <ArrowLeft size={14} />
             <span>All Orders</span>
@@ -198,7 +198,7 @@ export default function TrackOrderPage() {
               className="inline-flex items-center gap-1.5 bg-white hover:bg-gray-100 text-gray-700 px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-2xs border border-gray-200 cursor-pointer"
               title="View Invoice"
             >
-              <Printer size={13} className="text-[#0f8646]" />
+              <Printer size={13} className="text-[#0a3d24]" />
               <span className="hidden sm:inline">Bill / Receipt</span>
             </button>
 
@@ -233,7 +233,7 @@ export default function TrackOrderPage() {
                     isDelivered
                       ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
                       : isOutForDelivery
-                      ? "bg-emerald-600 text-white shadow-2xs animate-pulse"
+                      ? "bg-[#0a3d24] text-white shadow-2xs animate-pulse"
                       : isCancelled
                       ? "bg-rose-50 text-rose-700 border border-rose-200"
                       : "bg-amber-50 text-amber-900 border border-amber-200"
@@ -273,7 +273,7 @@ export default function TrackOrderPage() {
                 <span className="text-[9.5px] uppercase font-black tracking-wider text-emerald-900/60 block">
                   Total Bill
                 </span>
-                <span className="text-base sm:text-lg font-black text-[#0f8646]">
+                <span className="text-base sm:text-lg font-black text-[#0a3d24]">
                   ₹{order?.totalamount || 0}
                 </span>
               </div>
@@ -305,7 +305,7 @@ export default function TrackOrderPage() {
                 
                 {/* Active Progress Bar */}
                 <div
-                  className="absolute left-0 top-4 -translate-y-1/2 h-1 bg-[#0f8646] transition-all duration-500 z-0 rounded-full"
+                  className="absolute left-0 top-4 -translate-y-1/2 h-1 bg-[#0a3d24] transition-all duration-500 z-0 rounded-full"
                   style={{
                     width:
                       currentStepIndex === 0
@@ -330,9 +330,9 @@ export default function TrackOrderPage() {
                       <div
                         className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-xs font-black transition-all shadow-2xs ${
                           isCurrent
-                            ? "bg-[#0f8646] text-white ring-4 ring-emerald-100 scale-110"
+                            ? "bg-[#0a3d24] text-white ring-4 ring-emerald-100 scale-110"
                             : isPassed
-                            ? "bg-[#0f8646] text-white"
+                            ? "bg-[#0a3d24] text-white"
                             : "bg-white text-gray-400 border border-gray-200"
                         }`}
                       >
@@ -397,7 +397,7 @@ export default function TrackOrderPage() {
                     setTimeout(() => setCopiedOtp(false), 2500);
                   }
                 }}
-                className="bg-white text-[#0f8646] px-4 py-2 rounded-2xl shadow-md border-2 border-emerald-400 text-center cursor-pointer hover:bg-emerald-50/50 transition group"
+                className="bg-white text-[#0a3d24] px-4 py-2 rounded-2xl shadow-md border-2 border-emerald-400 text-center cursor-pointer hover:bg-emerald-50/50 transition group"
                 title="Click to copy OTP"
               >
                 <div className="flex items-center justify-center gap-1.5 mb-0.5">
@@ -456,12 +456,12 @@ export default function TrackOrderPage() {
             {/* Rider Identity Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <div className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-2xl bg-emerald-100 text-[#0f8646] flex items-center justify-center font-bold text-lg shadow-2xs border border-emerald-200/80 shrink-0">
+                <div className="w-11 h-11 rounded-2xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center font-bold text-lg shadow-2xs border border-emerald-200/80 shrink-0">
                   <Truck size={20} />
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-[9.5px] font-black text-[#0f8646] uppercase bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">
+                    <span className="text-[9.5px] font-black text-[#0a3d24] uppercase bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">
                       Assigned Rider
                     </span>
                     <span className="text-[10.5px] font-bold text-gray-500">
@@ -477,7 +477,7 @@ export default function TrackOrderPage() {
               <div className="flex items-center gap-2">
                 <a
                   href={`tel:${deliveryBoy.mobile}`}
-                  className="bg-[#0f8646] hover:bg-[#0c6a38] active:scale-95 text-white px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                  className="bg-[#0a3d24] hover:bg-[#072817] active:scale-95 text-white px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 shadow-2xs cursor-pointer"
                 >
                   <Phone size={13} />
                   <span>Call Rider ({deliveryBoy.mobile})</span>
@@ -522,12 +522,12 @@ export default function TrackOrderPage() {
               return (
                 <div className="bg-emerald-50/90 border border-emerald-200 rounded-2xl p-3 sm:p-3.5 mb-4 flex items-center justify-between gap-3 shadow-2xs">
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="w-8 h-8 rounded-xl bg-[#0f8646] text-white flex items-center justify-center shrink-0">
+                    <div className="w-8 h-8 rounded-xl bg-[#0a3d24] text-white flex items-center justify-center shrink-0">
                       <Navigation size={15} />
                     </div>
                     <div className="min-w-0">
                       <p className="font-black text-xs sm:text-sm text-gray-900 truncate">
-                        Rider is <span className="text-[#0f8646] font-black">{hasExactGPS ? `${distKm} km away` : "On the way in Bhopal"}</span>
+                        Rider is <span className="text-[#0a3d24] font-black">{hasExactGPS ? `${distKm} km away` : "On the way in Bhopal"}</span>
                       </p>
                       <span className="text-[10.5px] text-gray-500 font-medium block">
                         Estimated Arrival: ~{etaMins} Mins • 10-15 Min Express Route
@@ -561,7 +561,7 @@ export default function TrackOrderPage() {
           /* Waiting for Delivery Partner */
           !isDelivered && !isCancelled && (
             <div className="bg-white rounded-3xl p-5 sm:p-6 border border-gray-200/80 shadow-2xs mb-5 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200 text-[#0f8646] flex items-center justify-center shrink-0">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200 text-[#0a3d24] flex items-center justify-center shrink-0">
                 <Clock size={24} className="animate-pulse" />
               </div>
               <div>
@@ -584,7 +584,7 @@ export default function TrackOrderPage() {
             <div className="lg:col-span-7 bg-white rounded-3xl p-5 sm:p-6 border border-gray-200/80 shadow-2xs">
               <div className="flex items-center justify-between gap-2 mb-3.5">
                 <h3 className="font-black text-gray-900 text-sm sm:text-base flex items-center gap-2">
-                  <Package size={16} className="text-[#0f8646]" />
+                  <Package size={16} className="text-[#0a3d24]" />
                   <span>Items in this Harvest ({order.items?.length || 0})</span>
                 </h3>
                 <span className="text-[11px] font-bold text-gray-500">
@@ -638,7 +638,7 @@ export default function TrackOrderPage() {
                               unit: item.variationWeight || item.unit,
                             })
                           }
-                          className="text-[10px] font-black text-[#0f8646] hover:text-[#0c6a38] bg-emerald-50 hover:bg-emerald-100 px-2 py-1 rounded-lg border border-emerald-200 transition cursor-pointer flex items-center gap-1 shadow-2xs"
+                          className="text-[10px] font-black text-[#0a3d24] hover:text-[#072817] bg-emerald-50 hover:bg-emerald-100 px-2 py-1 rounded-lg border border-emerald-200 transition cursor-pointer flex items-center gap-1 shadow-2xs"
                         >
                           <Star size={10} className="fill-amber-400 text-amber-400" />
                           <span>Rate</span>
@@ -652,7 +652,7 @@ export default function TrackOrderPage() {
               {/* Multi-Bag Quality Segregation */}
               {order?.items && (
                 <div className="mt-4 pt-4 border-t border-gray-100">
-                  <span className="text-[10px] font-black uppercase text-[#0f8646] tracking-wider bg-emerald-50 px-2 py-0.5 rounded-md inline-block mb-2.5">
+                  <span className="text-[10px] font-black uppercase text-[#0a3d24] tracking-wider bg-emerald-50 px-2 py-0.5 rounded-md inline-block mb-2.5">
                     📦 Multi-Bag Packing
                   </span>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
@@ -705,10 +705,10 @@ export default function TrackOrderPage() {
               <div className="bg-white rounded-3xl p-5 sm:p-6 border border-gray-200/80 shadow-2xs">
                 <div className="flex items-center justify-between gap-2 mb-2.5">
                   <h3 className="font-black text-gray-900 text-xs uppercase tracking-wider flex items-center gap-1.5">
-                    <MapPin size={14} className="text-[#0f8646]" />
+                    <MapPin size={14} className="text-[#0a3d24]" />
                     <span>Destination</span>
                   </h3>
-                  <span className="text-[9.5px] font-black uppercase text-[#0f8646] bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200 truncate">
+                  <span className="text-[9.5px] font-black uppercase text-[#0a3d24] bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200 truncate">
                     {order.deliverySlot || "10-15 Min Express"}
                   </span>
                 </div>
@@ -720,7 +720,7 @@ export default function TrackOrderPage() {
                     {order.address?.city || "Bhopal"}, {order.address?.state || "MP"} {order.address?.pincode}
                   </p>
                   <p className="text-gray-600 flex items-center gap-1 pt-1.5 font-bold">
-                    <Phone size={11} className="text-[#0f8646]" /> {order.address?.mobile}
+                    <Phone size={11} className="text-[#0a3d24]" /> {order.address?.mobile}
                   </p>
                 </div>
               </div>
@@ -728,7 +728,7 @@ export default function TrackOrderPage() {
               {/* Bill & Payment Summary */}
               <div className="bg-white rounded-3xl p-5 sm:p-6 border border-gray-200/80 shadow-2xs">
                 <h3 className="font-black text-gray-900 text-xs uppercase tracking-wider mb-3 flex items-center gap-1.5">
-                  <CreditCard size={14} className="text-[#0f8646]" />
+                  <CreditCard size={14} className="text-[#0a3d24]" />
                   <span>Payment Breakdown</span>
                 </h3>
 
@@ -779,7 +779,7 @@ export default function TrackOrderPage() {
 
                   <div className="flex justify-between items-center pt-2.5 border-t border-gray-100 text-sm font-black text-gray-900">
                     <span>Amount Payable:</span>
-                    <span className="text-base font-black text-[#0f8646]">
+                    <span className="text-base font-black text-[#0a3d24]">
                       ₹{order.totalamount || 0}
                     </span>
                   </div>

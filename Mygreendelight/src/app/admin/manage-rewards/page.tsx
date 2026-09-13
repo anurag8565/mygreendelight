@@ -107,14 +107,14 @@ export default function ManageRewardsPage() {
               className="bg-white hover:bg-gray-50 text-gray-700 border border-gray-200/90 px-3.5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-xs transition cursor-pointer disabled:opacity-50"
               title="Refresh rewards"
             >
-              <RefreshCw size={15} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+              <RefreshCw size={15} className={loading ? "animate-spin text-[#0a3d24]" : ""} />
               <span>Refresh</span>
             </button>
 
             <button
               onClick={handleSave}
               disabled={saving}
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-md transition-all cursor-pointer disabled:opacity-50"
+              className="bg-[#0a3d24] hover:bg-[#072817] text-white px-5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-md transition-all cursor-pointer disabled:opacity-50"
             >
               <Save size={16} />
               <span>{saving ? "Saving..." : "Save Settings"}</span>
@@ -140,14 +140,14 @@ export default function ManageRewardsPage() {
           <div className="bg-white p-5 rounded-2xl border border-gray-200/80 shadow-2xs">
             <span className="text-xs font-bold text-gray-500 uppercase block mb-1">Status</span>
             <div className="flex items-center justify-between">
-              <span className={`text-base font-black ${config?.isActive ? "text-[#0f8646]" : "text-gray-400"}`}>
+              <span className={`text-base font-black ${config?.isActive ? "text-[#0a3d24]" : "text-gray-400"}`}>
                 {config?.isActive ? "🟢 Active on App" : "⚪ Disabled"}
               </span>
               <input
                 type="checkbox"
                 checked={config?.isActive || false}
                 onChange={(e) => setConfig({ ...config, isActive: e.target.checked })}
-                className="w-5 h-5 accent-[#0f8646] cursor-pointer"
+                className="w-5 h-5 accent-[#0a3d24] cursor-pointer"
               />
             </div>
           </div>

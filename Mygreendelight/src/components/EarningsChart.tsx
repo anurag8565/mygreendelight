@@ -59,8 +59,8 @@ export default function EarningsChart({ data }: Props) {
           <AreaChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
             <defs>
               <linearGradient id="earningsGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#0f8646" stopOpacity={0.28} />
-                <stop offset="95%" stopColor="#0f8646" stopOpacity={0.0} />
+                <stop offset="5%" stopColor="#0a3d24" stopOpacity={0.28} />
+                <stop offset="95%" stopColor="#0a3d24" stopOpacity={0.0} />
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
@@ -80,10 +80,10 @@ export default function EarningsChart({ data }: Props) {
             <Area
               type="monotone"
               dataKey="earnings"
-              stroke="#0f8646"
+              stroke="#0a3d24"
               strokeWidth={3}
               fill="url(#earningsGradient)"
-              activeDot={{ r: 6, fill: "#0f8646", stroke: "#ffffff", strokeWidth: 2 }}
+              activeDot={{ r: 6, fill: "#0a3d24", stroke: "#ffffff", strokeWidth: 2 }}
             />
           </AreaChart>
         </ResponsiveContainer>

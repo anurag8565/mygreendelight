@@ -28,7 +28,7 @@ const AVATAR_COLORS = [
   "bg-[#34A853] text-white",
   "bg-[#FBBC05] text-gray-950",
   "bg-[#8e24aa] text-white",
-  "bg-[#0f8646] text-white",
+  "bg-[#0a3d24] text-white",
   "bg-[#0284c7] text-white",
 ];
 
@@ -261,7 +261,7 @@ export default function Testimonials({
             <button
               type="button"
               onClick={() => setIsModalOpen(true)}
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-4 py-2 rounded-full font-black shadow-2xs transition text-xs flex items-center gap-1.5 cursor-pointer active:scale-95"
+              className="bg-[#0a3d24] hover:bg-[#072817] text-white px-4 py-2 rounded-full font-black shadow-2xs transition text-xs flex items-center gap-1.5 cursor-pointer active:scale-95"
             >
               <MessageSquarePlus size={14} />
               <span>Write a Review</span>
@@ -276,7 +276,7 @@ export default function Testimonials({
             type="button"
             onClick={() => scroll("left")}
             aria-label="Scroll left"
-            className="flex absolute -left-2 sm:-left-3.5 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0f8646] w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all shadow-md hover:shadow-lg border border-gray-200/90 active:scale-95 cursor-pointer backdrop-blur-xs"
+            className="flex absolute -left-2 sm:-left-3.5 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0a3d24] w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all shadow-md hover:shadow-lg border border-gray-200/90 active:scale-95 cursor-pointer backdrop-blur-xs"
           >
             <ChevronLeft size={18} className="stroke-[2.5]" />
           </button>
@@ -380,7 +380,7 @@ export default function Testimonials({
             type="button"
             onClick={() => scroll("right")}
             aria-label="Scroll right"
-            className="flex absolute -right-2 sm:-right-3.5 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0f8646] w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all shadow-md hover:shadow-lg border border-gray-200/90 active:scale-95 cursor-pointer backdrop-blur-xs"
+            className="flex absolute -right-2 sm:-right-3.5 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0a3d24] w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all shadow-md hover:shadow-lg border border-gray-200/90 active:scale-95 cursor-pointer backdrop-blur-xs"
           >
             <ChevronRight size={18} className="stroke-[2.5]" />
           </button>
@@ -408,7 +408,7 @@ export default function Testimonials({
                 <X size={18} />
               </button>
 
-              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-[#0f8646] border border-emerald-200 flex items-center justify-center mb-3 mx-auto shadow-2xs">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-[#0a3d24] border border-emerald-200 flex items-center justify-center mb-3 mx-auto shadow-2xs">
                 <GoogleGIcon className="w-6 h-6" />
               </div>
 
@@ -429,7 +429,7 @@ export default function Testimonials({
                     href={googleSettings.googleReviewUrl || GOOGLE_PROFILE_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 bg-[#0f8646] text-white px-4 py-2 rounded-xl text-xs font-black shadow-sm hover:bg-[#0c6a38] transition"
+                    className="inline-flex items-center gap-1.5 bg-[#0a3d24] text-white px-4 py-2 rounded-xl text-xs font-black shadow-sm hover:bg-[#072817] transition"
                   >
                     <GoogleGIcon className="w-3.5 h-3.5 bg-white rounded-full p-0.5" />
                     <span>Post on Google Reviews</span>
@@ -450,7 +450,7 @@ export default function Testimonials({
                       onChange={(e) =>
                         setReviewForm({ ...reviewForm, name: e.target.value })
                       }
-                      className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium"
+                      className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium"
                     />
                   </div>
 
@@ -463,7 +463,7 @@ export default function Testimonials({
                       onChange={(e) =>
                         setReviewForm({ ...reviewForm, location: e.target.value })
                       }
-                      className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium cursor-pointer"
+                      className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium cursor-pointer"
                     >
                       <option value="Arera Colony, Bhopal">Arera Colony, Bhopal</option>
                       <option value="Kolar Road, Bhopal">Kolar Road, Bhopal</option>
@@ -480,30 +480,33 @@ export default function Testimonials({
                     <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
                       Rating
                     </label>
-                    <div className="flex items-center gap-2 p-2 bg-gray-50 rounded-xl border border-gray-200 justify-center">
-                      {[1, 2, 3, 4, 5].map((star) => (
+                    <div className="flex items-center gap-1.5">
+                      {[1, 2, 3, 4, 5].map((s) => (
                         <button
+                          key={s}
                           type="button"
-                          key={star}
-                          onClick={() => setReviewForm({ ...reviewForm, rating: star })}
-                          className="transition-transform hover:scale-125 cursor-pointer"
+                          onClick={() => setReviewForm({ ...reviewForm, rating: s })}
+                          className="p-1 text-amber-400 hover:scale-110 transition cursor-pointer"
                         >
                           <Star
-                            size={24}
+                            size={22}
                             className={
-                              reviewForm.rating >= star
-                                ? "text-amber-400 fill-amber-400"
+                              s <= reviewForm.rating
+                                ? "fill-amber-400 text-amber-400"
                                 : "text-gray-300"
                             }
                           />
                         </button>
                       ))}
+                      <span className="text-xs text-gray-500 ml-2">
+                        {reviewForm.rating} / 5 Stars
+                      </span>
                     </div>
                   </div>
 
                   <div>
                     <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
-                      Your Review / Experience *
+                      Your Experience / Feedback *
                     </label>
                     <textarea
                       required
@@ -513,14 +516,14 @@ export default function Testimonials({
                       onChange={(e) =>
                         setReviewForm({ ...reviewForm, comment: e.target.value })
                       }
-                      className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium resize-none"
+                      className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium resize-none"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-3 bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                    className="w-full py-3 bg-[#0a3d24] hover:bg-[#072817] text-white font-black rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                   >
                     {isSubmitting ? "Submitting Review..." : "Publish Verified Review"}
                   </button>

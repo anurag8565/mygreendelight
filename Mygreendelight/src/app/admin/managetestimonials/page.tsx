@@ -209,7 +209,7 @@ export default function ManageTestimonials() {
                 className="bg-white hover:bg-gray-50 text-gray-700 border border-gray-200/90 px-3 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                 title="Refresh testimonials"
               >
-                <RefreshCw size={13} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+                <RefreshCw size={13} className={loading ? "animate-spin text-[#0a3d24]" : ""} />
                 <span>Refresh</span>
               </button>
 
@@ -226,7 +226,7 @@ export default function ManageTestimonials() {
               <button
                 onClick={handleSeedBhopalReviews}
                 disabled={actionLoading}
-                className="bg-emerald-50 hover:bg-emerald-100 text-[#0f8646] border border-emerald-300 px-3 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="bg-emerald-50 hover:bg-emerald-100 text-[#0a3d24] border border-emerald-300 px-3 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                 title="Populate authentic Bhopal customer feedback"
               >
                 <GoogleGIcon className="w-3.5 h-3.5" />
@@ -235,7 +235,7 @@ export default function ManageTestimonials() {
 
               <button
                 onClick={() => setIsAddModalOpen(true)}
-                className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-3.5 py-2 rounded-xl text-xs font-black shadow-sm transition flex items-center gap-1.5 cursor-pointer"
+                className="bg-[#0a3d24] hover:bg-[#072817] text-white px-3.5 py-2 rounded-xl text-xs font-black shadow-sm transition flex items-center gap-1.5 cursor-pointer"
               >
                 <Plus size={15} />
                 <span>Add Review</span>
@@ -273,7 +273,7 @@ export default function ManageTestimonials() {
                           showGoogleRatingPill: e.target.checked,
                         })
                       }
-                      className="w-4 h-4 text-[#0f8646] rounded focus:ring-0 cursor-pointer"
+                      className="w-4 h-4 text-[#0a3d24] rounded focus:ring-0 cursor-pointer"
                     />
                     <span>Show Rating Pill on Homepage</span>
                   </label>
@@ -297,7 +297,7 @@ export default function ManageTestimonials() {
                         googleRating: parseFloat(e.target.value) || 5,
                       })
                     }
-                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-black text-sm"
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-black text-sm"
                   />
                 </div>
 
@@ -315,7 +315,7 @@ export default function ManageTestimonials() {
                       })
                     }
                     placeholder="e.g. on Google Reviews / 50+ reviews"
-                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium"
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium"
                   />
                 </div>
 
@@ -333,7 +333,7 @@ export default function ManageTestimonials() {
                       })
                     }
                     placeholder="e.g. Customer Reviews on Google"
-                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium"
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium"
                   />
                 </div>
 
@@ -351,7 +351,7 @@ export default function ManageTestimonials() {
                       })
                     }
                     placeholder="https://share.google/..."
-                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-mono text-[11px]"
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-mono text-[11px]"
                   />
                 </div>
 
@@ -364,7 +364,7 @@ export default function ManageTestimonials() {
                   <button
                     type="submit"
                     disabled={savingSettings}
-                    className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2.5 rounded-xl font-black text-xs transition shadow-sm cursor-pointer disabled:opacity-50"
+                    className="bg-[#0a3d24] hover:bg-[#072817] text-white px-5 py-2.5 rounded-xl font-black text-xs transition shadow-sm cursor-pointer disabled:opacity-50"
                   >
                     {savingSettings ? "Saving Settings..." : "Save Google Settings"}
                   </button>
@@ -374,7 +374,7 @@ export default function ManageTestimonials() {
 
             {loading ? (
               <div className="py-24 flex flex-col items-center justify-center">
-                <Loader2 size={36} className="animate-spin text-[#0f8646] mb-3" />
+                <Loader2 size={36} className="animate-spin text-[#0a3d24] mb-3" />
                 <p className="text-xs font-bold text-gray-500">
                   Loading Testimonials...
                 </p>
@@ -391,7 +391,7 @@ export default function ManageTestimonials() {
                 <button
                   onClick={handleSeedBhopalReviews}
                   disabled={actionLoading}
-                  className="bg-[#0f8646] text-white px-5 py-2.5 rounded-xl text-xs font-black shadow-md hover:bg-[#0c6a38] transition cursor-pointer"
+                  className="bg-[#0a3d24] text-white px-5 py-2.5 rounded-xl text-xs font-black shadow-md hover:bg-[#072817] transition cursor-pointer"
                 >
                   Seed Google Reviews
                 </button>
@@ -407,7 +407,7 @@ export default function ManageTestimonials() {
                       {/* Top User Row */}
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-2.5">
-                          <div className="w-9 h-9 rounded-xl bg-emerald-100 text-[#0f8646] flex items-center justify-center font-black text-xs border border-emerald-200">
+                          <div className="w-9 h-9 rounded-xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center font-black text-xs border border-emerald-200">
                             {t.name ? t.name.slice(0, 1).toUpperCase() : "U"}
                           </div>
                           <div>
@@ -462,7 +462,7 @@ export default function ManageTestimonials() {
                         <span
                           className={`text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full ${
                             t.status === "approved"
-                              ? "bg-green-100 text-[#0f8646]"
+                              ? "bg-green-100 text-[#0a3d24]"
                               : "bg-amber-100 text-amber-800"
                           }`}
                         >
@@ -472,7 +472,7 @@ export default function ManageTestimonials() {
                         {t.status !== "approved" ? (
                           <button
                             onClick={() => updateStatus(t._id, "approved")}
-                            className="bg-green-50 hover:bg-green-100 text-[#0f8646] px-2 py-0.5 rounded-lg text-xs font-bold transition flex items-center gap-1 cursor-pointer"
+                            className="bg-green-50 hover:bg-green-100 text-[#0a3d24] px-2 py-0.5 rounded-lg text-xs font-bold transition flex items-center gap-1 cursor-pointer"
                           >
                             <Check size={12} /> Approve
                           </button>
@@ -531,7 +531,7 @@ export default function ManageTestimonials() {
                   onChange={(e) =>
                     setAddForm({ ...addForm, name: e.target.value })
                   }
-                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium"
+                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium"
                 />
               </div>
 
@@ -542,7 +542,7 @@ export default function ManageTestimonials() {
                 <select
                   value={addForm.location}
                   onChange={(e) => setAddForm({ ...addForm, location: e.target.value })}
-                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 cursor-pointer"
+                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 cursor-pointer"
                 >
                   <option value="Arera Colony, Bhopal">Arera Colony, Bhopal</option>
                   <option value="Kolar Road, Bhopal">Kolar Road, Bhopal</option>
@@ -566,7 +566,7 @@ export default function ManageTestimonials() {
                       tag: e.target.value === "google" ? "Google Review" : "Verified Customer",
                     })
                   }
-                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 cursor-pointer"
+                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 cursor-pointer"
                 >
                   <option value="google">🌐 Google My Business Review (Shows Google &apos;G&apos; Badge)</option>
                   <option value="website">🛒 Website Customer Review (Shows &apos;Verified Buyer&apos; Badge)</option>
@@ -582,7 +582,7 @@ export default function ManageTestimonials() {
                   placeholder="e.g. 2 days ago, 1 week ago, Yesterday"
                   value={addForm.timeAgo}
                   onChange={(e) => setAddForm({ ...addForm, timeAgo: e.target.value })}
-                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium"
+                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium"
                 />
               </div>
 
@@ -595,7 +595,7 @@ export default function ManageTestimonials() {
                   onChange={(e) =>
                     setAddForm({ ...addForm, rating: Number(e.target.value) })
                   }
-                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 cursor-pointer"
+                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 cursor-pointer"
                 >
                   <option value={5}>⭐⭐⭐⭐⭐ 5 Stars (Excellent)</option>
                   <option value={4}>⭐⭐⭐⭐ 4 Stars (Good)</option>
@@ -615,7 +615,7 @@ export default function ManageTestimonials() {
                   onChange={(e) =>
                     setAddForm({ ...addForm, comment: e.target.value })
                   }
-                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium resize-none"
+                  className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium resize-none"
                 />
               </div>
 
@@ -630,7 +630,7 @@ export default function ManageTestimonials() {
                 <button
                   type="submit"
                   disabled={isAdding}
-                  className="px-6 py-2.5 rounded-xl bg-[#0f8646] hover:bg-[#0c6a38] text-white font-extrabold shadow-md disabled:opacity-50 cursor-pointer"
+                  className="px-6 py-2.5 rounded-xl bg-[#0a3d24] hover:bg-[#072817] text-white font-extrabold shadow-md disabled:opacity-50 cursor-pointer"
                 >
                   {isAdding ? "Saving..." : "Save Review"}
                 </button>

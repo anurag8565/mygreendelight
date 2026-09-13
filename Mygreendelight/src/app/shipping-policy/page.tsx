@@ -19,10 +19,10 @@ export default function ShippingPolicyPage() {
       <main className="max-w-4xl mx-auto px-4 md:px-8 py-10 w-full flex-1">
         {/* Header */}
         <div className="bg-white rounded-3xl p-8 sm:p-10 border border-gray-200/80 shadow-xs mb-8">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-[#0f8646] flex items-center justify-center mb-4">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center mb-4">
             <Truck size={24} />
           </div>
-          <span className="text-xs font-black uppercase text-[#0f8646] tracking-wider block mb-1">
+          <span className="text-xs font-black uppercase text-[#0a3d24] tracking-wider block mb-1">
             Fast Delivery Promise
           </span>
           <h1 className="text-2xl sm:text-3xl font-black text-gray-900">
@@ -37,7 +37,7 @@ export default function ShippingPolicyPage() {
         <div className="bg-white rounded-3xl p-8 sm:p-10 border border-gray-200/80 shadow-xs space-y-8 text-sm text-gray-700 leading-relaxed">
           <section className="space-y-3">
             <h2 className="text-lg font-black text-gray-900 flex items-center gap-2">
-              <Zap size={18} className="text-[#0f8646]" />
+              <Zap size={18} className="text-[#0a3d24]" />
               <span>1. Daily Delivery Slots & Operational Hours</span>
             </h2>
             <p className="text-xs text-gray-600">
@@ -45,7 +45,7 @@ export default function ShippingPolicyPage() {
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
               <div className="p-4 rounded-2xl bg-green-50 border border-green-200">
-                <span className="font-extrabold text-[#0f8646] block text-sm mb-1">Slot 1: Early Morning</span>
+                <span className="font-extrabold text-[#0a3d24] block text-sm mb-1">Slot 1: Early Morning</span>
                 <p className="text-gray-600">6:00 AM – 8:30 AM (Sunrise Pooja & Breakfast Essentials)</p>
               </div>
               <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200">
@@ -61,7 +61,7 @@ export default function ShippingPolicyPage() {
 
           <section className="space-y-3">
             <h2 className="text-lg font-black text-gray-900 flex items-center gap-2">
-              <MapPin size={18} className="text-[#0f8646]" />
+              <MapPin size={18} className="text-[#0a3d24]" />
               <span>2. Store Location & Delivery Coverage Area</span>
             </h2>
             <p>
@@ -74,7 +74,7 @@ export default function ShippingPolicyPage() {
 
           <section className="space-y-3">
             <h2 className="text-lg font-black text-gray-900 flex items-center gap-2">
-              <Clock size={18} className="text-[#0f8646]" />
+              <Clock size={18} className="text-[#0a3d24]" />
               <span>3. Delivery Charges & Free Shipping Threshold</span>
             </h2>
             <ul className="list-disc pl-5 space-y-1.5 text-xs text-gray-600">

@@ -49,18 +49,18 @@ async function Home() {
   return (
     <>
       {user?.role === "admin" && (
-        <div className="bg-[#093e21] text-white py-2 px-4 text-xs font-bold flex items-center justify-between sticky top-0 z-[100] shadow-md border-b border-green-800">
+        <div className="bg-[#0a3d24] text-white py-2 px-4 text-xs font-bold flex items-center justify-between sticky top-0 z-[100] shadow-md border-b border-emerald-900/60">
           <div className="flex items-center gap-2">
             <span className="bg-yellow-400 text-gray-950 text-[10px] px-2 py-0.5 rounded font-black tracking-wide">
               ADMIN MODE
             </span>
-            <span className="text-green-100 hidden sm:inline">
+            <span className="text-emerald-100 hidden sm:inline">
               You are previewing the live customer store as Administrator
             </span>
           </div>
           <Link
             href="/admin"
-            className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-3 py-1.5 rounded-xl text-xs font-extrabold transition flex items-center gap-1.5 shadow-sm cursor-pointer"
+            className="bg-[#072817] hover:bg-[#041a0d] text-white px-3 py-1.5 rounded-xl text-xs font-extrabold transition flex items-center gap-1.5 shadow-sm cursor-pointer border border-emerald-500/30"
           >
             <span>Go to Admin Center</span>
             <ArrowRight size={13} />

@@ -44,7 +44,7 @@ export default function AdminMandiProfitAnalytics() {
   if (loading || !data) {
     return (
       <div className="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-xs mt-8 text-center">
-        <div className="w-8 h-8 border-3 border-[#0f8646] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+        <div className="w-8 h-8 border-3 border-[#0a3d24] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
         <p className="text-xs text-gray-500 font-bold">Calculating Kisan Procurement Costs & Net Margins...</p>
       </div>
     );
@@ -74,7 +74,7 @@ export default function AdminMandiProfitAnalytics() {
       {/* Header & Title */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-6 border-b border-gray-100">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-[#0f8646] flex items-center justify-center font-black shadow-xs">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center font-black shadow-xs">
             <TrendingUp size={24} />
           </div>
           <div>
@@ -124,7 +124,7 @@ export default function AdminMandiProfitAnalytics() {
           <span className="text-[11px] font-extrabold uppercase text-green-900 tracking-wider block mb-1">
             Net Estimated Profit
           </span>
-          <h3 className="text-2xl sm:text-3xl font-black text-[#0f8646]">
+          <h3 className="text-2xl sm:text-3xl font-black text-[#0a3d24]">
             +₹{summary.totalProfitEst?.toLocaleString("en-IN") || 0}
           </h3>
           <span className="text-[10px] text-emerald-700 font-bold mt-1 block">
@@ -157,7 +157,7 @@ export default function AdminMandiProfitAnalytics() {
             placeholder="Search produce item..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0f8646] transition"
+            className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-[#0a3d24] transition"
           />
         </div>
 
@@ -246,7 +246,7 @@ export default function AdminMandiProfitAnalytics() {
                 </td>
 
                 {/* Total Item Daily Profit */}
-                <td className="py-3 px-4 text-right font-black text-sm text-[#0f8646]">
+                <td className="py-3 px-4 text-right font-black text-sm text-[#0a3d24]">
                   +₹{it.totalItemProfit}
                 </td>
 

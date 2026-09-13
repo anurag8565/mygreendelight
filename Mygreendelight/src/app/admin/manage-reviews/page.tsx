@@ -86,7 +86,7 @@ export default function ManageReviewsPage() {
             className="bg-white hover:bg-gray-50 text-gray-700 border border-gray-200/90 px-3.5 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-xs transition cursor-pointer disabled:opacity-50"
             title="Refresh reviews"
           >
-            <RefreshCw size={15} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+            <RefreshCw size={15} className={loading ? "animate-spin text-[#0a3d24]" : ""} />
             <span>Refresh</span>
           </button>
         </div>
@@ -101,7 +101,7 @@ export default function ManageReviewsPage() {
           <div className="bg-white p-5 rounded-2xl border border-gray-200/80 shadow-2xs">
             <span className="text-xs font-bold text-gray-400 block uppercase">Overall Average Rating</span>
             <div className="flex items-center gap-1.5 mt-1">
-              <span className="text-2xl font-black text-[#0f8646]">{avgRating}</span>
+              <span className="text-2xl font-black text-[#0a3d24]">{avgRating}</span>
               <div className="flex text-amber-400">
                 {"★".repeat(Math.round(Number(avgRating)))}
               </div>
@@ -138,7 +138,7 @@ export default function ManageReviewsPage() {
               onClick={() => setFilterRating(f)}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition shrink-0 cursor-pointer ${
                 filterRating === f
-                  ? "bg-[#0f8646] text-white shadow-xs"
+                  ? "bg-[#0a3d24] text-white shadow-xs"
                   : "bg-white text-gray-700 border border-gray-200 hover:bg-gray-50"
               }`}
             >
@@ -150,7 +150,7 @@ export default function ManageReviewsPage() {
         {/* Reviews List */}
         {loading ? (
           <div className="py-24 text-center">
-            <Loader2 size={32} className="animate-spin text-[#0f8646] mx-auto mb-2" />
+            <Loader2 size={32} className="animate-spin text-[#0a3d24] mx-auto mb-2" />
             <p className="text-xs font-bold text-gray-400">Loading reviews...</p>
           </div>
         ) : filteredReviews.length === 0 ? (

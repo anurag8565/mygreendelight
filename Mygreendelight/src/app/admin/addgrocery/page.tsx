@@ -175,7 +175,7 @@ export default function AddGrocery() {
           <div className="flex items-center gap-3">
             <Link
               href="/admin/bulk-upload"
-              className="bg-green-50 hover:bg-green-100 border border-green-300 text-[#0f8646] px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 shadow-xs"
+              className="bg-green-50 hover:bg-green-100 border border-green-300 text-[#0a3d24] px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 shadow-xs"
             >
               <Upload size={14} />
               <span>Bulk CSV Upload</span>
@@ -194,7 +194,7 @@ export default function AddGrocery() {
         {/* Form Body */}
         <div className="p-3.5 sm:p-6 lg:p-8 max-w-4xl space-y-6 w-full">
           {successMsg && (
-            <div className="bg-emerald-50 border border-emerald-300 text-[#0f8646] px-5 py-4 rounded-2xl flex items-center gap-3 shadow-xs">
+            <div className="bg-emerald-50 border border-emerald-300 text-[#0a3d24] px-5 py-4 rounded-2xl flex items-center gap-3 shadow-xs">
               <CheckCircle2 size={18} />
               <span className="font-bold text-xs sm:text-sm">{successMsg}</span>
             </div>
@@ -211,7 +211,7 @@ export default function AddGrocery() {
                 <label className="block text-gray-700 uppercase tracking-wider mb-2">
                   Produce Image *
                 </label>
-                <div className="flex flex-col sm:flex-row items-center gap-6 p-4 rounded-2xl border-2 border-dashed border-gray-200 hover:border-[#0f8646] transition bg-gray-50/50">
+                <div className="flex flex-col sm:flex-row items-center gap-6 p-4 rounded-2xl border-2 border-dashed border-gray-200 hover:border-[#0a3d24] transition bg-gray-50/50">
                   <div className="w-24 h-24 rounded-2xl bg-white border border-gray-200 flex items-center justify-center overflow-hidden shrink-0 shadow-2xs">
                     {imagePreview ? (
                       <img
@@ -234,7 +234,7 @@ export default function AddGrocery() {
                     />
                     <label
                       htmlFor="image-upload"
-                      className="inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-800 hover:border-[#0f8646] hover:text-[#0f8646] px-4 py-2 rounded-xl cursor-pointer shadow-2xs transition"
+                      className="inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-800 hover:border-[#0a3d24] hover:text-[#0a3d24] px-4 py-2 rounded-xl cursor-pointer shadow-2xs transition"
                     >
                       <Upload size={14} />
                       <span>Select Image from Computer</span>
@@ -260,7 +260,7 @@ export default function AddGrocery() {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium text-xs sm:text-sm"
+                    className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium text-xs sm:text-sm"
                   />
                 </div>
 
@@ -274,7 +274,7 @@ export default function AddGrocery() {
                     onChange={(e) =>
                       setFormData({ ...formData, category: e.target.value })
                     }
-                    className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-bold text-xs sm:text-sm"
+                    className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-bold text-xs sm:text-sm"
                   >
                     <option value="">Select Category</option>
                     {(categories.length > 0
@@ -308,7 +308,7 @@ export default function AddGrocery() {
                     onChange={(e) =>
                       setFormData({ ...formData, price: e.target.value })
                     }
-                    className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium text-xs sm:text-sm"
+                    className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium text-xs sm:text-sm"
                   />
                 </div>
 
@@ -323,7 +323,7 @@ export default function AddGrocery() {
                     onChange={(e) =>
                       setFormData({ ...formData, mrp: e.target.value })
                     }
-                    className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium text-xs sm:text-sm"
+                    className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium text-xs sm:text-sm"
                   />
                   <p className="text-[10px] text-gray-400 mt-1 font-normal">Shows crossed discount badge</p>
                 </div>
@@ -340,7 +340,7 @@ export default function AddGrocery() {
                     onChange={(e) =>
                       setFormData({ ...formData, unit: e.target.value })
                     }
-                    className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium text-xs sm:text-sm"
+                    className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium text-xs sm:text-sm"
                   />
                 </div>
 
@@ -356,7 +356,7 @@ export default function AddGrocery() {
                     onChange={(e) =>
                       setFormData({ ...formData, stock: e.target.value })
                     }
-                    className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium text-xs sm:text-sm"
+                    className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium text-xs sm:text-sm"
                   />
                 </div>
               </div>
@@ -376,7 +376,7 @@ export default function AddGrocery() {
                     onChange={(e) =>
                       setFormData({ ...formData, rating: e.target.value })
                     }
-                    className="w-full p-2.5 rounded-xl border border-emerald-200 outline-none focus:border-[#0f8646] bg-white font-bold text-xs sm:text-sm"
+                    className="w-full p-2.5 rounded-xl border border-emerald-200 outline-none focus:border-[#0a3d24] bg-white font-bold text-xs sm:text-sm"
                   />
                 </div>
 
@@ -388,7 +388,7 @@ export default function AddGrocery() {
                     onChange={(e) =>
                       setFormData({ ...formData, isTopRated: e.target.checked })
                     }
-                    className="w-5 h-5 accent-[#0f8646] rounded cursor-pointer"
+                    className="w-5 h-5 accent-[#0a3d24] rounded cursor-pointer"
                   />
                   <label htmlFor="top-rated-check" className="cursor-pointer text-gray-800 font-black text-xs">
                     🌟 Feature in &quot;Top Rated Farm Products&quot; on Homepage
@@ -408,7 +408,7 @@ export default function AddGrocery() {
                   onChange={(e) =>
                     setFormData({ ...formData, description: e.target.value })
                   }
-                  className="w-full p-3 rounded-2xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium text-xs sm:text-sm resize-none"
+                  className="w-full p-3 rounded-2xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium text-xs sm:text-sm resize-none"
                 />
               </div>
 
@@ -424,7 +424,7 @@ export default function AddGrocery() {
                     onChange={(e) =>
                       setFormData({ ...formData, sourcing: e.target.value })
                     }
-                    className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium text-xs"
+                    className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium text-xs"
                   />
                 </div>
 
@@ -438,7 +438,7 @@ export default function AddGrocery() {
                     onChange={(e) =>
                       setFormData({ ...formData, storage: e.target.value })
                     }
-                    className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium text-xs"
+                    className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium text-xs"
                   />
                 </div>
               </div>
@@ -457,7 +457,7 @@ export default function AddGrocery() {
                   <button
                     type="button"
                     onClick={addVariation}
-                    className="inline-flex items-center gap-1 text-xs text-[#0f8646] hover:underline"
+                    className="inline-flex items-center gap-1 text-xs text-[#0a3d24] hover:underline"
                   >
                     <Plus size={14} /> Add Size
                   </button>
@@ -508,7 +508,7 @@ export default function AddGrocery() {
                     onChange={(e) =>
                       setFormData({ ...formData, status: e.target.value as "published" | "draft" })
                     }
-                    className="w-full p-2.5 rounded-xl border border-gray-300 outline-none focus:border-[#0f8646] bg-white font-bold text-xs sm:text-sm"
+                    className="w-full p-2.5 rounded-xl border border-gray-300 outline-none focus:border-[#0a3d24] bg-white font-bold text-xs sm:text-sm"
                   >
                     <option value="published">🟢 Published (Visible to all Customers)</option>
                     <option value="draft">🟡 Draft (Hidden from Website, saved in Admin)</option>
@@ -555,7 +555,7 @@ export default function AddGrocery() {
                   type="button"
                   disabled={loading}
                   onClick={() => handleSubmitWithStatus("published")}
-                  className="flex-1 py-4 bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black rounded-2xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 text-xs sm:text-sm disabled:opacity-50 cursor-pointer"
+                  className="flex-1 py-4 bg-[#0a3d24] hover:bg-[#072817] text-white font-black rounded-2xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 text-xs sm:text-sm disabled:opacity-50 cursor-pointer"
                 >
                   {loading ? (
                     <>

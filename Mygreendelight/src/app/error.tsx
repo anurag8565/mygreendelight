@@ -54,7 +54,7 @@ export default function Error({
           <button
             type="button"
             onClick={() => reset()}
-            className="flex-1 py-2.5 px-4 bg-[#0f8646] hover:bg-[#0c6a38] text-white rounded-xl text-xs font-black flex items-center justify-center gap-1.5 transition shadow-sm cursor-pointer"
+            className="flex-1 py-2.5 px-4 bg-[#0a3d24] hover:bg-[#072817] text-white rounded-xl text-xs font-black flex items-center justify-center gap-1.5 transition shadow-sm cursor-pointer"
           >
             <RotateCcw size={14} />
             <span>Try Again</span>

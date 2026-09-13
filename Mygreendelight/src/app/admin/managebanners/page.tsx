@@ -241,7 +241,7 @@ export default function ManageBanners() {
                 title="Restore 4 official high-res 8K farm banners into database"
               >
                 {seeding ? (
-                  <Loader2 size={14} className="animate-spin text-[#0f8646]" />
+                  <Loader2 size={14} className="animate-spin text-[#0a3d24]" />
                 ) : (
                   <Sparkles size={14} className="text-emerald-600 fill-emerald-600" />
                 )}
@@ -290,7 +290,7 @@ export default function ManageBanners() {
                       onChange={(e) =>
                         setFormData({ ...formData, title: e.target.value })
                       }
-                      className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium text-xs"
+                      className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium text-xs"
                     />
                   </div>
 
@@ -306,7 +306,7 @@ export default function ManageBanners() {
                       onChange={(e) =>
                         setFormData({ ...formData, subtitle: e.target.value })
                       }
-                      className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium text-xs"
+                      className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium text-xs"
                     />
                   </div>
 
@@ -322,7 +322,7 @@ export default function ManageBanners() {
                         onChange={(e) =>
                           setFormData({ ...formData, badge: e.target.value })
                         }
-                        className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium text-xs"
+                        className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium text-xs"
                       />
                     </div>
 
@@ -337,7 +337,7 @@ export default function ManageBanners() {
                         onChange={(e) =>
                           setFormData({ ...formData, offerPill: e.target.value })
                         }
-                        className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium text-xs"
+                        className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium text-xs"
                       />
                     </div>
                   </div>
@@ -353,7 +353,7 @@ export default function ManageBanners() {
                         onChange={(e) =>
                           setFormData({ ...formData, btnText: e.target.value })
                         }
-                        className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium text-xs"
+                        className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium text-xs"
                       />
                     </div>
 
@@ -367,7 +367,7 @@ export default function ManageBanners() {
                         onChange={(e) =>
                           setFormData({ ...formData, link: e.target.value })
                         }
-                        className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium text-xs"
+                        className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium text-xs"
                       />
                     </div>
                   </div>
@@ -383,7 +383,7 @@ export default function ManageBanners() {
                       onChange={(e) =>
                         setFormData({ ...formData, floatingStat: e.target.value })
                       }
-                      className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium text-xs"
+                      className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium text-xs"
                     />
                   </div>
 
@@ -414,7 +414,7 @@ export default function ManageBanners() {
                           />
                           <label
                             htmlFor="banner-img"
-                            className="inline-block bg-white border border-gray-200 text-gray-800 hover:border-[#0f8646] px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer shadow-2xs"
+                            className="inline-block bg-white border border-gray-200 text-gray-800 hover:border-[#0a3d24] px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer shadow-2xs"
                           >
                             Choose File
                           </label>
@@ -433,7 +433,7 @@ export default function ManageBanners() {
                   <button
                     type="submit"
                     disabled={adding}
-                    className="w-full py-3.5 bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black rounded-xl shadow-md transition flex items-center justify-center gap-2 text-xs disabled:opacity-50 cursor-pointer"
+                    className="w-full py-3.5 bg-[#0a3d24] hover:bg-[#072817] text-white font-black rounded-xl shadow-md transition flex items-center justify-center gap-2 text-xs disabled:opacity-50 cursor-pointer"
                   >
                     {adding ? (
                       <>
@@ -466,7 +466,7 @@ export default function ManageBanners() {
 
                 {loading ? (
                   <div className="py-16 flex flex-col items-center justify-center">
-                    <Loader2 size={30} className="animate-spin text-[#0f8646] mb-2" />
+                    <Loader2 size={30} className="animate-spin text-[#0a3d24] mb-2" />
                     <p className="text-xs font-bold text-gray-400">Loading banners...</p>
                   </div>
                 ) : banners.length === 0 ? (
@@ -474,7 +474,7 @@ export default function ManageBanners() {
                     <p>No banners found in database.</p>
                     <button
                       onClick={handleSeedDefaults}
-                      className="bg-[#0f8646] text-white px-4 py-2 rounded-xl font-bold text-xs shadow-sm hover:bg-[#0c6a38] transition cursor-pointer"
+                      className="bg-[#0a3d24] text-white px-4 py-2 rounded-xl font-bold text-xs shadow-sm hover:bg-[#072817] transition cursor-pointer"
                     >
                       ✨ Load 4 Official 8K Banners Now
                     </button>
@@ -543,7 +543,7 @@ export default function ManageBanners() {
                               <div className="flex items-center gap-1.5">
                                 <button
                                   onClick={() => handleOpenEdit(b)}
-                                  className="p-1.5 sm:px-2.5 sm:py-1 rounded-lg bg-white/95 text-gray-900 hover:bg-[#0f8646] hover:text-white transition shadow-sm cursor-pointer text-xs font-bold flex items-center gap-1"
+                                  className="p-1.5 sm:px-2.5 sm:py-1 rounded-lg bg-white/95 text-gray-900 hover:bg-[#0a3d24] hover:text-white transition shadow-sm cursor-pointer text-xs font-bold flex items-center gap-1"
                                   title="Edit Banner"
                                 >
                                   <Edit2 size={12} />
@@ -604,7 +604,7 @@ export default function ManageBanners() {
                   required
                   value={editForm.title}
                   onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
-                  className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0f8646] font-medium"
+                  className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0a3d24] font-medium"
                 />
               </div>
 
@@ -615,7 +615,7 @@ export default function ManageBanners() {
                   required
                   value={editForm.subtitle}
                   onChange={(e) => setEditForm({ ...editForm, subtitle: e.target.value })}
-                  className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0f8646] font-medium"
+                  className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0a3d24] font-medium"
                 />
               </div>
 
@@ -626,7 +626,7 @@ export default function ManageBanners() {
                     type="text"
                     value={editForm.badge}
                     onChange={(e) => setEditForm({ ...editForm, badge: e.target.value })}
-                    className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0f8646] font-medium"
+                    className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0a3d24] font-medium"
                   />
                 </div>
                 <div>
@@ -635,7 +635,7 @@ export default function ManageBanners() {
                     type="text"
                     value={editForm.offerPill}
                     onChange={(e) => setEditForm({ ...editForm, offerPill: e.target.value })}
-                    className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0f8646] font-medium"
+                    className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0a3d24] font-medium"
                   />
                 </div>
               </div>
@@ -647,7 +647,7 @@ export default function ManageBanners() {
                     type="text"
                     value={editForm.btnText}
                     onChange={(e) => setEditForm({ ...editForm, btnText: e.target.value })}
-                    className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0f8646] font-medium"
+                    className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0a3d24] font-medium"
                   />
                 </div>
                 <div>
@@ -656,7 +656,7 @@ export default function ManageBanners() {
                     type="text"
                     value={editForm.link}
                     onChange={(e) => setEditForm({ ...editForm, link: e.target.value })}
-                    className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0f8646] font-medium"
+                    className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0a3d24] font-medium"
                   />
                 </div>
               </div>
@@ -668,7 +668,7 @@ export default function ManageBanners() {
                   required
                   value={editForm.image}
                   onChange={(e) => setEditForm({ ...editForm, image: e.target.value })}
-                  className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0f8646] font-medium"
+                  className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0a3d24] font-medium"
                 />
               </div>
 
@@ -678,7 +678,7 @@ export default function ManageBanners() {
                   type="text"
                   value={editForm.floatingStat}
                   onChange={(e) => setEditForm({ ...editForm, floatingStat: e.target.value })}
-                  className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0f8646] font-medium"
+                  className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0a3d24] font-medium"
                 />
               </div>
 
@@ -693,7 +693,7 @@ export default function ManageBanners() {
                 <button
                   type="submit"
                   disabled={adding}
-                  className="w-1/2 py-2.5 bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-md cursor-pointer disabled:opacity-50"
+                  className="w-1/2 py-2.5 bg-[#0a3d24] hover:bg-[#072817] text-white font-black rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-md cursor-pointer disabled:opacity-50"
                 >
                   {adding ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />}
                   <span>Save Changes</span>

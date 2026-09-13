@@ -178,7 +178,7 @@ export default function ManageSocietiesPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
             <div className="flex items-center gap-2.5 mb-1">
-              <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-[#0f8646] flex items-center justify-center font-black">
+              <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center font-black">
                 <Building2 size={22} />
               </div>
               <div>
@@ -200,14 +200,14 @@ export default function ManageSocietiesPage() {
               className="bg-white hover:bg-gray-50 text-gray-700 border border-gray-200/90 px-4 py-3 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition cursor-pointer disabled:opacity-50"
               title="Refresh societies"
             >
-              <RefreshCw size={15} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+              <RefreshCw size={15} className={loading ? "animate-spin text-[#0a3d24]" : ""} />
               <span>Refresh</span>
             </button>
 
             <button
               type="button"
               onClick={handleOpenAdd}
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-3 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition cursor-pointer"
+              className="bg-[#0a3d24] hover:bg-[#072817] text-white px-5 py-3 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition cursor-pointer"
             >
               <Plus size={18} />
               <span>Add Bhopal Society</span>
@@ -262,7 +262,7 @@ export default function ManageSocietiesPage() {
               Active Community Pools
             </span>
             <div className="flex items-baseline justify-between">
-              <span className="text-2xl font-black text-[#0f8646]">
+              <span className="text-2xl font-black text-[#0a3d24]">
                 {totalActive}
               </span>
               <span className="text-[10px] font-extrabold text-gray-500">
@@ -323,7 +323,7 @@ export default function ManageSocietiesPage() {
         {/* Societies Grid */}
         {loading ? (
           <div className="py-20 text-center">
-            <div className="w-10 h-10 border-4 border-[#0f8646] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+            <div className="w-10 h-10 border-4 border-[#0a3d24] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
             <p className="text-xs text-gray-500 font-bold">Loading Bhopal Society Database...</p>
           </div>
         ) : filtered.length === 0 ? (
@@ -333,7 +333,7 @@ export default function ManageSocietiesPage() {
             <p className="text-xs text-gray-400 mb-4">Click "Add Bhopal Society" to register your first colony pool.</p>
             <button
               onClick={handleOpenAdd}
-              className="px-4 py-2 bg-[#0f8646] text-white rounded-xl text-xs font-black shadow-sm"
+              className="px-4 py-2 bg-[#0a3d24] text-white rounded-xl text-xs font-black shadow-sm"
             >
               Add Society
             </button>
@@ -385,13 +385,13 @@ export default function ManageSocietiesPage() {
                     <div className="bg-gray-50 border border-gray-100 rounded-2xl p-3 mb-4">
                       <div className="flex items-center justify-between text-xs font-black mb-1.5">
                         <span className="text-gray-600">Pool Progress</span>
-                        <span className="text-[#0f8646]">
+                        <span className="text-[#0a3d24]">
                           {current} / {target} Orders ({pct}%)
                         </span>
                       </div>
                       <div className="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-gradient-to-r from-emerald-500 to-[#0f8646] rounded-full transition-all duration-500"
+                          className="h-full bg-gradient-to-r from-emerald-500 to-[#0a3d24] rounded-full transition-all duration-500"
                           style={{ width: `${pct}%` }}
                         />
                       </div>
@@ -435,7 +435,7 @@ export default function ManageSocietiesPage() {
                       <button
                         type="button"
                         onClick={() => handleOpenEdit(soc)}
-                        className="p-2 rounded-xl bg-gray-100 hover:bg-emerald-50 text-gray-600 hover:text-[#0f8646] transition cursor-pointer"
+                        className="p-2 rounded-xl bg-gray-100 hover:bg-emerald-50 text-gray-600 hover:text-[#0a3d24] transition cursor-pointer"
                         title="Edit Society"
                       >
                         <Edit2 size={14} />
@@ -462,7 +462,7 @@ export default function ManageSocietiesPage() {
             <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between pb-4 border-b border-gray-100 mb-5">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-xl bg-emerald-100 text-[#0f8646] flex items-center justify-center font-black">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center font-black">
                     <Building2 size={18} />
                   </div>
                   <h3 className="text-base font-black text-gray-900">
@@ -489,7 +489,7 @@ export default function ManageSocietiesPage() {
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     placeholder="e.g. Arera Colony (E1 - E7 & Green Meadows)"
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:outline-hidden focus:border-[#0f8646] focus:bg-white"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:outline-hidden focus:border-[#0a3d24] focus:bg-white"
                   />
                 </div>
 
@@ -504,7 +504,7 @@ export default function ManageSocietiesPage() {
                       value={form.locality}
                       onChange={(e) => setForm({ ...form, locality: e.target.value })}
                       placeholder="e.g. Arera Colony"
-                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:outline-hidden focus:border-[#0f8646] focus:bg-white"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:outline-hidden focus:border-[#0a3d24] focus:bg-white"
                     />
                   </div>
 
@@ -518,7 +518,7 @@ export default function ManageSocietiesPage() {
                       value={form.pincode}
                       onChange={(e) => setForm({ ...form, pincode: e.target.value })}
                       placeholder="e.g. 462016"
-                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:outline-hidden focus:border-[#0f8646] focus:bg-white"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:outline-hidden focus:border-[#0a3d24] focus:bg-white"
                     />
                   </div>
                 </div>
@@ -532,7 +532,7 @@ export default function ManageSocietiesPage() {
                     value={form.landmark}
                     onChange={(e) => setForm({ ...form, landmark: e.target.value })}
                     placeholder="e.g. Bittan Market / 10 No. Market"
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:outline-hidden focus:border-[#0f8646] focus:bg-white"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:outline-hidden focus:border-[#0a3d24] focus:bg-white"
                   />
                 </div>
 
@@ -547,7 +547,7 @@ export default function ManageSocietiesPage() {
                       max="50"
                       value={form.targetOrders}
                       onChange={(e) => setForm({ ...form, targetOrders: Number(e.target.value) })}
-                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:outline-hidden focus:border-[#0f8646] focus:bg-white"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:outline-hidden focus:border-[#0a3d24] focus:bg-white"
                     />
                   </div>
 
@@ -561,7 +561,7 @@ export default function ManageSocietiesPage() {
                       max="30"
                       value={form.discountPercent}
                       onChange={(e) => setForm({ ...form, discountPercent: Number(e.target.value) })}
-                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:outline-hidden focus:border-[#0f8646] focus:bg-white"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:outline-hidden focus:border-[#0a3d24] focus:bg-white"
                     />
                   </div>
                 </div>
@@ -575,7 +575,7 @@ export default function ManageSocietiesPage() {
                     value={form.keywords}
                     onChange={(e) => setForm({ ...form, keywords: e.target.value })}
                     placeholder="e.g. arera, bittan, e-1, e-2, 10 no"
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:outline-hidden focus:border-[#0f8646] focus:bg-white"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:outline-hidden focus:border-[#0a3d24] focus:bg-white"
                   />
                   <p className="text-[10px] text-gray-400 mt-1">
                     Orders matching these keywords in their full address automatically count towards this pool.
@@ -588,7 +588,7 @@ export default function ManageSocietiesPage() {
                     id="isActiveToggle"
                     checked={form.isActive}
                     onChange={(e) => setForm({ ...form, isActive: e.target.checked })}
-                    className="w-4 h-4 text-[#0f8646] rounded focus:ring-0 cursor-pointer"
+                    className="w-4 h-4 text-[#0a3d24] rounded focus:ring-0 cursor-pointer"
                   />
                   <label htmlFor="isActiveToggle" className="text-xs font-bold text-gray-700 cursor-pointer">
                     Enable this society pool immediately (Live on Home Page)
@@ -605,7 +605,7 @@ export default function ManageSocietiesPage() {
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2.5 bg-[#0f8646] hover:bg-[#0c6a38] text-white rounded-xl font-black text-xs shadow-md transition cursor-pointer"
+                    className="px-5 py-2.5 bg-[#0a3d24] hover:bg-[#072817] text-white rounded-xl font-black text-xs shadow-md transition cursor-pointer"
                   >
                     {editingId ? "Update Society" : "Save Society to DB"}
                   </button>

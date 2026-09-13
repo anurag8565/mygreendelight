@@ -121,7 +121,7 @@ export default function ManageCategories() {
               disabled={loading}
               className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
             >
-              <RefreshCw size={14} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+              <RefreshCw size={14} className={loading ? "animate-spin text-[#0a3d24]" : ""} />
               <span>Refresh</span>
             </button>
           </div>
@@ -150,7 +150,7 @@ export default function ManageCategories() {
                     placeholder="e.g. Green Leafy Vegetables"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0f8646] bg-gray-50/60 font-medium"
+                    className="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium"
                   />
                 </div>
 
@@ -180,7 +180,7 @@ export default function ManageCategories() {
                       />
                       <label
                         htmlFor="cat-img"
-                        className="inline-block bg-white border border-gray-200 text-gray-800 hover:border-[#0f8646] px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer"
+                        className="inline-block bg-white border border-gray-200 text-gray-800 hover:border-[#0a3d24] px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer"
                       >
                         Choose Image
                       </label>
@@ -191,7 +191,7 @@ export default function ManageCategories() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black rounded-xl shadow-md transition flex items-center justify-center gap-2 text-xs disabled:opacity-50 cursor-pointer"
+                  className="w-full py-3.5 bg-[#0a3d24] hover:bg-[#072817] text-white font-black rounded-xl shadow-md transition flex items-center justify-center gap-2 text-xs disabled:opacity-50 cursor-pointer"
                 >
                   {isSubmitting ? (
                     <>
@@ -219,7 +219,7 @@ export default function ManageCategories() {
 
               {loading ? (
                 <div className="py-16 flex flex-col items-center justify-center">
-                  <Loader2 size={30} className="animate-spin text-[#0f8646] mb-2" />
+                  <Loader2 size={30} className="animate-spin text-[#0a3d24] mb-2" />
                   <p className="text-xs font-bold text-gray-400">Loading categories...</p>
                 </div>
               ) : categories.length === 0 ? (

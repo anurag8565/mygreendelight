@@ -171,11 +171,11 @@ export default function ProductDetailsClient({
             >
               <ArrowLeft size={14} />
             </button>
-            <Link href="/" className="hover:text-[#0c831f] transition font-semibold shrink-0">
+            <Link href="/" className="hover:text-[#0a3d24] transition font-semibold shrink-0">
               Home
             </Link>
             <ChevronRight size={11} className="text-gray-400 shrink-0" />
-            <Link href="/shop" className="hover:text-[#0c831f] transition font-semibold shrink-0">
+            <Link href="/shop" className="hover:text-[#0a3d24] transition font-semibold shrink-0">
               Shop
             </Link>
             {product.category && (
@@ -183,7 +183,7 @@ export default function ProductDetailsClient({
                 <ChevronRight size={11} className="text-gray-400 shrink-0" />
                 <Link
                   href={`/shop?category=${encodeURIComponent(product.category)}`}
-                  className="hover:text-[#0c831f] transition font-semibold capitalize shrink-0"
+                  className="hover:text-[#0a3d24] transition font-semibold capitalize shrink-0"
                 >
                   {product.category}
                 </Link>
@@ -290,11 +290,11 @@ export default function ProductDetailsClient({
               
               {/* Category & Verified Badge */}
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-[11px] font-black uppercase text-[#0c831f] bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80">
+                <span className="text-[11px] font-black uppercase text-[#0a3d24] bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80">
                   {product.category || "Fresh Produce"}
                 </span>
                 <span className="text-[11px] font-bold text-gray-500 flex items-center gap-1">
-                  <BadgeCheck size={13} className="text-[#0c831f]" /> Bhopal Farm Direct
+                  <BadgeCheck size={13} className="text-[#0a3d24]" /> Bhopal Farm Direct
                 </span>
               </div>
 
@@ -320,7 +320,7 @@ export default function ProductDetailsClient({
               {/* Express Delivery Live Slot Banner */}
               <div className="mb-3.5 bg-gradient-to-r from-emerald-50 via-teal-50/70 to-emerald-50 border border-emerald-200/70 rounded-2xl p-2.5 sm:p-3 flex items-center justify-between gap-2 shadow-2xs">
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-2xs">
+                  <div className="w-7 h-7 rounded-xl bg-[#0a3d24] text-white flex items-center justify-center shrink-0 shadow-2xs">
                     <Zap size={14} className="fill-white" />
                   </div>
                   <div>
@@ -347,7 +347,7 @@ export default function ProductDetailsClient({
                     <span className="text-sm sm:text-base text-gray-400 line-through font-medium">
                       ₹{activeMRP}
                     </span>
-                    <span className="bg-[#0c831f] text-white text-[11px] font-black px-2 py-0.5 rounded-full shadow-2xs">
+                    <span className="bg-[#0a3d24] text-white text-[11px] font-black px-2 py-0.5 rounded-full shadow-2xs">
                       SAVE ₹{activeMRP - currentPrice} ({discountPercent}% OFF)
                     </span>
                   </div>
@@ -376,7 +376,7 @@ export default function ProductDetailsClient({
                           onClick={() => setSelectedVarIndex(index)}
                           className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
                             isSelected
-                              ? "border-[#0c831f] bg-emerald-50 text-gray-950 shadow-2xs ring-2 ring-emerald-400/40"
+                              ? "border-[#0a3d24] bg-emerald-50 text-gray-950 shadow-2xs ring-2 ring-emerald-400/40"
                               : "border-gray-200 hover:border-emerald-300 bg-white text-gray-700"
                           }`}
                         >
@@ -384,10 +384,10 @@ export default function ProductDetailsClient({
                             <span className="font-black text-xs block truncate">
                               {v.weight}
                             </span>
-                            {isSelected && <Check size={13} className="text-[#0c831f] stroke-[3]" />}
+                            {isSelected && <Check size={13} className="text-[#0a3d24] stroke-[3]" />}
                           </div>
                           <div className="flex items-baseline gap-1">
-                            <span className="font-black text-xs sm:text-sm text-[#0c831f]">
+                            <span className="font-black text-xs sm:text-sm text-[#0a3d24]">
                               ₹{v.price}
                             </span>
                             <span className="text-[10px] text-gray-400 line-through">
@@ -455,7 +455,7 @@ export default function ProductDetailsClient({
         {/* 4 Trust Feature Strip */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 mb-4">
           <div className="bg-white border border-gray-100 rounded-2xl p-3 sm:p-3.5 flex items-center gap-2.5 shadow-2xs">
-            <div className="w-8 h-8 rounded-xl bg-emerald-100 text-[#0c831f] flex items-center justify-center shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center shrink-0">
               <ShieldCheck size={16} />
             </div>
             <div>
@@ -498,7 +498,7 @@ export default function ProductDetailsClient({
         {/* Product Information Accordions */}
         <div className="bg-white border border-gray-100 rounded-3xl p-4 sm:p-6 shadow-xs mb-4">
           <h3 className="text-sm sm:text-base font-black text-gray-900 mb-3 flex items-center gap-2">
-            <Info size={16} className="text-[#0c831f]" />
+            <Info size={16} className="text-[#0a3d24]" />
             <span>Product Details & Freshness Guarantee</span>
           </h3>
 
@@ -515,7 +515,7 @@ export default function ProductDetailsClient({
                 </span>
                 <ChevronDown
                   size={15}
-                  className={`text-gray-400 transition-transform ${openSection === "about" ? "rotate-180 text-[#0c831f]" : ""}`}
+                  className={`text-gray-400 transition-transform ${openSection === "about" ? "rotate-180 text-[#0a3d24]" : ""}`}
                 />
               </button>
               {openSection === "about" && (
@@ -538,7 +538,7 @@ export default function ProductDetailsClient({
                 </span>
                 <ChevronDown
                   size={15}
-                  className={`text-gray-400 transition-transform ${openSection === "sourcing" ? "rotate-180 text-[#0c831f]" : ""}`}
+                  className={`text-gray-400 transition-transform ${openSection === "sourcing" ? "rotate-180 text-[#0a3d24]" : ""}`}
                 />
               </button>
               {openSection === "sourcing" && (
@@ -561,7 +561,7 @@ export default function ProductDetailsClient({
                 </span>
                 <ChevronDown
                   size={15}
-                  className={`text-gray-400 transition-transform ${openSection === "storage" ? "rotate-180 text-[#0c831f]" : ""}`}
+                  className={`text-gray-400 transition-transform ${openSection === "storage" ? "rotate-180 text-[#0a3d24]" : ""}`}
                 />
               </button>
               {openSection === "storage" && (
@@ -584,7 +584,7 @@ export default function ProductDetailsClient({
                 </span>
                 <ChevronDown
                   size={15}
-                  className={`text-gray-400 transition-transform ${openSection === "delivery" ? "rotate-180 text-[#0c831f]" : ""}`}
+                  className={`text-gray-400 transition-transform ${openSection === "delivery" ? "rotate-180 text-[#0a3d24]" : ""}`}
                 />
               </button>
               {openSection === "delivery" && (
@@ -637,7 +637,7 @@ export default function ProductDetailsClient({
                 <select
                   value={rating}
                   onChange={(e) => setRating(Number(e.target.value))}
-                  className="border border-gray-200 rounded-xl px-2.5 py-1 text-xs font-bold outline-none focus:border-[#0c831f] bg-white cursor-pointer shadow-2xs"
+                  className="border border-gray-200 rounded-xl px-2.5 py-1 text-xs font-bold outline-none focus:border-[#0a3d24] bg-white cursor-pointer shadow-2xs"
                 >
                   <option value="5">⭐⭐⭐⭐⭐ 5 - Excellent Freshness</option>
                   <option value="4">⭐⭐⭐⭐ 4 - Good Quality</option>
@@ -654,14 +654,14 @@ export default function ProductDetailsClient({
                   required
                   placeholder="How was the farm freshness, packaging and delivery speed?"
                   rows={2}
-                  className="w-full border border-gray-200 rounded-xl p-2.5 text-xs outline-none focus:border-[#0c831f] bg-white resize-none font-medium"
+                  className="w-full border border-gray-200 rounded-xl p-2.5 text-xs outline-none focus:border-[#0a3d24] bg-white resize-none font-medium"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={submittingReview}
-                className="bg-[#0c831f] hover:bg-[#0a6c1a] text-white px-4 py-2 rounded-xl font-bold text-xs shadow-2xs transition disabled:opacity-50 cursor-pointer"
+                className="bg-[#0a3d24] hover:bg-[#072817] text-white px-4 py-2 rounded-xl font-bold text-xs shadow-2xs transition disabled:opacity-50 cursor-pointer"
               >
                 {submittingReview ? "Submitting..." : "Submit Review"}
               </button>
@@ -682,7 +682,7 @@ export default function ProductDetailsClient({
               </h3>
               <Link
                 href={`/shop?category=${encodeURIComponent(product.category || "Vegetables")}`}
-                className="text-[#0c831f] hover:text-[#0a6c1a] font-bold text-xs flex items-center gap-0.5"
+                className="text-[#0a3d24] hover:text-[#072817] font-bold text-xs flex items-center gap-0.5"
               >
                 <span>View More</span>
                 <ChevronRight size={13} />
@@ -705,10 +705,10 @@ export default function ProductDetailsClient({
         {totalCartCount > 0 && quantity === 0 && (
           <div className="flex items-center justify-between bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-xl text-[11px] font-bold text-emerald-900">
             <span className="flex items-center gap-1">
-              <ShoppingBasket size={13} className="text-[#0c831f]" />
+              <ShoppingBasket size={13} className="text-[#0a3d24]" />
               <span>{totalCartCount} item(s) in Cart (₹{totalCartValue})</span>
             </span>
-            <Link href="/user/cart" className="text-[#0c831f] font-black underline">
+            <Link href="/user/cart" className="text-[#0a3d24] font-black underline">
               View Cart →
             </Link>
           </div>

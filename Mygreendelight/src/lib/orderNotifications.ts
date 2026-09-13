@@ -63,14 +63,14 @@ export function generateOrderHtmlEmail(payload: OrderNotificationPayload, isAdmi
         <style>
           body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f7fafc; margin: 0; padding: 20px; }
           .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; }
-          .header { background: linear-gradient(135deg, #093e21 0%, #0c831f 100%); color: #ffffff; padding: 25px 30px; text-align: left; }
+          .header { background: linear-gradient(135deg, #072817 0%, #0a3d24 100%); color: #ffffff; padding: 25px 30px; text-align: left; }
           .badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
           .content { padding: 30px; }
           .info-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 15px; margin-bottom: 20px; }
           .table { width: 100%; border-collapse: collapse; margin-top: 15px; }
           .total-row { border-top: 2px solid #e2e8f0; }
           .footer { background: #f8fafc; padding: 20px; text-align: center; font-size: 11px; color: #a0aec0; border-top: 1px solid #e2e8f0; }
-          .btn { display: inline-block; background: #0c831f; color: #ffffff !important; text-decoration: none; padding: 12px 25px; border-radius: 12px; font-weight: bold; font-size: 13px; margin-top: 20px; }
+          .btn { display: inline-block; background: #0a3d24; color: #ffffff !important; text-decoration: none; padding: 12px 25px; border-radius: 12px; font-weight: bold; font-size: 13px; margin-top: 20px; }
         </style>
       </head>
       <body>
@@ -313,12 +313,12 @@ export async function sendDeliveryOtpNotification(order: any, driver?: any) {
         `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 480px; margin: 0 auto; padding: 24px; border: 1px solid #d1fae5; border-radius: 20px; background: #ffffff;">
           <div style="text-align: center; margin-bottom: 20px;">
-            <span style="background: #ecfdf5; color: #065f46; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 20px; text-transform: uppercase;">SubziQuick Bhopal Express Delivery</span>
-            <h2 style="color: #0f8646; margin: 12px 0 4px 0; font-size: 22px;">Doorstep Verification OTP</h2>
+            <span style="background: #ecfdf5; color: #0a3d24; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 20px; text-transform: uppercase;">SubziQuick Bhopal Express Delivery</span>
+            <h2 style="color: #0a3d24; margin: 12px 0 4px 0; font-size: 22px;">Doorstep Verification OTP</h2>
             <p style="color: #6b7280; font-size: 13px; margin: 0;">Hi ${customerName}, your delivery partner (${driverName}) is out for delivery with your fresh harvest.</p>
           </div>
 
-          <div style="background: #0f8646; border-radius: 16px; text-align: center; padding: 20px; margin: 20px 0; color: #ffffff;">
+          <div style="background: #0a3d24; border-radius: 16px; text-align: center; padding: 20px; margin: 20px 0; color: #ffffff;">
             <p style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 6px 0; opacity: 0.85;">Share this 4-Digit OTP with Rider</p>
             <h1 style="color: #ffffff; letter-spacing: 10px; margin: 0; font-size: 38px; font-family: monospace; font-weight: 900;">${otp}</h1>
           </div>

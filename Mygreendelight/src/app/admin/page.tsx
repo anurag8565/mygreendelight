@@ -139,14 +139,14 @@ export default function AdminDashboardPage() {
               >
                 <RefreshCw
                   size={14}
-                  className={refreshing ? "animate-spin text-[#0f8646]" : ""}
+                  className={refreshing ? "animate-spin text-[#0a3d24]" : ""}
                 />
                 <span>Refresh</span>
               </button>
 
               <Link
                 href="/admin/addgrocery"
-                className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-3.5 py-2 sm:px-4 sm:py-2 rounded-xl text-xs font-black shadow-sm transition flex items-center gap-1.5"
+                className="bg-[#0a3d24] hover:bg-[#072817] text-white px-3.5 py-2 sm:px-4 sm:py-2 rounded-xl text-xs font-black shadow-sm transition flex items-center gap-1.5"
               >
                 <PlusCircle size={15} />
                 <span>Add Produce</span>
@@ -158,7 +158,7 @@ export default function AdminDashboardPage() {
           <div className="p-3.5 sm:p-6 lg:p-8 space-y-6 sm:space-y-8 flex-1 w-full max-w-7xl mx-auto">
             {loading ? (
               <div className="py-24 flex flex-col items-center justify-center">
-                <Loader2 size={36} className="animate-spin text-[#0f8646] mb-3" />
+                <Loader2 size={36} className="animate-spin text-[#0a3d24] mb-3" />
                 <p className="text-xs font-bold text-gray-500">
                   Loading SubziQuick Live Metrics...
                 </p>
@@ -200,10 +200,10 @@ export default function AdminDashboardPage() {
                   className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 lg:p-6 border border-gray-200/80 shadow-2xs hover:shadow-md hover:border-green-300 hover:scale-[1.02] transition-all flex flex-col justify-between cursor-pointer group"
                 >
                   <div className="flex items-center justify-between mb-2 sm:mb-4">
-                    <span className="text-[10px] sm:text-xs font-extrabold uppercase text-gray-400 tracking-wider group-hover:text-[#0f8646] transition">
+                    <span className="text-[10px] sm:text-xs font-extrabold uppercase text-gray-400 tracking-wider group-hover:text-[#0a3d24] transition">
                       Total Sales
                     </span>
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-green-50 text-[#0f8646] flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-green-50 text-[#0a3d24] flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
                       <TrendingUp size={16} className="sm:w-5 sm:h-5" />
                     </div>
                   </div>
@@ -338,7 +338,7 @@ export default function AdminDashboardPage() {
                   className="bg-green-50/80 hover:bg-green-100/90 border border-green-200/80 rounded-2xl p-4 flex items-center justify-between transition cursor-pointer group"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-green-200/60 text-[#0f8646] flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <div className="w-10 h-10 rounded-xl bg-green-200/60 text-[#0a3d24] flex items-center justify-center group-hover:scale-110 transition-transform">
                       <CheckCircle2 size={20} />
                     </div>
                     <div>
@@ -350,7 +350,7 @@ export default function AdminDashboardPage() {
                       </span>
                     </div>
                   </div>
-                  <span className="text-xs font-extrabold text-[#0f8646]">
+                  <span className="text-xs font-extrabold text-[#0a3d24]">
                     ✓ Success History →
                   </span>
                 </Link>
@@ -387,7 +387,7 @@ export default function AdminDashboardPage() {
                         type="checkbox"
                         checked={broadcastForm.isActive}
                         onChange={(e) => setBroadcastForm({ ...broadcastForm, isActive: e.target.checked })}
-                        className="w-4 h-4 rounded text-[#0f8646] cursor-pointer"
+                        className="w-4 h-4 rounded text-[#0a3d24] cursor-pointer"
                       />
                     </label>
                   </div>
@@ -405,7 +405,7 @@ export default function AdminDashboardPage() {
                         value={broadcastForm.message}
                         onChange={(e) => setBroadcastForm({ ...broadcastForm, message: e.target.value })}
                         placeholder="e.g. 🌧️ Bhopal Heavy Rain: Fleet is on the move, same-day express delivery active!"
-                        className="w-full bg-gray-800/90 border border-gray-700 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-bold text-white outline-none focus:border-[#0f8646]"
+                        className="w-full bg-gray-800/90 border border-gray-700 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-bold text-white outline-none focus:border-[#0a3d24]"
                       />
                     </div>
 
@@ -416,7 +416,7 @@ export default function AdminDashboardPage() {
                       <select
                         value={broadcastForm.type}
                         onChange={(e) => setBroadcastForm({ ...broadcastForm, type: e.target.value as any })}
-                        className="w-full bg-gray-800/90 border border-gray-700 rounded-xl px-3 py-2.5 text-xs font-bold text-white outline-none focus:border-[#0f8646] cursor-pointer"
+                        className="w-full bg-gray-800/90 border border-gray-700 rounded-xl px-3 py-2.5 text-xs font-bold text-white outline-none focus:border-[#0a3d24] cursor-pointer"
                       >
                         <option value="weather">🌧️ Weather Alert (Blue)</option>
                         <option value="promo">🎉 Promo / Harvest Offer (Green)</option>
@@ -447,7 +447,7 @@ export default function AdminDashboardPage() {
                     <button
                       type="submit"
                       disabled={broadcastSaving}
-                      className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2 rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 shadow-md cursor-pointer disabled:opacity-50"
+                      className="bg-[#0a3d24] hover:bg-[#072817] text-white px-5 py-2 rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 shadow-md cursor-pointer disabled:opacity-50"
                     >
                       <Save size={14} />
                       <span>{broadcastSaving ? "Broadcasting..." : "Save & Broadcast Live"}</span>
@@ -460,7 +460,7 @@ export default function AdminDashboardPage() {
               <div className="bg-white rounded-3xl border border-gray-200/80 p-6 sm:p-7 shadow-xs">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-[#0f8646] flex items-center justify-center shadow-xs shrink-0">
+                    <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center shadow-xs shrink-0">
                       <MapPin size={20} />
                     </div>
                     <div>
@@ -473,7 +473,7 @@ export default function AdminDashboardPage() {
                     </div>
                   </div>
 
-                  <span className="text-[11px] font-black bg-green-50 text-[#0f8646] border border-green-200 px-3 py-1 rounded-xl">
+                  <span className="text-[11px] font-black bg-green-50 text-[#0a3d24] border border-green-200 px-3 py-1 rounded-xl">
                     🌿 Bagsewaniya Store (Amrai): Active
                   </span>
                 </div>
@@ -489,10 +489,10 @@ export default function AdminDashboardPage() {
                       >
                         <div className="flex items-center justify-between">
                           <span className="font-black text-xs text-gray-900 flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-[#0f8646]" />
+                            <span className="w-2 h-2 rounded-full bg-[#0a3d24]" />
                             {pocket.name}
                           </span>
-                          <span className="text-[11px] font-extrabold text-[#0f8646]">
+                          <span className="text-[11px] font-extrabold text-[#0a3d24]">
                             {pocket.count} Orders
                           </span>
                         </div>
@@ -500,7 +500,7 @@ export default function AdminDashboardPage() {
                         {/* Progress Bar */}
                         <div className="w-full bg-gray-200 rounded-full h-1.5 overflow-hidden my-1">
                           <div
-                            className="bg-[#0f8646] h-1.5 rounded-full transition-all duration-500"
+                            className="bg-[#0a3d24] h-1.5 rounded-full transition-all duration-500"
                             style={{ width: `${Math.max(8, percent)}%` }}
                           />
                         </div>
@@ -525,7 +525,7 @@ export default function AdminDashboardPage() {
                     href="/admin/manageorder"
                     className="p-3 sm:p-4 rounded-2xl bg-gray-50/80 hover:bg-green-50 border border-gray-100 hover:border-green-200 transition text-center flex flex-col items-center gap-1.5 sm:gap-2 group"
                   >
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white text-[#0f8646] flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white text-[#0a3d24] flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
                       <ShoppingBag size={18} />
                     </div>
                     <span className="font-bold text-[11px] sm:text-xs text-gray-900 truncate w-full">
@@ -549,7 +549,7 @@ export default function AdminDashboardPage() {
                     href="/admin/manage-delivery-fee"
                     className="p-3 sm:p-4 rounded-2xl bg-emerald-50/70 hover:bg-emerald-100/80 border border-emerald-200 transition text-center flex flex-col items-center gap-1.5 sm:gap-2 group"
                   >
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#0f8646] text-white flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#0a3d24] text-white flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
                       <Percent size={18} />
                     </div>
                     <span className="font-bold text-[11px] sm:text-xs text-emerald-950 truncate w-full">
@@ -561,7 +561,7 @@ export default function AdminDashboardPage() {
                     href="/admin/viewgrocery"
                     className="p-3 sm:p-4 rounded-2xl bg-gray-50/80 hover:bg-green-50 border border-gray-100 hover:border-green-200 transition text-center flex flex-col items-center gap-1.5 sm:gap-2 group"
                   >
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white text-[#0f8646] flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white text-[#0a3d24] flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
                       <Package size={18} />
                     </div>
                     <span className="font-bold text-[11px] sm:text-xs text-gray-900 truncate w-full">
@@ -573,7 +573,7 @@ export default function AdminDashboardPage() {
                     href="/admin/managecoupons"
                     className="p-3 sm:p-4 rounded-2xl bg-gray-50/80 hover:bg-green-50 border border-gray-100 hover:border-green-200 transition text-center flex flex-col items-center gap-1.5 sm:gap-2 group"
                   >
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white text-[#0f8646] flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white text-[#0a3d24] flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
                       <Tag size={18} />
                     </div>
                     <span className="font-bold text-[11px] sm:text-xs text-gray-900 truncate w-full">
@@ -585,7 +585,7 @@ export default function AdminDashboardPage() {
                     href="/admin/manageinquiries"
                     className="p-3 sm:p-4 rounded-2xl bg-gray-50/80 hover:bg-green-50 border border-gray-100 hover:border-green-200 transition text-center flex flex-col items-center gap-1.5 sm:gap-2 group"
                   >
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white text-[#0f8646] flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white text-[#0a3d24] flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
                       <MessageSquare size={18} />
                     </div>
                     <span className="font-bold text-[11px] sm:text-xs text-gray-900 truncate w-full">
@@ -609,7 +609,7 @@ export default function AdminDashboardPage() {
 
                   <Link
                     href="/admin/manageorder"
-                    className="text-xs font-extrabold text-[#0f8646] hover:text-[#0c6a38] flex items-center gap-1"
+                    className="text-xs font-extrabold text-[#0a3d24] hover:text-[#072817] flex items-center gap-1"
                   >
                     <span>View All Orders</span>
                     <ArrowRight size={14} />
@@ -661,13 +661,13 @@ export default function AdminDashboardPage() {
                                 <span className="font-bold text-gray-800 block">{customerName}</span>
                                 <span className="text-gray-400">{itemsCount} items • {paymentMode.toUpperCase()}</span>
                               </div>
-                              <span className="font-black text-sm text-[#0f8646]">₹{totalAmt}</span>
+                              <span className="font-black text-sm text-[#0a3d24]">₹{totalAmt}</span>
                             </div>
 
                             <div className="pt-2 border-t border-gray-200/60 flex justify-end">
                               <Link
                                 href="/admin/manageorder"
-                                className="bg-[#0f8646] text-white px-3 py-1 rounded-lg font-bold text-[10px]"
+                                className="bg-[#0a3d24] text-white px-3 py-1 rounded-lg font-bold text-[10px]"
                               >
                                 Manage Order →
                               </Link>
@@ -736,13 +736,13 @@ export default function AdminDashboardPage() {
                                 <td className="py-3.5 uppercase font-bold text-gray-500">
                                   {paymentMode}
                                 </td>
-                                <td className="py-3.5 text-right font-black text-[#0f8646]">
+                                <td className="py-3.5 text-right font-black text-[#0a3d24]">
                                   ₹{totalAmt}
                                 </td>
                                 <td className="py-3.5 text-right">
                                   <Link
                                     href="/admin/manageorder"
-                                    className="bg-gray-100 hover:bg-[#0f8646] hover:text-white px-3 py-1.5 rounded-lg font-extrabold text-[11px] transition inline-block"
+                                    className="bg-gray-100 hover:bg-[#0a3d24] hover:text-white px-3 py-1.5 rounded-lg font-extrabold text-[11px] transition inline-block"
                                   >
                                     Manage
                                   </Link>

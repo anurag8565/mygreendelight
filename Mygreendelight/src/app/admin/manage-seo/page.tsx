@@ -289,7 +289,7 @@ export default function ManageSEOPage() {
         <header className="bg-white border-b border-gray-200/80 px-3.5 sm:px-6 lg:px-8 py-3.5 sm:py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sticky top-0 z-30 shadow-2xs">
           <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-emerald-100 text-[#0f8646] flex items-center justify-center font-black shrink-0">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center font-black shrink-0">
                 <Globe size={16} className="sm:w-[18px] sm:h-[18px]" />
               </div>
               <h1 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 truncate">
@@ -309,7 +309,7 @@ export default function ManageSEOPage() {
               className="bg-white hover:bg-gray-50 border border-gray-200/90 text-gray-700 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-2xs disabled:opacity-50"
               title="Refresh SEO data"
             >
-              <RefreshCw size={13} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+              <RefreshCw size={13} className={loading ? "animate-spin text-[#0a3d24]" : ""} />
               <span>Refresh</span>
             </button>
 
@@ -317,9 +317,9 @@ export default function ManageSEOPage() {
               type="button"
               onClick={() => handleRunBulkOptimize(false)}
               disabled={bulkOptimizing}
-              className="bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-[#0f8646] px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-2xs disabled:opacity-50"
+              className="bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-[#0a3d24] px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-2xs disabled:opacity-50"
             >
-              <Zap size={13} className="text-[#0f8646]" />
+              <Zap size={13} className="text-[#0a3d24]" />
               <span>{bulkOptimizing ? "Optimizing..." : "1-Click Bulk SEO"}</span>
             </button>
 
@@ -360,7 +360,7 @@ export default function ManageSEOPage() {
                   {products.length} Items
                 </span>
               </div>
-              <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-emerald-50 text-[#0f8646] flex items-center justify-center shrink-0 ml-1">
+              <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-emerald-50 text-[#0a3d24] flex items-center justify-center shrink-0 ml-1">
                 <Layers size={16} className="sm:w-5 sm:h-5" />
               </div>
             </div>
@@ -415,7 +415,7 @@ export default function ManageSEOPage() {
               onClick={() => setActiveTab("products")}
               className={`px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl text-[11px] sm:text-xs font-black transition cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap ${
                 activeTab === "products"
-                  ? "bg-[#0f8646] text-white shadow-xs"
+                  ? "bg-[#0a3d24] text-white shadow-xs"
                   : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
               }`}
             >
@@ -428,7 +428,7 @@ export default function ManageSEOPage() {
               onClick={() => setActiveTab("global")}
               className={`px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl text-[11px] sm:text-xs font-black transition cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap ${
                 activeTab === "global"
-                  ? "bg-[#0f8646] text-white shadow-xs"
+                  ? "bg-[#0a3d24] text-white shadow-xs"
                   : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
               }`}
             >
@@ -441,7 +441,7 @@ export default function ManageSEOPage() {
               onClick={() => setActiveTab("bulk")}
               className={`px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl text-[11px] sm:text-xs font-black transition cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap ${
                 activeTab === "bulk"
-                  ? "bg-[#0f8646] text-white shadow-xs"
+                  ? "bg-[#0a3d24] text-white shadow-xs"
                   : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
               }`}
             >
@@ -461,7 +461,7 @@ export default function ManageSEOPage() {
                     <h3 className="font-black text-xs sm:text-sm text-gray-900">Select Produce</h3>
                     <p className="text-[10.5px] text-gray-400">Choose item to customize tags</p>
                   </div>
-                  <span className="text-[10.5px] font-black text-[#0f8646] bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-200">
+                  <span className="text-[10.5px] font-black text-[#0a3d24] bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-200">
                     {filteredProducts.length} Found
                   </span>
                 </div>
@@ -474,7 +474,7 @@ export default function ManageSEOPage() {
                     placeholder="Search vegetable or fruit..."
                     value={searchFilter}
                     onChange={(e) => setSearchFilter(e.target.value)}
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 pl-9 pr-3 text-xs font-semibold outline-none focus:border-[#0f8646] focus:bg-white transition"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 pl-9 pr-3 text-xs font-semibold outline-none focus:border-[#0a3d24] focus:bg-white transition"
                   />
                 </div>
 
@@ -490,7 +490,7 @@ export default function ManageSEOPage() {
                         onClick={() => selectProduct(prod)}
                         className={`p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-2.5 ${
                           isSelected
-                            ? "bg-emerald-50/80 border-[#0f8646] shadow-2xs ring-1 ring-[#0f8646]/30"
+                            ? "bg-emerald-50/80 border-[#0a3d24] shadow-2xs ring-1 ring-[#0a3d24]/30"
                             : "bg-white border-transparent hover:border-gray-200 hover:bg-gray-50"
                         }`}
                       >
@@ -540,7 +540,7 @@ export default function ManageSEOPage() {
                 <div className="bg-white rounded-2xl sm:rounded-3xl border border-gray-200/90 p-4 sm:p-6 shadow-2xs space-y-3.5">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-gray-100">
                     <div className="flex items-center gap-2">
-                      <Eye size={16} className="text-[#0f8646] shrink-0" />
+                      <Eye size={16} className="text-[#0a3d24] shrink-0" />
                       <h3 className="font-black text-xs sm:text-sm text-gray-900">
                         Live Google Search (SERP) Simulator
                       </h3>
@@ -583,7 +583,7 @@ export default function ManageSEOPage() {
                   >
                     {/* URL Breadcrumb */}
                     <div className="flex items-center gap-1.5 text-xs text-gray-600 mb-1 overflow-hidden">
-                      <div className="w-3.5 h-3.5 rounded-full bg-[#0f8646] flex items-center justify-center text-white text-[8px] font-black shrink-0">
+                      <div className="w-3.5 h-3.5 rounded-full bg-[#0a3d24] flex items-center justify-center text-white text-[8px] font-black shrink-0">
                         S
                       </div>
                       <div className="leading-none text-[11px] sm:text-[12px] truncate text-gray-600">
@@ -651,7 +651,7 @@ export default function ManageSEOPage() {
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-gray-100">
                     <div className="min-w-0">
                       <h3 className="font-black text-xs sm:text-base text-gray-900 truncate">
-                        Edit SEO Meta Tags: <span className="text-[#0f8646]">{productForm.name}</span>
+                        Edit SEO Meta Tags: <span className="text-[#0a3d24]">{productForm.name}</span>
                       </h3>
                       <p className="text-[10.5px] text-gray-400">Optimize search appearance for this specific produce</p>
                     </div>
@@ -670,7 +670,7 @@ export default function ManageSEOPage() {
                   <div>
                     <div className="flex justify-between items-center mb-1">
                       <label className="text-[11px] sm:text-xs font-bold text-gray-700 flex items-center gap-1">
-                        <Link2 size={13} className="text-[#0f8646]" />
+                        <Link2 size={13} className="text-[#0a3d24]" />
                         <span>URL Slug *</span>
                       </label>
                       <span className="text-[9.5px] sm:text-[10px] text-gray-400 font-mono truncate max-w-[180px] sm:max-w-none">
@@ -682,7 +682,7 @@ export default function ManageSEOPage() {
                       value={productForm.slug}
                       onChange={(e) => setProductForm({ ...productForm, slug: e.target.value })}
                       placeholder="e.g. fresh-desi-tamatar-bhopal"
-                      className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:border-[#0f8646] focus:bg-white"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:border-[#0a3d24] focus:bg-white"
                     />
                   </div>
 
@@ -701,7 +701,7 @@ export default function ManageSEOPage() {
                       value={productForm.metaTitle}
                       onChange={(e) => setProductForm({ ...productForm, metaTitle: e.target.value })}
                       placeholder="e.g. Fresh Tomato / देशी टमाटर (₹30/kg) | SubziQuick Bhopal"
-                      className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:border-[#0f8646] focus:bg-white"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:border-[#0a3d24] focus:bg-white"
                     />
                   </div>
 
@@ -720,7 +720,7 @@ export default function ManageSEOPage() {
                       value={productForm.metaDescription}
                       onChange={(e) => setProductForm({ ...productForm, metaDescription: e.target.value })}
                       placeholder="Describe the produce, Bhopal delivery time, and Farm Fresh direct harvest guarantee..."
-                      className="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:border-[#0f8646] focus:bg-white resize-none"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:border-[#0a3d24] focus:bg-white resize-none"
                     />
                   </div>
 
@@ -733,7 +733,7 @@ export default function ManageSEOPage() {
                         value={productForm.focusKeyword}
                         onChange={(e) => setProductForm({ ...productForm, focusKeyword: e.target.value })}
                         placeholder="e.g. tomato delivery bhopal"
-                        className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:border-[#0f8646] focus:bg-white"
+                        className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:border-[#0a3d24] focus:bg-white"
                       />
                     </div>
 
@@ -744,7 +744,7 @@ export default function ManageSEOPage() {
                         value={productForm.metaKeywords}
                         onChange={(e) => setProductForm({ ...productForm, metaKeywords: e.target.value })}
                         placeholder="e.g. tomato price bhopal, fresh vegetable delivery bhopal, sabzi"
-                        className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:border-[#0f8646] focus:bg-white"
+                        className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold text-gray-900 outline-none focus:border-[#0a3d24] focus:bg-white"
                       />
                     </div>
                   </div>
@@ -754,7 +754,7 @@ export default function ManageSEOPage() {
                     <button
                       type="submit"
                       disabled={saving}
-                      className="w-full sm:w-auto bg-[#0f8646] hover:bg-[#0c6a38] text-white px-6 py-2.5 rounded-xl text-xs sm:text-sm font-black flex items-center justify-center gap-1.5 transition shadow-sm cursor-pointer disabled:opacity-50"
+                      className="w-full sm:w-auto bg-[#0a3d24] hover:bg-[#072817] text-white px-6 py-2.5 rounded-xl text-xs sm:text-sm font-black flex items-center justify-center gap-1.5 transition shadow-sm cursor-pointer disabled:opacity-50"
                     >
                       <Save size={15} />
                       <span>{saving ? "Saving SEO..." : "Save Product SEO Tags"}</span>
@@ -785,7 +785,7 @@ export default function ManageSEOPage() {
                     type="text"
                     value={globalSeo.siteName}
                     onChange={(e) => setGlobalSeo({ ...globalSeo, siteName: e.target.value })}
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold outline-none focus:border-[#0f8646] focus:bg-white"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold outline-none focus:border-[#0a3d24] focus:bg-white"
                   />
                 </div>
 
@@ -795,7 +795,7 @@ export default function ManageSEOPage() {
                     type="text"
                     value={globalSeo.canonicalBase}
                     onChange={(e) => setGlobalSeo({ ...globalSeo, canonicalBase: e.target.value })}
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold outline-none focus:border-[#0f8646] focus:bg-white"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold outline-none focus:border-[#0a3d24] focus:bg-white"
                   />
                 </div>
               </div>
@@ -810,7 +810,7 @@ export default function ManageSEOPage() {
                   type="text"
                   value={globalSeo.defaultTitle}
                   onChange={(e) => setGlobalSeo({ ...globalSeo, defaultTitle: e.target.value })}
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold outline-none focus:border-[#0f8646] focus:bg-white"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold outline-none focus:border-[#0a3d24] focus:bg-white"
                 />
               </div>
 
@@ -824,7 +824,7 @@ export default function ManageSEOPage() {
                   rows={3}
                   value={globalSeo.defaultDescription}
                   onChange={(e) => setGlobalSeo({ ...globalSeo, defaultDescription: e.target.value })}
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-xs sm:text-sm font-semibold outline-none focus:border-[#0f8646] focus:bg-white resize-none"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-xs sm:text-sm font-semibold outline-none focus:border-[#0a3d24] focus:bg-white resize-none"
                 />
               </div>
 
@@ -835,7 +835,7 @@ export default function ManageSEOPage() {
                   type="text"
                   value={globalSeo.primaryKeywords}
                   onChange={(e) => setGlobalSeo({ ...globalSeo, primaryKeywords: e.target.value })}
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold outline-none focus:border-[#0f8646] focus:bg-white"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold outline-none focus:border-[#0a3d24] focus:bg-white"
                 />
               </div>
 
@@ -848,7 +848,7 @@ export default function ManageSEOPage() {
                     value={globalSeo.googleSiteVerification}
                     onChange={(e) => setGlobalSeo({ ...globalSeo, googleSiteVerification: e.target.value })}
                     placeholder="e.g. google-site-verification code"
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold outline-none focus:border-[#0f8646] focus:bg-white"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold outline-none focus:border-[#0a3d24] focus:bg-white"
                   />
                 </div>
 
@@ -859,7 +859,7 @@ export default function ManageSEOPage() {
                     value={globalSeo.googleAnalyticsId}
                     onChange={(e) => setGlobalSeo({ ...globalSeo, googleAnalyticsId: e.target.value })}
                     placeholder="e.g. G-XXXXXXXXXX"
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold outline-none focus:border-[#0f8646] focus:bg-white"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold outline-none focus:border-[#0a3d24] focus:bg-white"
                   />
                 </div>
               </div>
@@ -871,7 +871,7 @@ export default function ManageSEOPage() {
                   type="text"
                   value={globalSeo.ogImageUrl}
                   onChange={(e) => setGlobalSeo({ ...globalSeo, ogImageUrl: e.target.value })}
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold outline-none focus:border-[#0f8646] focus:bg-white"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold outline-none focus:border-[#0a3d24] focus:bg-white"
                 />
               </div>
 
@@ -879,7 +879,7 @@ export default function ManageSEOPage() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="w-full sm:w-auto bg-[#0f8646] hover:bg-[#0c6a38] text-white px-7 py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-black flex items-center justify-center gap-1.5 transition shadow-sm cursor-pointer disabled:opacity-50"
+                  className="w-full sm:w-auto bg-[#0a3d24] hover:bg-[#072817] text-white px-7 py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-black flex items-center justify-center gap-1.5 transition shadow-sm cursor-pointer disabled:opacity-50"
                 >
                   <Save size={15} />
                   <span>{saving ? "Saving Global SEO..." : "Save Global Store SEO"}</span>
@@ -901,7 +901,7 @@ export default function ManageSEOPage() {
               </div>
 
               <div className="bg-emerald-50/70 border border-emerald-200 rounded-xl sm:rounded-2xl p-4 sm:p-5 space-y-2 text-xs text-emerald-950">
-                <span className="font-black uppercase tracking-wider text-[10px] text-[#0f8646] block">
+                <span className="font-black uppercase tracking-wider text-[10px] text-[#0a3d24] block">
                   WHAT THE AUTO-OPTIMIZER DOES:
                 </span>
                 <ul className="space-y-1.5 list-disc pl-4 text-gray-700 text-[11px] sm:text-xs">
@@ -917,7 +917,7 @@ export default function ManageSEOPage() {
                   type="button"
                   onClick={() => handleRunBulkOptimize(false)}
                   disabled={bulkOptimizing}
-                  className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-black flex items-center justify-center gap-2 transition shadow-md cursor-pointer disabled:opacity-50 flex-1"
+                  className="bg-[#0a3d24] hover:bg-[#072817] text-white px-5 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-black flex items-center justify-center gap-2 transition shadow-md cursor-pointer disabled:opacity-50 flex-1"
                 >
                   <Zap size={15} />
                   <span>{bulkOptimizing ? "Optimizing..." : "Optimize Missing Products"}</span>

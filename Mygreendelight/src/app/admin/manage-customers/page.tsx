@@ -144,7 +144,7 @@ export default function ManageCustomersPage() {
           <header className="bg-white border-b border-gray-200/80 px-4 sm:px-6 py-3.5 sm:py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sticky top-0 z-30 shadow-2xs">
             <div>
               <h1 className="text-lg sm:text-2xl font-black text-gray-900 flex items-center gap-2">
-                <Users className="text-[#0f8646]" size={24} />
+                <Users className="text-[#0a3d24]" size={24} />
                 <span>Customer Directory</span>
               </h1>
               <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5">
@@ -161,7 +161,7 @@ export default function ManageCustomersPage() {
               >
                 <RefreshCw
                   size={14}
-                  className={refreshing ? "animate-spin text-[#0f8646]" : ""}
+                  className={refreshing ? "animate-spin text-[#0a3d24]" : ""}
                 />
                 <span>Refresh</span>
               </button>
@@ -186,7 +186,7 @@ export default function ManageCustomersPage() {
           {/* Toast Notification */}
           {toastMsg && (
             <div className="fixed top-20 right-6 z-50 bg-gray-900 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-2.5 text-xs font-bold animate-fade-in border border-gray-700">
-              <Sparkles size={16} className="text-[#0f8646]" />
+              <Sparkles size={16} className="text-[#0a3d24]" />
               <span>{toastMsg}</span>
             </div>
           )}
@@ -217,7 +217,7 @@ export default function ManageCustomersPage() {
                     {customersWithOrders}
                   </span>
                 </div>
-                <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-[#0f8646] flex items-center justify-center shrink-0">
+                <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-[#0a3d24] flex items-center justify-center shrink-0">
                   <ShoppingBag size={22} />
                 </div>
               </div>
@@ -261,7 +261,7 @@ export default function ManageCustomersPage() {
             {/* Customers Table / Grid */}
             {loading ? (
               <div className="py-24 flex flex-col items-center justify-center">
-                <Loader2 size={36} className="animate-spin text-[#0f8646] mb-3" />
+                <Loader2 size={36} className="animate-spin text-[#0a3d24] mb-3" />
                 <p className="text-xs font-bold text-gray-500">Loading Customers...</p>
               </div>
             ) : filteredCustomers.length === 0 ? (
@@ -301,7 +301,7 @@ export default function ManageCustomersPage() {
                             {/* Customer Avatar & Name */}
                             <td className="px-5 py-4">
                               <div className="flex items-center gap-3">
-                                <div className="w-9 h-9 rounded-2xl bg-emerald-100 text-[#0f8646] font-black text-sm flex items-center justify-center shrink-0 shadow-2xs">
+                                <div className="w-9 h-9 rounded-2xl bg-emerald-100 text-[#0a3d24] font-black text-sm flex items-center justify-center shrink-0 shadow-2xs">
                                   {customer.name?.charAt(0).toUpperCase() || "U"}
                                 </div>
                                 <div className="min-w-0">
@@ -309,7 +309,7 @@ export default function ManageCustomersPage() {
                                     {customer.name || "Unnamed Customer"}
                                   </p>
                                   {hasOrders ? (
-                                    <span className="inline-flex items-center gap-1 text-[10px] font-black text-[#0f8646] bg-emerald-50 px-1.5 py-0.2 rounded-md">
+                                    <span className="inline-flex items-center gap-1 text-[10px] font-black text-[#0a3d24] bg-emerald-50 px-1.5 py-0.2 rounded-md">
                                       Active Buyer
                                     </span>
                                   ) : (
@@ -342,7 +342,7 @@ export default function ManageCustomersPage() {
                               <span
                                 className={`px-2.5 py-1 rounded-xl text-xs font-black inline-block ${
                                   hasOrders
-                                    ? "bg-emerald-50 text-[#0f8646] border border-emerald-200"
+                                    ? "bg-emerald-50 text-[#0a3d24] border border-emerald-200"
                                     : "bg-gray-100 text-gray-500"
                                 }`}
                               >

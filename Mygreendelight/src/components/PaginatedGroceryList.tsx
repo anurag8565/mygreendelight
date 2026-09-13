@@ -49,7 +49,7 @@ export default function PaginatedGroceryList({ initialData }: { initialData: any
         <button
           onClick={loadMore}
           disabled={loading}
-          className="mt-6 px-8 py-3 bg-green-500 hover:bg-green-600 text-white rounded-full font-bold shadow-md transition-all flex items-center gap-2"
+          className="mt-6 px-8 py-3 bg-[#0a3d24] hover:bg-[#072817] text-white rounded-full font-bold shadow-md transition-all flex items-center gap-2 cursor-pointer"
         >
           {loading && <Loader2 className="animate-spin w-5 h-5" />}
           {loading ? "Loading..." : "Load More Products"}

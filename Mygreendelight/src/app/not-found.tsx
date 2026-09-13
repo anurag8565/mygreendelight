@@ -12,7 +12,7 @@ export default function NotFound() {
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="text-7xl md:text-9xl font-bold text-green-600"
+        className="text-7xl md:text-9xl font-bold text-[#0a3d24]"
       >
         404
       </motion.h1>
@@ -44,8 +44,8 @@ export default function NotFound() {
         className="mt-6"
       >
         <Link href="/">
-          <button className="px-6 py-3 bg-green-600 text-white rounded-xl shadow-md hover:bg-green-700 transition">
-            🛒 Back to Home
+          <button className="px-6 py-3 bg-[#0a3d24] text-white rounded-xl shadow-md hover:bg-[#072817] font-bold text-sm transition cursor-pointer">
+            Back to Home
           </button>
         </Link>
       </motion.div>

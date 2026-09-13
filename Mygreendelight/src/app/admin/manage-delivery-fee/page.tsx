@@ -106,13 +106,13 @@ export default function ManageDeliveryFee() {
             <div className="flex items-center gap-2 mb-1">
               <Link
                 href="/admin"
-                className="text-xs font-bold text-gray-500 hover:text-[#0f8646] flex items-center gap-1 transition"
+                className="text-xs font-bold text-gray-500 hover:text-[#0a3d24] flex items-center gap-1 transition"
               >
                 <ArrowLeft size={14} /> Back to Dashboard
               </Link>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-gray-900 flex items-center gap-2.5">
-              <span className="w-10 h-10 rounded-2xl bg-[#0f8646] text-white flex items-center justify-center shadow-md">
+              <span className="w-10 h-10 rounded-2xl bg-[#0a3d24] text-white flex items-center justify-center shadow-md">
                 <Truck size={22} />
               </span>
               <span>Manage Delivery Fee & Threshold</span>
@@ -125,9 +125,9 @@ export default function ManageDeliveryFee() {
           <button
             onClick={fetchSettings}
             disabled={loading}
-            className="self-start sm:self-auto bg-white border border-gray-200 text-gray-700 hover:text-[#0f8646] hover:border-[#0f8646] px-3.5 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 shadow-2xs cursor-pointer"
+            className="self-start sm:self-auto bg-white border border-gray-200 text-gray-700 hover:text-[#0a3d24] hover:border-[#0a3d24] px-3.5 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 shadow-2xs cursor-pointer"
           >
-            <RefreshCw size={14} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+            <RefreshCw size={14} className={loading ? "animate-spin text-[#0a3d24]" : ""} />
             <span>Refresh</span>
           </button>
         </div>
@@ -151,14 +151,14 @@ export default function ManageDeliveryFee() {
 
         {loading ? (
           <div className="bg-white rounded-3xl p-12 border border-gray-200/80 shadow-xs flex flex-col items-center justify-center text-center">
-            <Loader2 className="w-8 h-8 text-[#0f8646] animate-spin mb-3" />
+            <Loader2 className="w-8 h-8 text-[#0a3d24] animate-spin mb-3" />
             <p className="text-xs font-bold text-gray-500">Loading delivery fee settings...</p>
           </div>
         ) : (
           <form onSubmit={handleSave} className="space-y-6">
             
             {/* Quick 1-Click Free Delivery Banner Toggle */}
-            <div className="bg-gradient-to-r from-[#063319] via-[#094c25] to-[#0f8646] rounded-3xl p-6 text-white shadow-lg relative overflow-hidden flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="bg-gradient-to-r from-[#063319] via-[#094c25] to-[#0a3d24] rounded-3xl p-6 text-white shadow-lg relative overflow-hidden flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="relative z-10 max-w-xl">
                 <span className="bg-amber-400 text-gray-950 text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md inline-block mb-2">
                   Special Promo Mode
@@ -192,7 +192,7 @@ export default function ManageDeliveryFee() {
             {/* Main Delivery Rules Form */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200/80 shadow-xs space-y-6">
               <h2 className="text-base font-black text-gray-900 border-b border-gray-100 pb-3 flex items-center gap-2">
-                <Truck size={18} className="text-[#0f8646]" />
+                <Truck size={18} className="text-[#0a3d24]" />
                 <span>Base Delivery Rules & Pricing</span>
               </h2>
 
@@ -212,7 +212,7 @@ export default function ManageDeliveryFee() {
                       onChange={(e) =>
                         setForm({ ...form, deliveryFee: Number(e.target.value) })
                       }
-                      className="w-full pl-8 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm font-black text-gray-900 outline-none focus:border-[#0f8646] transition"
+                      className="w-full pl-8 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm font-black text-gray-900 outline-none focus:border-[#0a3d24] transition"
                       placeholder="e.g. 30"
                     />
                   </div>
@@ -236,7 +236,7 @@ export default function ManageDeliveryFee() {
                       onChange={(e) =>
                         setForm({ ...form, freeDeliveryThreshold: Number(e.target.value) })
                       }
-                      className="w-full pl-8 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm font-black text-gray-900 outline-none focus:border-[#0f8646] transition"
+                      className="w-full pl-8 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm font-black text-gray-900 outline-none focus:border-[#0a3d24] transition"
                       placeholder="e.g. 199"
                     />
                   </div>
@@ -259,7 +259,7 @@ export default function ManageDeliveryFee() {
                       onChange={(e) =>
                         setForm({ ...form, minOrderAmount: Number(e.target.value) })
                       }
-                      className="w-full pl-8 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm font-black text-gray-900 outline-none focus:border-[#0f8646] transition"
+                      className="w-full pl-8 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm font-black text-gray-900 outline-none focus:border-[#0a3d24] transition"
                       placeholder="e.g. 0 or 50"
                     />
                   </div>
@@ -281,7 +281,7 @@ export default function ManageDeliveryFee() {
                       onChange={(e) =>
                         setForm({ ...form, expressDeliveryMins: e.target.value })
                       }
-                      className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm font-bold text-gray-900 outline-none focus:border-[#0f8646] transition"
+                      className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm font-bold text-gray-900 outline-none focus:border-[#0a3d24] transition"
                       placeholder="e.g. 15-45 Mins"
                     />
                   </div>
@@ -300,7 +300,7 @@ export default function ManageDeliveryFee() {
                   type="text"
                   value={form.deliveryNotice}
                   onChange={(e) => setForm({ ...form, deliveryNotice: e.target.value })}
-                  className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm font-medium text-gray-900 outline-none focus:border-[#0f8646] transition"
+                  className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm font-medium text-gray-900 outline-none focus:border-[#0a3d24] transition"
                   placeholder="e.g. Monsoon express delivery active in Bhopal! 🌿"
                 />
               </div>
@@ -309,7 +309,7 @@ export default function ManageDeliveryFee() {
             {/* Live Customer Simulation Preview */}
             <div className="bg-emerald-50/70 rounded-3xl p-6 border border-emerald-200 shadow-2xs">
               <h3 className="text-xs font-black uppercase tracking-wider text-emerald-900 mb-3 flex items-center gap-1.5">
-                <Sparkles size={14} className="text-[#0f8646]" />
+                <Sparkles size={14} className="text-[#0a3d24]" />
                 <span>Live Customer Cart & Checkout Preview</span>
               </h3>
 
@@ -324,7 +324,7 @@ export default function ManageDeliveryFee() {
                   </div>
                   <div className="flex justify-between items-center py-1">
                     <span>Delivery Charge:</span>
-                    <span className={`font-black ${form.isFreeDeliveryActive || form.deliveryFee === 0 ? "text-[#0f8646]" : "text-gray-900"}`}>
+                    <span className={`font-black ${form.isFreeDeliveryActive || form.deliveryFee === 0 ? "text-[#0a3d24]" : "text-gray-900"}`}>
                       {form.isFreeDeliveryActive || form.deliveryFee === 0
                         ? "FREE (Promo)"
                         : `₹${form.deliveryFee}`}
@@ -332,7 +332,7 @@ export default function ManageDeliveryFee() {
                   </div>
                   <div className="flex justify-between items-center pt-2 border-t border-gray-100 font-black text-sm text-gray-900">
                     <span>Customer Pays:</span>
-                    <span className="text-[#0f8646]">
+                    <span className="text-[#0a3d24]">
                       ₹{120 + (form.isFreeDeliveryActive ? 0 : form.deliveryFee)}
                     </span>
                   </div>
@@ -348,11 +348,11 @@ export default function ManageDeliveryFee() {
                   </div>
                   <div className="flex justify-between items-center py-1">
                     <span>Delivery Charge:</span>
-                    <span className="font-black text-[#0f8646]">FREE (₹0)</span>
+                    <span className="font-black text-[#0a3d24]">FREE (₹0)</span>
                   </div>
                   <div className="flex justify-between items-center pt-2 border-t border-gray-100 font-black text-sm text-gray-900">
                     <span>Customer Pays:</span>
-                    <span className="text-[#0f8646]">
+                    <span className="text-[#0a3d24]">
                       ₹{Math.max(200, form.freeDeliveryThreshold)}
                     </span>
                   </div>
@@ -365,7 +365,7 @@ export default function ManageDeliveryFee() {
               <button
                 type="submit"
                 disabled={saving}
-                className="w-full sm:w-auto bg-[#0f8646] hover:bg-[#0c6a38] text-white font-black text-xs sm:text-sm px-8 py-3.5 rounded-2xl shadow-lg shadow-emerald-900/15 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                className="w-full sm:w-auto bg-[#0a3d24] hover:bg-[#072817] text-white font-black text-xs sm:text-sm px-8 py-3.5 rounded-2xl shadow-lg shadow-emerald-900/15 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 {saving ? (
                   <>

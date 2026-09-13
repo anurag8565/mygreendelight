@@ -555,7 +555,7 @@ export default function Deliveryboy({ initialUser }: Props) {
           {/* Driver Profile */}
           <div className="flex items-center gap-3">
             <div className="relative">
-              <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-[#0f8646] to-emerald-400 text-white flex items-center justify-center font-black text-lg shadow-sm shadow-emerald-600/20">
+              <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-[#0a3d24] to-emerald-400 text-white flex items-center justify-center font-black text-lg shadow-sm shadow-emerald-600/20">
                 {currentUser?.name ? currentUser.name.charAt(0).toUpperCase() : <Bike size={22} />}
               </div>
               <span
@@ -805,7 +805,7 @@ export default function Deliveryboy({ initialUser }: Props) {
             )}
           </div>
           <p className="text-xs text-slate-600 flex items-start gap-1.5 leading-relaxed">
-            <MapPin size={14} className="text-[#0f8646] shrink-0 mt-0.5" />
+            <MapPin size={14} className="text-[#0a3d24] shrink-0 mt-0.5" />
             <span>{customerAddress}</span>
           </p>
         </div>
@@ -841,7 +841,7 @@ export default function Deliveryboy({ initialUser }: Props) {
             href={mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-[#0f8646] hover:bg-[#0c6a38] text-white p-3 rounded-2xl font-black text-xs flex flex-col items-center justify-center gap-1.5 transition active:scale-95 shadow-xs text-center"
+            className="bg-[#0a3d24] hover:bg-[#072817] text-white p-3 rounded-2xl font-black text-xs flex flex-col items-center justify-center gap-1.5 transition active:scale-95 shadow-xs text-center"
           >
             <Compass size={17} />
             <span>Google Maps 🗺️</span>
@@ -871,7 +871,7 @@ export default function Deliveryboy({ initialUser }: Props) {
 
           <button
             onClick={() => setIsChatOpen(true)}
-            className="bg-emerald-50 hover:bg-emerald-100 text-[#0f8646] p-3 rounded-2xl font-black text-xs flex flex-col items-center justify-center gap-1.5 transition active:scale-95 border border-emerald-200 shadow-xs text-center cursor-pointer"
+            className="bg-emerald-50 hover:bg-emerald-100 text-[#0a3d24] p-3 rounded-2xl font-black text-xs flex flex-col items-center justify-center gap-1.5 transition active:scale-95 border border-emerald-200 shadow-xs text-center cursor-pointer"
           >
             <MessageSquare size={17} />
             <span>In-App Chat</span>
@@ -958,7 +958,7 @@ export default function Deliveryboy({ initialUser }: Props) {
         <div className="bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent rounded-3xl p-4 sm:p-5 border-2 border-emerald-500/40 space-y-3.5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5 font-black text-xs text-slate-900">
-              <ShieldAlert size={15} className="text-[#0f8646]" />
+              <ShieldAlert size={15} className="text-[#0a3d24]" />
               <span>Doorstep Verification</span>
             </div>
             <span className="text-[10px] font-extrabold uppercase text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-md">
@@ -995,8 +995,8 @@ export default function Deliveryboy({ initialUser }: Props) {
                 onPaste={idx === 0 ? handlePinPaste : undefined}
                 className={`w-12 h-14 text-center font-mono font-black text-2xl rounded-2xl border-2 outline-none transition bg-white shadow-2xs ${
                   digit
-                    ? 'border-[#0f8646] text-slate-900 ring-2 ring-emerald-500/20'
-                    : 'border-slate-300 focus:border-[#0f8646]'
+                    ? 'border-[#0a3d24] text-slate-900 ring-2 ring-emerald-500/20'
+                    : 'border-slate-300 focus:border-[#0a3d24]'
                 }`}
               />
             ))}
@@ -1006,7 +1006,7 @@ export default function Deliveryboy({ initialUser }: Props) {
           <button
             onClick={handleVerifyOtp}
             disabled={verifyingOtp}
-            className="w-full bg-[#0f8646] hover:bg-[#0c6a38] disabled:bg-slate-400 text-white font-black py-3.5 rounded-2xl shadow-md shadow-emerald-900/10 transition active:scale-98 text-xs flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full bg-[#0a3d24] hover:bg-[#072817] disabled:bg-slate-400 text-white font-black py-3.5 rounded-2xl shadow-md shadow-emerald-900/10 transition active:scale-98 text-xs flex items-center justify-center gap-2 cursor-pointer"
           >
             {verifyingOtp ? (
               <>
@@ -1062,7 +1062,7 @@ export default function Deliveryboy({ initialUser }: Props) {
             <button
               onClick={handleToggleDuty}
               disabled={togglingDuty}
-              className="bg-[#0f8646] hover:bg-[#0c6a38] text-white px-5 py-2.5 rounded-2xl font-black text-xs transition cursor-pointer flex items-center gap-2 shadow-sm"
+              className="bg-[#0a3d24] hover:bg-[#072817] text-white px-5 py-2.5 rounded-2xl font-black text-xs transition cursor-pointer flex items-center gap-2 shadow-sm"
             >
               <Zap size={14} />
               <span>Slide / Tap to Go Online</span>
@@ -1080,7 +1080,7 @@ export default function Deliveryboy({ initialUser }: Props) {
                 : 'text-slate-500 hover:text-slate-900'
             }`}
           >
-            <Truck size={14} className={activeTab === 'requests' ? 'text-[#0f8646]' : ''} />
+            <Truck size={14} className={activeTab === 'requests' ? 'text-[#0a3d24]' : ''} />
             <span>Trips & Requests</span>
             {(activeAssignments.length > 0 || assignments.length > 0) && (
               <span className="bg-emerald-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full animate-bounce">
@@ -1097,7 +1097,7 @@ export default function Deliveryboy({ initialUser }: Props) {
                 : 'text-slate-500 hover:text-slate-900'
             }`}
           >
-            <BarChart3 size={14} className={activeTab === 'earnings' ? 'text-[#0f8646]' : ''} />
+            <BarChart3 size={14} className={activeTab === 'earnings' ? 'text-[#0a3d24]' : ''} />
             <span>Performance & Shifts</span>
           </button>
 
@@ -1109,7 +1109,7 @@ export default function Deliveryboy({ initialUser }: Props) {
                 : 'text-slate-500 hover:text-slate-900'
             }`}
           >
-            <History size={14} className={activeTab === 'history' ? 'text-[#0f8646]' : ''} />
+            <History size={14} className={activeTab === 'history' ? 'text-[#0a3d24]' : ''} />
             <span>Trip History</span>
           </button>
         </div>
@@ -1117,7 +1117,7 @@ export default function Deliveryboy({ initialUser }: Props) {
         {/* Loading Spinner */}
         {loading && (
           <div className="bg-white rounded-3xl p-10 text-center border border-slate-200/80 shadow-xs">
-            <Loader2 size={30} className="animate-spin text-[#0f8646] mx-auto mb-2" />
+            <Loader2 size={30} className="animate-spin text-[#0a3d24] mx-auto mb-2" />
             <p className="text-xs text-slate-500 font-bold">Syncing fleet dispatch radar...</p>
           </div>
         )}
@@ -1157,14 +1157,14 @@ export default function Deliveryboy({ initialUser }: Props) {
                           onClick={() => setSelectedAssignmentId(a._id)}
                           className={`p-3.5 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between gap-3 active:scale-98 ${
                             isSelected
-                              ? 'bg-emerald-50/90 border-[#0f8646] shadow-xs'
+                              ? 'bg-emerald-50/90 border-[#0a3d24] shadow-xs'
                               : 'bg-white border-slate-200 hover:border-emerald-300'
                           }`}
                         >
                           <div className="flex items-center gap-3 min-w-0">
                             <div
                               className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
-                                isSelected ? 'bg-[#0f8646] text-white' : 'bg-slate-100 text-slate-700'
+                                isSelected ? 'bg-[#0a3d24] text-white' : 'bg-slate-100 text-slate-700'
                               }`}
                             >
                               #{shortId}
@@ -1186,7 +1186,7 @@ export default function Deliveryboy({ initialUser }: Props) {
                             <span
                               className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-md inline-block mt-0.5 ${
                                 isSelected
-                                  ? 'bg-[#0f8646] text-white'
+                                  ? 'bg-[#0a3d24] text-white'
                                   : 'bg-slate-100 text-slate-600'
                               }`}
                             >
@@ -1208,7 +1208,7 @@ export default function Deliveryboy({ initialUser }: Props) {
             <div className="space-y-3.5">
               <div className="flex items-center justify-between px-1">
                 <h3 className="font-black text-sm text-slate-900 flex items-center gap-2">
-                  <Package size={16} className="text-[#0f8646]" />
+                  <Package size={16} className="text-[#0a3d24]" />
                   <span>Available Express Requests</span>
                 </h3>
                 <span className="text-xs font-bold text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full">
@@ -1218,7 +1218,7 @@ export default function Deliveryboy({ initialUser }: Props) {
 
               {assignments.length === 0 ? (
                 <div className="bg-white rounded-3xl p-8 text-center border border-slate-200/80 shadow-xs space-y-2">
-                  <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-[#0f8646] flex items-center justify-center mx-auto">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-[#0a3d24] flex items-center justify-center mx-auto">
                     <Package size={22} />
                   </div>
                   <div>
@@ -1245,7 +1245,7 @@ export default function Deliveryboy({ initialUser }: Props) {
                       >
                         <div className="p-5 space-y-3.5">
                           <div className="flex items-center justify-between">
-                            <span className="font-mono font-black text-xs text-[#0f8646] bg-emerald-50 px-2.5 py-1 rounded-lg">
+                            <span className="font-mono font-black text-xs text-[#0a3d24] bg-emerald-50 px-2.5 py-1 rounded-lg">
                               #{shortId}
                             </span>
                             <span className="text-[10px] font-black uppercase text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
@@ -1272,7 +1272,7 @@ export default function Deliveryboy({ initialUser }: Props) {
                             </div>
                             <div className="bg-emerald-50 p-2.5 rounded-2xl">
                               <span className="text-[10px] uppercase font-bold text-emerald-700 block">Bill</span>
-                              <span className="font-black text-xs text-[#0f8646]">
+                              <span className="font-black text-xs text-[#0a3d24]">
                                 ₹{order?.totalamount || 0}
                               </span>
                             </div>
@@ -1282,7 +1282,7 @@ export default function Deliveryboy({ initialUser }: Props) {
                         <div className="p-3 bg-slate-50/80 border-t border-slate-100 flex gap-2">
                           <button
                             onClick={() => handleAccept(a._id)}
-                            className="flex-1 bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3 rounded-2xl font-black text-xs transition active:scale-95 cursor-pointer shadow-xs flex items-center justify-center gap-1.5"
+                            className="flex-1 bg-[#0a3d24] hover:bg-[#072817] text-white py-3 rounded-2xl font-black text-xs transition active:scale-95 cursor-pointer shadow-xs flex items-center justify-center gap-1.5"
                           >
                             <Check size={14} />
                             <span>Accept & Deliver</span>

@@ -3,22 +3,22 @@ import { ShieldCheck, Truck, RefreshCcw, Headset } from "lucide-react";
 export default function TrustBadges() {
   const features = [
     {
-      icon: <Truck size={40} className="text-green-600 mb-3" />,
+      icon: <Truck size={40} className="text-[#0a3d24] mb-3" />,
       title: "Superfast Delivery",
       desc: "Get your order delivered to your doorstep at the earliest."
     },
     {
-      icon: <ShieldCheck size={40} className="text-green-600 mb-3" />,
+      icon: <ShieldCheck size={40} className="text-[#0a3d24] mb-3" />,
       title: "Best Prices & Offers",
       desc: "Cheaper prices than your local supermarket, great cashback."
     },
     {
-      icon: <RefreshCcw size={40} className="text-green-600 mb-3" />,
+      icon: <RefreshCcw size={40} className="text-[#0a3d24] mb-3" />,
       title: "Easy Returns",
       desc: "Not satisfied with a product? Return it at the doorstep."
     },
     {
-      icon: <Headset size={40} className="text-green-600 mb-3" />,
+      icon: <Headset size={40} className="text-[#0a3d24] mb-3" />,
       title: "24/7 Support",
       desc: "Got a question? Our support team is here to help you."
     }

@@ -173,7 +173,7 @@ export default function ManageFlashDeals() {
             onClick={fetchSettings}
             className="flex items-center gap-1.5 px-4 py-2 bg-white border border-gray-200 hover:border-gray-300 rounded-xl text-xs font-bold text-gray-700 shadow-2xs cursor-pointer self-start sm:self-auto"
           >
-            <RefreshCw size={14} className={loading ? "animate-spin text-[#0f8646]" : ""} />
+            <RefreshCw size={14} className={loading ? "animate-spin text-[#0a3d24]" : ""} />
             <span>Reload</span>
           </button>
         </div>
@@ -187,7 +187,7 @@ export default function ManageFlashDeals() {
 
         {loading ? (
           <div className="bg-white rounded-3xl p-12 text-center border border-gray-100 shadow-xs">
-            <Loader2 size={32} className="animate-spin text-[#0f8646] mx-auto mb-3" />
+            <Loader2 size={32} className="animate-spin text-[#0a3d24] mx-auto mb-3" />
             <p className="text-sm font-bold text-gray-600">Loading Flash Deal Settings...</p>
           </div>
         ) : (
@@ -200,7 +200,7 @@ export default function ManageFlashDeals() {
                   <div className="flex items-center gap-3">
                     <div
                       className={`w-9 h-9 rounded-xl flex items-center justify-center font-black ${
-                        formData.isActive ? "bg-green-100 text-[#0f8646]" : "bg-gray-200 text-gray-500"
+                        formData.isActive ? "bg-green-100 text-[#0a3d24]" : "bg-gray-200 text-gray-500"
                       }`}
                     >
                       <Power size={18} />
@@ -222,21 +222,21 @@ export default function ManageFlashDeals() {
                       onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
                       className="sr-only peer"
                     />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0f8646]"></div>
+                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0a3d24]"></div>
                   </label>
                 </div>
 
                 {/* 2. End Date & Time Picker */}
                 <div>
                   <label className="text-xs font-black uppercase text-gray-700 tracking-wider flex items-center gap-1.5 mb-2">
-                    <Calendar size={14} className="text-[#0f8646]" />
+                    <Calendar size={14} className="text-[#0a3d24]" />
                     <span>Flash Deal End Date & Time (Target)</span>
                   </label>
                   <input
                     type="datetime-local"
                     value={formData.endTime}
                     onChange={(e) => setFormData({ ...formData, endTime: e.target.value })}
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-bold text-gray-800 outline-none focus:border-[#0f8646] bg-gray-50 focus:bg-white transition"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-bold text-gray-800 outline-none focus:border-[#0a3d24] bg-gray-50 focus:bg-white transition"
                     required
                   />
                   <p className="text-[11px] text-gray-400 font-medium mt-1">
@@ -267,14 +267,14 @@ export default function ManageFlashDeals() {
                     <button
                       type="button"
                       onClick={() => applyPreset("tonight")}
-                      className="px-3 py-1.5 bg-gray-100 hover:bg-green-50 hover:text-[#0f8646] hover:border-green-200 border border-gray-200 rounded-xl text-xs font-bold transition cursor-pointer"
+                      className="px-3 py-1.5 bg-gray-100 hover:bg-green-50 hover:text-[#0a3d24] hover:border-green-200 border border-gray-200 rounded-xl text-xs font-bold transition cursor-pointer"
                     >
                       🌙 Tonight (11:59 PM)
                     </button>
                     <button
                       type="button"
                       onClick={() => applyPreset("tomorrow")}
-                      className="px-3 py-1.5 bg-gray-100 hover:bg-green-50 hover:text-[#0f8646] hover:border-green-200 border border-gray-200 rounded-xl text-xs font-bold transition cursor-pointer"
+                      className="px-3 py-1.5 bg-gray-100 hover:bg-green-50 hover:text-[#0a3d24] hover:border-green-200 border border-gray-200 rounded-xl text-xs font-bold transition cursor-pointer"
                     >
                       ☀️ Tomorrow Midnight
                     </button>
@@ -299,7 +299,7 @@ export default function ManageFlashDeals() {
                     value={formData.badgeText}
                     onChange={(e) => setFormData({ ...formData, badgeText: e.target.value })}
                     placeholder="e.g. FLAT 25% - 40% OFF or TODAY'S SPECIAL"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-bold text-gray-800 outline-none focus:border-[#0f8646] bg-gray-50 focus:bg-white transition"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-bold text-gray-800 outline-none focus:border-[#0a3d24] bg-gray-50 focus:bg-white transition"
                   />
                 </div>
 
@@ -307,7 +307,7 @@ export default function ManageFlashDeals() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="w-full py-4 bg-[#0f8646] hover:bg-[#0c6a38] text-white rounded-2xl font-black text-sm shadow-md hover:shadow-lg transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                  className="w-full py-4 bg-[#0a3d24] hover:bg-[#072817] text-white rounded-2xl font-black text-sm shadow-md hover:shadow-lg transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
                 >
                   {saving ? (
                     <>
@@ -328,7 +328,7 @@ export default function ManageFlashDeals() {
             <div className="lg:col-span-5 space-y-5">
               <div className="bg-white rounded-3xl border border-gray-200/90 p-6 shadow-xs">
                 <h3 className="font-extrabold text-sm text-gray-900 mb-4 pb-3 border-b border-gray-100 flex items-center gap-2">
-                  <Eye size={16} className="text-[#0f8646]" />
+                  <Eye size={16} className="text-[#0a3d24]" />
                   <span>Customer Live Preview</span>
                 </h3>
 
@@ -361,7 +361,7 @@ export default function ManageFlashDeals() {
 
                   <div className="mt-4 pt-3 border-t border-orange-100/80 flex items-center justify-between text-xs text-gray-500">
                     <span>Badge Promo:</span>
-                    <span className="font-extrabold text-[#0f8646]">{formData.badgeText}</span>
+                    <span className="font-extrabold text-[#0a3d24]">{formData.badgeText}</span>
                   </div>
                 </div>
 

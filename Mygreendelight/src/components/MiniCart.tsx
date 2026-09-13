@@ -80,7 +80,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
             {/* Header */}
             <div className="p-4 border-b flex items-center justify-between bg-emerald-50/50">
               <h2 className="text-xl font-black text-gray-900 flex items-center gap-2">
-                <ShoppingBag className="text-[#0f8646]" />
+                <ShoppingBag className="text-[#0a3d24]" />
                 <span>My Basket</span>
                 <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
                   {cartdata.length} items
@@ -96,14 +96,14 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
               <div className="bg-emerald-50/90 border-b border-emerald-100 px-4 py-3 text-xs">
                 <div className="flex items-center justify-between font-bold mb-1.5">
                   <div className="flex items-center gap-1.5">
-                    <Truck size={15} className="text-[#0f8646] shrink-0" />
+                    <Truck size={15} className="text-[#0a3d24] shrink-0" />
                     {isFreeDelivery ? (
-                      <span className="text-[#0f8646] font-black">
+                      <span className="text-[#0a3d24] font-black">
                         🎉 FREE Delivery Unlocked!
                       </span>
                     ) : (
                       <span className="text-slate-800">
-                        Add <strong className="text-[#0f8646] font-black">₹{remainingForFreeDelivery}</strong> more for FREE Delivery
+                        Add <strong className="text-[#0a3d24] font-black">₹{remainingForFreeDelivery}</strong> more for FREE Delivery
                       </span>
                     )}
                   </div>
@@ -115,7 +115,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                 {/* Animated Progress Track */}
                 <div className="w-full bg-emerald-200/60 rounded-full h-2 overflow-hidden">
                   <div
-                    className="bg-[#0f8646] h-full rounded-full transition-all duration-500 ease-out"
+                    className="bg-[#0a3d24] h-full rounded-full transition-all duration-500 ease-out"
                     style={{ width: `${progressPercent}%` }}
                   />
                 </div>
@@ -132,7 +132,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                   <p className="font-semibold text-lg">Your cart is empty</p>
                   <button 
                     onClick={() => { onClose(); router.push('/shop'); }}
-                    className="text-[#0f8646] font-bold border border-[#0f8646] px-6 py-2 rounded-lg hover:bg-green-50"
+                    className="text-[#0a3d24] font-bold border border-[#0a3d24] px-6 py-2 rounded-lg hover:bg-green-50 cursor-pointer"
                   >
                     Start Shopping
                   </button>
@@ -142,7 +142,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                   <div key={item.cartItemId} className="flex gap-3 p-3 bg-white border border-gray-100 rounded-xl shadow-sm relative">
                     <button 
                       onClick={() => dispatch(removeFromCart(item.cartItemId!))}
-                      className="absolute -top-2 -right-2 bg-red-100 text-red-600 p-1 rounded-full hover:bg-red-200"
+                      className="absolute -top-2 -right-2 bg-red-100 text-red-600 p-1 rounded-full hover:bg-red-200 cursor-pointer"
                     >
                       <X size={12} />
                     </button>
@@ -155,21 +155,21 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                         <p className="text-xs text-gray-500 mt-1">{item.variation?.weight || item.unit}</p>
                       </div>
                       <div className="flex items-center justify-between mt-2">
-                        <span className="font-extrabold text-[#0f8646]">₹{item.price * item.quantity}</span>
+                        <span className="font-extrabold text-[#0a3d24]">₹{item.price * item.quantity}</span>
                         
                         <div className="flex items-center bg-green-50 rounded-lg border border-green-200">
                           <button
                             onClick={() => dispatch(decreaseQuantity(item.cartItemId!))}
-                            className="w-7 h-7 flex items-center justify-center text-[#0f8646] hover:bg-green-100 rounded-l-lg transition"
+                            className="w-7 h-7 flex items-center justify-center text-[#0a3d24] hover:bg-green-100 rounded-l-lg transition cursor-pointer"
                           >
                             <Minus size={14} />
                           </button>
-                          <span className="w-8 text-center text-xs font-bold text-[#0f8646]">
+                          <span className="w-8 text-center text-xs font-bold text-[#0a3d24]">
                             {item.quantity}
                           </span>
                           <button
                             onClick={() => dispatch(increaseQuantity(item.cartItemId!))}
-                            className="w-7 h-7 flex items-center justify-center text-[#0f8646] hover:bg-green-100 rounded-r-lg transition"
+                            className="w-7 h-7 flex items-center justify-center text-[#0a3d24] hover:bg-green-100 rounded-r-lg transition cursor-pointer"
                           >
                             <Plus size={14} />
                           </button>
@@ -193,7 +193,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                     onClose();
                     router.push('/user/cart');
                   }}
-                  className="relative overflow-hidden w-full bg-[#0f8646] hover:bg-[#0c6a38] text-white py-3 rounded-xl font-black flex items-center justify-center gap-2 shadow-lg transition-transform hover:scale-[1.02] cursor-pointer"
+                  className="relative overflow-hidden w-full bg-[#0a3d24] hover:bg-[#072817] text-white py-3 rounded-xl font-black flex items-center justify-center gap-2 shadow-lg transition-transform hover:scale-[1.02] cursor-pointer"
                 >
                   <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/25 to-transparent" />
                   <span className="relative z-10">Proceed to Checkout</span>
