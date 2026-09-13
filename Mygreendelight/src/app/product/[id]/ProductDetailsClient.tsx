@@ -243,13 +243,31 @@ export default function ProductDetailsClient({
           </div>
         </div>
 
-        {/* Main Product Showcase Card */}
-        <div className="bg-white border border-gray-100 rounded-3xl p-3.5 sm:p-7 shadow-xs mb-4">
+        {/* Main Product Showcase Card (Inspired by Top D2C & Modern Grocery UIs) */}
+        <div className="bg-white border border-stone-200/90 rounded-3xl p-3.5 sm:p-7 shadow-xs mb-5 overflow-hidden">
+          {/* Top D2C Announcement Strip */}
+          <div className="mb-4 -mx-3.5 -mt-3.5 sm:-mx-7 sm:-mt-7 bg-gradient-to-r from-[#072817] via-[#0a3d24] to-[#072817] text-white px-4 py-2 flex items-center justify-between text-[11px] sm:text-xs font-semibold overflow-x-auto no-scrollbar gap-4">
+            <span className="flex items-center gap-1.5 shrink-0">
+              <Truck size={13} className="text-emerald-300" />
+              <span>Free Delivery on Orders &gt; ₹199</span>
+            </span>
+            <span className="hidden sm:inline-block text-emerald-300/60">•</span>
+            <span className="flex items-center gap-1.5 shrink-0">
+              <Leaf size={13} className="text-emerald-300" />
+              <span>5:00 AM Direct Mandi Harvest</span>
+            </span>
+            <span className="hidden sm:inline-block text-emerald-300/60">•</span>
+            <span className="flex items-center gap-1.5 shrink-0">
+              <ShieldCheck size={13} className="text-emerald-300" />
+              <span>100% Safe & Graded Quality</span>
+            </span>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-10 items-start">
             
-            {/* Left 5 Cols: Product Image Frame */}
+            {/* Left 5 Cols: Product Image Frame with Floating Wishlist */}
             <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
-              <div className="w-full aspect-square max-h-[340px] sm:max-h-[420px] rounded-2xl sm:rounded-3xl bg-stone-50/80 border border-stone-200/80 p-5 sm:p-8 flex items-center justify-center relative overflow-hidden group shadow-2xs">
+              <div className="w-full aspect-square max-h-[350px] sm:max-h-[420px] rounded-2xl sm:rounded-3xl bg-gradient-to-b from-stone-50 to-white border border-stone-200/80 p-5 sm:p-8 flex items-center justify-center relative overflow-hidden group shadow-2xs">
                 
                 <img
                   src={product.image}
@@ -262,17 +280,52 @@ export default function ProductDetailsClient({
                 />
 
                 {/* Top Badges */}
-                <div className="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap">
+                <div className="absolute top-3 left-3 flex flex-col gap-1.5 items-start">
+                  <span className="bg-[#0a3d24] text-white text-[9.5px] sm:text-[10.5px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-2xs">
+                    BEST SELLER
+                  </span>
                   {discountPercent > 0 && (
-                    <span className="bg-[#0a3d24] text-white text-[9.5px] sm:text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-2xs">
+                    <span className="bg-amber-400 text-stone-950 text-[9.5px] sm:text-[10px] font-black px-2 py-0.5 rounded-full shadow-2xs">
                       {discountPercent}% OFF
                     </span>
                   )}
-                  <span className="bg-white/90 border border-stone-200 text-stone-700 text-[9.5px] sm:text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-2xs flex items-center gap-1">
-                    <Sparkles size={10} className="text-[#0a3d24]" />
-                    <span>Graded Taaza</span>
-                  </span>
                 </div>
+
+                {/* Floating Image Wishlist Button */}
+                <button
+                  type="button"
+                  onClick={async () => {
+                    const rawId = userdata?._id || (userdata as any)?.id || null;
+                    const cleanUserId = rawId ? String(rawId) : null;
+                    dispatch(toggleWishlist({
+                      item: {
+                        _id: String(product._id),
+                        name: product.name,
+                        price: currentPrice,
+                        image: product.image,
+                        unit: currentUnit,
+                        category: product.category,
+                        stock: currentStock,
+                      },
+                      userId: cleanUserId,
+                    }));
+                    setShowWishlistToast(true);
+                    setTimeout(() => setShowWishlistToast(false), 2500);
+                    try {
+                      const res = await axios.post("/api/wishlist", { productId: String(product._id) });
+                      if (res.data?.success && Array.isArray(res.data?.wishlist) && res.data.wishlist.length > 0) {
+                        dispatch(setWishlist({ items: res.data.wishlist, userId: cleanUserId }));
+                      }
+                    } catch (error) {}
+                  }}
+                  className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/95 backdrop-blur-xs border border-stone-200 shadow-sm flex items-center justify-center transition cursor-pointer active:scale-90 hover:bg-rose-50"
+                  title="Wishlist"
+                >
+                  <Heart
+                    size={16}
+                    className={isWishlisted ? "text-rose-500 fill-rose-500" : "text-stone-400 hover:text-rose-500"}
+                  />
+                </button>
 
                 {/* Out of Stock Overlay */}
                 {currentStock <= 0 && (
@@ -290,69 +343,49 @@ export default function ProductDetailsClient({
               
               {/* Category & Verified Badge */}
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-[11px] font-black uppercase text-[#0a3d24] bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80">
+                <span className="text-[11px] font-black uppercase text-[#0a3d24] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200/80">
                   {product.category || "Fresh Produce"}
                 </span>
-                <span className="text-[11px] font-bold text-gray-500 flex items-center gap-1">
+                <span className="text-[11px] font-bold text-stone-500 flex items-center gap-1">
                   <BadgeCheck size={13} className="text-[#0a3d24]" /> Bhopal Farm Direct
                 </span>
               </div>
 
-              {/* Product Title */}
-              <h1 className="text-xl sm:text-3xl font-black text-gray-900 leading-tight mb-1.5 tracking-tight">
+              {/* Product Title (Luxury Serif / Bold Heading) */}
+              <h1 className="text-xl sm:text-3xl font-black text-stone-900 leading-tight mb-1.5 tracking-tight font-heading">
                 {product.name}
               </h1>
 
-              {/* Rating & Fast Info */}
-              <div className="flex items-center gap-3 mb-3.5 pb-2.5 border-b border-gray-100 flex-wrap">
-                <div className="flex items-center gap-1 bg-amber-50 border border-amber-200 text-amber-900 px-2 py-0.5 rounded-lg text-xs font-black">
-                  <Star size={12} className="fill-amber-400 text-amber-400" />
+              {/* Rating & Review Counter */}
+              <div className="flex items-center gap-3 mb-3.5 pb-2.5 border-b border-stone-100 flex-wrap">
+                <div className="flex items-center gap-1 bg-amber-50 border border-amber-200/80 text-amber-900 px-2.5 py-0.5 rounded-lg text-xs font-black">
+                  <Star size={13} className="fill-amber-400 text-amber-400" />
                   <span>{product.rating ? product.rating.toFixed(1) : "4.8"}</span>
-                  <span className="text-gray-400 font-bold ml-0.5">
-                    ({product.numReviews || "89"})
+                  <span className="text-stone-400 font-bold ml-0.5">
+                    ({product.numReviews || "124"} reviews)
                   </span>
                 </div>
-                <span className="text-xs font-semibold text-gray-500">
-                  Selected Pack: <strong className="text-gray-900">{currentUnit}</strong>
-                </span>
-              </div>
-
-              {/* Express Delivery Live Slot Banner */}
-              <div className="mb-3.5 bg-gradient-to-r from-emerald-50 via-teal-50/70 to-emerald-50 border border-emerald-200/70 rounded-2xl p-2.5 sm:p-3 flex items-center justify-between gap-2 shadow-2xs">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-xl bg-[#0a3d24] text-white flex items-center justify-center shrink-0 shadow-2xs">
-                    <Zap size={14} className="fill-white" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-black text-emerald-950 leading-tight">
-                      10-15 Min Express Delivery in Bhopal
-                    </p>
-                    <p className="text-[10px] text-emerald-700 font-medium">
-                      Harvested sunrise 5:00 AM • 100% Handpicked Fresh
-                    </p>
-                  </div>
-                </div>
-                <span className="hidden sm:inline-block text-[10px] font-bold bg-white text-emerald-800 px-2.5 py-1 rounded-lg border border-emerald-200">
-                  Live Farm Stock
+                <span className="text-xs font-semibold text-stone-500">
+                  Selected Pack: <strong className="text-stone-900">{currentUnit}</strong>
                 </span>
               </div>
 
               {/* Price Block */}
-              <div className="mb-4 bg-emerald-50/60 border border-emerald-100 rounded-2xl p-3 sm:p-4 flex items-center justify-between gap-3 flex-wrap">
+              <div className="mb-4 bg-emerald-50/50 border border-emerald-200/70 rounded-2xl p-3 sm:p-4 flex items-center justify-between gap-3 flex-wrap">
                 <div>
-                  <div className="flex items-baseline gap-2 flex-wrap">
-                    <span className="text-2xl sm:text-3xl font-black text-gray-950">
+                  <div className="flex items-baseline gap-2.5 flex-wrap">
+                    <span className="text-2xl sm:text-3xl font-black text-stone-900">
                       ₹{currentPrice}
                     </span>
-                    <span className="text-sm sm:text-base text-gray-400 line-through font-medium">
+                    <span className="text-sm sm:text-base text-stone-400 line-through font-medium">
                       ₹{activeMRP}
                     </span>
-                    <span className="bg-[#0a3d24] text-white text-[11px] font-black px-2 py-0.5 rounded-full shadow-2xs">
+                    <span className="bg-[#0a3d24] text-white text-[10.5px] font-black px-2.5 py-0.5 rounded-full shadow-2xs">
                       SAVE ₹{activeMRP - currentPrice} ({discountPercent}% OFF)
                     </span>
                   </div>
-                  <p className="text-[10px] sm:text-[11px] text-gray-500 font-medium mt-1">
-                    Inclusive of all taxes • 100% Handpicked & Farm Fresh
+                  <p className="text-[10px] sm:text-[11px] text-stone-500 font-medium mt-1">
+                    Tax included • Free shipping on orders over ₹199 in Bhopal
                   </p>
                 </div>
               </div>
@@ -360,40 +393,32 @@ export default function ProductDetailsClient({
               {/* Pack Sizes (Variations Chips) */}
               {hasVariations && (
                 <div className="mb-4">
-                  <span className="text-[11px] sm:text-xs font-black uppercase text-gray-500 tracking-wider block mb-2">
-                    Choose Pack Size:
+                  <span className="text-[11px] sm:text-xs font-black uppercase text-stone-500 tracking-wider block mb-2">
+                    Select Size:
                   </span>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     {product.variations.map((v: any, index: number) => {
                       const isSelected = selectedVarIndex === index;
                       const vMrp = Math.round(v.price * 1.25);
-                      const vDiscount = Math.round(((vMrp - v.price) / vMrp) * 100);
 
                       return (
                         <button
                           type="button"
                           key={index}
                           onClick={() => setSelectedVarIndex(index)}
-                          className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
+                          className={`px-3.5 py-2 rounded-xl border text-left transition-all cursor-pointer flex items-center gap-2 ${
                             isSelected
-                              ? "border-[#0a3d24] bg-emerald-50 text-gray-950 shadow-2xs ring-2 ring-emerald-400/40"
-                              : "border-gray-200 hover:border-emerald-300 bg-white text-gray-700"
+                              ? "border-[#0a3d24] bg-[#0a3d24] text-white shadow-xs"
+                              : "border-stone-200 hover:border-emerald-300 bg-stone-50 text-stone-700"
                           }`}
                         >
-                          <div className="flex items-center justify-between mb-0.5">
-                            <span className="font-black text-xs block truncate">
-                              {v.weight}
-                            </span>
-                            {isSelected && <Check size={13} className="text-[#0a3d24] stroke-[3]" />}
-                          </div>
-                          <div className="flex items-baseline gap-1">
-                            <span className="font-black text-xs sm:text-sm text-[#0a3d24]">
-                              ₹{v.price}
-                            </span>
-                            <span className="text-[10px] text-gray-400 line-through">
-                              ₹{vMrp}
-                            </span>
-                          </div>
+                          <span className="font-black text-xs">
+                            {v.weight}
+                          </span>
+                          <span className={`text-xs font-bold ${isSelected ? "text-emerald-200" : "text-[#0a3d24]"}`}>
+                            ₹{v.price}
+                          </span>
+                          {isSelected && <Check size={12} className="text-white stroke-[3]" />}
                         </button>
                       );
                     })}
@@ -401,50 +426,123 @@ export default function ProductDetailsClient({
                 </div>
               )}
 
-              {/* Action Buttons Row (Desktop & Main View) */}
-              <div className="flex items-center gap-3 pt-1 w-full">
-                {quantity > 0 ? (
-                  <div className="flex items-center bg-[#0a3d24] text-white rounded-2xl h-12 sm:h-13 w-full sm:w-52 overflow-hidden shadow-md">
-                    <button
-                      type="button"
-                      onClick={() => dispatch(decreaseQuantity(cartItemId))}
-                      className="w-14 h-full flex items-center justify-center hover:bg-black/15 transition font-black text-lg cursor-pointer active:scale-90"
-                    >
-                      <Minus size={16} className="stroke-[3]" />
-                    </button>
-                    <span className="flex-1 text-center font-black text-sm sm:text-base text-white">
-                      {quantity} in Basket
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (quantity < currentStock) dispatch(increaseQuantity(cartItemId));
-                      }}
-                      disabled={quantity >= currentStock}
-                      className={`w-14 h-full flex items-center justify-center transition font-black text-lg active:scale-90 ${
-                        quantity >= currentStock
-                          ? "bg-black/25 text-white/50 cursor-not-allowed"
-                          : "hover:bg-black/15 cursor-pointer text-white"
-                      }`}
-                    >
-                      <Plus size={16} className="stroke-[3]" />
-                    </button>
-                  </div>
-                ) : (
+              {/* Dual Action CTAs: Add to Basket + Instant Buy Now */}
+              <div className="space-y-2.5 mb-5">
+                <div className="flex items-center gap-2.5">
+                  {/* Quantity Controller */}
+                  {quantity > 0 ? (
+                    <div className="flex items-center bg-white border border-[#0a3d24] rounded-2xl h-12 w-36 overflow-hidden shadow-xs shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => dispatch(decreaseQuantity(cartItemId))}
+                        className="w-11 h-full flex items-center justify-center bg-emerald-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-base cursor-pointer active:scale-90"
+                      >
+                        <Minus size={15} className="stroke-[3]" />
+                      </button>
+                      <span className="flex-1 text-center font-black text-sm text-stone-900">
+                        {quantity}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (quantity < currentStock) dispatch(increaseQuantity(cartItemId));
+                        }}
+                        disabled={quantity >= currentStock}
+                        className="w-11 h-full flex items-center justify-center bg-emerald-50 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white transition font-black text-base active:scale-90 cursor-pointer disabled:opacity-40"
+                      >
+                        <Plus size={15} className="stroke-[3]" />
+                      </button>
+                    </div>
+                  ) : null}
+
+                  {/* Add to Basket Button */}
                   <button
                     type="button"
                     onClick={handleAddToCart}
                     disabled={currentStock <= 0}
-                    className={`w-full h-12 sm:h-13 rounded-2xl font-bold text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 ${
+                    className={`flex-1 h-12 rounded-2xl font-black text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 ${
                       currentStock > 0
-                        ? "bg-[#0a3d24] hover:bg-[#072817] text-white shadow-emerald-950/20"
+                        ? quantity > 0
+                          ? "bg-emerald-50 border border-emerald-300 text-[#0a3d24] hover:bg-emerald-100"
+                          : "bg-[#0a3d24] hover:bg-[#072817] text-white shadow-emerald-950/20"
                         : "bg-stone-200 text-stone-400 cursor-not-allowed"
                     }`}
                   >
                     <ShoppingBag size={16} />
-                    <span>{currentStock > 0 ? `Add to Basket • ₹${currentPrice}` : "Out of Stock"}</span>
+                    <span>{currentStock > 0 ? (quantity > 0 ? `Added in Basket (${quantity})` : `Add to Basket • ₹${currentPrice}`) : "Out of Stock"}</span>
+                  </button>
+                </div>
+
+                {/* Instant Buy Now Button (1-Click Express Checkout) */}
+                {currentStock > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (quantity === 0) {
+                        handleAddToCart();
+                      }
+                      router.push("/user/cart");
+                    }}
+                    className="w-full h-11 rounded-2xl font-black text-xs sm:text-sm bg-amber-400 hover:bg-amber-300 text-stone-950 shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 border border-amber-500/30"
+                  >
+                    <Zap size={15} className="fill-stone-950 text-stone-950" />
+                    <span>⚡ Buy It Now • 10-15 Min Express Delivery</span>
                   </button>
                 )}
+              </div>
+
+              {/* 'Why You'll Love It' - 4 Feature Highlights Grid (From Inspiration UI) */}
+              <div className="pt-2 border-t border-stone-100">
+                <span className="text-[11px] font-black uppercase text-stone-500 tracking-wider block mb-2.5">
+                  Why you&apos;ll love it:
+                </span>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  <div className="bg-stone-50 border border-stone-200/70 rounded-xl p-2.5 flex flex-col items-center text-center">
+                    <div className="w-7 h-7 rounded-full bg-emerald-100 text-[#0a3d24] flex items-center justify-center mb-1">
+                      <Leaf size={14} />
+                    </div>
+                    <span className="text-[10.5px] font-black text-stone-900 leading-tight">100% Farm Fresh</span>
+                    <span className="text-[9px] text-stone-500 font-medium">Daily sunrise harvest</span>
+                  </div>
+
+                  <div className="bg-stone-50 border border-stone-200/70 rounded-xl p-2.5 flex flex-col items-center text-center">
+                    <div className="w-7 h-7 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center mb-1">
+                      <ShieldCheck size={14} />
+                    </div>
+                    <span className="text-[10.5px] font-black text-stone-900 leading-tight">No Wax or Polish</span>
+                    <span className="text-[9px] text-stone-500 font-medium">Naturally graded safe</span>
+                  </div>
+
+                  <div className="bg-stone-50 border border-stone-200/70 rounded-xl p-2.5 flex flex-col items-center text-center">
+                    <div className="w-7 h-7 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center mb-1">
+                      <Clock size={14} />
+                    </div>
+                    <span className="text-[10.5px] font-black text-stone-900 leading-tight">10-15M Express</span>
+                    <span className="text-[9px] text-stone-500 font-medium">Doorstep in Bhopal</span>
+                  </div>
+
+                  <div className="bg-stone-50 border border-stone-200/70 rounded-xl p-2.5 flex flex-col items-center text-center">
+                    <div className="w-7 h-7 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center mb-1">
+                      <RefreshCw size={14} />
+                    </div>
+                    <span className="text-[10.5px] font-black text-stone-900 leading-tight">Instant Replace</span>
+                    <span className="text-[9px] text-stone-500 font-medium">Doorstep verification</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Guaranteed Safe Checkout Badges (From Inspiration UI) */}
+              <div className="mt-4 pt-3 border-t border-stone-100 flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+                <span className="text-[10px] font-bold text-stone-400 uppercase tracking-wider flex items-center gap-1">
+                  <ShieldCheck size={12} className="text-[#0a3d24]" /> Guaranteed Safe Checkout
+                </span>
+                <div className="flex items-center gap-1.5">
+                  <span className="bg-stone-100 px-2 py-0.5 rounded text-[9.5px] font-black text-stone-700">UPI</span>
+                  <span className="bg-stone-100 px-2 py-0.5 rounded text-[9.5px] font-black text-stone-700">GooglePay</span>
+                  <span className="bg-stone-100 px-2 py-0.5 rounded text-[9.5px] font-black text-stone-700">PhonePe</span>
+                  <span className="bg-stone-100 px-2 py-0.5 rounded text-[9.5px] font-black text-stone-700">Paytm</span>
+                  <span className="bg-stone-100 px-2 py-0.5 rounded text-[9.5px] font-black text-stone-700">Cash on Delivery</span>
+                </div>
               </div>
 
             </div>
@@ -452,135 +550,113 @@ export default function ProductDetailsClient({
           </div>
         </div>
 
-        {/* 4 Trust Feature Strip */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 mb-4">
-          <div className="bg-white border border-gray-100 rounded-2xl p-3 sm:p-3.5 flex items-center gap-2.5 shadow-2xs">
-            <div className="w-8 h-8 rounded-xl bg-emerald-100 text-[#0a3d24] flex items-center justify-center shrink-0">
-              <ShieldCheck size={16} />
-            </div>
-            <div>
-              <h4 className="font-black text-xs text-gray-900">100% Quality Checked</h4>
-              <p className="text-[10px] text-gray-500 font-medium">Hand-graded & clean</p>
-            </div>
+        {/* Product Information Accordions (Clean, Readable & Enriched) */}
+        <div className="bg-white border border-stone-200/90 rounded-3xl p-4 sm:p-6 shadow-xs mb-5">
+          <div className="flex items-center justify-between mb-3.5 pb-2 border-b border-stone-100">
+            <h3 className="text-sm sm:text-base font-black text-stone-900 flex items-center gap-2">
+              <Info size={16} className="text-[#0a3d24]" />
+              <span>Product Description & Specifications</span>
+            </h3>
+            <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+              Verified Produce
+            </span>
           </div>
 
-          <div className="bg-white border border-gray-100 rounded-2xl p-3 sm:p-3.5 flex items-center gap-2.5 shadow-2xs">
-            <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
-              <Clock size={16} />
-            </div>
-            <div>
-              <h4 className="font-black text-xs text-gray-900">10-15 Min Express</h4>
-              <p className="text-[10px] text-gray-500 font-medium">Delivered fresh in Bhopal</p>
-            </div>
-          </div>
-
-          <div className="bg-white border border-gray-100 rounded-2xl p-3 sm:p-3.5 flex items-center gap-2.5 shadow-2xs">
-            <div className="w-8 h-8 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center shrink-0">
-              <Truck size={16} />
-            </div>
-            <div>
-              <h4 className="font-black text-xs text-gray-900">Free Delivery &gt; ₹199</h4>
-              <p className="text-[10px] text-gray-500 font-medium">Zero hidden packaging charges</p>
-            </div>
-          </div>
-
-          <div className="bg-white border border-gray-100 rounded-2xl p-3 sm:p-3.5 flex items-center gap-2.5 shadow-2xs">
-            <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center shrink-0">
-              <RefreshCw size={16} />
-            </div>
-            <div>
-              <h4 className="font-black text-xs text-gray-900">Instant Replacement</h4>
-              <p className="text-[10px] text-gray-500 font-medium">No-questions-asked refund</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Product Information Accordions */}
-        <div className="bg-white border border-gray-100 rounded-3xl p-4 sm:p-6 shadow-xs mb-4">
-          <h3 className="text-sm sm:text-base font-black text-gray-900 mb-3 flex items-center gap-2">
-            <Info size={16} className="text-[#0a3d24]" />
-            <span>Product Details & Freshness Guarantee</span>
-          </h3>
-
-          <div className="border border-gray-100 rounded-2xl overflow-hidden divide-y divide-gray-100">
-            {/* About */}
+          <div className="border border-stone-200 rounded-2xl overflow-hidden divide-y divide-stone-100">
+            {/* 1. About Produce */}
             <div>
               <button
                 type="button"
                 onClick={() => setOpenSection(openSection === "about" ? "" : "about")}
-                className="w-full p-3.5 flex items-center justify-between text-left hover:bg-gray-50 transition cursor-pointer"
+                className="w-full p-4 flex items-center justify-between text-left hover:bg-stone-50/80 transition cursor-pointer"
               >
-                <span className="text-xs sm:text-sm font-black text-gray-900">
-                  About {product.name}
+                <span className="text-xs sm:text-sm font-black text-stone-900 flex items-center gap-2">
+                  <span>🥬</span> About {product.name}
                 </span>
                 <ChevronDown
                   size={15}
-                  className={`text-gray-400 transition-transform ${openSection === "about" ? "rotate-180 text-[#0a3d24]" : ""}`}
+                  className={`text-stone-400 transition-transform ${openSection === "about" ? "rotate-180 text-[#0a3d24]" : ""}`}
                 />
               </button>
               {openSection === "about" && (
-                <div className="px-3.5 pb-3.5 text-xs text-gray-600 leading-relaxed font-medium">
-                  {product.description ||
-                    `Farm-fresh ${product.name} sourced directly from verified local farmers around Bhopal. Packed with essential vitamins, minerals and rich natural taste for healthy daily cooking.`}
+                <div className="px-4 pb-4 text-xs text-stone-600 leading-relaxed font-medium bg-stone-50/30">
+                  <p className="mb-2">
+                    {product.description ||
+                      `Farm-fresh ${product.name} sourced directly from verified local farmers around Bhopal. Packed with essential vitamins, minerals and rich natural taste for healthy daily cooking.`}
+                  </p>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-2 border-t border-stone-100 text-[11px]">
+                    <div>
+                      <span className="text-stone-400 block font-bold">Category:</span>
+                      <span className="font-black text-stone-800">{product.category || "Fresh Vegetable"}</span>
+                    </div>
+                    <div>
+                      <span className="text-stone-400 block font-bold">Standard Pack:</span>
+                      <span className="font-black text-stone-800">{currentUnit}</span>
+                    </div>
+                    <div>
+                      <span className="text-stone-400 block font-bold">Best Used For:</span>
+                      <span className="font-black text-stone-800">Daily Cooking & Salads</span>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
 
-            {/* Sourcing */}
+            {/* 2. Origin & Sourcing */}
             <div>
               <button
                 type="button"
                 onClick={() => setOpenSection(openSection === "sourcing" ? "" : "sourcing")}
-                className="w-full p-3.5 flex items-center justify-between text-left hover:bg-gray-50 transition cursor-pointer"
+                className="w-full p-4 flex items-center justify-between text-left hover:bg-stone-50/80 transition cursor-pointer"
               >
-                <span className="text-xs sm:text-sm font-black text-gray-900">
-                  Origin & Farm Sourcing
+                <span className="text-xs sm:text-sm font-black text-stone-900 flex items-center gap-2">
+                  <span>🚜</span> Farm Origin & Harvest Sourcing
                 </span>
                 <ChevronDown
                   size={15}
-                  className={`text-gray-400 transition-transform ${openSection === "sourcing" ? "rotate-180 text-[#0a3d24]" : ""}`}
+                  className={`text-stone-400 transition-transform ${openSection === "sourcing" ? "rotate-180 text-[#0a3d24]" : ""}`}
                 />
               </button>
               {openSection === "sourcing" && (
-                <div className="px-3.5 pb-3.5 text-xs text-gray-600 leading-relaxed font-medium">
+                <div className="px-4 pb-4 text-xs text-stone-600 leading-relaxed font-medium bg-stone-50/30">
                   {product.sourcing ||
                     `Harvested daily at 4:30 AM from agricultural contract farms near Bhopal. Hand-graded and naturally cleaned to ensure complete safety and kitchen-ready freshness.`}
                 </div>
               )}
             </div>
 
-            {/* Storage */}
+            {/* 3. Storage */}
             <div>
               <button
                 type="button"
                 onClick={() => setOpenSection(openSection === "storage" ? "" : "storage")}
-                className="w-full p-3.5 flex items-center justify-between text-left hover:bg-gray-50 transition cursor-pointer"
+                className="w-full p-4 flex items-center justify-between text-left hover:bg-stone-50/80 transition cursor-pointer"
               >
-                <span className="text-xs sm:text-sm font-black text-gray-900">
-                  Storage & Freshness Tips
+                <span className="text-xs sm:text-sm font-black text-stone-900 flex items-center gap-2">
+                  <span>❄️</span> Freshness & Storage Tips
                 </span>
                 <ChevronDown
                   size={15}
-                  className={`text-gray-400 transition-transform ${openSection === "storage" ? "rotate-180 text-[#0a3d24]" : ""}`}
+                  className={`text-stone-400 transition-transform ${openSection === "storage" ? "rotate-180 text-[#0a3d24]" : ""}`}
                 />
               </button>
               {openSection === "storage" && (
-                <div className="px-3.5 pb-3.5 text-xs text-gray-600 leading-relaxed font-medium">
+                <div className="px-4 pb-4 text-xs text-stone-600 leading-relaxed font-medium bg-stone-50/30">
                   {product.storage ||
                     `Store in a cool, ventilated container or refrigerate at 4°C - 7°C to preserve natural crispness and freshness for up to 48 hours.`}
                 </div>
               )}
             </div>
 
-            {/* Bhopal Local Delivery & Purity Guarantee */}
+            {/* 4. Bhopal Delivery Guarantee */}
             <div>
               <button
                 type="button"
                 onClick={() => setOpenSection(openSection === "delivery" ? "" : "delivery")}
-                className="w-full p-3.5 flex items-center justify-between text-left hover:bg-gray-50 transition cursor-pointer"
+                className="w-full p-4 flex items-center justify-between text-left hover:bg-stone-50/80 transition cursor-pointer"
               >
-                <span className="text-xs sm:text-sm font-black text-gray-900">
-                  10-15 Min Bhopal Delivery & Farm Fresh Purity
+                <span className="text-xs sm:text-sm font-black text-stone-900 flex items-center gap-2">
+                  <span>⚡</span> 10-15 Min Bhopal Delivery & Doorstep Guarantee
                 </span>
                 <ChevronDown
                   size={15}
@@ -588,9 +664,9 @@ export default function ProductDetailsClient({
                 />
               </button>
               {openSection === "delivery" && (
-                <div className="px-3.5 pb-3.5 text-xs text-gray-600 leading-relaxed font-medium space-y-1.5">
+                <div className="px-4 pb-4 text-xs text-stone-600 leading-relaxed font-medium space-y-1.5 bg-stone-50/30">
                   <p>
-                    • <strong>Express Dispatch</strong>: Packed and dispatched fresh within 10-15 minutes across Bhopal.
+                    • <strong>Express Dispatch</strong>: Packed and dispatched fresh within 10-15 minutes across Bhopal societies.
                   </p>
                   <p>
                     • <strong>Covered Localities</strong>: Arera Colony (E1-E8), Kolar Road, MP Nagar, Bawadiya Kalan, Katara Hills, Shahpura, Chunabhatti, Trilanga, Gulmohar, Hoshangabad Road, and all major Bhopal societies.
@@ -699,14 +775,14 @@ export default function ProductDetailsClient({
 
       </div>
 
-      {/* 📱 Sticky Mobile Bottom Cart Bar (App-Style Quick Commerce with Cart Preview) */}
-      <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-200 px-3.5 py-2.5 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] flex flex-col gap-1.5">
+      {/* 📱 Sticky Mobile Bottom Bar (App-Style Quick Commerce Dual CTA with Cart Preview) */}
+      <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-stone-200 px-3.5 py-2 pb-[max(0.6rem,env(safe-area-inset-bottom))] shadow-[0_-4px_20px_rgba(0,0,0,0.08)] flex flex-col gap-1.5">
         {/* Floating Mini Basket Strip if other items in cart */}
         {totalCartCount > 0 && quantity === 0 && (
           <div className="flex items-center justify-between bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-xl text-[11px] font-bold text-emerald-900">
             <span className="flex items-center gap-1">
               <ShoppingBasket size={13} className="text-[#0a3d24]" />
-              <span>{totalCartCount} item(s) in Cart (₹{totalCartValue})</span>
+              <span>{totalCartCount} in Cart (₹{totalCartValue})</span>
             </span>
             <Link href="/user/cart" className="text-[#0a3d24] font-black underline">
               View Cart →
@@ -714,24 +790,24 @@ export default function ProductDetailsClient({
           </div>
         )}
 
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex flex-col">
-            <span className="text-[10px] text-gray-500 font-medium leading-none">
+        <div className="flex items-center justify-between gap-2.5">
+          <div className="flex flex-col min-w-0">
+            <span className="text-[10px] text-stone-500 font-medium leading-none truncate">
               {currentUnit}
             </span>
             <div className="flex items-baseline gap-1 mt-0.5">
-              <span className="text-base font-black text-gray-950">
+              <span className="text-base font-black text-stone-900">
                 ₹{currentPrice}
               </span>
-              <span className="text-[10px] text-gray-400 line-through">
+              <span className="text-[10px] text-stone-400 line-through">
                 ₹{activeMRP}
               </span>
             </div>
           </div>
 
-          <div className="flex-1 max-w-[200px]">
+          <div className="flex items-center gap-1.5 flex-1 justify-end">
             {quantity > 0 ? (
-              <div className="flex items-center bg-[#0a3d24] text-white rounded-xl h-10 w-full overflow-hidden shadow-xs">
+              <div className="flex items-center bg-[#0a3d24] text-white rounded-xl h-10 w-32 overflow-hidden shadow-xs shrink-0">
                 <button
                   type="button"
                   onClick={() => dispatch(decreaseQuantity(cartItemId))}
@@ -740,7 +816,7 @@ export default function ProductDetailsClient({
                   <Minus size={14} className="stroke-[3]" />
                 </button>
                 <span className="flex-1 text-center font-bold text-xs text-white">
-                  {quantity} in Cart
+                  {quantity}
                 </span>
                 <button
                   type="button"
@@ -758,14 +834,31 @@ export default function ProductDetailsClient({
                 type="button"
                 onClick={handleAddToCart}
                 disabled={currentStock <= 0}
-                className={`w-full h-10 rounded-xl font-bold text-xs shadow-xs transition flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer ${
+                className={`h-10 px-3.5 rounded-xl font-black text-xs shadow-xs transition flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer shrink-0 ${
                   currentStock > 0
                     ? "bg-[#0a3d24] hover:bg-[#072817] text-white"
                     : "bg-stone-200 text-stone-400 cursor-not-allowed"
                 }`}
               >
                 <ShoppingBag size={14} />
-                <span>{currentStock > 0 ? "Add to Cart" : "Out of Stock"}</span>
+                <span>{currentStock > 0 ? "Add" : "Out"}</span>
+              </button>
+            )}
+
+            {/* Instant Buy Now Button on Mobile */}
+            {currentStock > 0 && (
+              <button
+                type="button"
+                onClick={() => {
+                  if (quantity === 0) {
+                    handleAddToCart();
+                  }
+                  router.push("/user/cart");
+                }}
+                className="h-10 px-3 flex-1 rounded-xl font-black text-xs bg-amber-400 text-stone-950 shadow-xs transition flex items-center justify-center gap-1 active:scale-95 cursor-pointer truncate border border-amber-500/20"
+              >
+                <Zap size={13} className="fill-stone-950 shrink-0" />
+                <span className="truncate">Buy Now</span>
               </button>
             )}
           </div>
