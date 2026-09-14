@@ -1164,31 +1164,36 @@ export default function Nav({ user }: { user?: iUser | null }) {
                )}
             </Link>
 
-            {/* Cart Widget with Bounce Animation */}
-            <motion.div
-              key={cartdata.length}
-              initial={{ scale: 1 }}
-              animate={{ scale: [1, 1.15, 0.95, 1] }}
-              transition={{ duration: 0.35, ease: "easeInOut" }}
+            {/* Cart Widget with Bounce Animation & Premium Pill Styling */}
+            <motion.button
+              whileTap={{ scale: 0.94 }}
+              whileHover={{ scale: 1.03 }}
+              transition={{ type: "spring", stiffness: 450, damping: 24 }}
               onClick={() => setIsMiniCartOpen(true)}
-              className="flex items-center gap-1.5 cursor-pointer hover:opacity-80 transition-opacity shrink-0 select-none"
+              className="flex items-center gap-2.5 bg-[#0a3d24] hover:bg-[#072817] text-white px-3.5 py-2 rounded-2xl shadow-[0_4px_16px_rgba(10,61,36,0.25)] border border-emerald-800/40 cursor-pointer shrink-0 select-none transition-all group"
             >
-              <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-emerald-50/80 flex items-center justify-center text-[#0a3d24] border border-emerald-200/70 shadow-2xs">
-                <ShoppingCart size={19} className="stroke-[2.2]" />
+              <div className="relative flex items-center justify-center text-white">
+                <ShoppingCart size={18} className="stroke-[2.4]" />
                 {mounted && cartdata.length > 0 && (
                   <motion.span
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="absolute -top-1 -right-1 bg-[#0a3d24] text-white text-[9px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center shadow-xs"
+                    className="absolute -top-2 -right-2.5 bg-amber-400 text-stone-950 text-[9px] font-black min-w-[16px] h-[16px] px-0.5 rounded-full flex items-center justify-center shadow-xs border border-white/80"
                   >
-                    {cartdata.length}
+                    {cartdata.reduce((sum, item) => sum + item.quantity, 0)}
                   </motion.span>
                 )}
               </div>
-              <div className="hidden sm:flex flex-col">
-                <span className="text-[12px] font-extrabold text-stone-900">₹{mounted ? cartTotal.toFixed(2) : "0.00"}</span>
+
+              <div className="hidden sm:flex flex-col text-left leading-none">
+                <span className="text-[10px] font-bold text-emerald-200/90 tracking-wide uppercase">
+                  {cartdata.length > 0 ? `${cartdata.length} items` : "My Basket"}
+                </span>
+                <span className="text-xs font-black text-white mt-0.5">
+                  ₹{mounted ? cartTotal.toFixed(0) : "0"}
+                </span>
               </div>
-            </motion.div>
+            </motion.button>
           </div>
         </div>
 
