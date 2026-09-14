@@ -22,14 +22,13 @@ export function GoogleGIcon({ className = "w-4 h-4" }: { className?: string }) {
   return <FcGoogle className={className} aria-hidden="true" />;
 }
 
-const AVATAR_COLORS = [
-  "bg-[#4285F4] text-white",
-  "bg-[#EA4335] text-white",
-  "bg-[#34A853] text-white",
-  "bg-[#FBBC05] text-gray-950",
-  "bg-[#8e24aa] text-white",
-  "bg-[#0a3d24] text-white",
-  "bg-[#0284c7] text-white",
+export const AVATAR_COLORS = [
+  "bg-emerald-50 text-emerald-800 border-emerald-200/70",
+  "bg-amber-50 text-amber-900 border-amber-200/70",
+  "bg-stone-100 text-stone-800 border-stone-200/70",
+  "bg-sky-50 text-sky-800 border-sky-200/70",
+  "bg-teal-50 text-teal-800 border-teal-200/70",
+  "bg-rose-50 text-rose-800 border-rose-200/70",
 ];
 
 export const DEFAULT_GOOGLE_REVIEWS = [
@@ -40,7 +39,7 @@ export const DEFAULT_GOOGLE_REVIEWS = [
     rating: 5,
     timeAgo: "3 days ago",
     comment:
-      "The crispness of the palak and taaza methi is incredible! Exactly like sunrise harvest. Delivered in 12 minutes to my doorstep in Bhopal.",
+      "Palak and methi were fresh like direct farm harvest. Delivery reached before 7 AM, neatly packed in paper bags without any plastic.",
     source: "google",
     tag: "Google Review",
   },
@@ -51,7 +50,7 @@ export const DEFAULT_GOOGLE_REVIEWS = [
     rating: 5,
     timeAgo: "1 week ago",
     comment:
-      "Early morning delivery is super fast! Got fresh vegetables right at 6:30 AM before breakfast & pooja. 100% crunchy, fresh and hygienic.",
+      "Ordered early morning veggies for home pooja. Tomatoes, ginger, and coriander were clean, firm and without a single spoiled piece.",
     source: "google",
     tag: "Google Review",
   },
@@ -62,7 +61,7 @@ export const DEFAULT_GOOGLE_REVIEWS = [
     rating: 5,
     timeAgo: "1 week ago",
     comment:
-      "Direct farmer rates without unfair middleman markup. 100% clean, hand-sorted, and no chemical smell in coriander or tomatoes.",
+      "Genuine mandi rates and far better quality than roadside carts. No extra middleman markup and very polite delivery partner.",
     source: "google",
     tag: "Google Review",
   },
@@ -73,7 +72,7 @@ export const DEFAULT_GOOGLE_REVIEWS = [
     rating: 5,
     timeAgo: "2 weeks ago",
     comment:
-      "Zero plastic mission is commendable! Fresh vegetables delivered neatly in eco-friendly packaging right on time. Truly 5-star customer service!",
+      "Clean packaging without single-use polythene. Fresh coriander and mint had genuine natural aroma. Really impressed with the consistency.",
     source: "google",
     tag: "Google Review",
   },
@@ -84,7 +83,7 @@ export const DEFAULT_GOOGLE_REVIEWS = [
     rating: 5,
     timeAgo: "3 weeks ago",
     comment:
-      "Best quality fresh vegetables and farm-fresh Paneer in Bhopal. Soft and purely organic. My entire family loves SubziQuick!",
+      "Soft dairy paneer and fresh daily vegetables. SubziQuick has replaced our tiring weekly mandi rush completely. Highly recommended!",
     source: "google",
     tag: "Google Review",
   },
@@ -213,78 +212,98 @@ export default function Testimonials({
     <div className="w-full bg-[#faf9f5] py-6 sm:py-8 border-b border-stone-200/70 font-sans">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         
-        {/* Section Header: Google My Business Focused */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5 sm:mb-7">
+        {/* Section Header: Google My Business Trust & Controls */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5 sm:mb-6">
           <div>
             {/* Google Rating Pill (Controllable from Admin Panel) */}
             {googleSettings.showGoogleRatingPill && (
-              <div className="inline-flex items-center gap-2 bg-white border border-stone-200/90 px-3 py-1 rounded-full shadow-2xs mb-2">
-                <GoogleGIcon className="w-4 h-4 shrink-0" />
-                <div className="flex items-center gap-1 text-xs">
-                  <span className="font-black text-stone-900">
+              <div className="inline-flex items-center gap-2 bg-white border border-stone-200/90 px-3 py-1 rounded-full shadow-[0_1px_3px_rgba(0,0,0,0.03)] mb-2.5">
+                <GoogleGIcon className="w-3.5 h-3.5 shrink-0" />
+                <div className="flex items-center gap-1.5 text-xs">
+                  <span className="font-bold text-stone-900">
                     {Number(googleSettings.googleRating || 4.9).toFixed(1)}
                   </span>
-                  <div className="flex items-center text-amber-400">
+                  <div className="flex items-center text-[#FBBC04]">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={12} className="fill-amber-400 text-amber-400" />
+                      <Star key={i} size={11} className="fill-[#FBBC04] text-[#FBBC04]" />
                     ))}
                   </div>
-                  <span className="text-[11px] text-stone-500 font-medium ml-0.5">
-                    {googleSettings.googleReviewsCount || "on Google Reviews"}
+                  <span className="text-[11px] text-stone-400 font-medium">
+                    ({googleSettings.googleReviewsCount || "120+ reviews"})
                   </span>
                 </div>
               </div>
             )}
 
-            <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-stone-900 tracking-tight font-heading">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-stone-900 tracking-tight font-heading">
               {googleSettings.googleReviewsHeading || "Customer Reviews on Google"}
             </h2>
-            <p className="text-[11px] sm:text-xs text-stone-500 font-medium mt-0.5">
-              100% verified farm-to-table feedback from Bhopal residents
+            <p className="text-xs text-stone-500 font-medium mt-0.5">
+              Verified feedback from households in Arera Colony, Kolar Road, MP Nagar & Bhopal
             </p>
           </div>
 
-          {/* Action CTAs: Review on Google + Write on Website */}
+          {/* Action CTAs & Carousel Navigation */}
           <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
             <a
               href={googleSettings.googleReviewUrl || GOOGLE_PROFILE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white hover:bg-gray-50 text-gray-900 border border-gray-300 px-3.5 sm:px-4 py-2 rounded-full font-black text-xs flex items-center gap-2 shadow-2xs transition active:scale-95"
+              className="bg-white hover:bg-stone-50 text-stone-800 border border-stone-200/90 px-3 sm:px-3.5 py-1.5 rounded-full font-semibold text-xs flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.03)] transition active:scale-95"
               title="Open SubziQuick Google Business Profile in new tab"
             >
-              <GoogleGIcon className="w-4 h-4 shrink-0" />
-              <span>Review on Google</span>
-              <ExternalLink size={12} className="text-gray-400" />
+              <GoogleGIcon className="w-3.5 h-3.5 shrink-0" />
+              <span>Google Reviews</span>
+              <ExternalLink size={11} className="text-stone-400" />
             </a>
 
             <button
               type="button"
               onClick={() => setIsModalOpen(true)}
-              className="bg-[#0a3d24] hover:bg-[#072817] text-white px-4 py-2 rounded-full font-black shadow-2xs transition text-xs flex items-center gap-1.5 cursor-pointer active:scale-95"
+              className="bg-[#0a3d24] hover:bg-[#072817] text-white px-3.5 py-1.5 rounded-full font-semibold text-xs flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.05)] transition active:scale-95 cursor-pointer"
             >
-              <MessageSquarePlus size={14} />
+              <MessageSquarePlus size={13} />
               <span>Write a Review</span>
             </button>
+
+            {/* Desktop Quick Nav Arrows */}
+            <div className="hidden sm:flex items-center gap-1 ml-1">
+              <button
+                type="button"
+                onClick={() => scroll("left")}
+                aria-label="Scroll left"
+                className="w-8 h-8 rounded-full bg-white hover:bg-stone-50 text-stone-700 border border-stone-200/90 flex items-center justify-center transition shadow-[0_1px_2px_rgba(0,0,0,0.03)] active:scale-95 cursor-pointer"
+              >
+                <ChevronLeft size={15} />
+              </button>
+              <button
+                type="button"
+                onClick={() => scroll("right")}
+                aria-label="Scroll right"
+                className="w-8 h-8 rounded-full bg-white hover:bg-stone-50 text-stone-700 border border-stone-200/90 flex items-center justify-center transition shadow-[0_1px_2px_rgba(0,0,0,0.03)] active:scale-95 cursor-pointer"
+              >
+                <ChevronRight size={15} />
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Carousel Container with Side Floating Arrows */}
+        {/* Carousel Container with Side Floating Arrows (Desktop) */}
         <div className="relative group">
-          {/* Left Arrow Button */}
+          {/* Left Arrow Button (Desktop Floating) */}
           <button
             type="button"
             onClick={() => scroll("left")}
             aria-label="Scroll left"
-            className="flex absolute -left-2 sm:-left-3.5 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0a3d24] w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all shadow-md hover:shadow-lg border border-gray-200/90 active:scale-95 cursor-pointer backdrop-blur-xs"
+            className="hidden md:flex absolute -left-3.5 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-stone-700 hover:text-[#0a3d24] w-9 h-9 rounded-full items-center justify-center transition shadow-[0_2px_8px_rgba(0,0,0,0.08)] border border-stone-200/90 active:scale-95 cursor-pointer backdrop-blur-xs"
           >
-            <ChevronLeft size={18} className="stroke-[2.5]" />
+            <ChevronLeft size={17} />
           </button>
 
-          {/* Modern Swipeable Review Carousel: Google Review Style */}
+          {/* Clean Google Review Style Carousel */}
           <div
             ref={scrollContainerRef}
-            className="flex items-stretch gap-3.5 sm:gap-5 overflow-x-auto pb-3 pt-1 scrollbar-none snap-x snap-mandatory scroll-smooth -mx-3.5 px-3.5 sm:mx-0 sm:px-0"
+            className="flex items-stretch gap-3.5 sm:gap-4.5 overflow-x-auto pb-3 pt-1 scrollbar-none snap-x snap-mandatory scroll-smooth -mx-3.5 px-3.5 sm:mx-0 sm:px-0"
           >
             {testimonials.map((t, idx) => {
               const avatarColorClass =
@@ -295,26 +314,25 @@ export default function Testimonials({
                 !t.source;
 
               return (
-                <motion.div
+                <div
                   key={t._id || idx}
-                  whileHover={{ y: -3 }}
-                  className="w-[85vw] xs:w-[320px] md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] shrink-0 snap-center md:snap-start bg-white rounded-3xl p-4 sm:p-5 border border-gray-200/90 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between"
+                  className="w-[84vw] xs:w-[320px] md:w-[calc(50%-10px)] lg:w-[calc(33.333%-12px)] shrink-0 snap-center md:snap-start bg-white rounded-2xl p-4 sm:p-5 border border-stone-200/80 shadow-[0_1px_4px_rgba(0,0,0,0.02)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-stone-300 transition-all duration-200 flex flex-col justify-between"
                 >
                   <div>
                     {/* Top Row: Reviewer Avatar + Name + Source Badge */}
-                    <div className="flex items-start justify-between gap-2.5 mb-3">
+                    <div className="flex items-start justify-between gap-2.5 mb-2.5">
                       <div className="flex items-center gap-2.5 min-w-0">
                         <div
-                          className={`w-10 h-10 rounded-full flex items-center justify-center font-black text-sm shrink-0 shadow-2xs uppercase ${avatarColorClass}`}
+                          className={`w-9 h-9 rounded-full border flex items-center justify-center font-bold text-xs shrink-0 uppercase tracking-tight ${avatarColorClass}`}
                         >
                           {t.name?.charAt(0) || "U"}
                         </div>
                         <div className="min-w-0">
-                          <h4 className="font-black text-xs sm:text-sm text-gray-900 truncate">
+                          <h4 className="font-semibold text-xs sm:text-sm text-stone-900 truncate">
                             {t.name}
                           </h4>
-                          <span className="text-[10px] text-gray-400 block truncate font-medium">
-                            📍 {t.location || "Bhopal, MP"}
+                          <span className="text-[11px] text-stone-400 block truncate font-medium">
+                            {t.location || "Bhopal, MP"}
                             {t.timeAgo ? ` • ${t.timeAgo}` : ""}
                           </span>
                         </div>
@@ -326,63 +344,69 @@ export default function Testimonials({
                           href={googleSettings.googleReviewUrl || GOOGLE_PROFILE_URL}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 bg-white hover:bg-blue-50 text-gray-700 hover:text-blue-700 border border-gray-200 px-2 py-0.5 rounded-full text-[10px] font-bold shadow-2xs shrink-0 transition"
+                          className="inline-flex items-center gap-1.5 bg-[#f8f9fa] hover:bg-stone-100 text-stone-700 border border-stone-200/90 px-2.5 py-1 rounded-full text-[10px] font-medium shrink-0 transition"
                           title="Verified on Google Business Profile"
                         >
                           <GoogleGIcon className="w-3 h-3 shrink-0" />
                           <span>Google</span>
                         </a>
                       ) : (
-                        <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full text-[10px] font-bold shrink-0">
+                        <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-800 border border-emerald-200/70 px-2 py-0.5 rounded-full text-[10px] font-medium shrink-0">
                           <CheckCircle2 size={11} className="text-emerald-600" />
-                          <span>Verified Buyer</span>
+                          <span>Verified</span>
                         </span>
                       )}
                     </div>
 
                     {/* Rating Stars */}
-                    <div className="flex items-center gap-0.5 text-amber-400 mb-2.5">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          size={14}
-                          className={
-                            i < (t.rating || 5)
-                              ? "fill-amber-400 text-amber-400"
-                              : "text-gray-200"
-                          }
-                        />
-                      ))}
+                    <div className="flex items-center gap-1.5 mb-2.5">
+                      <div className="flex items-center gap-0.5 text-[#FBBC04]">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            size={13}
+                            className={
+                              i < (t.rating || 5)
+                                ? "fill-[#FBBC04] text-[#FBBC04]"
+                                : "text-stone-200 fill-stone-100"
+                            }
+                          />
+                        ))}
+                      </div>
+                      <span className="text-[11px] font-semibold text-stone-700">
+                        {Number(t.rating || 5).toFixed(1)}
+                      </span>
                     </div>
 
                     {/* Review Text */}
-                    <div className="relative">
-                      <p className="text-xs sm:text-[13px] text-gray-700 font-medium leading-relaxed">
-                        &ldquo;{t.comment}&rdquo;
-                      </p>
-                    </div>
+                    <p className="text-xs sm:text-[13px] text-stone-600 leading-relaxed font-normal">
+                      &ldquo;{t.comment}&rdquo;
+                    </p>
                   </div>
 
                   {/* Card Bottom Meta */}
-                  <div className="pt-3 mt-3 border-t border-gray-100 flex items-center justify-between text-[10px] text-gray-400 font-medium">
-                    <span className="text-emerald-700 font-bold flex items-center gap-1">
-                      <Sparkles size={11} /> Farm Fresh Delivery
+                  <div className="pt-3 mt-3.5 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-400 font-medium">
+                    <div className="flex items-center gap-1 text-emerald-800 font-medium">
+                      <CheckCircle2 size={12} className="text-emerald-600 shrink-0" />
+                      <span>Verified Fresh Delivery</span>
+                    </div>
+                    <span className="text-[10px] text-stone-400">
+                      {t.location ? t.location.split(",")[0] : "Bhopal"}
                     </span>
-                    <span>Bhopal, MP</span>
                   </div>
-                </motion.div>
+                </div>
               );
             })}
           </div>
 
-          {/* Right Arrow Button */}
+          {/* Right Arrow Button (Desktop Floating) */}
           <button
             type="button"
             onClick={() => scroll("right")}
             aria-label="Scroll right"
-            className="flex absolute -right-2 sm:-right-3.5 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-gray-800 hover:text-[#0a3d24] w-8 h-8 sm:w-10 sm:h-10 rounded-full items-center justify-center transition-all shadow-md hover:shadow-lg border border-gray-200/90 active:scale-95 cursor-pointer backdrop-blur-xs"
+            className="hidden md:flex absolute -right-3.5 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white text-stone-700 hover:text-[#0a3d24] w-9 h-9 rounded-full items-center justify-center transition shadow-[0_2px_8px_rgba(0,0,0,0.08)] border border-stone-200/90 active:scale-95 cursor-pointer backdrop-blur-xs"
           >
-            <ChevronRight size={18} className="stroke-[2.5]" />
+            <ChevronRight size={17} />
           </button>
         </div>
 
@@ -397,49 +421,49 @@ export default function Testimonials({
           >
             <div
               onClick={(e) => e.stopPropagation()}
-              className="cursor-default bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-gray-100 relative text-gray-900 animate-in fade-in zoom-in-95 duration-200"
+              className="cursor-default bg-white rounded-3xl p-6 sm:p-7 max-w-md w-full shadow-2xl border border-stone-200/90 relative text-stone-900 animate-in fade-in zoom-in-95 duration-200"
             >
               <button
                 type="button"
                 onClick={() => setIsModalOpen(false)}
-                className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-900 transition border border-gray-200 cursor-pointer"
+                className="absolute top-4 right-4 p-1.5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-500 hover:text-stone-900 transition border border-stone-200/80 cursor-pointer"
                 title="Close"
               >
-                <X size={18} />
+                <X size={16} />
               </button>
 
-              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-[#0a3d24] border border-emerald-200 flex items-center justify-center mb-3 mx-auto shadow-2xs">
-                <GoogleGIcon className="w-6 h-6" />
+              <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-[#0a3d24] border border-emerald-200/70 flex items-center justify-center mb-3 mx-auto shadow-2xs">
+                <GoogleGIcon className="w-5 h-5" />
               </div>
 
-              <h3 className="text-lg font-black text-center text-gray-900 mb-1">
+              <h3 className="text-base sm:text-lg font-bold text-center text-stone-900 mb-1">
                 Share Your Customer Review
               </h3>
-              <p className="text-xs text-gray-500 text-center mb-5">
-                Aapka review live homepage par Google-verified card style me dikhega!
+              <p className="text-xs text-stone-500 text-center mb-5 font-normal">
+                Your experience helps fellow Bhopal families choose fresh, healthy food.
               </p>
 
               {submittedMsg ? (
-                <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs font-bold text-center mb-4 space-y-3">
-                  <p className="font-black text-sm">{submittedMsg}</p>
-                  <p className="text-gray-600">
-                    Aap apna review hamare official Google Business Profile par bhi share kar sakte hain:
+                <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200/80 text-emerald-900 text-xs font-semibold text-center mb-4 space-y-3">
+                  <p className="font-bold text-sm">{submittedMsg}</p>
+                  <p className="text-stone-600 font-normal">
+                    You can also share your review directly on our official Google Business page:
                   </p>
                   <a
                     href={googleSettings.googleReviewUrl || GOOGLE_PROFILE_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 bg-[#0a3d24] text-white px-4 py-2 rounded-xl text-xs font-black shadow-sm hover:bg-[#072817] transition"
+                    className="inline-flex items-center gap-1.5 bg-[#0a3d24] text-white px-4 py-2 rounded-full text-xs font-semibold shadow-sm hover:bg-[#072817] transition"
                   >
                     <GoogleGIcon className="w-3.5 h-3.5 bg-white rounded-full p-0.5" />
                     <span>Post on Google Reviews</span>
-                    <ExternalLink size={12} />
+                    <ExternalLink size={11} />
                   </a>
                 </div>
               ) : (
-                <form onSubmit={handleSubmitReview} className="space-y-4 text-xs font-bold">
+                <form onSubmit={handleSubmitReview} className="space-y-3.5 text-xs font-medium">
                   <div>
-                    <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
+                    <label className="block text-stone-700 uppercase tracking-wider text-[11px] font-semibold mb-1">
                       Your Full Name *
                     </label>
                     <input
@@ -450,12 +474,12 @@ export default function Testimonials({
                       onChange={(e) =>
                         setReviewForm({ ...reviewForm, name: e.target.value })
                       }
-                      className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium"
+                      className="w-full p-2.5 rounded-xl border border-stone-200 outline-none focus:border-[#0a3d24] bg-stone-50/50 font-normal text-stone-800 text-xs transition"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
+                    <label className="block text-stone-700 uppercase tracking-wider text-[11px] font-semibold mb-1">
                       Bhopal Locality / Colony
                     </label>
                     <select
@@ -463,7 +487,7 @@ export default function Testimonials({
                       onChange={(e) =>
                         setReviewForm({ ...reviewForm, location: e.target.value })
                       }
-                      className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium cursor-pointer"
+                      className="w-full p-2.5 rounded-xl border border-stone-200 outline-none focus:border-[#0a3d24] bg-stone-50/50 font-normal text-stone-800 text-xs cursor-pointer transition"
                     >
                       <option value="Arera Colony, Bhopal">Arera Colony, Bhopal</option>
                       <option value="Kolar Road, Bhopal">Kolar Road, Bhopal</option>
@@ -477,7 +501,7 @@ export default function Testimonials({
                   </div>
 
                   <div>
-                    <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
+                    <label className="block text-stone-700 uppercase tracking-wider text-[11px] font-semibold mb-1">
                       Rating
                     </label>
                     <div className="flex items-center gap-1.5">
@@ -486,26 +510,26 @@ export default function Testimonials({
                           key={s}
                           type="button"
                           onClick={() => setReviewForm({ ...reviewForm, rating: s })}
-                          className="p-1 text-amber-400 hover:scale-110 transition cursor-pointer"
+                          className="p-1 text-[#FBBC04] hover:scale-110 transition cursor-pointer"
                         >
                           <Star
-                            size={22}
+                            size={20}
                             className={
                               s <= reviewForm.rating
-                                ? "fill-amber-400 text-amber-400"
-                                : "text-gray-300"
+                                ? "fill-[#FBBC04] text-[#FBBC04]"
+                                : "text-stone-200 fill-stone-100"
                             }
                           />
                         </button>
                       ))}
-                      <span className="text-xs text-gray-500 ml-2">
+                      <span className="text-xs text-stone-500 font-semibold ml-2">
                         {reviewForm.rating} / 5 Stars
                       </span>
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
+                    <label className="block text-stone-700 uppercase tracking-wider text-[11px] font-semibold mb-1">
                       Your Experience / Feedback *
                     </label>
                     <textarea
@@ -516,14 +540,14 @@ export default function Testimonials({
                       onChange={(e) =>
                         setReviewForm({ ...reviewForm, comment: e.target.value })
                       }
-                      className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium resize-none"
+                      className="w-full p-2.5 rounded-xl border border-stone-200 outline-none focus:border-[#0a3d24] bg-stone-50/50 font-normal text-stone-800 text-xs resize-none transition"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-3 bg-[#0a3d24] hover:bg-[#072817] text-white font-black rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                    className="w-full py-2.5 bg-[#0a3d24] hover:bg-[#072817] text-white font-semibold rounded-full shadow-sm transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 text-xs"
                   >
                     {isSubmitting ? "Submitting Review..." : "Publish Verified Review"}
                   </button>
