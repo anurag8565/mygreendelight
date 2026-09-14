@@ -88,7 +88,7 @@ export default function WishlistPage() {
 
     const cartItemsToAdd = items.map((item: any) => ({
       _id: item._id,
-      cartItemId: `${item._id}_default`,
+      cartItemId: item.cartItemId || (item.variation ? `${item._id}-${item.variation.weight}` : String(item._id)),
       name: item.name,
       price: Number(item.price) || 0,
       unit: item.unit || "1 unit",

@@ -22,10 +22,11 @@ export default function MobileBottomNav() {
   const { cartdata } = useSelector((state: RootState) => state.cart);
   const { userdata } = useSelector((state: RootState) => state.user);
 
-  // Hide bottom nav on admin, delivery, cart, checkout, and auth pages to avoid overlapping floating action bars
+  // Hide bottom nav on admin, delivery, product detail, cart, checkout, and auth pages to avoid overlapping floating action bars
   if (
     pathname.startsWith("/admin") ||
     pathname.startsWith("/delivery") ||
+    pathname.startsWith("/product") ||
     pathname === "/user/cart" ||
     pathname === "/user/checkout" ||
     pathname === "/login" ||

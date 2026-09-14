@@ -22,13 +22,9 @@ export async function GET(req: NextRequest) {
     const query: any = {
       status: { $ne: "draft" },
     };
-    if (category) {
-      query.category = category;
-    } else {
-      const activeCats = await Category.find({}).select("name").lean();
-      if (activeCats.length > 0) {
-        query.category = { $in: activeCats.map((c) => c.name) };
-      }
+    if (category && category.trim().toLowerCase() !== "all") {
+      const { escapeRegex } = await import("@/lib/sanitize");
+      query.category = { $regex: new RegExp(`^${escapeRegex(category.trim())}$`, "i") };
     }
     if (featured === "true") {
       query.isFeatured = true;
