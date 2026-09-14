@@ -9,7 +9,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import axios from "axios";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import StockAlertModal from "./StockAlertModal";
 
 interface IGrosery {
@@ -267,9 +267,9 @@ export default function Groceryitemcard({
               <span>ADD</span>
             </motion.button>
           ) : (
-            <div className="flex items-center justify-between bg-[#0a3d24] text-white rounded-xl overflow-hidden h-[38px] shadow-xs ring-1 ring-[#0a3d24]/20">
+            <div className="flex items-center justify-between bg-[#0a3d24] text-white rounded-xl overflow-hidden h-[38px] shadow-[0_4px_12px_rgba(10,61,36,0.25)] ring-1 ring-[#0a3d24]/30">
               <motion.button
-                whileTap={{ scale: 0.85 }}
+                whileTap={{ scale: 0.8 }}
                 type="button"
                 className="w-10 h-full flex items-center justify-center hover:bg-black/20 active:bg-black/30 transition-colors font-bold text-sm cursor-pointer"
                 onClick={() => {
@@ -281,11 +281,24 @@ export default function Groceryitemcard({
               >
                 <Minus size={14} className="stroke-[2.5]" />
               </motion.button>
-              <span className="flex-1 text-center font-extrabold text-xs sm:text-sm text-white select-none">
-                {cartitem.quantity}
-              </span>
+              
+              <div className="flex-1 h-full flex items-center justify-center overflow-hidden relative">
+                <AnimatePresence mode="popLayout" initial={false}>
+                  <motion.span
+                    key={cartitem.quantity}
+                    initial={{ y: 8, opacity: 0, scale: 0.8 }}
+                    animate={{ y: 0, opacity: 1, scale: 1 }}
+                    exit={{ y: -8, opacity: 0, scale: 0.8 }}
+                    transition={{ type: "spring", stiffness: 500, damping: 28 }}
+                    className="font-extrabold text-xs sm:text-sm text-white select-none inline-block"
+                  >
+                    {cartitem.quantity}
+                  </motion.span>
+                </AnimatePresence>
+              </div>
+
               <motion.button
-                whileTap={{ scale: 0.85 }}
+                whileTap={{ scale: 0.8 }}
                 type="button"
                 disabled={cartitem.quantity >= displayStock}
                 className={`w-10 h-full flex items-center justify-center transition-colors font-bold text-sm ${

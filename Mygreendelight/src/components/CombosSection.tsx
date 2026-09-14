@@ -103,9 +103,11 @@ export default function CombosSection({
                 : 0;
 
             return (
-              <div
+              <motion.div
                 key={combo._id}
-                className="w-full bg-white rounded-3xl border border-stone-200/80 hover:border-[#0a3d24]/50 shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_rgba(10,61,36,0.08)] transition-all flex flex-col justify-between p-3.5 relative group"
+                whileHover={{ y: -4 }}
+                transition={{ type: "spring", stiffness: 320, damping: 22 }}
+                className="w-full bg-white rounded-3xl border border-stone-200/80 hover:border-[#0a3d24]/50 shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_32px_rgba(10,61,36,0.1)] transition-all flex flex-col justify-between p-3.5 relative group"
               >
                 <div>
                   {/* Full-Bleed HD Produce Combo Photo */}
@@ -113,7 +115,7 @@ export default function CombosSection({
                     <img
                       src={combo.image}
                       alt={combo.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-500 ease-out"
                     />
                     {discount > 0 && (
                       <span className="absolute top-2 left-2 bg-[#0a3d24] text-white text-[9px] font-bold px-2 py-0.5 rounded-full shadow-xs">
@@ -144,13 +146,14 @@ export default function CombosSection({
                     )}
                   </div>
 
-                  <button
+                  <motion.button
+                    whileTap={{ scale: 0.92 }}
                     type="button"
                     onClick={() => handleAddCombo(combo)}
                     className={`h-[34px] px-3.5 rounded-xl font-bold text-xs flex items-center gap-1 transition-all cursor-pointer ${
                       isAdded
-                        ? "bg-[#0a3d24] text-white"
-                        : "bg-white text-[#0a3d24] border border-[#0a3d24] hover:bg-[#0a3d24] hover:text-white shadow-2xs active:scale-95"
+                        ? "bg-[#0a3d24] text-white shadow-xs"
+                        : "bg-white text-[#0a3d24] border border-[#0a3d24] hover:bg-[#0a3d24] hover:text-white shadow-2xs"
                     }`}
                   >
                     {isAdded ? (
@@ -164,9 +167,9 @@ export default function CombosSection({
                         <span>ADD</span>
                       </>
                     )}
-                  </button>
+                  </motion.button>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
@@ -242,13 +245,14 @@ export default function CombosSection({
                       )}
                     </div>
 
-                    <button
+                    <motion.button
+                      whileTap={{ scale: 0.92 }}
                       type="button"
                       onClick={() => handleAddCombo(combo)}
                       className={`h-[36px] px-4 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer ${
                         isAdded
-                          ? "bg-[#0a3d24] text-white"
-                          : "bg-white text-[#0a3d24] border border-[#0a3d24] hover:bg-[#0a3d24] hover:text-white shadow-2xs active:scale-95"
+                          ? "bg-[#0a3d24] text-white shadow-xs"
+                          : "bg-white text-[#0a3d24] border border-[#0a3d24] hover:bg-[#0a3d24] hover:text-white shadow-2xs"
                       }`}
                     >
                       {isAdded ? (
@@ -259,10 +263,10 @@ export default function CombosSection({
                       ) : (
                         <>
                           <Plus size={14} className="stroke-[3]" />
-                          <span>ADD COMBO</span>
+                          <span>ADD</span>
                         </>
                       )}
-                    </button>
+                    </motion.button>
                   </div>
                 </div>
               );

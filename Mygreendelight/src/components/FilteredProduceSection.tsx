@@ -186,33 +186,36 @@ export default function FilteredProduceSection({
           3 DEDICATED PRODUCE CATEGORY TABS (Vegetables, Fruits, Exotics)
           Symmetrical 3-column cards with balanced photo, label, hindi text, and count badge
         */}
-        <div className="grid grid-cols-3 gap-2.5 sm:gap-4 mb-6 sm:mb-8 select-none">
+        <div className="grid grid-cols-3 gap-2.5 sm:gap-4 mb-6 sm:mb-8 select-none relative">
           {tabs.map((tab) => {
             const isSelected = activeTab === tab.id;
             return (
               <motion.button
                 key={tab.id}
                 type="button"
-                whileTap={{ scale: 0.97 }}
+                whileTap={{ scale: 0.96 }}
                 whileHover={{ y: -2 }}
-                transition={{ type: "spring", stiffness: 350, damping: 22 }}
+                transition={{ type: "spring", stiffness: 400, damping: 24 }}
                 onClick={() => setActiveTab(tab.id)}
-                className={`group relative p-3 sm:p-4 rounded-2xl sm:rounded-3xl transition-all duration-300 flex flex-col sm:flex-row items-center gap-2.5 sm:gap-3.5 cursor-pointer border text-center sm:text-left overflow-hidden ${
+                className={`group relative p-3 sm:p-4 rounded-2xl sm:rounded-3xl transition-all duration-300 flex flex-col sm:flex-row items-center gap-2.5 sm:gap-3.5 cursor-pointer text-center sm:text-left overflow-hidden ${
                   isSelected
-                    ? "bg-white border-[#0a3d24] shadow-[0_6px_20px_rgba(10,61,36,0.1)] ring-2 ring-[#0a3d24]/15"
-                    : "bg-white/80 hover:bg-white border-stone-200/80 hover:border-stone-300 shadow-2xs"
+                    ? "text-[#0a3d24]"
+                    : "text-stone-700 hover:text-stone-900"
                 }`}
               >
-                {/* Active Indicator Top Accent */}
-                {isSelected && (
+                {/* Fluid Active Background Card Glider */}
+                {isSelected ? (
                   <motion.div
-                    layoutId="activeTabAccent"
-                    className="absolute top-0 inset-x-0 h-1 bg-[#0a3d24]"
+                    layoutId="activeProduceTabGlider"
+                    className="absolute inset-0 bg-white border border-[#0a3d24]/60 shadow-[0_8px_24px_rgba(10,61,36,0.12)] ring-2 ring-[#0a3d24]/15 rounded-2xl sm:rounded-3xl z-0"
+                    transition={{ type: "spring", stiffness: 450, damping: 32 }}
                   />
+                ) : (
+                  <div className="absolute inset-0 bg-white/70 hover:bg-white border border-stone-200/80 hover:border-stone-300 rounded-2xl sm:rounded-3xl shadow-2xs z-0 transition-colors" />
                 )}
 
                 {/* Produce Photo Thumbnail */}
-                <div className="relative w-11 h-11 sm:w-13 sm:h-13 rounded-xl sm:rounded-2xl overflow-hidden shrink-0 bg-stone-50 border border-stone-100 shadow-2xs">
+                <div className="relative z-10 w-11 h-11 sm:w-13 sm:h-13 rounded-xl sm:rounded-2xl overflow-hidden shrink-0 bg-stone-50 border border-stone-100 shadow-2xs">
                   <img
                     src={tab.imgUrl}
                     alt={tab.label}
@@ -225,7 +228,7 @@ export default function FilteredProduceSection({
                 </div>
 
                 {/* Text Details */}
-                <div className="flex flex-col items-center sm:items-start min-w-0 flex-1 w-full">
+                <div className="relative z-10 flex flex-col items-center sm:items-start min-w-0 flex-1 w-full">
                   <span
                     className={`text-xs sm:text-sm md:text-base font-extrabold tracking-tight leading-tight truncate w-full ${
                       isSelected ? "text-[#0a3d24]" : "text-stone-900 group-hover:text-stone-950"
@@ -246,7 +249,7 @@ export default function FilteredProduceSection({
                   <span
                     className={`text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full font-bold mt-1 sm:mt-1.5 inline-block transition-colors shrink-0 ${
                       isSelected
-                        ? "bg-[#0a3d24] text-white"
+                        ? "bg-[#0a3d24] text-white shadow-xs"
                         : "bg-stone-100 text-stone-600 group-hover:bg-stone-200/70"
                     }`}
                   >
@@ -258,14 +261,24 @@ export default function FilteredProduceSection({
           })}
         </div>
 
-        {/* Dynamic Products Display: Grid OR List View */}
+        {/* Dynamic Products Display: Grid OR List View with Smooth Staggered Animation */}
         <AnimatePresence mode="wait">
           <motion.div
             key={`${activeTab}-${viewMode}-${sortBy}`}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.18 }}
+            initial="hidden"
+            animate="show"
+            exit="exit"
+            variants={{
+              hidden: { opacity: 0 },
+              show: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.035,
+                  delayChildren: 0.02,
+                },
+              },
+              exit: { opacity: 0, transition: { duration: 0.12 } },
+            }}
           >
             {filteredList.length === 0 ? (
               <div className="py-14 text-center bg-white rounded-3xl border border-dashed border-gray-200">
@@ -284,14 +297,39 @@ export default function FilteredProduceSection({
               /* Grid Mode: Relaxed breathing whitespace - 2 Cols Mobile / 3 sm / 4 md & lg */
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-3.5 sm:gap-5 md:gap-6">
                 {currentVisibleItems.map((item: any) => (
-                  <Groceryitemcard key={item._id} item={item} />
+                  <motion.div
+                    key={item._id}
+                    variants={{
+                      hidden: { opacity: 0, y: 12, scale: 0.98 },
+                      show: {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        transition: { type: "spring", stiffness: 350, damping: 25 },
+                      },
+                    }}
+                  >
+                    <Groceryitemcard item={item} />
+                  </motion.div>
                 ))}
               </div>
             ) : (
               /* List Mode: Full-width row cards (Shop style) */
               <div className="flex flex-col gap-3 sm:gap-4">
                 {currentVisibleItems.map((item: any) => (
-                  <Groceryitemcard key={item._id} item={item} isList={true} />
+                  <motion.div
+                    key={item._id}
+                    variants={{
+                      hidden: { opacity: 0, y: 10 },
+                      show: {
+                        opacity: 1,
+                        y: 0,
+                        transition: { type: "spring", stiffness: 350, damping: 25 },
+                      },
+                    }}
+                  >
+                    <Groceryitemcard item={item} isList={true} />
+                  </motion.div>
                 ))}
               </div>
             )}

@@ -123,7 +123,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
             )}
 
             {/* Cart Items */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50/50">
+            <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-stone-50/60">
               {cartdata.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-gray-500 space-y-4">
                   <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center">
@@ -138,49 +138,73 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                   </button>
                 </div>
               ) : (
-                cartdata.map((item) => {
-                  const safeKey = item.cartItemId || String(item._id);
-                  return (
-                    <div key={safeKey} className="flex gap-3 p-3 bg-white border border-gray-100 rounded-xl shadow-sm relative">
-                      <button 
-                        onClick={() => dispatch(removeFromCart(safeKey))}
-                        className="absolute -top-2 -right-2 bg-red-100 text-red-600 p-1 rounded-full hover:bg-red-200 cursor-pointer"
+                <AnimatePresence initial={false}>
+                  {cartdata.map((item) => {
+                    const safeKey = item.cartItemId || String(item._id);
+                    return (
+                      <motion.div
+                        key={safeKey}
+                        layout
+                        initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.9, x: 20 }}
+                        transition={{ type: "spring", stiffness: 450, damping: 28 }}
+                        className="flex gap-3 p-3 bg-white border border-stone-200/80 rounded-2xl shadow-2xs relative hover:border-[#0a3d24]/30 transition-colors"
                       >
-                        <X size={12} />
-                      </button>
-                      <div className="w-20 h-20 bg-gray-50 rounded-lg overflow-hidden shrink-0 border border-gray-100">
-                        <img src={item.image} alt={item.name} className="w-full h-full object-contain p-2" />
-                      </div>
-                      <div className="flex flex-col flex-1 py-1 justify-between">
-                        <div>
-                          <h4 className="font-bold text-gray-900 text-sm line-clamp-2 leading-tight">{item.name}</h4>
-                          <p className="text-xs text-gray-500 mt-1">{item.variation?.weight || item.unit}</p>
+                        <motion.button 
+                          whileTap={{ scale: 0.8 }}
+                          onClick={() => dispatch(removeFromCart(safeKey))}
+                          className="absolute -top-2 -right-2 bg-rose-50 text-rose-600 p-1 rounded-full hover:bg-rose-100 border border-rose-200 cursor-pointer shadow-2xs"
+                        >
+                          <X size={12} />
+                        </motion.button>
+                        <div className="w-20 h-20 bg-stone-50 rounded-xl overflow-hidden shrink-0 border border-stone-100">
+                          <img src={item.image} alt={item.name} className="w-full h-full object-contain p-2" />
                         </div>
-                        <div className="flex items-center justify-between mt-2">
-                          <span className="font-extrabold text-[#0a3d24]">₹{item.price * item.quantity}</span>
-                          
-                          <div className="flex items-center bg-emerald-50 rounded-lg border border-emerald-200">
-                            <button
-                              onClick={() => dispatch(decreaseQuantity(safeKey))}
-                              className="w-7 h-7 flex items-center justify-center text-[#0a3d24] hover:bg-emerald-100 rounded-l-lg transition cursor-pointer"
-                            >
-                              <Minus size={14} />
-                            </button>
-                            <span className="w-8 text-center text-xs font-bold text-[#0a3d24]">
-                              {item.quantity}
-                            </span>
-                            <button
-                              onClick={() => dispatch(increaseQuantity(safeKey))}
-                              className="w-7 h-7 flex items-center justify-center text-[#0a3d24] hover:bg-emerald-100 rounded-r-lg transition cursor-pointer"
-                            >
-                              <Plus size={14} />
-                            </button>
+                        <div className="flex flex-col flex-1 py-1 justify-between">
+                          <div>
+                            <h4 className="font-bold text-gray-900 text-sm line-clamp-2 leading-tight">{item.name}</h4>
+                            <p className="text-xs text-gray-500 mt-0.5">{item.variation?.weight || item.unit}</p>
+                          </div>
+                          <div className="flex items-center justify-between mt-2">
+                            <span className="font-extrabold text-[#0a3d24] text-sm sm:text-base">₹{item.price * item.quantity}</span>
+                            
+                            <div className="flex items-center bg-[#0a3d24] text-white rounded-xl shadow-xs overflow-hidden h-7">
+                              <motion.button
+                                whileTap={{ scale: 0.8 }}
+                                onClick={() => dispatch(decreaseQuantity(safeKey))}
+                                className="w-7 h-full flex items-center justify-center hover:bg-black/20 active:bg-black/30 transition cursor-pointer text-white"
+                              >
+                                <Minus size={12} className="stroke-[2.5]" />
+                              </motion.button>
+                              <div className="w-8 h-full flex items-center justify-center overflow-hidden relative">
+                                <AnimatePresence mode="popLayout" initial={false}>
+                                  <motion.span
+                                    key={item.quantity}
+                                    initial={{ y: 6, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    exit={{ y: -6, opacity: 0 }}
+                                    transition={{ type: "spring", stiffness: 500, damping: 28 }}
+                                    className="text-xs font-bold text-white select-none inline-block"
+                                  >
+                                    {item.quantity}
+                                  </motion.span>
+                                </AnimatePresence>
+                              </div>
+                              <motion.button
+                                whileTap={{ scale: 0.8 }}
+                                onClick={() => dispatch(increaseQuantity(safeKey))}
+                                className="w-7 h-full flex items-center justify-center hover:bg-black/20 active:bg-black/30 transition cursor-pointer text-white"
+                              >
+                                <Plus size={12} className="stroke-[2.5]" />
+                              </motion.button>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  );
-                })
+                      </motion.div>
+                    );
+                  })}
+                </AnimatePresence>
               )}
             </div>
 
