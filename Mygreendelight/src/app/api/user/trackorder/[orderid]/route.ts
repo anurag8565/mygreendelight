@@ -33,7 +33,28 @@ export async function GET(
 
     const { auth } = await import("@/auth");
     const session = await auth();
-    const isDeliveryBoy = (session?.user as any)?.role === "deliveryboy";
+
+    if (!session?.user) {
+      return NextResponse.json(
+        { message: "Unauthorized: Session required to track order" },
+        { status: 401 }
+      );
+    }
+
+    const userId = session.user.id || "";
+    const userRole = (session.user as any)?.role || "user";
+    const isOwner = order.user && String(order.user) === String(userId);
+    const isAssignedRider = order.assigneddelliveryboy && String(order.assigneddelliveryboy._id || order.assigneddelliveryboy) === String(userId);
+    const isAdmin = userRole === "admin";
+
+    if (!isOwner && !isAssignedRider && !isAdmin) {
+      return NextResponse.json(
+        { message: "Forbidden: You are not authorized to view this order" },
+        { status: 403 }
+      );
+    }
+
+    const isDeliveryBoy = userRole === "deliveryboy" || isAssignedRider;
 
     // 🔒 Real Email OTP Security: Never expose raw OTP to delivery riders
     const hasOtp = Boolean(orderObj.deliveryOtp?.code);

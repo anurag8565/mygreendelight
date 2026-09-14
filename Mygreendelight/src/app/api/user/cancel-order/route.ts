@@ -52,6 +52,12 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // If order was already paid, flag paymentStatus for administrative refund processing
+    if (cancelledOrder.ispaid || cancelledOrder.paymentStatus === "completed") {
+      cancelledOrder.paymentStatus = "refund_pending";
+      await cancelledOrder.save();
+    }
+
     const order = cancelledOrder;
 
     // 2. Automatically Restore Produce Stock in MongoDB

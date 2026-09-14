@@ -237,8 +237,8 @@ export default function Testimonials({
             )}
 
             <div className="flex items-center gap-2">
-              <MessageSquareQuote size={20} className="text-[#0a3d24] shrink-0" />
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-stone-900 tracking-tight font-heading">
+              <MessageSquareQuote size={18} className="text-[#0a3d24] shrink-0" />
+              <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-stone-900 tracking-tight font-heading">
                 {googleSettings.googleReviewsHeading || "Customer Reviews on Google"}
               </h2>
             </div>

@@ -85,8 +85,8 @@ export default function FilteredProduceSection({
         imgUrl: "/categories/exotics_4k.jpg?v=4",
         count: exoticItems.length,
         badge: "Hydroponic & Salads",
-        themeColor: "from-purple-600 to-indigo-700",
-        activeBorder: "border-purple-600",
+        themeColor: "from-emerald-700 to-[#0a3d24]",
+        activeBorder: "border-[#0a3d24]",
       },
     ];
 
@@ -121,8 +121,8 @@ export default function FilteredProduceSection({
         <div className="flex items-center justify-between gap-2 mb-4 sm:mb-6">
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
-              <Leaf size={20} className="text-[#0a3d24] shrink-0" />
-              <h2 className="text-base sm:text-xl md:text-2xl font-extrabold text-stone-900 tracking-tight truncate">
+              <Leaf size={18} className="text-[#0a3d24] shrink-0" />
+              <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-stone-900 tracking-tight font-heading truncate">
                 Fresh Farm Vegetables & Fruits
               </h2>
             </div>

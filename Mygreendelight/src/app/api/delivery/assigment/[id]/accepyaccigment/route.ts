@@ -5,7 +5,7 @@ import Order from "@/model/order";
 import User from "@/model/user.model";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(
+async function handleAccept(
   req: NextRequest,
   context: {
     params: Promise<{
@@ -157,3 +157,6 @@ export async function GET(
     );
   }
 }
+
+export const GET = handleAccept;
+export const POST = handleAccept;

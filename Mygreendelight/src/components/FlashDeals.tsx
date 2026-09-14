@@ -97,8 +97,8 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
 
             {/* Minimalist Clean Countdown Pill */}
             {!isExpired && (
-              <div className="flex items-center gap-1.5 bg-stone-100 text-stone-700 px-2.5 py-0.5 rounded-full text-[11px] font-semibold">
-                <Clock size={12} className="text-stone-500" />
+              <div className="flex items-center gap-1.5 bg-amber-50/90 border border-amber-200/80 text-amber-950 px-2.5 py-0.5 rounded-full text-[11px] font-bold">
+                <Clock size={12} className="text-amber-700" />
                 <span className="tabular-nums font-mono">
                   {timeLeft.hours}:{timeLeft.minutes}:{timeLeft.seconds}
                 </span>

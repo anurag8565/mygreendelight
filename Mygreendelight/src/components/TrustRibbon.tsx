@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Zap, Clock, ShieldCheck, RefreshCw, Leaf, Sparkles } from "lucide-react";
+import { Zap, Clock, ShieldCheck, RotateCcw, Leaf, Sparkles } from "lucide-react";
 
 export default function TrustRibbon() {
   const highlights = [
@@ -24,10 +24,10 @@ export default function TrustRibbon() {
       bg: "bg-stone-50 border-stone-200/80 text-stone-900",
     },
     {
-      icon: <RefreshCw size={14} className="text-sky-800 stroke-[2.2]" />,
+      icon: <RotateCcw size={14} className="text-amber-700 stroke-[2.2]" />,
       title: "Instant Replacement",
       subtitle: "No Questions Asked",
-      bg: "bg-sky-50/80 border-sky-200/70 text-sky-950",
+      bg: "bg-amber-50/80 border-amber-200/70 text-amber-950",
     },
     {
       icon: <Leaf size={14} className="text-[#0a3d24] stroke-[2.2]" />,
@@ -36,10 +36,10 @@ export default function TrustRibbon() {
       bg: "bg-emerald-50/80 border-emerald-200/70 text-emerald-950",
     },
     {
-      icon: <Sparkles size={14} className="text-stone-700 stroke-[2.2]" />,
+      icon: <Sparkles size={14} className="text-[#0a3d24] stroke-[2.2]" />,
       title: "Eco Kraft Packaging",
       subtitle: "Breathable Freshness",
-      bg: "bg-stone-100/80 border-stone-200/70 text-stone-950",
+      bg: "bg-stone-50 border-stone-200/80 text-stone-900",
     },
   ];
 

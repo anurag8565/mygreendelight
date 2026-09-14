@@ -146,7 +146,7 @@ export default async function Userdashbord() {
              <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <div className="flex items-center gap-2">
                    <RotateCcw size={18} className="text-[#0a3d24]" />
-                   <h2 className="text-base sm:text-xl md:text-2xl font-extrabold text-stone-900 tracking-tight">
+                   <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-stone-900 tracking-tight font-heading">
                       Order Again
                    </h2>
                 </div>

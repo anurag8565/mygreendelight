@@ -53,7 +53,7 @@ export default function FarmFreshPromise() {
                 <span>Our Quality Guarantee</span>
               </div>
               <div className="flex items-center gap-2">
-                <ShieldCheck size={19} className="text-[#0a3d24] shrink-0" />
+                <ShieldCheck size={18} className="text-[#0a3d24] shrink-0" />
                 <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-stone-900 tracking-tight font-heading">
                   Farm to Kitchen Freshness Promise
                 </h2>
