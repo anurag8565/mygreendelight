@@ -129,7 +129,7 @@ export default function CategorySlider({
         {/* Header Row */}
         <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#0a3d24] animate-pulse" />
+            <LayoutGrid size={18} className="text-[#0a3d24] shrink-0" />
             <h2 className="text-sm sm:text-base md:text-lg font-extrabold text-stone-900 tracking-tight font-heading">
               Explore Fresh Categories
             </h2>

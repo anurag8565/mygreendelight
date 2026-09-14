@@ -12,6 +12,7 @@ import {
   MessageSquarePlus,
   ExternalLink,
   Quote,
+  MessageSquareQuote,
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FcGoogle } from "react-icons/fc";
@@ -235,9 +236,12 @@ export default function Testimonials({
               </div>
             )}
 
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-stone-900 tracking-tight font-heading">
-              {googleSettings.googleReviewsHeading || "Customer Reviews on Google"}
-            </h2>
+            <div className="flex items-center gap-2">
+              <MessageSquareQuote size={20} className="text-[#0a3d24] shrink-0" />
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-stone-900 tracking-tight font-heading">
+                {googleSettings.googleReviewsHeading || "Customer Reviews on Google"}
+              </h2>
+            </div>
             <p className="text-xs text-stone-500 font-medium mt-0.5">
               Verified feedback from households in Arera Colony, Kolar Road, MP Nagar & Bhopal
             </p>

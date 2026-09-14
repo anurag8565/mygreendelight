@@ -52,9 +52,12 @@ export default function FarmFreshPromise() {
                 <Leaf size={11} className="text-emerald-700" />
                 <span>Our Quality Guarantee</span>
               </div>
-              <h2 className="text-base sm:text-lg md:text-xl font-bold text-stone-900 tracking-tight font-heading">
-                Farm to Kitchen Freshness Promise
-              </h2>
+              <div className="flex items-center gap-2">
+                <ShieldCheck size={19} className="text-[#0a3d24] shrink-0" />
+                <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-stone-900 tracking-tight font-heading">
+                  Farm to Kitchen Freshness Promise
+                </h2>
+              </div>
               <p className="text-xs text-stone-500 font-normal mt-0.5">
                 Direct Mandi wholesale pricing with 100% no-questions replacement across Bhopal
               </p>

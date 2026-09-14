@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { Flame, Clock, ChevronRight } from "lucide-react";
+import { Flame, Clock, ChevronRight, Zap } from "lucide-react";
 import ProductCarousel from "./ProductCarousel";
 import Groceryitemcard from "./Groceryitemcard";
 import axios from "axios";
@@ -89,8 +89,9 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Minimalist Header Row */}
         <div className="flex items-center justify-between gap-2 mb-4 sm:mb-5">
-          <div className="flex items-center gap-2.5">
-            <h2 className="text-base sm:text-lg md:text-xl font-bold text-stone-900 tracking-tight font-heading">
+          <div className="flex items-center gap-2">
+            <Zap size={18} className="text-amber-500 fill-amber-500 shrink-0" />
+            <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-stone-900 tracking-tight font-heading">
               Flash Deals
             </h2>
 
