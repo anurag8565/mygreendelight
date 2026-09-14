@@ -226,76 +226,48 @@ export default function FilteredProduceSection({
         </div>
 
         {/* 
-          3 DEDICATED PRODUCE CATEGORY TABS (Vegetables, Fruits, Exotics)
-          Symmetrical 3-column cards with balanced photo, label, hindi text, and count badge
+          LUXURY APPLE-STYLE SEGMENTED PILL BAR (Clean, Zero Clutter, Ultra-Smooth Glider)
         */}
-        <div className="grid grid-cols-3 gap-2 sm:gap-3.5 mb-5 sm:mb-7 select-none relative">
-          {tabs.map((tab) => {
-            const isSelected = activeTab === tab.id;
-            return (
-              <motion.button
-                key={tab.id}
-                type="button"
-                whileTap={{ scale: 0.96 }}
-                whileHover={{ y: -2 }}
-                transition={{ type: "spring", stiffness: 400, damping: 24 }}
-                onClick={() => setActiveTab(tab.id)}
-                className={`group relative p-2.5 sm:p-3.5 rounded-2xl sm:rounded-3xl transition-all duration-300 flex flex-col sm:flex-row items-center gap-2 sm:gap-3 cursor-pointer text-center sm:text-left overflow-hidden ${
-                  isSelected
-                    ? "text-[#0a3d24]"
-                    : "text-stone-700 hover:text-stone-900"
-                }`}
-              >
-                {/* Fluid Active Background Card Glider */}
-                {isSelected ? (
-                  <motion.div
-                    layoutId="activeProduceTabGlider"
-                    className="absolute inset-0 bg-white border-2 border-[#0a3d24] shadow-[0_8px_24px_rgba(10,61,36,0.12)] rounded-2xl sm:rounded-3xl z-0"
-                    transition={{ type: "spring", stiffness: 450, damping: 32 }}
-                  />
-                ) : (
-                  <div className="absolute inset-0 bg-white/70 hover:bg-white border border-stone-200/80 hover:border-stone-300 rounded-2xl sm:rounded-3xl shadow-2xs z-0 transition-colors" />
-                )}
-
-                {/* Produce Photo Thumbnail */}
-                <div className="relative z-10 w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl overflow-hidden shrink-0 bg-stone-50 border border-stone-100 shadow-2xs">
-                  <img
-                    src={tab.imgUrl}
-                    alt={tab.label}
-                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-300 ease-out"
-                    loading="lazy"
-                  />
+        <div className="flex items-center justify-center mb-6 sm:mb-8">
+          <div className="inline-flex p-1.5 rounded-2xl sm:rounded-full bg-stone-200/60 backdrop-blur-md border border-stone-300/60 shadow-inner relative max-w-full overflow-x-auto no-scrollbar">
+            {tabs.map((tab) => {
+              const isSelected = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`relative px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl sm:rounded-full text-xs sm:text-sm font-extrabold transition-colors duration-200 flex items-center gap-2 shrink-0 cursor-pointer select-none ${
+                    isSelected ? "text-white" : "text-stone-600 hover:text-stone-950"
+                  }`}
+                >
+                  {/* Fluid Sliding Background Pill */}
                   {isSelected && (
-                    <div className="absolute inset-0 bg-[#0a3d24]/10" />
+                    <motion.div
+                      layoutId="produceSegmentedPill"
+                      className="absolute inset-0 bg-[#0a3d24] rounded-xl sm:rounded-full shadow-[0_4px_14px_rgba(10,61,36,0.35)] z-0"
+                      transition={{ type: "spring", stiffness: 450, damping: 30 }}
+                    />
                   )}
-                </div>
 
-                {/* Text Details */}
-                <div className="relative z-10 flex flex-col items-center sm:items-start min-w-0 flex-1 w-full">
-                  <div className="flex items-center gap-1.5 w-full justify-center sm:justify-start">
+                  {/* Icon & Label */}
+                  <span className="relative z-10 flex items-center gap-2">
+                    <span className="text-base sm:text-lg">
+                      {tab.id === "vegetables" ? "🥦" : tab.id === "fruits" ? "🍎" : "🥗"}
+                    </span>
+                    <span>{tab.label}</span>
                     <span
-                      className={`text-xs sm:text-sm md:text-base font-extrabold tracking-tight leading-tight truncate ${
-                        isSelected ? "text-[#0a3d24]" : "text-stone-900 group-hover:text-stone-950"
+                      className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold transition-colors ${
+                        isSelected ? "bg-white/20 text-white" : "bg-stone-300/60 text-stone-700"
                       }`}
                     >
-                      {tab.label}
+                      {tab.count}
                     </span>
-                    <span className="hidden md:inline-block text-[10px] font-bold text-stone-400">
-                      • {tab.count} items
-                    </span>
-                  </div>
-
-                  <span
-                    className={`text-[9.5px] sm:text-xs font-semibold leading-tight mt-0.5 truncate w-full ${
-                      isSelected ? "text-[#0a3d24]/80 font-bold" : "text-stone-500"
-                    }`}
-                  >
-                    {tab.hindi}
                   </span>
-                </div>
-              </motion.button>
-            );
-          })}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Dynamic Products Display: Grid OR List View with Smooth Staggered Animation */}
