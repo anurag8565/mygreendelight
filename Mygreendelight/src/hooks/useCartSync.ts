@@ -3,7 +3,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from '@/redux/store';
-import { setCartFromCloud, getCleanUserId } from '@/redux/CartSlice';
+import { setCartFromCloud, getCleanUserId, CLIENT_SESSION_ID } from '@/redux/CartSlice';
 import { socket } from '@/lib/socket';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
@@ -82,6 +82,9 @@ export function useCartSync(userIdProp?: any) {
     const handleSocketCartUpdated = (data: any) => {
       try {
         if (!data || !data.cart) return;
+        // 🛡️ SELF-ECHO SHIELD: Do not overwrite this tab with echoes of its own actions!
+        if (data.clientId && data.clientId === CLIENT_SESSION_ID) return;
+
         const incomingCart = data.cart;
         const formatted = formatItems(incomingCart.items || []);
         const eventTimestamp = Number(data.timestamp) || Date.now();
@@ -94,7 +97,6 @@ export function useCartSync(userIdProp?: any) {
             userId: cleanUserId,
             serverUpdatedAt: eventTimestamp,
             requestStartedAt: eventTimestamp,
-            force: true,
           })
         );
       } catch (err) {
@@ -123,6 +125,9 @@ export function useCartSync(userIdProp?: any) {
       try {
         channel = new BroadcastChannel("subziquick_cart_sync");
         channel.onmessage = (event) => {
+          // 🛡️ SELF-ECHO SHIELD: Ignore messages posted by our own tab!
+          if (event.data?.clientId === CLIENT_SESSION_ID) return;
+
           if (event.data?.type === "CART_MUTATED" && Array.isArray(event.data.cartdata)) {
             dispatch(
               setCartFromCloud({
@@ -132,7 +137,6 @@ export function useCartSync(userIdProp?: any) {
                 userId: cleanUserId,
                 serverUpdatedAt: event.data.timestamp,
                 requestStartedAt: event.data.timestamp,
-                force: true,
               })
             );
           }

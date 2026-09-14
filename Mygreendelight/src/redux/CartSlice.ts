@@ -47,9 +47,14 @@ const getCouponStorageKey = (userId?: any) => {
     return cleanId ? `subziquick_coupon_user_${cleanId}` : "subziquick_coupon_guest";
 };
 
+export const CLIENT_SESSION_ID = typeof window !== "undefined"
+  ? ((window as any).__subziquick_client_id || ((window as any).__subziquick_client_id = "client_" + Math.random().toString(36).substring(2, 9) + "_" + Date.now().toString(36)))
+  : "server";
+
 let syncTimer: any = null;
 let isSyncingToBackend = false;
 let lastLocalActionTimestamp = 0;
+let pendingCartToSync: { cartdata: IGrocery[]; couponCode: string | null; discountAmount: number; userId?: any } | null = null;
 
 // Broadcast changes instantly across both same-device tabs (BroadcastChannel) and other devices (WebSocket)
 export const emitLiveCartUpdate = (cartdata: IGrocery[], couponCode: string | null, discountAmount: number, userId?: any) => {
@@ -68,6 +73,7 @@ export const emitLiveCartUpdate = (cartdata: IGrocery[], couponCode: string | nu
                 couponCode,
                 discountAmount,
                 timestamp: Date.now(),
+                clientId: CLIENT_SESSION_ID,
             });
             setTimeout(() => {
                 try { channel.close(); } catch (_) {}
@@ -86,6 +92,7 @@ export const emitLiveCartUpdate = (cartdata: IGrocery[], couponCode: string | nu
                     discountAmount,
                 },
                 timestamp: Date.now(),
+                clientId: CLIENT_SESSION_ID,
             });
         } catch (_) {}
     }
@@ -94,24 +101,36 @@ export const emitLiveCartUpdate = (cartdata: IGrocery[], couponCode: string | nu
 export const syncCartToBackend = (cartdata: IGrocery[], couponCode: string | null, discountAmount: number, userId?: any) => {
     if (typeof window === "undefined") return;
 
+    lastLocalActionTimestamp = Date.now();
     const cleanId = getCleanUserId(userId);
 
     // Immediately push live update via WebSocket and BroadcastChannel
     emitLiveCartUpdate(cartdata, couponCode, discountAmount, cleanId);
 
+    // Always store the freshest clone of cart state so rapid clicks (1->2->3->4) sync the final quantity
+    pendingCartToSync = {
+        cartdata: JSON.parse(JSON.stringify(cartdata)),
+        couponCode,
+        discountAmount,
+        userId: cleanId,
+    };
+
     if (syncTimer) clearTimeout(syncTimer);
-    // Debounced sync to MongoDB cloud so multi-device updates save cleanly
+    // Debounced sync to MongoDB cloud so rapid clicks only sync the final quantity
     syncTimer = setTimeout(async () => {
+        if (!pendingCartToSync) return;
+        const toSync = pendingCartToSync;
         isSyncingToBackend = true;
         try {
             await fetch("/api/user/cart", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    items: cartdata,
-                    couponCode,
-                    discountAmount,
+                    items: toSync.cartdata,
+                    couponCode: toSync.couponCode,
+                    discountAmount: toSync.discountAmount,
                     clientTimestamp: Date.now(),
+                    clientId: CLIENT_SESSION_ID,
                 }),
             });
         } catch (e) {
@@ -120,17 +139,23 @@ export const syncCartToBackend = (cartdata: IGrocery[], couponCode: string | nul
             isSyncingToBackend = false;
             syncTimer = null;
         }
-    }, 200);
+    }, 250);
 };
 
 // Pure local storage update without network side effects
 const saveCartToStorage = (cartdata: IGrocery[], couponCode: string | null, discountAmount: number, userId?: any) => {
     if (typeof window === "undefined") return;
     try {
-        const cartKey = getCartStorageKey(userId);
-        const couponKey = getCouponStorageKey(userId);
+        const cleanId = getCleanUserId(userId);
+        const cartKey = cleanId ? `subziquick_cart_user_${cleanId}` : "subziquick_cart_guest";
+        const couponKey = cleanId ? `subziquick_coupon_user_${cleanId}` : "subziquick_coupon_guest";
         localStorage.setItem(cartKey, JSON.stringify(cartdata));
         localStorage.setItem(couponKey, JSON.stringify({ couponCode, discountAmount }));
+        
+        // Also keep guest key updated so if session transitions, items aren't overwritten with old quantity
+        if (cleanId) {
+            localStorage.setItem("subziquick_cart_guest", JSON.stringify(cartdata));
+        }
         localStorage.removeItem("mgd_cart_data");
         localStorage.removeItem("mgd_cart_coupon");
     } catch (e) {
@@ -192,7 +217,7 @@ const getSavedCart = (userId?: any): { cartdata: IGrocery[]; couponCode: string 
             const existing = combined.find(i => (i.cartItemId && i.cartItemId === key) || String(i._id) === String(item._id));
             if (existing) {
                 const maxStock = existing.variation ? existing.variation.stock : existing.stock;
-                existing.quantity = Math.min(existing.quantity + item.quantity, maxStock);
+                existing.quantity = Math.min(Math.max(existing.quantity, item.quantity), maxStock);
             } else {
                 combined.push({ ...item });
                 seenKeys.add(key);
@@ -200,9 +225,12 @@ const getSavedCart = (userId?: any): { cartdata: IGrocery[]; couponCode: string 
         };
 
         if (cleanId) {
-            userItems.forEach(addItem);
-            guestItems.forEach(addItem);
-            legacyItems.forEach(addItem);
+            if (userItems.length > 0) {
+                userItems.forEach(addItem);
+            } else {
+                guestItems.forEach(addItem);
+                legacyItems.forEach(addItem);
+            }
         } else {
             guestItems.forEach(addItem);
             legacyItems.forEach(addItem);
@@ -262,27 +290,31 @@ const cartSlice = createSlice({
 
                 const saved = getSavedCart(cleanId);
 
-                // Merge in-memory state with saved localStorage
-                let merged = [...saved.cartdata];
+                // If in-memory state already has items, prioritize in-memory quantities (active user actions)!
                 if (state.cartdata.length > 0) {
-                    for (const memItem of state.cartdata) {
-                        const mKey = memItem.cartItemId || String(memItem._id);
-                        const existing = merged.find(i => (i.cartItemId && i.cartItemId === mKey) || String(i._id) === String(memItem._id));
+                    let merged = [...state.cartdata];
+                    for (const sItem of saved.cartdata) {
+                        const sKey = sItem.cartItemId || String(sItem._id);
+                        const existing = merged.find(i => (i.cartItemId && i.cartItemId === sKey) || String(i._id) === String(sItem._id));
                         if (!existing) {
-                            merged.push(memItem);
+                            merged.push(sItem);
+                        } else {
+                            existing.quantity = Math.max(existing.quantity, sItem.quantity || 1);
                         }
                     }
+                    state.cartdata = merged;
+                } else {
+                    state.cartdata = saved.cartdata;
                 }
 
-                state.cartdata = merged;
-                state.couponCode = saved.couponCode || state.couponCode;
-                state.discountAmount = saved.discountAmount || state.discountAmount;
+                state.couponCode = state.couponCode || saved.couponCode;
+                state.discountAmount = state.discountAmount || saved.discountAmount;
 
                 // Save back to both user & guest storage so items are consistently available
                 saveCartToStorage(state.cartdata, state.couponCode, state.discountAmount, cleanId);
 
-                if (cleanId && merged.length > 0) {
-                    syncCartToBackend(merged, state.couponCode, state.discountAmount, cleanId);
+                if (cleanId && state.cartdata.length > 0) {
+                    syncCartToBackend(state.cartdata, state.couponCode, state.discountAmount, cleanId);
                 }
 
                 state.isCloudHydrated = true;
@@ -434,6 +466,14 @@ const cartSlice = createSlice({
             state.currentUserId = cleanId;
 
             const reqTime = action.payload.requestStartedAt || 0;
+            const now = Date.now();
+            const isRecentLocalAction = (now - state.lastLocalActionAt < 4000) || (now - lastLocalActionTimestamp < 4000);
+
+            // 🛡️ RECENT USER INTERACTION SHIELD (4s):
+            // If user just interacted on this tab, never overwrite with background polling/stale GET responses!
+            if (!action.payload.force && isRecentLocalAction) {
+                return;
+            }
 
             // 🛡️ IN-FLIGHT RACE CONDITION SHIELD:
             // 1. If this GET request was started BEFORE the user made their latest local click,
@@ -442,9 +482,9 @@ const cartSlice = createSlice({
                 return;
             }
 
-            // 2. If the user on THIS device has an in-flight sync or pending debounce or clicked within the last 600ms,
+            // 2. If the user on THIS device has an in-flight sync or pending debounce,
             // don't let external reads overwrite the local optimistic state!
-            if (!action.payload.force && (isSyncingToBackend || syncTimer !== null || Date.now() - lastLocalActionTimestamp < 600)) {
+            if (!action.payload.force && (isSyncingToBackend || syncTimer !== null)) {
                 return;
             }
 
@@ -461,8 +501,25 @@ const cartSlice = createSlice({
                 return;
             }
 
-            // Otherwise, apply authoritative cloud cart state
-            state.cartdata = incomingItems;
+            // 🛡️ PER-ITEM QUANTITY SAFEGUARD:
+            // Never allow an incoming cloud/socket update to downgrade an item quantity that is locally higher!
+            // This prevents race conditions where an older server state arrives after a local increment.
+            if (state.cartdata.length > 0) {
+                const reconciled = incomingItems.map((inc) => {
+                    const localMatch = state.cartdata.find(
+                        (loc) => (loc.cartItemId && loc.cartItemId === inc.cartItemId) ||
+                                 String(loc._id) === String(inc._id)
+                    );
+                    if (localMatch && localMatch.quantity > inc.quantity) {
+                        return { ...inc, quantity: localMatch.quantity };
+                    }
+                    return inc;
+                });
+                state.cartdata = reconciled;
+            } else {
+                state.cartdata = incomingItems;
+            }
+
             state.couponCode = action.payload.couponCode || null;
             state.discountAmount = action.payload.discountAmount || 0;
             state.isCloudHydrated = true;

@@ -44,7 +44,7 @@ io.on("connection", (socket) => {
   // Real-time live cart sync across devices of the same user
   socket.on("cart-changed", (data) => {
     try {
-      const { userId, cart, timestamp } = data || {};
+      const { userId, cart, timestamp, clientId } = data || {};
       const targetUserId = userId || socket.userId;
       if (!targetUserId) return;
       const cleanId = String(targetUserId);
@@ -53,6 +53,7 @@ io.on("connection", (socket) => {
       socket.to(`user:${cleanId}`).emit("cart-updated", {
         cart,
         timestamp: timestamp || Date.now(),
+        clientId,
         fromSocketId: socket.id,
       });
       console.log(`[SOCKET] Cart sync broadcasted to user:${cleanId}`);
@@ -92,7 +93,7 @@ io.on("connection", (socket) => {
 // HTTP Webhook for Next.js server to push live cart updates via Socket.io
 app.post("/cart-sync", (req, res) => {
   try {
-    const { userId, cart, timestamp } = req.body || {};
+    const { userId, cart, timestamp, clientId } = req.body || {};
     if (!userId) {
       return res.status(400).json({ success: false, message: "userId required" });
     }
@@ -100,8 +101,9 @@ app.post("/cart-sync", (req, res) => {
     io.to(`user:${cleanId}`).emit("cart-updated", {
       cart,
       timestamp: timestamp || Date.now(),
+      clientId: clientId || null,
     });
-    console.log(`[SOCKET HTTP] Pushed cart-updated to room user:${cleanId}`);
+    console.log(`[SOCKET HTTP] Pushed cart-updated to room user:${cleanId} (origin: ${clientId || "unknown"})`);
     return res.json({ success: true });
   } catch (err) {
     console.error("[SOCKET HTTP] /cart-sync error:", err);

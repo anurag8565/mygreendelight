@@ -64,7 +64,7 @@ export async function GET() {
 }
 
 // Asynchronously notify socket server so connected devices (Mobile, Laptop, etc.) receive live push instantly
-async function notifySocketCartUpdate(userId: string, cart: any) {
+async function notifySocketCartUpdate(userId: string, cart: any, clientId?: string) {
   try {
     const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:5000";
     fetch(`${socketUrl}/cart-sync`, {
@@ -74,6 +74,7 @@ async function notifySocketCartUpdate(userId: string, cart: any) {
         userId,
         cart,
         timestamp: Date.now(),
+        clientId,
       }),
       // 1.5s timeout so Next.js response is never delayed if socket server is offline
       signal: AbortSignal.timeout(1500),
@@ -136,8 +137,8 @@ export async function POST(req: Request) {
         { upsert: true, new: true, setDefaultsOnInsert: true }
       );
 
-      // Notify socket server for instant cross-device broadcast
-      notifySocketCartUpdate(userId, updated);
+      // Notify socket server for instant cross-device broadcast (excluding sender client)
+      notifySocketCartUpdate(userId, updated, body.clientId);
 
       return NextResponse.json(
         {
