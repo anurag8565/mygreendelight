@@ -1176,8 +1176,10 @@ export default function Nav({ user }: { user?: iUser | null }) {
                 <ShoppingCart size={18} className="stroke-[2.4]" />
                 {mounted && cartdata.length > 0 && (
                   <motion.span
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
+                    key={`header-badge-${cartdata.reduce((sum, item) => sum + item.quantity, 0)}`}
+                    initial={{ scale: 0.4, y: -3 }}
+                    animate={{ scale: [1.3, 0.95, 1], y: 0 }}
+                    transition={{ type: "spring", stiffness: 600, damping: 18 }}
                     className="absolute -top-2 -right-2.5 bg-amber-400 text-stone-950 text-[9px] font-black min-w-[16px] h-[16px] px-0.5 rounded-full flex items-center justify-center shadow-xs border border-white/80"
                   >
                     {cartdata.reduce((sum, item) => sum + item.quantity, 0)}

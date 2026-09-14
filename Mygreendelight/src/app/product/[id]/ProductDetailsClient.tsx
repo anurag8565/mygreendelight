@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, increaseQuantity, decreaseQuantity } from "@/redux/CartSlice";
+import { triggerHaptic } from "@/utils/haptics";
 import { toggleWishlist, setWishlist } from "@/redux/WishlistSlice";
 import type { RootState, AppDispatch } from "@/redux/store";
 import {
@@ -108,8 +109,12 @@ export default function ProductDetailsClient({
   );
 
   const handleAddToCart = () => {
-    if (currentStock <= 0) return;
+    if (currentStock <= 0) {
+      triggerHaptic("error");
+      return;
+    }
 
+    triggerHaptic("medium");
     dispatch(
       addToCart({
         ...product,
@@ -502,6 +507,7 @@ export default function ProductDetailsClient({
                   <button
                     type="button"
                     onClick={() => {
+                      triggerHaptic("heavy");
                       if (quantity === 0) {
                         handleAddToCart();
                       }
@@ -510,7 +516,7 @@ export default function ProductDetailsClient({
                     className="w-full h-11 rounded-2xl font-black text-xs sm:text-sm bg-amber-400 hover:bg-amber-300 text-stone-950 shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 border border-amber-500/30"
                   >
                     <Zap size={15} className="fill-stone-950 text-stone-950" />
-                    <span>⚡ Buy It Now • 10-15 Min Express Delivery</span>
+                    <span>Buy It Now • 10-15 Min Express Delivery</span>
                   </button>
                 )}
               </div>

@@ -4,7 +4,8 @@ import React, { useState, useEffect } from "react";
 import { Zap, ShoppingBag, Check, ArrowRight, RotateCcw, AlertCircle } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/CartSlice";
-import { AppDispatch } from "@/redux/store";
+import { triggerHaptic } from "@/utils/haptics";
+import { AppDispatch, RootState } from "@/redux/store";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -43,6 +44,7 @@ export default function FastReorderWidget() {
   const handleReorderAll = () => {
     if (availableItems.length === 0) return;
 
+    triggerHaptic("success");
     availableItems.forEach((item: any) => {
       const cartItemId =
         item._id.toString() + (item.variationWeight ? `-${item.variationWeight}` : "");

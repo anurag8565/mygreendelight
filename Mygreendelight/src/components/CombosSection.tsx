@@ -11,7 +11,8 @@ import {
 } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/CartSlice";
-import { AppDispatch } from "@/redux/store";
+import { triggerHaptic } from "@/utils/haptics";
+import { AppDispatch, RootState } from "@/redux/store";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
@@ -28,6 +29,7 @@ export default function CombosSection({
   if (!combos || combos.length === 0) return null;
 
   const handleAddCombo = (combo: any) => {
+    triggerHaptic("medium");
     dispatch(
       addToCart({
         _id: combo._id,

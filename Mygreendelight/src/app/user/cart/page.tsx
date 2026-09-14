@@ -8,6 +8,9 @@ import {
   decreaseQuantity,
   increaseQuantity,
   removeFromCart,
+} from "@/redux/CartSlice";
+import { triggerHaptic } from "@/utils/haptics";
+import {
   applyCoupon,
   removeCoupon,
   hydrateCart,
@@ -531,7 +534,10 @@ export default function CartPage() {
                         <div className="flex items-center bg-stone-50 border border-stone-200 rounded-xl overflow-hidden h-7.5 sm:h-9 shadow-2xs">
                           <button
                             type="button"
-                            onClick={() => dispatch(decreaseQuantity(itemId))}
+                            onClick={() => {
+                              triggerHaptic("light");
+                              dispatch(decreaseQuantity(itemId));
+                            }}
                             className="w-7 sm:w-8 h-full flex items-center justify-center text-stone-600 hover:text-red-600 hover:bg-stone-100 transition cursor-pointer active:scale-90"
                             aria-label="Decrease quantity"
                           >
@@ -542,7 +548,10 @@ export default function CartPage() {
                           </span>
                           <button
                             type="button"
-                            onClick={() => dispatch(increaseQuantity(itemId))}
+                            onClick={() => {
+                              triggerHaptic("light");
+                              dispatch(increaseQuantity(itemId));
+                            }}
                             className="w-7 sm:w-8 h-full flex items-center justify-center text-[#0a3d24] hover:bg-emerald-50 transition cursor-pointer active:scale-90"
                             aria-label="Increase quantity"
                           >
@@ -552,7 +561,10 @@ export default function CartPage() {
 
                         <button
                           type="button"
-                          onClick={() => dispatch(removeFromCart(itemId))}
+                          onClick={() => {
+                            triggerHaptic("warning");
+                            dispatch(removeFromCart(itemId));
+                          }}
                           className="text-stone-300 hover:text-red-500 p-1 sm:p-1.5 transition cursor-pointer active:scale-90"
                           title="Remove item"
                         >

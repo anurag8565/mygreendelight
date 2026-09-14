@@ -153,11 +153,13 @@ export default function MobileBottomNav() {
                     >
                       <ShoppingCart size={17} className="stroke-[2.4]" />
 
-                      {/* Golden Count Badge */}
+                      {/* Golden Count Badge with Spring Bounce */}
                       {cartCount > 0 && (
                         <motion.span
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
+                          key={`badge-${cartCount}`}
+                          initial={{ scale: 0.4, y: -4 }}
+                          animate={{ scale: [1.35, 0.95, 1], y: 0 }}
+                          transition={{ type: "spring", stiffness: 600, damping: 18 }}
                           className="absolute -top-1 -right-1 bg-amber-400 text-stone-950 font-black text-[9px] min-w-[16px] h-[16px] px-0.5 rounded-full flex items-center justify-center border border-white shadow-xs"
                         >
                           {cartCount}

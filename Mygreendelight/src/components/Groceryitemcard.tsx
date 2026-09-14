@@ -2,6 +2,7 @@
 
 import { addToCart, decreaseQuantity, increaseQuantity } from "@/redux/CartSlice";
 import { toggleWishlist, setWishlist } from "@/redux/WishlistSlice";
+import { triggerHaptic } from "@/utils/haptics";
 import { AppDispatch, RootState } from "@/redux/store";
 import { Heart, Plus, Minus, Bell, Zap, Sparkles } from "lucide-react";
 import mongoose from "mongoose";
@@ -238,12 +239,10 @@ export default function Groceryitemcard({
             </button>
           ) : !cartitem ? (
             <motion.button
-              whileTap={{ scale: 0.95 }}
+              whileTap={{ scale: 0.92 }}
               type="button"
               onClick={() => {
-                if (typeof window !== "undefined" && navigator.vibrate) {
-                  try { navigator.vibrate(20); } catch (e) {}
-                }
+                triggerHaptic("medium");
                 dispatch(
                   addToCart({
                     ...item,
@@ -261,7 +260,7 @@ export default function Groceryitemcard({
                   })
                 );
               }}
-              className="w-full h-[38px] rounded-xl flex items-center justify-center gap-1.5 font-bold text-xs transition-all duration-200 border-1.5 border-[#0a3d24] cursor-pointer bg-white text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white hover:shadow-[0_4px_14px_rgba(10,61,36,0.2)] shadow-2xs active:scale-95"
+              className="w-full h-[38px] rounded-xl flex items-center justify-center gap-1.5 font-bold text-xs transition-all duration-150 border-1.5 border-[#0a3d24] cursor-pointer bg-white text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white hover:shadow-[0_4px_14px_rgba(10,61,36,0.2)] shadow-2xs active:scale-92"
             >
               <Plus size={14} className="stroke-[2.5]" />
               <span>ADD</span>
@@ -269,13 +268,11 @@ export default function Groceryitemcard({
           ) : (
             <div className="flex items-center justify-between bg-[#0a3d24] text-white rounded-xl overflow-hidden h-[38px] shadow-[0_4px_12px_rgba(10,61,36,0.25)] ring-1 ring-[#0a3d24]/30">
               <motion.button
-                whileTap={{ scale: 0.8 }}
+                whileTap={{ scale: 0.75 }}
                 type="button"
                 className="w-10 h-full flex items-center justify-center hover:bg-black/20 active:bg-black/30 transition-colors font-bold text-sm cursor-pointer"
                 onClick={() => {
-                  if (typeof window !== "undefined" && navigator.vibrate) {
-                    try { navigator.vibrate(15); } catch (e) {}
-                  }
+                  triggerHaptic("light");
                   dispatch(decreaseQuantity(currentCartItemId));
                 }}
               >
@@ -298,7 +295,7 @@ export default function Groceryitemcard({
               </div>
 
               <motion.button
-                whileTap={{ scale: 0.8 }}
+                whileTap={{ scale: 0.75 }}
                 type="button"
                 disabled={cartitem.quantity >= displayStock}
                 className={`w-10 h-full flex items-center justify-center transition-colors font-bold text-sm ${
@@ -307,9 +304,7 @@ export default function Groceryitemcard({
                     : "hover:bg-black/20 active:bg-black/30 cursor-pointer text-white"
                 }`}
                 onClick={() => {
-                  if (typeof window !== "undefined" && navigator.vibrate) {
-                    try { navigator.vibrate(15); } catch (e) {}
-                  }
+                  triggerHaptic("light");
                   dispatch(increaseQuantity(currentCartItemId));
                 }}
               >
