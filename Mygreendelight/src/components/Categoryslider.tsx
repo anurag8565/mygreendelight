@@ -124,31 +124,34 @@ export default function CategorySlider({
         ];
 
   return (
-    <section className="w-full py-8 sm:py-10 bg-white font-sans border-b border-stone-200/70">
+    <section className="w-full py-5 sm:py-7 bg-white font-sans border-b border-stone-200/70 select-none">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Header Row */}
-        <div className="flex items-center justify-between gap-2 mb-4 sm:mb-6">
+        <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">
           <div className="flex items-center gap-2">
-            <LayoutGrid size={20} className="text-[#0a3d24]" />
-            <h2 className="text-base sm:text-xl md:text-2xl font-extrabold text-stone-900 tracking-tight">
-              Shop by Category
+            <span className="w-2 h-2 rounded-full bg-[#0a3d24] animate-pulse" />
+            <h2 className="text-sm sm:text-base md:text-lg font-extrabold text-stone-900 tracking-tight font-heading">
+              Explore Fresh Categories
             </h2>
+            <span className="text-[10px] sm:text-xs font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/70 hidden xs:inline">
+              Daily Mandi Harvest
+            </span>
           </div>
 
           <Link
             href="/shop"
             className="text-[#0a3d24] hover:text-[#072a18] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition"
           >
-            <span>See all</span>
+            <span>View All</span>
             <ChevronRight
-              size={15}
+              size={14}
               className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]"
             />
           </Link>
         </div>
 
-        {/* Perfectly Balanced 3-Column Grid for the 3 Core Categories */}
-        <div className="grid grid-cols-3 gap-3 sm:gap-5 md:gap-6">
+        {/* Circular Stories-Style Avatar Grid (Responsive & Fluid) */}
+        <div className="grid grid-cols-3 gap-3 sm:gap-6 md:gap-8 max-w-2xl mx-auto">
           {displayList.map((item, idx) => {
             const rawKey = (item.name || "").toLowerCase().trim();
             const matchedKey =
@@ -165,34 +168,41 @@ export default function CategorySlider({
             return (
               <motion.div
                 key={item._id || item.name || idx}
-                whileTap={{ scale: 0.97 }}
-                whileHover={{ y: -4 }}
-                transition={{ type: "spring", stiffness: 350, damping: 24 }}
+                whileTap={{ scale: 0.92 }}
+                whileHover={{ y: -5 }}
+                transition={{ type: "spring", stiffness: 400, damping: 22 }}
                 onClick={() =>
                   router.push(`/shop?category=${encodeURIComponent(config.path)}`)
                 }
-                className="group cursor-pointer bg-white hover:bg-stone-50/50 rounded-2xl sm:rounded-3xl p-3 sm:p-4 border border-stone-200/80 hover:border-[#0a3d24]/50 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-[0_12px_28px_rgba(10,61,36,0.08)] transition-all duration-300 select-none flex flex-col justify-between"
+                className="group cursor-pointer flex flex-col items-center text-center select-none"
               >
-                {/* Clean Photo Container (Pure 4K Photography) */}
-                <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-stone-50/90 ring-1 ring-black/[0.03]">
-                  <img
-                    src={imageSrc}
-                    alt={config.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    onError={(e: any) => {
-                      e.target.src = "/categories/vegetables_4k.jpg?v=4";
-                    }}
-                  />
+                {/* Glowing Circular Avatar with Double Ring */}
+                <div className="relative p-1 rounded-full bg-gradient-to-tr from-emerald-600 via-emerald-400 to-amber-300 shadow-[0_6px_20px_rgba(10,61,36,0.15)] group-hover:shadow-[0_10px_28px_rgba(10,61,36,0.28)] transition-all duration-300">
+                  {/* Subtle rotating glow ring on hover */}
+                  <div className="w-20 h-20 xs:w-24 xs:h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden bg-white p-1 ring-2 ring-white">
+                    <div className="w-full h-full rounded-full overflow-hidden bg-stone-50 relative">
+                      <img
+                        src={imageSrc}
+                        alt={config.title}
+                        className="w-full h-full object-cover group-hover:scale-112 group-hover:rotate-2 transition-transform duration-500 ease-out"
+                        onError={(e: any) => {
+                          e.target.src = "/categories/vegetables_4k.jpg?v=4";
+                        }}
+                      />
+                      {/* Gentle inner overlay on hover */}
+                      <div className="absolute inset-0 bg-[#0a3d24]/0 group-hover:bg-[#0a3d24]/10 transition-colors duration-300 rounded-full" />
+                    </div>
+                  </div>
                 </div>
 
-                {/* Typography */}
-                <div className="mt-2.5 sm:mt-3.5 text-center flex flex-col items-center">
-                  <h3 className="font-extrabold text-xs sm:text-base md:text-lg text-stone-900 group-hover:text-[#0a3d24] transition-colors duration-200 leading-tight tracking-tight truncate w-full">
+                {/* Typography with Subtitle Pill */}
+                <div className="mt-2 sm:mt-2.5 flex flex-col items-center">
+                  <span className="font-extrabold text-xs sm:text-sm md:text-base text-stone-900 group-hover:text-[#0a3d24] transition-colors duration-200 tracking-tight leading-tight">
                     {config.title}
-                  </h3>
-                  <p className="text-[10px] sm:text-xs text-stone-500 font-medium truncate mt-0.5 sm:mt-1 w-full">
+                  </span>
+                  <span className="text-[9.5px] sm:text-[11px] text-stone-500 font-semibold mt-0.5 group-hover:text-stone-700 transition-colors">
                     {config.subtitle}
-                  </p>
+                  </span>
                 </div>
               </motion.div>
             );
