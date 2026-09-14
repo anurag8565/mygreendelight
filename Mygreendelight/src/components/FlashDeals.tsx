@@ -85,43 +85,32 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
   }
 
   return (
-    <div className="w-full py-8 sm:py-10 bg-white font-sans border-b border-stone-200/70">
+    <section className="w-full py-6 sm:py-8 bg-white font-sans border-b border-stone-200/70">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
-        {/* Flash Deals Header Row */}
-        <div className="flex items-center justify-between gap-2 mb-4 sm:mb-6">
-          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-            <h2 className="text-base sm:text-xl md:text-2xl font-extrabold text-stone-900 tracking-tight flex items-center gap-2">
-              <Flame size={20} className="text-amber-600 stroke-[2.2]" />
-              <span>Flash Deals</span>
+        {/* Minimalist Header Row */}
+        <div className="flex items-center justify-between gap-2 mb-4 sm:mb-5">
+          <div className="flex items-center gap-2.5">
+            <h2 className="text-base sm:text-lg md:text-xl font-bold text-stone-900 tracking-tight font-heading">
+              Flash Deals
             </h2>
 
-            {/* Real-time Reverse Countdown Badge */}
+            {/* Minimalist Clean Countdown Pill */}
             {!isExpired && (
-              <div className="flex items-center gap-1.5 bg-rose-50 text-rose-800 border border-rose-200/90 px-3 py-1 rounded-full text-[11px] font-bold shadow-2xs">
-                <Clock size={12} className="stroke-[2.2] text-rose-700" />
-                <span className="tabular-nums font-mono text-[11px] font-extrabold">
-                  {timeLeft.hours}:{timeLeft.minutes}:{timeLeft.seconds} left
+              <div className="flex items-center gap-1.5 bg-stone-100 text-stone-700 px-2.5 py-0.5 rounded-full text-[11px] font-semibold">
+                <Clock size={12} className="text-stone-500" />
+                <span className="tabular-nums font-mono">
+                  {timeLeft.hours}:{timeLeft.minutes}:{timeLeft.seconds}
                 </span>
               </div>
-            )}
-
-            {badgeText && (
-              <span className="hidden md:inline-flex items-center gap-1 bg-[#0a3d24] text-white text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full shadow-2xs tracking-wider">
-                <Flame size={11} className="stroke-[2]" />
-                <span>{badgeText}</span>
-              </span>
             )}
           </div>
 
           <Link
             href="/shop"
-            className="text-[#0a3d24] hover:text-[#072a18] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition"
+            className="text-stone-500 hover:text-[#0a3d24] font-semibold text-xs sm:text-sm flex items-center gap-0.5 transition"
           >
-            <span>See All</span>
-            <ChevronRight
-              size={14}
-              className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]"
-            />
+            <span>See all</span>
+            <ChevronRight size={14} className="stroke-[2]" />
           </Link>
         </div>
 
@@ -137,6 +126,6 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
           ))}
         </ProductCarousel>
       </div>
-    </div>
+    </section>
   );
 }
