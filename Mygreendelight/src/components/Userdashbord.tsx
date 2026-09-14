@@ -120,24 +120,24 @@ export default async function Userdashbord() {
       {/* 1.5 Quick Commerce Trust & Speed Ribbon */}
       <TrustRibbon />
 
-      {/* 2. Shop by Category Cards */}
+      {/* 2. Shop by Category Circles */}
       <Categoryslider categories={plainCategories} />
 
-      {/* 3. Interactive Fresh Produce Section (3 Tabs: Vegetables, Fruits, Exotics + Grid/List Switcher) */}
+      {/* 3. Daily Lucky Scratch Card & Rewards (Claim Discount at the Top) */}
+      <DailyRewardWidget />
+
+      {/* 4. Interactive Fresh Produce Section (3 Tabs: Vegetables, Fruits, Exotics + Grid/List Switcher) */}
       <FilteredProduceSection groceries={plainNew} />
 
-      {/* 4. Live Flash Deals & Steal Discounts */}
+      {/* 5. Live Flash Deals & Steal Discounts */}
       {plainFlash && plainFlash.length > 0 && (
         <FlashDeals products={plainFlash} />
       )}
 
-      {/* 5. Save-More Value Combos & Multipacks */}
+      {/* 6. Save-More Value Combos & Multipacks */}
       {plainCombos && plainCombos.length > 0 && (
         <CombosSection initialCombos={plainCombos} />
       )}
-
-      {/* 7. Tone 1: Daily Lucky Scratch Card & Rewards (Pure White) */}
-      <DailyRewardWidget />
 
       {/* 9. Tone 2: Order Again Carousel (Soft Warm Stone #f7f6f2) */}
       {plainOrderAgain && plainOrderAgain.length > 0 && (
