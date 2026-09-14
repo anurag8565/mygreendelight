@@ -114,28 +114,73 @@ export default function FilteredProduceSection({
   const activeTabMeta = tabs.find((t) => t.id === activeTab) || tabs[0];
 
   return (
-    <section className="w-full py-8 sm:py-12 bg-[#f7f6f2] font-sans border-b border-stone-200/70">
+    <section className="w-full py-7 sm:py-10 bg-[#faf9f5] font-sans border-b border-stone-200/70">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         
         {/* Section Header */}
-        <div className="flex items-center justify-between gap-2 mb-4 sm:mb-6">
-          <div className="min-w-0 flex-1">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 sm:mb-6">
+          <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <Leaf size={20} className="text-[#0a3d24] shrink-0" />
-              <h2 className="text-base sm:text-xl md:text-2xl font-extrabold text-stone-900 tracking-tight truncate">
-                Fresh Farm Vegetables & Fruits
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-[#0a3d24] text-white flex items-center justify-center shadow-xs">
+                <Leaf size={16} />
+              </div>
+              <h2 className="text-base sm:text-xl md:text-2xl font-extrabold text-stone-900 tracking-tight font-heading truncate">
+                Fresh Mandi Produce
               </h2>
+              <span className="bg-emerald-100/80 text-emerald-900 text-[10px] sm:text-xs font-black px-2.5 py-0.5 rounded-full border border-emerald-300/60 shrink-0">
+                100% Taaza
+              </span>
             </div>
+            <p className="text-[11px] sm:text-xs text-stone-500 font-medium mt-1">
+              Sunrise harvested at 5:00 AM from Bhopal & local Kisan farms
+            </p>
           </div>
 
-          {/* Controls: Grid/List Toggle & View All */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          {/* Controls: Sort Filters & Grid/List Toggle */}
+          <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-between sm:justify-end">
+            {/* Quick Sort Filter Pills */}
+            <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-stone-200/80 shadow-2xs">
+              <button
+                type="button"
+                onClick={() => setSortBy("default")}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition cursor-pointer ${
+                  sortBy === "default"
+                    ? "bg-[#0a3d24] text-white shadow-2xs"
+                    : "text-stone-500 hover:text-stone-900"
+                }`}
+              >
+                Featured
+              </button>
+              <button
+                type="button"
+                onClick={() => setSortBy("price_asc")}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition cursor-pointer ${
+                  sortBy === "price_asc"
+                    ? "bg-[#0a3d24] text-white shadow-2xs"
+                    : "text-stone-500 hover:text-stone-900"
+                }`}
+              >
+                Price: Low
+              </button>
+              <button
+                type="button"
+                onClick={() => setSortBy("rating")}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition cursor-pointer ${
+                  sortBy === "rating"
+                    ? "bg-[#0a3d24] text-white shadow-2xs"
+                    : "text-stone-500 hover:text-stone-900"
+                }`}
+              >
+                Top Rated
+              </button>
+            </div>
+
             {/* View Mode Switcher */}
             <div className="flex items-center bg-white p-1 rounded-xl border border-stone-200/80 shadow-2xs">
               <button
                 type="button"
                 onClick={() => setViewMode("grid")}
-                className={`px-2.5 py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1.5 text-xs font-bold ${
+                className={`p-1.5 rounded-lg transition cursor-pointer flex items-center justify-center ${
                   viewMode === "grid"
                     ? "bg-[#0a3d24] text-white shadow-xs"
                     : "text-stone-500 hover:text-stone-900 hover:bg-stone-50"
@@ -144,12 +189,11 @@ export default function FilteredProduceSection({
                 aria-label="Grid View"
               >
                 <LayoutGrid size={14} />
-                <span className="hidden sm:inline">Grid</span>
               </button>
               <button
                 type="button"
                 onClick={() => setViewMode("list")}
-                className={`px-2.5 py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1.5 text-xs font-bold ${
+                className={`p-1.5 rounded-lg transition cursor-pointer flex items-center justify-center ${
                   viewMode === "list"
                     ? "bg-[#0a3d24] text-white shadow-xs"
                     : "text-stone-500 hover:text-stone-900 hover:bg-stone-50"
@@ -158,7 +202,6 @@ export default function FilteredProduceSection({
                 aria-label="List View"
               >
                 <List size={14} />
-                <span className="hidden sm:inline">List</span>
               </button>
             </div>
 
@@ -171,9 +214,9 @@ export default function FilteredProduceSection({
                   ? "/shop?category=Fruits"
                   : "/shop?category=Exotics"
               }
-              className="bg-white hover:bg-stone-50 text-[#0a3d24] border border-stone-200/90 hover:border-[#0a3d24]/40 font-bold text-xs px-3 sm:px-3.5 py-2 rounded-xl flex items-center gap-1 transition shadow-2xs shrink-0 group whitespace-nowrap"
+              className="bg-white hover:bg-stone-50 text-[#0a3d24] border border-stone-200/90 hover:border-[#0a3d24]/40 font-bold text-xs px-3 py-1.5 rounded-xl flex items-center gap-1 transition shadow-2xs shrink-0 group whitespace-nowrap"
             >
-              <span>View All</span>
+              <span>See All</span>
               <ChevronRight
                 size={13}
                 className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]"
@@ -186,7 +229,7 @@ export default function FilteredProduceSection({
           3 DEDICATED PRODUCE CATEGORY TABS (Vegetables, Fruits, Exotics)
           Symmetrical 3-column cards with balanced photo, label, hindi text, and count badge
         */}
-        <div className="grid grid-cols-3 gap-2.5 sm:gap-4 mb-6 sm:mb-8 select-none relative">
+        <div className="grid grid-cols-3 gap-2 sm:gap-3.5 mb-5 sm:mb-7 select-none relative">
           {tabs.map((tab) => {
             const isSelected = activeTab === tab.id;
             return (
@@ -197,7 +240,7 @@ export default function FilteredProduceSection({
                 whileHover={{ y: -2 }}
                 transition={{ type: "spring", stiffness: 400, damping: 24 }}
                 onClick={() => setActiveTab(tab.id)}
-                className={`group relative p-3 sm:p-4 rounded-2xl sm:rounded-3xl transition-all duration-300 flex flex-col sm:flex-row items-center gap-2.5 sm:gap-3.5 cursor-pointer text-center sm:text-left overflow-hidden ${
+                className={`group relative p-2.5 sm:p-3.5 rounded-2xl sm:rounded-3xl transition-all duration-300 flex flex-col sm:flex-row items-center gap-2 sm:gap-3 cursor-pointer text-center sm:text-left overflow-hidden ${
                   isSelected
                     ? "text-[#0a3d24]"
                     : "text-stone-700 hover:text-stone-900"
@@ -207,7 +250,7 @@ export default function FilteredProduceSection({
                 {isSelected ? (
                   <motion.div
                     layoutId="activeProduceTabGlider"
-                    className="absolute inset-0 bg-white border border-[#0a3d24]/60 shadow-[0_8px_24px_rgba(10,61,36,0.12)] ring-2 ring-[#0a3d24]/15 rounded-2xl sm:rounded-3xl z-0"
+                    className="absolute inset-0 bg-white border-2 border-[#0a3d24] shadow-[0_8px_24px_rgba(10,61,36,0.12)] rounded-2xl sm:rounded-3xl z-0"
                     transition={{ type: "spring", stiffness: 450, damping: 32 }}
                   />
                 ) : (
@@ -215,7 +258,7 @@ export default function FilteredProduceSection({
                 )}
 
                 {/* Produce Photo Thumbnail */}
-                <div className="relative z-10 w-11 h-11 sm:w-13 sm:h-13 rounded-xl sm:rounded-2xl overflow-hidden shrink-0 bg-stone-50 border border-stone-100 shadow-2xs">
+                <div className="relative z-10 w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl overflow-hidden shrink-0 bg-stone-50 border border-stone-100 shadow-2xs">
                   <img
                     src={tab.imgUrl}
                     alt={tab.label}
@@ -229,31 +272,25 @@ export default function FilteredProduceSection({
 
                 {/* Text Details */}
                 <div className="relative z-10 flex flex-col items-center sm:items-start min-w-0 flex-1 w-full">
-                  <span
-                    className={`text-xs sm:text-sm md:text-base font-extrabold tracking-tight leading-tight truncate w-full ${
-                      isSelected ? "text-[#0a3d24]" : "text-stone-900 group-hover:text-stone-950"
-                    }`}
-                  >
-                    {tab.label}
-                  </span>
+                  <div className="flex items-center gap-1.5 w-full justify-center sm:justify-start">
+                    <span
+                      className={`text-xs sm:text-sm md:text-base font-extrabold tracking-tight leading-tight truncate ${
+                        isSelected ? "text-[#0a3d24]" : "text-stone-900 group-hover:text-stone-950"
+                      }`}
+                    >
+                      {tab.label}
+                    </span>
+                    <span className="hidden md:inline-block text-[10px] font-bold text-stone-400">
+                      • {tab.count} items
+                    </span>
+                  </div>
 
                   <span
-                    className={`text-[10px] sm:text-xs font-semibold leading-tight mt-0.5 truncate w-full ${
+                    className={`text-[9.5px] sm:text-xs font-semibold leading-tight mt-0.5 truncate w-full ${
                       isSelected ? "text-[#0a3d24]/80 font-bold" : "text-stone-500"
                     }`}
                   >
                     {tab.hindi}
-                  </span>
-
-                  {/* Product Count Pill */}
-                  <span
-                    className={`text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full font-bold mt-1 sm:mt-1.5 inline-block transition-colors shrink-0 ${
-                      isSelected
-                        ? "bg-[#0a3d24] text-white shadow-xs"
-                        : "bg-stone-100 text-stone-600 group-hover:bg-stone-200/70"
-                    }`}
-                  >
-                    {tab.count} Items
                   </span>
                 </div>
               </motion.button>
