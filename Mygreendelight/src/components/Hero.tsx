@@ -22,41 +22,41 @@ export default function Hero({ banners = [] }: HeroProps) {
   const defaultSlides = [
     {
       _id: "s1",
-      badge: "10-15 Min Express Delivery in Bhopal",
-      title: "Online Fresh Vegetable Delivery in Bhopal",
-      subtitle: "5:00 AM Sunrise Mandi harvest, handpicked fresh, pesticide-safe & wholesale direct farm rates.",
-      btnText: "Order Fresh Vegetables",
+      badge: "10-15 Min Express • Bhopal",
+      title: "Farm Fresh Vegetables",
+      subtitle: "5:00 AM Mandi harvest, handpicked & delivered directly to your kitchen.",
+      btnText: "Order Vegetables",
       link: "/shop?category=Vegetables",
       image: "/banners/veggies_clean_4k.jpg",
-      bgGradient: "from-[#032010]/95 via-[#064e3b]/85 to-transparent/30",
+      bgGradient: "from-stone-950/90 via-stone-950/70 to-transparent",
       accentColor: "#10b981",
-      offerPill: "FLAT ₹50 OFF • CODE: FIRST50",
+      offerPill: "FLAT ₹50 OFF",
       floatingStat: "100% Handpicked Fresh",
     },
     {
       _id: "s2",
-      badge: "100% Naturally Ripe • Bhopal Same Day",
-      title: "Fresh Seasonal Fruits Home Delivery in Bhopal",
-      subtitle: "Sweet Apples, Fresh Bananas, Nagpur Oranges, Mangoes & Pomegranates delivered in 15 mins.",
-      btnText: "Buy Fresh Fruits Online",
+      badge: "Naturally Sweet & Ripe",
+      title: "Fresh Seasonal Fruits",
+      subtitle: "Crisp apples, sweet bananas & fresh citrus at direct wholesale rates.",
+      btnText: "Buy Fresh Fruits",
       link: "/shop?category=Fruits",
       image: "/banners/fruits_clean_4k.jpg",
-      bgGradient: "from-[#381303]/95 via-[#7c2d12]/85 to-transparent/30",
+      bgGradient: "from-stone-950/90 via-stone-950/70 to-transparent",
       accentColor: "#f59e0b",
-      offerPill: "BEST WHOLESALE PRICE",
+      offerPill: "WHOLESALE RATES",
       floatingStat: "Naturally Sweet & Ripe",
     },
     {
       _id: "s3",
-      badge: "Hydroponic Greens • Pesticide Free",
-      title: "Hydroponic Salads & Exotic Vegetables in Bhopal",
-      subtitle: "Hass Avocados, Fresh Broccoli, Romaine Lettuce, Cherry Tomatoes, Button Mushrooms & Herbs.",
-      btnText: "Explore Fresh Exotics",
+      badge: "Hydroponic & Clean",
+      title: "Exotics & Fresh Greens",
+      subtitle: "Avocados, broccoli, lettuce, mushrooms & fresh herbs.",
+      btnText: "Explore Exotics",
       link: "/shop?category=Exotics",
       image: "/banners/exotics_clean_4k.jpg",
-      bgGradient: "from-[#0f3a36]/95 via-[#115e59]/85 to-transparent/30",
+      bgGradient: "from-stone-950/90 via-stone-950/70 to-transparent",
       accentColor: "#2dd4bf",
-      offerPill: "100% PESTICIDE FREE",
+      offerPill: "PESTICIDE FREE",
       floatingStat: "Daily Fresh Harvest",
     },
   ];
@@ -66,16 +66,16 @@ export default function Hero({ banners = [] }: HeroProps) {
     if (!banners || banners.length === 0) return defaultSlides;
     return banners.map((b: any, idx: number) => ({
       _id: b._id || `db-${idx}`,
-      badge: b.badge ? b.badge.replace(/[🌿🌱✨⭐🔥🎉]/gu, "").trim() : "Sunrise Farm Harvest • 10-15 Min Express",
+      badge: b.badge ? b.badge.replace(/[🌿🌱✨⭐🔥🎉]/gu, "").trim() : "10-15 Min Express • Bhopal",
       title: b.title,
-      subtitle: b.subtitle || "Handpicked & Fresh produce delivered to your doorstep.",
+      subtitle: b.subtitle || "Handpicked fresh produce delivered to your doorstep.",
       btnText: b.btnText || "Shop Now",
       link: b.link || "/shop",
       image: b.image || "/banners/veggies_clean_4k.jpg",
-      bgGradient: b.bgGradient || "from-[#032010]/95 via-[#064e3b]/85 to-transparent/30",
+      bgGradient: b.bgGradient || "from-stone-950/90 via-stone-950/70 to-transparent",
       accentColor: b.accentColor || "#10b981",
       offerPill: b.offerPill || "",
-      floatingStat: b.floatingStat || "🌱 100% Farm Fresh",
+      floatingStat: b.floatingStat || "100% Farm Fresh",
     }));
   }, [banners]);
 
@@ -137,40 +137,40 @@ export default function Hero({ banners = [] }: HeroProps) {
     enter: (dir: number) => ({
       x: dir > 0 ? "100%" : "-100%",
       opacity: 0,
-      scale: 1.04,
+      scale: 1.02,
     }),
     center: {
       x: 0,
       opacity: 1,
       scale: 1,
       transition: {
-        x: { type: "spring" as const, stiffness: 260, damping: 30 },
-        opacity: { duration: 0.45 },
-        scale: { duration: 0.6 },
+        x: { type: "spring" as const, stiffness: 280, damping: 32 },
+        opacity: { duration: 0.35 },
+        scale: { duration: 0.45 },
       },
     },
     exit: (dir: number) => ({
       x: dir > 0 ? "-30%" : "30%",
       opacity: 0,
-      scale: 0.96,
+      scale: 0.98,
       transition: {
-        x: { type: "spring" as const, stiffness: 260, damping: 30 },
-        opacity: { duration: 0.35 },
+        x: { type: "spring" as const, stiffness: 280, damping: 32 },
+        opacity: { duration: 0.3 },
       },
     }),
   };
 
   return (
-    <section className="w-full bg-gradient-to-b from-emerald-50/40 via-white to-white pt-2.5 sm:pt-4 pb-2 sm:pb-3 font-sans">
-      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
+    <section className="w-full bg-[#faf9f5] pt-2 sm:pt-3.5 pb-2 sm:pb-3 font-sans">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 md:px-8">
         
-        {/* Main Luxury Hero Banner Card */}
+        {/* Main Hero Banner Card - Mobile Optimized Height */}
         <div
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
-          className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.12)] hover:shadow-[0_16px_45px_rgba(15,134,70,0.22)] transition-shadow duration-500 group bg-gray-950 h-[260px] xs:h-[285px] sm:h-[340px] md:h-[390px] lg:h-[415px] border border-gray-100"
+          className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_25px_rgba(0,0,0,0.12)] transition-shadow duration-300 group bg-stone-950 h-[225px] xs:h-[245px] sm:h-[300px] md:h-[350px] lg:h-[380px] border border-stone-200/60"
         >
           <AnimatePresence initial={false} custom={direction} mode="popLayout">
             <motion.div
@@ -182,160 +182,65 @@ export default function Hero({ banners = [] }: HeroProps) {
               exit="exit"
               className="absolute inset-0 w-full h-full flex items-center overflow-hidden select-none"
             >
-              {/* 1. 4K Produce Background Image with Smooth Subtle Ken-Burns Zoom */}
-              <motion.img
-                initial={{ scale: 1.08 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 6, ease: "easeOut" }}
+              {/* 1. Fresh Produce Background Image */}
+              <img
                 src={slide.image || "/banners/veggies_clean_4k.jpg"}
-                alt={`${slide.title || "Fresh Produce"} - Bhopal Farm Fresh Vegetable & Fruit Delivery | SubziQuick`}
+                alt={`${slide.title || "Fresh Produce"} - SubziQuick Bhopal`}
                 loading="eager"
                 decoding="async"
                 className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
               />
 
-              {/* 2. Multi-layer High-Contrast Gradient Mask for 100% Typography Crispness */}
+              {/* 2. Gradient Overlay for Crisp Typography & Vibrant Image Reveal */}
               <div
-                className={`absolute inset-0 bg-gradient-to-r ${
-                  slide.bgGradient || "from-black/95 via-black/80 to-transparent/30"
-                } z-10`}
+                className="absolute inset-0 bg-gradient-to-r from-stone-950/90 via-stone-950/65 to-stone-950/15 sm:via-stone-950/55 z-10"
               />
 
-              {/* Ambient Glowing Emerald Soft Spotlight */}
-              <div
-                style={{ backgroundColor: slide.accentColor || "#10b981" }}
-                className="absolute top-0 left-0 w-80 h-80 opacity-20 rounded-full blur-3xl pointer-events-none z-10 transition-colors duration-700"
-              />
-
-              {/* 3. Hero Animated Content */}
-              <div className="relative z-20 p-4 xs:p-5 sm:p-8 md:p-12 lg:p-14 flex flex-col items-start max-w-xl sm:max-w-2xl">
+              {/* 3. Hero Content - Mobile First Layout */}
+              <div className="relative z-20 p-4 xs:p-5 sm:p-7 md:p-10 lg:p-12 flex flex-col items-start max-w-[280px] xs:max-w-xs sm:max-w-lg md:max-w-xl">
                 
-                {/* Micro Offer & Quality Badge */}
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1, duration: 0.4 }}
-                  className="flex items-center gap-2 flex-wrap mb-1.5 xs:mb-2 sm:mb-3"
-                >
-                  <div className="relative overflow-hidden inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md text-white text-[9px] xs:text-[9.5px] sm:text-xs font-bold px-2.5 xs:px-3 py-0.5 xs:py-1 rounded-full uppercase tracking-wider border border-white/30 shadow-xs">
-                    <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-                    <Sparkles size={12} className="text-emerald-300 relative z-10" />
-                    <span className="relative z-10">
-                      {(slide.badge || "Sunrise Farm Harvest • Express")
+                {/* Trust Badge & Offer Pill */}
+                <div className="flex items-center gap-1.5 flex-wrap mb-1.5 sm:mb-2.5">
+                  <div className="inline-flex items-center gap-1 bg-white/20 backdrop-blur-md text-white text-[10px] sm:text-xs font-semibold px-2.5 py-0.5 rounded-full border border-white/25">
+                    <Sparkles size={11} className="text-emerald-300 shrink-0" />
+                    <span>
+                      {(slide.badge || "10-15 Min Express • Bhopal")
                         .replace(/[🌿🌱✨⭐🔥🎉]/gu, "")
                         .trim()}
                     </span>
                   </div>
 
                   {slide.offerPill && (
-                    <span className="relative overflow-hidden hidden xs:inline-flex items-center gap-1 bg-gradient-to-r from-amber-400 to-yellow-400 text-stone-950 text-[9px] sm:text-[10.5px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm">
-                      <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/50 to-transparent" />
-                      <Flame size={11} className="fill-amber-950 relative z-10" />
-                      <span className="relative z-10">
-                        {slide.offerPill.replace(/[🌿🌱✨⭐🔥🎉]/gu, "").trim()}
-                      </span>
+                    <span className="inline-flex items-center gap-1 bg-amber-400 text-stone-950 text-[9.5px] sm:text-[11px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">
+                      <span>{slide.offerPill.replace(/[🌿🌱✨⭐🔥🎉]/gu, "").trim()}</span>
                     </span>
                   )}
-                </motion.div>
+                </div>
 
                 {/* Hero Title */}
-                <motion.h1
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.18, duration: 0.45 }}
-                  className="text-lg xs:text-xl sm:text-3xl md:text-4xl lg:text-[42px] font-black leading-tight sm:leading-[1.12] tracking-tight text-white drop-shadow-md mb-1.5 sm:mb-2.5 line-clamp-2"
-                >
+                <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white leading-tight drop-shadow-sm mb-1 sm:mb-2">
                   {slide.title}
-                </motion.h1>
+                </h1>
 
                 {/* Hero Subtitle */}
-                <motion.p
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.26, duration: 0.45 }}
-                  className="text-[11px] xs:text-[12px] sm:text-sm text-emerald-100/95 font-medium mb-3.5 xs:mb-4 sm:mb-6 line-clamp-2 drop-shadow-sm max-w-md sm:max-w-lg leading-relaxed"
-                >
-                  {slide.subtitle || "Handpicked & Chemical-Free produce sourced daily from local contract farms."}
-                </motion.p>
+                <p className="text-[11px] xs:text-xs sm:text-sm text-stone-200/90 font-normal leading-relaxed line-clamp-2 drop-shadow-xs max-w-[250px] xs:max-w-xs sm:max-w-md mb-3 sm:mb-4.5">
+                  {slide.subtitle || "Handpicked fresh produce delivered straight to your doorstep."}
+                </p>
 
-                {/* Action CTA Buttons */}
-                <motion.div
-                  initial={{ opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.32, duration: 0.45 }}
-                  className="flex items-center gap-2.5 xs:gap-3 flex-wrap"
-                >
-                  <Link href={slide.link || "/shop"}>
-                    <motion.button
-                      whileHover={{ scale: 1.04 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="relative overflow-hidden bg-[#0a3d24] hover:bg-[#072817] text-white px-4.5 xs:px-5 sm:px-7 py-2.5 sm:py-3 rounded-full font-black text-xs sm:text-sm shadow-xl transition-all flex items-center gap-2 cursor-pointer border border-emerald-300/40 hover:shadow-emerald-950/60 group/btn"
-                    >
-                      <div className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/25 to-transparent" />
-                      <span className="relative z-10">{slide.btnText || "Shop Fresh Produce"}</span>
-                      <ArrowRight size={14} className="stroke-[2.5] relative z-10 group-hover/btn:translate-x-0.5 transition-transform" />
-                    </motion.button>
-                  </Link>
-
-                  <Link
-                    href="/shop"
-                    className="hidden sm:inline-flex items-center gap-1.5 text-white/90 hover:text-white bg-white/15 hover:bg-white/25 backdrop-blur-md px-4 py-2.5 rounded-full font-bold text-xs border border-white/25 transition"
-                  >
-                    <Zap size={13} className="text-amber-300" />
-                    <span>Explore 150+ Items</span>
-                  </Link>
-                </motion.div>
+                {/* Action CTA Button - High Contrast White Pill */}
+                <Link href={slide.link || "/shop"}>
+                  <button className="bg-white hover:bg-stone-100 text-stone-950 font-bold px-4 xs:px-4.5 sm:px-6 py-1.5 xs:py-2 sm:py-2.5 rounded-full text-xs sm:text-sm shadow-md transition flex items-center gap-1.5 active:scale-95 cursor-pointer">
+                    <span>{slide.btnText || "Shop Now"}</span>
+                    <ArrowRight size={13} className="text-stone-800" />
+                  </button>
+                </Link>
               </div>
-
-              {/* Right Floating Glassmorphic Certified Badges (Desktop) */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.35, duration: 0.5 }}
-                className="hidden md:flex flex-col gap-2.5 absolute right-8 top-1/2 -translate-y-1/2 z-20 pointer-events-none"
-              >
-                <motion.div
-                  animate={{ y: [0, -3, 0] }}
-                  transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-                  className="bg-black/40 backdrop-blur-md border border-white/20 text-white px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-3"
-                >
-                  <div className="w-8 h-8 rounded-xl bg-emerald-500/25 text-emerald-300 flex items-center justify-center font-bold">
-                    <ShieldCheck size={18} />
-                  </div>
-                  <div>
-                    <span className="text-[10px] text-emerald-200/80 uppercase font-black tracking-wider block">
-                      SubziQuick Certified
-                    </span>
-                    <span className="text-xs font-black text-white">
-                      {slide.floatingStat || "100% Handpicked & Fresh"}
-                    </span>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  animate={{ y: [0, 3, 0] }}
-                  transition={{ repeat: Infinity, duration: 4, delay: 1, ease: "easeInOut" }}
-                  className="bg-black/40 backdrop-blur-md border border-white/20 text-white px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-3"
-                >
-                  <div className="w-8 h-8 rounded-xl bg-amber-500/25 text-amber-300 flex items-center justify-center font-bold">
-                    <Clock size={18} />
-                  </div>
-                  <div>
-                    <span className="text-[10px] text-amber-200/80 uppercase font-black tracking-wider block">
-                      Bhopal Express
-                    </span>
-                    <span className="text-xs font-black text-white">
-                      10-15 Min Doorstep Delivery
-                    </span>
-                  </div>
-                </motion.div>
-              </motion.div>
             </motion.div>
           </AnimatePresence>
 
           {/* Smooth Auto-Slide Progress Bar at bottom */}
           {total > 1 && !isPaused && (
-            <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/15 z-30 overflow-hidden">
+            <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-white/15 z-30 overflow-hidden">
               <motion.div
                 key={currentSlide}
                 initial={{ width: "0%" }}
@@ -346,28 +251,28 @@ export default function Hero({ banners = [] }: HeroProps) {
             </div>
           )}
 
-          {/* Navigation Arrows */}
+          {/* Desktop Navigation Arrows */}
           {total > 1 && (
             <>
               <button
                 type="button"
                 onClick={prevSlide}
-                className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-9 sm:w-10 h-9 sm:h-10 rounded-full bg-black/40 hover:bg-black/75 text-white backdrop-blur-md flex items-center justify-center transition-all z-30 cursor-pointer hidden sm:flex border border-white/25 shadow-md active:scale-90"
+                className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-8 sm:w-9 h-8 sm:h-9 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-md flex items-center justify-center transition-all z-30 cursor-pointer hidden sm:flex border border-white/20 shadow-md active:scale-90"
                 title="Previous Slide"
               >
-                <ChevronLeft size={22} className="stroke-[2.5]" />
+                <ChevronLeft size={20} />
               </button>
               <button
                 type="button"
                 onClick={nextSlide}
-                className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 w-9 sm:w-10 h-9 sm:h-10 rounded-full bg-black/40 hover:bg-black/75 text-white backdrop-blur-md flex items-center justify-center transition-all z-30 cursor-pointer hidden sm:flex border border-white/25 shadow-md active:scale-90"
+                className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 w-8 sm:w-9 h-8 sm:h-9 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-md flex items-center justify-center transition-all z-30 cursor-pointer hidden sm:flex border border-white/20 shadow-md active:scale-90"
                 title="Next Slide"
               >
-                <ChevronRight size={22} className="stroke-[2.5]" />
+                <ChevronRight size={20} />
               </button>
 
               {/* Dots Pagination */}
-              <div className="absolute bottom-3 sm:bottom-4 right-3.5 sm:right-4 z-30 flex items-center gap-1.5 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 shadow-sm">
+              <div className="absolute bottom-2.5 sm:bottom-3.5 right-3 sm:right-4 z-30 flex items-center gap-1.5 bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/15 shadow-sm">
                 {activeSlides.map((_, idx) => (
                   <button
                     key={idx}
@@ -375,7 +280,7 @@ export default function Hero({ banners = [] }: HeroProps) {
                     onClick={() => goToSlide(idx, idx > currentSlide ? 1 : -1)}
                     className={`transition-all duration-300 rounded-full cursor-pointer ${
                       currentSlide === idx
-                        ? "w-6 h-1.5 bg-white shadow-xs"
+                        ? "w-5 h-1.5 bg-white shadow-xs"
                         : "w-1.5 h-1.5 bg-white/50 hover:bg-white/80"
                     }`}
                     title={`Slide ${idx + 1}`}
