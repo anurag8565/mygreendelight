@@ -97,8 +97,8 @@ export default function ProductDetailsClient({
   const cartItem = cartdata.find(
     (item: any) =>
       item.cartItemId === cartItemId ||
-      (!item.cartItemId && String(item._id) === safeProdId) ||
-      String(item._id) === safeProdId
+      (!hasVariations && !item.cartItemId && String(item._id) === safeProdId) ||
+      (!hasVariations && String(item._id) === safeProdId)
   );
   const quantity = cartItem ? cartItem.quantity : 0;
   const totalCartCount = cartdata.reduce((acc, curr) => acc + (curr.quantity || 1), 0);

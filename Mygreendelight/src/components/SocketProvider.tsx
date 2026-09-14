@@ -20,18 +20,31 @@ export default function SocketProvider() {
   );
 
   useEffect(() => {
-    if (!cleanUserId) return;
+    // Determine user ID or persistent guest device ID for live socket room
+    let targetId = cleanUserId;
+    if (!targetId && typeof window !== "undefined") {
+      let guestId = localStorage.getItem("subziquick_guest_id");
+      if (!guestId) {
+        guestId = "guest_" + Math.random().toString(36).substring(2, 9) + "_" + Date.now().toString(36);
+        localStorage.setItem("subziquick_guest_id", guestId);
+      }
+      targetId = guestId;
+    }
 
     if (!socket.connected) {
       socket.connect();
     }
 
     const onConnect = () => {
-      socket.emit("register-user", cleanUserId);
+      if (targetId) {
+        socket.emit("register-user", targetId);
+      }
     };
 
     if (socket.connected) {
-      socket.emit("register-user", cleanUserId);
+      if (targetId) {
+        socket.emit("register-user", targetId);
+      }
     } else {
       socket.on("connect", onConnect);
     }

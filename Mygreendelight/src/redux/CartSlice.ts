@@ -53,7 +53,10 @@ let lastLocalActionTimestamp = 0;
 
 // Broadcast changes instantly across both same-device tabs (BroadcastChannel) and other devices (WebSocket)
 export const emitLiveCartUpdate = (cartdata: IGrocery[], couponCode: string | null, discountAmount: number, userId?: any) => {
-    const cleanId = getCleanUserId(userId);
+    let cleanId = getCleanUserId(userId);
+    if (!cleanId && typeof window !== "undefined") {
+        cleanId = localStorage.getItem("subziquick_guest_id");
+    }
 
     // 1. Same-device multi-tab instant broadcast (0ms delay)
     if (typeof window !== "undefined" && typeof BroadcastChannel !== "undefined") {
@@ -66,7 +69,9 @@ export const emitLiveCartUpdate = (cartdata: IGrocery[], couponCode: string | nu
                 discountAmount,
                 timestamp: Date.now(),
             });
-            channel.close();
+            setTimeout(() => {
+                try { channel.close(); } catch (_) {}
+            }, 500);
         } catch (_) {}
     }
 
@@ -360,10 +365,12 @@ const cartSlice = createSlice({
             lastLocalActionTimestamp = Date.now();
             state.lastLocalActionAt = lastLocalActionTimestamp;
             const target = String(action.payload || "");
-            state.cartdata = state.cartdata.filter(
-                (item) => (item.cartItemId ? item.cartItemId !== target : String(item._id) !== target) &&
-                          String(item._id) !== target
-            );
+            state.cartdata = state.cartdata.filter((item) => {
+                if (item.cartItemId) {
+                    return item.cartItemId !== target;
+                }
+                return String(item._id) !== target;
+            });
             saveCart(state.cartdata, state.couponCode, state.discountAmount, state.currentUserId);
         },
 

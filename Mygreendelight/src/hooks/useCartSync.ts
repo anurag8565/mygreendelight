@@ -94,6 +94,7 @@ export function useCartSync(userIdProp?: any) {
             userId: cleanUserId,
             serverUpdatedAt: eventTimestamp,
             requestStartedAt: eventTimestamp,
+            force: true,
           })
         );
       } catch (err) {
@@ -101,12 +102,17 @@ export function useCartSync(userIdProp?: any) {
       }
     };
 
+    let targetSocketId = cleanUserId;
+    if (!targetSocketId && typeof window !== "undefined") {
+      targetSocketId = localStorage.getItem("subziquick_guest_id");
+    }
+
     if (socket) {
       if (!socket.connected) {
         socket.connect();
       }
-      if (cleanUserId) {
-        socket.emit("register-user", cleanUserId);
+      if (targetSocketId) {
+        socket.emit("register-user", targetSocketId);
       }
       socket.on("cart-updated", handleSocketCartUpdated);
     }
@@ -126,6 +132,7 @@ export function useCartSync(userIdProp?: any) {
                 userId: cleanUserId,
                 serverUpdatedAt: event.data.timestamp,
                 requestStartedAt: event.data.timestamp,
+                force: true,
               })
             );
           }

@@ -53,10 +53,11 @@ export default function Groceryitemcard({
   const safeItemId = String(item._id || "");
   const currentCartItemId = safeItemId + (selectedVariation ? "-" + selectedVariation.weight : "");
 
+  const isVariationItem = Boolean(item.variations && item.variations.length > 0);
   const cartitem = cartdata.find(
     (c) =>
       c.cartItemId === currentCartItemId ||
-      (!c.cartItemId && c._id?.toString() === item._id?.toString())
+      (!isVariationItem && !c.cartItemId && c._id?.toString() === item._id?.toString())
   );
 
   // Dynamic Realistic MRP & Discount
