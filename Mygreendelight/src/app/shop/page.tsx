@@ -36,7 +36,8 @@ const CATEGORY_IMAGES: Record<string, string> = {
   vegetables: "/categories/vegetables_4k.jpg?v=4",
   fruits: "/categories/fruits_4k.jpg?v=4",
   exotics: "/categories/exotics_4k.jpg?v=4",
-  combos: "/combo_banner.jpg",
+  combos: "/categories/combos_4k.jpg?v=4",
+  combo: "/categories/combos_4k.jpg?v=4",
 };
 
 function ShopContent() {
@@ -77,7 +78,7 @@ function ShopContent() {
         if (res.data?.success && Array.isArray(res.data.categories)) {
           const list = [...res.data.categories];
           if (!list.some((c) => (c.name || "").toLowerCase().includes("combo"))) {
-            list.push({ _id: "combos-category-bundle", name: "Combos", image: "/combo_banner.jpg" });
+            list.push({ _id: "combos-category-bundle", name: "Combos", image: "/categories/combos_4k.jpg?v=4" });
           }
           setCategories(list);
         }

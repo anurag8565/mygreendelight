@@ -56,13 +56,13 @@ const CATEGORY_MAP: Record<
   combos: {
     title: "Value Combos",
     subtitle: "Curated Packs",
-    imgUrl: "/combo_banner.jpg",
+    imgUrl: "/categories/combos_4k.jpg?v=4",
     path: "Combos",
   },
   combo: {
     title: "Value Combos",
     subtitle: "Curated Packs",
-    imgUrl: "/combo_banner.jpg",
+    imgUrl: "/categories/combos_4k.jpg?v=4",
     path: "Combos",
   },
 };
