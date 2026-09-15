@@ -15,6 +15,7 @@ import FarmFreshPromise from './FarmFreshPromise'
 import BhopalSocietyPool from './BhopalSocietyPool'
 import BhopalParchiShopping from './BhopalParchiShopping'
 import Testimonials from './Testimonials'
+import BhopalCompetitorSEOShowcase from './BhopalCompetitorSEOShowcase'
 import { RotateCcw } from 'lucide-react'
 
 import Banner from '@/model/banner.model'
@@ -171,7 +172,10 @@ export default async function Userdashbord() {
         initialGoogleSettings={plainGoogleSettings}
       />
 
-      {/* 11. Tone 2: Farm to Fork Freshness Promise & Trust Guarantee (Soft Luxury Gray #f8f9fa) */}
+      {/* 11. Bhopal Hyperlocal SEO & Produce Guide */}
+      <BhopalCompetitorSEOShowcase />
+
+      {/* 12. Tone 2: Farm to Fork Freshness Promise & Trust Guarantee (Soft Luxury Gray #f8f9fa) */}
       <FarmFreshPromise />
     </div>
   )
