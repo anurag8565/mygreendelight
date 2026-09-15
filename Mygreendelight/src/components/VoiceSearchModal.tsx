@@ -5,23 +5,13 @@ import { Mic, MicOff, X, Sparkles, ArrowRight, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { triggerHaptic } from "@/utils/haptics";
+import axios from "axios";
 
 interface VoiceSearchModalProps {
   isOpen: boolean;
   onClose: () => void;
   onResult?: (text: string) => void;
 }
-
-const QUICK_VOICE_PROMPTS = [
-  "Aloo (Potato)",
-  "Tamatar (Tomato)",
-  "Taaza Palak",
-  "Ratlami Sev",
-  "Bhopali Poha",
-  "Pyaaz (Onion)",
-  "Hari Mirch & Dhaniya",
-  "Adrak & Lahsun",
-];
 
 export default function VoiceSearchModal({
   isOpen,
@@ -34,6 +24,20 @@ export default function VoiceSearchModal({
   const [language, setLanguage] = useState<"hi-IN" | "en-IN">("hi-IN");
   const [recognition, setRecognition] = useState<any>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [storeItems, setStoreItems] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (isOpen) {
+      axios
+        .get("/api/user/search?trending=true")
+        .then((res) => {
+          if (Array.isArray(res.data)) {
+            setStoreItems(res.data);
+          }
+        })
+        .catch(() => {});
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -267,24 +271,26 @@ export default function VoiceSearchModal({
           </button>
         )}
 
-        {/* Quick Produce Tap Chips (Useful if mic is denied or for instant 1-tap search) */}
-        <div className="pt-2 border-t border-stone-200/80 text-left">
-          <span className="text-[10px] font-black text-stone-400 uppercase tracking-wider block mb-1.5">
-            Quick Bhopal Produce:
-          </span>
-          <div className="flex flex-wrap gap-1.5">
-            {QUICK_VOICE_PROMPTS.map((prompt) => (
-              <button
-                key={prompt}
-                type="button"
-                onClick={() => handleSearch(prompt.split(" ")[0])}
-                className="bg-white hover:bg-emerald-50 text-stone-800 hover:text-[#0a3d24] border border-stone-200 hover:border-emerald-300 px-2.5 py-1 rounded-xl text-[11px] font-bold transition active:scale-95 cursor-pointer shadow-2xs"
-              >
-                {prompt}
-              </button>
-            ))}
+        {/* Real Store Produce Chips (Only items from our actual store database) */}
+        {storeItems.length > 0 && (
+          <div className="pt-2.5 border-t border-stone-200/80 text-left">
+            <span className="text-[10px] font-black text-stone-400 uppercase tracking-wider block mb-1.5">
+              Available in Store:
+            </span>
+            <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto">
+              {storeItems.map((item) => (
+                <button
+                  key={item._id}
+                  type="button"
+                  onClick={() => handleSearch(item.name)}
+                  className="bg-white hover:bg-emerald-50 text-stone-800 hover:text-[#0a3d24] border border-stone-200 hover:border-emerald-300 px-2.5 py-1 rounded-xl text-[11px] font-bold transition active:scale-95 cursor-pointer shadow-2xs"
+                >
+                  {item.name}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </motion.div>
     </div>
   );

@@ -23,19 +23,7 @@ import useGetMe from "@/hooks/useGetMe";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
 
-const POPULAR_SEARCHES = [
-  "Fresh Tomato",
-  "Pahadi Potato",
-  "Nashik Onion",
-  "Fresh Coriander",
-  "Palak Spinach",
-  "Button Mushroom",
-  "Green Chilli",
-  "Ginger",
-  "Shimla Apple",
-  "Robusta Banana",
-  "Broccoli",
-];
+
 
 const CANONICAL_CATEGORIES = [
   {
@@ -355,24 +343,26 @@ function SearchContent() {
               </div>
             )}
 
-            {/* Popular Searches */}
-            <div className="bg-white rounded-2xl p-3 sm:p-4 border border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
-              <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider block mb-2">
-                Popular Searches
-              </span>
-              <div className="flex items-center gap-1.5 flex-wrap">
-                {POPULAR_SEARCHES.map((item, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => executeSearch(item)}
-                    className="px-2.5 py-1 bg-gray-50 hover:bg-emerald-50 text-gray-700 hover:text-[#0a3d24] border border-gray-200/70 hover:border-emerald-300 rounded-lg text-xs font-semibold transition cursor-pointer"
-                  >
-                    {item}
-                  </button>
-                ))}
+            {/* Real Store Popular Searches (Only real produce from DB) */}
+            {topProduce.length > 0 && (
+              <div className="bg-white rounded-2xl p-3 sm:p-4 border border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
+                <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider block mb-2">
+                  Popular in Store
+                </span>
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  {topProduce.map((item, idx) => (
+                    <button
+                      key={item._id || idx}
+                      type="button"
+                      onClick={() => executeSearch(item.name)}
+                      className="px-2.5 py-1 bg-gray-50 hover:bg-emerald-50 text-gray-700 hover:text-[#0a3d24] border border-gray-200/70 hover:border-emerald-300 rounded-lg text-xs font-semibold transition cursor-pointer"
+                    >
+                      {item.name}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* 3 Core Clean Category Cards (Real 4K Images) */}
             <div className="bg-white rounded-2xl p-3.5 sm:p-4 border border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
