@@ -120,7 +120,7 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
           {products.map((item: any) => (
             <div
               key={item._id}
-              className="w-[170px] sm:w-[210px] md:w-[225px] snap-start shrink-0 flex flex-col h-[335px] sm:h-[355px]"
+              className="w-[155px] sm:w-[185px] md:w-[200px] snap-start shrink-0 flex flex-col h-[255px] sm:h-[275px]"
             >
               <Groceryitemcard item={item} />
             </div>
