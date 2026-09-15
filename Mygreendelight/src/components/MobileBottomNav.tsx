@@ -46,11 +46,10 @@ export default function MobileBottomNav() {
   const cartCount = cartdata.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 pointer-events-none select-none">
-      <div className="pointer-events-auto px-2 sm:px-4 pb-[max(0.15rem,env(safe-area-inset-bottom))] pb-1 pt-0">
-        {/* Style 11 (iOS Floating Dock) + Smooth Pill Highlight + Responsive Tablet Scaling */}
-        <nav className="relative max-w-sm sm:max-w-md md:max-w-lg mx-auto bg-white/95 backdrop-blur-2xl border border-stone-200/90 rounded-[24px] p-1 sm:p-1.5 shadow-[0_8px_30px_-4px_rgba(0,0,0,0.15)] ring-1 ring-black/5">
-          <div className="grid grid-cols-5 items-center gap-0.5 sm:gap-1.5">
+    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 select-none bg-white/95 backdrop-blur-2xl border-t border-stone-200/90 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] pb-[env(safe-area-inset-bottom)]">
+      <div className="max-w-md mx-auto px-1 sm:px-2 pt-1 pb-1">
+        <nav className="relative w-full">
+          <div className="grid grid-cols-5 items-center gap-0.5 sm:gap-1">
             {/* 1. Home */}
             {(() => {
               const isActive = pathname === "/";
