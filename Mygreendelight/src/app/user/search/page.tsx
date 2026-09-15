@@ -66,7 +66,7 @@ function SearchContent() {
   const { userdata } = useSelector((state: RootState) => state.user);
   const router = useRouter();
   const params = useSearchParams();
-  const query = params.get("query") || "";
+  const query = params.get("query") || params.get("q") || "";
 
   const [inputQuery, setInputQuery] = useState(query);
   const [results, setResults] = useState<any[]>([]);

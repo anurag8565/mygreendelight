@@ -4,13 +4,30 @@ import React, { useState, useEffect } from "react";
 import { Mic, MicOff, X, Sparkles, ArrowRight, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { triggerHaptic } from "@/utils/haptics";
 
 interface VoiceSearchModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onResult?: (text: string) => void;
 }
 
-export default function VoiceSearchModal({ isOpen, onClose }: VoiceSearchModalProps) {
+const QUICK_VOICE_PROMPTS = [
+  "Aloo (Potato)",
+  "Tamatar (Tomato)",
+  "Taaza Palak",
+  "Ratlami Sev",
+  "Bhopali Poha",
+  "Pyaaz (Onion)",
+  "Hari Mirch & Dhaniya",
+  "Adrak & Lahsun",
+];
+
+export default function VoiceSearchModal({
+  isOpen,
+  onClose,
+  onResult,
+}: VoiceSearchModalProps) {
   const router = useRouter();
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState("");
@@ -31,23 +48,27 @@ export default function VoiceSearchModal({ isOpen, onClose }: VoiceSearchModalPr
 
         reco.onresult = (event: any) => {
           const current = event.resultIndex;
-          const text = event.results[current][0].transcript;
-          setTranscript(text);
+          const rawText = event.results[current][0].transcript;
+          const cleanText = rawText.replace(/[.,?!]/g, "").trim();
+          setTranscript(cleanText);
 
           if (event.results[current].isFinal) {
+            triggerHaptic("success");
             setTimeout(() => {
-              handleSearch(text);
-            }, 600);
+              handleSearch(cleanText);
+            }, 500);
           }
         };
 
         reco.onerror = (event: any) => {
-          console.error("Speech recognition error:", event.error);
+          console.warn("Speech recognition error:", event.error);
           setIsListening(false);
           if (event.error === "not-allowed") {
-            setErrorMsg("Microphone permission denied. Please allow microphone access in your browser.");
+            setErrorMsg("Microphone permission blocked. Please allow mic access in browser settings.");
+          } else if (event.error === "no-speech") {
+            setErrorMsg("Awaaz sunayi nahi di. Kripya dobara mic par tap karke bole.");
           } else {
-            setErrorMsg("Could not hear clearly. Please try speaking again.");
+            setErrorMsg("Microphone disconnected. Kripya niche diye produce par tap karein.");
           }
         };
 
@@ -75,14 +96,15 @@ export default function VoiceSearchModal({ isOpen, onClose }: VoiceSearchModalPr
     setTranscript("");
     if (recognition) {
       try {
+        triggerHaptic("medium");
         recognition.lang = language;
         recognition.start();
         setIsListening(true);
       } catch (err) {
-        console.error(err);
+        // Recognition might already be running
       }
     } else {
-      setErrorMsg("Voice search is not supported on this browser. Try Chrome / Edge.");
+      setErrorMsg("Is browser me voice speech supported nahi hai. Niche produce choose karein.");
     }
   };
 
@@ -90,9 +112,9 @@ export default function VoiceSearchModal({ isOpen, onClose }: VoiceSearchModalPr
     if (recognition) {
       try {
         recognition.stop();
-        setIsListening(false);
       } catch (err) {}
     }
+    setIsListening(false);
   };
 
   useEffect(() => {
@@ -106,9 +128,15 @@ export default function VoiceSearchModal({ isOpen, onClose }: VoiceSearchModalPr
   }, [isOpen, onClose]);
 
   const handleSearch = (textToSearch = transcript) => {
-    if (!textToSearch.trim()) return;
+    const clean = textToSearch.replace(/[.,?!]/g, "").trim();
+    if (!clean) return;
+
+    if (onResult) {
+      onResult(clean);
+    }
+
     onClose();
-    router.push(`/user/search?q=${encodeURIComponent(textToSearch.trim())}`);
+    router.push(`/user/search?query=${encodeURIComponent(clean)}`);
   };
 
   if (!isOpen) return null;
@@ -116,62 +144,84 @@ export default function VoiceSearchModal({ isOpen, onClose }: VoiceSearchModalPr
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-[1200] flex items-center justify-center p-4 bg-black/65 backdrop-blur-xs cursor-pointer"
+      className="fixed inset-0 z-[1200] flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs cursor-pointer font-sans select-none"
     >
-      <div
+      <motion.div
+        initial={{ opacity: 0, scale: 0.94, y: 15 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.94, y: 15 }}
+        transition={{ type: "spring", stiffness: 450, damping: 28 }}
         onClick={(e) => e.stopPropagation()}
-        className="cursor-default bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-gray-100 relative text-center animate-in fade-in zoom-in-95 duration-200"
+        className="cursor-default bg-[#faf9f5] rounded-3xl p-6 sm:p-7 max-w-md w-full shadow-2xl border border-amber-200/90 relative text-center overflow-hidden"
       >
+        {/* Top Close Button */}
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-900 transition-all cursor-pointer border border-gray-200"
+          className="absolute top-4 right-4 w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-500 hover:text-stone-900 transition flex items-center justify-center cursor-pointer border border-stone-200"
           title="Close"
         >
-          <X size={18} />
+          <X size={16} />
         </button>
 
+        {/* Header Tag */}
+        <div className="flex items-center justify-center gap-1.5 mb-2">
+          <span className="bg-[#0a3d24] text-white text-[9.5px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full flex items-center gap-1">
+            <Sparkles size={10} className="text-amber-300" />
+            <span>SubziQuick Voice Assistant</span>
+          </span>
+        </div>
+
+        <h3 className="text-base sm:text-lg font-black text-stone-900 tracking-tight font-heading">
+          {isListening ? "Listening... Bolna shuru karein!" : "Awaaz Se Sabzi Search Karein"}
+        </h3>
+        <p className="text-xs text-stone-500 mt-0.5 font-medium">
+          {language === "hi-IN" ? 'Boliye jaise: "Ek kilo aloo, tamatar, taaza palak"' : 'Speak produce name like "Tomato", "Spinach"'}
+        </p>
+
         {/* Language Selector */}
-        <div className="inline-flex items-center bg-gray-100 p-1 rounded-2xl mb-6">
+        <div className="inline-flex items-center bg-stone-200/70 p-1 rounded-2xl my-4 border border-stone-300/60">
           <button
+            type="button"
             onClick={() => {
               setLanguage("hi-IN");
               stopListening();
               setTimeout(startListening, 200);
             }}
-            className={`px-3.5 py-1 text-xs font-bold rounded-xl transition ${
-              language === "hi-IN" ? "bg-white text-[#0a3d24] shadow-xs" : "text-gray-600"
+            className={`px-3 py-1 text-xs font-bold rounded-xl transition cursor-pointer ${
+              language === "hi-IN" ? "bg-[#0a3d24] text-white shadow-xs" : "text-stone-700 hover:text-stone-950"
             }`}
           >
             🇮🇳 हिन्दी (Hindi)
           </button>
           <button
+            type="button"
             onClick={() => {
               setLanguage("en-IN");
               stopListening();
               setTimeout(startListening, 200);
             }}
-            className={`px-3.5 py-1 text-xs font-bold rounded-xl transition ${
-              language === "en-IN" ? "bg-white text-[#0a3d24] shadow-xs" : "text-gray-600"
+            className={`px-3 py-1 text-xs font-bold rounded-xl transition cursor-pointer ${
+              language === "en-IN" ? "bg-[#0a3d24] text-white shadow-xs" : "text-stone-700 hover:text-stone-950"
             }`}
           >
             English
           </button>
         </div>
 
-        {/* Animated Mic Wave */}
-        <div className="relative flex items-center justify-center my-6">
+        {/* Animated Microphone Radar Graphic */}
+        <div className="relative flex items-center justify-center my-4 py-2">
           {isListening && (
             <>
               <motion.div
-                animate={{ scale: [1, 1.4, 1], opacity: [0.6, 0.1, 0.6] }}
-                transition={{ repeat: Infinity, duration: 1.5 }}
-                className="absolute w-28 h-28 rounded-full bg-emerald-400"
+                animate={{ scale: [1, 1.5, 1.9], opacity: [0.6, 0.2, 0] }}
+                transition={{ repeat: Infinity, duration: 1.6, ease: "easeOut" }}
+                className="absolute w-24 h-24 rounded-full border-2 border-emerald-500"
               />
               <motion.div
-                animate={{ scale: [1, 1.8, 1], opacity: [0.4, 0, 0.4] }}
-                transition={{ repeat: Infinity, duration: 1.8, delay: 0.3 }}
-                className="absolute w-28 h-28 rounded-full bg-emerald-300"
+                animate={{ scale: [1, 1.3, 1.6], opacity: [0.7, 0.3, 0] }}
+                transition={{ repeat: Infinity, duration: 1.6, delay: 0.3, ease: "easeOut" }}
+                className="absolute w-24 h-24 rounded-full border-2 border-amber-400"
               />
             </>
           )}
@@ -179,33 +229,29 @@ export default function VoiceSearchModal({ isOpen, onClose }: VoiceSearchModalPr
           <button
             type="button"
             onClick={isListening ? stopListening : startListening}
-            className={`relative z-10 w-20 h-20 rounded-full flex items-center justify-center shadow-xl transition-transform active:scale-95 cursor-pointer ${
+            className={`relative z-10 w-20 h-20 rounded-3xl flex items-center justify-center shadow-xl transition-all active:scale-95 cursor-pointer border-2 ${
               isListening
-                ? "bg-[#0a3d24] text-white shadow-emerald-500/40"
-                : "bg-gray-200 text-gray-600 hover:bg-gray-300"
+                ? "bg-gradient-to-tr from-[#0a3d24] to-emerald-600 text-white border-emerald-400 shadow-[0_8px_24px_rgba(10,61,36,0.4)]"
+                : "bg-white text-stone-700 border-stone-300 hover:border-[#0a3d24]"
             }`}
           >
-            {isListening ? <Mic size={32} /> : <MicOff size={32} />}
+            {isListening ? <Mic size={32} className="animate-pulse" /> : <MicOff size={32} />}
           </button>
         </div>
 
-        <h3 className="text-base sm:text-lg font-black text-gray-900 mb-1">
-          {isListening ? "Listening... Bolna shuru karein!" : "Tap mic to speak"}
-        </h3>
-        
-        <p className="text-xs text-gray-400 mb-4 font-medium">
-          {language === "hi-IN" ? 'e.g. "Aloo, Tamatar, Taaza Palak, Doodh"' : 'e.g. "Fresh milk, Paneer, Apple"'}
-        </p>
-
         {/* Live Transcript Display */}
-        {transcript && (
-          <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl mb-4 text-emerald-950 font-black text-sm">
+        {transcript ? (
+          <div className="p-3 bg-emerald-100/80 border border-emerald-300 rounded-2xl mb-3 text-[#0a3d24] font-black text-sm sm:text-base">
             &ldquo;{transcript}&rdquo;
           </div>
+        ) : (
+          <p className="text-[11px] text-stone-400 font-bold mb-3">
+            {isListening ? "Mic chalu hai... bol rahe hain toh yahan aayega" : "Tap mic button to start speaking"}
+          </p>
         )}
 
         {errorMsg && (
-          <p className="text-xs font-bold text-red-600 mb-4 bg-red-50 p-2.5 rounded-xl border border-red-200">
+          <p className="text-xs font-bold text-red-700 mb-3 bg-red-50 p-2.5 rounded-xl border border-red-200">
             {errorMsg}
           </p>
         )}
@@ -214,13 +260,32 @@ export default function VoiceSearchModal({ isOpen, onClose }: VoiceSearchModalPr
           <button
             type="button"
             onClick={() => handleSearch()}
-            className="w-full bg-[#0a3d24] hover:bg-[#072817] text-white font-black py-3 rounded-2xl text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition cursor-pointer"
+            className="w-full bg-[#0a3d24] hover:bg-[#072817] text-white font-black py-3 rounded-2xl text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition cursor-pointer mb-3 active:scale-95"
           >
-            <span>Search Produce</span>
-            <ArrowRight size={16} />
+            <span>Search &quot;{transcript}&quot; Produce</span>
+            <ArrowRight size={15} />
           </button>
         )}
-      </div>
+
+        {/* Quick Produce Tap Chips (Useful if mic is denied or for instant 1-tap search) */}
+        <div className="pt-2 border-t border-stone-200/80 text-left">
+          <span className="text-[10px] font-black text-stone-400 uppercase tracking-wider block mb-1.5">
+            Quick Bhopal Produce:
+          </span>
+          <div className="flex flex-wrap gap-1.5">
+            {QUICK_VOICE_PROMPTS.map((prompt) => (
+              <button
+                key={prompt}
+                type="button"
+                onClick={() => handleSearch(prompt.split(" ")[0])}
+                className="bg-white hover:bg-emerald-50 text-stone-800 hover:text-[#0a3d24] border border-stone-200 hover:border-emerald-300 px-2.5 py-1 rounded-xl text-[11px] font-bold transition active:scale-95 cursor-pointer shadow-2xs"
+              >
+                {prompt}
+              </button>
+            ))}
+          </div>
+        </div>
+      </motion.div>
     </div>
   );
 }

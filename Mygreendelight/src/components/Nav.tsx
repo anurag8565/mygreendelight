@@ -872,18 +872,18 @@ export default function Nav({ user }: { user?: iUser | null }) {
 
               {/* 2. Live Search Results Suggestions Dropdown */}
               <AnimatePresence>
-                {search.trim() && (searchResults.length > 0 || isSearching) && (
+                {search.trim() && (
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
-                    className="absolute top-full left-0 w-full mt-2 bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] border border-gray-100 overflow-hidden"
+                    className="absolute top-full left-0 w-full mt-2 bg-white rounded-2xl shadow-[0_15px_45px_-10px_rgba(0,0,0,0.18)] border border-gray-100 overflow-hidden z-50 font-sans"
                   >
                     {isSearching ? (
                       <div className="p-4 text-center text-sm text-gray-500 flex items-center justify-center gap-2">
-                        <Loader2 size={16} className="animate-spin text-[#0a3d24]" /> Searching...
+                        <Loader2 size={16} className="animate-spin text-[#0a3d24]" /> Searching Bhopal Mandi produce...
                       </div>
-                    ) : (
+                    ) : searchResults.length > 0 ? (
                       <>
                         {searchResults.map((item) => {
                           const cartItem = cartdata.find(
@@ -978,11 +978,25 @@ export default function Nav({ user }: { user?: iUser | null }) {
                         })}
                         <div 
                           onClick={() => handleSearch()}
-                          className="p-3 text-center text-sm text-[#0a3d24] font-bold bg-emerald-50/50 hover:bg-emerald-100/60 cursor-pointer"
+                          className="p-3 text-center text-xs font-black text-[#0a3d24] bg-emerald-50/70 hover:bg-emerald-100/80 cursor-pointer border-t border-emerald-100 flex items-center justify-center gap-1.5"
                         >
-                          View all results for "{search.trim()}"
+                          <span>View all results for &quot;{search.trim()}&quot;</span>
+                          <ArrowRight size={13} />
                         </div>
                       </>
+                    ) : (
+                      <div className="p-4 text-center">
+                        <p className="text-xs font-bold text-gray-600 mb-1">
+                          Koi produce nahi mila &ldquo;{search.trim()}&rdquo; ke liye
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() => handleSearch()}
+                          className="text-xs font-black text-[#0a3d24] hover:underline cursor-pointer"
+                        >
+                          Poora store catalog search karein &rarr;
+                        </button>
+                      </div>
                     )}
                   </motion.div>
                 )}
@@ -1384,18 +1398,18 @@ export default function Nav({ user }: { user?: iUser | null }) {
 
           {/* 2. Mobile Suggestions Dropdown */}
           <AnimatePresence>
-            {search.trim() && (searchResults.length > 0 || isSearching) && (
+            {search.trim() && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
-                className="absolute top-[3.2rem] left-4 right-4 bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] border border-gray-100 overflow-hidden"
+                className="absolute top-[3.2rem] left-3.5 right-3.5 bg-white rounded-2xl shadow-[0_15px_45px_-10px_rgba(0,0,0,0.2)] border border-gray-100 overflow-hidden z-50 font-sans"
               >
                 {isSearching ? (
                   <div className="p-4 text-center text-sm text-gray-500 flex items-center justify-center gap-2">
-                    <Loader2 size={16} className="animate-spin text-[#0a3d24]" /> Searching...
+                    <Loader2 size={16} className="animate-spin text-[#0a3d24]" /> Searching Bhopal Mandi produce...
                   </div>
-                ) : (
+                ) : searchResults.length > 0 ? (
                   <>
                     {searchResults.map((item) => {
                       const cartItem = cartdata.find(
@@ -1490,11 +1504,25 @@ export default function Nav({ user }: { user?: iUser | null }) {
                     })}
                     <div 
                       onClick={() => handleSearch()}
-                      className="p-3 text-center text-sm text-[#0a3d24] font-bold bg-emerald-50/50 hover:bg-emerald-100/60 cursor-pointer"
+                      className="p-3 text-center text-xs font-black text-[#0a3d24] bg-emerald-50/70 hover:bg-emerald-100/80 cursor-pointer border-t border-emerald-100 flex items-center justify-center gap-1.5"
                     >
-                      View all results
+                      <span>View all results for &quot;{search.trim()}&quot;</span>
+                      <ArrowRight size={13} />
                     </div>
                   </>
+                ) : (
+                  <div className="p-4 text-center">
+                    <p className="text-xs font-bold text-gray-600 mb-1">
+                      Koi produce nahi mila &ldquo;{search.trim()}&rdquo; ke liye
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => handleSearch()}
+                      className="text-xs font-black text-[#0a3d24] hover:underline cursor-pointer"
+                    >
+                      Poora store catalog search karein &rarr;
+                    </button>
+                  </div>
                 )}
               </motion.div>
             )}
@@ -1553,6 +1581,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
       <VoiceSearchModal
         isOpen={showVoiceModal}
         onClose={() => setShowVoiceModal(false)}
+        onResult={(text) => setSearch(text)}
       />
     </>
   );
