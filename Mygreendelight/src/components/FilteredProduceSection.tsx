@@ -61,7 +61,7 @@ export default function FilteredProduceSection({
         label: "All Items",
         hindi: "सभी उत्पाद",
         count: list.length,
-        imgUrl: "/categories/vegetables_4k.jpg?v=4",
+        imgUrl: "/hero_basket.jpg",
       },
       {
         id: "vegetables",
@@ -123,36 +123,33 @@ export default function FilteredProduceSection({
   };
 
   return (
-    <section className="w-full py-4 sm:py-6 bg-[#faf9f5] font-sans border-b border-stone-200/70 select-none">
+    <section className="w-full py-5 sm:py-7 bg-[#faf9f5] font-sans border-b border-stone-200/70 select-none">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         
-        {/* Section Header: Title & Controls */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 sm:mb-5">
-          <div>
+        {/* Section Header: Clean & Minimal */}
+        <div className="flex items-center justify-between gap-3 mb-3.5 sm:mb-4">
+          <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <Leaf size={18} className="text-[#0a3d24] shrink-0" />
-              <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-stone-900 tracking-tight font-heading truncate">
+              <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse shrink-0" />
+              <h2 className="text-base sm:text-lg md:text-xl font-black text-stone-900 tracking-tight font-heading truncate">
                 Fresh Farm Harvest
               </h2>
-              <span className="bg-emerald-100/90 text-[#0a3d24] text-[9.5px] font-black uppercase px-2 py-0.5 rounded-full border border-emerald-300/60">
-                10-15 Min Delivery
-              </span>
             </div>
-            <p className="text-[11px] sm:text-xs text-stone-500 font-medium mt-0.5">
-              Handpicked daily from nearby farms &bull; Cleaned, sorted &amp; delivered fresh
+            <p className="text-[11px] sm:text-xs text-stone-500 font-medium mt-0.5 truncate">
+              Handpicked daily from local mandi &bull; Farm fresh in 10-15 mins
             </p>
           </div>
 
-          {/* Controls: Sort Dropdown, Grid/List Switcher, View All */}
-          <div className="flex items-center gap-2 sm:gap-2.5 self-start sm:self-auto flex-wrap">
-            {/* Sort Dropdown */}
+          {/* Clean Unified Controls */}
+          <div className="flex items-center gap-2 shrink-0">
+            {/* Sort Pill */}
             <div className="relative">
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
-                className="appearance-none bg-white hover:bg-stone-50 text-stone-700 text-xs font-bold py-1.5 pl-2.5 pr-6 rounded-xl border border-stone-200/90 shadow-2xs outline-none focus:border-[#0a3d24] cursor-pointer"
+                className="appearance-none bg-white hover:bg-stone-50 text-stone-700 text-[11px] sm:text-xs font-semibold py-1.5 pl-2.5 pr-6 rounded-full border border-stone-200/80 shadow-2xs outline-none focus:border-[#0a3d24] cursor-pointer transition-colors"
               >
-                <option value="default">Recommended</option>
+                <option value="default">Featured</option>
                 <option value="price_asc">Price: Low to High</option>
                 <option value="price_desc">Price: High to Low</option>
                 <option value="rating">Top Rated</option>
@@ -160,37 +157,37 @@ export default function FilteredProduceSection({
               <ChevronDown size={12} className="absolute right-2 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" />
             </div>
 
-            {/* View Mode Toggle */}
-            <div className="flex items-center bg-white p-0.5 rounded-xl border border-stone-200/90 shadow-2xs">
+            {/* Grid / List Switcher */}
+            <div className="hidden xs:flex items-center bg-white p-0.5 rounded-full border border-stone-200/80 shadow-2xs">
               <button
                 type="button"
                 onClick={() => setViewMode("grid")}
-                className={`p-1.5 rounded-lg transition cursor-pointer ${
+                className={`p-1.5 rounded-full transition cursor-pointer ${
                   viewMode === "grid"
                     ? "bg-[#0a3d24] text-white shadow-xs"
-                    : "text-stone-400 hover:text-stone-800"
+                    : "text-stone-400 hover:text-stone-700"
                 }`}
                 title="Grid View"
                 aria-label="Grid View"
               >
-                <LayoutGrid size={14} />
+                <LayoutGrid size={13} />
               </button>
               <button
                 type="button"
                 onClick={() => setViewMode("list")}
-                className={`p-1.5 rounded-lg transition cursor-pointer ${
+                className={`p-1.5 rounded-full transition cursor-pointer ${
                   viewMode === "list"
                     ? "bg-[#0a3d24] text-white shadow-xs"
-                    : "text-stone-400 hover:text-stone-800"
+                    : "text-stone-400 hover:text-stone-700"
                 }`}
                 title="List View"
                 aria-label="List View"
               >
-                <List size={14} />
+                <List size={13} />
               </button>
             </div>
 
-            {/* View All in Shop */}
+            {/* View All */}
             <Link
               href={
                 activeTab === "vegetables"
@@ -203,22 +200,21 @@ export default function FilteredProduceSection({
                   ? "/shop?category=Combos"
                   : "/shop"
               }
-              className="text-[#0a3d24] hover:text-[#072a18] font-bold text-xs px-2.5 py-1.5 rounded-xl transition flex items-center gap-0.5 group"
+              className="text-[#0a3d24] hover:text-[#072a18] font-bold text-xs px-2 sm:px-2.5 py-1.5 rounded-full hover:bg-emerald-50/60 transition flex items-center gap-0.5 group"
             >
-              <span>View All</span>
+              <span>See All</span>
               <ChevronRight size={13} className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]" />
             </Link>
           </div>
         </div>
 
         {/* 
-          🌟 REAL PRODUCE PHOTO CHIPS (Zepto / Blinkit Gold Standard)
-          - Real 4K circular photo thumbnails (NO fake cartoon emojis!)
-          - Smooth liquid spring glider animation
-          - Tactile haptic feedback
-          - Ultra-compact height (42px)
+          🌟 REAL PRODUCE PHOTO CHIPS (Clean & Fluid Zepto/Blinkit Style)
+          - Real 4K circular photo thumbnails
+          - Smooth physical spring glider
+          - Haptic feedback
         */}
-        <div className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar py-2 mb-5 -mx-3.5 px-3.5 sm:mx-0 sm:px-0">
+        <div className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar py-1.5 mb-4 sm:mb-5 -mx-3.5 px-3.5 sm:mx-0 sm:px-0">
           {tabs.map((tab) => {
             const isSelected = activeTab === tab.id;
 
@@ -226,26 +222,26 @@ export default function FilteredProduceSection({
               <motion.button
                 key={tab.id}
                 type="button"
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.94 }}
+                whileHover={{ y: -1.5 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => handleTabChange(tab.id)}
-                className={`group relative h-[42px] sm:h-[44px] pl-1.5 pr-3.5 sm:pr-4 rounded-full font-bold text-xs sm:text-[13px] transition-all flex items-center gap-2 cursor-pointer shrink-0 whitespace-nowrap active:scale-95 select-none ${
+                className={`group relative h-[40px] sm:h-[42px] pl-1.5 pr-3 sm:pr-3.5 rounded-full font-bold text-xs sm:text-[13px] transition-all flex items-center gap-2 cursor-pointer shrink-0 whitespace-nowrap active:scale-95 select-none ${
                   isSelected
-                    ? "text-white shadow-[0_4px_16px_rgba(10,61,36,0.22)]"
-                    : "bg-white text-stone-700 hover:text-stone-900 border border-stone-200/90 hover:bg-stone-50 shadow-2xs"
+                    ? "text-white shadow-[0_3px_12px_rgba(10,61,36,0.2)]"
+                    : "bg-white text-stone-700 hover:text-stone-900 border border-stone-200/80 hover:bg-stone-50/90 shadow-2xs"
                 }`}
               >
                 {/* Fluid Spring Glider */}
                 {isSelected && (
                   <motion.div
                     layoutId="realPhotoPillGlider"
-                    className="absolute inset-0 bg-[#0a3d24] rounded-full z-0 border border-[#0a3d24]"
-                    transition={{ type: "spring", stiffness: 450, damping: 30 }}
+                    className="absolute inset-0 bg-[#0a3d24] rounded-full z-0"
+                    transition={{ type: "spring", stiffness: 450, damping: 32 }}
                   />
                 )}
 
                 {/* Real Produce 4K Photo Avatar */}
-                <div className="relative z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full overflow-hidden shrink-0 bg-stone-100 p-0.5 border border-stone-200/60 shadow-2xs group-hover:scale-108 transition-transform duration-300">
+                <div className="relative z-10 w-7 h-7 rounded-full overflow-hidden shrink-0 bg-stone-100 p-0.5 border border-stone-200/60 shadow-2xs group-hover:scale-105 transition-transform duration-300">
                   <img
                     src={tab.imgUrl}
                     alt={tab.label}
@@ -255,13 +251,13 @@ export default function FilteredProduceSection({
                 </div>
 
                 {/* Category Label */}
-                <span className="relative z-10 tracking-tight font-extrabold">
+                <span className="relative z-10 tracking-tight font-extrabold text-[12px] sm:text-[13px]">
                   {tab.label}
                 </span>
 
                 {/* Item Count Chip */}
                 <span
-                  className={`relative z-10 text-[10px] sm:text-[10.5px] font-bold px-1.5 py-0.2 rounded-full transition-colors ${
+                  className={`relative z-10 text-[10px] font-bold px-1.5 py-0.2 rounded-full transition-colors ${
                     isSelected ? "bg-white/20 text-white" : "bg-stone-100 text-stone-500"
                   }`}
                 >
@@ -353,13 +349,13 @@ export default function FilteredProduceSection({
             <button
               type="button"
               onClick={() => setVisibleCount((prev) => prev + 8)}
-              className="bg-white hover:bg-stone-50 text-[#0a3d24] border border-stone-200 hover:border-[#0a3d24] px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm shadow-2xs transition inline-flex items-center gap-1.5 cursor-pointer active:scale-95 group"
+              className="bg-white hover:bg-[#0a3d24] text-stone-700 hover:text-white border border-stone-200/90 hover:border-[#0a3d24] px-5 py-2.5 rounded-full font-bold text-xs sm:text-[13px] shadow-2xs hover:shadow-sm transition-all inline-flex items-center gap-1.5 cursor-pointer active:scale-95 group"
             >
               <span>
                 Show More {activeTabMeta.label} (+{Math.min(8, filteredList.length - visibleCount)})
               </span>
               <ChevronDown
-                size={15}
+                size={14}
                 className="group-hover:translate-y-0.5 transition-transform stroke-[2.5]"
               />
             </button>
