@@ -79,7 +79,7 @@ export default function ManageBanners() {
   const handleSeedDefaults = async () => {
     if (
       !confirm(
-        "Are you sure you want to load/reset the 4 official 8K luxury farm banners into the database? This will update your storefront hero carousel."
+        "Are you sure you want to load/reset the 3 official farm banners into the database? This will update your storefront hero carousel."
       )
     ) {
       return;
@@ -89,7 +89,7 @@ export default function ManageBanners() {
       setSeeding(true);
       const res = await axios.post("/api/admin/banner/seed", { overwrite: true });
       if (res.data.success) {
-        alert("✨ Successfully loaded 4 Official 8K Luxury Banners into Admin & Storefront!");
+        alert("✨ Successfully loaded Official Farm Fresh Banners into Admin & Storefront!");
         fetchBanners();
       }
     } catch (error: any) {
@@ -245,7 +245,7 @@ export default function ManageBanners() {
                 ) : (
                   <Sparkles size={14} className="text-emerald-600 fill-emerald-600" />
                 )}
-                <span>Reset 4 Official 8K Banners</span>
+                <span>Reset Official Farm Banners</span>
               </button>
 
               <button

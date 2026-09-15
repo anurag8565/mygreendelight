@@ -61,7 +61,7 @@ export default function ManageSEOPage() {
     siteName: "SubziQuick Bhopal",
     defaultTitle: "Online Vegetable & Fruit Delivery in Bhopal | Farm Fresh Produce - SubziQuick",
     defaultDescription:
-      "Order farm-fresh vegetables, seasonal fruits & groceries online in Bhopal at wholesale farm rates. 100% handpicked, graded fresh with same-day doorstep delivery across Bhopal.",
+      "Order fresh vegetables, seasonal fruits & groceries online in Bhopal. 100% handpicked, graded fresh with 10-15 min doorstep delivery across Bhopal.",
     primaryKeywords:
       "vegetable delivery bhopal, fresh vegetables bhopal, buy vegetables online bhopal, farm fresh produce bhopal, subziquick",
     canonicalBase: "https://subziquick.in",

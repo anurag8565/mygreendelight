@@ -152,7 +152,7 @@ export default function ManageMandiPage() {
               <thead className="bg-gray-50 border-b border-gray-200 text-gray-600 font-bold uppercase text-[10px]">
                 <tr>
                   <th className="py-3 px-3">Item Name</th>
-                  <th className="py-3 px-3">Current Mandi Rate</th>
+                  <th className="py-3 px-3">Today's Store Rate</th>
                   <th className="py-3 px-3">Unit</th>
                   <th className="py-3 px-3">Price Trend</th>
                   <th className="py-3 px-3">Discount %</th>
@@ -218,7 +218,7 @@ export default function ManageMandiPage() {
             <div className="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl border border-gray-100">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-base font-black text-gray-900">
-                  {editingId ? "Edit Mandi Rate" : "Add New Mandi Item"}
+                  {editingId ? "Edit Farm Rate" : "Add New Farm Rate Item"}
                 </h3>
                 <button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-gray-700">
                   <X size={18} />

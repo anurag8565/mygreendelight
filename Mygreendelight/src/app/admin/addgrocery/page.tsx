@@ -34,7 +34,7 @@ export default function AddGrocery() {
     unit: "kg",
     stock: "50",
     description: "",
-    sourcing: "Direct from local Bhopal farms (Raisen / Sehore)",
+    sourcing: "Direct from local Bhopal farms",
     storage: "Store in a cool, dry place. Wash before consumption.",
     image: null as File | null,
   });
