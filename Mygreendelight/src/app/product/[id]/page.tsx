@@ -29,7 +29,7 @@ export async function generateMetadata(props: {
       const title = product.metaTitle || `Buy Fresh ${product.name} ${unitText} in Bhopal - ${priceText} | SubziQuick`;
       const description =
         product.metaDescription ||
-        `Order farm fresh ${product.name} online in Bhopal for ${priceText} at wholesale farm rates on SubziQuick (Subzi Quick). 100% handpicked, graded fresh with 10-15 min express delivery across Arera Colony, Kolar Road, MP Nagar & all Bhopal areas.`;
+        `Order fresh ${product.name} ${unitText} online in Bhopal for ${priceText} on SubziQuick. Handpicked daily from local farms, sorted, cleaned & delivered to your doorstep in 10-15 minutes across Arera Colony, Kolar Road, MP Nagar & all Bhopal areas.`;
 
       const productUrl = product.canonicalUrl || `https://subziquick.in/product/${product.slug || product._id}`;
 
@@ -37,18 +37,33 @@ export async function generateMetadata(props: {
         title,
         description,
         keywords: [
+          // Primary Brand & Intent
           "subzi quick",
           "subziquick",
           `subzi quick ${product.name}`,
           product.name,
           `buy ${product.name} in bhopal`,
+          `buy ${product.name} online bhopal`,
           `fresh ${product.name} online bhopal`,
+          `${product.name} home delivery bhopal`,
           `${product.name} price in bhopal`,
           `today ${product.name} rate in bhopal`,
-          `fresh vegetables and fruits in bhopal`,
-          `online vegetable delivery in bhopal`,
+          `${product.name} price today`,
+          // Category & Sourcing Keywords
+          `fresh ${product.category || "vegetables"} bhopal`,
+          "fresh vegetables and fruits in bhopal",
+          "online vegetable delivery in bhopal",
+          "online fruits delivery in bhopal",
+          "farm fresh vegetables bhopal",
+          "daily fresh sabzi bhopal",
+          "10-15 min grocery delivery bhopal",
+          "instant vegetable delivery bhopal",
+          "best sabzi app in bhopal",
+          // Quality & Trust
+          "handpicked fresh vegetables bhopal",
           "pesticide free vegetables in bhopal",
-          "100 percent handpicked fresh vegetables bhopal",
+          "no wax fresh fruits bhopal",
+          "doorstep replacement vegetable delivery",
         ],
         alternates: {
           canonical: productUrl,

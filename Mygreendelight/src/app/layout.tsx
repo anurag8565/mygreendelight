@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     template: "%s | SubziQuick Bhopal",
   },
   description:
-    "SubziQuick (Subzi Quick) is Bhopal's #1 farm-fresh vegetable & fruit delivery service. Handpicked fresh, safe farm produce sourced at 5:00 AM from local Kisan farms. Delivered in 10-15 mins with cash on delivery & zero platform fee across all Bhopal societies.",
+    "SubziQuick (Subzi Quick) is Bhopal's #1 farm-fresh vegetable & fruit delivery service. Handpicked daily from local Bhopal & Sehore farms, cleaned and sorted fresh. Delivered in 10-15 mins with cash on delivery & zero platform fee across all Bhopal societies.",
   keywords: [
     // Primary Brand & Name Variations (For #1 Brand Search Ranking)
     "subzi quick",
@@ -121,8 +121,8 @@ export const metadata: Metadata = {
     // Trust, Purity & Voice Search Queries
     "pesticide free vegetables in bhopal",
     "fresh handpicked clean vegetables bhopal",
-    "direct kisan wholesale price online sabzi bhopal",
-    "sunrise 5am harvest fresh farm produce bhopal",
+    "direct farm price online sabzi bhopal",
+    "fresh farm produce bhopal",
     "instant fresh sabzi delivery near me",
     "bhopal me online sabzi order kaise karein",
     "aaj bhopal me tamatar pyaz ka rate",
