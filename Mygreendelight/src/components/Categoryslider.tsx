@@ -7,7 +7,7 @@ import { ChevronRight, LayoutGrid } from "lucide-react";
 import { motion } from "framer-motion";
 
 // Clean, luxury category metadata with 4K assets and cache buster
-// Strictly the 3 core categories: Vegetables, Fruits, Exotics
+// 4 core categories: Vegetables, Fruits, Exotics, and Value Combos
 const CATEGORY_MAP: Record<
   string,
   {
@@ -53,9 +53,21 @@ const CATEGORY_MAP: Record<
     imgUrl: "/categories/exotics_4k.jpg?v=4",
     path: "Exotics",
   },
+  combos: {
+    title: "Value Combos",
+    subtitle: "Save 20%+",
+    imgUrl: "/combo_banner.jpg",
+    path: "Combos",
+  },
+  combo: {
+    title: "Value Combos",
+    subtitle: "Save 20%+",
+    imgUrl: "/combo_banner.jpg",
+    path: "Combos",
+  },
 };
 
-const PRIORITY = ["vegetables", "fruits", "exotics"];
+const PRIORITY = ["vegetables", "fruits", "exotics", "combos"];
 
 export default function CategorySlider({
   categories = [],
@@ -64,6 +76,7 @@ export default function CategorySlider({
 }) {
   const router = useRouter();
   const [activeCategories, setActiveCategories] = useState<any[]>([]);
+  const scrollContainerRef = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let list = Array.isArray(categories) && categories.length > 0 ? [...categories] : [];
@@ -83,7 +96,7 @@ export default function CategorySlider({
   }, [categories]);
 
   const filterAndSet = (list: any[]) => {
-    // Filter strictly to the 3 core categories (Vegetables, Fruits, Exotics)
+    // Filter to core categories
     const valid = list.filter((item) => {
       const name = (item.name || "").toLowerCase().trim();
       return PRIORITY.some((p) => name.includes(p));
@@ -102,15 +115,22 @@ export default function CategorySlider({
       return 0;
     });
 
-    // If DB has no categories or fewer than 3, fallback to the 3 core ones
+    // Ensure Combos is included in categories
+    const hasCombo = sorted.some((c) =>
+      (c.name || "").toLowerCase().includes("combo")
+    );
+    const listWithCombos = hasCombo ? sorted : [...sorted, { name: "Combos" }];
+
+    // If DB has no categories or fewer, fallback to the 4 core ones
     if (sorted.length === 0) {
       setActiveCategories([
         { name: "Vegetables" },
         { name: "Fruits" },
         { name: "Exotics" },
+        { name: "Combos" },
       ]);
     } else {
-      setActiveCategories(sorted.slice(0, 3));
+      setActiveCategories(listWithCombos.slice(0, 4));
     }
   };
 
@@ -121,7 +141,18 @@ export default function CategorySlider({
           { name: "Vegetables" },
           { name: "Fruits" },
           { name: "Exotics" },
+          { name: "Combos" },
         ];
+
+  const scroll = (direction: "left" | "right") => {
+    if (scrollContainerRef.current) {
+      const amount = 220;
+      scrollContainerRef.current.scrollBy({
+        left: direction === "left" ? -amount : amount,
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
     <section className="w-full py-4 sm:py-6 bg-white font-sans border-b border-stone-200/70 select-none">
@@ -135,72 +166,103 @@ export default function CategorySlider({
             </h2>
           </div>
 
-          <Link
-            href="/shop"
-            className="text-[#0a3d24] hover:text-[#072a18] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition"
-          >
-            <span>View All</span>
-            <ChevronRight
-              size={14}
-              className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]"
-            />
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/shop"
+              className="text-[#0a3d24] hover:text-[#072a18] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition"
+            >
+              <span>View All</span>
+              <ChevronRight
+                size={14}
+                className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]"
+              />
+            </Link>
+          </div>
         </div>
 
-        {/* Circular Stories-Style Avatar Grid (Responsive & Fluid) */}
-        <div className="grid grid-cols-3 gap-3.5 sm:gap-6 md:gap-8 max-w-2xl mx-auto">
-          {displayList.map((item, idx) => {
-            const rawKey = (item.name || "").toLowerCase().trim();
-            const matchedKey =
-              Object.keys(CATEGORY_MAP).find((k) => rawKey.includes(k)) || "";
-            const config = CATEGORY_MAP[matchedKey] || {
-              title: item.name || "Produce",
-              subtitle: "Fresh Harvest",
-              imgUrl: item.image || "/categories/vegetables_4k.jpg?v=4",
-              path: item.name || "Vegetables",
-            };
+        {/* Animated Stories-Style Carousel Container */}
+        <div className="relative w-full">
+          <div
+            ref={scrollContainerRef}
+            className="flex items-center justify-start sm:justify-center gap-3.5 xs:gap-5 sm:gap-8 md:gap-10 overflow-x-auto scrollbar-none py-2 px-1 -mx-3.5 px-3.5 sm:mx-0 sm:px-0 overscroll-x-contain snap-x snap-mandatory"
+            style={{ WebkitOverflowScrolling: "touch" }}
+          >
+            {displayList.map((item, idx) => {
+              const rawKey = (item.name || "").toLowerCase().trim();
+              const matchedKey =
+                Object.keys(CATEGORY_MAP).find((k) => rawKey.includes(k)) || "";
+              const config = CATEGORY_MAP[matchedKey] || {
+                title: item.name || "Produce",
+                subtitle: "Fresh Harvest",
+                imgUrl: item.image || "/categories/vegetables_4k.jpg?v=4",
+                path: item.name || "Vegetables",
+              };
 
-            const imageSrc = config.imgUrl || item.image || "/categories/vegetables_4k.jpg?v=4";
+              const imageSrc = config.imgUrl || item.image || "/categories/vegetables_4k.jpg?v=4";
+              const isCombo = matchedKey.includes("combo");
 
-            return (
-              <motion.div
-                key={item._id || item.name || idx}
-                whileTap={{ scale: 0.92 }}
-                whileHover={{ y: -6 }}
-                transition={{ type: "spring", stiffness: 400, damping: 22 }}
-                onClick={() =>
-                  router.push(`/shop?category=${encodeURIComponent(config.path)}`)
-                }
-                className="group cursor-pointer flex flex-col items-center text-center select-none"
-              >
-                {/* Glowing Circular Avatar with Double Ring & Ambient Shadow */}
-                <div className="relative p-1 rounded-full bg-gradient-to-tr from-[#0a3d24] via-emerald-500 to-amber-400 shadow-[0_6px_22px_rgba(10,61,36,0.18)] group-hover:shadow-[0_12px_32px_rgba(10,61,36,0.3)] transition-all duration-300">
-                  {/* Outer White Border Ring */}
-                  <div className="w-21 h-21 xs:w-25 xs:h-25 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden bg-white p-1 ring-2 ring-white">
-                    <div className="w-full h-full rounded-full overflow-hidden bg-stone-50 relative">
-                      <img
-                        src={imageSrc}
-                        alt={config.title}
-                        className="w-full h-full object-cover group-hover:scale-115 group-hover:rotate-2 transition-transform duration-500 ease-out"
-                        onError={(e: any) => {
-                          e.target.src = "/categories/vegetables_4k.jpg?v=4";
-                        }}
-                      />
-                      {/* Gentle inner overlay on hover */}
-                      <div className="absolute inset-0 bg-[#0a3d24]/0 group-hover:bg-[#0a3d24]/10 transition-colors duration-300 rounded-full" />
+              return (
+                <motion.div
+                  key={item._id || item.name || idx}
+                  initial={{ opacity: 0, y: 14, scale: 0.94 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{
+                    duration: 0.35,
+                    delay: idx * 0.07,
+                    ease: "easeOut",
+                  }}
+                  whileTap={{ scale: 0.92 }}
+                  whileHover={{ y: -5 }}
+                  onClick={() =>
+                    router.push(`/shop?category=${encodeURIComponent(config.path)}`)
+                  }
+                  className="group cursor-pointer flex flex-col items-center text-center select-none shrink-0 w-[76px] xs:w-[86px] sm:w-28 md:w-32 snap-center"
+                >
+                  {/* Glowing Circular Stories Avatar */}
+                  <div
+                    className={`relative p-0.5 sm:p-1 rounded-full transition-all duration-300 ${
+                      isCombo
+                        ? "bg-gradient-to-tr from-amber-500 via-emerald-500 to-[#0a3d24] shadow-[0_5px_20px_rgba(217,119,6,0.22)] group-hover:shadow-[0_10px_28px_rgba(217,119,6,0.35)]"
+                        : "bg-gradient-to-tr from-[#0a3d24] via-emerald-500 to-amber-400 shadow-[0_5px_20px_rgba(10,61,36,0.16)] group-hover:shadow-[0_10px_28px_rgba(10,61,36,0.28)]"
+                    }`}
+                  >
+                    {/* Outer White Border Ring */}
+                    <div className="w-[66px] h-[66px] xs:w-[74px] xs:h-[74px] sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full overflow-hidden bg-white p-0.5 sm:p-1 ring-2 ring-white">
+                      <div className="w-full h-full rounded-full overflow-hidden bg-stone-50 relative">
+                        <img
+                          src={imageSrc}
+                          alt={config.title}
+                          className="w-full h-full object-cover group-hover:scale-112 group-hover:rotate-1 transition-transform duration-500 ease-out"
+                          onError={(e: any) => {
+                            e.target.src = "/categories/vegetables_4k.jpg?v=4";
+                          }}
+                        />
+                        {/* Gentle inner overlay on hover */}
+                        <div className="absolute inset-0 bg-[#0a3d24]/0 group-hover:bg-[#0a3d24]/10 transition-colors duration-300 rounded-full" />
+                      </div>
                     </div>
-                  </div>
-                </div>
 
-                {/* Typography: Category Name */}
-                <div className="mt-2.5 sm:mt-3 flex flex-col items-center">
-                  <span className="font-extrabold text-xs sm:text-sm md:text-base text-stone-900 group-hover:text-[#0a3d24] transition-colors duration-200 tracking-tight leading-tight">
-                    {config.title}
-                  </span>
-                </div>
-              </motion.div>
-            );
-          })}
+                    {/* Value Combo Savings Pill Tag */}
+                    {isCombo && (
+                      <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-600 to-amber-500 text-white font-black text-[8px] sm:text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded-full shadow-xs border border-white whitespace-nowrap">
+                        Save 20%
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Typography: Category Name */}
+                  <div className="mt-2 sm:mt-2.5 flex flex-col items-center">
+                    <span className="font-extrabold text-[11px] xs:text-xs sm:text-sm md:text-base text-stone-900 group-hover:text-[#0a3d24] transition-colors duration-200 tracking-tight leading-tight line-clamp-1">
+                      {config.title}
+                    </span>
+                    <span className="text-[10px] sm:text-xs text-stone-500 font-medium tracking-tight mt-0.5 hidden xs:block">
+                      {config.subtitle}
+                    </span>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

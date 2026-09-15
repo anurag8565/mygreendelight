@@ -75,7 +75,11 @@ function ShopContent() {
       try {
         const res = await axios.get("/api/admin/category");
         if (res.data?.success && Array.isArray(res.data.categories)) {
-          setCategories(res.data.categories);
+          const list = [...res.data.categories];
+          if (!list.some((c) => (c.name || "").toLowerCase().includes("combo"))) {
+            list.push({ _id: "combos-category-bundle", name: "Combos", image: "/combo_banner.jpg" });
+          }
+          setCategories(list);
         }
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -241,7 +245,9 @@ function ShopContent() {
                 {searchParam
                   ? `Search: "${searchParam}"`
                   : categoryParam
-                  ? `Fresh ${categoryParam} in Bhopal`
+                  ? categoryParam.toLowerCase().includes("combo")
+                    ? "Value Combos & Savings Packs"
+                    : `Fresh ${categoryParam} in Bhopal`
                   : "Buy Fresh Vegetables & Fruits in Bhopal"}
               </h1>
               <span className="text-[10px] font-bold uppercase text-[#0a3d24] bg-emerald-50 border border-emerald-200/80 px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">

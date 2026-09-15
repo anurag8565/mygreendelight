@@ -4,7 +4,6 @@ import TrustRibbon from './TrustRibbon'
 import Categoryslider from './Categoryslider'
 import FilteredProduceSection from './FilteredProduceSection'
 import FlashDeals from './FlashDeals'
-import CombosSection from './CombosSection'
 import DailyRewardWidget from './DailyRewardWidget'
 import Grocery from '@/model/groseri.model'
 import Category from '@/model/category.model'
@@ -136,12 +135,7 @@ export default async function Userdashbord() {
         <FlashDeals products={plainFlash} />
       )}
 
-      {/* 6. Save-More Value Combos & Multipacks */}
-      {plainCombos && plainCombos.length > 0 && (
-        <CombosSection initialCombos={plainCombos} />
-      )}
-
-      {/* 7. Bhopal Community Society Bulk-Drop & Pool Savings */}
+      {/* 6. Bhopal Community Society Bulk-Drop & Pool Savings */}
       <BhopalSocietyPool />
 
       {/* 8. Bhopal Parchi & WhatsApp Voice Shopping (No Typing Required) */}
