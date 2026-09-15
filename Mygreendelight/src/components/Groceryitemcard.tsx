@@ -83,21 +83,21 @@ export default function Groceryitemcard({
 
   return (
     <motion.div
-      whileHover={{ y: -4 }}
-      transition={{ type: "spring", stiffness: 320, damping: 22 }}
-      className={`w-full bg-white rounded-2xl sm:rounded-3xl border border-stone-200/80 hover:border-[#0a3d24]/50 shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_rgba(10,61,36,0.08)] transition-all duration-300 flex flex-col justify-between relative group font-sans ${
+      whileHover={{ y: -5 }}
+      transition={{ type: "spring", stiffness: 350, damping: 24 }}
+      className={`w-full bg-white rounded-2xl sm:rounded-3xl border border-stone-200/90 hover:border-[#0a3d24]/60 card-luxury-shadow card-luxury-hover transition-all duration-300 flex flex-col justify-between relative group font-sans ${
         isList
           ? "flex-row max-w-full gap-4 p-3.5 min-h-[140px]"
-          : "h-[330px] sm:h-[350px] p-3 sm:p-3.5"
+          : "h-[335px] sm:h-[355px] p-3 sm:p-3.5"
       }`}
     >
-      {/* 1. TOP IMAGE BOX */}
+      {/* 1. TOP IMAGE BOX with Organic Produce Glow */}
       <Link
         href={`/product/${item._id}`}
-        className={`relative bg-stone-50/80 group-hover:bg-emerald-50/20 transition-colors duration-300 rounded-xl sm:rounded-2xl flex items-center justify-center cursor-pointer overflow-hidden shrink-0 border border-stone-100 ${
+        className={`relative bg-stone-50/90 group-hover:bg-emerald-50/30 card-fresh-glow transition-all duration-300 rounded-xl sm:rounded-2xl flex items-center justify-center cursor-pointer overflow-hidden shrink-0 border border-stone-100/90 ${
           isList
             ? "w-[115px] h-[115px] sm:w-[135px] sm:h-[135px]"
-            : "w-full h-[140px] sm:h-[155px]"
+            : "w-full h-[142px] sm:h-[158px]"
         }`}
       >
         <img
@@ -108,19 +108,19 @@ export default function Groceryitemcard({
             (e.target as HTMLImageElement).src =
               "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=500&q=80";
           }}
-          className="w-full h-full max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500 ease-out p-2"
+          className="w-full h-full max-h-full max-w-full object-contain group-hover:scale-108 transition-transform duration-500 ease-out p-2.5 drop-shadow-[0_4px_8px_rgba(0,0,0,0.06)]"
         />
 
         {/* Minimalist Consistent Pill Badges */}
         <div className="absolute top-2 left-2 flex flex-col gap-1.5 z-10">
           {item.isFeatured && (
-            <span className="bg-amber-50/90 border border-amber-200/90 text-amber-900 text-[8.5px] font-bold px-2 py-0.5 rounded-full shadow-2xs flex items-center gap-1 tracking-wide">
+            <span className="bg-amber-50/95 border border-amber-300/90 text-amber-950 text-[8.5px] font-extrabold px-2 py-0.5 rounded-full shadow-2xs flex items-center gap-1 tracking-wide backdrop-blur-xs">
               <Sparkles size={9} className="text-amber-600" />
               <span>Featured</span>
             </span>
           )}
           {discountPercent > 0 && (
-            <span className="bg-[#0a3d24] text-white text-[9.5px] font-bold px-2 py-0.5 rounded-full shadow-2xs tracking-wide">
+            <span className="bg-[#0a3d24] text-white text-[9.5px] font-black px-2 py-0.5 rounded-full shadow-2xs tracking-wide">
               {discountPercent}% OFF
             </span>
           )}
@@ -211,15 +211,15 @@ export default function Groceryitemcard({
           </div>
 
           {/* PRICE ROW & SAVINGS */}
-          <div className="flex items-center gap-1.5 mt-1.5 h-[22px]">
-            <span className="text-sm sm:text-base font-extrabold text-stone-950 group-hover:text-[#0a3d24] transition-colors shrink-0">
+          <div className="flex items-center gap-1.5 mt-1.5 h-[24px]">
+            <span className="text-base sm:text-lg font-black text-stone-950 group-hover:text-[#0a3d24] transition-colors shrink-0 tracking-tight">
               ₹{displayPrice}
             </span>
-            <span className="text-[11px] text-stone-400 line-through font-normal shrink-0">
+            <span className="text-[11.5px] text-stone-400 line-through font-normal shrink-0">
               ₹{activeMRP}
             </span>
             {activeMRP > displayPrice && (
-              <span className="text-[9.5px] font-bold text-[#0a3d24] bg-emerald-50/90 border border-emerald-200/70 px-1.5 py-0.5 rounded-md ml-auto shrink-0 truncate max-w-[75px]">
+              <span className="text-[9.5px] font-extrabold text-[#0a3d24] bg-emerald-50/95 border border-emerald-300/80 px-1.5 py-0.5 rounded-md ml-auto shrink-0 truncate max-w-[80px]">
                 Save ₹{activeMRP - displayPrice}
               </span>
             )}
@@ -260,9 +260,9 @@ export default function Groceryitemcard({
                   })
                 );
               }}
-              className="w-full h-[38px] rounded-xl flex items-center justify-center gap-1.5 font-bold text-xs transition-all duration-150 border-1.5 border-[#0a3d24] cursor-pointer bg-white text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white hover:shadow-[0_4px_14px_rgba(10,61,36,0.2)] shadow-2xs active:scale-92"
+              className="w-full h-[38px] rounded-xl flex items-center justify-center gap-1.5 font-black text-xs tracking-wide transition-all duration-150 border border-[#0a3d24]/80 cursor-pointer bg-[#0a3d24]/5 text-[#0a3d24] hover:bg-[#0a3d24] hover:text-white hover:shadow-[0_6px_18px_rgba(10,61,36,0.25)] shadow-2xs active:scale-92"
             >
-              <Plus size={14} className="stroke-[2.5]" />
+              <Plus size={15} className="stroke-[2.8]" />
               <span>ADD</span>
             </motion.button>
           ) : (

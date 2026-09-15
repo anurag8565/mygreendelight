@@ -151,7 +151,7 @@ export default function CategorySlider({
         </div>
 
         {/* Circular Stories-Style Avatar Grid (Responsive & Fluid) */}
-        <div className="grid grid-cols-3 gap-3 sm:gap-6 md:gap-8 max-w-2xl mx-auto">
+        <div className="grid grid-cols-3 gap-3.5 sm:gap-6 md:gap-8 max-w-2xl mx-auto">
           {displayList.map((item, idx) => {
             const rawKey = (item.name || "").toLowerCase().trim();
             const matchedKey =
@@ -169,22 +169,22 @@ export default function CategorySlider({
               <motion.div
                 key={item._id || item.name || idx}
                 whileTap={{ scale: 0.92 }}
-                whileHover={{ y: -5 }}
+                whileHover={{ y: -6 }}
                 transition={{ type: "spring", stiffness: 400, damping: 22 }}
                 onClick={() =>
                   router.push(`/shop?category=${encodeURIComponent(config.path)}`)
                 }
                 className="group cursor-pointer flex flex-col items-center text-center select-none"
               >
-                {/* Glowing Circular Avatar with Double Ring */}
-                <div className="relative p-1 rounded-full bg-gradient-to-tr from-emerald-600 via-emerald-400 to-amber-300 shadow-[0_6px_20px_rgba(10,61,36,0.15)] group-hover:shadow-[0_10px_28px_rgba(10,61,36,0.28)] transition-all duration-300">
-                  {/* Subtle rotating glow ring on hover */}
-                  <div className="w-20 h-20 xs:w-24 xs:h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden bg-white p-1 ring-2 ring-white">
+                {/* Glowing Circular Avatar with Double Ring & Ambient Shadow */}
+                <div className="relative p-1 rounded-full bg-gradient-to-tr from-[#0a3d24] via-emerald-500 to-amber-400 shadow-[0_6px_22px_rgba(10,61,36,0.18)] group-hover:shadow-[0_12px_32px_rgba(10,61,36,0.3)] transition-all duration-300">
+                  {/* Outer White Border Ring */}
+                  <div className="w-21 h-21 xs:w-25 xs:h-25 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden bg-white p-1 ring-2 ring-white">
                     <div className="w-full h-full rounded-full overflow-hidden bg-stone-50 relative">
                       <img
                         src={imageSrc}
                         alt={config.title}
-                        className="w-full h-full object-cover group-hover:scale-112 group-hover:rotate-2 transition-transform duration-500 ease-out"
+                        className="w-full h-full object-cover group-hover:scale-115 group-hover:rotate-2 transition-transform duration-500 ease-out"
                         onError={(e: any) => {
                           e.target.src = "/categories/vegetables_4k.jpg?v=4";
                         }}
@@ -196,11 +196,11 @@ export default function CategorySlider({
                 </div>
 
                 {/* Typography with Subtitle Pill */}
-                <div className="mt-2 sm:mt-2.5 flex flex-col items-center">
-                  <span className="font-extrabold text-xs sm:text-sm md:text-base text-stone-900 group-hover:text-[#0a3d24] transition-colors duration-200 tracking-tight leading-tight">
+                <div className="mt-2.5 sm:mt-3 flex flex-col items-center">
+                  <span className="font-black text-xs sm:text-sm md:text-base text-stone-900 group-hover:text-[#0a3d24] transition-colors duration-200 tracking-tight leading-tight">
                     {config.title}
                   </span>
-                  <span className="text-[9.5px] sm:text-[11px] text-stone-500 font-semibold mt-0.5 group-hover:text-stone-700 transition-colors">
+                  <span className="text-[9.5px] sm:text-[11px] text-[#0a3d24] bg-emerald-50/90 border border-emerald-200/80 px-2 py-0.5 rounded-full font-bold mt-1 shadow-2xs group-hover:bg-emerald-100 transition-colors">
                     {config.subtitle}
                   </span>
                 </div>

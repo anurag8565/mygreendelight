@@ -154,7 +154,7 @@ export default async function Userdashbord() {
 
              <ProductCarousel>
                {plainOrderAgain.map((item: any) => (
-                  <div key={item._id} className="w-[170px] sm:w-[210px] md:w-[225px] snap-start shrink-0 flex flex-col h-[330px] sm:h-[350px]">
+                  <div key={item._id} className="w-[170px] sm:w-[210px] md:w-[225px] snap-start shrink-0 flex flex-col h-[335px] sm:h-[355px]">
                      <Groceryitemcard item={item} />
                   </div>
                ))}

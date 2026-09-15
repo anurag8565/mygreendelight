@@ -662,7 +662,10 @@ export default function Nav({ user }: { user?: iUser | null }) {
                 title="Change delivery location"
               >
                 <MapPin size={11} className="text-[#0a3d24] shrink-0" />
-                <span className="truncate max-w-[130px] sm:max-w-[170px] font-semibold text-stone-800">{location}</span>
+                <span className="truncate max-w-[110px] sm:max-w-[150px] font-semibold text-stone-800">{location}</span>
+                <span className="bg-amber-100 text-amber-950 font-black text-[9px] px-1.5 py-0.2 rounded-full border border-amber-300/80 shrink-0">
+                  10-15m
+                </span>
                 <ChevronDown size={11} className="shrink-0 text-stone-400" />
               </button>
             </div>
@@ -670,14 +673,19 @@ export default function Nav({ user }: { user?: iUser | null }) {
 
           {/* Location Dropdown (Desktop) */}
           <div
-            className="hidden lg:flex items-center gap-2 shrink-0 cursor-pointer group relative hover:opacity-90 transition"
+            className="hidden lg:flex items-center gap-2.5 shrink-0 cursor-pointer group relative hover:opacity-90 transition"
             onClick={() => setShowLocationPopup(true)}
           >
-            <div className="w-9 h-9 rounded-xl bg-emerald-50 text-[#0a3d24] flex items-center justify-center group-hover:bg-[#0a3d24] group-hover:text-white transition-colors">
+            <div className="w-9 h-9 rounded-xl bg-emerald-50 text-[#0a3d24] flex items-center justify-center group-hover:bg-[#0a3d24] group-hover:text-white transition-colors shadow-2xs">
               <MapPin size={18} />
             </div>
             <div className="flex flex-col">
-              <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider">Deliver to</span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider">Deliver to</span>
+                <span className="bg-amber-100 text-amber-950 font-black text-[9px] px-1.5 py-0.2 rounded-full border border-amber-300/80">
+                  ⚡ 10-15 Min
+                </span>
+              </div>
               <div className="text-xs sm:text-sm font-black text-stone-800 flex items-center gap-1 group-hover:text-[#0a3d24] transition-colors">
                 <span className="truncate max-w-[160px]">{location}</span>
                 <ChevronDown size={14} className="shrink-0 text-stone-400" />
