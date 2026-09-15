@@ -53,7 +53,7 @@ export default function TermsConditionsPage() {
             <ul className="list-disc pl-5 space-y-1.5 text-xs text-gray-600">
               <li><strong>Farm Fresh Pricing:</strong> All vegetable and fruit rates are updated daily based on daily farm harvest arrivals and quality grading.</li>
               <li><strong>Weight & Natural Variations:</strong> Natural produce may experience slight weight variances (within ±3%) during sorting, cleaning, and transit.</li>
-              <li><strong>Delivery Slots:</strong> Orders placed under Instant Express are dispatched within 15-45 minutes. Scheduled morning/evening batch slots are delivered within their allocated time window.</li>
+              <li><strong>Delivery Slots:</strong> Orders placed under Instant Express are dispatched within 10-15 minutes across Bhopal societies. Scheduled morning batch slots are delivered within their allocated time window.</li>
             </ul>
           </section>
 

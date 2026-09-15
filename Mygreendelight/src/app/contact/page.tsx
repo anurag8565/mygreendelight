@@ -166,7 +166,7 @@ export default function ContactPage() {
     },
     {
       q: "Aaj Bhopal me tamatar pyaz aur fresh vegetables ka taaza rate kya hai?",
-      a: "SubziQuick par daily subah 5:00 AM sunrise harvest ke fresh rates update hote hain. Direct kisan farms se sourcing ke karan koi middleman commission nahi hota, jisse transparent aur kifayati rates milte hain.",
+      a: "SubziQuick par daily subah taaza harvest ke fresh rates update hote hain. Direct local Bhopal & Sehore farms se sourcing ke karan koi middleman commission nahi hota, jisse transparent aur sahi daam milte hain.",
     },
     {
       q: "What makes SubziQuick the best app to buy fresh vegetables in Bhopal?",
