@@ -123,42 +123,39 @@ export default function FilteredProduceSection({
   };
 
   return (
-    <section className="w-full py-5 sm:py-7 bg-[#faf9f5] font-sans border-b border-stone-200/70 select-none">
+    <section className="w-full py-3.5 sm:py-5 bg-[#faf9f5] font-sans border-b border-stone-200/70 select-none">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         
-        {/* Section Header: Line 1 Title, Line 2 Clean Controls Bar */}
-        <div className="mb-3.5 sm:mb-4">
-          {/* Row 1: Full Title with Icon (Never gets cut off) */}
-          <div className="flex items-center gap-2">
-            <Leaf size={18} className="text-[#0a3d24] shrink-0" />
-            <h2 className="text-[17px] sm:text-xl font-black text-stone-900 tracking-tight font-heading">
-              Fresh Farm Harvest
-            </h2>
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse ml-0.5 shrink-0" />
+        {/* Clean Balanced Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 mb-3 sm:mb-4">
+          <div>
+            <div className="flex items-center gap-1.5">
+              <Leaf size={17} className="text-[#0a3d24] shrink-0" />
+              <h2 className="text-[16px] sm:text-lg md:text-xl font-black text-stone-900 tracking-tight font-heading">
+                Fresh Farm Harvest
+              </h2>
+            </div>
+            <p className="text-[11px] sm:text-xs text-stone-400 font-medium mt-0.5">
+              Daily mandi harvest &bull; Delivered in 10-15 mins
+            </p>
           </div>
 
-          {/* Row 2: Subtitle on left (desktop), Controls on right / stacked nicely on mobile */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mt-1.5 pt-0.5">
-            <p className="text-[11px] sm:text-xs text-stone-500 font-medium">
-              Handpicked daily from local mandi &bull; Delivered in 10-15 mins
-            </p>
-
-            {/* Clean Controls Line: [Featured Dropdown] [Grid/List Toggle] [See All ->] */}
-            <div className="flex items-center gap-2 sm:gap-2.5 self-start sm:self-auto">
-              {/* Sort Pill */}
-              <div className="relative">
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as any)}
-                  className="appearance-none bg-white hover:bg-stone-50 text-stone-700 text-xs font-semibold py-1.5 pl-3 pr-7 rounded-full border border-stone-200/90 shadow-2xs outline-none focus:border-[#0a3d24] cursor-pointer transition-colors"
-                >
-                  <option value="default">Featured</option>
-                  <option value="price_asc">Price: Low to High</option>
-                  <option value="price_desc">Price: High to Low</option>
-                  <option value="rating">Top Rated</option>
-                </select>
-                <ChevronDown size={12} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" />
-              </div>
+          {/* Clean Unified Controls Row */}
+          <div className="flex items-center gap-2 self-start sm:self-auto">
+            {/* Sort Pill */}
+            <div className="relative">
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as any)}
+                className="appearance-none bg-white hover:bg-stone-50 text-stone-700 text-xs font-semibold py-1.5 pl-3 pr-7 rounded-full border border-stone-200/90 shadow-2xs outline-none focus:border-[#0a3d24] cursor-pointer transition-colors"
+              >
+                <option value="default">Featured</option>
+                <option value="price_asc">Price: Low to High</option>
+                <option value="price_desc">Price: High to Low</option>
+                <option value="rating">Top Rated</option>
+              </select>
+              <ChevronDown size={12} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" />
+            </div>
 
               {/* Grid / List Switcher */}
               <div className="flex items-center bg-white p-0.5 rounded-full border border-stone-200/90 shadow-2xs">
@@ -215,7 +212,6 @@ export default function FilteredProduceSection({
                 <ChevronRight size={13} className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]" />
               </Link>
             </div>
-          </div>
         </div>
 
         {/* 
