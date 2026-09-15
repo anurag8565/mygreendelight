@@ -14,8 +14,11 @@ export default function ActiveOrderPulseBar() {
   const [showModal, setShowModal] = useState(false);
   const [dismissedId, setDismissedId] = useState<string | null>(null);
 
-  // Don't show the floating bar if we are already on the dedicated track order page
-  const isOnTrackPage = pathname.startsWith("/track/");
+  // Don't show the floating bar if we are already on tracking, ordersuccess, or checkout pages
+  const isExcludedPage =
+    pathname.startsWith("/track") ||
+    pathname.startsWith("/user/ordersuccess") ||
+    pathname.startsWith("/user/checkout");
 
   const fetchActiveOrder = async () => {
     try {
@@ -53,7 +56,7 @@ export default function ActiveOrderPulseBar() {
     };
   }, []);
 
-  if (isOnTrackPage || !activeOrder || activeOrder._id === dismissedId) {
+  if (isExcludedPage || !activeOrder || activeOrder._id === dismissedId) {
     return null;
   }
 
@@ -62,73 +65,67 @@ export default function ActiveOrderPulseBar() {
 
   return (
     <>
-      {/* 🟢 FLOATING ACTIVE ORDER PULSE PILL */}
-      <div className="fixed bottom-18 sm:bottom-6 left-1/2 -translate-x-1/2 z-[899] w-[94%] max-w-md font-sans select-none">
+      {/* 🟢 ULTRA-SLEEK COMPACT FLOATING ORDER PILL */}
+      <div className="fixed bottom-16 sm:bottom-4 left-1/2 -translate-x-1/2 z-[899] w-auto max-w-[92vw] sm:max-w-md font-sans select-none pointer-events-auto">
         <motion.div
-          initial={{ y: 50, opacity: 0, scale: 0.92 }}
+          initial={{ y: 30, opacity: 0, scale: 0.94 }}
           animate={{ y: 0, opacity: 1, scale: 1 }}
-          exit={{ y: 50, opacity: 0, scale: 0.92 }}
-          transition={{ type: "spring", stiffness: 450, damping: 28 }}
-          className="relative rounded-2xl sm:rounded-3xl p-3 sm:p-3.5 bg-stone-950/95 backdrop-blur-md text-white border border-emerald-500/40 shadow-[0_10px_30px_rgba(10,61,36,0.35)] flex items-center justify-between gap-2.5 overflow-hidden"
+          exit={{ y: 30, opacity: 0, scale: 0.94 }}
+          transition={{ type: "spring", stiffness: 450, damping: 30 }}
+          className="rounded-full px-3 py-1.5 sm:px-3.5 sm:py-2 bg-[#072817]/95 backdrop-blur-md text-white border border-emerald-500/30 shadow-[0_6px_20px_rgba(0,0,0,0.25)] flex items-center gap-2 sm:gap-3"
         >
-          {/* Ambient Background Gradient Glow */}
-          <div className="absolute -left-8 -top-8 w-24 h-24 bg-emerald-500/20 rounded-full blur-xl pointer-events-none" />
-
-          {/* Left: Animated Icon + Live Pulse Indicator */}
+          {/* Left: Compact Scooter / Packing Icon */}
           <div
             onClick={() => {
               triggerHaptic("medium");
               setShowModal(true);
             }}
-            className="flex items-center gap-2.5 min-w-0 flex-1 cursor-pointer"
+            className="flex items-center gap-2 cursor-pointer min-w-0"
           >
-            {/* Scooter Badge with Ping Radar */}
-            <div className="relative shrink-0">
-              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-[#0a3d24] to-emerald-600 text-white flex items-center justify-center font-black shadow-inner border border-emerald-400/40">
-                <Truck size={17} className={isOut ? "animate-bounce" : ""} />
+            <div className="relative shrink-0 flex items-center justify-center">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping absolute -top-0.5 -right-0.5" />
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-emerald-700/60 border border-emerald-400/40 flex items-center justify-center text-emerald-200">
+                <Truck size={14} className={isOut ? "animate-bounce" : ""} />
               </div>
             </div>
 
-            {/* Info Text */}
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-1.5">
-                <span className="font-mono text-[10px] font-black text-amber-300">
-                  #SZQ-{shortId}
+            {/* Info Text: Single Line Sleek Pill */}
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 leading-none">
+                <span className="text-[10px] font-bold text-amber-300 font-mono">
+                  #{shortId}
                 </span>
-                <span className="text-[9px] font-black uppercase px-2 py-0.2 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
-                  {isOut ? "In-Transit 🛵" : "Packing 🌿"}
+                <span className="text-[9px] font-black uppercase text-emerald-300">
+                  • {isOut ? "On the Way" : "Packing"}
                 </span>
               </div>
-              <p className="text-xs font-black text-stone-100 truncate mt-0.5">
-                {isOut
-                  ? "Rider Raaste Me Hai (Bhopal Express)"
-                  : "Fresh Batch Sorted & Assigned"}
+              <p className="text-[11px] font-semibold text-stone-200 truncate mt-0.5">
+                {isOut ? "10-15 Min Bhopal Express" : "Fresh Farm Packing"}
               </p>
             </div>
           </div>
 
-          {/* Right: Action Buttons */}
-          <div className="flex items-center gap-1.5 shrink-0">
+          {/* Right: Small Track Button + Dismiss */}
+          <div className="flex items-center gap-1 shrink-0 ml-1">
             <button
               type="button"
               onClick={() => {
                 triggerHaptic("medium");
                 setShowModal(true);
               }}
-              className="bg-[#0a3d24] hover:bg-[#062415] text-white text-[11px] sm:text-xs font-black px-3.5 py-2 rounded-xl flex items-center gap-1 shadow-sm transition active:scale-95 cursor-pointer border border-emerald-600/50"
+              className="bg-white hover:bg-emerald-50 text-[#072817] text-[10px] sm:text-[11px] font-black px-2.5 py-1 rounded-full flex items-center gap-0.5 transition active:scale-95 cursor-pointer shadow-2xs"
             >
               <span>Track</span>
-              <ChevronRight size={13} />
+              <ChevronRight size={11} />
             </button>
 
             <button
               type="button"
               onClick={() => setDismissedId(activeOrder._id)}
-              className="w-7 h-7 rounded-xl bg-white/10 hover:bg-white/20 text-stone-400 hover:text-white flex items-center justify-center transition cursor-pointer"
-              title="Dismiss for now"
+              className="w-5 h-5 rounded-full hover:bg-white/10 text-stone-400 hover:text-white flex items-center justify-center transition cursor-pointer text-xs"
+              title="Close"
             >
-              <X size={13} />
+              <X size={11} />
             </button>
           </div>
         </motion.div>

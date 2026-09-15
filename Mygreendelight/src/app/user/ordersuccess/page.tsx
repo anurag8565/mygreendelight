@@ -407,7 +407,7 @@ function OrderSuccessContent() {
                     </p>
                     <p className="text-[11px] text-emerald-700 font-semibold inline-flex items-center gap-1">
                       <Zap size={11} className="text-amber-500 fill-amber-500" />
-                      Express 15-45 Mins
+                      Express 10-15 Mins
                     </p>
                   </div>
                 </div>
