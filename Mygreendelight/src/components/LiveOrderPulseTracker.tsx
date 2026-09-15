@@ -112,7 +112,7 @@ export default function LiveOrderPulseTracker({
     {
       id: "placed",
       title: "Order Placed",
-      detail: "Karond Mandi batch locked",
+      detail: "SubziQuick fresh batch locked",
       icon: Store,
     },
     {
@@ -196,7 +196,7 @@ export default function LiveOrderPulseTracker({
                 ? "SubziQuick Rider Raaste Me Hai! 🛵"
                 : isCancelled
                 ? "Order Cancelled"
-                : "Karond Mandi Lot Pack Ho Raha Hai 🌿"}
+                : "SubziQuick Order Pack Ho Raha Hai 🌿"}
             </h2>
             <p className="text-xs text-emerald-200/90 font-medium mt-0.5">
               {isDelivered
@@ -248,12 +248,12 @@ export default function LiveOrderPulseTracker({
                 transition={{ duration: 1.2, ease: "easeInOut" }}
               />
 
-              {/* Start Point: Mandi Hub */}
+              {/* Start Point: SubziQuick Hub */}
               <div className="absolute left-0 -top-2 flex flex-col items-center">
                 <div className="w-5 h-5 rounded-full bg-emerald-400 text-stone-950 flex items-center justify-center shadow-xs border-2 border-white">
                   <Store size={10} />
                 </div>
-                <span className="text-[8.5px] font-bold text-emerald-200 mt-0.5">Mandi Hub</span>
+                <span className="text-[8.5px] font-bold text-emerald-200 mt-0.5">SubziQuick Hub</span>
               </div>
 
               {/* Moving Electric Scooter with Headlight Pulse */}
@@ -465,7 +465,7 @@ export default function LiveOrderPulseTracker({
                   Assigning Nearest Bhopal Delivery Partner...
                 </h5>
                 <p className="text-[11px] text-stone-500">
-                  Mandi lot pack hote hi rider assign ho jayega (2-3 minutes).
+                  Order pack hote hi rider assign ho jayega (2-3 minutes).
                 </p>
               </div>
             </div>
@@ -475,7 +475,7 @@ export default function LiveOrderPulseTracker({
         {/* 🌿 Bhopal Doorstep Freshness Promise */}
         <div className="pt-1 flex items-center justify-center gap-3 text-[10.5px] font-bold text-stone-500">
           <span className="flex items-center gap-1 text-[#0a3d24]">
-            <ShieldCheck size={13} /> 100% Karond Mandi Taaza
+            <ShieldCheck size={13} /> 100% Farm Fresh Taaza
           </span>
           <span>•</span>
           <span>No Chemicals / No Stale Stock</span>

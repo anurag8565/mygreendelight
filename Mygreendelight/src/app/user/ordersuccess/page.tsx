@@ -57,7 +57,7 @@ function OrderSuccessContent() {
       try {
         const shortId = orderId ? `#${String(orderId).slice(-6).toUpperCase()}` : "";
         const notifTitle = `🌿 SubziQuick: Order Confirmed ${shortId}`;
-        const notifBody = "Aapka order successfully place ho gaya hai! 10-15 min me Bagsewaniya Mandi hub se deliver hoga.";
+        const notifBody = "Aapka order successfully place ho gaya hai! 10-15 min me SubziQuick hub se deliver hoga.";
 
         // 1. OneSignal User Tagging
         if ((window as any).OneSignalDeferred) {

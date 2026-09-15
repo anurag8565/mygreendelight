@@ -257,7 +257,7 @@ function ShopContent() {
               </span>
             </div>
             <p className="text-[11px] sm:text-xs text-gray-500 font-medium mt-0.5">
-              5:00 AM Direct Mandi Harvest • Handpicked & Triple-Checked • Express Delivery Across Bhopal
+              5:00 AM Farm Fresh Harvest • Handpicked & Triple-Checked • Express Delivery Across Bhopal
             </p>
           </div>
 
@@ -760,7 +760,7 @@ function ShopLoadingFallback() {
             Buy Fresh Vegetables &amp; Fruits in Bhopal
           </h1>
           <p className="text-[11px] sm:text-xs text-gray-500 font-medium mt-0.5">
-            5:00 AM Direct Mandi Harvest • Handpicked &amp; Triple-Checked • Express Delivery Across Bhopal
+            5:00 AM Farm Fresh Harvest • Handpicked &amp; Triple-Checked • Express Delivery Across Bhopal
           </p>
         </div>
         <div className="flex items-center justify-center py-24">

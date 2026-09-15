@@ -261,7 +261,7 @@ export default function ProductDetailsClient({
             <span className="hidden sm:inline-block text-emerald-300/60">•</span>
             <span className="flex items-center gap-1.5 shrink-0">
               <Leaf size={13} className="text-emerald-300" />
-              <span>5:00 AM Direct Mandi Harvest</span>
+              <span>5:00 AM Farm Fresh Harvest</span>
             </span>
             <span className="hidden sm:inline-block text-emerald-300/60">•</span>
             <span className="flex items-center gap-1.5 shrink-0">
@@ -339,7 +339,7 @@ export default function ProductDetailsClient({
                 <div className="absolute bottom-3 inset-x-4 flex items-center justify-center pointer-events-none">
                   <span className="bg-white/90 backdrop-blur-md border border-stone-200/90 text-stone-700 text-[10px] sm:text-[11px] font-bold px-3 py-1 rounded-full shadow-2xs flex items-center gap-1.5">
                     <Leaf size={12} className="text-[#0a3d24]" />
-                    <span>Harvested at 5:00 AM • Bhopal Mandi</span>
+                    <span>Harvested at 5:00 AM • SubziQuick Fresh Hub</span>
                   </span>
                 </div>
 

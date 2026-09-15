@@ -171,7 +171,7 @@ export default function AppSplashScreen() {
 
               <span className="bg-emerald-500/15 border border-emerald-400/25 text-emerald-300 text-[10px] font-bold px-3 py-1 rounded-full flex items-center gap-1.5 backdrop-blur-xs">
                 <Leaf size={11} className="text-emerald-300" />
-                <span>Karond Mandi Daily Fresh</span>
+                <span>100% Farm-Fresh Daily</span>
               </span>
             </motion.div>
           </div>

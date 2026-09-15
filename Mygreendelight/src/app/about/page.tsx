@@ -34,16 +34,16 @@ export default function AboutPage() {
   const stats = [
     { value: "2020", label: "Founded from a Thela", sub: "Lockdown Struggle" },
     { value: "10-15 Min", label: "Express Delivery", sub: "Across Bhopal" },
-    { value: "5:00 AM", label: "Daily Mandi Harvest", sub: "Zero Cold Storage" },
-    { value: "₹0", label: "Platform Surcharge", sub: "Mandi Wholesale Rates" },
+    { value: "5:00 AM", label: "Daily Farm Harvest", sub: "Zero Cold Storage" },
+    { value: "₹0", label: "Platform Surcharge", sub: "Direct Store Rates" },
   ];
 
   const corePromises = [
     {
       step: "01",
       icon: Leaf,
-      title: "5:00 AM Sunrise Mandi Harvest",
-      desc: "Seedha Bhopal ki Karond Mandi aur local kisanon se taazi sabziyan. Zero chemical treatment, zero days-old cold storage.",
+      title: "5:00 AM Sunrise Farm Harvest",
+      desc: "Seedha Bhopal ke local kisanon aur farms se taazi sabziyan. Zero chemical treatment, zero days-old cold storage.",
       tag: "Farm Fresh Daily",
     },
     {
@@ -56,8 +56,8 @@ export default function AboutPage() {
     {
       step: "03",
       icon: IndianRupee,
-      title: "Sahi Mandi Daam (Zero Hidden Fees)",
-      desc: "Direct wholesale mandi pricing. Zero platform fee, zero surge charges, aur ₹199 se upar free delivery.",
+      title: "Sahi Kifayati Daam (Zero Hidden Fees)",
+      desc: "Direct transparent store pricing. Zero platform fee, zero surge charges, aur ₹199 se upar free delivery.",
       tag: "Transparent Rates",
     },
     {
@@ -142,7 +142,7 @@ export default function AboutPage() {
 
             {/* Subtitle */}
             <p className="text-xs sm:text-base text-gray-600 font-medium max-w-2xl mx-auto leading-relaxed mb-6 sm:mb-8">
-              2020 mein shuru hua ek chhota sa sapna, aaj Bhopal ke hazaron parivaaron tak taazi mandi sabzi aur fal 10-15 minutes mein pahunchata hai — wahi papa ki imaandari, wahi taazgi, ab sirf ek click door.
+              2020 mein shuru hua ek chhota sa sapna, aaj Bhopal ke hazaron parivaaron tak taazi farm sabzi aur fal 10-15 minutes mein pahunchata hai — wahi papa ki imaandari, wahi taazgi, ab sirf ek click door.
             </p>
 
             {/* Action CTA Buttons */}
@@ -266,7 +266,7 @@ export default function AboutPage() {
                         Mere papa ki job chali gayi. Achanak, bina kisi warning ke. Ghar chalana tha, aur us waqt koi doosra option nazar nahi aa raha tha.
                       </p>
                       <p className="bg-amber-50/80 p-3 rounded-2xl border border-amber-200/60 font-medium text-gray-900">
-                        Papa ne haar nahi maani — unhone ek thela uthaya aur sabzi bechna shuru kar diya. Subah jaldi mandi jaana, din bhar galiyon mein thela ghumaana, garmi ho ya baarish — papa ne kabhi peeche mudkar nahi dekha.
+                        Papa ne haar nahi maani — unhone ek thela uthaya aur sabzi bechna shuru kar diya. Subah jaldi fresh harvest laana, din bhar galiyon mein thela ghumaana, garmi ho ya baarish — papa ne kabhi peeche mudkar nahi dekha.
                       </p>
                     </div>
                   </div>
@@ -276,7 +276,7 @@ export default function AboutPage() {
                 <div className="px-4 sm:px-6 pb-4 pt-2 border-t border-amber-100 flex items-center justify-between text-xs font-bold text-amber-900">
                   <span className="flex items-center gap-1.5">
                     <Scale size={14} className="text-amber-600" />
-                    <span>Karond Mandi Sunrise Procurement</span>
+                    <span>Sunrise Farm Fresh Procurement</span>
                   </span>
                   <span className="text-[10px] sm:text-[11px] font-mono text-amber-700 bg-amber-100/80 px-2 py-0.5 rounded">
                     Bhopal, 2020
@@ -433,7 +433,7 @@ export default function AboutPage() {
               <div className="lg:col-span-5 relative rounded-2xl overflow-hidden border border-gray-200 shadow-xs aspect-4/3 group">
                 <img
                   src="/mandi_packing_fresh.jpg"
-                  alt="Online Vegetable Delivery Bhopal - Mandi Fresh Sorting & Packing"
+                  alt="Online Vegetable Delivery Bhopal - Farm Fresh Sorting & Packing"
                   className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
@@ -442,7 +442,7 @@ export default function AboutPage() {
                     Pure Online Direct Model
                   </span>
                   <p className="text-xs sm:text-sm font-bold leading-tight">
-                    Subah Mandi Se Fresh Sorting, Seedha Aapke Kitchen Tak
+                    Subah Fresh Harvest Se Sorting, Seedha Aapke Kitchen Tak
                   </p>
                 </div>
               </div>
@@ -455,11 +455,11 @@ export default function AboutPage() {
                 </div>
 
                 <h2 className="text-lg sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight leading-tight mb-2.5">
-                  Online Fresh Vegetable & Fruit Delivery in Bhopal — <span className="text-[#0a3d24]">Seedha Mandi Daam Mein.</span>
+                  Online Fresh Vegetable & Fruit Delivery in Bhopal — <span className="text-[#0a3d24]">Kifayati Store Daam Mein.</span>
                 </h2>
 
                 <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal mb-4">
-                  SubziQuick par hum koi bada retail showroom nahi chalate jiska kharcha customer ke bill mein joda jaaye. Hum har subah 5:00 AM Karond Mandi jaate hain, taazi sabzi aur fal khud chunte hain, aur 10-15 minutes mein express deliver karte hain — transparent electronic weighing aur cash on delivery ke saath.
+                  SubziQuick par hum koi bada retail showroom nahi chalate jiska kharcha customer ke bill mein joda jaaye. Hum har subah 5:00 AM fresh farm harvest chunte hain, taazi sabzi aur fal select karte hain, aur 10-15 minutes mein express deliver karte hain — transparent electronic weighing aur cash on delivery ke saath.
                 </p>
 
                 {/* Localities Badges Grid */}
@@ -518,7 +518,7 @@ export default function AboutPage() {
                   Ek Thele Se Shuru Hui Kahani, Ab Aapke Ghar Tak.
                 </h2>
                 <p className="text-emerald-100/90 text-xs sm:text-sm leading-relaxed mb-6 font-medium">
-                  Aapke har order se ek mehanti parivaar ka hausla badhta hai. Aaj hi taazi mandi sabzi mangwaiye aur is safar ka hissa baniye.
+                  Aapke har order se ek mehanti parivaar ka hausla badhta hai. Aaj hi taazi farm sabzi mangwaiye aur is safar ka hissa baniye.
                 </p>
 
                 <div className="flex flex-wrap items-center gap-3">

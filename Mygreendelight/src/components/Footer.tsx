@@ -28,7 +28,7 @@ export default function Footer() {
             <div className="space-y-3">
               <Logo variant="white" />
               <p className="text-xs text-stone-300/80 font-normal leading-relaxed max-w-sm md:max-w-md lg:max-w-sm">
-                Bhopal&apos;s trusted farm-to-table delivery service. Direct 5:00 AM mandi harvest delivered straight to your doorstep in 15-25 minutes.
+                Bhopal&apos;s trusted farm-to-table delivery service. Direct 5:00 AM daily farm harvest delivered straight to your doorstep in 15-25 minutes.
               </p>
 
               {/* Quick Contact & Social Chips */}

@@ -29,7 +29,7 @@ export default function Hero({ banners = [] }: HeroProps) {
       iconType: "clock",
       tag: "5:00 AM Sunrise Harvest • 15 Min Express",
       title: "Direct From Local Bhopal & Sehore Farms",
-      subtitle: "Harvested at 5:00 AM daily • Wholesale mandi rates in Bhopal.",
+      subtitle: "Harvested at 5:00 AM daily • Best store prices in Bhopal.",
       btnText: "Order Fresh Produce",
       link: "/shop?category=Vegetables",
       image: "/banners/hero1.jpg",

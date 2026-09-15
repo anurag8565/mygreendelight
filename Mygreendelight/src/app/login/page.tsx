@@ -134,7 +134,7 @@ export default function Login() {
             <div className="relative z-10 mt-5">
               <h2 className="text-lg sm:text-xl font-black text-white">Welcome Back! 👋</h2>
               <p className="text-xs text-emerald-100/70 mt-0.5 max-w-xs font-medium">
-                Log in to order fresh mandi produce & check order status
+                Log in to order fresh farm produce & check order status
               </p>
             </div>
 
@@ -168,7 +168,7 @@ export default function Login() {
                 </div>
                 <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight tracking-tight">
                   Taaza Sabzi. <br />
-                  Direct Kisan Mandi Rates.
+                  Direct Kisan Fresh Rates.
                 </h2>
                 <p className="text-xs text-emerald-100/80 leading-relaxed font-medium">
                   Directly harvested at 4:30 AM and delivered in 10-15 minutes across Bhopal societies.

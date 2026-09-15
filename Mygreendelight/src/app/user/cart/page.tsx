@@ -358,7 +358,7 @@ export default function CartPage() {
               Your basket is empty
             </h2>
             <p className="text-xs text-stone-500 mb-6 leading-relaxed max-w-xs mx-auto">
-              Fresh 5:00 AM mandi harvest, exotic herbs, and daily saver combos are waiting for you.
+              Fresh 5:00 AM farm harvest, exotic herbs, and daily saver combos are waiting for you.
             </p>
             <Link
               href="/shop"
@@ -391,7 +391,7 @@ export default function CartPage() {
                 </div>
               )}
 
-              {/* Free Delivery Status & Mandi Direct Strip */}
+              {/* Free Delivery Status & Farm Direct Strip */}
               <div className={`border rounded-3xl p-3.5 sm:p-4 shadow-xs transition-all duration-300 ${
                 isFreeDelivery 
                   ? "bg-gradient-to-r from-emerald-50 via-white to-emerald-50 border-emerald-300" 
@@ -438,14 +438,14 @@ export default function CartPage() {
                 </div>
               </div>
 
-              {/* Total Mandi Direct Savings Banner */}
+              {/* Total Farm Direct Savings Banner */}
               {totalSavings > 0 && (
                 <div className="bg-gradient-to-r from-emerald-900 via-[#0a3d24] to-emerald-950 text-white rounded-2xl p-3 px-3.5 sm:px-4 flex items-center justify-between shadow-xs gap-2">
                   <div className="flex items-center gap-2 min-w-0">
                     <Sparkles size={16} className="text-amber-300 shrink-0" />
                     <div className="min-w-0">
                       <span className="font-black text-xs block text-white truncate sm:text-clip">
-                        You are saving ₹{totalSavings} on this Mandi direct order!
+                        You are saving ₹{totalSavings} on this farm-fresh order!
                       </span>
                       <span className="text-[10px] sm:text-[10.5px] text-emerald-200/80 font-medium block truncate sm:text-clip">
                         Direct farmer sourcing beats local market rates with zero middleman margin.
@@ -740,7 +740,7 @@ export default function CartPage() {
                   </div>
 
                   <div className="flex justify-between text-stone-600">
-                    <span>SubziQuick Mandi Price</span>
+                    <span>SubziQuick Store Price</span>
                     <span className="font-bold text-stone-900">₹{subtotal}</span>
                   </div>
 
@@ -777,7 +777,7 @@ export default function CartPage() {
                         To Pay
                       </span>
                       <span className="text-[10px] text-stone-400 font-medium">
-                        Inclusive of all Mandi taxes
+                        Inclusive of all taxes
                       </span>
                     </div>
                     <span className="text-2xl sm:text-3xl font-black text-[#0a3d24]">

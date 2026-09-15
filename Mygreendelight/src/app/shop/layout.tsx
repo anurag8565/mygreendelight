@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "SubziQuick: Buy Fresh Vegetables & Fruits in Bhopal | 10-15 Min Express",
   description:
-    "Order 270+ farm-fresh vegetables, seasonal fruits, and exotic greens online in Bhopal at wholesale mandi rates. Handpicked fresh with 10-15 min express doorstep delivery on SubziQuick.",
+    "Order 270+ farm-fresh vegetables, seasonal fruits, and exotic greens online in Bhopal at direct farm-fresh store rates. Handpicked fresh with 10-15 min express doorstep delivery on SubziQuick.",
   keywords: [
     "subzi quick",
     "subziquick",

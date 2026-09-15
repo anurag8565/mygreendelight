@@ -29,7 +29,7 @@ export default function FarmFreshPromise() {
             </div>
           </div>
 
-          {/* Right Column: Mandi Hub Info & 1-Click WhatsApp Support */}
+          {/* Right Column: Fresh Hub Info & 1-Click WhatsApp Support */}
           <div className="flex items-center gap-2.5 flex-wrap sm:flex-nowrap border-t md:border-t-0 pt-2.5 md:pt-0 border-stone-100 shrink-0">
             <div className="flex items-center gap-1.5 text-stone-600 bg-stone-50 border border-stone-200/80 px-2.5 py-1 rounded-xl text-[11px] font-medium">
               <MapPin size={13} className="text-emerald-700 shrink-0" />

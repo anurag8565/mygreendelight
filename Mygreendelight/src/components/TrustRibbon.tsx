@@ -13,7 +13,7 @@ export default function TrustRibbon() {
     },
     {
       icon: <Clock size={14} className="text-[#0a3d24] stroke-[2.2]" />,
-      title: "5:00 AM Mandi Fresh",
+      title: "5:00 AM Farm Fresh",
       subtitle: "Daily Morning Harvest",
       bg: "bg-emerald-50/80 border-emerald-200/70 text-emerald-950",
     },

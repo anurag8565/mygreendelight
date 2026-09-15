@@ -168,7 +168,7 @@ export default function BhopalParchiShopping() {
                   Parchi Bhejo, Sabzi Paao! (Haath Ki List Ya Voice Note)
                 </h3>
                 <p className="text-xs sm:text-[13px] text-stone-600 font-medium mt-0.5 leading-relaxed">
-                  Kaagaz par likhi sabziyon ki photo kheecho ya WhatsApp par list bhej do. 15-20 min me direct mandi fresh sabzi aapke ghar!
+                  Kaagaz par likhi sabziyon ki photo kheecho ya WhatsApp par list bhej do. 15-20 min me SubziQuick fresh sabzi aapke ghar!
                 </p>
               </div>
             </div>

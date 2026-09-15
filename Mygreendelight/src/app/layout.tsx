@@ -278,7 +278,7 @@ export default function RootLayout({
       "Online Vegetable Delivery in Bhopal",
       "Fresh Fruit Delivery Bhopal",
       "Handpicked Chemical Free Vegetables",
-      "Bhopal Sabzi Mandi Bhav"
+      "Bhopal Fresh Produce Daily Rates"
     ],
     "servesCuisine": "Fresh Vegetables, Seasonal Fruits, Hydroponic Exotics, Farm Produce, Groceries",
     "sameAs": [
@@ -317,7 +317,7 @@ export default function RootLayout({
         "name": "What is SubziQuick (Subzi Quick) in Bhopal?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "SubziQuick (also searched as Subzi Quick) is Bhopal's dedicated hyperlocal quick-commerce platform delivering handpicked, farm-fresh vegetables and seasonal fruits to your doorstep in 10-15 minutes at wholesale mandi prices with zero platform fee."
+          "text": "SubziQuick (also searched as Subzi Quick) is Bhopal's dedicated hyperlocal quick-commerce platform delivering handpicked, farm-fresh vegetables and seasonal fruits to your doorstep in 10-15 minutes at direct farm-fresh store prices with zero platform fee."
         }
       },
       {

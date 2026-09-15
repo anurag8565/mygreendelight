@@ -616,7 +616,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
           <div className="text-center pt-1">
             <span className="text-[10px] text-stone-400 font-medium flex items-center justify-center gap-1">
               <Truck size={12} className="text-[#0a3d24]" />
-              <span>Direct Kisan Mandi • Bhopal Express 10-15m</span>
+              <span>SubziQuick Fresh Hub • Bhopal Express 10-15m</span>
             </span>
           </div>
         </div>
@@ -881,7 +881,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
                   >
                     {isSearching ? (
                       <div className="p-4 text-center text-sm text-gray-500 flex items-center justify-center gap-2">
-                        <Loader2 size={16} className="animate-spin text-[#0a3d24]" /> Searching Bhopal Mandi produce...
+                        <Loader2 size={16} className="animate-spin text-[#0a3d24]" /> Searching SubziQuick fresh produce...
                       </div>
                     ) : searchResults.length > 0 ? (
                       <>
@@ -1407,7 +1407,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
               >
                 {isSearching ? (
                   <div className="p-4 text-center text-sm text-gray-500 flex items-center justify-center gap-2">
-                    <Loader2 size={16} className="animate-spin text-[#0a3d24]" /> Searching Bhopal Mandi produce...
+                    <Loader2 size={16} className="animate-spin text-[#0a3d24]" /> Searching SubziQuick fresh produce...
                   </div>
                 ) : searchResults.length > 0 ? (
                   <>

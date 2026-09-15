@@ -103,7 +103,7 @@ export default function ActiveOrderPulseBar() {
               <p className="text-xs font-black text-stone-100 truncate mt-0.5">
                 {isOut
                   ? "Rider Raaste Me Hai (Bhopal Express)"
-                  : "Mandi Lot Sorted & Assigned"}
+                  : "Fresh Batch Sorted & Assigned"}
               </p>
             </div>
           </div>

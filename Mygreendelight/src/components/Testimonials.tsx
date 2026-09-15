@@ -62,7 +62,7 @@ export const DEFAULT_GOOGLE_REVIEWS = [
     rating: 5,
     timeAgo: "1 week ago",
     comment:
-      "Genuine mandi rates and far better quality than roadside carts. No extra middleman markup and very polite delivery partner.",
+      "Genuine store rates and far better quality than roadside carts. No extra middleman markup and very polite delivery partner.",
     source: "google",
     tag: "Google Review",
   },
@@ -84,7 +84,7 @@ export const DEFAULT_GOOGLE_REVIEWS = [
     rating: 5,
     timeAgo: "3 weeks ago",
     comment:
-      "Soft dairy paneer and fresh daily vegetables. SubziQuick has replaced our tiring weekly mandi rush completely. Highly recommended!",
+      "Soft dairy paneer and fresh daily vegetables. SubziQuick has replaced our tiring weekly market rush completely. Highly recommended!",
     source: "google",
     tag: "Google Review",
   },

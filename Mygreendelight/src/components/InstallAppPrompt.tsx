@@ -174,7 +174,7 @@ export default function InstallAppPrompt() {
                 </div>
                 <div className="flex items-center gap-1.5">
                   <ShieldCheck size={13} className="text-emerald-300 shrink-0" />
-                  <span>Mandi Direct Rates</span>
+                  <span>Direct Store Rates</span>
                 </div>
               </div>
 

@@ -242,7 +242,7 @@ function SearchContent() {
           </div>
 
           <span className="text-[11px] font-bold text-[#0a3d24] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200/60">
-            Live Mandi Stock
+            Live Store Stock
           </span>
         </div>
 
