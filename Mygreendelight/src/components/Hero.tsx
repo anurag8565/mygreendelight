@@ -27,7 +27,7 @@ export default function Hero({ banners = [] }: HeroProps) {
     {
       _id: "s1",
       iconType: "clock",
-      tag: "Direct From Local Bhopal & Sehore Farms • 10-15 Min Delivery",
+      tag: "Direct From Local Bhopal Farms • 10-15 Min Delivery",
       title: "Fresh Vegetables & Fruits, Delivered to Your Door",
       subtitle: "Handpicked daily from nearby farms. Cleaned, sorted, and delivered fresh to your kitchen in minutes.",
       btnText: "Order Fresh Produce",
@@ -61,10 +61,23 @@ export default function Hero({ banners = [] }: HeroProps) {
     if (!banners || banners.length === 0) return defaultSlides;
     return banners.map((b: any, idx: number) => {
       const def = defaultSlides[idx % defaultSlides.length];
-      const rawBadge = b.badge ? cleanText(b.badge) : def.tag;
-      const rawTitle = b.title ? cleanText(b.title) : def.title;
-      const rawSubtitle = b.subtitle ? cleanText(b.subtitle) : def.subtitle;
-      const rawBtnText = b.btnText ? cleanText(b.btnText) : def.btnText;
+      let rawBadge = b.badge ? cleanText(b.badge) : def.tag;
+      let rawTitle = b.title ? cleanText(b.title) : def.title;
+      let rawSubtitle = b.subtitle ? cleanText(b.subtitle) : def.subtitle;
+      let rawBtnText = b.btnText ? cleanText(b.btnText) : def.btnText;
+
+      // Replace any legacy DB phrases like "Wax & Carbide Free" or "& Sehore"
+      rawBadge = rawBadge
+        .replace(/Wax\s*&\s*Carbide\s*Free/gi, "Naturally Sweet")
+        .replace(/&\s*Sehore\s*/gi, "")
+        .trim();
+      rawTitle = rawTitle
+        .replace(/&\s*Sehore\s*/gi, "")
+        .trim();
+      rawSubtitle = rawSubtitle
+        .replace(/Wax\s*&\s*Carbide\s*Free/gi, "Naturally Sweet")
+        .replace(/&\s*Sehore\s*/gi, "")
+        .trim();
 
       // Ensure wide 4K landscape imagery is preferred over cropped vertical photos
       let slideImg = b.image || def.image;
