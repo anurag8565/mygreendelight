@@ -174,6 +174,32 @@ export default function Checkout() {
     BHOPAL_AREAS[0].lng,
   ]);
 
+  // Real Bhopal Society Pool State
+  const [dbSocieties, setDbSocieties] = useState<any[]>([]);
+  const [selectedSocietySlug, setSelectedSocietySlug] = useState<string>("");
+
+  useEffect(() => {
+    // Fetch active real Bhopal societies from database
+    axios
+      .get("/api/society-pool")
+      .then((res) => {
+        if (res.data?.success && Array.isArray(res.data.societies)) {
+          setDbSocieties(res.data.societies);
+          // Check if society was pre-selected from homepage widget
+          const saved = localStorage.getItem("subziquick_selected_society");
+          if (saved) {
+            const matched = res.data.societies.find((s: any) => s.slug === saved);
+            if (matched) {
+              setSelectedSocietySlug(matched.slug);
+              setStreetSociety(matched.name);
+              if (matched.landmark) setLandmark(matched.landmark);
+            }
+          }
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   useEffect(() => {
     if (userdata) {
       if (userdata.name && !fullname) setFullname(userdata.name);
@@ -629,6 +655,47 @@ export default function Checkout() {
                     />
                   </div>
                 </div>
+
+                {/* Real Bhopal Society Quick-Select Dropdown */}
+                {dbSocieties && dbSocieties.length > 0 && (
+                  <div className="bg-emerald-50/60 border border-emerald-200/80 rounded-xl p-2.5">
+                    <div className="flex items-center justify-between gap-1 mb-1.5">
+                      <span className="text-[10.5px] font-black text-emerald-950 flex items-center gap-1">
+                        <Building size={12} className="text-[#0a3d24]" />
+                        <span>Deliver to a Registered Bhopal Society / Colony?</span>
+                      </span>
+                      <span className="text-[9.5px] text-[#0a3d24] font-black bg-white px-2 py-0.2 rounded-full border border-emerald-200">
+                        Community Pool
+                      </span>
+                    </div>
+
+                    <select
+                      value={selectedSocietySlug}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setSelectedSocietySlug(val);
+                        const matched = dbSocieties.find((s) => s.slug === val);
+                        if (matched) {
+                          setStreetSociety(matched.name);
+                          if (matched.landmark) setLandmark(matched.landmark);
+                          // Auto match area if possible
+                          const areaMatch = BHOPAL_AREAS.findIndex(
+                            (a) => a.pincode === matched.pincode || matched.locality.toLowerCase().includes(a.name.toLowerCase().split("/")[0].trim())
+                          );
+                          if (areaMatch !== -1) handleAreaChange(areaMatch);
+                        }
+                      }}
+                      className="w-full bg-white border border-emerald-300 rounded-lg py-1.5 px-2.5 text-xs font-bold text-gray-900 outline-none focus:border-[#0a3d24] cursor-pointer"
+                    >
+                      <option value="">-- Choose your Bhopal Society / Campus (Optional) --</option>
+                      {dbSocieties.map((soc) => (
+                        <option key={soc.slug} value={soc.slug}>
+                          {soc.name} ({soc.locality}) {soc.isUnlocked ? "• 5% OFF Unlocked!" : ""}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
 
                 {/* House No & Street */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
