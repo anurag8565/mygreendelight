@@ -5,6 +5,7 @@ import axios from "axios";
 import { Gift, X, Sparkles, Copy, Check, ArrowRight, PartyPopper } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom";
+import { triggerHaptic } from "@/utils/haptics";
 
 interface ScratchModalProps {
   isOpen: boolean;
@@ -43,24 +44,25 @@ export default function DigitalScratchCardModal({
     const width = canvas.width;
     const height = canvas.height;
 
-    // Draw luxurious golden/silver scratch overlay
+    // Draw luxurious gold foil scratch overlay
     const gradient = ctx.createLinearGradient(0, 0, width, height);
-    gradient.addColorStop(0, "#e2e8f0");
-    gradient.addColorStop(0.3, "#cbd5e1");
-    gradient.addColorStop(0.5, "#94a3b8");
-    gradient.addColorStop(0.7, "#cbd5e1");
-    gradient.addColorStop(1, "#64748b");
+    gradient.addColorStop(0, "#fde047");
+    gradient.addColorStop(0.2, "#eab308");
+    gradient.addColorStop(0.4, "#fef08a");
+    gradient.addColorStop(0.6, "#ca8a04");
+    gradient.addColorStop(0.8, "#eab308");
+    gradient.addColorStop(1, "#854d0e");
 
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, width, height);
 
     // Decorative pattern & text on scratch card
-    ctx.fillStyle = "#334155";
-    ctx.font = "bold 16px sans-serif";
+    ctx.fillStyle = "#713f12";
+    ctx.font = "bold 17px sans-serif";
     ctx.textAlign = "center";
-    ctx.fillText("🎁 SCRATCH HERE", width / 2, height / 2 - 10);
-    ctx.font = "12px sans-serif";
-    ctx.fillStyle = "#475569";
+    ctx.fillText("✨ SCRATCH HERE ✨", width / 2, height / 2 - 10);
+    ctx.font = "bold 12px sans-serif";
+    ctx.fillStyle = "#854d0e";
     ctx.fillText("Scratch to reveal your cashback", width / 2, height / 2 + 15);
 
     const getTouchPos = (e: MouseEvent | TouchEvent) => {
@@ -79,6 +81,7 @@ export default function DigitalScratchCardModal({
       ctx.arc(x, y, 22, 0, Math.PI * 2);
       ctx.fill();
 
+      triggerHaptic("selection");
       checkScratched();
     };
 
@@ -106,6 +109,7 @@ export default function DigitalScratchCardModal({
     const handleRevealPrize = async () => {
       setIsScratched(true);
       setScratchPercent(100);
+      triggerHaptic("success");
       try {
         await axios.post("/api/user/rewards", { rewardId: reward._id });
         if (onSuccess) onSuccess();
