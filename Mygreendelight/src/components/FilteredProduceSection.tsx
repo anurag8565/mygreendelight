@@ -114,7 +114,7 @@ export default function FilteredProduceSection({
   const activeTabMeta = tabs.find((t) => t.id === activeTab) || tabs[0];
 
   return (
-    <section className="w-full py-8 sm:py-12 bg-[#f7f6f2] font-sans border-b border-stone-200/70">
+    <section className="w-full py-4 sm:py-6 bg-[#f7f6f2] font-sans border-b border-stone-200/70">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         
         {/* Section Header */}

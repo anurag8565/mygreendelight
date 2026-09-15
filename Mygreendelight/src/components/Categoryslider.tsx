@@ -124,7 +124,7 @@ export default function CategorySlider({
         ];
 
   return (
-    <section className="w-full py-5 sm:py-7 bg-white font-sans border-b border-stone-200/70 select-none">
+    <section className="w-full py-4 sm:py-6 bg-white font-sans border-b border-stone-200/70 select-none">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Header Row */}
         <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">

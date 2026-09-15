@@ -149,7 +149,7 @@ export default async function Userdashbord() {
 
       {/* 9. Tone 2: Order Again Carousel (Soft Warm Stone #f7f6f2) */}
       {plainOrderAgain && plainOrderAgain.length > 0 && (
-        <div className="w-full py-8 sm:py-10 bg-[#f7f6f2] border-b border-stone-200/70 font-sans">
+        <div className="w-full py-4 sm:py-6 bg-[#f7f6f2] border-b border-stone-200/70 font-sans">
           <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
              <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <div className="flex items-center gap-2">

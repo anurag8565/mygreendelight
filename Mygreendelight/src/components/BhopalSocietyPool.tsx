@@ -69,7 +69,7 @@ export default function BhopalSocietyPool() {
   if (!loading && societies.length === 0) return null;
 
   return (
-    <section className="w-full py-6 sm:py-8 bg-white border-b border-stone-200/70 font-sans select-none">
+    <section className="w-full py-4 sm:py-6 bg-white border-b border-stone-200/70 font-sans select-none">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         
         {/* Section Header */}

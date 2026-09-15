@@ -126,7 +126,7 @@ export default function BhopalParchiShopping() {
   return (
     <>
       {/* 🌟 HOMEPAGE PROMINENT BANNER (Indian Yellow Notepad Aesthetic with Floating Pen) */}
-      <section className="w-full py-5 sm:py-7 bg-white font-sans border-b border-stone-200/70 select-none">
+      <section className="w-full py-4 sm:py-6 bg-white font-sans border-b border-stone-200/70 select-none">
         <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
           <div className="relative rounded-3xl p-4 sm:p-6 bg-gradient-to-r from-amber-100/90 via-amber-50/70 to-emerald-50/80 border border-amber-300 shadow-[0_6px_24px_rgba(217,119,6,0.1)] overflow-hidden flex flex-col md:flex-row items-center justify-between gap-5 group">
             

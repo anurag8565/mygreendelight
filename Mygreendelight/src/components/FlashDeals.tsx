@@ -85,7 +85,7 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
   }
 
   return (
-    <section className="w-full py-6 sm:py-8 bg-white font-sans border-b border-stone-200/70">
+    <section className="w-full py-4 sm:py-6 bg-white font-sans border-b border-stone-200/70">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         {/* Minimalist Header Row */}
         <div className="flex items-center justify-between gap-2 mb-4 sm:mb-5">
