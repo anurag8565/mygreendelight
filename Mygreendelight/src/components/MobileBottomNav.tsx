@@ -137,6 +137,7 @@ export default function MobileBottomNav() {
 
                     {/* Perfectly Proportioned Circular Cart Button */}
                     <motion.div
+                      id="mobile-bottom-cart-btn"
                       key={cartCount}
                       initial={{ scale: 0.95 }}
                       animate={{ scale: 1 }}

@@ -12,6 +12,7 @@ import Link from "next/link";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import StockAlertModal from "./StockAlertModal";
+import { triggerFlyToCart } from "./FlyingCartOverlay";
 
 interface IGrosery {
   _id: mongoose.Types.ObjectId;
@@ -241,8 +242,10 @@ export default function Groceryitemcard({
             <motion.button
               whileTap={{ scale: 0.92 }}
               type="button"
-              onClick={() => {
+              onClick={(e) => {
                 triggerHaptic("medium");
+                const rect = e.currentTarget.getBoundingClientRect();
+                triggerFlyToCart(item.image, rect);
                 dispatch(
                   addToCart({
                     ...item,
@@ -303,8 +306,10 @@ export default function Groceryitemcard({
                     ? "bg-black/25 text-white/50 cursor-not-allowed"
                     : "hover:bg-black/20 active:bg-black/30 cursor-pointer text-white"
                 }`}
-                onClick={() => {
+                onClick={(e) => {
                   triggerHaptic("light");
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  triggerFlyToCart(item.image, rect);
                   dispatch(increaseQuantity(currentCartItemId));
                 }}
               >

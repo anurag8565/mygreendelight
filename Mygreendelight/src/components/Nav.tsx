@@ -1174,6 +1174,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
 
             {/* Cart Widget with Bounce Animation & Premium Pill Styling */}
             <motion.button
+              id="desktop-header-cart-btn"
               whileTap={{ scale: 0.94 }}
               whileHover={{ scale: 1.03 }}
               transition={{ type: "spring", stiffness: 450, damping: 24 }}

@@ -11,6 +11,7 @@ import MobileBottomNav from "@/components/MobileBottomNav";
 import BroadcastBar from "@/components/BroadcastBar";
 import ContentProtection from "@/components/ContentProtection";
 import InstallAppPrompt from "@/components/InstallAppPrompt";
+import FlyingCartOverlay from "@/components/FlyingCartOverlay";
 
 const sansFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -427,6 +428,7 @@ export default function RootLayout({
             <WhatsAppWidget />
             <MobileBottomNav />
             <InstallAppPrompt />
+            <FlyingCartOverlay />
           </StoreProviders>
         </Provider>
       </body>
