@@ -46,40 +46,30 @@ export default function MobileBottomNav() {
   const cartCount = cartdata.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 select-none bg-white/95 backdrop-blur-2xl border-t border-stone-200/90 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] pb-[env(safe-area-inset-bottom)]">
-      <div className="max-w-md mx-auto px-1 sm:px-2 pt-1 pb-1">
+    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 select-none bg-white/95 backdrop-blur-2xl border-t border-stone-200/90 shadow-[0_-2px_10px_rgba(0,0,0,0.04)] pb-[env(safe-area-inset-bottom)]">
+      <div className="max-w-md mx-auto px-1 sm:px-2 py-0.5">
         <nav className="relative w-full">
-          <div className="grid grid-cols-5 items-center gap-0.5 sm:gap-1">
+          <div className="grid grid-cols-5 items-center gap-0.5">
             {/* 1. Home */}
             {(() => {
               const isActive = pathname === "/";
               return (
                 <Link
                   href="/"
-                  className={`relative py-1 px-0.5 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95 ${
+                  className={`relative py-0.5 px-0.5 rounded-lg flex flex-col items-center justify-center transition-all active:scale-95 ${
                     isActive ? "text-[#0a3d24]" : "text-stone-400 hover:text-stone-700"
                   }`}
                 >
                   <div className="relative flex flex-col items-center">
                     <motion.div
-                      animate={{ scale: isActive ? 1.08 : 1 }}
+                      animate={{ scale: isActive ? 1.05 : 1 }}
                       transition={{ type: "spring", stiffness: 450, damping: 25 }}
                     >
-                      <Home size={20} className={isActive ? "stroke-[2.5]" : "stroke-[1.8]"} />
+                      <Home size={18} className={isActive ? "stroke-[2.5]" : "stroke-[1.8]"} />
                     </motion.div>
-                    <span className={`text-[10px] sm:text-[10.5px] mt-0.5 tracking-tight leading-none ${isActive ? "font-black" : "font-semibold"}`}>
+                    <span className={`text-[9.5px] mt-0.5 tracking-tight leading-none ${isActive ? "font-black" : "font-semibold"}`}>
                       Home
                     </span>
-                    {/* Modern iOS Active Dot Indicator */}
-                    <div className="h-1 mt-1 flex items-center justify-center">
-                      {isActive && (
-                        <motion.div
-                          layoutId="mobileActiveDot"
-                          transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                          className="w-1.5 h-1.5 rounded-full bg-[#0a3d24]"
-                        />
-                      )}
-                    </div>
                   </div>
                 </Link>
               );
@@ -91,40 +81,30 @@ export default function MobileBottomNav() {
               return (
                 <Link
                   href="/shop"
-                  className={`relative py-1 px-0.5 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95 ${
+                  className={`relative py-0.5 px-0.5 rounded-lg flex flex-col items-center justify-center transition-all active:scale-95 ${
                     isActive ? "text-[#0a3d24]" : "text-stone-400 hover:text-stone-700"
                   }`}
                 >
                   <div className="relative flex flex-col items-center">
                     <motion.div
-                      animate={{ scale: isActive ? 1.08 : 1 }}
+                      animate={{ scale: isActive ? 1.05 : 1 }}
                       transition={{ type: "spring", stiffness: 450, damping: 25 }}
                     >
-                      <ShoppingBag size={20} className={isActive ? "stroke-[2.5]" : "stroke-[1.8]"} />
+                      <ShoppingBag size={18} className={isActive ? "stroke-[2.5]" : "stroke-[1.8]"} />
                     </motion.div>
-                    <span className={`text-[10px] sm:text-[10.5px] mt-0.5 tracking-tight leading-none ${isActive ? "font-black" : "font-semibold"}`}>
+                    <span className={`text-[9.5px] mt-0.5 tracking-tight leading-none ${isActive ? "font-black" : "font-semibold"}`}>
                       Shop
                     </span>
-                    {/* Modern iOS Active Dot Indicator */}
-                    <div className="h-1 mt-1 flex items-center justify-center">
-                      {isActive && (
-                        <motion.div
-                          layoutId="mobileActiveDot"
-                          transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                          className="w-1.5 h-1.5 rounded-full bg-[#0a3d24]"
-                        />
-                      )}
-                    </div>
                   </div>
                 </Link>
               );
             })()}
 
-            {/* 3. Center Cart: Compact, Flush-Elevated Circular Action */}
+            {/* 3. Center Cart: Compact Action */}
             {(() => {
               const isActive = pathname === "/user/cart";
               return (
-                <div className="relative -top-1 flex flex-col items-center justify-center shrink-0 px-0.5 z-20">
+                <div className="relative -top-1.5 flex flex-col items-center justify-center shrink-0 px-0.5 z-20">
                   <Link
                     href="/user/cart"
                     className="group relative flex flex-col items-center focus:outline-none"
@@ -143,15 +123,15 @@ export default function MobileBottomNav() {
                       whileTap={{ scale: 0.88 }}
                       whileHover={{ scale: 1.05 }}
                       transition={{ type: "spring", stiffness: 450, damping: 24 }}
-                      className={`relative w-10.5 h-10.5 sm:w-11 sm:h-11 rounded-full flex flex-col items-center justify-center border-2 border-white shadow-[0_4px_14px_rgba(10,61,36,0.35)] transition-colors ${
+                      className={`relative w-9.5 h-9.5 rounded-full flex flex-col items-center justify-center border-2 border-white shadow-[0_3px_10px_rgba(10,61,36,0.3)] transition-colors ${
                         cartCount > 0
-                          ? "bg-gradient-to-tr from-[#072817] via-[#0a3d24] to-[#072817] text-white ring-1 ring-[#0a3d24]/20"
+                          ? "bg-[#0a3d24] text-white ring-1 ring-[#0a3d24]/20"
                           : isActive
                           ? "bg-[#072817] text-white ring-1.5 ring-emerald-400"
                           : "bg-[#0a3d24] text-white"
                       }`}
                     >
-                      <ShoppingCart size={17} className="stroke-[2.4]" />
+                      <ShoppingCart size={15} className="stroke-[2.4]" />
 
                       {/* Golden Count Badge with Spring Bounce */}
                       {cartCount > 0 && (
@@ -160,7 +140,7 @@ export default function MobileBottomNav() {
                           initial={{ scale: 0.4, y: -4 }}
                           animate={{ scale: [1.35, 0.95, 1], y: 0 }}
                           transition={{ type: "spring", stiffness: 600, damping: 18 }}
-                          className="absolute -top-1 -right-1 bg-amber-400 text-stone-950 font-black text-[9px] min-w-[16px] h-[16px] px-0.5 rounded-full flex items-center justify-center border border-white shadow-xs"
+                          className="absolute -top-1 -right-1 bg-amber-400 text-stone-950 font-black text-[8.5px] min-w-[15px] h-[15px] px-0.5 rounded-full flex items-center justify-center border border-white shadow-xs"
                         >
                           {cartCount}
                         </motion.span>
@@ -168,7 +148,7 @@ export default function MobileBottomNav() {
                     </motion.div>
 
                     <span
-                      className={`text-[9.5px] sm:text-[10px] mt-0.5 tracking-tight leading-none ${
+                      className={`text-[9px] mt-0.5 tracking-tight leading-none ${
                         cartCount > 0
                           ? "font-black text-[#0a3d24]"
                           : isActive
@@ -178,17 +158,6 @@ export default function MobileBottomNav() {
                     >
                       {cartCount > 0 ? `₹${Math.round(cartTotal)}` : "Cart"}
                     </span>
-
-                    {/* Active Dot for Cart when on cart page and cart is empty */}
-                    <div className="h-1 mt-1 flex items-center justify-center">
-                      {isActive && cartCount === 0 && (
-                        <motion.div
-                          layoutId="mobileActiveDot"
-                          transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                          className="w-1.5 h-1.5 rounded-full bg-[#0a3d24]"
-                        />
-                      )}
-                    </div>
                   </Link>
                 </div>
               );
@@ -200,30 +169,20 @@ export default function MobileBottomNav() {
               return (
                 <Link
                   href="/user/search"
-                  className={`relative py-1 px-0.5 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95 ${
+                  className={`relative py-0.5 px-0.5 rounded-lg flex flex-col items-center justify-center transition-all active:scale-95 ${
                     isActive ? "text-[#0a3d24]" : "text-stone-400 hover:text-stone-700"
                   }`}
                 >
                   <div className="relative flex flex-col items-center">
                     <motion.div
-                      animate={{ scale: isActive ? 1.08 : 1 }}
+                      animate={{ scale: isActive ? 1.05 : 1 }}
                       transition={{ type: "spring", stiffness: 450, damping: 25 }}
                     >
-                      <Search size={20} className={isActive ? "stroke-[2.5]" : "stroke-[1.8]"} />
+                      <Search size={18} className={isActive ? "stroke-[2.5]" : "stroke-[1.8]"} />
                     </motion.div>
-                    <span className={`text-[10px] sm:text-[10.5px] mt-0.5 tracking-tight leading-none ${isActive ? "font-black" : "font-semibold"}`}>
+                    <span className={`text-[9.5px] mt-0.5 tracking-tight leading-none ${isActive ? "font-black" : "font-semibold"}`}>
                       Search
                     </span>
-                    {/* Modern iOS Active Dot Indicator */}
-                    <div className="h-1 mt-1 flex items-center justify-center">
-                      {isActive && (
-                        <motion.div
-                          layoutId="mobileActiveDot"
-                          transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                          className="w-1.5 h-1.5 rounded-full bg-[#0a3d24]"
-                        />
-                      )}
-                    </div>
                   </div>
                 </Link>
               );
@@ -243,40 +202,30 @@ export default function MobileBottomNav() {
               return (
                 <Link
                   href={targetHref}
-                  className={`relative py-1 px-0.5 rounded-xl flex flex-col items-center justify-center transition-all active:scale-95 ${
+                  className={`relative py-0.5 px-0.5 rounded-lg flex flex-col items-center justify-center transition-all active:scale-95 ${
                     isActive ? "text-[#0a3d24]" : "text-stone-400 hover:text-stone-700"
                   }`}
                 >
                   <div className="relative flex flex-col items-center">
                     <motion.div
-                      animate={{ scale: isActive ? 1.08 : 1 }}
+                      animate={{ scale: isActive ? 1.05 : 1 }}
                       transition={{ type: "spring", stiffness: 450, damping: 25 }}
                     >
                       {isLoggedIn && activeUser?.image ? (
                         <img
                           src={activeUser.image}
                           alt="User"
-                          className={`w-5 h-5 rounded-full object-cover border ${
+                          className={`w-4.5 h-4.5 rounded-full object-cover border ${
                             isActive ? "border-[#0a3d24]" : "border-stone-300"
                           }`}
                         />
                       ) : (
-                        <Icon size={20} className={isActive ? "stroke-[2.5]" : "stroke-[1.8]"} />
+                        <Icon size={18} className={isActive ? "stroke-[2.5]" : "stroke-[1.8]"} />
                       )}
                     </motion.div>
-                    <span className={`text-[10px] sm:text-[10.5px] mt-0.5 tracking-tight leading-none ${isActive ? "font-black" : "font-semibold"}`}>
+                    <span className={`text-[9.5px] mt-0.5 tracking-tight leading-none ${isActive ? "font-black" : "font-semibold"}`}>
                       {labelText}
                     </span>
-                    {/* Modern iOS Active Dot Indicator */}
-                    <div className="h-1 mt-1 flex items-center justify-center">
-                      {isActive && (
-                        <motion.div
-                          layoutId="mobileActiveDot"
-                          transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                          className="w-1.5 h-1.5 rounded-full bg-[#0a3d24]"
-                        />
-                      )}
-                    </div>
                   </div>
                 </Link>
               );
