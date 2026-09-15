@@ -13,6 +13,7 @@ import ContentProtection from "@/components/ContentProtection";
 import InstallAppPrompt from "@/components/InstallAppPrompt";
 import FlyingCartOverlay from "@/components/FlyingCartOverlay";
 import ActiveOrderPulseBar from "@/components/ActiveOrderPulseBar";
+import AppSplashScreen from "@/components/AppSplashScreen";
 
 const sansFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -419,6 +420,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${sansFont.variable} ${headingFont.variable} ${brandSerif.variable} w-full min-h-screen bg-[#faf9f5] text-stone-900 overflow-x-hidden antialiased font-sans`}>
+        <AppSplashScreen />
         <ContentProtection />
         <Provider>
           <StoreProviders>
