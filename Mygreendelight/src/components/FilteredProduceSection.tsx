@@ -123,11 +123,11 @@ export default function FilteredProduceSection({
             <div className="flex items-center gap-2">
               <Leaf size={18} className="text-[#0a3d24] shrink-0" />
               <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-stone-900 tracking-tight font-heading truncate">
-                Bhopal&apos;s Freshest Daily Harvest
+                Fresh Farm Vegetables &amp; Fruits
               </h2>
             </div>
             <p className="text-[11px] sm:text-xs text-stone-500 font-medium mt-0.5 ml-6.5 hidden sm:block">
-              Daily 5:00 AM farm harvest &bull; Handpicked &amp; triple-checked &bull; 10-15 min express delivery
+              Handpicked daily from nearby farms &bull; Cleaned, sorted &amp; delivered in 10-15 mins
             </p>
           </div>
 

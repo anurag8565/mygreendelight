@@ -160,15 +160,15 @@ export default function BhopalParchiShopping() {
                 <div className="flex items-center gap-2 mb-1 flex-wrap">
                   <span className="bg-[#0a3d24] text-white text-[9.5px] sm:text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-2xs flex items-center gap-1">
                     <Sparkles size={10} className="text-amber-300" />
-                    <span>Bhopal Special Fast Order</span>
+                    <span>Quick &amp; Easy Ordering</span>
                   </span>
                 </div>
 
                 <h3 className="text-base sm:text-lg md:text-xl font-black text-stone-900 tracking-tight leading-snug font-heading">
-                  Parchi ya Voice Note Bhejo, 15 Min me Sabzi Paao!
+                  Parchi ki Photo ya WhatsApp Voice Note Bhejo!
                 </h3>
                 <p className="text-xs sm:text-[13px] text-stone-600 font-medium mt-0.5 leading-relaxed">
-                  Kaagaz ki parchi ki photo kheecho ya WhatsApp par voice bhejo. 10-15 minute me SubziQuick fresh farm sabzi aapke ghar!
+                  List type karne ki jhanjhat nahi! Kaagaz par likhi list ki photo kheecho ya WhatsApp par voice bhejo. 10-15 minute me taazi sabzi aapke ghar!
                 </p>
               </div>
             </div>
@@ -185,7 +185,7 @@ export default function BhopalParchiShopping() {
                 className="flex-1 sm:flex-initial bg-[#0a3d24] hover:bg-[#072416] text-white px-4 sm:px-5 py-3 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(10,61,36,0.3)] transition-all cursor-pointer active:scale-95 border border-emerald-800"
               >
                 <Camera size={16} />
-                <span>Parchi Upload Karein</span>
+                <span>Parchi Photo Upload</span>
               </button>
 
               {/* Button 2: WhatsApp Voice / Direct Message */}
@@ -195,7 +195,7 @@ export default function BhopalParchiShopping() {
                 className="flex-1 sm:flex-initial bg-[#25D366] hover:bg-[#20ba59] text-white px-4 sm:px-5 py-3 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(37,211,102,0.3)] transition-all cursor-pointer active:scale-95"
               >
                 <FaWhatsapp size={18} />
-                <span>WhatsApp List</span>
+                <span>WhatsApp Order</span>
               </button>
             </div>
 

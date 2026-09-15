@@ -76,14 +76,14 @@ export default function DailyRewardWidget() {
               <div className="flex items-center gap-2">
                 <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-amber-900 flex items-center gap-1">
                   <Sparkles size={11} className="text-amber-600 fill-amber-600" />
-                  Daily Lucky Scratch Card
+                  Daily Scratch &amp; Save
                 </span>
               </div>
 
               <h3 className="text-stone-900 font-extrabold text-xs sm:text-sm mt-0.5 truncate tracking-tight font-heading">
                 {reward?.isScratched
                   ? `You Won ₹${reward.discountAmount} OFF On Your Order!`
-                  : "Scratch today's card to reveal your instant discount coupon"}
+                  : "Scratch today's card & unlock up to ₹50 OFF on your order"}
               </h3>
             </div>
           </div>

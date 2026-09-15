@@ -78,11 +78,11 @@ export default function BhopalSocietyPool() {
             <div className="flex items-center gap-2">
               <Building2 size={18} className="text-[#0a3d24] shrink-0" />
               <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-stone-900 tracking-tight font-heading">
-                Society &amp; Apartment Group Savings
+                Order Together with Neighbors &amp; Save More
               </h2>
             </div>
             <p className="text-xs text-stone-500 font-medium mt-0.5 max-w-xl">
-              When 3 or more neighbors order together, unlock <strong>FREE express delivery + extra 5% OFF</strong> on morning farm fresh produce.
+              When 3 or more neighbors in your apartment or society order together, everyone gets <strong>FREE delivery + extra 5% OFF</strong>!
             </p>
           </div>
 
@@ -90,7 +90,7 @@ export default function BhopalSocietyPool() {
             href="/shop"
             className="text-stone-500 hover:text-[#0a3d24] font-semibold text-xs sm:text-sm flex items-center gap-0.5 transition shrink-0 self-start sm:self-auto"
           >
-            <span>Shop for My Society</span>
+            <span>Select My Society</span>
             <ChevronRight size={14} className="stroke-[2]" />
           </Link>
         </div>
