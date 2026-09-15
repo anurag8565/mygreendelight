@@ -222,7 +222,7 @@ function ShopContent() {
           </Link>
           <ChevronRight size={11} className="text-stone-400" />
           <Link href="/shop" className="hover:text-[#0a3d24] transition font-semibold">
-            Fresh Produce
+            Store
           </Link>
           {categoryParam && (
             <>
@@ -248,6 +248,10 @@ function ShopContent() {
                   : categoryParam
                   ? categoryParam.toLowerCase().includes("combo")
                     ? "Value Combos & Savings Packs"
+                    : categoryParam.toLowerCase().includes("veg")
+                    ? "Fresh Vegetables"
+                    : categoryParam.toLowerCase().includes("fruit")
+                    ? "Fresh Fruits"
                     : `Fresh ${categoryParam}`
                   : "Fresh Fruits & Vegetables"}
               </h1>
@@ -304,7 +308,7 @@ function ShopContent() {
                   className="w-full h-full object-cover"
                 />
               </span>
-              <span>All Produce</span>
+              <span>All Items</span>
             </button>
 
             {/* Real MongoDB Categories */}
@@ -444,7 +448,7 @@ function ShopContent() {
                     <span className="w-5 h-5 rounded-md overflow-hidden bg-white border border-stone-200 shrink-0">
                       <img src="/categories/vegetables.jpg" alt="All" className="w-full h-full object-cover" />
                     </span>
-                    <span>All Products</span>
+                    <span>All Items</span>
                   </span>
                   {!categoryParam && <Check size={14} className="stroke-[3]" />}
                 </button>
@@ -499,7 +503,7 @@ function ShopContent() {
               {/* Price Range Slider */}
               <div className="mb-4">
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-xs font-bold text-gray-600">Max Budget:</span>
+                  <span className="text-xs font-bold text-gray-600">Max Price:</span>
                   <span className="text-xs font-black text-[#0a3d24]">₹{priceRange}</span>
                 </div>
                 <input
@@ -526,7 +530,7 @@ function ShopContent() {
             {/* Results Count & View Mode Header */}
             <div className="flex flex-row justify-between items-center bg-white border border-gray-100 rounded-2xl px-3 sm:px-4 py-2 mb-3 gap-2 shadow-2xs">
               <p className="text-xs sm:text-sm text-gray-600 font-medium truncate">
-                Showing <span className="font-black text-gray-900">{filteredGroceries.length}</span> fresh items
+                Showing <span className="font-black text-gray-900">{filteredGroceries.length}</span> items
               </p>
 
               <div className="flex items-center gap-2 shrink-0">
@@ -535,24 +539,24 @@ function ShopContent() {
                   <button
                     type="button"
                     onClick={() => setViewMode("grid")}
-                    className={`p-1 rounded-md transition cursor-pointer ${
+                    aria-label="Grid View"
+                    className={`p-1.5 rounded-md transition cursor-pointer ${
                       viewMode === "grid"
-                        ? "bg-white text-[#0a3d24] shadow-2xs"
-                        : "text-gray-500 hover:text-gray-800"
+                        ? "bg-white text-emerald-800 shadow-2xs"
+                        : "text-gray-400 hover:text-gray-700"
                     }`}
-                    title="Grid View"
                   >
                     <LayoutGrid size={14} />
                   </button>
                   <button
                     type="button"
                     onClick={() => setViewMode("list")}
-                    className={`p-1 rounded-md transition cursor-pointer ${
+                    aria-label="List View"
+                    className={`p-1.5 rounded-md transition cursor-pointer ${
                       viewMode === "list"
-                        ? "bg-white text-[#0a3d24] shadow-2xs"
-                        : "text-gray-500 hover:text-gray-800"
+                        ? "bg-white text-emerald-800 shadow-2xs"
+                        : "text-gray-400 hover:text-gray-700"
                     }`}
-                    title="List View"
                   >
                     <List size={14} />
                   </button>
@@ -564,7 +568,7 @@ function ShopContent() {
             {loading && groceries.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-20 bg-white rounded-3xl border border-gray-100 shadow-2xs">
                 <Loader2 size={32} className="animate-spin text-[#0a3d24] mb-2" />
-                <p className="text-xs font-bold text-gray-500">Loading fresh harvest...</p>
+                <p className="text-xs font-bold text-gray-500">Loading fresh produce...</p>
               </div>
             ) : filteredGroceries.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-14 px-4 bg-white rounded-3xl border border-gray-100 shadow-2xs text-center max-w-md mx-auto">
@@ -572,10 +576,10 @@ function ShopContent() {
                   🥬
                 </div>
                 <h3 className="text-sm sm:text-base font-black text-gray-900 mb-1">
-                  No matching fresh produce found
+                  No matching items found
                 </h3>
                 <p className="text-xs text-gray-500 mb-3.5 font-medium">
-                  Try clearing some filter chips or searching another produce category.
+                  Try checking your spelling, clearing some filters, or searching for other fresh vegetables &amp; fruits.
                 </p>
                 <button
                   type="button"
@@ -614,7 +618,7 @@ function ShopContent() {
                       <span>Loading more...</span>
                     </>
                   ) : (
-                    <span>Load More Produce</span>
+                    <span>Load More Items</span>
                   )}
                 </button>
               </div>
@@ -644,7 +648,7 @@ function ShopContent() {
               <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-3.5">
                 <h3 className="text-base font-black text-gray-900 flex items-center gap-1.5">
                   <SlidersHorizontal size={15} className="text-[#0a3d24]" />
-                  <span>Refine Produce Filters</span>
+                  <span>Filters &amp; Sort</span>
                 </h3>
                 <button
                   type="button"
@@ -658,7 +662,7 @@ function ShopContent() {
               {/* Categories */}
               <div className="mb-4">
                 <span className="text-[11px] font-black uppercase text-gray-400 block mb-2">
-                  Produce Categories
+                  Categories
                 </span>
                 <div className="grid grid-cols-2 gap-2">
                   <button
@@ -674,7 +678,7 @@ function ShopContent() {
                       <span className="w-4 h-4 rounded-full overflow-hidden bg-white border border-gray-200 shrink-0">
                         <img src="/categories/vegetables.jpg" alt="All" className="w-full h-full object-cover" />
                       </span>
-                      <span>All Aisles</span>
+                      <span>All Items</span>
                     </span>
                     {!categoryParam && <Check size={12} className="stroke-[3]" />}
                   </button>
@@ -711,7 +715,7 @@ function ShopContent() {
               {/* Max Budget Slider */}
               <div className="mb-4">
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-[11px] font-black uppercase text-gray-400">Max Budget</span>
+                  <span className="text-[11px] font-black uppercase text-gray-400">Max Price</span>
                   <span className="text-xs font-black text-[#0a3d24]">₹{priceRange}</span>
                 </div>
                 <input
@@ -757,10 +761,10 @@ function ShopLoadingFallback() {
       <main className="flex-1 max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8 py-5 sm:py-8 pb-28 sm:pb-16 w-full">
         <div className="bg-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-gray-100 shadow-xs mb-3">
           <h1 className="text-lg sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
-            Buy Fresh Vegetables &amp; Fruits in Bhopal
+            Fresh Fruits &amp; Vegetables
           </h1>
           <p className="text-[11px] sm:text-xs text-gray-500 font-medium mt-0.5">
-            5:00 AM Farm Fresh Harvest • Handpicked &amp; Triple-Checked • Express Delivery Across Bhopal
+            Handpicked daily from nearby farms • Cleaned, sorted &amp; delivered in 10-15 mins
           </p>
         </div>
         <div className="flex items-center justify-center py-24">
