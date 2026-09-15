@@ -42,30 +42,30 @@ export default function AboutPage() {
     {
       step: "01",
       icon: Leaf,
-      title: "5:00 AM Sunrise Farm Harvest",
-      desc: "Seedha Bhopal ke local kisanon aur farms se taazi sabziyan. Zero chemical treatment, zero days-old cold storage.",
-      tag: "Farm Fresh Daily",
+      title: "Direct From Local Farmers",
+      desc: "Taazi sabziyan aur phal seedha kisanon ke khet se har subah aate hain. Zero chemical treatment, bilkul taaza.",
+      tag: "100% Farm Fresh",
     },
     {
       step: "02",
       icon: Zap,
-      title: "10-15 Min Express Delivery",
-      desc: "SubziQuick ki dedicated Bhopal EV fleet se aapke ghar tak lightning-fast delivery, bina kisi lambe intezaar ke.",
-      tag: "Bhopal Express Fleet",
+      title: "10-15 Min Fast Delivery",
+      desc: "SubziQuick ki local Bhopal delivery fleet se bina kisi lambe intezaar ke taaza saaman aapke ghar pahunchega.",
+      tag: "Express Delivery",
     },
     {
       step: "03",
       icon: IndianRupee,
-      title: "Sahi Kifayati Daam (Zero Hidden Fees)",
-      desc: "Direct transparent store pricing. Zero platform fee, zero surge charges, aur ₹199 se upar free delivery.",
-      tag: "Transparent Rates",
+      title: "Sahi Daam, Zero Extra Charge",
+      desc: "Transparent store prices. Koi hidden platform fee nahi, koi surge charges nahi, aur ₹199+ par free delivery.",
+      tag: "Honest Pricing",
     },
     {
       step: "04",
       icon: ShieldCheck,
-      title: "100% Quality & Replacement Guarantee",
-      desc: "Har order ke saath quality ka pakka vaada. Doorstep par sabzi pasand na aaye toh instant replacement ya refund.",
-      tag: "No Questions Asked",
+      title: "100% Doorstep Quality Check",
+      desc: "Delivery ke waqt sabzi check karein. Pasand na aaye toh turant doorstep replacement ya refund paayein.",
+      tag: "Instant Replacement",
     },
   ];
 
@@ -280,7 +280,7 @@ export default function AboutPage() {
                 <div className="px-4 sm:px-6 pb-4 pt-2 border-t border-amber-100 flex items-center justify-between text-xs font-bold text-amber-900">
                   <span className="flex items-center gap-1.5">
                     <Scale size={14} className="text-amber-600" />
-                    <span>Sunrise Farm Fresh Procurement</span>
+                    <span>Sourced Fresh Daily</span>
                   </span>
                   <span className="text-[10px] sm:text-[11px] font-mono text-amber-700 bg-amber-100/80 px-2 py-0.5 rounded">
                     Bhopal, 2020
@@ -325,7 +325,7 @@ export default function AboutPage() {
                 <div className="px-4 sm:px-6 pb-4 pt-2 border-t border-emerald-100 flex items-center justify-between text-xs font-bold text-emerald-900">
                   <span className="flex items-center gap-1.5">
                     <Bike size={14} className="text-[#0a3d24]" />
-                    <span>MP-04 Bhopal Fleet (10-15 Min)</span>
+                    <span>10-15 Min Doorstep Delivery</span>
                   </span>
                   <span className="text-[10px] sm:text-[11px] font-mono text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded">
                     Active Across Bhopal

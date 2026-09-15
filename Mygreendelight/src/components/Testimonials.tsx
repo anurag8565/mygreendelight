@@ -239,11 +239,11 @@ export default function Testimonials({
             <div className="flex items-center gap-2">
               <MessageSquareQuote size={18} className="text-[#0a3d24] shrink-0" />
               <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-stone-900 tracking-tight font-heading">
-                {googleSettings.googleReviewsHeading || "Customer Reviews on Google"}
+                {googleSettings.googleReviewsHeading || "What Our Customers Say"}
               </h2>
             </div>
             <p className="text-xs text-stone-500 font-medium mt-0.5">
-              Verified feedback from households in Arera Colony, Kolar Road, MP Nagar & Bhopal
+              Real feedback from households across Bhopal on fresh quality &amp; express delivery
             </p>
           </div>
 

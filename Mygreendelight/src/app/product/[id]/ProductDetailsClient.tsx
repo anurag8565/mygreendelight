@@ -547,16 +547,16 @@ export default function ProductDetailsClient({
                     <div className="w-7 h-7 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center mb-1">
                       <Clock size={14} />
                     </div>
-                    <span className="text-[10.5px] font-black text-stone-900 leading-tight">10-15M Express</span>
-                    <span className="text-[9px] text-stone-500 font-medium">Doorstep in Bhopal</span>
+                    <span className="text-[10.5px] font-black text-stone-900 leading-tight">10-15 Min Delivery</span>
+                    <span className="text-[9px] text-stone-500 font-medium">To your doorstep in Bhopal</span>
                   </div>
 
                   <div className="bg-stone-50 border border-stone-200/70 rounded-xl p-2.5 flex flex-col items-center text-center">
                     <div className="w-7 h-7 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center mb-1">
                       <RefreshCw size={14} />
                     </div>
-                    <span className="text-[10.5px] font-black text-stone-900 leading-tight">Instant Replace</span>
-                    <span className="text-[9px] text-stone-500 font-medium">Doorstep verification</span>
+                    <span className="text-[10.5px] font-black text-stone-900 leading-tight">Easy Returns</span>
+                    <span className="text-[9px] text-stone-500 font-medium">Doorstep check &amp; replace</span>
                   </div>
                 </div>
               </div>
@@ -585,31 +585,31 @@ export default function ProductDetailsClient({
           <div className="flex items-center justify-between mb-3.5 pb-2 border-b border-stone-100">
             <h3 className="text-sm sm:text-base font-black text-stone-900 flex items-center gap-2">
               <Info size={16} className="text-[#0a3d24]" />
-              <span>Product Description & Specifications</span>
+              <span>Product Details &amp; Quality Specs</span>
             </h3>
             <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
               <Sparkles size={11} className="text-[#0a3d24]" />
-              <span>100% Quality Graded</span>
+              <span>100% Quality Checked</span>
             </span>
           </div>
 
           {/* Quick Nutrition & Highlights Bar */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
             <div className="bg-emerald-50/60 border border-emerald-100 rounded-xl p-2.5 text-center">
-              <span className="text-[10px] uppercase font-bold text-emerald-800 tracking-wider block">Harvest Time</span>
-              <span className="text-xs font-black text-[#0a3d24]">5:00 AM Today</span>
+              <span className="text-[10px] uppercase font-bold text-emerald-800 tracking-wider block">Harvest</span>
+              <span className="text-xs font-black text-[#0a3d24]">Fresh Daily</span>
             </div>
             <div className="bg-emerald-50/60 border border-emerald-100 rounded-xl p-2.5 text-center">
-              <span className="text-[10px] uppercase font-bold text-emerald-800 tracking-wider block">Dietary</span>
-              <span className="text-xs font-black text-[#0a3d24]">100% Pure Vegan</span>
+              <span className="text-[10px] uppercase font-bold text-emerald-800 tracking-wider block">Quality</span>
+              <span className="text-xs font-black text-[#0a3d24]">Hand-Inspected</span>
             </div>
             <div className="bg-emerald-50/60 border border-emerald-100 rounded-xl p-2.5 text-center">
-              <span className="text-[10px] uppercase font-bold text-emerald-800 tracking-wider block">Grade</span>
-              <span className="text-xs font-black text-[#0a3d24]">Grade A Produce</span>
+              <span className="text-[10px] uppercase font-bold text-emerald-800 tracking-wider block">Storage</span>
+              <span className="text-xs font-black text-[#0a3d24]">Zero Cold Storage</span>
             </div>
             <div className="bg-emerald-50/60 border border-emerald-100 rounded-xl p-2.5 text-center">
-              <span className="text-[10px] uppercase font-bold text-emerald-800 tracking-wider block">Preservatives</span>
-              <span className="text-xs font-black text-[#0a3d24]">Zero Chemicals</span>
+              <span className="text-[10px] uppercase font-bold text-emerald-800 tracking-wider block">Handling</span>
+              <span className="text-xs font-black text-[#0a3d24]">Hygienically Packed</span>
             </div>
           </div>
 
