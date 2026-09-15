@@ -185,79 +185,113 @@ export default function Footer() {
         </div>
 
         {/* Sleek Collapsible SEO & Popular Searches Directory (Keeps Footer Compact, 100% Crawlable) */}
-        <details className="group py-2.5 border-b border-white/[0.08] text-stone-300/80">
-          <summary className="flex items-center justify-between cursor-pointer list-none text-xs text-stone-400 hover:text-emerald-300 transition-colors select-none py-1">
-            <span className="flex items-center gap-2 font-medium">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              <span>Popular Searches &amp; Bhopal Delivery Directory</span>
+        {/* Sleek Collapsible SEO & Popular Searches Directory (100% Mobile Responsive & Touch-Friendly) */}
+        <details className="group py-2 border-b border-white/[0.08] text-stone-300/80 w-full overflow-hidden">
+          <summary className="flex items-center justify-between cursor-pointer list-none [&::-webkit-details-marker]:hidden text-[11px] sm:text-xs text-stone-400 hover:text-emerald-300 transition-colors select-none py-1.5 gap-2">
+            <span className="flex items-center gap-2 font-medium min-w-0 flex-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+              <span className="truncate sm:whitespace-normal font-semibold">
+                Popular Searches &amp; Bhopal Delivery Directory
+              </span>
             </span>
-            <ChevronDown size={14} className="group-open:rotate-180 transition-transform text-stone-500 group-hover:text-emerald-300" />
+            <span className="p-1 rounded-md bg-white/[0.05] border border-white/[0.08] shrink-0 group-hover:bg-white/[0.1] transition-colors">
+              <ChevronDown size={13} className="group-open:rotate-180 transition-transform text-stone-400 group-hover:text-emerald-300" />
+            </span>
           </summary>
           
-          <div className="pt-3 pb-2 space-y-3 text-[11px]">
+          <div className="pt-3 pb-3 space-y-3.5 text-[11px] w-full">
             <div>
-              <h4 className="font-bold text-[10.5px] uppercase tracking-wider text-emerald-300 mb-1.5">
+              <h4 className="font-bold text-[10px] sm:text-[10.5px] uppercase tracking-wider text-emerald-300 mb-2">
                 Popular Searches in Bhopal
               </h4>
-              <div className="flex flex-wrap gap-x-2.5 gap-y-1 text-stone-400">
-                <Link href="/shop?category=Vegetables" className="hover:text-white transition-colors">online vegetable delivery in bhopal</Link>
-                <span className="text-stone-600">•</span>
-                <Link href="/shop?category=Vegetables" className="hover:text-white transition-colors">fresh vegetables and fruits in bhopal</Link>
-                <span className="text-stone-600">•</span>
-                <Link href="/shop?category=Fruits" className="hover:text-white transition-colors">buy fresh fruits online bhopal</Link>
-                <span className="text-stone-600">•</span>
-                <Link href="/shop" className="hover:text-white transition-colors">online sabzi delivery app bhopal</Link>
-                <span className="text-stone-600">•</span>
-                <Link href="/shop" className="hover:text-white transition-colors">taaza sabzi online bhopal</Link>
-                <span className="text-stone-600">•</span>
-                <Link href="/shop" className="hover:text-white transition-colors">best vegetable delivery service in bhopal</Link>
-                <span className="text-stone-600">•</span>
-                <Link href="/shop" className="hover:text-white transition-colors">fresh farm vegetables home delivery bhopal</Link>
-                <span className="text-stone-600">•</span>
-                <Link href="/shop" className="hover:text-white transition-colors">doorstep sabzi delivery cash on delivery</Link>
-                <span className="text-stone-600">•</span>
-                <Link href="/shop" className="hover:text-white transition-colors">same day fresh vegetable delivery bhopal</Link>
-                <span className="text-stone-600">•</span>
-                <Link href="/shop" className="hover:text-white transition-colors">10-15 minute vegetable delivery bhopal</Link>
-                <span className="text-stone-600">•</span>
-                <Link href="/shop" className="hover:text-white transition-colors">subziquick 15 min express delivery</Link>
+              <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                {[
+                  { text: "online vegetable delivery in bhopal", href: "/shop?category=Vegetables" },
+                  { text: "fresh vegetables & fruits in bhopal", href: "/shop?category=Vegetables" },
+                  { text: "buy fresh fruits online bhopal", href: "/shop?category=Fruits" },
+                  { text: "online sabzi delivery app bhopal", href: "/shop" },
+                  { text: "taaza sabzi online bhopal", href: "/shop" },
+                  { text: "best vegetable delivery service bhopal", href: "/shop" },
+                  { text: "fresh farm vegetables home delivery", href: "/shop" },
+                  { text: "doorstep sabzi cash on delivery", href: "/shop" },
+                  { text: "same day fresh vegetable delivery", href: "/shop" },
+                  { text: "today fresh vegetable rate in bhopal", href: "/shop" },
+                  { text: "10-15 minute vegetable delivery", href: "/shop" },
+                  { text: "fastest sabzi delivery bhopal", href: "/shop" },
+                  { text: "instant fresh vegetable delivery", href: "/shop" },
+                  { text: "subziquick 15 min express delivery", href: "/shop" },
+                ].map((item, i) => (
+                  <Link
+                    key={i}
+                    href={item.href}
+                    className="inline-block bg-white/[0.04] hover:bg-emerald-950/50 hover:text-emerald-300 hover:border-emerald-700/50 border border-white/[0.08] px-2 sm:px-2.5 py-1 rounded-lg text-[10px] sm:text-[11px] text-stone-300 transition-colors break-words max-w-full"
+                  >
+                    {item.text}
+                  </Link>
+                ))}
               </div>
             </div>
 
             <div>
-              <h4 className="font-bold text-[10.5px] uppercase tracking-wider text-emerald-300 mb-1.5">
-                Daily Essentials &amp; Produce
+              <h4 className="font-bold text-[10px] sm:text-[10.5px] uppercase tracking-wider text-emerald-300 mb-2">
+                Daily Farm Fresh Produce &amp; Essentials
               </h4>
-              <div className="flex flex-wrap gap-x-2.5 gap-y-1 text-stone-400">
-                <Link href="/user/search?query=tamatar" className="hover:text-white transition-colors">buy fresh desi tamatar</Link>
-                <span className="text-stone-600">•</span>
-                <Link href="/user/search?query=aloo" className="hover:text-white transition-colors">pahadi aloo potato home delivery</Link>
-                <span className="text-stone-600">•</span>
-                <Link href="/user/search?query=pyaaz" className="hover:text-white transition-colors">nashik red onion pyaaz</Link>
-                <span className="text-stone-600">•</span>
-                <Link href="/user/search?query=palak" className="hover:text-white transition-colors">fresh organic palak</Link>
-                <span className="text-stone-600">•</span>
-                <Link href="/user/search?query=matar" className="hover:text-white transition-colors">green peas matar</Link>
-                <span className="text-stone-600">•</span>
-                <Link href="/user/search?query=avocado" className="hover:text-white transition-colors">hass avocado bhopal</Link>
-                <span className="text-stone-600">•</span>
-                <Link href="/user/search?query=broccoli" className="hover:text-white transition-colors">fresh green broccoli</Link>
-                <span className="text-stone-600">•</span>
-                <Link href="/user/search?query=lettuce" className="hover:text-white transition-colors">hydroponic romaine lettuce</Link>
-                <span className="text-stone-600">•</span>
-                <Link href="/user/search?query=mushroom" className="hover:text-white transition-colors">button mushroom 200g</Link>
-                <span className="text-stone-600">•</span>
-                <Link href="/shop?category=Combos" className="hover:text-white transition-colors">daily value combos &amp; family basket</Link>
+              <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                {[
+                  { text: "buy fresh desi tamatar", href: "/user/search?query=tamatar" },
+                  { text: "pahadi aloo potato home delivery", href: "/user/search?query=aloo" },
+                  { text: "nashik red onion pyaaz", href: "/user/search?query=pyaaz" },
+                  { text: "fresh organic palak spinach", href: "/user/search?query=palak" },
+                  { text: "fresh green peas matar", href: "/user/search?query=matar" },
+                  { text: "buy hass avocado in bhopal", href: "/user/search?query=avocado" },
+                  { text: "fresh green broccoli price", href: "/user/search?query=broccoli" },
+                  { text: "hydroponic romaine lettuce", href: "/user/search?query=lettuce" },
+                  { text: "fresh button mushroom 200g", href: "/user/search?query=mushroom" },
+                  { text: "daily value combo vegetable pack", href: "/shop?category=Combos" },
+                  { text: "weekly family sabzi basket", href: "/shop?category=Combos" },
+                ].map((item, i) => (
+                  <Link
+                    key={i}
+                    href={item.href}
+                    className="inline-block bg-white/[0.04] hover:bg-emerald-950/50 hover:text-emerald-300 hover:border-emerald-700/50 border border-white/[0.08] px-2 sm:px-2.5 py-1 rounded-lg text-[10px] sm:text-[11px] text-stone-300 transition-colors break-words max-w-full"
+                  >
+                    {item.text}
+                  </Link>
+                ))}
               </div>
             </div>
 
             <div>
-              <h4 className="font-bold text-[10.5px] uppercase tracking-wider text-emerald-300 mb-1.5">
-                Delivery Localities in Bhopal
+              <h4 className="font-bold text-[10px] sm:text-[10.5px] uppercase tracking-wider text-emerald-300 mb-2">
+                Express Delivery Across Bhopal Localities (10-15 Min)
               </h4>
-              <p className="text-stone-400 leading-relaxed text-[10.5px]">
-                Arera Colony • Kolar Road • MP Nagar • Bawadiya Kalan • Katara Hills • Shahpura • Bittan Market • Ayodhya Bypass • Indrapuri &amp; BHEL • Hoshangabad Rd • Gulmohar • Chunabhatti • Saket Nagar • Bagsewaniya Hub (462043) • Trilanga • Misrod.
-              </p>
+              <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                {[
+                  "Arera Colony",
+                  "Kolar Road",
+                  "MP Nagar",
+                  "Bawadiya Kalan",
+                  "Katara Hills",
+                  "Shahpura",
+                  "Bittan Market (E-4)",
+                  "Ayodhya Bypass",
+                  "Indrapuri & BHEL",
+                  "Hoshangabad Road",
+                  "Gulmohar",
+                  "Chunabhatti",
+                  "Saket Nagar",
+                  "Bagsewaniya Hub (462043)",
+                  "Trilanga",
+                  "Misrod",
+                ].map((loc, i) => (
+                  <span
+                    key={i}
+                    className="inline-block bg-white/[0.03] border border-white/[0.06] px-2 py-0.5 rounded-md text-[10px] sm:text-[10.5px] text-stone-300 break-words"
+                  >
+                    {loc}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </details>
