@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
 import { addMultipleToCart } from "@/redux/CartSlice";
 import OrderInvoiceModal from "@/components/OrderInvoiceModal";
+import LiveOrderPulseTracker from "@/components/LiveOrderPulseTracker";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Calendar,
@@ -103,6 +104,7 @@ export default function MyOrder() {
   const [helpIssueType, setHelpIssueType] = useState("Damaged / Rotten Produce");
   const [helpDetails, setHelpDetails] = useState("");
   const [submittingHelp, setSubmittingHelp] = useState(false);
+  const [selectedPulseOrder, setSelectedPulseOrder] = useState<OrderType | null>(null);
 
 
   useEffect(() => {
@@ -645,13 +647,15 @@ export default function MyOrder() {
                     
                     {/* Primary Action Button */}
                     {!isDelivered && !isCancelled ? (
-                      <Link
-                        href={`/track/${order._id}`}
+                      <button
+                        type="button"
+                        onClick={() => setSelectedPulseOrder(order)}
                         className="flex-1 bg-[#0a3d24] hover:bg-[#072817] active:scale-98 text-white py-2.5 px-4 rounded-xl text-xs font-black shadow-xs hover:shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer text-center"
                       >
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping inline-block mr-0.5" />
                         <Truck size={14} />
-                        <span>Track Live Delivery</span>
-                      </Link>
+                        <span>Live Pulse Track</span>
+                      </button>
                     ) : isDelivered ? (
                       <Link
                         href={`/track/${order._id}`}
@@ -987,6 +991,27 @@ export default function MyOrder() {
           </motion.div>
         </div>
       )}
+
+      {/* 📋 Live Pulse Tracker Modal */}
+      <AnimatePresence>
+        {selectedPulseOrder && (
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3.5 sm:p-4 bg-black/65 backdrop-blur-xs font-sans overflow-y-auto">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              transition={{ type: "spring", stiffness: 450, damping: 28 }}
+              className="relative w-full max-w-xl my-auto"
+            >
+              <LiveOrderPulseTracker
+                order={selectedPulseOrder}
+                customerLocation={selectedPulseOrder.address as any}
+                onClose={() => setSelectedPulseOrder(null)}
+              />
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       <Footer />
     </div>
