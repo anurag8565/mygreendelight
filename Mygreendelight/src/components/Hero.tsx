@@ -172,7 +172,7 @@ export default function Hero({ banners = [] }: HeroProps) {
           onMouseLeave={() => setIsPaused(false)}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
-          className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-stone-100 border border-stone-200/90 shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.06)] transition-all duration-300 h-[165px] xs:h-[180px] sm:h-[215px] md:h-[245px] select-none"
+          className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-stone-100 border border-stone-200/90 shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.06)] transition-all duration-300 h-[165px] xs:h-[180px] sm:h-[215px] md:h-[250px] lg:h-[295px] xl:h-[320px] select-none"
         >
           <AnimatePresence initial={false} custom={direction} mode="wait">
             <motion.div
@@ -198,34 +198,34 @@ export default function Hero({ banners = [] }: HeroProps) {
               <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 via-55% sm:via-42% to-transparent pointer-events-none z-1" />
 
               {/* Left Editorial Content Layer */}
-              <div className="relative z-10 h-full p-3.5 xs:p-4 sm:p-6 md:p-8 flex flex-col justify-between max-w-[64%] xs:max-w-[62%] sm:max-w-md">
+              <div className="relative z-10 h-full p-3.5 xs:p-4 sm:p-6 md:p-8 lg:p-10 flex flex-col justify-between max-w-[64%] xs:max-w-[62%] sm:max-w-md lg:max-w-xl">
                 <div>
                   {/* Clean Trust Micro-Pill (Zero Emojis, Real Lucide SVG Icon) */}
-                  <div className="inline-flex items-center gap-1.5 bg-emerald-50/95 border border-emerald-200/80 text-[#0a3d24] text-[10px] sm:text-[11px] font-bold px-2.5 py-0.5 rounded-full mb-1.5 sm:mb-2 shadow-2xs">
+                  <div className="inline-flex items-center gap-1.5 bg-emerald-50/95 border border-emerald-200/80 text-[#0a3d24] text-[10px] sm:text-[11px] lg:text-xs font-bold px-2.5 py-0.5 lg:px-3 lg:py-1 rounded-full mb-1.5 sm:mb-2 lg:mb-3 shadow-2xs">
                     {renderIcon(slide.iconType)}
                     <span className="truncate">{slide.tag}</span>
                   </div>
 
                   {/* High-Impact Headline */}
-                  <h2 className="text-[15px] xs:text-[17px] sm:text-2xl md:text-[26px] font-extrabold text-stone-900 tracking-tight leading-tight line-clamp-2">
+                  <h2 className="text-[15px] xs:text-[17px] sm:text-2xl md:text-[26px] lg:text-[32px] xl:text-[34px] font-extrabold text-stone-900 tracking-tight leading-tight line-clamp-2 font-heading">
                     {slide.title}
                   </h2>
 
                   {/* Value Proposition Subtitle */}
-                  <p className="text-[11px] xs:text-xs sm:text-sm text-stone-600 font-medium leading-snug line-clamp-1 sm:line-clamp-2 mt-0.5 sm:mt-1">
+                  <p className="text-[11px] xs:text-xs sm:text-sm lg:text-base text-stone-600 font-medium leading-snug line-clamp-1 sm:line-clamp-2 mt-0.5 sm:mt-1 lg:mt-2 max-w-lg">
                     {slide.subtitle}
                   </p>
                 </div>
 
                 {/* Bottom Row: CTA Pill Button & Minimalist Pagination Dots */}
-                <div className="flex items-center gap-2.5 sm:gap-3.5 pt-1">
+                <div className="flex items-center gap-2.5 sm:gap-3.5 lg:gap-5 pt-1 lg:pt-2">
                   <Link href={slide.link || "/shop"}>
                     <button
                       type="button"
-                      className="bg-[#0a3d24] hover:bg-[#072416] text-white px-3.5 xs:px-4 sm:px-5 py-1.5 sm:py-2 rounded-full font-bold text-[11px] xs:text-xs sm:text-sm shadow-xs transition flex items-center gap-1.5 active:scale-95 cursor-pointer whitespace-nowrap"
+                      className="bg-[#0a3d24] hover:bg-[#072416] text-white px-3.5 xs:px-4 sm:px-5 lg:px-6 py-1.5 sm:py-2 lg:py-2.5 rounded-full font-bold text-[11px] xs:text-xs sm:text-sm lg:text-[15px] shadow-xs transition flex items-center gap-1.5 active:scale-95 cursor-pointer whitespace-nowrap"
                     >
                       <span>{slide.btnText}</span>
-                      <ArrowRight size={13} className="stroke-[2.5]" />
+                      <ArrowRight size={14} className="stroke-[2.5]" />
                     </button>
                   </Link>
 
