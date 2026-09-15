@@ -3,8 +3,37 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ChevronRight, LayoutGrid } from "lucide-react";
-import { motion } from "framer-motion";
+import { ChevronRight, LayoutGrid, Sparkles } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { triggerHaptic } from "@/utils/haptics";
+
+// Gentle synthesized luxury UI tap sound (AudioContext, zero external assets)
+const playTapSound = () => {
+  if (typeof window === "undefined") return;
+  try {
+    const AudioContextClass =
+      window.AudioContext || (window as any).webkitAudioContext;
+    if (!AudioContextClass) return;
+    const ctx = new AudioContextClass();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(520, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(840, ctx.currentTime + 0.045);
+
+    gain.gain.setValueAtTime(0.06, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.045);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start();
+    osc.stop(ctx.currentTime + 0.05);
+  } catch {
+    // Ignore audio permission or hardware limits safely
+  }
+};
 
 // Clean, luxury category metadata with 4K assets and cache buster
 // 4 core categories: Vegetables, Fruits, Exotics, and Value Combos
@@ -76,6 +105,7 @@ export default function CategorySlider({
 }) {
   const router = useRouter();
   const [activeCategories, setActiveCategories] = useState<any[]>([]);
+  const [tappedKey, setTappedKey] = useState<string | null>(null);
   const scrollContainerRef = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -154,6 +184,17 @@ export default function CategorySlider({
     }
   };
 
+  const handleCategoryTap = (matchedKey: string, path: string) => {
+    setTappedKey(matchedKey);
+    triggerHaptic("medium");
+    playTapSound();
+
+    // Instant smooth navigation with tactile delay
+    setTimeout(() => {
+      router.push(`/shop?category=${encodeURIComponent(path)}`);
+    }, 140);
+  };
+
   return (
     <section className="w-full py-4 sm:py-6 bg-white font-sans border-b border-stone-200/70 select-none">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
@@ -200,28 +241,29 @@ export default function CategorySlider({
 
               const imageSrc = config.imgUrl || item.image || "/categories/vegetables_4k.jpg?v=4";
               const isCombo = matchedKey.includes("combo");
+              const isTapped = tappedKey === matchedKey;
 
               return (
                 <motion.div
                   key={item._id || item.name || idx}
                   initial={{ opacity: 0, y: 14, scale: 0.94 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  animate={{ opacity: 1, y: 0, scale: isTapped ? 0.92 : 1 }}
                   transition={{
-                    duration: 0.35,
-                    delay: idx * 0.07,
-                    ease: "easeOut",
+                    type: "spring",
+                    stiffness: 450,
+                    damping: 20,
                   }}
-                  whileTap={{ scale: 0.92 }}
+                  whileTap={{ scale: 0.88 }}
                   whileHover={{ y: -5 }}
-                  onClick={() =>
-                    router.push(`/shop?category=${encodeURIComponent(config.path)}`)
-                  }
-                  className="group cursor-pointer flex flex-col items-center text-center select-none shrink-0 w-[76px] xs:w-[86px] sm:w-28 md:w-32 snap-center"
+                  onClick={() => handleCategoryTap(matchedKey, config.path)}
+                  className="group cursor-pointer flex flex-col items-center text-center select-none shrink-0 w-[76px] xs:w-[86px] sm:w-28 md:w-32 snap-center relative"
                 >
-                  {/* Glowing Circular Stories Avatar */}
+                  {/* Glowing Circular Stories Avatar with Active Tap Ring */}
                   <div
                     className={`relative p-0.5 sm:p-1 rounded-full transition-all duration-300 ${
-                      isCombo
+                      isTapped
+                        ? "ring-4 ring-emerald-500 ring-offset-2 ring-offset-white shadow-[0_0_24px_rgba(16,185,129,0.6)] scale-105 bg-emerald-500"
+                        : isCombo
                         ? "bg-gradient-to-tr from-amber-500 via-emerald-500 to-[#0a3d24] shadow-[0_5px_20px_rgba(217,119,6,0.22)] group-hover:shadow-[0_10px_28px_rgba(217,119,6,0.35)]"
                         : "bg-gradient-to-tr from-[#0a3d24] via-emerald-500 to-amber-400 shadow-[0_5px_20px_rgba(10,61,36,0.16)] group-hover:shadow-[0_10px_28px_rgba(10,61,36,0.28)]"
                     }`}
@@ -232,20 +274,47 @@ export default function CategorySlider({
                         <img
                           src={imageSrc}
                           alt={config.title}
-                          className="w-full h-full object-cover group-hover:scale-112 group-hover:rotate-1 transition-transform duration-500 ease-out"
+                          className={`w-full h-full object-cover transition-transform duration-500 ease-out ${
+                            isTapped
+                              ? "scale-118 rotate-1"
+                              : "group-hover:scale-112 group-hover:rotate-1"
+                          }`}
                           onError={(e: any) => {
                             e.target.src = "/categories/vegetables_4k.jpg?v=4";
                           }}
                         />
-                        {/* Gentle inner overlay on hover */}
-                        <div className="absolute inset-0 bg-[#0a3d24]/0 group-hover:bg-[#0a3d24]/10 transition-colors duration-300 rounded-full" />
+                        {/* Active Tap Ripple Glow Overlay */}
+                        <div
+                          className={`absolute inset-0 rounded-full transition-all duration-300 ${
+                            isTapped
+                              ? "bg-emerald-500/20"
+                              : "bg-[#0a3d24]/0 group-hover:bg-[#0a3d24]/10"
+                          }`}
+                        />
                       </div>
                     </div>
+
+                    {/* Active Tap Sparkle Badge */}
+                    {isTapped && (
+                      <motion.div
+                        initial={{ scale: 0, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        className="absolute -top-1 -right-1 bg-emerald-600 text-white p-1 rounded-full shadow-md border border-white"
+                      >
+                        <Sparkles size={10} className="stroke-[3]" />
+                      </motion.div>
+                    )}
                   </div>
 
                   {/* Typography: Category Name */}
                   <div className="mt-2 sm:mt-2.5 flex flex-col items-center">
-                    <span className="font-extrabold text-[11px] xs:text-xs sm:text-sm md:text-base text-stone-900 group-hover:text-[#0a3d24] transition-colors duration-200 tracking-tight leading-tight line-clamp-1">
+                    <span
+                      className={`font-extrabold text-[11px] xs:text-xs sm:text-sm md:text-base tracking-tight leading-tight line-clamp-1 transition-colors duration-200 ${
+                        isTapped
+                          ? "text-emerald-700 font-black scale-105"
+                          : "text-stone-900 group-hover:text-[#0a3d24]"
+                      }`}
+                    >
                       {config.title}
                     </span>
                     <span className="text-[10px] sm:text-xs text-stone-500 font-medium tracking-tight mt-0.5 hidden xs:block">
