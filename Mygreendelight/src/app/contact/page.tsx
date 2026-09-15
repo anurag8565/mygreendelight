@@ -157,24 +157,36 @@ export default function ContactPage() {
 
   const faqs = [
     {
-      q: "How fast is delivery across Bhopal?",
-      a: "SubziQuick provides 15-45 minutes express delivery directly from our Bhopal farm hubs. You can also pick a scheduled morning farm slot (6:00 AM - 10:00 AM) during checkout.",
+      q: "How fast is vegetable and fruit delivery across Bhopal?",
+      a: "SubziQuick delivers in 10-15 minutes across all Bhopal societies directly from our local farm hubs. You can also pick a scheduled sunrise farm slot (6:00 AM - 10:00 AM) during checkout.",
+    },
+    {
+      q: "Bhopal me online taaza sabzi kaise order karein?",
+      a: "Aap SubziQuick website ya app se direct items add kar sakte hain, ya kaagaz ki parchi ki photo upload karke ya WhatsApp (+91 9981418565) par voice note bhejkar 10-15 minute me doorstep delivery pa sakte hain.",
+    },
+    {
+      q: "Aaj Bhopal me tamatar pyaz aur fresh vegetables ka taaza rate kya hai?",
+      a: "SubziQuick par daily subah 5:00 AM sunrise harvest ke fresh rates update hote hain. Direct kisan farms se sourcing ke karan koi middleman commission nahi hota, jisse transparent aur kifayati rates milte hain.",
+    },
+    {
+      q: "What makes SubziQuick the best app to buy fresh vegetables in Bhopal?",
+      a: "SubziQuick offers 100% handpicked & triple-checked farm produce, zero cold storage, 10-15 min express delivery, ₹0 platform fee, and instant doorstep replacement or refund guarantee.",
+    },
+    {
+      q: "What is the SubziQuick Bhopal customer care number?",
+      a: "You can reach our Bhopal customer care desk directly via Phone or WhatsApp at +91 9981418565 (Bagsewaniya Hub, 7:00 AM to 10:00 PM every day).",
+    },
+    {
+      q: "How do I get free vegetable delivery near me in Bhopal?",
+      a: "All orders above ₹199 unlock 100% FREE express delivery across Arera Colony, Kolar Road, MP Nagar, Bawadiya Kalan, Katara Hills, Shahpura, and all 462xxx pin code areas in Bhopal.",
     },
     {
       q: "What is your Freshness & Quality Guarantee?",
-      a: "If any vegetable or fruit does not meet your quality expectations upon delivery, we offer an instant 100% no-questions-asked replacement or refund directly via our delivery partner or WhatsApp support.",
-    },
-    {
-      q: "What are your delivery operating hours?",
-      a: "We deliver 7 days a week from 7:00 AM to 10:00 PM across all Bhopal neighborhoods including Arera Colony, Kolar Road, MP Nagar, Hoshangabad Road, Bawadiya Kalan, and beyond.",
-    },
-    {
-      q: "How do I use my Farm Wallet & Scratch Card coupons?",
-      a: "Your wallet balance and unlocked scratch card discounts automatically apply at checkout with 1 tap, reducing your payable order total instantly.",
+      a: "Check your produce at delivery. If any vegetable or fruit is bruised or not crisp, get an instant replacement or refund on the spot. Zero questions asked.",
     },
     {
       q: "How do Bhopal Society Order Pools work?",
-      a: "When neighbors in the same colony order together and reach the group pool target, every order unlocks an additional flat 5% discount automatically.",
+      a: "When 3 or more neighbors in the same colony order together, everyone unlocks FREE express delivery plus an extra flat 5% discount on farm-fresh produce.",
     },
   ];
 

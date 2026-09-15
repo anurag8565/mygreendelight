@@ -183,11 +183,111 @@ export default function Footer() {
 
         </div>
 
-        {/* Micro Localities Notice */}
-        <div className="py-3 flex flex-wrap items-center justify-between gap-2 text-[11px] text-stone-400/90 font-normal border-b border-white/[0.06]">
-          <div className="flex items-center gap-1.5">
-            <Truck size={13} className="text-emerald-400 shrink-0" />
-            <span>Delivering across Bhopal: Arera Colony, MP Nagar, Kolar Road, Bagsewaniya, Shahpura, Bawadiya Kalan, Katara Hills, Hoshangabad Rd & all PIN 462xxx areas.</span>
+        {/* SEO & Popular Searches Directory (Blinkit / Zepto Style) */}
+        <div className="py-6 border-b border-white/[0.08] space-y-4 text-stone-300/80">
+          <div>
+            <h4 className="text-[11px] font-bold uppercase tracking-wider text-emerald-300 mb-2">
+              Popular Searches &amp; Online Sabzi Delivery in Bhopal
+            </h4>
+            <div className="flex flex-wrap gap-x-3 gap-y-1.5 text-[11px] text-stone-400">
+              <Link href="/shop?category=Vegetables" className="hover:text-white transition-colors">online vegetable delivery in bhopal</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/shop?category=Vegetables" className="hover:text-white transition-colors">fresh vegetables and fruits in bhopal</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/shop?category=Fruits" className="hover:text-white transition-colors">buy fresh fruits online bhopal</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/shop" className="hover:text-white transition-colors">online sabzi delivery app bhopal</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/shop" className="hover:text-white transition-colors">taaza sabzi online bhopal</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/shop" className="hover:text-white transition-colors">best vegetable delivery service in bhopal</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/shop" className="hover:text-white transition-colors">fresh farm vegetables home delivery bhopal</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/shop" className="hover:text-white transition-colors">doorstep sabzi delivery bhopal cash on delivery</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/shop" className="hover:text-white transition-colors">same day fresh vegetable delivery bhopal</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/shop" className="hover:text-white transition-colors">today fresh vegetable rate in bhopal</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/shop" className="hover:text-white transition-colors">10-15 minute vegetable delivery bhopal</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/shop" className="hover:text-white transition-colors">fastest sabzi delivery bhopal</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/shop" className="hover:text-white transition-colors">instant fresh vegetable delivery near me</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/shop" className="hover:text-white transition-colors">early morning fresh vegetable delivery bhopal</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/shop" className="hover:text-white transition-colors">subziquick 15 min express delivery</Link>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-[11px] font-bold uppercase tracking-wider text-emerald-300 mb-2">
+              Daily Farm Fresh Produce &amp; Essentials
+            </h4>
+            <div className="flex flex-wrap gap-x-3 gap-y-1.5 text-[11px] text-stone-400">
+              <Link href="/user/search?query=tamatar" className="hover:text-white transition-colors">buy fresh desi tamatar online bhopal</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/user/search?query=aloo" className="hover:text-white transition-colors">pahadi aloo potato home delivery bhopal</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/user/search?query=pyaaz" className="hover:text-white transition-colors">nashik red onion pyaaz online rate bhopal</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/user/search?query=palak" className="hover:text-white transition-colors">fresh organic palak spinach delivery bhopal</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/user/search?query=matar" className="hover:text-white transition-colors">fresh green peas matar buy online bhopal</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/user/search?query=avocado" className="hover:text-white transition-colors">buy hass avocado in bhopal online</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/user/search?query=broccoli" className="hover:text-white transition-colors">fresh green broccoli price in bhopal</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/user/search?query=lettuce" className="hover:text-white transition-colors">hydroponic romaine iceberg lettuce bhopal</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/user/search?query=mushroom" className="hover:text-white transition-colors">fresh button mushroom 200g online bhopal</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/shop?category=Combos" className="hover:text-white transition-colors">daily value combo vegetable pack bhopal</Link>
+              <span className="text-stone-600">•</span>
+              <Link href="/shop?category=Combos" className="hover:text-white transition-colors">weekly family sabzi basket bhopal</Link>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-[11px] font-bold uppercase tracking-wider text-emerald-300 mb-2">
+              Express Delivery Across Bhopal Localities (10-15 Min)
+            </h4>
+            <div className="flex flex-wrap gap-x-3 gap-y-1.5 text-[11px] text-stone-400">
+              <span className="text-stone-300">Arera Colony</span>
+              <span className="text-stone-600">•</span>
+              <span className="text-stone-300">Kolar Road</span>
+              <span className="text-stone-600">•</span>
+              <span className="text-stone-300">MP Nagar</span>
+              <span className="text-stone-600">•</span>
+              <span className="text-stone-300">Bawadiya Kalan</span>
+              <span className="text-stone-600">•</span>
+              <span className="text-stone-300">Katara Hills</span>
+              <span className="text-stone-600">•</span>
+              <span className="text-stone-300">Shahpura</span>
+              <span className="text-stone-600">•</span>
+              <span className="text-stone-300">Bittan Market (E-4)</span>
+              <span className="text-stone-600">•</span>
+              <span className="text-stone-300">Ayodhya Bypass</span>
+              <span className="text-stone-600">•</span>
+              <span className="text-stone-300">Indrapuri &amp; BHEL</span>
+              <span className="text-stone-600">•</span>
+              <span className="text-stone-300">Hoshangabad Road</span>
+              <span className="text-stone-600">•</span>
+              <span className="text-stone-300">Gulmohar</span>
+              <span className="text-stone-600">•</span>
+              <span className="text-stone-300">Chunabhatti</span>
+              <span className="text-stone-600">•</span>
+              <span className="text-stone-300">Saket Nagar</span>
+              <span className="text-stone-600">•</span>
+              <span className="text-stone-300">Bagsewaniya Hub (462043)</span>
+              <span className="text-stone-600">•</span>
+              <span className="text-stone-300">Trilanga</span>
+              <span className="text-stone-600">•</span>
+              <span className="text-stone-300">Misrod</span>
+            </div>
           </div>
         </div>
 

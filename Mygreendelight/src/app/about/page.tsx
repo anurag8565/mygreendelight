@@ -70,18 +70,22 @@ export default function AboutPage() {
   ];
 
   const localities = [
-    "Bagsewaniya",
-    "MP Nagar",
     "Arera Colony",
-    "Gulmohar",
     "Kolar Road",
-    "Hoshangabad Road",
-    "TT Nagar",
-    "Saket Nagar",
-    "Shahpura",
-    "Chunabhatti",
-    "Ayodhya Bypass",
+    "MP Nagar",
     "Bawadiya Kalan",
+    "Katara Hills",
+    "Shahpura",
+    "Bittan Market (E-4)",
+    "Ayodhya Bypass",
+    "Indrapuri BHEL",
+    "Hoshangabad Road",
+    "Gulmohar",
+    "Chunabhatti",
+    "Saket Nagar",
+    "Bagsewaniya",
+    "Trilanga",
+    "Misrod",
   ];
 
   return (

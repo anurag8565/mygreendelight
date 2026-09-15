@@ -343,7 +343,37 @@ function SearchContent() {
               </div>
             )}
 
-            {/* Real Store Popular Searches (Only real produce from DB) */}
+            {/* Trending Bhopal Produce Searches */}
+            <div className="bg-white rounded-2xl p-3 sm:p-4 border border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
+              <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider block mb-2">
+                Trending in Bhopal
+              </span>
+              <div className="flex items-center gap-1.5 flex-wrap">
+                {[
+                  "Desi Tamatar",
+                  "Pahadi Aloo",
+                  "Nashik Pyaaz",
+                  "Organic Palak",
+                  "Green Peas Matar",
+                  "Hass Avocado",
+                  "Green Broccoli",
+                  "Hydroponic Lettuce",
+                  "Button Mushroom",
+                  "Value Combos",
+                ].map((term) => (
+                  <button
+                    key={term}
+                    type="button"
+                    onClick={() => executeSearch(term)}
+                    className="px-2.5 py-1 bg-emerald-50/60 hover:bg-emerald-100 text-[#0a3d24] border border-emerald-200/80 rounded-lg text-xs font-semibold transition cursor-pointer"
+                  >
+                    {term}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Real Store Popular Searches */}
             {topProduce.length > 0 && (
               <div className="bg-white rounded-2xl p-3 sm:p-4 border border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
                 <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider block mb-2">
