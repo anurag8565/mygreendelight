@@ -19,37 +19,37 @@ const CATEGORY_MAP: Record<
 > = {
   vegetables: {
     title: "Vegetables",
-    subtitle: "Farm Fresh Daily",
+    subtitle: "Farm Fresh",
     imgUrl: "/categories/vegetables_4k.jpg?v=4",
     path: "Vegetables",
   },
   vegetable: {
     title: "Vegetables",
-    subtitle: "Farm Fresh Daily",
+    subtitle: "Farm Fresh",
     imgUrl: "/categories/vegetables_4k.jpg?v=4",
     path: "Vegetables",
   },
   fruits: {
     title: "Fruits",
-    subtitle: "Sweet & Juicy",
+    subtitle: "Fresh & Juicy",
     imgUrl: "/categories/fruits_4k.jpg?v=4",
     path: "Fruits",
   },
   fruit: {
     title: "Fruits",
-    subtitle: "Sweet & Juicy",
+    subtitle: "Fresh & Juicy",
     imgUrl: "/categories/fruits_4k.jpg?v=4",
     path: "Fruits",
   },
   exotics: {
     title: "Exotics & Salads",
-    subtitle: "Hydroponic Greens",
+    subtitle: "Hydroponics",
     imgUrl: "/categories/exotics_4k.jpg?v=4",
     path: "Exotics",
   },
   exotic: {
     title: "Exotics & Salads",
-    subtitle: "Hydroponic Greens",
+    subtitle: "Hydroponics",
     imgUrl: "/categories/exotics_4k.jpg?v=4",
     path: "Exotics",
   },
@@ -200,7 +200,7 @@ export default function CategorySlider({
                   <span className="font-black text-xs sm:text-sm md:text-base text-stone-900 group-hover:text-[#0a3d24] transition-colors duration-200 tracking-tight leading-tight">
                     {config.title}
                   </span>
-                  <span className="text-[9.5px] sm:text-[11px] text-[#0a3d24] bg-emerald-50/90 border border-emerald-200/80 px-2 py-0.5 rounded-full font-bold mt-1 shadow-2xs group-hover:bg-emerald-100 transition-colors">
+                  <span className="text-[9.5px] sm:text-[11px] text-[#0a3d24] bg-emerald-50/90 border border-emerald-200/80 px-2.5 py-0.5 rounded-full font-bold mt-1 shadow-2xs group-hover:bg-emerald-100 transition-colors whitespace-nowrap">
                     {config.subtitle}
                   </span>
                 </div>
