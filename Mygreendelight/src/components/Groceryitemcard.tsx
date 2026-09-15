@@ -89,69 +89,68 @@ export default function Groceryitemcard({
           : "h-[255px] sm:h-[275px]"
       }`}
     >
-      {/* 1. PRODUCT IMAGE WITH CLEAN WISHLIST HEART & DISCOUNT */}
+      {/* 1. PRODUCT IMAGE WITH UNIFORM PHOTO STAGE */}
       <div className="relative w-full">
-        {/* Floating Heart & Discount */}
-        <div className="absolute top-0 inset-x-0 flex items-center justify-between z-10 pointer-events-none">
-          {discountPercent > 5 ? (
-            <span className="bg-[#f0c242] text-stone-950 font-extrabold text-[9px] px-1.5 py-0.5 rounded-md shadow-2xs pointer-events-auto">
-              {discountPercent}% OFF
-            </span>
-          ) : (
-            <span />
-          )}
-
-          <motion.button
-            whileTap={{ scale: 0.8 }}
-            type="button"
-            onClick={async (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              triggerHaptic("light");
-              const rawId = userdata?._id || (userdata as any)?.id || null;
-              const cleanUserId = rawId ? String(rawId) : null;
-              dispatch(
-                toggleWishlist({
-                  item: {
-                    _id: String(item._id),
-                    name: item.name,
-                    price: displayPrice,
-                    image: item.image,
-                    unit: displayUnit,
-                    category: item.category,
-                    stock: displayStock,
-                  },
-                  userId: cleanUserId,
-                })
-              );
-              try {
-                const res = await axios.post("/api/wishlist", { productId: String(item._id) });
-                if (res.data?.success && Array.isArray(res.data?.wishlist) && res.data.wishlist.length > 0) {
-                  dispatch(setWishlist({ items: res.data.wishlist, userId: cleanUserId }));
-                }
-              } catch {
-                // guest
-              }
-            }}
-            className="w-6.5 h-6.5 sm:w-7 sm:h-7 rounded-full bg-stone-50/80 hover:bg-white text-stone-400 hover:text-rose-500 flex items-center justify-center shadow-2xs transition-all pointer-events-auto cursor-pointer border border-stone-100"
-            aria-label="Wishlist"
-          >
-            <Heart
-              size={12}
-              className={`transition-colors ${
-                isLiked ? "text-rose-500 fill-rose-500 scale-110" : "text-stone-400 hover:text-rose-500"
-              }`}
-            />
-          </motion.button>
-        </div>
-
-        {/* Clean Center Image */}
         <Link
           href={`/product/${item._id}`}
-          className={`relative w-full flex items-center justify-center cursor-pointer overflow-hidden ${
-            isList ? "w-[100px] h-[100px] shrink-0" : "h-[115px] sm:h-[130px]"
+          className={`relative w-full flex items-center justify-center cursor-pointer overflow-hidden rounded-xl sm:rounded-2xl bg-[#f6f5f2] group-hover:bg-[#f0ede6] transition-colors duration-300 border border-stone-200/50 ${
+            isList ? "w-[100px] h-[100px] shrink-0" : "h-[120px] sm:h-[135px]"
           }`}
         >
+          {/* Floating Heart & Discount inside the stage */}
+          <div className="absolute top-1.5 inset-x-1.5 flex items-center justify-between z-10 pointer-events-none">
+            {discountPercent > 5 ? (
+              <span className="bg-[#f0c242] text-stone-950 font-extrabold text-[9px] px-1.5 py-0.5 rounded-md shadow-2xs pointer-events-auto">
+                {discountPercent}% OFF
+              </span>
+            ) : (
+              <span />
+            )}
+
+            <motion.button
+              whileTap={{ scale: 0.8 }}
+              type="button"
+              onClick={async (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                triggerHaptic("light");
+                const rawId = userdata?._id || (userdata as any)?.id || null;
+                const cleanUserId = rawId ? String(rawId) : null;
+                dispatch(
+                  toggleWishlist({
+                    item: {
+                      _id: String(item._id),
+                      name: item.name,
+                      price: displayPrice,
+                      image: item.image,
+                      unit: displayUnit,
+                      category: item.category,
+                      stock: displayStock,
+                    },
+                    userId: cleanUserId,
+                  })
+                );
+                try {
+                  const res = await axios.post("/api/wishlist", { productId: String(item._id) });
+                  if (res.data?.success && Array.isArray(res.data?.wishlist) && res.data.wishlist.length > 0) {
+                    dispatch(setWishlist({ items: res.data.wishlist, userId: cleanUserId }));
+                  }
+                } catch {
+                  // guest
+                }
+              }}
+              className="w-6.5 h-6.5 sm:w-7 sm:h-7 rounded-full bg-white/90 hover:bg-white text-stone-400 hover:text-rose-500 flex items-center justify-center shadow-2xs transition-all pointer-events-auto cursor-pointer border border-stone-100"
+              aria-label="Wishlist"
+            >
+              <Heart
+                size={12}
+                className={`transition-colors ${
+                  isLiked ? "text-rose-500 fill-rose-500 scale-110" : "text-stone-400 hover:text-rose-500"
+                }`}
+              />
+            </motion.button>
+          </div>
+
           <img
             src={item.image}
             alt={item.name}
@@ -160,11 +159,11 @@ export default function Groceryitemcard({
               (e.target as HTMLImageElement).src =
                 "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=500&q=80";
             }}
-            className="w-full h-full max-h-full max-w-full object-contain p-1 drop-shadow-[0_6px_12px_rgba(0,0,0,0.08)] group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full max-h-full max-w-full object-contain p-2 mix-blend-multiply drop-shadow-[0_4px_10px_rgba(0,0,0,0.06)] group-hover:scale-106 transition-transform duration-300"
           />
 
           {displayStock <= 0 && (
-            <div className="absolute inset-0 bg-white/80 backdrop-blur-2xs flex items-center justify-center rounded-xl">
+            <div className="absolute inset-0 bg-white/85 backdrop-blur-2xs flex items-center justify-center rounded-xl z-20">
               <span className="bg-stone-900 text-white font-bold text-[9px] uppercase px-2 py-0.5 rounded-full">
                 Out of Stock
               </span>
