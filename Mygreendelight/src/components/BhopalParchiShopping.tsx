@@ -162,9 +162,6 @@ export default function BhopalParchiShopping() {
                     <Sparkles size={10} className="text-amber-300" />
                     <span>Bhopal Special Fast Order</span>
                   </span>
-                  <span className="text-[10.5px] font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded-full border border-amber-300/80">
-                    No App Typing Needed!
-                  </span>
                 </div>
 
                 <h3 className="text-base sm:text-lg md:text-xl font-black text-stone-900 tracking-tight leading-snug font-heading">

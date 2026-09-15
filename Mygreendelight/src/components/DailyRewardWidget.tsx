@@ -78,9 +78,6 @@ export default function DailyRewardWidget() {
                   <Sparkles size={11} className="text-amber-600 fill-amber-600" />
                   Daily Lucky Scratch Card
                 </span>
-                <span className="text-[9.5px] text-emerald-800 font-bold bg-emerald-100/90 px-2 py-0.2 rounded-full border border-emerald-300/80 hidden xs:inline">
-                  Guaranteed Reward
-                </span>
               </div>
 
               <h3 className="text-stone-900 font-extrabold text-xs sm:text-sm mt-0.5 truncate tracking-tight font-heading">

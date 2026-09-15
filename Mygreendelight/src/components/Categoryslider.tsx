@@ -133,9 +133,6 @@ export default function CategorySlider({
             <h2 className="text-sm sm:text-base md:text-lg font-extrabold text-stone-900 tracking-tight font-heading">
               Explore Fresh Categories
             </h2>
-            <span className="text-[10px] sm:text-xs font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/70 hidden xs:inline">
-              Daily Mandi Harvest
-            </span>
           </div>
 
           <Link

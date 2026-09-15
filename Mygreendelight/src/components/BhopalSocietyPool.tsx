@@ -75,10 +75,6 @@ export default function BhopalSocietyPool() {
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-4 sm:mb-6">
           <div>
-            <div className="inline-flex items-center gap-1.5 bg-amber-50 border border-amber-300/80 px-2.5 py-0.5 rounded-full text-[10.5px] font-black text-amber-950 mb-1 shadow-2xs">
-              <Sparkles size={11} className="text-amber-600 fill-amber-600" />
-              <span>Bhopal Community Bulk-Drop Pool</span>
-            </div>
             <div className="flex items-center gap-2">
               <Building2 size={18} className="text-[#0a3d24] shrink-0" />
               <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-stone-900 tracking-tight font-heading">

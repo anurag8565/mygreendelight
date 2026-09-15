@@ -74,9 +74,6 @@ export default function CombosSection({
             <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-stone-900 tracking-tight font-heading">
               Fresh Produce Combos
             </h2>
-            <span className="text-[10px] sm:text-xs font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/60">
-              Value Packs
-            </span>
           </div>
 
           <Link
