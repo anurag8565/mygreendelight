@@ -14,6 +14,7 @@ import Groceryitemcard from './Groceryitemcard'
 import ProductCarousel from './ProductCarousel'
 import FarmFreshPromise from './FarmFreshPromise'
 import BhopalSocietyPool from './BhopalSocietyPool'
+import BhopalParchiShopping from './BhopalParchiShopping'
 import Testimonials from './Testimonials'
 import { RotateCcw } from 'lucide-react'
 
@@ -142,6 +143,9 @@ export default async function Userdashbord() {
 
       {/* 7. Bhopal Community Society Bulk-Drop & Pool Savings */}
       <BhopalSocietyPool />
+
+      {/* 8. Bhopal Parchi & WhatsApp Voice Shopping (No Typing Required) */}
+      <BhopalParchiShopping />
 
       {/* 9. Tone 2: Order Again Carousel (Soft Warm Stone #f7f6f2) */}
       {plainOrderAgain && plainOrderAgain.length > 0 && (

@@ -27,6 +27,7 @@ import {
   LogOut,
   Globe,
   Sparkles,
+  FileText,
 } from "lucide-react";
 import Logo from "./Logo";
 
@@ -60,6 +61,11 @@ export default function AdminSidebar() {
           name: "Live Orders & Fleet",
           href: "/admin/manageorder",
           icon: <ShoppingBag size={17} />,
+        },
+        {
+          name: "Parchi / WhatsApp Lists",
+          href: "/admin/manage-parchi-orders",
+          icon: <FileText size={17} />,
         },
         {
           name: "All Produce & Stock",
