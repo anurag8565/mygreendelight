@@ -8,22 +8,18 @@ import {
   LayoutGrid,
   List,
   ChevronDown,
-  CheckCircle2,
-  SlidersHorizontal,
-  Flame,
   Leaf,
+  Sparkles,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { triggerHaptic } from "@/utils/haptics";
 
 interface TabConfig {
   id: string;
   label: string;
   hindi: string;
-  imgUrl: string;
   count: number;
-  badge: string;
-  themeColor: string;
-  activeBorder: string;
+  imgUrl: string;
 }
 
 export default function FilteredProduceSection({
@@ -31,8 +27,7 @@ export default function FilteredProduceSection({
 }: {
   groceries: any[];
 }) {
-  // Default to vegetables tab
-  const [activeTab, setActiveTab] = useState<string>("vegetables");
+  const [activeTab, setActiveTab] = useState<string>("all");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [visibleCount, setVisibleCount] = useState<number>(8);
   const [sortBy, setSortBy] = useState<"default" | "price_asc" | "price_desc" | "rating">("default");
@@ -56,44 +51,53 @@ export default function FilteredProduceSection({
         (g.category || "").toLowerCase().includes("hydroponic") ||
         (g.category || "").toLowerCase().includes("salad")
     );
+    const comboItems = list.filter((g) =>
+      (g.category || "").toLowerCase().includes("combo")
+    );
 
     const tabList: TabConfig[] = [
+      {
+        id: "all",
+        label: "All Items",
+        hindi: "सभी उत्पाद",
+        count: list.length,
+        imgUrl: "/categories/vegetables_4k.jpg?v=4",
+      },
       {
         id: "vegetables",
         label: "Vegetables",
         hindi: "ताज़ी सब्जियां",
-        imgUrl: "/categories/vegetables_4k.jpg?v=4",
         count: vegItems.length,
-        badge: "Daily Fresh",
-        themeColor: "from-emerald-600 to-emerald-800",
-        activeBorder: "border-[#0a3d24]",
+        imgUrl: "/categories/vegetables_4k.jpg?v=4",
       },
       {
         id: "fruits",
-        label: "Fruits",
-        hindi: "ताज़े मीठे फल",
-        imgUrl: "/categories/fruits_4k.jpg?v=4",
+        label: "Fresh Fruits",
+        hindi: "ताज़े फल",
         count: fruitItems.length,
-        badge: "Sweet & Seasonal",
-        themeColor: "from-amber-600 to-orange-600",
-        activeBorder: "border-amber-600",
+        imgUrl: "/categories/fruits_4k.jpg?v=4",
       },
       {
         id: "exotics",
         label: "Exotics & Salads",
         hindi: "विदेशी व सलाद",
-        imgUrl: "/categories/exotics_4k.jpg?v=4",
         count: exoticItems.length,
-        badge: "Hydroponic & Salads",
-        themeColor: "from-emerald-700 to-[#0a3d24]",
-        activeBorder: "border-[#0a3d24]",
+        imgUrl: "/categories/exotics_4k.jpg?v=4",
+      },
+      {
+        id: "combos",
+        label: "Value Combos",
+        hindi: "बचत कॉम्बो",
+        count: comboItems.length,
+        imgUrl: "/categories/combos_4k.jpg?v=4",
       },
     ];
 
-    let displayList = vegItems;
+    let displayList = list;
     if (activeTab === "vegetables") displayList = vegItems.length > 0 ? vegItems : list;
     else if (activeTab === "fruits") displayList = fruitItems;
     else if (activeTab === "exotics") displayList = exoticItems;
+    else if (activeTab === "combos") displayList = comboItems.length > 0 ? comboItems : list;
 
     // Apply sorting
     let sortedList = [...displayList];
@@ -113,158 +117,162 @@ export default function FilteredProduceSection({
   const currentVisibleItems = filteredList.slice(0, visibleCount);
   const activeTabMeta = tabs.find((t) => t.id === activeTab) || tabs[0];
 
+  const handleTabChange = (tabId: string) => {
+    triggerHaptic("medium");
+    setActiveTab(tabId);
+  };
+
   return (
-    <section className="w-full py-4 sm:py-6 bg-[#f7f6f2] font-sans border-b border-stone-200/70">
+    <section className="w-full py-4 sm:py-6 bg-[#faf9f5] font-sans border-b border-stone-200/70 select-none">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         
-        {/* Section Header */}
-        <div className="flex items-center justify-between gap-2 mb-4 sm:mb-6">
-          <div className="min-w-0 flex-1">
+        {/* Section Header: Title & Controls */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 sm:mb-5">
+          <div>
             <div className="flex items-center gap-2">
               <Leaf size={18} className="text-[#0a3d24] shrink-0" />
               <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-stone-900 tracking-tight font-heading truncate">
-                Fresh Farm Vegetables &amp; Fruits
+                Fresh Farm Harvest
               </h2>
+              <span className="bg-emerald-100/90 text-[#0a3d24] text-[9.5px] font-black uppercase px-2 py-0.5 rounded-full border border-emerald-300/60">
+                10-15 Min Delivery
+              </span>
             </div>
-            <p className="text-[11px] sm:text-xs text-stone-500 font-medium mt-0.5 ml-6.5 hidden sm:block">
-              Handpicked daily from nearby farms &bull; Cleaned, sorted &amp; delivered in 10-15 mins
+            <p className="text-[11px] sm:text-xs text-stone-500 font-medium mt-0.5">
+              Handpicked daily from nearby farms &bull; Cleaned, sorted &amp; delivered fresh
             </p>
           </div>
 
-          {/* Controls: Grid/List Toggle & View All */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            {/* View Mode Switcher */}
-            <div className="flex items-center bg-white p-1 rounded-xl border border-stone-200/80 shadow-2xs">
+          {/* Controls: Sort Dropdown, Grid/List Switcher, View All */}
+          <div className="flex items-center gap-2 sm:gap-2.5 self-start sm:self-auto flex-wrap">
+            {/* Sort Dropdown */}
+            <div className="relative">
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as any)}
+                className="appearance-none bg-white hover:bg-stone-50 text-stone-700 text-xs font-bold py-1.5 pl-2.5 pr-6 rounded-xl border border-stone-200/90 shadow-2xs outline-none focus:border-[#0a3d24] cursor-pointer"
+              >
+                <option value="default">Recommended</option>
+                <option value="price_asc">Price: Low to High</option>
+                <option value="price_desc">Price: High to Low</option>
+                <option value="rating">Top Rated</option>
+              </select>
+              <ChevronDown size={12} className="absolute right-2 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" />
+            </div>
+
+            {/* View Mode Toggle */}
+            <div className="flex items-center bg-white p-0.5 rounded-xl border border-stone-200/90 shadow-2xs">
               <button
                 type="button"
                 onClick={() => setViewMode("grid")}
-                className={`px-2.5 py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1.5 text-xs font-bold ${
+                className={`p-1.5 rounded-lg transition cursor-pointer ${
                   viewMode === "grid"
                     ? "bg-[#0a3d24] text-white shadow-xs"
-                    : "text-stone-500 hover:text-stone-900 hover:bg-stone-50"
+                    : "text-stone-400 hover:text-stone-800"
                 }`}
                 title="Grid View"
                 aria-label="Grid View"
               >
                 <LayoutGrid size={14} />
-                <span className="hidden sm:inline">Grid</span>
               </button>
               <button
                 type="button"
                 onClick={() => setViewMode("list")}
-                className={`px-2.5 py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1.5 text-xs font-bold ${
+                className={`p-1.5 rounded-lg transition cursor-pointer ${
                   viewMode === "list"
                     ? "bg-[#0a3d24] text-white shadow-xs"
-                    : "text-stone-500 hover:text-stone-900 hover:bg-stone-50"
+                    : "text-stone-400 hover:text-stone-800"
                 }`}
                 title="List View"
                 aria-label="List View"
               >
                 <List size={14} />
-                <span className="hidden sm:inline">List</span>
               </button>
             </div>
 
-            {/* Quick Link to Shop */}
+            {/* View All in Shop */}
             <Link
               href={
                 activeTab === "vegetables"
                   ? "/shop?category=Vegetables"
                   : activeTab === "fruits"
                   ? "/shop?category=Fruits"
-                  : "/shop?category=Exotics"
+                  : activeTab === "exotics"
+                  ? "/shop?category=Exotics"
+                  : activeTab === "combos"
+                  ? "/shop?category=Combos"
+                  : "/shop"
               }
-              className="bg-white hover:bg-stone-50 text-[#0a3d24] border border-stone-200/90 hover:border-[#0a3d24]/40 font-bold text-xs px-3 sm:px-3.5 py-2 rounded-xl flex items-center gap-1 transition shadow-2xs shrink-0 group whitespace-nowrap"
+              className="text-[#0a3d24] hover:text-[#072a18] font-bold text-xs px-2.5 py-1.5 rounded-xl transition flex items-center gap-0.5 group"
             >
               <span>View All</span>
-              <ChevronRight
-                size={13}
-                className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]"
-              />
+              <ChevronRight size={13} className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]" />
             </Link>
           </div>
         </div>
 
         {/* 
-          3 DEDICATED PRODUCE CATEGORY TABS (Vegetables, Fruits, Exotics)
-          Symmetrical 3-column cards with balanced photo, label, hindi text, and count badge
+          🌟 REAL PRODUCE PHOTO CHIPS (Zepto / Blinkit Gold Standard)
+          - Real 4K circular photo thumbnails (NO fake cartoon emojis!)
+          - Smooth liquid spring glider animation
+          - Tactile haptic feedback
+          - Ultra-compact height (42px)
         */}
-        <div className="grid grid-cols-3 gap-2.5 sm:gap-4 mb-6 sm:mb-8 select-none relative">
+        <div className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar py-2 mb-5 -mx-3.5 px-3.5 sm:mx-0 sm:px-0">
           {tabs.map((tab) => {
             const isSelected = activeTab === tab.id;
+
             return (
               <motion.button
                 key={tab.id}
                 type="button"
-                whileTap={{ scale: 0.96 }}
                 whileHover={{ y: -2 }}
-                transition={{ type: "spring", stiffness: 400, damping: 24 }}
-                onClick={() => setActiveTab(tab.id)}
-                className={`group relative p-3 sm:p-4 rounded-2xl sm:rounded-3xl transition-all duration-300 flex flex-col sm:flex-row items-center gap-2.5 sm:gap-3.5 cursor-pointer text-center sm:text-left overflow-hidden ${
+                whileTap={{ scale: 0.94 }}
+                onClick={() => handleTabChange(tab.id)}
+                className={`group relative h-[42px] sm:h-[44px] pl-1.5 pr-3.5 sm:pr-4 rounded-full font-bold text-xs sm:text-[13px] transition-all flex items-center gap-2 cursor-pointer shrink-0 whitespace-nowrap active:scale-95 select-none ${
                   isSelected
-                    ? "text-[#0a3d24]"
-                    : "text-stone-700 hover:text-stone-900"
+                    ? "text-white shadow-[0_4px_16px_rgba(10,61,36,0.22)]"
+                    : "bg-white text-stone-700 hover:text-stone-900 border border-stone-200/90 hover:bg-stone-50 shadow-2xs"
                 }`}
               >
-                {/* Fluid Active Background Card Glider */}
-                {isSelected ? (
+                {/* Fluid Spring Glider */}
+                {isSelected && (
                   <motion.div
-                    layoutId="activeProduceTabGlider"
-                    className="absolute inset-0 bg-white border border-[#0a3d24]/60 shadow-[0_8px_24px_rgba(10,61,36,0.12)] ring-2 ring-[#0a3d24]/15 rounded-2xl sm:rounded-3xl z-0"
-                    transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                    layoutId="realPhotoPillGlider"
+                    className="absolute inset-0 bg-[#0a3d24] rounded-full z-0 border border-[#0a3d24]"
+                    transition={{ type: "spring", stiffness: 450, damping: 30 }}
                   />
-                ) : (
-                  <div className="absolute inset-0 bg-white/70 hover:bg-white border border-stone-200/80 hover:border-stone-300 rounded-2xl sm:rounded-3xl shadow-2xs z-0 transition-colors" />
                 )}
 
-                {/* Produce Photo Thumbnail */}
-                <div className="relative z-10 w-11 h-11 sm:w-13 sm:h-13 rounded-xl sm:rounded-2xl overflow-hidden shrink-0 bg-stone-50 border border-stone-100 shadow-2xs">
+                {/* Real Produce 4K Photo Avatar */}
+                <div className="relative z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full overflow-hidden shrink-0 bg-stone-100 p-0.5 border border-stone-200/60 shadow-2xs group-hover:scale-108 transition-transform duration-300">
                   <img
                     src={tab.imgUrl}
                     alt={tab.label}
-                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-300 ease-out"
+                    className="w-full h-full object-cover rounded-full"
                     loading="lazy"
                   />
-                  {isSelected && (
-                    <div className="absolute inset-0 bg-[#0a3d24]/10" />
-                  )}
                 </div>
 
-                {/* Text Details */}
-                <div className="relative z-10 flex flex-col items-center sm:items-start min-w-0 flex-1 w-full">
-                  <span
-                    className={`text-xs sm:text-sm md:text-base font-extrabold tracking-tight leading-tight truncate w-full ${
-                      isSelected ? "text-[#0a3d24]" : "text-stone-900 group-hover:text-stone-950"
-                    }`}
-                  >
-                    {tab.label}
-                  </span>
+                {/* Category Label */}
+                <span className="relative z-10 tracking-tight font-extrabold">
+                  {tab.label}
+                </span>
 
-                  <span
-                    className={`text-[10px] sm:text-xs font-semibold leading-tight mt-0.5 truncate w-full ${
-                      isSelected ? "text-[#0a3d24]/80 font-bold" : "text-stone-500"
-                    }`}
-                  >
-                    {tab.hindi}
-                  </span>
-
-                  {/* Product Count Pill */}
-                  <span
-                    className={`text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full font-bold mt-1 sm:mt-1.5 inline-block transition-colors shrink-0 ${
-                      isSelected
-                        ? "bg-[#0a3d24] text-white shadow-xs"
-                        : "bg-stone-100 text-stone-600 group-hover:bg-stone-200/70"
-                    }`}
-                  >
-                    {tab.count} Items
-                  </span>
-                </div>
+                {/* Item Count Chip */}
+                <span
+                  className={`relative z-10 text-[10px] sm:text-[10.5px] font-bold px-1.5 py-0.2 rounded-full transition-colors ${
+                    isSelected ? "bg-white/20 text-white" : "bg-stone-100 text-stone-500"
+                  }`}
+                >
+                  {tab.count}
+                </span>
               </motion.button>
             );
           })}
         </div>
 
-        {/* Dynamic Products Display: Grid OR List View with Smooth Staggered Animation */}
+        {/* Dynamic Products Display with Stagger Animation */}
         <AnimatePresence mode="wait">
           <motion.div
             key={`${activeTab}-${viewMode}-${sortBy}`}
@@ -276,34 +284,34 @@ export default function FilteredProduceSection({
               show: {
                 opacity: 1,
                 transition: {
-                  staggerChildren: 0.035,
-                  delayChildren: 0.02,
+                  staggerChildren: 0.03,
+                  delayChildren: 0.01,
                 },
               },
               exit: { opacity: 0, transition: { duration: 0.12 } },
             }}
           >
             {filteredList.length === 0 ? (
-              <div className="py-14 text-center bg-white rounded-3xl border border-dashed border-gray-200">
-                <p className="text-sm font-bold text-gray-500">
+              <div className="py-12 text-center bg-white rounded-3xl border border-dashed border-stone-200">
+                <p className="text-xs sm:text-sm font-bold text-stone-500">
                   No items found in this section right now.
                 </p>
                 <button
                   type="button"
-                  onClick={() => setActiveTab("vegetables")}
+                  onClick={() => setActiveTab("all")}
                   className="mt-2 text-xs font-bold text-[#0a3d24] hover:underline cursor-pointer"
                 >
-                  View All Fresh Vegetables
+                  View All Produce
                 </button>
               </div>
             ) : viewMode === "grid" ? (
-              /* Grid Mode: Relaxed breathing whitespace - 2 Cols Mobile / 3 sm / 4 md & lg */
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-3.5 sm:gap-5 md:gap-6">
+              /* Grid Mode: 2 Cols Mobile / 3 sm / 4 md & lg */
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
                 {currentVisibleItems.map((item: any) => (
                   <motion.div
                     key={item._id}
                     variants={{
-                      hidden: { opacity: 0, y: 12, scale: 0.98 },
+                      hidden: { opacity: 0, y: 10, scale: 0.98 },
                       show: {
                         opacity: 1,
                         y: 0,
@@ -317,13 +325,13 @@ export default function FilteredProduceSection({
                 ))}
               </div>
             ) : (
-              /* List Mode: Full-width row cards (Shop style) */
-              <div className="flex flex-col gap-3 sm:gap-4">
+              /* List Mode */
+              <div className="flex flex-col gap-3">
                 {currentVisibleItems.map((item: any) => (
                   <motion.div
                     key={item._id}
                     variants={{
-                      hidden: { opacity: 0, y: 10 },
+                      hidden: { opacity: 0, y: 8 },
                       show: {
                         opacity: 1,
                         y: 0,
@@ -339,41 +347,26 @@ export default function FilteredProduceSection({
           </motion.div>
         </AnimatePresence>
 
-        {/* Load More / Explore Full Shop Button */}
+        {/* Show More Items Button */}
         {filteredList.length > visibleCount && (
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-6 sm:mt-8">
+          <div className="flex items-center justify-center mt-6 sm:mt-7">
             <button
               type="button"
               onClick={() => setVisibleCount((prev) => prev + 8)}
-              className="w-full sm:w-auto bg-white hover:bg-[#0a3d24] hover:text-white active:scale-95 text-[#0a3d24] border-1.5 border-[#0a3d24]/40 hover:border-[#0a3d24] px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-2xs transition inline-flex items-center justify-center gap-2 cursor-pointer group"
+              className="bg-white hover:bg-stone-50 text-[#0a3d24] border border-stone-200 hover:border-[#0a3d24] px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm shadow-2xs transition inline-flex items-center gap-1.5 cursor-pointer active:scale-95 group"
             >
               <span>
-                Show More {activeTabMeta.label} (+{Math.min(8, filteredList.length - visibleCount)} more)
+                Show More {activeTabMeta.label} (+{Math.min(8, filteredList.length - visibleCount)})
               </span>
               <ChevronDown
-                size={16}
+                size={15}
                 className="group-hover:translate-y-0.5 transition-transform stroke-[2.5]"
               />
             </button>
-
-            <Link
-              href={
-                activeTab === "vegetables"
-                  ? "/shop?category=Vegetables"
-                  : activeTab === "fruits"
-                  ? "/shop?category=Fruits"
-                  : "/shop?category=Exotics"
-              }
-              className="w-full sm:w-auto text-stone-600 hover:text-[#0a3d24] font-bold text-xs sm:text-sm px-4 py-2 text-center transition flex items-center justify-center gap-1"
-            >
-              <span>Explore All {filteredList.length} {activeTabMeta.label} in Shop</span>
-              <ChevronRight size={14} className="stroke-[2.5]" />
-            </Link>
           </div>
         )}
+
       </div>
     </section>
   );
 }
-
-
