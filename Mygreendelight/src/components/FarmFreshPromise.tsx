@@ -17,14 +17,14 @@ export default function FarmFreshPromise() {
             <div>
               <div className="flex items-center gap-2 flex-wrap">
                 <h3 className="text-xs sm:text-sm font-extrabold text-stone-900 tracking-tight font-heading">
-                  100% Doorstep Replacement Guarantee
+                  100% Doorstep Freshness Guarantee
                 </h3>
                 <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200/70 px-2 py-0.5 rounded-full">
-                  No Questions Asked
+                  Instant Replace or Refund
                 </span>
               </div>
               <p className="text-[11px] sm:text-xs text-stone-500 font-normal mt-0.5">
-                If anything is bruised or unripe, get an instant replacement or refund on your doorstep.
+                Check produce at delivery. If anything isn&apos;t crisp and fresh, get an instant replacement or refund on the spot.
               </p>
             </div>
           </div>
@@ -33,7 +33,7 @@ export default function FarmFreshPromise() {
           <div className="flex items-center gap-2.5 flex-wrap sm:flex-nowrap border-t md:border-t-0 pt-2.5 md:pt-0 border-stone-100 shrink-0">
             <div className="flex items-center gap-1.5 text-stone-600 bg-stone-50 border border-stone-200/80 px-2.5 py-1 rounded-xl text-[11px] font-medium">
               <MapPin size={13} className="text-emerald-700 shrink-0" />
-              <span>Fulfilled from Bagsewaniya Hub, Bhopal</span>
+              <span>Fulfilled from SubziQuick Fresh Hub, Bhopal</span>
             </div>
 
             <a

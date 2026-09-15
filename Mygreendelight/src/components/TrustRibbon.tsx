@@ -8,37 +8,37 @@ export default function TrustRibbon() {
     {
       icon: <Zap size={14} className="text-amber-700 stroke-[2.2]" />,
       title: "10-15 Min Delivery",
-      subtitle: "Express in Bhopal",
+      subtitle: "Across Bhopal Societies",
       bg: "bg-amber-50/80 border-amber-200/70 text-amber-950",
     },
     {
       icon: <Clock size={14} className="text-[#0a3d24] stroke-[2.2]" />,
       title: "5:00 AM Farm Fresh",
-      subtitle: "Daily Morning Harvest",
+      subtitle: "Direct Sunrise Harvest",
       bg: "bg-emerald-50/80 border-emerald-200/70 text-emerald-950",
     },
     {
       icon: <ShieldCheck size={14} className="text-[#0a3d24] stroke-[2.2]" />,
       title: "100% Hand-Graded",
-      subtitle: "A-Grade Produce",
+      subtitle: "Zero Bruised / A-Grade",
       bg: "bg-stone-50 border-stone-200/80 text-stone-900",
     },
     {
       icon: <RotateCcw size={14} className="text-amber-700 stroke-[2.2]" />,
       title: "Instant Replacement",
-      subtitle: "No Questions Asked",
+      subtitle: "Doorstep UPI or Replace",
       bg: "bg-amber-50/80 border-amber-200/70 text-amber-950",
     },
     {
       icon: <Leaf size={14} className="text-[#0a3d24] stroke-[2.2]" />,
       title: "Direct Kisan Sourced",
-      subtitle: "Zero Middleman Markup",
+      subtitle: "Fair Prices • No Middlemen",
       bg: "bg-emerald-50/80 border-emerald-200/70 text-emerald-950",
     },
     {
       icon: <Sparkles size={14} className="text-[#0a3d24] stroke-[2.2]" />,
       title: "Eco Kraft Packaging",
-      subtitle: "Breathable Freshness",
+      subtitle: "100% Plastic-Free & Clean",
       bg: "bg-stone-50 border-stone-200/80 text-stone-900",
     },
   ];

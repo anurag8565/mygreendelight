@@ -165,10 +165,10 @@ export default function BhopalParchiShopping() {
                 </div>
 
                 <h3 className="text-base sm:text-lg md:text-xl font-black text-stone-900 tracking-tight leading-snug font-heading">
-                  Parchi Bhejo, Sabzi Paao! (Haath Ki List Ya Voice Note)
+                  Parchi ya Voice Note Bhejo, 15 Min me Sabzi Paao!
                 </h3>
                 <p className="text-xs sm:text-[13px] text-stone-600 font-medium mt-0.5 leading-relaxed">
-                  Kaagaz par likhi sabziyon ki photo kheecho ya WhatsApp par list bhej do. 15-20 min me SubziQuick fresh sabzi aapke ghar!
+                  Kaagaz ki parchi ki photo kheecho ya WhatsApp par voice bhejo. 10-15 minute me SubziQuick fresh farm sabzi aapke ghar!
                 </p>
               </div>
             </div>

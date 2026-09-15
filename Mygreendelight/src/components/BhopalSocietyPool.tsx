@@ -78,11 +78,11 @@ export default function BhopalSocietyPool() {
             <div className="flex items-center gap-2">
               <Building2 size={18} className="text-[#0a3d24] shrink-0" />
               <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-stone-900 tracking-tight font-heading">
-                Society & Campus Club Savings
+                Society &amp; Apartment Group Savings
               </h2>
             </div>
             <p className="text-xs text-stone-500 font-medium mt-0.5 max-w-xl">
-              When 3 or more neighbors order together, everyone unlocks <strong>FREE Delivery + Extra 5% OFF</strong> on morning farm fresh produce.
+              When 3 or more neighbors order together, unlock <strong>FREE express delivery + extra 5% OFF</strong> on morning farm fresh produce.
             </p>
           </div>
 
