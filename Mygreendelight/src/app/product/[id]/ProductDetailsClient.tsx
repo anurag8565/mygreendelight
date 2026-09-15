@@ -672,7 +672,7 @@ export default function ProductDetailsClient({
                 <div className="px-4 pb-4 text-xs text-stone-600 leading-relaxed font-medium bg-stone-50/30">
                   <p>
                     {product.sourcing ||
-                      `Harvested daily at 4:30 AM from agricultural contract farms near Bhopal. Hand-graded and naturally cleaned to ensure complete safety and kitchen-ready freshness.`}
+                      `Harvested daily from verified local farms across Bhopal & Sehore. Cleaned, sorted, and graded fresh before quick doorstep delivery.`}
                   </p>
                 </div>
               )}

@@ -145,7 +145,7 @@ export default async function ProductPage(props: { params: Promise<{ id: string 
     description:
       product.metaDescription ||
       product.description ||
-      `Fresh ${product.name} delivered same-day in Bhopal at direct Kisan farm wholesale rates on SubziQuick.`,
+      `Fresh ${product.name} delivered in 10-15 minutes across Bhopal direct from local farms on SubziQuick.`,
     sku: `SQ-${String(product._id).slice(-6).toUpperCase()}`,
     brand: {
       "@type": "Brand",
@@ -240,7 +240,7 @@ export default async function ProductPage(props: { params: Promise<{ id: string 
         name: `What is the price of fresh ${product.name} in Bhopal today?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `Fresh ${product.name} is available on SubziQuick at wholesale farm rates of ₹${product.price} per ${product.unit || "pack"} with zero platform fee.`,
+          text: `Fresh ${product.name} is available on SubziQuick at best local prices of ₹${product.price} per ${product.unit || "pack"} with zero platform fee.`,
         },
       },
     ],
