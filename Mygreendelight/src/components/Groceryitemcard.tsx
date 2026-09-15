@@ -89,16 +89,16 @@ export default function Groceryitemcard({
           : "h-[255px] sm:h-[275px]"
       }`}
     >
-      {/* 1. PRODUCT IMAGE WITH UNIFORM PHOTO STAGE */}
+      {/* 1. PRODUCT IMAGE (Pure White Canvas - Seamless for both Cutouts & White-BG photos) */}
       <div className="relative w-full">
         <Link
           href={`/product/${item._id}`}
-          className={`relative w-full flex items-center justify-center cursor-pointer overflow-hidden rounded-xl sm:rounded-2xl bg-[#f6f5f2] group-hover:bg-[#f0ede6] transition-colors duration-300 border border-stone-200/50 ${
-            isList ? "w-[100px] h-[100px] shrink-0" : "h-[120px] sm:h-[135px]"
+          className={`relative w-full flex items-center justify-center cursor-pointer overflow-hidden bg-white ${
+            isList ? "w-[100px] h-[100px] shrink-0" : "h-[125px] sm:h-[140px]"
           }`}
         >
           {/* Floating Heart & Discount inside the stage */}
-          <div className="absolute top-1.5 inset-x-1.5 flex items-center justify-between z-10 pointer-events-none">
+          <div className="absolute top-0 inset-x-0 flex items-center justify-between z-10 pointer-events-none">
             {discountPercent > 5 ? (
               <span className="bg-[#f0c242] text-stone-950 font-extrabold text-[9px] px-1.5 py-0.5 rounded-md shadow-2xs pointer-events-auto">
                 {discountPercent}% OFF
@@ -139,7 +139,7 @@ export default function Groceryitemcard({
                   // guest
                 }
               }}
-              className="w-6.5 h-6.5 sm:w-7 sm:h-7 rounded-full bg-white/90 hover:bg-white text-stone-400 hover:text-rose-500 flex items-center justify-center shadow-2xs transition-all pointer-events-auto cursor-pointer border border-stone-100"
+              className="w-6.5 h-6.5 sm:w-7 sm:h-7 rounded-full bg-stone-50/80 hover:bg-stone-100 text-stone-400 hover:text-rose-500 flex items-center justify-center shadow-2xs transition-all pointer-events-auto cursor-pointer border border-stone-200/60"
               aria-label="Wishlist"
             >
               <Heart
@@ -159,7 +159,7 @@ export default function Groceryitemcard({
               (e.target as HTMLImageElement).src =
                 "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=500&q=80";
             }}
-            className="w-full h-full max-h-full max-w-full object-contain p-2 mix-blend-multiply drop-shadow-[0_4px_10px_rgba(0,0,0,0.06)] group-hover:scale-106 transition-transform duration-300"
+            className="w-full h-full max-h-full max-w-full object-contain p-1 group-hover:scale-106 transition-transform duration-300"
           />
 
           {displayStock <= 0 && (
