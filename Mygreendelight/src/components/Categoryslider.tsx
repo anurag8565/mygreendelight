@@ -195,13 +195,10 @@ export default function CategorySlider({
                   </div>
                 </div>
 
-                {/* Typography with Subtitle Pill */}
+                {/* Typography: Category Name */}
                 <div className="mt-2.5 sm:mt-3 flex flex-col items-center">
-                  <span className="font-black text-xs sm:text-sm md:text-base text-stone-900 group-hover:text-[#0a3d24] transition-colors duration-200 tracking-tight leading-tight">
+                  <span className="font-extrabold text-xs sm:text-sm md:text-base text-stone-900 group-hover:text-[#0a3d24] transition-colors duration-200 tracking-tight leading-tight">
                     {config.title}
-                  </span>
-                  <span className="text-[9.5px] sm:text-[11px] text-[#0a3d24] bg-emerald-50/90 border border-emerald-200/80 px-2.5 py-0.5 rounded-full font-bold mt-1 shadow-2xs group-hover:bg-emerald-100 transition-colors whitespace-nowrap">
-                    {config.subtitle}
                   </span>
                 </div>
               </motion.div>
