@@ -55,13 +55,13 @@ const CATEGORY_MAP: Record<
   },
   combos: {
     title: "Value Combos",
-    subtitle: "Save 20%+",
+    subtitle: "Curated Packs",
     imgUrl: "/combo_banner.jpg",
     path: "Combos",
   },
   combo: {
     title: "Value Combos",
-    subtitle: "Save 20%+",
+    subtitle: "Curated Packs",
     imgUrl: "/combo_banner.jpg",
     path: "Combos",
   },
@@ -241,13 +241,6 @@ export default function CategorySlider({
                         <div className="absolute inset-0 bg-[#0a3d24]/0 group-hover:bg-[#0a3d24]/10 transition-colors duration-300 rounded-full" />
                       </div>
                     </div>
-
-                    {/* Value Combo Savings Pill Tag */}
-                    {isCombo && (
-                      <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-600 to-amber-500 text-white font-black text-[8px] sm:text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded-full shadow-xs border border-white whitespace-nowrap">
-                        Save 20%
-                      </div>
-                    )}
                   </div>
 
                   {/* Typography: Category Name */}
