@@ -3,11 +3,11 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ChevronRight, LayoutGrid, Sparkles } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { ChevronRight, LayoutGrid, Sparkles, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 import { triggerHaptic } from "@/utils/haptics";
 
-// Gentle synthesized luxury UI tap sound (AudioContext, zero external assets)
+// Gentle synthesized luxury UI tap sound
 const playTapSound = () => {
   if (typeof window === "undefined") return;
   try {
@@ -35,68 +35,64 @@ const playTapSound = () => {
   }
 };
 
-// Clean, luxury category metadata with 4K assets and cache buster
-// 4 core categories: Vegetables, Fruits, Exotics, and Value Combos
-const CATEGORY_MAP: Record<
-  string,
-  {
-    title: string;
-    subtitle: string;
-    imgUrl: string;
-    path: string;
-  }
-> = {
-  vegetables: {
-    title: "Vegetables",
-    subtitle: "Farm Fresh",
-    imgUrl: "/categories/vegetables_4k.jpg?v=4",
-    path: "Vegetables",
-  },
-  vegetable: {
-    title: "Vegetables",
-    subtitle: "Farm Fresh",
-    imgUrl: "/categories/vegetables_4k.jpg?v=4",
-    path: "Vegetables",
-  },
-  fruits: {
-    title: "Fruits",
-    subtitle: "Fresh & Juicy",
-    imgUrl: "/categories/fruits_4k.jpg?v=4",
-    path: "Fruits",
-  },
-  fruit: {
-    title: "Fruits",
-    subtitle: "Fresh & Juicy",
-    imgUrl: "/categories/fruits_4k.jpg?v=4",
-    path: "Fruits",
-  },
-  exotics: {
-    title: "Exotics & Salads",
-    subtitle: "Hydroponics",
-    imgUrl: "/categories/exotics_4k.jpg?v=4",
-    path: "Exotics",
-  },
-  exotic: {
-    title: "Exotics & Salads",
-    subtitle: "Hydroponics",
-    imgUrl: "/categories/exotics_4k.jpg?v=4",
-    path: "Exotics",
-  },
-  combos: {
-    title: "Value Combos",
-    subtitle: "Curated Packs",
-    imgUrl: "/categories/combos_4k.jpg?v=4",
-    path: "Combos",
-  },
-  combo: {
-    title: "Value Combos",
-    subtitle: "Curated Packs",
-    imgUrl: "/categories/combos_4k.jpg?v=4",
-    path: "Combos",
-  },
-};
+interface CategoryConfig {
+  id: string;
+  title: string;
+  hindi: string;
+  tag: string;
+  tagBg: string;
+  cardBg: string;
+  borderHover: string;
+  imgUrl: string;
+  path: string;
+}
 
-const PRIORITY = ["vegetables", "fruits", "exotics", "combos"];
+const CATEGORY_CARDS: CategoryConfig[] = [
+  {
+    id: "vegetables",
+    title: "Vegetables",
+    hindi: "ताज़ी सब्जियां",
+    tag: "Daily Farm Fresh",
+    tagBg: "bg-emerald-100 text-[#0a3d24]",
+    cardBg: "from-emerald-50/90 via-emerald-50/40 to-stone-50 border-emerald-200/90",
+    borderHover: "hover:border-[#0a3d24] hover:shadow-[0_8px_24px_rgba(10,61,36,0.12)]",
+    imgUrl: "/categories/vegetables_4k.jpg?v=4",
+    path: "Vegetables",
+  },
+  {
+    id: "fruits",
+    title: "Fresh Fruits",
+    hindi: "मीठे रसीले फल",
+    tag: "Sweet & Juicy",
+    tagBg: "bg-amber-100 text-amber-900",
+    cardBg: "from-amber-50/90 via-amber-50/40 to-stone-50 border-amber-200/90",
+    borderHover: "hover:border-amber-500 hover:shadow-[0_8px_24px_rgba(245,158,11,0.14)]",
+    imgUrl: "/categories/fruits_4k.jpg?v=4",
+    path: "Fruits",
+  },
+  {
+    id: "exotics",
+    title: "Exotics & Salads",
+    hindi: "विदेशी व सलाद",
+    tag: "Hydroponic & Clean",
+    tagBg: "bg-teal-100 text-teal-900",
+    cardBg: "from-teal-50/90 via-teal-50/40 to-stone-50 border-teal-200/90",
+    borderHover: "hover:border-teal-600 hover:shadow-[0_8px_24px_rgba(13,148,136,0.12)]",
+    imgUrl: "/categories/exotics_4k.jpg?v=4",
+    path: "Exotics",
+  },
+  {
+    id: "combos",
+    title: "Value Combos",
+    hindi: "सुपर सेवर कॉम्बो",
+    tag: "Save Up to 25%",
+    tagBg: "bg-yellow-100 text-yellow-900",
+    cardBg: "from-yellow-50/90 via-amber-50/40 to-stone-50 border-yellow-300/90",
+    borderHover: "hover:border-amber-600 hover:shadow-[0_8px_24px_rgba(217,119,6,0.14)]",
+    imgUrl: "/categories/combos_4k.jpg?v=4",
+    path: "Combos",
+  },
+];
 
 export default function CategorySlider({
   categories = [],
@@ -104,100 +100,22 @@ export default function CategorySlider({
   categories?: any[];
 }) {
   const router = useRouter();
-  const [activeCategories, setActiveCategories] = useState<any[]>([]);
   const [tappedKey, setTappedKey] = useState<string | null>(null);
-  const scrollContainerRef = React.useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    let list = Array.isArray(categories) && categories.length > 0 ? [...categories] : [];
-
-    if (list.length === 0) {
-      fetch("/api/admin/category")
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success && Array.isArray(data.categories)) {
-            filterAndSet(data.categories);
-          }
-        })
-        .catch(console.error);
-    } else {
-      filterAndSet(list);
-    }
-  }, [categories]);
-
-  const filterAndSet = (list: any[]) => {
-    // Filter to core categories
-    const valid = list.filter((item) => {
-      const name = (item.name || "").toLowerCase().trim();
-      return PRIORITY.some((p) => name.includes(p));
-    });
-
-    const sorted = [...(valid.length > 0 ? valid : list)].sort((a, b) => {
-      const nameA = (a.name || "").toLowerCase().trim();
-      const nameB = (b.name || "").toLowerCase().trim();
-
-      const idxA = PRIORITY.findIndex((p) => nameA.includes(p));
-      const idxB = PRIORITY.findIndex((p) => nameB.includes(p));
-
-      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
-      if (idxA !== -1) return -1;
-      if (idxB !== -1) return 1;
-      return 0;
-    });
-
-    // Ensure Combos is included in categories
-    const hasCombo = sorted.some((c) =>
-      (c.name || "").toLowerCase().includes("combo")
-    );
-    const listWithCombos = hasCombo ? sorted : [...sorted, { name: "Combos" }];
-
-    // If DB has no categories or fewer, fallback to the 4 core ones
-    if (sorted.length === 0) {
-      setActiveCategories([
-        { name: "Vegetables" },
-        { name: "Fruits" },
-        { name: "Exotics" },
-        { name: "Combos" },
-      ]);
-    } else {
-      setActiveCategories(listWithCombos.slice(0, 4));
-    }
-  };
-
-  const displayList =
-    activeCategories.length > 0
-      ? activeCategories
-      : [
-          { name: "Vegetables" },
-          { name: "Fruits" },
-          { name: "Exotics" },
-          { name: "Combos" },
-        ];
-
-  const scroll = (direction: "left" | "right") => {
-    if (scrollContainerRef.current) {
-      const amount = 220;
-      scrollContainerRef.current.scrollBy({
-        left: direction === "left" ? -amount : amount,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  const handleCategoryTap = (matchedKey: string, path: string) => {
-    setTappedKey(matchedKey);
+  const handleCategoryTap = (id: string, path: string) => {
+    setTappedKey(id);
     triggerHaptic("medium");
     playTapSound();
 
-    // Instant smooth navigation with tactile delay
     setTimeout(() => {
       router.push(`/shop?category=${encodeURIComponent(path)}`);
-    }, 140);
+    }, 130);
   };
 
   return (
     <section className="w-full py-4 sm:py-6 bg-white font-sans border-b border-stone-200/70 select-none">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
+        
         {/* Header Row */}
         <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-5">
           <div className="flex items-center gap-2">
@@ -207,125 +125,147 @@ export default function CategorySlider({
             </h2>
           </div>
 
-          <div className="flex items-center gap-2">
-            <Link
-              href="/shop"
-              className="text-[#0a3d24] hover:text-[#072a18] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition"
-            >
-              <span>View All</span>
-              <ChevronRight
-                size={14}
-                className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]"
-              />
-            </Link>
-          </div>
+          <Link
+            href="/shop"
+            className="text-[#0a3d24] hover:text-[#072a18] font-bold text-xs sm:text-sm flex items-center gap-0.5 group transition"
+          >
+            <span>View All</span>
+            <ChevronRight
+              size={14}
+              className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]"
+            />
+          </Link>
         </div>
 
-        {/* Animated Stories-Style Carousel Container */}
-        <div className="relative w-full">
-          <div
-            ref={scrollContainerRef}
-            className="flex items-center justify-start sm:justify-center gap-3.5 xs:gap-5 sm:gap-8 md:gap-10 overflow-x-auto scrollbar-none py-2 px-1 -mx-3.5 px-3.5 sm:mx-0 sm:px-0 overscroll-x-contain snap-x snap-mandatory"
-            style={{ WebkitOverflowScrolling: "touch" }}
-          >
-            {displayList.map((item, idx) => {
-              const rawKey = (item.name || "").toLowerCase().trim();
-              const matchedKey =
-                Object.keys(CATEGORY_MAP).find((k) => rawKey.includes(k)) || "";
-              const config = CATEGORY_MAP[matchedKey] || {
-                title: item.name || "Produce",
-                subtitle: "Fresh Harvest",
-                imgUrl: item.image || "/categories/vegetables_4k.jpg?v=4",
-                path: item.name || "Vegetables",
-              };
+        {/* 🖥️ DESKTOP & TABLET: 4 Full-Width Premium Category Banner Cards (Fills 100% Width Perfectly) */}
+        <div className="hidden md:grid md:grid-cols-4 gap-4 lg:gap-5 w-full">
+          {CATEGORY_CARDS.map((cat, idx) => {
+            const isTapped = tappedKey === cat.id;
 
-              const imageSrc = config.imgUrl || item.image || "/categories/vegetables_4k.jpg?v=4";
-              const isCombo = matchedKey.includes("combo");
-              const isTapped = tappedKey === matchedKey;
+            return (
+              <motion.div
+                key={cat.id}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, delay: idx * 0.06 }}
+                whileHover={{ y: -4 }}
+                whileTap={{ scale: 0.96 }}
+                onClick={() => handleCategoryTap(cat.id, cat.path)}
+                className={`group cursor-pointer rounded-2xl lg:rounded-3xl p-4 bg-gradient-to-br ${cat.cardBg} border transition-all duration-300 flex items-center justify-between gap-3 shadow-2xs ${cat.borderHover} ${
+                  isTapped ? "scale-95 ring-2 ring-[#0a3d24]" : ""
+                }`}
+              >
+                {/* Left: Metadata & Typography */}
+                <div className="min-w-0 flex-1 flex flex-col justify-between h-full py-0.5">
+                  <div>
+                    <span
+                      className={`inline-block text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full mb-1.5 ${cat.tagBg}`}
+                    >
+                      {cat.tag}
+                    </span>
+                    <h3 className="font-extrabold text-sm lg:text-base text-stone-900 tracking-tight leading-tight group-hover:text-[#0a3d24] transition-colors font-heading truncate">
+                      {cat.title}
+                    </h3>
+                    <p className="text-[11px] text-stone-500 font-semibold leading-tight mt-0.5 truncate">
+                      {cat.hindi}
+                    </p>
+                  </div>
 
-              return (
-                <motion.div
-                  key={item._id || item.name || idx}
-                  initial={{ opacity: 0, y: 14, scale: 0.94 }}
-                  animate={{ opacity: 1, y: 0, scale: isTapped ? 0.92 : 1 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 450,
-                    damping: 20,
-                  }}
-                  whileTap={{ scale: 0.88 }}
-                  whileHover={{ y: -5 }}
-                  onClick={() => handleCategoryTap(matchedKey, config.path)}
-                  className="group cursor-pointer flex flex-col items-center text-center select-none shrink-0 w-[76px] xs:w-[86px] sm:w-28 md:w-32 snap-center relative"
+                  <div className="mt-3 flex items-center gap-1 text-[11px] font-bold text-[#0a3d24] group-hover:translate-x-1 transition-transform">
+                    <span>Shop Now</span>
+                    <ArrowRight size={11} className="stroke-[2.5]" />
+                  </div>
+                </div>
+
+                {/* Right: High-Resolution 4K Image Container */}
+                <div className="relative shrink-0 w-18 h-18 lg:w-20 lg:h-20 rounded-2xl overflow-hidden bg-white/80 p-1 border border-white shadow-2xs group-hover:shadow-md transition-all">
+                  <img
+                    src={cat.imgUrl}
+                    alt={cat.title}
+                    className="w-full h-full object-cover rounded-xl group-hover:scale-110 transition-transform duration-500 ease-out"
+                    loading="lazy"
+                    onError={(e: any) => {
+                      e.target.src = "/categories/vegetables_4k.jpg?v=4";
+                    }}
+                  />
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* 📱 MOBILE: 4 Evenly-Distributed Story Circles (Edge-to-Edge Balanced Across Screen) */}
+        <div className="grid grid-cols-4 gap-1.5 xs:gap-2.5 w-full justify-items-center md:hidden">
+          {CATEGORY_CARDS.map((cat, idx) => {
+            const isTapped = tappedKey === cat.id;
+
+            return (
+              <motion.div
+                key={`mobile-${cat.id}`}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: isTapped ? 0.92 : 1 }}
+                transition={{ type: "spring", stiffness: 450, damping: 20 }}
+                whileTap={{ scale: 0.88 }}
+                onClick={() => handleCategoryTap(cat.id, cat.path)}
+                className="group cursor-pointer flex flex-col items-center text-center select-none w-full max-w-[84px] relative"
+              >
+                {/* Glowing Avatar Ring */}
+                <div
+                  className={`relative p-0.5 rounded-full transition-all duration-300 ${
+                    isTapped
+                      ? "ring-3 ring-emerald-500 ring-offset-2 ring-offset-white shadow-[0_0_20px_rgba(16,185,129,0.5)] scale-105 bg-emerald-500"
+                      : cat.id === "combos"
+                      ? "bg-gradient-to-tr from-amber-500 via-emerald-500 to-[#0a3d24] shadow-[0_4px_16px_rgba(217,119,6,0.2)]"
+                      : "bg-gradient-to-tr from-[#0a3d24] via-emerald-500 to-amber-400 shadow-[0_4px_16px_rgba(10,61,36,0.15)]"
+                  }`}
                 >
-                  {/* Glowing Circular Stories Avatar with Active Tap Ring */}
-                  <div
-                    className={`relative p-0.5 sm:p-1 rounded-full transition-all duration-300 ${
+                  <div className="w-15 h-15 xs:w-17 xs:h-17 rounded-full overflow-hidden bg-white p-0.5 ring-1 ring-white">
+                    <div className="w-full h-full rounded-full overflow-hidden bg-stone-50 relative">
+                      <img
+                        src={cat.imgUrl}
+                        alt={cat.title}
+                        className={`w-full h-full object-cover transition-transform duration-300 ${
+                          isTapped ? "scale-115" : "group-hover:scale-108"
+                        }`}
+                        loading="lazy"
+                        onError={(e: any) => {
+                          e.target.src = "/categories/vegetables_4k.jpg?v=4";
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {isTapped && (
+                    <motion.div
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      className="absolute -top-1 -right-1 bg-emerald-600 text-white p-0.5 rounded-full shadow-md border border-white"
+                    >
+                      <Sparkles size={9} className="stroke-[3]" />
+                    </motion.div>
+                  )}
+                </div>
+
+                {/* Typography: Category Name */}
+                <div className="mt-1.5 flex flex-col items-center w-full px-0.5">
+                  <span
+                    className={`font-extrabold text-[10.5px] xs:text-[11.5px] tracking-tight leading-tight truncate w-full transition-colors ${
                       isTapped
-                        ? "ring-4 ring-emerald-500 ring-offset-2 ring-offset-white shadow-[0_0_24px_rgba(16,185,129,0.6)] scale-105 bg-emerald-500"
-                        : isCombo
-                        ? "bg-gradient-to-tr from-amber-500 via-emerald-500 to-[#0a3d24] shadow-[0_5px_20px_rgba(217,119,6,0.22)] group-hover:shadow-[0_10px_28px_rgba(217,119,6,0.35)]"
-                        : "bg-gradient-to-tr from-[#0a3d24] via-emerald-500 to-amber-400 shadow-[0_5px_20px_rgba(10,61,36,0.16)] group-hover:shadow-[0_10px_28px_rgba(10,61,36,0.28)]"
+                        ? "text-emerald-700 font-black"
+                        : "text-stone-900 group-hover:text-[#0a3d24]"
                     }`}
                   >
-                    {/* Outer White Border Ring */}
-                    <div className="w-[66px] h-[66px] xs:w-[74px] xs:h-[74px] sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full overflow-hidden bg-white p-0.5 sm:p-1 ring-2 ring-white">
-                      <div className="w-full h-full rounded-full overflow-hidden bg-stone-50 relative">
-                        <img
-                          src={imageSrc}
-                          alt={config.title}
-                          className={`w-full h-full object-cover transition-transform duration-500 ease-out ${
-                            isTapped
-                              ? "scale-118 rotate-1"
-                              : "group-hover:scale-112 group-hover:rotate-1"
-                          }`}
-                          onError={(e: any) => {
-                            e.target.src = "/categories/vegetables_4k.jpg?v=4";
-                          }}
-                        />
-                        {/* Active Tap Ripple Glow Overlay */}
-                        <div
-                          className={`absolute inset-0 rounded-full transition-all duration-300 ${
-                            isTapped
-                              ? "bg-emerald-500/20"
-                              : "bg-[#0a3d24]/0 group-hover:bg-[#0a3d24]/10"
-                          }`}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Active Tap Sparkle Badge */}
-                    {isTapped && (
-                      <motion.div
-                        initial={{ scale: 0, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        className="absolute -top-1 -right-1 bg-emerald-600 text-white p-1 rounded-full shadow-md border border-white"
-                      >
-                        <Sparkles size={10} className="stroke-[3]" />
-                      </motion.div>
-                    )}
-                  </div>
-
-                  {/* Typography: Category Name */}
-                  <div className="mt-2 sm:mt-2.5 flex flex-col items-center">
-                    <span
-                      className={`font-extrabold text-[11px] xs:text-xs sm:text-sm md:text-base tracking-tight leading-tight line-clamp-1 transition-colors duration-200 ${
-                        isTapped
-                          ? "text-emerald-700 font-black scale-105"
-                          : "text-stone-900 group-hover:text-[#0a3d24]"
-                      }`}
-                    >
-                      {config.title}
-                    </span>
-                    <span className="text-[10px] sm:text-xs text-stone-500 font-medium tracking-tight mt-0.5 hidden xs:block">
-                      {config.subtitle}
-                    </span>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
+                    {cat.title}
+                  </span>
+                  <span className="text-[9px] text-stone-500 font-semibold tracking-tight mt-0.5 truncate w-full hidden xs:block">
+                    {cat.hindi}
+                  </span>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
+
       </div>
     </section>
   );
