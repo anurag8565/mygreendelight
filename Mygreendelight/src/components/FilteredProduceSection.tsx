@@ -157,11 +157,14 @@ export default function FilteredProduceSection({
               <ChevronDown size={12} className="absolute right-2 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" />
             </div>
 
-            {/* Grid / List Switcher */}
-            <div className="hidden xs:flex items-center bg-white p-0.5 rounded-full border border-stone-200/80 shadow-2xs">
+            {/* Grid / List Switcher (Visible on all screens) */}
+            <div className="flex items-center bg-white p-0.5 rounded-full border border-stone-200/80 shadow-2xs">
               <button
                 type="button"
-                onClick={() => setViewMode("grid")}
+                onClick={() => {
+                  triggerHaptic("light");
+                  setViewMode("grid");
+                }}
                 className={`p-1.5 rounded-full transition cursor-pointer ${
                   viewMode === "grid"
                     ? "bg-[#0a3d24] text-white shadow-xs"
@@ -174,7 +177,10 @@ export default function FilteredProduceSection({
               </button>
               <button
                 type="button"
-                onClick={() => setViewMode("list")}
+                onClick={() => {
+                  triggerHaptic("light");
+                  setViewMode("list");
+                }}
                 className={`p-1.5 rounded-full transition cursor-pointer ${
                   viewMode === "list"
                     ? "bg-[#0a3d24] text-white shadow-xs"
