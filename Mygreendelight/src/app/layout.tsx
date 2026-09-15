@@ -12,7 +12,6 @@ import BroadcastBar from "@/components/BroadcastBar";
 import ContentProtection from "@/components/ContentProtection";
 import InstallAppPrompt from "@/components/InstallAppPrompt";
 import FlyingCartOverlay from "@/components/FlyingCartOverlay";
-import ActiveOrderPulseBar from "@/components/ActiveOrderPulseBar";
 import AppSplashScreen from "@/components/AppSplashScreen";
 
 const sansFont = Plus_Jakarta_Sans({
@@ -432,7 +431,6 @@ export default function RootLayout({
             <MobileBottomNav />
             <InstallAppPrompt />
             <FlyingCartOverlay />
-            <ActiveOrderPulseBar />
           </StoreProviders>
         </Provider>
       </body>
