@@ -127,17 +127,12 @@ export default function FilteredProduceSection({
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
         
         {/* Clean Balanced Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 mb-3 sm:mb-4">
-          <div>
-            <div className="flex items-center gap-1.5">
-              <Leaf size={17} className="text-[#0a3d24] shrink-0" />
-              <h2 className="text-[16px] sm:text-lg md:text-xl font-black text-stone-900 tracking-tight font-heading">
-                Fresh Farm Harvest
-              </h2>
-            </div>
-            <p className="text-[11px] sm:text-xs text-stone-400 font-medium mt-0.5">
-              Daily mandi harvest &bull; Delivered in 10-15 mins
-            </p>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 mb-3 sm:mb-4">
+          <div className="flex items-center gap-1.5">
+            <Leaf size={17} className="text-[#0a3d24] shrink-0" />
+            <h2 className="text-[16px] sm:text-lg md:text-xl font-black text-stone-900 tracking-tight font-heading">
+              Fresh Farm Harvest
+            </h2>
           </div>
 
           {/* Clean Unified Controls Row: Featured on Left, Grid/List & See All pushed Right */}
