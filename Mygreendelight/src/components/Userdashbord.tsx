@@ -15,6 +15,7 @@ import FarmFreshPromise from './FarmFreshPromise'
 import BhopalSocietyPool from './BhopalSocietyPool'
 import BhopalParchiShopping from './BhopalParchiShopping'
 import Testimonials from './Testimonials'
+import OrderAgainSection from './OrderAgainSection'
 import { RotateCcw } from 'lucide-react'
 
 import Banner from '@/model/banner.model'
@@ -141,28 +142,9 @@ export default async function Userdashbord() {
       {/* 8. Bhopal Parchi & WhatsApp Voice Shopping (No Typing Required) */}
       <BhopalParchiShopping />
 
-      {/* 9. Tone 2: Order Again Carousel (Soft Warm Stone #f7f6f2) */}
+      {/* 9. Tone 2: Order Again Carousel with Header Controls (Soft Warm Stone #f7f6f2) */}
       {plainOrderAgain && plainOrderAgain.length > 0 && (
-        <div className="w-full py-4 sm:py-6 bg-[#f7f6f2] border-b border-stone-200/70 font-sans">
-          <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-8">
-             <div className="flex items-center justify-between mb-4 sm:mb-6">
-                <div className="flex items-center gap-2">
-                   <RotateCcw size={18} className="text-[#0a3d24]" />
-                   <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-stone-900 tracking-tight font-heading">
-                      Order Again
-                   </h2>
-                </div>
-             </div>
-
-             <ProductCarousel>
-                {plainOrderAgain.map((item: any) => (
-                   <div key={item._id} className="w-[155px] sm:w-[185px] md:w-[200px] snap-start shrink-0 flex flex-col h-[255px] sm:h-[275px]">
-                      <Groceryitemcard item={item} />
-                   </div>
-                ))}
-             </ProductCarousel>
-          </div>
-        </div>
+        <OrderAgainSection items={plainOrderAgain} />
       )}
 
       {/* 10. Tone 1: Customer Testimonials & Reviews (Pure White) */}
