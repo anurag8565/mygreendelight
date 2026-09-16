@@ -1004,8 +1004,8 @@ export default function Nav({ user }: { user?: iUser | null }) {
               </AnimatePresence>
             </div>
 
-          {/* User & Cart */}
-          <div className="flex items-center gap-4 shrink-0">
+          {/* User, WhatsApp & Cart Controls */}
+          <div className="flex items-center gap-1.5 sm:gap-2.5 md:gap-3 shrink-0">
             {/* User Dropdown */}
             <div
               className="hidden sm:flex items-center gap-3 cursor-pointer group relative select-none"
@@ -1187,16 +1187,16 @@ export default function Nav({ user }: { user?: iUser | null }) {
                )}
             </Link>
 
-            {/* WhatsApp Quick Order & Support Button (Directly next to Cart) */}
+            {/* WhatsApp Quick Order & Support Button (Responsive across all screens) */}
             <a
               href="https://wa.me/919981418565?text=Hello%20SubziQuick!%20I%20need%20quick%20assistance%20with%20farm%20fresh%20vegetables%20/%20my%20order."
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 h-10 px-2.5 sm:px-3 rounded-2xl bg-[#25D366]/10 hover:bg-[#25D366] text-[#128C7E] hover:text-white border border-[#25D366]/30 transition-all cursor-pointer shadow-2xs group shrink-0 active:scale-95"
+              className="flex items-center justify-center gap-1.5 h-9 sm:h-10 w-9 sm:w-auto px-0 sm:px-3 rounded-full sm:rounded-2xl bg-[#25D366]/10 hover:bg-[#25D366] text-[#128C7E] hover:text-white border border-[#25D366]/30 transition-all cursor-pointer shadow-2xs group shrink-0 active:scale-95"
               title="Chat with SubziQuick on WhatsApp"
               aria-label="Order on WhatsApp"
             >
-              <FaWhatsapp size={19} className="text-[#25D366] group-hover:text-white transition-colors" />
+              <FaWhatsapp className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-[#25D366] group-hover:text-white transition-colors" />
               <span className="hidden md:inline text-xs font-black tracking-tight">
                 WhatsApp
               </span>
@@ -1209,17 +1209,17 @@ export default function Nav({ user }: { user?: iUser | null }) {
               whileHover={{ scale: 1.03 }}
               transition={{ type: "spring", stiffness: 450, damping: 24 }}
               onClick={() => setIsMiniCartOpen(true)}
-              className="flex items-center gap-2.5 bg-[#0a3d24] hover:bg-[#072817] text-white px-3.5 py-2 rounded-2xl shadow-[0_4px_16px_rgba(10,61,36,0.25)] border border-emerald-800/40 cursor-pointer shrink-0 select-none transition-all group"
+              className="flex items-center gap-1.5 sm:gap-2.5 bg-[#0a3d24] hover:bg-[#072817] text-white h-9 sm:h-10 px-2.5 sm:px-3.5 rounded-full sm:rounded-2xl shadow-[0_4px_16px_rgba(10,61,36,0.22)] border border-emerald-800/40 cursor-pointer shrink-0 select-none transition-all group"
             >
               <div className="relative flex items-center justify-center text-white">
-                <ShoppingCart size={18} className="stroke-[2.4]" />
+                <ShoppingCart className="w-4 h-4 sm:w-[18px] sm:h-[18px] stroke-[2.4]" />
                 {mounted && cartdata.length > 0 && (
                   <motion.span
                     key={`header-badge-${cartdata.reduce((sum, item) => sum + item.quantity, 0)}`}
                     initial={{ scale: 0.4, y: -3 }}
                     animate={{ scale: [1.3, 0.95, 1], y: 0 }}
                     transition={{ type: "spring", stiffness: 600, damping: 18 }}
-                    className="absolute -top-2 -right-2.5 bg-amber-400 text-stone-950 text-[9px] font-black min-w-[16px] h-[16px] px-0.5 rounded-full flex items-center justify-center shadow-xs border border-white/80"
+                    className="absolute -top-2 -right-2 bg-amber-400 text-stone-950 text-[9px] font-black min-w-[15px] h-[15px] px-0.5 rounded-full flex items-center justify-center shadow-xs border border-white/80"
                   >
                     {cartdata.reduce((sum, item) => sum + item.quantity, 0)}
                   </motion.span>
@@ -1227,7 +1227,7 @@ export default function Nav({ user }: { user?: iUser | null }) {
               </div>
 
               <div className="hidden sm:flex flex-col text-left leading-none">
-                <span className="text-[10px] font-bold text-emerald-200/90 tracking-wide uppercase">
+                <span className="text-[9.5px] font-bold text-emerald-200/90 tracking-wide uppercase">
                   {cartdata.length > 0 ? `${cartdata.length} items` : "My Basket"}
                 </span>
                 <span className="text-xs font-black text-white mt-0.5">
