@@ -91,9 +91,9 @@ const ProductCarousel = forwardRef<
       </div>
 
       {/* 
-        🌟 SLEEK BOTTOM INDICATOR DOTS (Like Zepto / Blinkit / Apple)
-        - Active dot expands smoothly (pill shape)
-        - Inactive dots are subtle stones
+        🌟 SLEEK BOTTOM INDICATOR DOTS (Pure Circular Dots - Zero Dashes/Lines)
+        - Active dot is a clean circular green bead
+        - Inactive dots are soft subtle beads
         - Tap/Click on any dot to jump directly
       */}
       {showDots && totalDots > 1 && (
@@ -106,10 +106,10 @@ const ProductCarousel = forwardRef<
                 type="button"
                 onClick={() => scrollToPage(idx)}
                 aria-label={`Go to slide ${idx + 1}`}
-                className={`transition-all duration-300 rounded-full cursor-pointer h-1.5 ${
+                className={`transition-all duration-300 rounded-full cursor-pointer ${
                   isActive
-                    ? "w-6 bg-[#0a3d24] shadow-xs"
-                    : "w-1.5 bg-stone-300 hover:bg-stone-400"
+                    ? "w-2 h-2 bg-[#0a3d24] scale-125 shadow-xs"
+                    : "w-1.5 h-1.5 bg-stone-300 hover:bg-stone-400"
                 }`}
               />
             );
