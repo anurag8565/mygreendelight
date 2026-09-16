@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
+import { FaWhatsapp } from "react-icons/fa6";
 import {
   Menu,
   Search,
@@ -1185,6 +1186,21 @@ export default function Nav({ user }: { user?: iUser | null }) {
                  </span>
                )}
             </Link>
+
+            {/* WhatsApp Quick Order & Support Button (Directly next to Cart) */}
+            <a
+              href="https://wa.me/919981418565?text=Hello%20SubziQuick!%20I%20need%20quick%20assistance%20with%20farm%20fresh%20vegetables%20/%20my%20order."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 h-10 px-2.5 sm:px-3 rounded-2xl bg-[#25D366]/10 hover:bg-[#25D366] text-[#128C7E] hover:text-white border border-[#25D366]/30 transition-all cursor-pointer shadow-2xs group shrink-0 active:scale-95"
+              title="Chat with SubziQuick on WhatsApp"
+              aria-label="Order on WhatsApp"
+            >
+              <FaWhatsapp size={19} className="text-[#25D366] group-hover:text-white transition-colors" />
+              <span className="hidden md:inline text-xs font-black tracking-tight">
+                WhatsApp
+              </span>
+            </a>
 
             {/* Cart Widget with Bounce Animation & Premium Pill Styling */}
             <motion.button

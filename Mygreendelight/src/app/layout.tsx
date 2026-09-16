@@ -427,7 +427,6 @@ export default function RootLayout({
             <SocketProvider />
             <BroadcastBar />
             {children}
-            <WhatsAppWidget />
             <MobileBottomNav />
             <InstallAppPrompt />
             <FlyingCartOverlay />
