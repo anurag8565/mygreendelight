@@ -107,42 +107,18 @@ export default function FlashDeals({ products = [] }: { products: any[] }) {
             )}
           </div>
 
-          {/* Right: Header Navigation Arrows [ < ] [ > ] + See All */}
-          <div className="flex items-center gap-2">
-            {/* Carousel Buttons */}
-            <div className="hidden xs:flex items-center gap-1 bg-stone-100/80 p-0.5 rounded-full border border-stone-200/80">
-              <button
-                type="button"
-                onClick={() => carouselRef.current?.scrollLeft()}
-                className="w-7 h-7 rounded-full bg-white hover:bg-stone-50 text-stone-700 hover:text-[#0a3d24] flex items-center justify-center shadow-2xs transition active:scale-90 cursor-pointer"
-                title="Scroll Left"
-                aria-label="Scroll Left"
-              >
-                <ChevronLeft size={14} className="stroke-[2.5]" />
-              </button>
-              <button
-                type="button"
-                onClick={() => carouselRef.current?.scrollRight()}
-                className="w-7 h-7 rounded-full bg-white hover:bg-stone-50 text-stone-700 hover:text-[#0a3d24] flex items-center justify-center shadow-2xs transition active:scale-90 cursor-pointer"
-                title="Scroll Right"
-                aria-label="Scroll Right"
-              >
-                <ChevronRight size={14} className="stroke-[2.5]" />
-              </button>
-            </div>
-
-            <Link
-              href="/shop"
-              className="text-stone-500 hover:text-[#0a3d24] font-semibold text-xs sm:text-sm flex items-center gap-0.5 px-2 py-1 rounded-full hover:bg-stone-50 transition"
-            >
-              <span>See all</span>
-              <ChevronRight size={14} className="stroke-[2]" />
-            </Link>
-          </div>
+          {/* Right: See All */}
+          <Link
+            href="/shop"
+            className="text-stone-500 hover:text-[#0a3d24] font-semibold text-xs sm:text-sm flex items-center gap-0.5 px-2 py-1 rounded-full hover:bg-stone-50 transition"
+          >
+            <span>See all</span>
+            <ChevronRight size={14} className="stroke-[2]" />
+          </Link>
         </div>
 
         {/* Swipeable Carousel */}
-        <ProductCarousel ref={carouselRef}>
+        <ProductCarousel>
           {products.map((item: any) => (
             <div
               key={item._id}
