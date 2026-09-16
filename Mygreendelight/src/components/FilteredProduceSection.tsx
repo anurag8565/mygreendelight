@@ -140,10 +140,10 @@ export default function FilteredProduceSection({
             </p>
           </div>
 
-          {/* Clean Unified Controls Row */}
-          <div className="flex items-center gap-2 self-start sm:self-auto">
+          {/* Clean Unified Controls Row: Featured on Left, Grid/List & See All pushed Right */}
+          <div className="flex items-center justify-between sm:justify-end gap-2.5 sm:gap-3 w-full sm:w-auto">
             {/* Sort Pill */}
-            <div className="relative">
+            <div className="relative shrink-0">
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
@@ -157,6 +157,8 @@ export default function FilteredProduceSection({
               <ChevronDown size={12} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" />
             </div>
 
+            {/* Right Group: Grid / List Switcher + See All Button */}
+            <div className="flex items-center gap-2 sm:gap-2.5 shrink-0 ml-auto sm:ml-0">
               {/* Grid / List Switcher */}
               <div className="flex items-center bg-white p-0.5 rounded-full border border-stone-200/90 shadow-2xs">
                 <button
@@ -206,12 +208,13 @@ export default function FilteredProduceSection({
                     ? "/shop?category=Combos"
                     : "/shop"
                 }
-                className="text-[#0a3d24] hover:text-[#072a18] font-bold text-xs px-2.5 py-1.5 rounded-full bg-emerald-50/70 hover:bg-emerald-100/70 transition flex items-center gap-0.5 group border border-emerald-200/60"
+                className="text-[#0a3d24] hover:text-[#072a18] font-bold text-xs px-3 py-1.5 rounded-full bg-emerald-50/70 hover:bg-emerald-100/70 transition flex items-center gap-0.5 group border border-emerald-200/60 shadow-2xs"
               >
                 <span>See All</span>
                 <ChevronRight size={13} className="group-hover:translate-x-0.5 transition-transform stroke-[2.5]" />
               </Link>
             </div>
+          </div>
         </div>
 
         {/* 
