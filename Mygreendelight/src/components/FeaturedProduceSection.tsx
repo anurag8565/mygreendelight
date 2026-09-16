@@ -45,7 +45,7 @@ export default function FeaturedProduceSection({
           {products.map((item: any) => (
             <div
               key={item._id}
-              className="w-[155px] sm:w-[200px] md:w-[210px] snap-start shrink-0 flex flex-col h-[320px] sm:h-[340px]"
+              className="w-[155px] sm:w-[185px] md:w-[200px] snap-start shrink-0 flex flex-col h-[255px] sm:h-[275px]"
             >
               <Groceryitemcard item={item} />
             </div>
