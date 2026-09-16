@@ -1187,17 +1187,17 @@ export default function Nav({ user }: { user?: iUser | null }) {
                )}
             </Link>
 
-            {/* WhatsApp Quick Order & Support Button (Responsive across all screens) */}
+            {/* WhatsApp Quick Order & Support Button (Solid Vibrant Brand Green) */}
             <a
               href="https://wa.me/919981418565?text=Hello%20SubziQuick!%20I%20need%20quick%20assistance%20with%20farm%20fresh%20vegetables%20/%20my%20order."
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-1.5 h-9 sm:h-10 w-9 sm:w-auto px-0 sm:px-3 rounded-full sm:rounded-2xl bg-[#25D366]/10 hover:bg-[#25D366] text-[#128C7E] hover:text-white border border-[#25D366]/30 transition-all cursor-pointer shadow-2xs group shrink-0 active:scale-95"
+              className="flex items-center justify-center gap-1.5 h-9 sm:h-10 w-9 sm:w-auto px-0 sm:px-3.5 rounded-full sm:rounded-2xl bg-[#25D366] hover:bg-[#20ba59] text-white transition-all cursor-pointer shadow-[0_3px_12px_rgba(37,211,102,0.28)] hover:shadow-[0_4px_16px_rgba(37,211,102,0.38)] group shrink-0 active:scale-95"
               title="Chat with SubziQuick on WhatsApp"
               aria-label="Order on WhatsApp"
             >
-              <FaWhatsapp className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-[#25D366] group-hover:text-white transition-colors" />
-              <span className="hidden md:inline text-xs font-black tracking-tight">
+              <FaWhatsapp className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white transition-transform group-hover:scale-110" />
+              <span className="hidden md:inline text-xs font-black tracking-tight text-white drop-shadow-2xs">
                 WhatsApp
               </span>
             </a>
