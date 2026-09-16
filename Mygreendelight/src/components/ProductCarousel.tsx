@@ -84,8 +84,12 @@ const ProductCarousel = forwardRef<
       {/* Free-Flowing Smooth Scroll Container */}
       <div
         ref={scrollRef}
-        className="flex gap-3 sm:gap-4 overflow-x-auto pb-2 pt-0.5 no-scrollbar -mx-3.5 px-3.5 sm:mx-0 sm:px-0 overscroll-x-contain scroll-smooth"
-        style={{ WebkitOverflowScrolling: "touch" }}
+        className="flex gap-3 sm:gap-4 overflow-x-auto pb-2 pt-0.5 no-scrollbar scrollbar-none scrollbar-hide -mx-3.5 px-3.5 sm:mx-0 sm:px-0 overscroll-x-contain scroll-smooth"
+        style={{
+          WebkitOverflowScrolling: "touch",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}
       >
         {children}
       </div>
