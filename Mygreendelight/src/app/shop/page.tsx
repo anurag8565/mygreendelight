@@ -60,19 +60,19 @@ const CATEGORY_HERO_DATA: Record<string, HeroMeta> = {
     title: "Fresh Farm Harvest",
     subtitle: "Handpicked daily from trusted cultivators • 100% sorted, cleaned & delivered in 10-15 mins",
     badge: "Bhopal Express • 10-15 Min",
-    image: "/banners/veggies_clean_4k.jpg",
+    image: "/banners/shop_banner_veggies.jpg",
   },
   vegetables: {
     title: "Farm Fresh Vegetables",
     subtitle: "Crisp leafy greens, root veggies & daily kitchen staples at direct farm prices",
     badge: "Harvested Today • 5:00 AM",
-    image: "/banners/veggies_clean_4k.jpg",
+    image: "/banners/shop_banner_veggies.jpg",
   },
   fruits: {
     title: "Sweet Seasonal Fruits",
     subtitle: "Naturally tree-ripened, hand-selected orchard fruits packed with rich vitamins",
     badge: "100% Naturally Ripened",
-    image: "/banners/fruits_clean_4k.jpg",
+    image: "/banners/hero_fruits.jpg",
   },
   combos: {
     title: "Super Saver Kitchen Combos",
@@ -326,63 +326,58 @@ function ShopContent() {
           )}
         </nav>
 
-        {/* 2. Contextual Editorial Mini-Hero Banner */}
-        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#062817] via-[#0a3d24] to-[#0f492b] text-white p-4 sm:p-7 mb-4 sm:mb-6 shadow-[0_8px_30px_rgba(10,61,36,0.12)] border border-emerald-800/40">
-          {/* Subtle Ambient Radial Glow */}
-          <div className="pointer-events-none absolute -right-16 -bottom-16 w-80 h-80 sm:w-96 sm:h-96 bg-emerald-400/15 rounded-full blur-3xl" />
-          <div className="pointer-events-none absolute left-1/3 -top-20 w-64 h-64 bg-amber-400/10 rounded-full blur-3xl" />
+        {/* 2. Full 4K Photographic Storefront Hero Banner */}
+        <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-stone-900 border border-stone-200/90 shadow-[0_4px_20px_rgba(0,0,0,0.06)] mb-4 sm:mb-6 h-[175px] xs:h-[190px] sm:h-[220px] md:h-[245px] select-none">
+          {/* Full-bleed 4K Background Photographic Layer */}
+          <div className="absolute inset-0 w-full h-full overflow-hidden">
+            <img
+              src={currentHeroMeta.image}
+              alt={currentHeroMeta.title}
+              className="w-full h-full object-cover object-right sm:object-center contrast-[1.04] saturate-[1.06] transition-all duration-700"
+              loading="eager"
+            />
+          </div>
 
-          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="max-w-xl">
+          {/* Natural Directional Fade for razor-sharp text contrast */}
+          <div className="absolute inset-0 bg-gradient-to-r from-stone-950/92 via-stone-950/75 via-55% sm:via-42% to-transparent pointer-events-none z-1" />
+
+          {/* Left Editorial Content Layer */}
+          <div className="relative z-10 h-full p-4 sm:p-6 md:p-8 flex flex-col justify-between max-w-[72%] xs:max-w-[68%] sm:max-w-md lg:max-w-xl text-white">
+            <div>
               {/* Live Status Badge */}
-              <div className="flex items-center gap-2 mb-2 flex-wrap">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-bold tracking-wide uppercase bg-white/12 backdrop-blur-md text-emerald-200 border border-white/15">
+              <div className="flex items-center gap-2 mb-1.5 sm:mb-2 flex-wrap">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-bold tracking-wide uppercase bg-emerald-500/25 backdrop-blur-md text-emerald-300 border border-emerald-400/30">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                   {currentHeroMeta.badge}
                 </span>
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30">
                   <Zap size={10} className="fill-amber-300" />
-                  10-15 Min
+                  10-15 Min Express
                 </span>
               </div>
 
-              {/* Title & Description */}
-              <h1 className="text-xl sm:text-2xl md:text-3xl font-black tracking-tight text-white font-heading">
+              {/* High-Impact Headline */}
+              <h1 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-white font-heading leading-tight line-clamp-2">
                 {currentHeroMeta.title}
               </h1>
-              <p className="text-xs sm:text-sm text-emerald-100/80 font-normal mt-1 leading-relaxed max-w-lg">
+
+              {/* Subtitle */}
+              <p className="text-[11px] xs:text-xs sm:text-sm text-stone-200/90 font-medium mt-1 leading-snug line-clamp-1 sm:line-clamp-2 max-w-lg">
                 {currentHeroMeta.subtitle}
               </p>
-
-              {/* Sub-bar / Stats */}
-              <div className="flex items-center gap-3 mt-3 text-[11px] font-medium text-emerald-200/90">
-                <span className="flex items-center gap-1">
-                  <Check size={13} className="text-emerald-300 stroke-[3]" />
-                  <span>{filteredGroceries.length} Products Available</span>
-                </span>
-                <span className="w-1 h-1 rounded-full bg-emerald-400/50" />
-                <span className="flex items-center gap-1">
-                  <ShieldCheck size={13} className="text-emerald-300" />
-                  <span>100% Quality Assurance</span>
-                </span>
-              </div>
             </div>
 
-            {/* Desktop Right Side Visual Anchor */}
-            <div className="hidden md:flex items-center gap-3 shrink-0">
-              <div className="relative w-44 h-28 lg:w-52 lg:h-32 rounded-2xl overflow-hidden border border-white/15 shadow-lg bg-black/20 group">
-                <img
-                  src={currentHeroMeta.image}
-                  alt={currentHeroMeta.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                <div className="absolute bottom-2 left-2 right-2 text-center">
-                  <span className="text-[10px] font-bold text-white/95 uppercase tracking-wider bg-black/40 backdrop-blur-xs px-2 py-0.5 rounded-md border border-white/20">
-                    Farm Direct
-                  </span>
-                </div>
-              </div>
+            {/* Bottom Bar: Live Products Counter & Quality Guarantee */}
+            <div className="flex items-center gap-3 text-[11px] font-medium text-emerald-300/95 pt-1">
+              <span className="flex items-center gap-1">
+                <Check size={13} className="text-emerald-400 stroke-[3]" />
+                <span className="font-bold text-white">{filteredGroceries.length} Products Available</span>
+              </span>
+              <span className="w-1 h-1 rounded-full bg-emerald-400/50" />
+              <span className="hidden sm:flex items-center gap-1">
+                <ShieldCheck size={13} className="text-emerald-400" />
+                <span>100% Quality Assurance</span>
+              </span>
             </div>
           </div>
         </div>
