@@ -1235,6 +1235,35 @@ export default function ViewGrocery() {
                 />
               </div>
 
+              {/* Sourcing & Storage Inputs */}
+              <div className="grid sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-gray-700 mb-1 text-xs font-bold">Farm Sourcing Info</label>
+                  <input
+                    type="text"
+                    value={editForm.sourcing}
+                    onChange={(e) =>
+                      setEditForm({ ...editForm, sourcing: e.target.value })
+                    }
+                    placeholder="e.g. Direct from local Bhopal farms (Raisen / Sehore)"
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 text-xs"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 mb-1 text-xs font-bold">Storage &amp; Shelf Life</label>
+                  <input
+                    type="text"
+                    value={editForm.storage}
+                    onChange={(e) =>
+                      setEditForm({ ...editForm, storage: e.target.value })
+                    }
+                    placeholder="e.g. Store in a cool, dry place. Wash before use."
+                    className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 text-xs"
+                  />
+                </div>
+              </div>
+
               {/* Weight Variations Manager */}
               <div className="pt-2">
                 <div className="flex items-center justify-between mb-2">

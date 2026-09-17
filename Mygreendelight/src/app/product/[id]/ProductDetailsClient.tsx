@@ -456,37 +456,85 @@ export default function ProductDetailsClient({
           </div>
         </div>
 
-        {/* Clean Specifications & About Card */}
-        <div className="bg-white border border-stone-200/80 rounded-3xl p-5 sm:p-6 shadow-xs mb-6">
-          <h2 className="text-base font-black text-stone-900 mb-2.5 flex items-center gap-2">
-            <Info size={17} className="text-[#0a3d24]" />
-            <span>Product Details &amp; Sourcing</span>
-          </h2>
-          <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-normal mb-5">
-            {product.description ||
-              `Farm-fresh ${product.name} hand-picked from verified local growers around Bhopal. Thoroughly cleaned and graded to ensure premium quality, natural freshness, and rich taste in your daily cooking.`}
-          </p>
+        {/* Real Product Details, Sourcing & Storage (100% Dynamic from Admin Panel) */}
+        {(product.description || product.sourcing || product.storage || product.category || product.unit) && (
+          <div className="bg-white border border-stone-200/80 rounded-3xl p-5 sm:p-7 shadow-xs mb-6">
+            <div className="flex items-center justify-between gap-2 mb-4 pb-3 border-b border-stone-100 flex-wrap">
+              <h2 className="text-base font-black text-stone-900 flex items-center gap-2 font-heading">
+                <Info size={17} className="text-[#0a3d24]" />
+                <span>Product Information &amp; Sourcing</span>
+              </h2>
+              {product.category && (
+                <span className="text-[11px] font-black text-[#0a3d24] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200/60 capitalize">
+                  {product.category}
+                </span>
+              )}
+            </div>
 
-          {/* 4 Clean Attribute Tiles */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-stone-100">
-            <div className="bg-stone-50 rounded-xl p-3">
-              <span className="text-[10.5px] uppercase font-bold text-stone-400 block tracking-wider mb-0.5">Sourcing</span>
-              <span className="text-xs font-bold text-stone-900 block">{product.sourcing || "Local MP Farms"}</span>
-            </div>
-            <div className="bg-stone-50 rounded-xl p-3">
-              <span className="text-[10.5px] uppercase font-bold text-stone-400 block tracking-wider mb-0.5">Shelf Life</span>
-              <span className="text-xs font-bold text-stone-900 block">2-3 Days</span>
-            </div>
-            <div className="bg-stone-50 rounded-xl p-3">
-              <span className="text-[10.5px] uppercase font-bold text-stone-400 block tracking-wider mb-0.5">Storage</span>
-              <span className="text-xs font-bold text-stone-900 block">{product.storage || "Cool, dry place"}</span>
-            </div>
-            <div className="bg-stone-50 rounded-xl p-3">
-              <span className="text-[10.5px] uppercase font-bold text-stone-400 block tracking-wider mb-0.5">Quality</span>
-              <span className="text-xs font-bold text-stone-900 block">100% Hand-Graded</span>
+            {/* Description directly from Admin Panel */}
+            {product.description && product.description.trim().length > 0 && (
+              <div className="mb-5">
+                <span className="text-xs font-black uppercase tracking-wider text-stone-400 block mb-1.5">
+                  About {product.name}
+                </span>
+                <p className="text-xs sm:text-sm text-stone-700 leading-relaxed font-normal whitespace-pre-line">
+                  {product.description}
+                </p>
+              </div>
+            )}
+
+            {/* Admin-Configured Sourcing & Storage Info */}
+            {(Boolean(product.sourcing?.trim()) || Boolean(product.storage?.trim())) && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
+                {product.sourcing && product.sourcing.trim().length > 0 && (
+                  <div className="bg-emerald-50/50 border border-emerald-200/70 rounded-2xl p-4">
+                    <span className="text-xs font-black uppercase text-[#0a3d24] flex items-center gap-1.5 mb-1.5">
+                      <Leaf size={14} />
+                      <span>Farm Sourcing Info</span>
+                    </span>
+                    <p className="text-xs text-stone-800 font-medium leading-relaxed">
+                      {product.sourcing}
+                    </p>
+                  </div>
+                )}
+
+                {product.storage && product.storage.trim().length > 0 && (
+                  <div className="bg-amber-50/50 border border-amber-200/70 rounded-2xl p-4">
+                    <span className="text-xs font-black uppercase text-amber-900 flex items-center gap-1.5 mb-1.5">
+                      <Clock size={14} />
+                      <span>Storage &amp; Shelf Life</span>
+                    </span>
+                    <p className="text-xs text-stone-800 font-medium leading-relaxed">
+                      {product.storage}
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Real Specifications from Database */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-stone-100">
+              <div className="bg-stone-50 rounded-xl p-3">
+                <span className="text-[10.5px] uppercase font-bold text-stone-400 block tracking-wider mb-0.5">Category</span>
+                <span className="text-xs font-bold text-stone-900 block capitalize">{product.category || "Fresh Produce"}</span>
+              </div>
+              <div className="bg-stone-50 rounded-xl p-3">
+                <span className="text-[10.5px] uppercase font-bold text-stone-400 block tracking-wider mb-0.5">Pack Unit</span>
+                <span className="text-xs font-bold text-stone-900 block">{currentUnit || product.unit}</span>
+              </div>
+              <div className="bg-stone-50 rounded-xl p-3">
+                <span className="text-[10.5px] uppercase font-bold text-stone-400 block tracking-wider mb-0.5">Stock Status</span>
+                <span className={`text-xs font-bold block ${currentStock > 0 ? "text-emerald-700" : "text-red-600"}`}>
+                  {currentStock > 0 ? `In Stock (${currentStock} available)` : "Out of Stock"}
+                </span>
+              </div>
+              <div className="bg-stone-50 rounded-xl p-3">
+                <span className="text-[10.5px] uppercase font-bold text-stone-400 block tracking-wider mb-0.5">Fast Delivery</span>
+                <span className="text-xs font-bold text-stone-900 block">10-15 Min Express</span>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Customer Reviews Section */}
         <div className="bg-white border border-stone-200/80 rounded-3xl p-5 sm:p-6 shadow-xs mb-6">
