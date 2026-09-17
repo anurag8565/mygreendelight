@@ -20,8 +20,50 @@ import {
   RotateCcw,
   Tag,
   ArrowRight,
+  ArrowUp,
+  ArrowDown,
+  Clock,
 } from "lucide-react";
 import AdminSidebar from "@/components/AdminSidebar";
+
+const PRESET_BANNERS = [
+  {
+    name: "Farm Vegetables",
+    image: "/banners/hero1.jpg",
+    title: "Fresh Farm Vegetables",
+    subtitle: "Cleaned, sorted & delivered daily to your doorstep.",
+    badge: "Daily Farm Harvest • 10-15 Min",
+    btnText: "Shop Vegetables",
+    link: "/shop?category=Vegetables",
+  },
+  {
+    name: "Seasonal Fruits",
+    image: "/banners/hero_fruits.jpg",
+    title: "Sweet Seasonal Fruits",
+    subtitle: "Handpicked crisp apples, ripe mangoes & berries.",
+    badge: "Naturally Sweet • Zero Cold Storage",
+    btnText: "Shop Fruits",
+    link: "/shop?category=Fruits",
+  },
+  {
+    name: "Kitchen Combos",
+    image: "/banners/hero_combos.jpg",
+    title: "Daily Kitchen Combos",
+    subtitle: "Fresh Aloo, Pyaaz, Tamatar & kitchen essentials.",
+    badge: "Super Saver Packs • Up to 35% OFF",
+    btnText: "View Combos",
+    link: "/shop?category=Combos",
+  },
+  {
+    name: "Scratch & Win",
+    image: "/banners/daily_scratch_banner.jpg",
+    title: "Daily Scratch & Save",
+    subtitle: "Scratch today's card & win up to ₹50 cashback.",
+    badge: "Daily Scratch & Save",
+    btnText: "Claim Cashback",
+    link: "/#rewards",
+  },
+];
 
 export default function ManageBanners() {
   const [banners, setBanners] = useState<any[]>([]);
@@ -30,15 +72,17 @@ export default function ManageBanners() {
   const [adding, setAdding] = useState(false);
   const [editing, setEditing] = useState(false);
   const [imagePreview, setImagePreview] = useState("");
+  const [editImagePreview, setEditImagePreview] = useState("");
+  const [editImageFile, setEditImageFile] = useState<File | null>(null);
   const [selectedBanner, setSelectedBanner] = useState<any>(null);
 
   const [formData, setFormData] = useState({
     title: "",
     subtitle: "",
-    badge: "🌿 Sunrise Farm Harvest • 10-15 Min Express",
-    offerPill: "FLAT ₹50 OFF • CODE: FRESH50",
-    floatingStat: "🌱 5:00 AM Fresh Harvest",
-    btnText: "Order Fresh Produce",
+    badge: "Daily Farm Harvest • 10-15 Min",
+    offerPill: "FLAT ₹50 OFF",
+    floatingStat: "100% Farm Fresh",
+    btnText: "Shop Now",
     link: "/shop",
     image: null as File | null,
     imageUrl: "",
@@ -76,10 +120,24 @@ export default function ManageBanners() {
     fetchBanners();
   }, []);
 
+  const handleApplyPreset = (preset: (typeof PRESET_BANNERS)[0]) => {
+    setFormData({
+      ...formData,
+      title: preset.title,
+      subtitle: preset.subtitle,
+      badge: preset.badge,
+      btnText: preset.btnText,
+      link: preset.link,
+      image: null,
+      imageUrl: preset.image,
+    });
+    setImagePreview(preset.image);
+  };
+
   const handleSeedDefaults = async () => {
     if (
       !confirm(
-        "Are you sure you want to load/reset the 3 official farm banners into the database? This will update your storefront hero carousel."
+        "Are you sure you want to load/reset the 3 official farm banners into the database? This will sync your storefront hero carousel."
       )
     ) {
       return;
@@ -111,6 +169,29 @@ export default function ManageBanners() {
     }
   };
 
+  const handleMoveOrder = async (banner: any, direction: "up" | "down") => {
+    const idx = banners.findIndex((b) => b._id === banner._id);
+    if (idx === -1) return;
+    const targetIdx = direction === "up" ? idx - 1 : idx + 1;
+    if (targetIdx < 0 || targetIdx >= banners.length) return;
+
+    const currentBanner = banners[idx];
+    const targetBanner = banners[targetIdx];
+
+    const currentOrder = currentBanner.order || idx + 1;
+    const targetOrder = targetBanner.order || targetIdx + 1;
+
+    try {
+      await Promise.all([
+        axios.put(`/api/admin/banner/${currentBanner._id}`, { order: targetOrder }),
+        axios.put(`/api/admin/banner/${targetBanner._id}`, { order: currentOrder }),
+      ]);
+      fetchBanners();
+    } catch (err) {
+      alert("Failed to update banner order");
+    }
+  };
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -118,10 +199,17 @@ export default function ManageBanners() {
     setImagePreview(URL.createObjectURL(file));
   };
 
+  const handleEditImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setEditImageFile(file);
+    setEditImagePreview(URL.createObjectURL(file));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.image && !formData.imageUrl) {
-      return alert("Please select an image or provide an image path for the banner");
+      return alert("Please select an image file or choose a preset banner");
     }
 
     try {
@@ -141,14 +229,14 @@ export default function ManageBanners() {
       }
 
       const result = await axios.post("/api/admin/banner", data);
-      alert(result.data.message || "Banner created successfully!");
+      alert(result.data.message || "Banner published successfully!");
       setFormData({
         title: "",
         subtitle: "",
-        badge: "🌿 Sunrise Farm Harvest • 10-15 Min Express",
-        offerPill: "FLAT ₹50 OFF • CODE: FRESH50",
-        floatingStat: "🌱 5:00 AM Fresh Harvest",
-        btnText: "Order Fresh Produce",
+        badge: "Daily Farm Harvest • 10-15 Min",
+        offerPill: "FLAT ₹50 OFF",
+        floatingStat: "100% Farm Fresh",
+        btnText: "Shop Now",
         link: "/shop",
         image: null,
         imageUrl: "",
@@ -168,14 +256,16 @@ export default function ManageBanners() {
     setEditForm({
       title: banner.title || "",
       subtitle: banner.subtitle || "",
-      badge: banner.badge || "🌿 Sunrise Farm Harvest • 10-15 Min Express",
+      badge: banner.badge || "Daily Farm Harvest • 10-15 Min",
       offerPill: banner.offerPill || "",
-      floatingStat: banner.floatingStat || "🌱 100% Farm Fresh",
+      floatingStat: banner.floatingStat || "100% Farm Fresh",
       btnText: banner.btnText || "Shop Now",
       link: banner.link || "/shop",
       image: banner.image || "",
       isActive: banner.isActive !== false,
     });
+    setEditImagePreview(banner.image || "");
+    setEditImageFile(null);
     setEditing(true);
   };
 
@@ -185,11 +275,28 @@ export default function ManageBanners() {
 
     try {
       setAdding(true);
-      const res = await axios.put(`/api/admin/banner/${selectedBanner._id}`, editForm);
+      let res;
+      if (editImageFile) {
+        const data = new FormData();
+        data.append("title", editForm.title);
+        data.append("subtitle", editForm.subtitle);
+        data.append("badge", editForm.badge);
+        data.append("offerPill", editForm.offerPill);
+        data.append("floatingStat", editForm.floatingStat);
+        data.append("btnText", editForm.btnText);
+        data.append("link", editForm.link);
+        data.append("isActive", String(editForm.isActive));
+        data.append("image", editImageFile);
+        res = await axios.put(`/api/admin/banner/${selectedBanner._id}`, data);
+      } else {
+        res = await axios.put(`/api/admin/banner/${selectedBanner._id}`, editForm);
+      }
+
       if (res.data.success) {
         alert("Banner updated successfully!");
         setEditing(false);
         setSelectedBanner(null);
+        setEditImageFile(null);
         fetchBanners();
       }
     } catch (error: any) {
@@ -211,6 +318,8 @@ export default function ManageBanners() {
     }
   };
 
+  const previewImage = imagePreview || formData.imageUrl || "/banners/hero1.jpg";
+
   return (
     <div className="bg-[#f8faf9] min-h-screen font-sans flex flex-col lg:flex-row w-full max-w-full overflow-x-hidden">
       <AdminSidebar />
@@ -222,14 +331,14 @@ export default function ManageBanners() {
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-xl sm:text-2xl font-black text-gray-900">
-                  Hero & Promo Banners Manager
+                  Hero &amp; Promo Banners Manager
                 </h1>
-                <span className="bg-emerald-100 text-emerald-800 text-[11px] font-black px-2.5 py-0.5 rounded-full">
+                <span className="bg-emerald-100 text-[#0a3d24] text-[11px] font-black px-2.5 py-0.5 rounded-full">
                   {banners.length} Active Banners
                 </span>
               </div>
               <p className="text-xs text-gray-500 mt-0.5">
-                Manage and customize the homepage hero showcase slider directly in real-time
+                Upload 4K banners, customize headlines, tags, links and control live storefront carousel order
               </p>
             </div>
 
@@ -237,15 +346,15 @@ export default function ManageBanners() {
               <button
                 onClick={handleSeedDefaults}
                 disabled={seeding}
-                className="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300/80 px-3.5 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-2xs disabled:opacity-50"
-                title="Restore 4 official high-res 8K farm banners into database"
+                className="bg-emerald-50 hover:bg-emerald-100 text-[#0a3d24] border border-emerald-300/80 px-3.5 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-2xs disabled:opacity-50"
+                title="Restore 3 official 4K produce banners into database"
               >
                 {seeding ? (
                   <Loader2 size={14} className="animate-spin text-[#0a3d24]" />
                 ) : (
-                  <Sparkles size={14} className="text-emerald-600 fill-emerald-600" />
+                  <Sparkles size={14} className="text-emerald-700 fill-emerald-700" />
                 )}
-                <span>Reset Official Farm Banners</span>
+                <span>Reset 4K Official Banners</span>
               </button>
 
               <button
@@ -261,23 +370,155 @@ export default function ManageBanners() {
 
           {/* Content Body */}
           <div className="p-3.5 sm:p-6 lg:p-8 space-y-6 flex-1 w-full">
+            
+            {/* Live Storefront Preview Card */}
+            <div className="bg-white rounded-3xl p-4 sm:p-6 border border-gray-200/80 shadow-xs">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <Eye size={16} className="text-[#0a3d24]" />
+                  <span className="text-xs font-black uppercase tracking-wider text-gray-700">
+                    Live Storefront Preview
+                  </span>
+                </div>
+                <span className="text-[11px] text-gray-400 font-medium">
+                  Real-time preview of your hero banner exactly as customers see it
+                </span>
+              </div>
+
+              <div className="relative rounded-2xl overflow-hidden bg-stone-100 border border-stone-200/90 shadow-sm h-[140px] xs:h-[160px] sm:h-[190px] md:h-[220px]">
+                <img
+                  src={previewImage}
+                  alt="Live Preview"
+                  className="w-full h-full object-cover object-right sm:object-center contrast-[1.04] saturate-[1.06]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 via-48% sm:via-36% to-transparent pointer-events-none" />
+
+                <div className="relative z-10 h-full p-3.5 xs:p-4 sm:p-6 flex flex-col justify-between max-w-[65%] xs:max-w-[62%] sm:max-w-md">
+                  <div>
+                    <div className="inline-flex items-center gap-1 bg-emerald-50/95 border border-emerald-200/80 text-[#0a3d24] text-[9.5px] sm:text-[11px] font-bold px-2 py-0.5 rounded-full mb-1 sm:mb-2 shadow-2xs">
+                      <Clock size={11} className="text-[#0a3d24] stroke-[2.2]" />
+                      <span className="truncate">
+                        {formData.badge || "Daily Farm Harvest • 10-15 Min"}
+                      </span>
+                    </div>
+
+                    <h2 className="text-[15px] xs:text-[17px] sm:text-2xl font-extrabold text-stone-900 tracking-tight leading-tight line-clamp-2">
+                      {formData.title || "Fresh Farm Vegetables"}
+                    </h2>
+
+                    <p className="text-[11px] sm:text-xs text-stone-600 font-medium leading-snug line-clamp-1 sm:line-clamp-2 mt-0.5 sm:mt-1">
+                      {formData.subtitle || "Cleaned, sorted & delivered daily to your doorstep."}
+                    </p>
+                  </div>
+
+                  <div>
+                    <span className="inline-flex items-center gap-1.5 bg-[#0a3d24] text-white px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full font-bold text-[11px] sm:text-xs shadow-xs">
+                      <span>{formData.btnText || "Shop Now"}</span>
+                      <ArrowRight size={13} className="stroke-[2.5]" />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Grid: Form (5 Cols) + Banners List (7 Cols) */}
             <div className="grid lg:grid-cols-12 gap-8 items-start">
               
               {/* Create Banner Form (5 Cols) */}
               <div className="lg:col-span-5 bg-white rounded-3xl p-4 sm:p-7 border border-gray-200/80 shadow-xs">
                 <div className="flex items-center justify-between mb-1">
                   <h2 className="text-base font-black text-gray-900">
-                    Add New Promo Banner
+                    Upload New Banner
                   </h2>
-                  <span className="text-[10px] font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded-md">
+                  <span className="text-[10px] font-bold text-[#0a3d24] bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">
                     Storefront Hero
                   </span>
                 </div>
-                <p className="text-xs text-gray-400 mb-5">
-                  Upload an 8K/HD image with customizable tagline, badge, and CTA link
+                <p className="text-xs text-gray-400 mb-4">
+                  Upload an image from device or choose a 1-click 4K studio preset
                 </p>
 
+                {/* 1-Click Preset Selector */}
+                <div className="mb-5 p-3 rounded-2xl bg-gray-50 border border-gray-200/70">
+                  <span className="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-2">
+                    Quick 1-Click 4K Presets
+                  </span>
+                  <div className="grid grid-cols-2 gap-2">
+                    {PRESET_BANNERS.map((preset, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => handleApplyPreset(preset)}
+                        className="p-2 rounded-xl bg-white border border-gray-200 hover:border-[#0a3d24] hover:bg-emerald-50/40 text-left transition flex items-center gap-2 cursor-pointer group"
+                      >
+                        <img
+                          src={preset.image}
+                          alt={preset.name}
+                          className="w-8 h-8 rounded-lg object-cover shrink-0"
+                        />
+                        <div className="min-w-0 flex-1">
+                          <span className="block text-[11px] font-bold text-gray-900 truncate group-hover:text-[#0a3d24]">
+                            {preset.name}
+                          </span>
+                          <span className="block text-[9px] text-gray-400 truncate">
+                            Preset 4K
+                          </span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 <form onSubmit={handleSubmit} className="space-y-4 text-xs font-bold">
+                  {/* File Upload / Image Picker */}
+                  <div>
+                    <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
+                      Banner Image (Upload File or Enter URL) *
+                    </label>
+                    <div className="p-4 rounded-2xl border-2 border-dashed border-gray-300 hover:border-[#0a3d24] bg-gray-50/50 transition">
+                      <div className="flex items-center gap-4">
+                        <div className="w-20 h-14 rounded-xl bg-white border border-gray-200 flex items-center justify-center overflow-hidden shrink-0 shadow-2xs">
+                          {imagePreview || formData.imageUrl ? (
+                            <img
+                              src={imagePreview || formData.imageUrl}
+                              alt="Preview"
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <ImageIcon size={22} className="text-gray-400" />
+                          )}
+                        </div>
+                        <div className="flex-1 space-y-2">
+                          <input
+                            type="file"
+                            id="banner-img"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                            className="hidden"
+                          />
+                          <label
+                            htmlFor="banner-img"
+                            className="inline-flex items-center gap-1.5 bg-[#0a3d24] text-white hover:bg-[#072416] px-3.5 py-1.5 rounded-xl text-xs font-bold cursor-pointer shadow-xs transition active:scale-95"
+                          >
+                            <Upload size={13} />
+                            <span>Choose Image File</span>
+                          </label>
+
+                          <input
+                            type="text"
+                            placeholder="Or enter path / URL: /banners/hero1.jpg"
+                            value={formData.imageUrl}
+                            onChange={(e) => {
+                              setFormData({ ...formData, imageUrl: e.target.value, image: null });
+                              setImagePreview(e.target.value);
+                            }}
+                            className="w-full p-2 rounded-xl border border-gray-200 text-[11px] font-normal outline-none focus:border-[#0a3d24] bg-white"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                   <div>
                     <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
                       Banner Headline *
@@ -285,7 +526,7 @@ export default function ManageBanners() {
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Direct From Local Bhopal & Sehore Farms"
+                      placeholder="e.g. Fresh Farm Vegetables"
                       value={formData.title}
                       onChange={(e) =>
                         setFormData({ ...formData, title: e.target.value })
@@ -296,12 +537,12 @@ export default function ManageBanners() {
 
                   <div>
                     <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
-                      Subtitle / Description *
+                      Subtitle / Tagline *
                     </label>
                     <textarea
                       rows={2}
                       required
-                      placeholder="e.g. 100% Farm Fresh, Handpicked Vegetables & Fruits Delivered Daily."
+                      placeholder="e.g. Cleaned, sorted & delivered daily to your doorstep."
                       value={formData.subtitle}
                       onChange={(e) =>
                         setFormData({ ...formData, subtitle: e.target.value })
@@ -318,7 +559,7 @@ export default function ManageBanners() {
                       <input
                         type="text"
                         value={formData.badge}
-                        placeholder="e.g. 🌿 Sunrise Farm Harvest"
+                        placeholder="e.g. Daily Farm Harvest • 10-15 Min"
                         onChange={(e) =>
                           setFormData({ ...formData, badge: e.target.value })
                         }
@@ -328,12 +569,12 @@ export default function ManageBanners() {
 
                     <div>
                       <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
-                        Offer Pill (Yellow)
+                        Offer Tag
                       </label>
                       <input
                         type="text"
                         value={formData.offerPill}
-                        placeholder="e.g. FLAT ₹50 OFF"
+                        placeholder="e.g. UP TO 35% OFF"
                         onChange={(e) =>
                           setFormData({ ...formData, offerPill: e.target.value })
                         }
@@ -345,11 +586,12 @@ export default function ManageBanners() {
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
-                        Button Text
+                        Button Label
                       </label>
                       <input
                         type="text"
                         value={formData.btnText}
+                        placeholder="Shop Vegetables"
                         onChange={(e) =>
                           setFormData({ ...formData, btnText: e.target.value })
                         }
@@ -359,74 +601,17 @@ export default function ManageBanners() {
 
                     <div>
                       <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
-                        Button Target Link
+                        Button Link
                       </label>
                       <input
                         type="text"
                         value={formData.link}
+                        placeholder="/shop?category=Vegetables"
                         onChange={(e) =>
                           setFormData({ ...formData, link: e.target.value })
                         }
                         className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium text-xs"
                       />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
-                      Floating Trust Badge
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.floatingStat}
-                      placeholder="e.g. 🌱 5:00 AM Fresh Harvest"
-                      onChange={(e) =>
-                        setFormData({ ...formData, floatingStat: e.target.value })
-                      }
-                      className="w-full p-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#0a3d24] bg-gray-50/60 font-medium text-xs"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-gray-700 uppercase tracking-wider mb-1.5">
-                      Banner Image (Upload File or Enter Local Path) *
-                    </label>
-                    <div className="flex items-center gap-4 p-3.5 rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50/50">
-                      <div className="w-20 h-14 rounded-xl bg-white border border-gray-200 flex items-center justify-center overflow-hidden shrink-0">
-                        {imagePreview || formData.imageUrl ? (
-                          <img
-                            src={imagePreview || formData.imageUrl}
-                            alt="Preview"
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <ImageIcon size={20} className="text-gray-300" />
-                        )}
-                      </div>
-                      <div className="flex-1 space-y-1.5">
-                        <div>
-                          <input
-                            type="file"
-                            id="banner-img"
-                            accept="image/*"
-                            onChange={handleImageChange}
-                            className="hidden"
-                          />
-                          <label
-                            htmlFor="banner-img"
-                            className="inline-block bg-white border border-gray-200 text-gray-800 hover:border-[#0a3d24] px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer shadow-2xs"
-                          >
-                            Choose File
-                          </label>
-                        </div>
-                        <input
-                          type="text"
-                          placeholder="Or path: /hero_fresh_farm.jpg"
-                          value={formData.imageUrl}
-                          onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value, image: null })}
-                          className="w-full p-1.5 rounded-lg border border-gray-200 text-[11px] font-normal"
-                        />
-                      </div>
                     </div>
                   </div>
 
@@ -443,7 +628,7 @@ export default function ManageBanners() {
                     ) : (
                       <>
                         <Plus size={16} />
-                        <span>Publish Banner to Store</span>
+                        <span>Publish Banner to Storefront</span>
                       </>
                     )}
                   </button>
@@ -509,14 +694,36 @@ export default function ManageBanners() {
                             </div>
 
                             <div className="flex items-center gap-1.5">
-                              <span className="bg-black/60 text-[10px] font-bold px-2 py-0.5 rounded-md">
-                                #{idx + 1}
-                              </span>
+                              {/* Order & Reorder Arrows */}
+                              <div className="flex items-center bg-black/60 rounded-lg p-0.5 border border-white/10">
+                                <button
+                                  type="button"
+                                  onClick={() => handleMoveOrder(b, "up")}
+                                  disabled={idx === 0}
+                                  className="p-1 hover:bg-white/20 rounded text-white disabled:opacity-30 cursor-pointer"
+                                  title="Move Up"
+                                >
+                                  <ArrowUp size={12} />
+                                </button>
+                                <span className="text-[10.5px] font-bold px-1.5">
+                                  #{idx + 1}
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() => handleMoveOrder(b, "down")}
+                                  disabled={idx === banners.length - 1}
+                                  className="p-1 hover:bg-white/20 rounded text-white disabled:opacity-30 cursor-pointer"
+                                  title="Move Down"
+                                >
+                                  <ArrowDown size={12} />
+                                </button>
+                              </div>
+
                               <button
                                 onClick={() => handleToggleActive(b)}
-                                className={`p-1.5 rounded-lg text-[10px] font-black transition cursor-pointer flex items-center gap-1 ${
+                                className={`px-2 py-1 rounded-lg text-[10px] font-black transition cursor-pointer flex items-center gap-1 ${
                                   b.isActive !== false
-                                    ? "bg-emerald-500/80 text-white"
+                                    ? "bg-emerald-600 text-white"
                                     : "bg-gray-700 text-gray-300"
                                 }`}
                                 title="Toggle Active/Inactive"
@@ -536,14 +743,14 @@ export default function ManageBanners() {
                             </p>
                             
                             <div className="flex items-center justify-between mt-3">
-                              <span className="text-[10.5px] bg-white/15 px-2.5 py-1 rounded-lg font-mono text-emerald-200">
-                                CTA: {b.btnText || "Shop Now"} ➔ {b.link || "/shop"}
+                              <span className="text-[10px] bg-white/15 px-2.5 py-1 rounded-lg font-mono text-emerald-200 truncate max-w-[200px]">
+                                {b.btnText || "Shop"} ➔ {b.link || "/shop"}
                               </span>
 
                               <div className="flex items-center gap-1.5">
                                 <button
                                   onClick={() => handleOpenEdit(b)}
-                                  className="p-1.5 sm:px-2.5 sm:py-1 rounded-lg bg-white/95 text-gray-900 hover:bg-[#0a3d24] hover:text-white transition shadow-sm cursor-pointer text-xs font-bold flex items-center gap-1"
+                                  className="p-1.5 sm:px-2.5 sm:py-1 rounded-lg bg-white text-gray-900 hover:bg-[#0a3d24] hover:text-white transition shadow-sm cursor-pointer text-xs font-bold flex items-center gap-1"
                                   title="Edit Banner"
                                 >
                                   <Edit2 size={12} />
@@ -551,7 +758,7 @@ export default function ManageBanners() {
                                 </button>
                                 <button
                                   onClick={() => handleDelete(b._id)}
-                                  className="p-1.5 sm:px-2.5 sm:py-1 rounded-lg bg-white/95 text-red-600 hover:bg-red-600 hover:text-white transition shadow-sm cursor-pointer text-xs font-bold flex items-center gap-1"
+                                  className="p-1.5 sm:px-2.5 sm:py-1 rounded-lg bg-white text-red-600 hover:bg-red-600 hover:text-white transition shadow-sm cursor-pointer text-xs font-bold flex items-center gap-1"
                                   title="Delete Banner"
                                 >
                                   <Trash2 size={12} />
@@ -572,7 +779,7 @@ export default function ManageBanners() {
         </main>
       </div>
 
-      {/* Edit Banner Modal */}
+      {/* Edit Banner Modal with Image File Upload */}
       {editing && selectedBanner && (
         <div
           onClick={() => setEditing(false)}
@@ -593,10 +800,53 @@ export default function ManageBanners() {
               Edit Store Banner
             </h3>
             <p className="text-xs text-gray-400 mb-5">
-              Update headline, subtitle, badge tag, CTA button and image path
+              Update headline, subtitle, badge tag, CTA button and upload replacement image
             </p>
 
             <form onSubmit={handleSaveEdit} className="space-y-3.5 text-xs font-bold">
+              {/* Image Upload in Edit */}
+              <div>
+                <label className="block text-gray-700 uppercase mb-1">
+                  Banner Image (Upload File or Path)
+                </label>
+                <div className="p-3 rounded-2xl border border-gray-200 bg-gray-50 flex items-center gap-3">
+                  <div className="w-16 h-12 rounded-xl bg-white border border-gray-200 overflow-hidden shrink-0">
+                    <img
+                      src={editImagePreview || editForm.image}
+                      alt="Edit Preview"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1 space-y-1.5">
+                    <input
+                      type="file"
+                      id="edit-banner-img"
+                      accept="image/*"
+                      onChange={handleEditImageChange}
+                      className="hidden"
+                    />
+                    <label
+                      htmlFor="edit-banner-img"
+                      className="inline-flex items-center gap-1 bg-[#0a3d24] text-white px-3 py-1 rounded-lg text-xs font-bold cursor-pointer hover:bg-[#072416] transition"
+                    >
+                      <Upload size={12} />
+                      <span>Change Image File</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={editForm.image}
+                      onChange={(e) => {
+                        setEditForm({ ...editForm, image: e.target.value });
+                        setEditImagePreview(e.target.value);
+                        setEditImageFile(null);
+                      }}
+                      placeholder="Or image path: /banners/hero1.jpg"
+                      className="w-full p-1.5 rounded-lg border border-gray-200 bg-white text-[11px] font-normal"
+                    />
+                  </div>
+                </div>
+              </div>
+
               <div>
                 <label className="block text-gray-700 uppercase mb-1">Banner Headline</label>
                 <input
@@ -630,7 +880,7 @@ export default function ManageBanners() {
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-700 uppercase mb-1">Offer Pill</label>
+                  <label className="block text-gray-700 uppercase mb-1">Offer Tag</label>
                   <input
                     type="text"
                     value={editForm.offerPill}
@@ -659,17 +909,6 @@ export default function ManageBanners() {
                     className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0a3d24] font-medium"
                   />
                 </div>
-              </div>
-
-              <div>
-                <label className="block text-gray-700 uppercase mb-1">Image URL / Path</label>
-                <input
-                  type="text"
-                  required
-                  value={editForm.image}
-                  onChange={(e) => setEditForm({ ...editForm, image: e.target.value })}
-                  className="w-full p-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#0a3d24] font-medium"
-                />
               </div>
 
               <div>

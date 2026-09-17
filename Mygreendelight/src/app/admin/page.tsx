@@ -26,6 +26,7 @@ import {
   Sparkles,
   Save,
   Percent,
+  Image as ImageIcon,
 } from "lucide-react";
 import AdminSidebar from "@/components/AdminSidebar";
 
@@ -520,7 +521,19 @@ export default function AdminDashboardPage() {
                 <h3 className="font-extrabold text-xs sm:text-sm text-gray-900 mb-3 sm:mb-4 uppercase tracking-wider">
                   Quick Management Shortcuts
                 </h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2.5 sm:gap-4">
+                  <Link
+                    href="/admin/managebanners"
+                    className="p-3 sm:p-4 rounded-2xl bg-emerald-50/70 hover:bg-emerald-100/90 border border-emerald-200 transition text-center flex flex-col items-center gap-1.5 sm:gap-2 group"
+                  >
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#0a3d24] text-white flex items-center justify-center shadow-2xs group-hover:scale-110 transition-transform">
+                      <ImageIcon size={18} />
+                    </div>
+                    <span className="font-bold text-[11px] sm:text-xs text-emerald-950 truncate w-full">
+                      Hero Banners
+                    </span>
+                  </Link>
+
                   <Link
                     href="/admin/manageorder"
                     className="p-3 sm:p-4 rounded-2xl bg-gray-50/80 hover:bg-emerald-50 border border-gray-100 hover:border-emerald-200 transition text-center flex flex-col items-center gap-1.5 sm:gap-2 group"
