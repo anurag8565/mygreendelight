@@ -104,11 +104,15 @@ function ShopContent() {
   useGetMe();
   const { userdata } = useSelector((state: RootState) => state.user);
 
-  const [categories, setCategories] = useState<{ _id: string; name: string; image?: string }[]>([]);
+  const [categories, setCategories] = useState<
+    { _id: string; name: string; image?: string; count?: number }[]
+  >([]);
   const [groceries, setGroceries] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [totalAvailableCount, setTotalAvailableCount] = useState<number | null>(null);
+  const [totalStoreCount, setTotalStoreCount] = useState<number>(0);
 
   // Filter States
   const [priceRange, setPriceRange] = useState(1500);
@@ -132,9 +136,17 @@ function ShopContent() {
         if (res.data?.success && Array.isArray(res.data.categories)) {
           const list = [...res.data.categories];
           if (!list.some((c) => (c.name || "").toLowerCase().includes("combo"))) {
-            list.push({ _id: "combos-category-bundle", name: "Combos", image: "/categories/combos_4k.jpg?v=4" });
+            list.push({
+              _id: "combos-category-bundle",
+              name: "Combos",
+              image: "/categories/combos_4k.jpg?v=4",
+              count: res.data.comboCount || 0,
+            });
           }
           setCategories(list);
+          if (typeof res.data.totalStoreCount === "number") {
+            setTotalStoreCount(res.data.totalStoreCount);
+          }
         }
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -160,7 +172,12 @@ function ShopContent() {
         const res = await axios.get(url);
         if (res.data?.success) {
           setGroceries(res.data.groceries);
-          if (res.data.groceries.length < 24) {
+          if (typeof res.data.totalCount === "number") {
+            setTotalAvailableCount(res.data.totalCount);
+            if (res.data.groceries.length >= res.data.totalCount) {
+              setHasMore(false);
+            }
+          } else if (res.data.groceries.length < 24) {
             setHasMore(false);
           }
         }
@@ -367,11 +384,27 @@ function ShopContent() {
               </p>
             </div>
 
-            {/* Bottom Bar: Live Products Counter & Quality Guarantee */}
+            {/* Bottom Bar: Real Live Products Counter & Quality Guarantee */}
             <div className="flex items-center gap-3 text-[11px] font-medium text-emerald-300/95 pt-1">
-              <span className="flex items-center gap-1">
+              <span className="flex items-center gap-1.5">
                 <Check size={13} className="text-emerald-400 stroke-[3]" />
-                <span className="font-bold text-white">{filteredGroceries.length} Products Available</span>
+                <span className="font-bold text-white">
+                  {loading && groceries.length === 0 ? (
+                    "Checking live stock..."
+                  ) : activeFilterCount > 0 ? (
+                    `${filteredGroceries.length} of ${totalAvailableCount ?? groceries.length} Products Filtered`
+                  ) : totalAvailableCount !== null ? (
+                    categoryParam ? (
+                      `${totalAvailableCount} Fresh ${categoryParam} in Stock`
+                    ) : searchParam ? (
+                      `${totalAvailableCount} Items Matching "${searchParam}"`
+                    ) : (
+                      `${totalAvailableCount} Farm-Fresh Products Available`
+                    )
+                  ) : (
+                    `${filteredGroceries.length} Products in Stock`
+                  )}
+                </span>
               </span>
               <span className="w-1 h-1 rounded-full bg-emerald-400/50" />
               <span className="hidden sm:flex items-center gap-1">
@@ -589,7 +622,20 @@ function ShopContent() {
                     </span>
                     <span>All Items</span>
                   </span>
-                  {!categoryParam && <Check size={14} className="stroke-[3]" />}
+                  <div className="flex items-center gap-1.5">
+                    {totalStoreCount > 0 && (
+                      <span
+                        className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md ${
+                          !categoryParam
+                            ? "bg-emerald-200/60 text-[#0a3d24]"
+                            : "bg-stone-100 text-stone-500"
+                        }`}
+                      >
+                        {totalStoreCount}
+                      </span>
+                    )}
+                    {!categoryParam && <Check size={14} className="stroke-[3]" />}
+                  </div>
                 </button>
 
                 {categories.map((cat) => (
@@ -616,7 +662,20 @@ function ShopContent() {
                       </span>
                       <span className="truncate">{cat.name}</span>
                     </span>
-                    {categoryParam === cat.name && <Check size={14} className="stroke-[3]" />}
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      {typeof cat.count === "number" && cat.count > 0 && (
+                        <span
+                          className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md ${
+                            categoryParam === cat.name
+                              ? "bg-emerald-200/60 text-[#0a3d24]"
+                              : "bg-stone-100 text-stone-500"
+                          }`}
+                        >
+                          {cat.count}
+                        </span>
+                      )}
+                      {categoryParam === cat.name && <Check size={14} className="stroke-[3]" />}
+                    </div>
                   </button>
                 ))}
               </div>
@@ -721,7 +780,14 @@ function ShopContent() {
             {/* Header / View Switcher Bar */}
             <div className="flex flex-row justify-between items-center bg-white border border-stone-200/80 rounded-2xl px-3.5 sm:px-4 py-2 mb-3.5 gap-2 shadow-2xs">
               <p className="text-xs sm:text-sm text-stone-600 font-medium truncate">
-                Showing <span className="font-bold text-stone-900">{filteredGroceries.length}</span> fresh items
+                Showing <span className="font-bold text-stone-900">{filteredGroceries.length}</span>
+                {totalAvailableCount && totalAvailableCount > filteredGroceries.length ? (
+                  <>
+                    {" "}
+                    of <span className="font-bold text-stone-900">{totalAvailableCount}</span>
+                  </>
+                ) : null}{" "}
+                fresh items
               </p>
 
               <div className="flex items-center gap-2 shrink-0">

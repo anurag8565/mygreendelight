@@ -34,11 +34,14 @@ export async function GET(req: NextRequest) {
       if (sort === "price_asc") sortObj = { comboPrice: 1 };
       if (sort === "price_desc") sortObj = { comboPrice: -1 };
 
-      const comboBundles = await ComboBundle.find(comboQuery)
-        .sort(sortObj)
-        .skip(skip)
-        .limit(limit)
-        .lean();
+      const [comboBundles, totalCount] = await Promise.all([
+        ComboBundle.find(comboQuery)
+          .sort(sortObj)
+          .skip(skip)
+          .limit(limit)
+          .lean(),
+        ComboBundle.countDocuments(comboQuery),
+      ]);
 
       const mappedCombos = comboBundles.map((c: any) => ({
         _id: c._id,
@@ -56,7 +59,7 @@ export async function GET(req: NextRequest) {
         updatedAt: c.updatedAt,
       }));
 
-      return NextResponse.json({ success: true, groceries: mappedCombos }, { status: 200 });
+      return NextResponse.json({ success: true, groceries: mappedCombos, totalCount }, { status: 200 });
     }
 
     const query: any = {
@@ -79,13 +82,16 @@ export async function GET(req: NextRequest) {
     if (sort === "price_asc") sortObj = { price: 1 };
     if (sort === "price_desc") sortObj = { price: -1 };
 
-    const groceries = await Grocery.find(query)
-      .sort(sortObj)
-      .skip(skip)
-      .limit(limit)
-      .lean();
+    const [groceries, totalCount] = await Promise.all([
+      Grocery.find(query)
+        .sort(sortObj)
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+      Grocery.countDocuments(query),
+    ]);
 
-    return NextResponse.json({ success: true, groceries }, { status: 200 });
+    return NextResponse.json({ success: true, groceries, totalCount }, { status: 200 });
   } catch (error) {
     console.error("Pagination API Error:", error);
     return NextResponse.json(

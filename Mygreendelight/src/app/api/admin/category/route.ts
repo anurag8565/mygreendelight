@@ -12,20 +12,41 @@ export const revalidate = 0;
 export async function GET() {
   try {
     await connectDb();
-    const categories = await Category.find({}).sort({ createdAt: -1 });
+    const [categories, counts, comboCount, totalGroceryCount] = await Promise.all([
+      Category.find({}).sort({ createdAt: -1 }),
+      Grocery.aggregate([
+        { $match: { status: { $ne: "draft" } } },
+        { $group: { _id: { $toLower: "$category" }, count: { $sum: 1 } } },
+      ]),
+      import("@/model/combo.model").then(m => m.default.countDocuments({ isActive: true })).catch(() => 0),
+      Grocery.countDocuments({ status: { $ne: "draft" } }),
+    ]);
+
+    const countMap: Record<string, number> = {};
+    for (const c of counts) {
+      if (c._id) countMap[c._id] = c.count;
+    }
 
     // Deduplicate by lowercased name
     const uniqueMap = new Map<string, any>();
     for (const cat of categories) {
       const key = cat.name.trim().toLowerCase();
       if (!uniqueMap.has(key)) {
-        uniqueMap.set(key, cat);
+        const itemObj = cat.toObject ? cat.toObject() : { ...cat };
+        itemObj.count = countMap[key] || 0;
+        uniqueMap.set(key, itemObj);
       }
     }
 
     const uniqueCategories = Array.from(uniqueMap.values());
 
-    return NextResponse.json({ success: true, categories: uniqueCategories }, { status: 200 });
+    return NextResponse.json({
+      success: true,
+      categories: uniqueCategories,
+      comboCount,
+      totalGroceryCount,
+      totalStoreCount: totalGroceryCount + comboCount,
+    }, { status: 200 });
   } catch (error: any) {
     console.error("GET Categories Error:", error);
     return NextResponse.json(
