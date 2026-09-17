@@ -7,6 +7,7 @@ import User from "@/model/user.model";
 import ProductDetailsClient from "./ProductDetailsClient";
 import type { Metadata } from "next";
 import mongoose from "mongoose";
+import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -113,6 +114,9 @@ export default async function ProductPage(props: { params: Promise<{ id: string 
       : await Grocery.findOne({ slug: id }).lean();
 
     if (rawProduct) {
+      if (isObjectId && rawProduct.slug && rawProduct.slug !== id) {
+        redirect(`/product/${rawProduct.slug}`);
+      }
       product = JSON.parse(JSON.stringify(rawProduct));
 
       const related = await Grocery.find({

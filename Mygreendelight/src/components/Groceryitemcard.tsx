@@ -19,6 +19,7 @@ interface IGrosery {
   name: string;
   price: number;
   mrp?: number;
+  slug?: string;
   unit: string;
   image: string;
   category: string;
@@ -53,14 +54,18 @@ export default function Groceryitemcard({
     ? (selectedVariation ? selectedVariation.stock : item.stock)
     : 50;
   const safeItemId = String(item._id || "");
+  const productHref = `/product/${item.slug || safeItemId}`;
   const currentCartItemId = safeItemId + (selectedVariation ? "-" + selectedVariation.weight : "");
 
   const isVariationItem = Boolean(item.variations && item.variations.length > 0);
   const cartitem = cartdata.find(
     (c) =>
       c.cartItemId === currentCartItemId ||
-      (!isVariationItem && !c.cartItemId && c._id?.toString() === item._id?.toString())
+      (!isVariationItem && !c.cartItemId && String(c._id) === safeItemId) ||
+      (!isVariationItem && String(c._id) === safeItemId)
   );
+  const quantity = cartitem ? cartitem.quantity : 0;
+  const isLiked = wishlistItems.some((w) => String(w._id) === safeItemId);
 
   // Dynamic MRP & Discount
   const activeMRP = React.useMemo(() => {
@@ -71,7 +76,7 @@ export default function Groceryitemcard({
       const baseRatio = item.mrp / item.price;
       return Math.round(displayPrice * baseRatio);
     }
-    return Math.round(displayPrice * 1.2);
+    return Math.round(displayPrice * 1.25);
   }, [selectedVariation, item.mrp, item.price, displayPrice]);
 
   const discountPercent = Math.max(
@@ -79,20 +84,16 @@ export default function Groceryitemcard({
     Math.round(((activeMRP - displayPrice) / activeMRP) * 100)
   );
 
-  const isLiked = wishlistItems.some((w) => String(w._id) === String(item._id));
-
   return (
     <div
-      className={`w-full bg-white rounded-2xl sm:rounded-[22px] p-3 sm:p-3.5 border border-stone-100 shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] hover:border-stone-200/80 transition-all duration-300 flex flex-col justify-between relative group font-sans select-none ${
-        isList
-          ? "flex-row max-w-full gap-4 min-h-[120px]"
-          : "h-[255px] sm:h-[275px]"
+      className={`group relative bg-white border border-stone-200/90 rounded-2xl p-2.5 sm:p-3 transition-all duration-300 hover:shadow-md hover:border-emerald-500/40 flex flex-col justify-between ${
+        isList ? "flex-row gap-3 items-center" : "h-full"
       }`}
     >
       {/* 1. PRODUCT IMAGE (Pure White Canvas - Seamless for both Cutouts & White-BG photos) */}
       <div className="relative w-full">
         <Link
-          href={`/product/${item._id}`}
+          href={productHref}
           className={`relative w-full flex items-center justify-center cursor-pointer overflow-hidden bg-white ${
             isList ? "w-[100px] h-[100px] shrink-0" : "h-[125px] sm:h-[140px]"
           }`}
@@ -176,7 +177,7 @@ export default function Groceryitemcard({
       <div className="flex flex-col justify-between flex-1 mt-1 min-h-0">
         <div>
           {/* Simple Clean Title (Matches Reference Image) */}
-          <Link href={`/product/${item._id}`}>
+          <Link href={productHref}>
             <h3 className="text-[13px] sm:text-[14px] font-bold text-stone-900 leading-tight line-clamp-1 group-hover:text-[#0a3d24] transition-colors">
               {item.name}
             </h3>

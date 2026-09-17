@@ -69,32 +69,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  let categoryRoutes: MetadataRoute.Sitemap = [];
   let productRoutes: MetadataRoute.Sitemap = [];
 
   try {
     await connectDb();
 
-    // Fetch categories
-    const categories = await Category.find({}, { name: 1, updatedAt: 1 }).lean();
-    categoryRoutes = categories.map((cat: any) => ({
-      url: `${baseUrl}/shop?category=${encodeURIComponent(cat.name)}`,
-      lastModified: safeDate(cat.updatedAt),
-      changeFrequency: "daily" as const,
-      priority: 0.85,
-    }));
-
     // Fetch published products (exclude drafts)
-    const products = await Groseri.find({ status: { $ne: "draft" } }, { _id: 1, slug: 1, updatedAt: 1 }).lean().limit(1500);
+    const products = await Groseri.find(
+      { status: { $ne: "draft" } },
+      { _id: 1, slug: 1, updatedAt: 1 }
+    )
+      .lean()
+      .limit(1500);
+
     productRoutes = products.map((item: any) => ({
       url: `${baseUrl}/product/${item.slug || item._id}`,
       lastModified: safeDate(item.updatedAt),
       changeFrequency: "daily" as const,
-      priority: 0.9,
+      priority: 0.85,
     }));
   } catch (err) {
     console.warn("Sitemap dynamic fetch warning:", err);
   }
 
-  return [...staticRoutes, ...categoryRoutes, ...productRoutes];
+  return [...staticRoutes, ...productRoutes];
 }
