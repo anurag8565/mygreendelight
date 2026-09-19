@@ -26,33 +26,43 @@ export default function Hero({ banners = [] }: HeroProps) {
   const defaultSlides = [
     {
       _id: "s1",
-      iconType: "clock",
-      tag: "Daily Farm Harvest • 10-15 Min",
-      title: "Fresh Farm Vegetables",
-      subtitle: "Cleaned, sorted & delivered daily to your doorstep.",
-      btnText: "Shop Vegetables",
-      link: "/shop?category=Vegetables",
-      image: "/banners/hero1.jpg",
+      iconType: "sparkles",
+      tag: "100% Organic • Cold Pressed Juicy",
+      title: "Organic Fresh Fruits For Your Health",
+      subtitle: "Sweet, juicy oranges & handpicked seasonal orchard fruits.",
+      btnText: "Shop Fruits",
+      link: "/shop?category=Fruits",
+      image: "/banners/hero_freshgo_orange.jpg",
     },
     {
       _id: "s2",
-      iconType: "sparkles",
-      tag: "Naturally Sweet • Zero Cold Storage",
-      title: "Sweet Seasonal Fruits",
-      subtitle: "Handpicked crisp apples, ripe mangoes & berries.",
-      btnText: "Shop Fruits",
-      link: "/shop?category=Fruits",
-      image: "/banners/hero_fruits.jpg",
+      iconType: "clock",
+      tag: "Daily Farm Harvest • 10-15 Min",
+      title: "Farm Fresh Daily Harvest",
+      subtitle: "Cleaned, sorted & delivered daily from local Mandi.",
+      btnText: "Shop Vegetables",
+      link: "/shop?category=Vegetables",
+      image: "/banners/hero_freshgo_veg_basket.jpg",
     },
     {
       _id: "s3",
+      iconType: "sparkles",
+      tag: "Naturally Sweet • Zero Artificial Ripening",
+      title: "Sweet Handpicked Fruits",
+      subtitle: "Crisp apples, ripe mangoes, grapes & seasonal treats.",
+      btnText: "Explore Fruits",
+      link: "/shop?category=Fruits",
+      image: "/banners/hero_freshgo_fruits.jpg",
+    },
+    {
+      _id: "s4",
       iconType: "shield",
       tag: "Super Saver Packs • Up to 35% OFF",
-      title: "Daily Kitchen Combos",
-      subtitle: "Fresh Aloo, Pyaaz, Tamatar & kitchen essentials.",
+      title: "Daily Kitchen Combos & Greens",
+      subtitle: "Crisp broccoli, fresh greens, Aloo, Pyaaz & Tamatar combos.",
       btnText: "View Combos",
       link: "/shop?category=Combos",
-      image: "/banners/hero_combos.jpg",
+      image: "/banners/hero_freshgo_greens.jpg",
     },
   ];
 
@@ -66,36 +76,11 @@ export default function Hero({ banners = [] }: HeroProps) {
       let rawSubtitle = b.subtitle ? cleanText(b.subtitle) : def.subtitle;
       let rawBtnText = b.btnText ? cleanText(b.btnText) : def.btnText;
 
-      // Normalize long legacy DB strings to punchy, modern quick-commerce copy
-      if (rawTitle.includes("Direct From Local Bhopal") || rawTitle.includes("Fresh Vegetables & Fruits")) {
-        rawTitle = "Fresh Farm Vegetables";
-      } else if (rawTitle.includes("Handpicked Premium Seasonal") || rawTitle.includes("Juicy Seasonal Fruits")) {
-        rawTitle = "Sweet Seasonal Fruits";
-      } else if (rawTitle.includes("Daily Sabzi Combos") || rawTitle.includes("Combos & Family")) {
-        rawTitle = "Daily Kitchen Combos";
-      }
-
-      if (rawSubtitle.includes("Cleaned, sorted, and delivered") || rawSubtitle.includes("Harvested daily") || rawSubtitle.includes("Handpicked daily from")) {
-        rawSubtitle = "Cleaned, sorted & delivered daily to your doorstep.";
-      } else if (rawSubtitle.includes("Crisp apples, sweet bananas") || rawSubtitle.includes("Crisp apples")) {
-        rawSubtitle = "Handpicked crisp apples, ripe mangoes & berries.";
-      } else if (rawSubtitle.includes("Essential kitchen combos") || rawSubtitle.includes("Essential daily sabzi")) {
-        rawSubtitle = "Fresh Aloo, Pyaaz, Tamatar & kitchen essentials.";
-      }
-
-      if (rawBadge.includes("Direct From Local Bhopal") || rawBadge.includes("Farm Fresh Harvest")) {
-        rawBadge = "Daily Farm Harvest • 10-15 Min";
-      } else if (rawBadge.includes("100% Naturally Sweet")) {
-        rawBadge = "Naturally Sweet • Zero Cold Storage";
-      } else if (rawBadge.includes("Super Saver Combos")) {
-        rawBadge = "Super Saver Packs • Up to 35% OFF";
-      }
-
       // Ensure consistent 4K landscape imagery across all slides
       let slideImg = b.image || def.image;
-      if (slideImg.includes("veggies_clean_4k.jpg")) slideImg = "/banners/hero1.jpg";
-      if (slideImg.includes("fruits_clean_4k.jpg") || slideImg.includes("hero_fruits_orchard.jpg")) slideImg = "/banners/hero_fruits.jpg";
-      if (slideImg.includes("exotics_clean_4k.jpg") || slideImg.includes("hero2.jpg") || slideImg.includes("combo")) slideImg = "/banners/hero_combos.jpg";
+      if (slideImg.includes("hero1.jpg") || slideImg.includes("veggies_clean_4k.jpg")) slideImg = "/banners/hero_freshgo_veg_basket.jpg";
+      if (slideImg.includes("hero_fruits_orchard.jpg") || slideImg.includes("fruits_clean_4k.jpg")) slideImg = "/banners/hero_freshgo_fruits.jpg";
+      if (slideImg.includes("hero2.jpg") || slideImg.includes("exotics_clean_4k.jpg")) slideImg = "/banners/hero_freshgo_greens.jpg";
 
       return {
         _id: b._id || `db-${idx}`,
@@ -144,6 +129,10 @@ export default function Hero({ banners = [] }: HeroProps) {
 
   const slide = activeSlides[currentSlide] || activeSlides[0];
 
+  // Dynamic Theme presets tailored for each banner background
+  const isOrangeSlide = slide.image?.includes("hero_freshgo_orange");
+  const isDarkGreensSlide = slide.image?.includes("hero_freshgo_greens");
+
   // Touch Swipe Handlers for mobile
   const handleTouchStart = (e: React.TouchEvent) => {
     setIsPaused(true);
@@ -166,11 +155,11 @@ export default function Hero({ banners = [] }: HeroProps) {
   const renderIcon = (type?: string) => {
     switch (type) {
       case "sparkles":
-        return <Sparkles size={12} className="text-amber-600 shrink-0 stroke-[2.2]" />;
+        return <Sparkles size={12} className={isDarkGreensSlide ? "text-amber-300 shrink-0 stroke-[2.2]" : "text-amber-600 shrink-0 stroke-[2.2]"} />;
       case "shield":
-        return <ShieldCheck size={12} className="text-[#0a3d24] shrink-0 stroke-[2.2]" />;
+        return <ShieldCheck size={12} className={isDarkGreensSlide ? "text-emerald-200 shrink-0 stroke-[2.2]" : "text-[#0a3d24] shrink-0 stroke-[2.2]"} />;
       default:
-        return <Clock size={12} className="text-[#0a3d24] shrink-0 stroke-[2.2]" />;
+        return <Clock size={12} className={isDarkGreensSlide ? "text-emerald-200 shrink-0 stroke-[2.2]" : "text-[#0a3d24] shrink-0 stroke-[2.2]"} />;
     }
   };
 
@@ -206,25 +195,55 @@ export default function Hero({ banners = [] }: HeroProps) {
                 />
               </div>
 
-              {/* Natural directional fade: Guarantees razor-sharp text contrast while keeping right produce 100% rich & unwashed */}
-              <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 via-48% sm:via-36% to-transparent pointer-events-none z-1" />
+              {/* Natural directional fade tailored to each banner */}
+              {isOrangeSlide ? (
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-500/30 via-transparent to-transparent pointer-events-none z-1" />
+              ) : isDarkGreensSlide ? (
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/90 via-emerald-950/65 via-50% sm:via-38% to-transparent pointer-events-none z-1" />
+              ) : (
+                <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 via-48% sm:via-36% to-transparent pointer-events-none z-1" />
+              )}
 
               {/* Left Editorial Content Layer */}
               <div className="relative z-10 h-full p-3.5 xs:p-4 sm:p-6 md:p-8 lg:p-10 flex flex-col justify-between max-w-[64%] xs:max-w-[62%] sm:max-w-md lg:max-w-xl">
                 <div>
-                  {/* Clean Trust Micro-Pill (Zero Emojis, Real Lucide SVG Icon) */}
-                  <div className="inline-flex items-center gap-1.5 bg-emerald-50/95 border border-emerald-200/80 text-[#0a3d24] text-[9.5px] xs:text-[10px] sm:text-[11px] lg:text-xs font-bold px-2.5 py-0.5 lg:px-3 lg:py-1 rounded-full mb-1 sm:mb-2 lg:mb-3 shadow-2xs">
+                  {/* Clean Trust Micro-Pill */}
+                  <div
+                    className={`inline-flex items-center gap-1.5 text-[9.5px] xs:text-[10px] sm:text-[11px] lg:text-xs font-bold px-2.5 py-0.5 lg:px-3 lg:py-1 rounded-full mb-1 sm:mb-2 lg:mb-3 shadow-2xs ${
+                      isOrangeSlide
+                        ? "bg-white/95 border border-white/80 text-[#0a3d24]"
+                        : isDarkGreensSlide
+                        ? "bg-white/15 border border-white/25 text-white backdrop-blur-xs"
+                        : "bg-emerald-50/95 border border-emerald-200/80 text-[#0a3d24]"
+                    }`}
+                  >
                     {renderIcon(slide.iconType)}
                     <span className="truncate">{slide.tag}</span>
                   </div>
 
                   {/* High-Impact Headline */}
-                  <h2 className="text-[16px] xs:text-[18px] sm:text-2xl md:text-[26px] lg:text-[32px] xl:text-[34px] font-extrabold text-stone-900 tracking-tight leading-tight line-clamp-2 font-heading">
+                  <h2
+                    className={`text-[16px] xs:text-[18px] sm:text-2xl md:text-[26px] lg:text-[32px] xl:text-[34px] font-extrabold tracking-tight leading-tight line-clamp-2 font-heading ${
+                      isOrangeSlide
+                        ? "text-[#072d1a] drop-shadow-[0_1px_1px_rgba(255,255,255,0.4)]"
+                        : isDarkGreensSlide
+                        ? "text-white drop-shadow-sm"
+                        : "text-stone-900"
+                    }`}
+                  >
                     {slide.title}
                   </h2>
 
-                  {/* Value Proposition Subtitle (Punchy, 1 clean line, never truncates) */}
-                  <p className="text-[11px] xs:text-xs sm:text-sm lg:text-base text-stone-600 font-medium leading-snug line-clamp-1 sm:line-clamp-2 mt-0.5 sm:mt-1 lg:mt-2 max-w-lg">
+                  {/* Value Proposition Subtitle */}
+                  <p
+                    className={`text-[11px] xs:text-xs sm:text-sm lg:text-base font-medium leading-snug line-clamp-1 sm:line-clamp-2 mt-0.5 sm:mt-1 lg:mt-2 max-w-lg ${
+                      isOrangeSlide
+                        ? "text-[#1c3828] font-semibold drop-shadow-[0_1px_0_rgba(255,255,255,0.3)]"
+                        : isDarkGreensSlide
+                        ? "text-emerald-100/90"
+                        : "text-stone-600"
+                    }`}
+                  >
                     {slide.subtitle}
                   </p>
                 </div>
@@ -234,7 +253,13 @@ export default function Hero({ banners = [] }: HeroProps) {
                   <Link href={slide.link || "/shop"}>
                     <button
                       type="button"
-                      className="bg-[#0a3d24] hover:bg-[#072416] text-white px-3.5 xs:px-4 sm:px-5 lg:px-6 py-1.5 sm:py-2 lg:py-2.5 rounded-full font-bold text-[11px] xs:text-xs sm:text-sm lg:text-[15px] shadow-xs transition flex items-center gap-1.5 active:scale-95 cursor-pointer whitespace-nowrap"
+                      className={`px-3.5 xs:px-4 sm:px-5 lg:px-6 py-1.5 sm:py-2 lg:py-2.5 rounded-full font-bold text-[11px] xs:text-xs sm:text-sm lg:text-[15px] shadow-sm transition flex items-center gap-1.5 active:scale-95 cursor-pointer whitespace-nowrap ${
+                        isOrangeSlide
+                          ? "bg-[#0a3d24] hover:bg-[#062918] text-white shadow-md"
+                          : isDarkGreensSlide
+                          ? "bg-emerald-400 hover:bg-emerald-300 text-stone-950 shadow-md"
+                          : "bg-[#0a3d24] hover:bg-[#072416] text-white"
+                      }`}
                     >
                       <span>{slide.btnText}</span>
                       <ArrowRight size={14} className="stroke-[2.5]" />
@@ -251,7 +276,11 @@ export default function Hero({ banners = [] }: HeroProps) {
                           onClick={() => goToSlide(idx, idx > currentSlide ? 1 : -1)}
                           className={`transition-all duration-300 rounded-full cursor-pointer ${
                             currentSlide === idx
-                              ? "w-4.5 h-1.5 bg-[#0a3d24]"
+                              ? isDarkGreensSlide
+                                ? "w-4.5 h-1.5 bg-emerald-400"
+                                : "w-4.5 h-1.5 bg-[#0a3d24]"
+                              : isDarkGreensSlide
+                              ? "w-1.5 h-1.5 bg-white/40 hover:bg-white/60"
                               : "w-1.5 h-1.5 bg-stone-300/90 hover:bg-stone-400"
                           }`}
                           title={`Slide ${idx + 1}`}
